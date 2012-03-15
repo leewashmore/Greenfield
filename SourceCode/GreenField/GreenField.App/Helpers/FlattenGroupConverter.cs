@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Data;
 using System.Collections.Generic;
 using System.Linq;
-//Test comment
+//Test comment test
 namespace GreenField.App.Helpers
 {
     public class FlattenGroupConverter : IValueConverter
