@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.App", "GreenField.App\GreenField.App.csproj", "{F914419C-A86A-487F-9757-8DF5151FAA77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Web", "GreenField.Web\GreenField.Web.csproj", "{64C3D391-3815-4125-9AEE-2C253B7A80A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Module", "GreenField.Module\GreenField.Module.csproj", "{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.ServiceCaller", "GreenField.ServiceCaller\GreenField.ServiceCaller.csproj", "{F46363AA-C93C-4396-8C99-3C513EF3A875}"
+	ProjectSection(ProjectDependencies) = postProject
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3} = {64C3D391-3815-4125-9AEE-2C253B7A80A3}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.DAL", "GreenField.DAL\GreenField.DAL.csproj", "{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.LoginModule", "GreenField.LoginModule\GreenField.LoginModule.csproj", "{98908D84-F1D0-49CB-AB27-03499035BA00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Login.App", "GreenField.Login.App\GreenField.Login.App.csproj", "{52101286-444F-49E8-ADC8-28F884471DB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Common", "GreenField.Common\GreenField.Common.csproj", "{46F8DB66-D3C6-4F12-B31B-60744ED3D840}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.AdministrationModule", "GreenField.AdministrationModule\GreenField.AdministrationModule.csproj", "{DDB40CCE-A142-4911-8B48-6424B737D8F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.DashBoardModule", "GreenField.DashBoardModule\GreenField.DashBoardModule.csproj", "{BEFDA960-2EED-4D30-A2A6-36C0E899516E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Gadgets", "GreenField.Gadgets\GreenField.Gadgets.csproj", "{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F914419C-A86A-487F-9757-8DF5151FAA77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F914419C-A86A-487F-9757-8DF5151FAA77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F914419C-A86A-487F-9757-8DF5151FAA77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F914419C-A86A-487F-9757-8DF5151FAA77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98908D84-F1D0-49CB-AB27-03499035BA00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98908D84-F1D0-49CB-AB27-03499035BA00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98908D84-F1D0-49CB-AB27-03499035BA00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98908D84-F1D0-49CB-AB27-03499035BA00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52101286-444F-49E8-ADC8-28F884471DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52101286-444F-49E8-ADC8-28F884471DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52101286-444F-49E8-ADC8-28F884471DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52101286-444F-49E8-ADC8-28F884471DB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46F8DB66-D3C6-4F12-B31B-60744ED3D840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46F8DB66-D3C6-4F12-B31B-60744ED3D840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46F8DB66-D3C6-4F12-B31B-60744ED3D840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46F8DB66-D3C6-4F12-B31B-60744ED3D840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDB40CCE-A142-4911-8B48-6424B737D8F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDB40CCE-A142-4911-8B48-6424B737D8F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDB40CCE-A142-4911-8B48-6424B737D8F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDB40CCE-A142-4911-8B48-6424B737D8F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEFDA960-2EED-4D30-A2A6-36C0E899516E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEFDA960-2EED-4D30-A2A6-36C0E899516E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEFDA960-2EED-4D30-A2A6-36C0E899516E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEFDA960-2EED-4D30-A2A6-36C0E899516E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

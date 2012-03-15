@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.Gadgets</RootNamespace>
+    <AssemblyName>GreenField.Gadgets</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions">
+      <HintPath>..\Lib\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ComponentModel.Composition.Initialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.Charting, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.Data, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.GridView, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.Input, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Controls.Navigation, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Data, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Themes.Metro, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\DataContextProxy.cs" />
+    <Compile Include="Helpers\FlattenGroupConverter.cs" />
+    <Compile Include="Helpers\Flipper.cs" />
+    <Compile Include="Helpers\ItemStyleSelector.cs" />
+    <Compile Include="Helpers\RangeObservableCollection.cs" />
+    <Compile Include="Models\RegionSpecificData.cs" />
+    <Compile Include="Models\SectorSpecificData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
+    <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
+    <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
+    <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
+    <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
+    <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
+    <Compile Include="ViewModels\ViewModelRegionBreakDown.cs" />
+    <Compile Include="ViewModels\ViewModelSectorBreakDown.cs" />
+    <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
+    <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
+    <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
+    <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
+    <Compile Include="Views\ViewAssetAllocation.xaml.cs">
+      <DependentUpon>ViewAssetAllocation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewClosingPriceChart.xaml.cs">
+      <DependentUpon>ViewClosingPriceChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewHoldingsPieChart.xaml.cs">
+      <DependentUpon>ViewHoldingsPieChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewIndexConstituents.xaml.cs">
+      <DependentUpon>ViewIndexConstituents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMarketCapitalization.xaml.cs">
+      <DependentUpon>ViewMarketCapitalization.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPortfolioRiskReturns.xaml.cs">
+      <DependentUpon>ViewPortfolioRiskReturns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewRegionBreakdown.xaml.cs">
+      <DependentUpon>ViewRegionBreakdown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSectorBreakdown.xaml.cs">
+      <DependentUpon>ViewSectorBreakdown.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSecurityOverview.xaml.cs">
+      <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewTopHoldings.xaml.cs">
+      <DependentUpon>ViewTopHoldings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewTopBenchmarkSecurities.xaml.cs">
+      <DependentUpon>ViewTopBenchmarkSecurities.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewUnrealizedGainLoss.xaml.cs">
+      <DependentUpon>ViewUnrealizedGainLoss.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ViewAssetAllocation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewClosingPriceChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewHoldingsPieChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewIndexConstituents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMarketCapitalization.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPortfolioRiskReturns.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewRegionBreakdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSectorBreakdown.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSecurityOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTopHoldings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTopBenchmarkSecurities.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewUnrealizedGainLoss.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.Common\GreenField.Common.csproj">
+      <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
+      <Name>GreenField.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
+      <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
+      <Name>GreenField.ServiceCaller</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AddToChart.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\ExportExcel.png" />
+    <Resource Include="Images\flipIcon.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:complexType name="ArrayOfDetailedEstimates_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DetailedEstimates_Result" nillable="true" type="tns:DetailedEstimates_Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDetailedEstimates_Result" nillable="true" type="tns:ArrayOfDetailedEstimates_Result" />
+  <xs:complexType name="DetailedEstimates_Result">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AmtType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EstimateType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FY2009" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2010" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2011" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2012" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2013" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2014" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="FY2015" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="srt" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DetailedEstimates_Result" nillable="true" type="tns:DetailedEstimates_Result" />
+  <xs:complexType name="ArrayOfGetCompanies_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="GetCompanies_Result" nillable="true" type="tns:GetCompanies_Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfGetCompanies_Result" nillable="true" type="tns:ArrayOfGetCompanies_Result" />
+  <xs:complexType name="GetCompanies_Result">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CodeIndustry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CodeSector" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentPeriod" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Earnings" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ReportNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="XRef" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="GetCompanies_Result" nillable="true" type="tns:GetCompanies_Result" />
+  <xs:complexType name="ArrayOfConsensusEstimates_Result">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimates_Result" nillable="true" type="tns:ConsensusEstimates_Result" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimates_Result" nillable="true" type="tns:ArrayOfConsensusEstimates_Result" />
+  <xs:complexType name="ConsensusEstimates_Result">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Actual_Dec_2009" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Actual_Dec_2010" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="AmtType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EstimateType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2009" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2010" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2011" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2012" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2013" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2014" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimated_Dec_2015" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Xref" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="srt" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimates_Result" nillable="true" type="tns:ConsensusEstimates_Result" />
+</xs:schema>

@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="GreenField.AdministrationModule.Controls.ErrorMessage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border BorderThickness="1" BorderBrush="DarkRed" Opacity="0.7">
+        <Grid x:Name="LayoutRoot" Background="Red" Opacity="0.7">
+            <TextBlock FontSize="12" Foreground="White" Width="250" TextWrapping="Wrap" x:Name="MessageBlock" Margin="5"/>
+        </Grid>
+    </Border>
+</UserControl>

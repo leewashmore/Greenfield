@@ -1,0 +1,93 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="Entities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="Model.GF_PRICING_BASEVIEW" />
+        <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="Model.GF_SECURITY_BASEVIEW" />
+        <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="Model.GF_SELECTION_BASEVIEW" />
+      </EntityContainer>
+      <EntityType Name="GF_PRICING_BASEVIEW">
+        <Key>
+          <PropertyRef Name="TYPE" />
+          <PropertyRef Name="TICKER" />
+          <PropertyRef Name="ISSUE_NAME" />
+          <PropertyRef Name="FROMDATE" />
+        </Key>
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="DAILY_CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="DAILY_PRICE_RETURN" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="DAILY_GROSS_RETURN" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="VOLUME" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="DAILY_SPOT_FX" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+      </EntityType>
+      <EntityType Name="GF_SECURITY_BASEVIEW">
+        <Key>
+          <PropertyRef Name="SECURITY_ID" />
+        </Key>
+        <Property Name="SECURITY_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISIN" Type="Edm.String" Nullable="true" MaxLength="12" Unicode="false" FixedLength="false" />
+        <Property Name="SEDOL" Type="Edm.String" Nullable="true" MaxLength="7" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_INSTR_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_FC_SEC_REF" Type="Edm.Int32" Nullable="true" />
+        <Property Name="FIFTYTWO_WEEK_LOW" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="FIFTYTWO_WEEK_HIGH" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_VOLUME_AVG_90D" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_VOLUME_AVG_6M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="SECURITY_VOLUME_AVG_30D" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="GREENFIELD_FLAG" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="FLOAT_AMOUNT" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CUSIP" Type="Edm.String" Nullable="true" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="STOCK_EXCHANGE_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_ISSUED_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="SHARES_OUTSTANDING" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BETA" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MSCI" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_NAME" Type="Edm.String" Nullable="true" MaxLength="160" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="240" Unicode="false" FixedLength="false" />
+        <Property Name="BLOOMBERG_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="240" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WEBSITE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="FISCAL_YEAR_END" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="SHARES_PER_ADR" Type="Edm.Decimal" Nullable="true" Precision="21" Scale="7" />
+        <Property Name="ADR_UNDERLYING_TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="MARKET_CAP_IN_USD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_SELECTION_BASEVIEW">
+        <Key>
+          <PropertyRef Name="INSTRUMENT_ID" />
+          <PropertyRef Name="TYPE" />
+        </Key>
+        <Property Name="SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+      </EntityType>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

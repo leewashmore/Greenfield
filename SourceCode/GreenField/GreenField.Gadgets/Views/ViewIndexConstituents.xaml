@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewIndexConstituents"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="MSCI Standard (" FontWeight="Bold"/>
+                <TextBlock Text="{Binding EffectiveDate, StringFormat='MMMM dd, yyyy'}" FontWeight="Bold"/>
+                <TextBlock Text=") Constituents" FontWeight="Bold"/>
+            </StackPanel>
+            <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
+                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
+                <Button.Content>
+                    <Image Source="../Images/ExportExcel.png" />
+                </Button.Content>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <telerik:RadGridView Name="dgIndexConstituents" AutoGenerateColumns="False" ItemsSource="{Binding IndexConstituentsInfo}" 
+                             CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
+                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ElementExporting="dgIndexConstituents_ElementExporting"
+                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgcConstituentName" Header="Constituent Name" DataMemberBinding="{Binding ConstituentName}" Width="Auto" HeaderTextAlignment="Left" TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" DataMemberBinding="{Binding Country}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcRegion" Header="Region" DataMemberBinding="{Binding Region}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" DataMemberBinding="{Binding Sector}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcIndustry" Header="Industry" DataMemberBinding="{Binding Industry}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcSubIndustry" Header="Sub-Industry" DataMemberBinding="{Binding SubIndustry}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeight" Header="Weight" DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeightCountry" Header="Weight (Country)" DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeightIndustry" Header="Weight (Industry)" DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="Ticker" DataMemberBinding="{Binding Ticker}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcShares" Header="Shares" DataMemberBinding="{Binding Shares}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcPrice" Header="Price" DataMemberBinding="{Binding Price}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcPriceCurrency" Header="Price Currency" DataMemberBinding="{Binding PriceCurrency}" Width="Auto" HeaderTextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcFXPriceCurrency" Header="F/X (Price Currency)" DataMemberBinding="{Binding FXPriceCurrency}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcForeignInclusionFactor" Header="Foreign Inclusion Factor (Free Float Factor)" DataMemberBinding="{Binding ForeignInclusionFactor}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcDailyReturnUSD" Header="Daily Return in USD (Price, Gross, Net)" DataMemberBinding="{Binding DailyReturnUSD}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

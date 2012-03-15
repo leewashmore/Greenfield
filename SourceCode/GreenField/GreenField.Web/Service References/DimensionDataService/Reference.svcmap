@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="20b96a0f-3788-4077-a6dc-94b0d12e0d54" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://longreen1t/GFServiceSite/Schema.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Schema.xsd" MetadataType="Schema" ID="928bb5b2-0be6-47ef-b223-bc70bf774533" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?xsd=xsd3" />
+    <MetadataFile FileName="Schema1.xsd" MetadataType="Schema" ID="8e26cd78-701b-4e46-9956-8b34728a8888" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?xsd=xsd0" />
+    <MetadataFile FileName="Schema.wsdl" MetadataType="Wsdl" ID="d2a636a2-6d77-4411-abe1-dd219322716c" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?wsdl" />
+    <MetadataFile FileName="Schema.disco" MetadataType="Disco" ID="10b83923-db23-4c73-8a09-33f9768209bb" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?disco" />
+    <MetadataFile FileName="Schema2.xsd" MetadataType="Schema" ID="557d079c-59e4-4cd5-bf7b-05fdd99ece9a" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?xsd=xsd1" />
+    <MetadataFile FileName="Schema3.xsd" MetadataType="Schema" ID="08b4237c-1579-45b6-93cb-c990a3faaeb3" SourceId="1" SourceUrl="http://longreen1t/GFServiceSite/Schema.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{64C3D391-3815-4125-9AEE-2C253B7A80A3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.Web</RootNamespace>
+    <AssemblyName>GreenField.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GATEVA.App\GATEVA.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False</SilverlightApplicationList>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientBin\GreenField.App.xap" />
+    <Content Include="ClientBin\GreenField.Login.App.xap" />
+    <Content Include="HomePage.aspx" />
+    <Content Include="HomePage.html" />
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
+    <None Include="Service References\DimensionDataLocalService\Schema.wsdl" />
+    <None Include="Service References\DimensionDataLocalService\Schema.xsd" />
+    <None Include="Service References\DimensionDataLocalService\Schema1.xsd" />
+    <None Include="Service References\DimensionDataLocalService\Schema2.xsd" />
+    <None Include="Service References\DimensionDataLocalService\Schema3.xsd" />
+    <None Include="Service References\DimensionDataService\Schema.disco" />
+    <None Include="Service References\DimensionDataService\configuration91.svcinfo" />
+    <None Include="Service References\DimensionDataService\configuration.svcinfo" />
+    <None Include="Service References\DimensionDataService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DimensionDataLocalService\Schema.disco" />
+    <None Include="Service References\DimensionDataLocalService\configuration91.svcinfo" />
+    <None Include="Service References\DimensionDataLocalService\configuration.svcinfo" />
+    <None Include="Service References\DimensionDataLocalService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Login.aspx" />
+    <None Include="Service References\DimensionEntitiesService\Reference.datasvcmap">
+      <Generator>DataServiceClientGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Services\DashboardOperations.svc" />
+    <Content Include="Services\LoggingOperations.svc" />
+    <Content Include="Services\LoginOperations.svc" />
+    <Content Include="Services\ProxyDataOperations.svc" />
+    <Content Include="Services\SessionOperations.svc" />
+    <Content Include="Silverlight.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <None Include="Service References\DimensionDataService\Schema.wsdl" />
+    <None Include="Service References\DimensionDataService\Schema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DimensionDataService\Schema1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DimensionDataService\Schema2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DimensionDataService\Schema3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DimensionEntitiesService\service.edmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataContracts\AggregatedData.cs" />
+    <Compile Include="DataContracts\AssetAllocationData.cs" />
+    <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
+    <Compile Include="DataContracts\HoldingsPercentageData.cs" />
+    <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
+    <Compile Include="DataContracts\RegionBreakdownData.cs" />
+    <Compile Include="DataContracts\FundSelectionData.cs" />
+    <Compile Include="DataContracts\EntitySelectionData.cs" />
+    <Compile Include="DataContracts\HoldingsData.cs" />
+    <Compile Include="DataContracts\MarketCapitalizationData.cs" />
+    <Compile Include="DataContracts\MembershipUserInfo.cs" />
+    <Compile Include="DataContracts\PerformanceData.cs" />
+    <Compile Include="DataContracts\PricingReferenceData.cs" />
+    <Compile Include="DataContracts\ReferenceData.cs" />
+    <Compile Include="DataContracts\SectorBreakdownData.cs" />
+    <Compile Include="DataContracts\SecurityReferenceData.cs" />
+    <Compile Include="DataContracts\Session.cs" />
+    <Compile Include="DataContracts\TopHoldingsData.cs" />
+    <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\DimensionDataLocalService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DimensionDataService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DashboardOperations.svc.cs">
+      <DependentUpon>DashboardOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\LoggingOperations.svc.cs">
+      <DependentUpon>LoggingOperations.svc</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\LoginOperations.svc.cs">
+      <DependentUpon>LoginOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ProxyDataOperations.svc.cs">
+      <DependentUpon>ProxyDataOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\SessionOperations.svc.cs">
+      <DependentUpon>SessionOperations.svc</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.DAL\GreenField.DAL.csproj">
+      <Project>{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}</Project>
+      <Name>GreenField.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DimensionDataLocalService\" />
+    <WCFMetadataStorage Include="Service References\DimensionDataService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ServiceReferenceMetadataStorage Include="Service References\DimensionEntitiesService\">
+      <Type>datasvcmap</Type>
+    </ServiceReferenceMetadataStorage>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>59430</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewTopBenchmarkSecurities"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>          
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Top 10 Benchmark Securities" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Height="40"/>
+        <telerik:RadGridView Grid.Row="1" Name="dgTopTenSecurities"  AutoGenerateColumns="False" ShowColumnFooters="True"
+                                     ItemsSource="{Binding TopBenchmarkSecuritiesInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
+                                     SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
+                                     CanUserDeleteRows="False" IsReadOnly="True"
+                                     CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
+                                     UseLayoutRounding="True">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="" DataMemberBinding="{Binding IssuerName}">
+                    <telerik:GridViewDataColumn.Footer>
+                        <TextBlock Text="Total"/>
+                    </telerik:GridViewDataColumn.Footer>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Weight" DataMemberBinding="{Binding Weight}" DataFormatString="{}{0:n2}%">
+                    <telerik:GridViewDataColumn.AggregateFunctions>
+                        <telerik:SumFunction SourceField="Weight" ResultFormatString="{}{0:n2}%"/>
+                    </telerik:GridViewDataColumn.AggregateFunctions>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n1}%"/>
+                <telerik:GridViewDataColumn Header="QTD" 
+                                                DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n1}%"/>
+                <telerik:GridViewDataColumn Header="YTD" 
+                                                DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n1}%"/>
+                <telerik:GridViewDataColumn Header="2010" 
+                                                DataMemberBinding="{Binding PreviousYear}" DataFormatString="{}{0:n1}%"/>
+                <telerik:GridViewDataColumn Header="2009" 
+                                                DataMemberBinding="{Binding SecondPreviousYear}" DataFormatString="{}{0:n1}%"/>
+                <telerik:GridViewDataColumn Header="2008" 
+                                                DataMemberBinding="{Binding ThirdPreviousYear}" DataFormatString="{}{0:n1}%"/>                
+                
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</UserControl>
