@@ -459,5 +459,20 @@ namespace GreenField.ServiceCaller
                     callback(e.Result.ToList());
             };
         }
+
+        public void RetrieveUnrealizedGainLossData(ObservableCollection<String> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, Action<List<UnrealizedGainLossData>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifiers, startDateTime, endDateTime);
+            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
+
+
+      
+
     }
 }

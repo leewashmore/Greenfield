@@ -124,11 +124,11 @@
 
         <Grid  Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" x:Name="chartControl" >
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition />               
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border Grid.Row="0" telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" 
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
                 <telerik:RadChart x:Name="closingPriceChart" Visibility="Visible"
                                   ItemsSource="{Binding PlottedSeries,Mode=TwoWay}" BorderBrush="Transparent" 
@@ -150,8 +150,19 @@
                                                            LayoutMode="Auto" Title="Period"  StepLabelLevelHeight="10" LabelRotationAngle="45"/>
                                     </telerik:ChartArea.AxisX>
                                     <telerik:ChartArea.AxisY>
-                                        <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
+                                        <telerik:AxisY Title="Closing Price" AutoRange="True" MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
                                     </telerik:ChartArea.AxisY>
+                                    <telerik:ChartArea.AdditionalYAxes>
+                                        <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
+                                                   AutoRange="False" MinValue="-1" MaxValue="1" Step="0.2">
+                                            <!--<telerik:AxisY.AxisStyles>
+                                                <telerik:AxisStyles AxisLineStyle="{StaticResource AxisLineStyle2}"
+                                                                TickLineStyle="{StaticResource MajorTickLineStyle2}"
+                                                                MinorTickLineStyle="{StaticResource MinorTickLineStyle2}"
+                                                                ItemLabelStyle="{StaticResource CustomLabel2}"/>
+                                            </telerik:AxisY.AxisStyles>-->
+                                        </telerik:AxisY>
+                                    </telerik:ChartArea.AdditionalYAxes>
                                 </telerik:ChartArea>
                             </telerik:ChartDefaultView.ChartArea>
                             <telerik:ChartDefaultView.ChartLegend>
@@ -171,25 +182,25 @@
                                                               ShowItemLabels="False" ShowPointMarks="False" />
                             </telerik:SeriesMapping.SeriesDefinition>
                             <telerik:SeriesMapping.ItemMappings>
-                                <telerik:ItemMapping DataPointMember="YValue" FieldName="ClosingPrice"/>
-                                <telerik:ItemMapping DataPointMember="XValue" FieldName="ClosingDate" />
+                                <telerik:ItemMapping DataPointMember="YValue" FieldName="DailyClosingPrice"/>
+                                <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
                             </telerik:SeriesMapping.ItemMappings>
                         </telerik:SeriesMapping>
                         <telerik:SeriesMapping LegendLabel="Gain or Loss" >
                             <telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:LineSeriesDefinition ShowItemToolTips="True"  ShowItemLabels="False" ShowPointMarks="False"
-                                                              ItemToolTipFormat="Price: #Y   / Date: #X{dd-MMM-yyyy}" />
+                                                              ItemToolTipFormat="Price: #Y   / Date: #X{dd-MMM-yyyy}" AxisName="Secondary" />
                             </telerik:SeriesMapping.SeriesDefinition>
                             <telerik:SeriesMapping.ItemMappings>
                                 <telerik:ItemMapping DataPointMember="YValue" FieldName="UnrealizedGainLoss" />
-                                <telerik:ItemMapping DataPointMember="XValue" FieldName="ClosingDate" />
+                                <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
                             </telerik:SeriesMapping.ItemMappings>
                         </telerik:SeriesMapping>
                     </telerik:RadChart.SeriesMappings>
                 </telerik:RadChart>
             </Border>
 
-            <Border Grid.Row="1" telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" >
+            <!--<Border Grid.Row="1" telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" >
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadChart x:Name="volumeChart"  Visibility="Visible"
                                       ItemsSource="{Binding PlottedSeries,Mode=TwoWay}" BorderBrush="Transparent" 
@@ -229,26 +240,21 @@
                                     <telerikCharting:BarSeriesDefinition ShowItemToolTips="True"  ShowItemLabels="False"/>
                                 </telerikCharting:SeriesMapping.SeriesDefinition>
                                 <telerikCharting:SeriesMapping.ItemMappings>
-                                    <telerikCharting:ItemMapping FieldName="ClosingVolume" DataPointMember="YValue" />
-                                    <telerikCharting:ItemMapping FieldName="ClosingDate" DataPointMember="XCategory" />
+                                    <telerikCharting:ItemMapping FieldName="Volume" DataPointMember="YValue" />
+                                    <telerikCharting:ItemMapping FieldName="FromDate" DataPointMember="XCategory" />
                                 </telerikCharting:SeriesMapping.ItemMappings>
                             </telerikCharting:SeriesMapping>
                         </telerik:RadChart.SeriesMappings>
                     </telerik:RadChart>
                 </Border>
-            </Border>
+            </Border>-->
         </Grid>
-
         <Grid Grid.Column="1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                IsHitTestVisible="True" x:Name="gridControl">
-
-
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-
-
             <telerik:RadGridView Name="priceDataGrid" AutoGenerateColumns="False"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                  Grid.Row="0" CanUserDeleteRows="False" IsReadOnly="True"
@@ -256,14 +262,14 @@
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding ClosingPrice}" />
-                    <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding ClosingDate}" />
+                    <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice}" />
+                    <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding FromDate}" />
                     <telerik:GridViewDataColumn Header="Unrealized Gain/Loss" 
-                                                DataMemberBinding="{Binding UnrealizedGainLoss,StringFormat='MM/dd/yyyy'}" />
+                                                DataMemberBinding="{Binding UnrealizedGainLoss}" />
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
 
-            <telerik:RadGridView  Name="volumeDataGrid" AutoGenerateColumns="False" 
+            <!--<telerik:RadGridView  Name="volumeDataGrid" AutoGenerateColumns="False" 
                                   ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                   CanUserReorderColumns="True" 
                                   CanUserSortColumns="True"  
@@ -272,16 +278,11 @@
                                   ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
                                   ShowGroupPanel="False" telerik:StyleManager.Theme="Metro">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Closing Volume" DataMemberBinding="{Binding ClosingVolume}" />
-                    <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding ClosingDate,StringFormat='MM/dd/yyyy'}"  />
+                    <telerik:GridViewDataColumn Header="Closing Volume" DataMemberBinding="{Binding Volume}" />
+                    <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding FromDate,StringFormat='MM/dd/yyyy'}"  />
                 </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
-
+            </telerik:RadGridView>-->
         </Grid>
-
-
-
-
         <Grid  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  x:Name="topGrid" Grid.Column="1" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15*" />
@@ -309,51 +310,8 @@
                     <Image Source="../Images/ExportExcel.png" />
                 </Button.Content>
             </Button>
-
         </Grid>
-
-
-
-        <!--<Grid x:Name="LayRoot" Background="White" Grid.Column="0" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="0.7*"/>
-                <RowDefinition Height="6*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <ComboBox  Name="cbTime" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch"  Grid.Column="1" Grid.Row="0" 
-                       ItemsSource="{Binding CbTimeValues,Mode=TwoWay}"                       
-                       SelectionChanged="cbTime_SelectionChanged"> -->
-        <!--SelectedItem="1-Year"-->
-        <!-- </ComboBox>
-            <ComboBox Name="cbFrequency"   Grid.Column="1"  Grid.Row="1"  VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" 
-                    
-                      ItemsSource="{Binding CbFrequencyValues,Mode=TwoWay}"> -->
-        <!--SelectedItem="Daily"-->
-        <!--        
-    </ComboBox>
-            <sdk:Label   HorizontalAlignment="Stretch" Name="lbTime" VerticalAlignment="Stretch"  Grid.Row="0" Grid.Column="0" 
-                    Content="Time"/>
-            <sdk:Label HorizontalAlignment="Stretch" Name="lbFrequency" VerticalAlignment="Stretch" 
-                    Grid.Row="1" Content="Frequency" />
-
-
-            <sdk:Label  HorizontalAlignment="Stretch" Name="lbStartDate"  Grid.Row="2"
-                               Content="Start Date:" Grid.Column="0"/>
-            <basics:DatePicker Name="firstDatePicker" Grid.Row="2" Grid.Column="1" 
-                                       SelectedDate="{Binding SelectedStartDate, Mode=TwoWay}" >
-            </basics:DatePicker>
-            <sdk:Label  Name="lbEndDate"  Content="End Date:" Grid.Row="3" Grid.Column="0" />
-            <basics:DatePicker Name="secondDatePicker" SelectedDate="{Binding SelectedEndDate, Mode=TwoWay}"
-                                        Grid.Row="3" Grid.Column="1">
-            </basics:DatePicker>
-        </Grid>-->
-
+        
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -399,49 +357,7 @@
                     <telerik:RadComboBoxItem Content="Quarterly"/>
                     <telerik:RadComboBoxItem Content="Yearly"/>
                 </telerik:RadComboBox>
-            </Grid>
-            <!--<Grid Grid.Row="4" Margin="0,5,5,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <telerik:RadComboBox Grid.Column="0" ItemsSource="{Binding SeriesReference.View.Groups, 
-                                     Converter={StaticResource FlattenGroupConverter}}"
-                                     IsEditable="True" telerik:TextSearch.TextPath="EntityIdentifier" Width="150"
-                                     CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
-                                     OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                     Text="{Binding SeriesEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
-                                     ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
-                                     HorizontalAlignment="Right"/>
-                <Button Grid.Column="1" HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
-                Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
-                    <Image Source="../Images/AddToChart.png"/>
-                </Button>
-            </Grid>
-
-            <Grid Grid.Row="5" Margin="0,5,0,0">
-                <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          IsChecked="{Binding SearchFilterEnabled,Mode=TwoWay}"/>
-            </Grid>
-
-            <Grid Grid.Row="6" Margin="0,5,0,0">
-                <ItemsControl HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding EntityName}" />
-                                <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" CommandParameter="{Binding}"  Width="20">
-                                    <Image Source="../Images/Delete.png"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>-->
+            </Grid>           
         </Grid>
-
-
-
     </Grid>
 </UserControl>

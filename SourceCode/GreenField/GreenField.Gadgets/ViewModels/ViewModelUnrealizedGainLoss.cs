@@ -45,13 +45,13 @@ namespace GreenField.Gadgets.ViewModels
         #region Properties
 
         #region UI Fields
-        private RangeObservableCollection<PricingReferenceData> _plottedSeries;
-        public RangeObservableCollection<PricingReferenceData> PlottedSeries
+        private RangeObservableCollection<UnrealizedGainLossData> _plottedSeries;
+        public RangeObservableCollection<UnrealizedGainLossData> PlottedSeries
         {
             get
             {
                 if (_plottedSeries == null)
-                    _plottedSeries = new RangeObservableCollection<PricingReferenceData>();
+                    _plottedSeries = new RangeObservableCollection<UnrealizedGainLossData>();
                 return _plottedSeries;
             }
             set
@@ -74,7 +74,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedTimeRange = value;
                     //Retrieve Pricing Data for updated Time Range
-                    RetrievePricingData(new ObservableCollection<String>(PlottedSeries.Select(p => p.Ticker).Distinct().ToList()), RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                    RetrieveUnrealizedGainLossData(new ObservableCollection<String>(PlottedSeries.Select(p => p.Ticker).Distinct().ToList()), RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange);
                 }
             }
         }
@@ -94,13 +94,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private RangeObservableCollection<PricingReferenceData> _primaryPlottedSeries;
-        public RangeObservableCollection<PricingReferenceData> PrimaryPlottedSeries
+
+        private RangeObservableCollection<UnrealizedGainLossData> _primaryPlottedSeries;
+        public RangeObservableCollection<UnrealizedGainLossData> PrimaryPlottedSeries
         {
             get
             {
                 if (_primaryPlottedSeries == null)
-                    _primaryPlottedSeries = new RangeObservableCollection<PricingReferenceData>();
+                    _primaryPlottedSeries = new RangeObservableCollection<UnrealizedGainLossData>();
                 return _primaryPlottedSeries;
             }
             set
@@ -112,6 +113,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
 
         private ObservableCollection<String> _cbTimeValues;
         public ObservableCollection<String> CbTimeValues
@@ -185,24 +187,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Type of entites added to chart
-        /// if true: only securities added
-        /// if false: Commodity/Index/Currency Added
-        /// </summary>
-        private bool _chartEntityTypes;
-        public bool ChartEntityTypes
-        {
-            get
-            {
-                return _chartEntityTypes;
-            }
-            set
-            {
-                _chartEntityTypes = value;
-                this.RaisePropertyChanged(() => this.ChartEntityTypes);
-            }
-        }
 
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
 
@@ -231,56 +215,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region FrequencySelection
-
-        private string _frequencyInterval;
-        public string FrequencyInterval
-        {
-            get
-            {
-                return _frequencyInterval;
-            }
-            set
-            {
-                _frequencyInterval = value;
-                this.RaisePropertyChanged(() => this.FrequencyInterval);
-            }
-        }
-
-        #endregion
-
-        #region Chart/Grid Entities
-
-        private string newEntity;
-        public string NewEntity
-        {
-            get { return newEntity; }
-            set
-            {
-                if (newEntity != value)
-                {
-                    newEntity = value;
-                    RaisePropertyChanged(() => NewEntity);
-                }
-            }
-        }
-
-        private bool _returnTypeSelection;
-        public bool ReturnTypeSelection
-        {
-            get
-            {
-                return _returnTypeSelection;
-            }
-            set
-            {
-                _returnTypeSelection = value;
-                this.RaisePropertyChanged(() => this.ReturnTypeSelection);
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region CallBack Methods
@@ -299,31 +233,16 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        private void RetrievePricingData(ObservableCollection<String> entityIdentifiers, Action<List<PricingReferenceData>> callback)
+        private void RetrieveUnrealizedGainLossData(ObservableCollection<String> Tickers, Action<List<UnrealizedGainLossData>> callback)
         {
             DateTime periodStartDate;
             DateTime periodEndDate;
             GetPeriod(out periodStartDate, out periodEndDate);
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, callback);
+            _dbInteractivity.RetrieveUnrealizedGainLossData(Tickers, periodStartDate, periodEndDate, callback);
         }
 
-        private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
-        {
-            //ObservableCollection<PricingReferenceData> objCollection = new ObservableCollection<PricingReferenceData>();
-            //string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().EntityIdentifier;
-            //PrimaryPlottedSeries.Clear();
-            //PlottedSeries.Clear();
-
-            //foreach (PricingReferenceData item in result)
-            //{
-            //    PlottedSeries.Add(item);
-            //    if (item.EntityIdentifier == primarySecurityReferenceIdentifier)
-            //        objCollection.Add(item);
-            //}
-            //PrimaryPlottedSeries = objCollection;
-
-
-            //ObservableCollection<PricingReferenceData> objCollection = new ObservableCollection<PricingReferenceData>();
+        private void RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange(List<UnrealizedGainLossData> result)
+        {            
             string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().Ticker;
             PrimaryPlottedSeries.Clear();
             PlottedSeries.Clear();
@@ -379,6 +298,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+
+
         #endregion
 
         #region Event Handlers
@@ -387,19 +308,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="securityReferenceData">SecurityReferenceData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
-        {
-            //if (securityReferenceData != null)
-            //{
-            //    RetrievePricingData(new ObservableCollection<String>() { securityReferenceData.Ticker }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-            //_dbInteractivity.RetrievePricingReferenceData(new ObservableCollection<String>() { SelectedSeriesReference.EntityIdentifier }, DateTime.Today.AddYears(-1), DateTime.Today, (result) =>
-            //{
-            //    foreach (PricingReferenceData item in result)
-            //        PlottedSeries.Add(item);
-            //    //ComparisonSeries.Add(SelectedSeriesReference);
-            //    SelectedSeriesReference = null;
-            //});
-
-            //ArgumentNullException
+        {           
             if (entitySelectionData == null)
                 return;
 
@@ -410,30 +319,21 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
+                    List<UnrealizedGainLossData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
                     PlottedSeries.RemoveRange(RemoveItems);
                     PrimaryPlottedSeries.Clear();
                 }
 
                 //Retrieve Pricing Data for Primary Security Reference
-                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.ShortName }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+                RetrieveUnrealizedGainLossData(new ObservableCollection<String>() { entitySelectionData.ShortName }, RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference);
             }
         }
 
-        private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
-        {
-            //foreach (PricingReferenceData item in result)
-            //{
-            //    //PlottedSeries.Add(item);
-            //    //PrimaryPlottedSeries.Add(item);
-            //    objCollection.Add(item);
-            //    objCollectionPrimary.Add(item);
-            //}
-            //PlottedSeries = objCollection;
-            //PrimaryPlottedSeries = objCollectionPrimary;
-
-
+        private void RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference(List<UnrealizedGainLossData> result)
+        {           
+            PlottedSeries.Clear();
             PlottedSeries.AddRange(result);
+            List<UnrealizedGainLossData> d = PlottedSeries.ToList();
             PrimaryPlottedSeries.AddRange(result);
         }
 

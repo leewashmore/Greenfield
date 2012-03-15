@@ -22,7 +22,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             priceDataGrid.Visibility = Visibility.Collapsed;
-            volumeDataGrid.Visibility = Visibility.Collapsed;
+            //volumeDataGrid.Visibility = Visibility.Collapsed;
             //cbTime.SelectedItem = "1-Year";
             //cbFrequency.SelectedItem = "Daily";
         }
@@ -36,10 +36,10 @@ namespace GreenField.Gadgets.Views
 
         private void btnFlipforGraph_Click(object sender, RoutedEventArgs e)
         {
-            if (volumeDataGrid.Visibility == Visibility.Collapsed)
-                Flipper.FlipItem(volumeChart, volumeDataGrid);
-            else
-                Flipper.FlipItem(volumeDataGrid, volumeChart);
+            //if (volumeDataGrid.Visibility == Visibility.Collapsed)
+            //    Flipper.FlipItem(volumeChart, volumeDataGrid);
+            //else
+            //    Flipper.FlipItem(volumeDataGrid, volumeChart);
 
         }
 
@@ -115,7 +115,7 @@ namespace GreenField.Gadgets.Views
             try
             {
                 closingPriceChart.ExportToExcelML(fileStream);
-                volumeChart.ExportToExcelML(fileStream);
+                //volumeChart.ExportToExcelML(fileStream);
             }
             catch (Exception ex)
             {

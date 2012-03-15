@@ -61,6 +61,7 @@
           <EntitySet Name="tblStdInterimIssue" EntityType="ResearchModel.Store.tblStdInterimIssue" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblStdInterimRef" EntityType="ResearchModel.Store.tblStdInterimRef" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblStdIssue" EntityType="ResearchModel.Store.tblStdIssue" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUnrealizedGLData" EntityType="ResearchModel.Store.tblUnrealizedGLData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserDashboardPreferance" EntityType="ResearchModel.Store.UserDashboardPreferance" store:Type="Tables" store:Schema="dbo" store:Name="UserDashboardPreferance">
             <DefiningQuery>SELECT 
       [UserDashboardPreferance].[Id] AS [Id], 
@@ -513,6 +514,17 @@
           <Property Name="Votes" Type="real" />
           <Property Name="ConversionFactor" Type="real" />
         </EntityType>
+        <EntityType Name="tblUnrealizedGLData">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Name="SNo" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FROMDATE" Type="datetime" />
+          <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Scale="5" />
+          <Property Name="VOLUME" Type="decimal" Scale="5" />
+          <Property Name="DAILY_PRICE_RETURN" Type="decimal" Scale="5" />
+          <Property Name="TICKER" Type="varchar" MaxLength="50" />
+        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AshmoreEMMPOC.dbo.UserDashboardPreferance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -622,8 +634,9 @@
             <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetDashBoardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
-            <Parameter Name="UserName" Mode="In" Type="String" />
+          <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblUnrealizedGLDatas" EntityType="ResearchModel.tblUnrealizedGLData" />
         </EntityContainer>
         <EntityType Name="tblActual">
           <Key>
@@ -1121,6 +1134,17 @@
           <Property Type="Int32" Name="GadgetPosition" Nullable="false" />
           <Property Type="String" Name="PreferenceGroupID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="tblUnrealizedGLData">
+          <Key>
+            <PropertyRef Name="SNo" />
+          </Key>
+          <Property Type="Int32" Name="SNo" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="FROMDATE" />
+          <Property Type="Decimal" Name="DAILY_CLOSING_PRICE" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="VOLUME" Precision="18" Scale="5" />
+          <Property Type="Decimal" Name="DAILY_PRICE_RETURN" Precision="18" Scale="5" />
+          <Property Type="String" Name="TICKER" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1554,6 +1578,18 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SetDashBoardPreference" FunctionName="ResearchModel.Store.SetDashBoardPreference" />
           <FunctionImportMapping FunctionImportName="GetDashBoardPreferenceByUserName" FunctionName="ResearchModel.Store.GetDashBoardPreferenceByUserName" />
+          <EntitySetMapping Name="tblUnrealizedGLDatas">
+            <EntityTypeMapping TypeName="ResearchModel.tblUnrealizedGLData">
+              <MappingFragment StoreEntitySet="tblUnrealizedGLData">
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="DAILY_PRICE_RETURN" ColumnName="DAILY_PRICE_RETURN" />
+                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+                <ScalarProperty Name="DAILY_CLOSING_PRICE" ColumnName="DAILY_CLOSING_PRICE" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1595,6 +1631,7 @@
         <EntityTypeShape EntityType="ResearchModel.tblStdIssue" Width="1.5" PointX="6.75" PointY="13.75" Height="6.2109179687500031" IsExpanded="true" />
         <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="13.375" PointY="13.75" Height="1.5956835937500031" />
         <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="0.75" PointY="14.75" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="ResearchModel.tblUnrealizedGLData" Width="1.5" PointX="15.375" PointY="0.75" Height="2.1725878906250031" />
       </Diagram>
     </Diagrams>
   </Designer>

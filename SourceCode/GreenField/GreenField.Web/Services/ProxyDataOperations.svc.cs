@@ -9,6 +9,7 @@ using System.Data;
 using GreenField.Web.DataContracts;
 using System.Data.SqlClient;
 using System.ServiceModel.Activation;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Web.Services
 {
@@ -2036,6 +2037,36 @@ namespace GreenField.Web.Services
             }
 
             return portfolioRiskReturnValues;
+        }
+
+        [OperationContract]
+        public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string[] entityIdentifiers, DateTime startDateTime, DateTime endDateTime)
+        {
+
+            List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
+            List<UnrealizedGainLossData> movingAverageResult = new List<UnrealizedGainLossData>();
+            List<UnrealizedGainLossData> ninetyDayWtResult = new List<UnrealizedGainLossData>();
+            List<UnrealizedGainLossData> costResult = new List<UnrealizedGainLossData>();
+            List<UnrealizedGainLossData> wtAvgCostResult = new List<UnrealizedGainLossData>();
+            List<UnrealizedGainLossData> unrealizedGainLossResult = new List<UnrealizedGainLossData>();
+            DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+
+            foreach (string item in entityIdentifiers)
+            {
+                int noOfRows;
+                //List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
+                //.Where(r => (r.TICKER == item) && (r.FROMDATE >= startDateTime) && (r.FROMDATE < endDateTime)).OrderByDescending(res => res.FROMDATE).ToList();              
+                ResearchEntities research = new ResearchEntities();
+                List<tblUnrealizedGLData> arrangedByDescRecord = research.tblUnrealizedGLDatas.Where(r => (r.TICKER == item) && (r.FROMDATE >= startDateTime) && (r.FROMDATE < endDateTime)).OrderByDescending(res => res.FROMDATE).ToList();
+                noOfRows = arrangedByDescRecord.Count();
+                adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+            }
+            return unrealizedGainLossResult;
         }
     }
 }
