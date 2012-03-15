@@ -963,6 +963,7 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = dimensionEntity.GF_SELECTION_BASEVIEW.ToList();
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
 
+
                 foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW record in data)
                 {
                     result.Add(new EntitySelectionData()
