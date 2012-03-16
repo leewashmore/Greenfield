@@ -365,7 +365,7 @@
   <xs:element name="RetrieveUnrealizedGainLossData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q41="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="entityIdentifiers" nillable="true" type="q41:ArrayOfstring" />
+        <xs:element minOccurs="0" name="entityIdentifier" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
       </xs:sequence>
@@ -374,7 +374,7 @@
   <xs:element name="RetrieveUnrealizedGainLossDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q42:ArrayOfUnrealizedGainLossData" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q41:ArrayOfUnrealizedGainLossData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

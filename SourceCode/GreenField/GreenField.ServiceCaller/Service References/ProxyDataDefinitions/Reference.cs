@@ -8972,7 +8972,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse")]
-        System.IAsyncResult BeginRetrieveUnrealizedGainLossData(System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);
     }
@@ -10927,8 +10927,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUnrealizedGainLossData(System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveUnrealizedGainLossData(entityIdentifiers, startDateTime, endDateTime, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -10937,10 +10937,10 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveUnrealizedGainLossData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers = ((System.Collections.ObjectModel.ObservableCollection<string>)(inValues[0]));
+            string entityIdentifier = ((string)(inValues[0]));
             System.DateTime startDateTime = ((System.DateTime)(inValues[1]));
             System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveUnrealizedGainLossData(entityIdentifiers, startDateTime, endDateTime, callback, asyncState);
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, callback, asyncState);
         }
         
         private object[] OnEndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
@@ -10956,11 +10956,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             }
         }
         
-        public void RetrieveUnrealizedGainLossDataAsync(System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime) {
-            this.RetrieveUnrealizedGainLossDataAsync(entityIdentifiers, startDateTime, endDateTime, null);
+        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime) {
+            this.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, null);
         }
         
-        public void RetrieveUnrealizedGainLossDataAsync(System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, object userState) {
+        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, object userState) {
             if ((this.onBeginRetrieveUnrealizedGainLossDataDelegate == null)) {
                 this.onBeginRetrieveUnrealizedGainLossDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveUnrealizedGainLossData);
             }
@@ -10971,7 +10971,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 this.onRetrieveUnrealizedGainLossDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveUnrealizedGainLossDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveUnrealizedGainLossDataDelegate, new object[] {
-                        entityIdentifiers,
+                        entityIdentifier,
                         startDateTime,
                         endDateTime}, this.onEndRetrieveUnrealizedGainLossDataDelegate, this.onRetrieveUnrealizedGainLossDataCompletedDelegate, userState);
         }
@@ -11393,9 +11393,9 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveUnrealizedGainLossData(System.Collections.ObjectModel.ObservableCollection<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[3];
-                _args[0] = entityIdentifiers;
+                _args[0] = entityIdentifier;
                 _args[1] = startDateTime;
                 _args[2] = endDateTime;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveUnrealizedGainLossData", _args, callback, asyncState);

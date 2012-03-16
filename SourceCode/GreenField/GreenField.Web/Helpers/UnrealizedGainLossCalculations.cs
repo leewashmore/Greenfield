@@ -9,7 +9,7 @@ namespace GreenField.Web.Helpers
 {
     public static class UnrealizedGainLossCalculations
     {
-        public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<tblUnrealizedGLData> arrangedByDescRecord, int noOfRows)
+        public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord, int noOfRows)
         {
             List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
             double previousAdjustedPrice;
