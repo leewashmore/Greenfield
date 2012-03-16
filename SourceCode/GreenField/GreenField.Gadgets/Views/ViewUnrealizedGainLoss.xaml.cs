@@ -21,10 +21,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            priceDataGrid.Visibility = Visibility.Collapsed;
-            //volumeDataGrid.Visibility = Visibility.Collapsed;
-            //cbTime.SelectedItem = "1-Year";
-            //cbFrequency.SelectedItem = "Daily";
+            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;            
         }
 
         /// <summary>
@@ -33,47 +30,16 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-        private void btnFlipforGraph_Click(object sender, RoutedEventArgs e)
+        private void btnTFlip_Click(object sender, RoutedEventArgs e)
         {
-            //if (volumeDataGrid.Visibility == Visibility.Collapsed)
-            //    Flipper.FlipItem(volumeChart, volumeDataGrid);
-            //else
-            //    Flipper.FlipItem(volumeDataGrid, volumeChart);
-
-        }
-
-        private void btnFlipforChart_Click(object sender, RoutedEventArgs e)
-        {
-            if (priceDataGrid.Visibility == Visibility.Collapsed)
-                Flipper.FlipItem(closingPriceChart, priceDataGrid);
+            if (dgUnrealizedGainLoss.Visibility == Visibility.Collapsed)
+                Flipper.FlipItem(chUnrealizedGainLoss, dgUnrealizedGainLoss);
             else
-                Flipper.FlipItem(priceDataGrid, closingPriceChart);
+                Flipper.FlipItem(dgUnrealizedGainLoss, chUnrealizedGainLoss);
 
         }
 
-        private void cbTime_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-            //if (cbTime.SelectedItem != null)
-            //{
-            //    if (cbTime.SelectedItem.ToString().ToLower() == "custom")
-            //    {
-            //        lbStartDate.Visibility = Visibility.Visible;
-            //        firstDatePicker.Visibility = Visibility.Visible;
-            //        lbEndDate.Visibility = Visibility.Visible;
-            //        secondDatePicker.Visibility = Visibility.Visible;
-            //    }
-            //    else
-            //    {
-            //        lbStartDate.Visibility = Visibility.Collapsed;
-            //        firstDatePicker.Visibility = Visibility.Collapsed;
-            //        lbEndDate.Visibility = Visibility.Collapsed;
-            //        secondDatePicker.Visibility = Visibility.Collapsed;
-            //    }
-            //}
-        }
-
+        
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -114,8 +80,7 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                closingPriceChart.ExportToExcelML(fileStream);
-                //volumeChart.ExportToExcelML(fileStream);
+                chUnrealizedGainLoss.ExportToExcelML(fileStream);                
             }
             catch (Exception ex)
             {
