@@ -769,8 +769,10 @@ namespace GreenField.Web.Services
                         string entityName = item;
                         DateTime startDate = Convert.ToDateTime(startDateTime);
                         DateTime endDate = Convert.ToDateTime(endDateTime);
+
+
                         List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                            .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
+                            .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
                             .OrderByDescending(res => res.FROMDATE).ToList();
                         //List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
                         //    .Where(r => (r.TICKER == entityName))
@@ -798,7 +800,7 @@ namespace GreenField.Web.Services
                                 objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
 
                                 //Checking if the Item is the first item in the list
-                                if ((pricingItem.TICKER == dimensionServicePricingData[0].TICKER) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
+                                if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
                                 {
                                     // if it is the first item in the list then simply save the value of calculated price
                                     objPricingReferenceData.CalculatedPrice = calculatedPrice;
@@ -835,7 +837,7 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
 
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
@@ -871,10 +873,10 @@ namespace GreenField.Web.Services
                                     {
                                         curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
                                         calculatedPrice = curPrice * (1 + (curReturn / 100));
-                                        fxAdjusted = calculatedFXPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                        calculatedFXPrice = fxAdjusted / previousFXAdjust * calculatedFXPrice;
+                                        fxAdjusted = calculatedPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                                        calculatedFXPrice = (fxAdjusted / previousFXAdjust) * calculatedFXPrice;
                                         curPrice = calculatedPrice;
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
+                                        objPricingReferenceData.CalculatedPrice = calculatedFXPrice;
                                     }
                                     result.Add(objPricingReferenceData);
                                 }
@@ -897,11 +899,11 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
+                            //List<DimensionEntitiesService.GF_PRICING_BASEVIEW> adimensionServicePricingData = entity.GF_PRICING_BASEVIEW
+                            //    .Where(r => (r.INSTRUMENT_ID == entityName)).ToList();
 
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TYPE == "CURRENCY") && (r.INSTRUMENT_ID == "365")).OrderByDescending(r => r.TICKER).ToList();
 
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
                             if (dimensionServicePricingData.Count != 0)
@@ -940,6 +942,11 @@ namespace GreenField.Web.Services
                                     result.Add(objPricingReferenceData);
                                 }
                             }
+                        }
+
+                        foreach (PricingReferenceData item in result)
+                        {
+                            item.CalculatedPrice = item.CalculatedPrice - 100;
                         }
                     }
                 }

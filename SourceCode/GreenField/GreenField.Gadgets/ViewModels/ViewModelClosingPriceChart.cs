@@ -373,10 +373,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedSeriesReference != null)
             {
-                if (!PlottedSeries.Any(t => t.IssueName == SelectedSeriesReference.LongName))
+                if (!PlottedSeries.Any(t => t.InstrumentID == SelectedSeriesReference.InstrumentID))
                 {
                     //string type = SelectedSeriesReference.Type.ToString();
-                    ChartEntityList.Add(SelectedSeriesReference.ShortName.ToString());
+                    ChartEntityList.Add(SelectedSeriesReference.InstrumentID.ToString());
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
@@ -388,7 +388,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         List<EntitySelectionData> a = SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList();
                         //If it contains type Commodity/Index/Currency, ChartEntityTypes=true else false
-                        if (ChartEntityList.Contains(item.ShortName.ToString()))
+                        if (ChartEntityList.Contains(item.InstrumentID.ToString()))
                         {
                             ChartEntityTypes = false;
                         }
@@ -409,10 +409,10 @@ namespace GreenField.Gadgets.ViewModels
         private void DeleteCommandMethod(object param)
         {
             EntitySelectionData a = param as EntitySelectionData;
-            PricingReferenceData removeItem = new PricingReferenceData();
-            removeItem = PlottedSeries.Where(w => w.Ticker == a.ShortName).First();
+            List<PricingReferenceData> removeItem = new List<PricingReferenceData>();
+            removeItem = PlottedSeries.Where(w => w.InstrumentID == a.InstrumentID).ToList();
             if (removeItem != null)
-                PlottedSeries.Remove(removeItem);
+                PlottedSeries.RemoveRange(removeItem);
             ComparisonSeries.Remove(a);
             ChartEntityList.Remove(a.ShortName);
         }
@@ -443,11 +443,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
         {
-            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().Ticker;
+            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
             PlottedSeries.Clear();
             PrimaryPlottedSeries.Clear();
             PlottedSeries.AddRange(result);
-            PrimaryPlottedSeries.AddRange(result.Where(item => item.Ticker == primarySecurityReferenceIdentifier).ToList());
+            PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
         }
 
         /// <summary>
@@ -475,21 +475,21 @@ namespace GreenField.Gadgets.ViewModels
                 return;
 
             //Check if security reference data is already present
-            if (PrimaryPlottedSeries.Where(p => p.Ticker == entitySelectionData.ShortName).Count().Equals(0))
+            if (PrimaryPlottedSeries.Where(p => p.InstrumentID == entitySelectionData.InstrumentID).Count().Equals(0))
             {
                 //Check if no data exists
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
+                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.InstrumentID != PrimaryPlottedSeries.First().InstrumentID).ToList();
                     PlottedSeries.RemoveRange(RemoveItems);
                     PrimaryPlottedSeries.Clear();
                 }
 
                 ChartEntityList.Clear();
                 //Retrieve Pricing Data for Primary Security Reference
-                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.ShortName }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-                ChartEntityList.Add(entitySelectionData.ShortName);
+                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.InstrumentID }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+                ChartEntityList.Add(entitySelectionData.InstrumentID);
             }
 
         }

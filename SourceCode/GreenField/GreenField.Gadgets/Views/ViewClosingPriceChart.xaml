@@ -281,16 +281,21 @@
                         <telerik:RadChart.DefaultView>
                             <telerik:ChartDefaultView ChartLegendPosition="Top">
                                 <telerik:ChartDefaultView.ChartArea>
-                                    <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" EnableAnimations="False" >
+                                    <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" EnableAnimations="False"
+                                                       NoDataString="No Data Available">
                                         <telerik:ChartArea.ZoomScrollSettingsX>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0.033" ScrollMode="ScrollAndZoom"/>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" />
                                         </telerik:ChartArea.ZoomScrollSettingsX>
+                                        <telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom"/>
+                                        </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerik:ChartArea.AxisX>
-                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="M" 
-                                                           LayoutMode="Auto" Title="Period" LabelStep="1"/>
+                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM" 
+                                                           LayoutMode="Auto" Title="Period" LabelStep="1" LabelRotationAngle="45"/>
                                         </telerik:ChartArea.AxisX>
                                         <telerik:ChartArea.AxisY>
-                                            <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
+                                            <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed"
+                                                           AutoRange="True" />
                                         </telerik:ChartArea.AxisY>
                                     </telerik:ChartArea>
                                 </telerik:ChartDefaultView.ChartArea>
@@ -309,7 +314,7 @@
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                   EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                                  LegendDisplayMode="SeriesLabel"/>
+                                                                  LegendDisplayMode="SeriesLabel" ItemToolTipFormat="Return : #CalculatedPrice{0.0000}/ Date: #FromDate{dd-MMM}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:SeriesMapping.GroupingSettings>
                                     <telerik:GroupingSettings>
@@ -320,7 +325,7 @@
                                 </telerik:SeriesMapping.GroupingSettings>
                                 <telerik:ItemMapping FieldName="CalculatedPrice" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
-                                <telerik:ItemMapping DataPointMember="Tooltip" FieldName="CalculatedPrice"/>
+                                <!--<telerik:ItemMapping DataPointMember="Tooltip" FieldName="CalculatedPrice"/>-->
                             </telerik:SeriesMapping>
                         </telerik:RadChart.SeriesMappings>
                     </telerik:RadChart>
@@ -352,9 +357,12 @@
                                         <telerik:ChartArea.ZoomScrollSettingsX>
                                             <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom"/>
                                         </telerik:ChartArea.ZoomScrollSettingsX>
+                                        <telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.10" ScrollMode="ScrollAndZoom"/>
+                                        </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerik:ChartArea.AxisX>
-                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="M" 
-                                                           LayoutMode="Auto" LabelStep="5"/>
+                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM" 
+                                                           LayoutMode="Auto" LabelStep="5" LabelRotationAngle="45"/>
                                         </telerik:ChartArea.AxisX>
                                         <telerik:ChartArea.AxisY>
                                             <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed"
@@ -373,10 +381,11 @@
                         </telerik:RadChart.DefaultView>
 
                         <telerik:RadChart.SeriesMappings>
+
                             <telerik:SeriesMapping>
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
-                                                                  />
+                                                                 ItemToolTipFormat="Volume: #Volume /Date: #FromDate{dd-MMM}" />
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:SeriesMapping.GroupingSettings>
                                     <telerik:GroupingSettings>
@@ -387,9 +396,9 @@
                                 </telerik:SeriesMapping.GroupingSettings>
                                 <telerik:ItemMapping FieldName="Volume" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
-                                <telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>
-
+                                <!--<telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>-->
                             </telerik:SeriesMapping>
+
                         </telerik:RadChart.SeriesMappings>
                     </telerik:RadChart>
                 </Border>
@@ -397,4 +406,3 @@
         </Grid>
     </Grid>
 </UserControl>
-  
