@@ -92,15 +92,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (_selectedTimeRange != value)
                 {
                     _selectedTimeRange = value;
-                    //Retrieve Pricing Data for updated Time Range
-                    //string a = (PlottedSeries.Select(p => p.Ticker)).FirstOrDefault().ToString();
+                    
                     if(_entitySelectionData != null)
                         RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange);
-                    RaisePropertyChanged(() => this.SelectedTimeRange);
-                  
-                    //RetrieveUnrealizedGainLossData(new ObservableCollection<String>
-                    //   (PlottedSeries.Select(p => p.Ticker).Distinct().ToList()),
-                    //       RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange);
+                    RaisePropertyChanged(() => this.SelectedTimeRange);                                     
                 }
             }
         }
@@ -152,11 +147,9 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         private void RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange(List<UnrealizedGainLossData> result)
-        {            
-            //string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().Ticker;
-            //PrimaryPlottedSeries.Clear();
+        {                       
             PlottedSeries.Clear();
-            //PrimaryPlottedSeries.AddRange((result.Where(r => r.Ticker == primarySecurityReferenceIdentifier)).ToList());
+            
             PlottedSeries.AddRange(result);
         }
 
@@ -216,31 +209,16 @@ namespace GreenField.Gadgets.ViewModels
             if (entitySelectionData == null)
                 return;
 
-            _entitySelectionData = entitySelectionData;
-
-            //Check if security reference data is already present
-            //if (PrimaryPlottedSeries.Where(p => p.Ticker == entitySelectionData.ShortName).Count().Equals(0))
-            //{
-            //    //Check if no data exists
-            //    if (!PrimaryPlottedSeries.Count.Equals(0))
-            //    {
-            //        //Remove previous primary security reference data
-                    //List<UnrealizedGainLossData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
-                    //PlottedSeries.RemoveRange(RemoveItems);
-                    //PrimaryPlottedSeries.Clear();
-                //}
-
-                //Retrieve Pricing Data for Primary Security Reference
-                RetrieveUnrealizedGainLossData(entitySelectionData.ShortName , RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference);
-            //}
+            _entitySelectionData = entitySelectionData;            
+            
+            RetrieveUnrealizedGainLossData(entitySelectionData.ShortName , RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference);            
         }
 
         private void RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference(List<UnrealizedGainLossData> result)
         {           
             PlottedSeries.Clear();
             PlottedSeries.AddRange(result);
-            List<UnrealizedGainLossData> d = PlottedSeries.ToList();
-            //PrimaryPlottedSeries.AddRange(result);
+            List<UnrealizedGainLossData> d = PlottedSeries.ToList();            
         }
 
         #endregion
