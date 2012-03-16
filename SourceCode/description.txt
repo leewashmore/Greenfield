@@ -1,2 +1,2 @@
-This folder is intended for SOurce code and UnitTests.
+This folder is intended for SOurce code and UnitTests .
 Please add every solution in separate subfolder.
