@@ -21,7 +21,17 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;            
+            dataContextSource.unrealizedGainLossDataLoadedEvent +=
+                new UnrealizedGainLossDataLoaded(dataContextSource_unrealizedGainLossDataLoadedEvent);
+            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
+        }
+
+        void dataContextSource_unrealizedGainLossDataLoadedEvent(UnrealizedGainLossDataLoadEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.busyIndicator.IsBusy = true;
+            else
+                this.busyIndicator.IsBusy = false;
         }
 
         /// <summary>
@@ -39,7 +49,7 @@ namespace GreenField.Gadgets.Views
 
         }
 
-        
+
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -80,7 +90,7 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                chUnrealizedGainLoss.ExportToExcelML(fileStream);                
+                chUnrealizedGainLoss.ExportToExcelML(fileStream);
             }
             catch (Exception ex)
             {
