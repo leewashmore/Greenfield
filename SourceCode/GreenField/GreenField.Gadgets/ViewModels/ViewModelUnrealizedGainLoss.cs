@@ -14,6 +14,13 @@ using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    public delegate void UnrealizedGainLossDataLoaded(UnrealizedGainLossDataLoadEventArgs e);
+
+    public class UnrealizedGainLossDataLoadEventArgs : EventArgs
+    {
+        public bool ShowBusy { get; set; }
+    }
+
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
         private IEventAggregator _eventAggregator;
@@ -31,7 +38,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            
+
             _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
 
             _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
@@ -92,17 +99,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (_selectedTimeRange != value)
                 {
                     _selectedTimeRange = value;
-                    
-                    if(_entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange);
-                    RaisePropertyChanged(() => this.SelectedTimeRange);                                     
+
+                    if (_entitySelectionData != null)
+                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
         }
-
-
-
-        public EntitySelectionData SelectedSeriesReference { get; set; }
 
         private CollectionViewSource _seriesReference;
         public CollectionViewSource SeriesReference
@@ -114,7 +117,6 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SeriesReference);
             }
         }
-
 
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
 
@@ -143,14 +145,9 @@ namespace GreenField.Gadgets.ViewModels
             DateTime periodStartDate;
             DateTime periodEndDate;
             GetPeriod(out periodStartDate, out periodEndDate);
+            if (null != unrealizedGainLossDataLoadedEvent)
+                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = true });
             _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, callback);
-        }
-
-        private void RetrieveUnrealizedGainLossDataCallBackMethod_TimeRange(List<UnrealizedGainLossData> result)
-        {                       
-            PlottedSeries.Clear();
-            
-            PlottedSeries.AddRange(result);
         }
 
         private void GetPeriod(out DateTime startDate, out DateTime endDate)
@@ -190,7 +187,7 @@ namespace GreenField.Gadgets.ViewModels
                     break;
                 case "10-Years":
                     startDate = endDate.AddMonths(-120);
-                    break;                
+                    break;
                 default:
                     startDate = endDate.AddMonths(-12);
                     break;
@@ -199,26 +196,31 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
         #endregion
 
+        #region Events
+        public event UnrealizedGainLossDataLoaded unrealizedGainLossDataLoadedEvent;
+        #endregion
+
         #region Event Handlers
         /// <summary>
         /// Assigns UI Field Properties based on Security reference
         /// </summary>
         /// <param name="securityReferenceData">SecurityReferenceData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
-        {            
+        {
             if (entitySelectionData == null)
                 return;
 
-            _entitySelectionData = entitySelectionData;            
-            
-            RetrieveUnrealizedGainLossData(entitySelectionData.ShortName , RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference);            
+            _entitySelectionData = entitySelectionData;
+
+            RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
         }
 
-        private void RetrieveUnrealizedGainLossDataCallBackMethod_SecurityReference(List<UnrealizedGainLossData> result)
-        {           
+        private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
+        {
             PlottedSeries.Clear();
             PlottedSeries.AddRange(result);
-            List<UnrealizedGainLossData> d = PlottedSeries.ToList();            
+            if (null != unrealizedGainLossDataLoadedEvent)
+                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
         }
 
         #endregion
