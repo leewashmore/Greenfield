@@ -157,12 +157,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                 <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                      ItemsSource="{Binding CbFrequencyValues,Mode=TwoWay}">
-                    <telerik:RadComboBoxItem Content="Daily" IsSelected="True"/>
-                    <telerik:RadComboBoxItem Content="Weekly"/>
-                    <telerik:RadComboBoxItem Content="Monthly"/>
-                    <telerik:RadComboBoxItem Content="Quarterly"/>
-                    <telerik:RadComboBoxItem Content="Yearly"/>
+                                      ItemsSource="{Binding FrequencyInterval,Mode=TwoWay}" 
+                                      SelectedItem="{Binding SelectedFrequencyInterval, Mode=TwoWay}">
                 </telerik:RadComboBox>
             </Grid>
 

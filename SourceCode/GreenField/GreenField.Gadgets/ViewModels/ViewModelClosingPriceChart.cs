@@ -153,11 +153,21 @@ namespace GreenField.Gadgets.ViewModels
 
         #region FrequencySelection
 
-        private string _frequencyInterval = "";
-        public string FrequencyInterval
+        private ObservableCollection<string> _frequencyInterval;
+        public ObservableCollection<string> FrequencyInterval
         {
             get
             {
+                if (_frequencyInterval == null)
+                {
+                    _frequencyInterval = new ObservableCollection<string>();
+                    _frequencyInterval.Add("Daily");
+                    _frequencyInterval.Add("Weekly");
+                    _frequencyInterval.Add("Monthly");
+                    _frequencyInterval.Add("Quarterly");
+                    _frequencyInterval.Add("Semi-Annually");
+                    _frequencyInterval.Add("Annually");
+                }
                 return _frequencyInterval;
             }
             set
@@ -166,6 +176,34 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.FrequencyInterval);
             }
         }
+
+        private string  _selectedFrequencyInterval;
+        public string  SelectedFrequencyInterval
+        {
+            get 
+            {
+                return _selectedFrequencyInterval; 
+            }
+            set
+            {
+                _selectedFrequencyInterval = value; 
+            }
+        }
+        
+
+        //private string _frequencyInterval = "";
+        //public string FrequencyInterval
+        //{
+        //    get
+        //    {
+        //        return _frequencyInterval;
+        //    }
+        //    set
+        //    {
+        //        _frequencyInterval = value;
+        //        this.RaisePropertyChanged(() => this.FrequencyInterval);
+        //    }
+        //}
 
         #endregion
 
@@ -394,7 +432,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
 
-                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, DateTime.Today.AddYears(-1), DateTime.Today, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, (result) =>
+                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, DateTime.Today.AddYears(-1), DateTime.Today, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, (result) =>
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
@@ -508,7 +546,7 @@ namespace GreenField.Gadgets.ViewModels
             DateTime periodStartDate;
             DateTime periodEndDate;
             GetPeriod(out periodStartDate, out periodEndDate);
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, callback);
+            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, callback);
         }
 
         /// <summary>

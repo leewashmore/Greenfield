@@ -9,6 +9,7 @@ using System.Data;
 using GreenField.Web.DataContracts;
 using System.Data.SqlClient;
 using System.ServiceModel.Activation;
+using GreenField.Web.Helper;
 
 namespace GreenField.Web.Services
 {
@@ -672,7 +673,7 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
 
                 List<SecurityReferenceData> result = new List<SecurityReferenceData>();
-                foreach(DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
+                foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
                 {
                     result.Add(new SecurityReferenceData()
                 {
@@ -705,7 +706,7 @@ namespace GreenField.Web.Services
             {
                 DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).First();
-                
+
                 SecurityReferenceData result = new SecurityReferenceData()
                 {
                     IssueName = data.ISSUE_NAME,
@@ -729,6 +730,14 @@ namespace GreenField.Web.Services
             }
         }
 
+
+
+
+        //public List<PricingReferenceData> RetrievePricingDataFrequency(List<PricingReferenceData> objPricingReferenceData,string Frequency,List<DateTime> objEndDates,DateTime objStartDate,DateTime objEndDate)
+        //{
+
+        //}
+
         /// <summary>
         /// Retrieving the Pricing Reference Data for selected Entity.
         /// </summary>
@@ -744,6 +753,7 @@ namespace GreenField.Web.Services
         {
             try
             {
+
                 decimal curPrice = 0;
                 decimal curReturn = 0;
                 decimal calculatedPrice = 0;
@@ -952,7 +962,15 @@ namespace GreenField.Web.Services
                 }
                 #endregion
 
-                return result;
+
+
+
+                DateTime datedata = DateTime.Today;
+                List<PricingReferenceData> objResult = result.ToList();
+
+                List<PricingReferenceData> closingPriceResult = FrequencyCalculator.RetrieveDataAccordingToFrequency(result, startDateTime, endDateTime, "Quarterly");
+                return closingPriceResult;
+
             }
 
             catch (Exception ex)
@@ -997,11 +1015,11 @@ namespace GreenField.Web.Services
             {
                 List<FundSelectionData> result = new List<FundSelectionData>();
 
-                for (int i = 0; i < 10; i++ )
+                for (int i = 0; i < 10; i++)
                 {
                     result.Add(new FundSelectionData()
                     {
-                        Category = i % 2 == 0? "Funds" : "Composites",
+                        Category = i % 2 == 0 ? "Funds" : "Composites",
                         Name = i % 2 == 0 ? "Fund " + (i + 1).ToString() : "Composite " + (i + 1).ToString()
                     });
                 }
@@ -1068,7 +1086,7 @@ namespace GreenField.Web.Services
             catch (Exception)
             {
                 return null;
-            } 
+            }
         }
 
         [OperationContract]
@@ -1104,7 +1122,7 @@ namespace GreenField.Web.Services
                 result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Solar", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
                 result.Add(new SectorBreakdownData() { Sector = "Sector 2", Industry = "Industry 1", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
                 result.Add(new SectorBreakdownData() { Sector = "Sector 2", Industry = "Industry 2", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                
+
                 return result;
             }
             catch (Exception)
@@ -1151,7 +1169,7 @@ namespace GreenField.Web.Services
                 result.Add(new TopHoldingsData() { Ticker = "Ticker8", Holding = "Holding8", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
                 result.Add(new TopHoldingsData() { Ticker = "Ticker9", Holding = "Holding9", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
                 result.Add(new TopHoldingsData() { Ticker = "Ticker10", Holding = "Holding10", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                
+
                 return result;
             }
             catch (Exception)
@@ -1951,7 +1969,7 @@ namespace GreenField.Web.Services
                 result.Add(new IndexConstituentsData() { ConstituentName = "TELKOM SOUTH AFRICA", Country = "SA", Region = "ZAR", Sector = "", Industry = "", SubIndustry = "", Weight = 0.00160308, WeightCountry = 0.024377, WeightIndustry = 0.040348 });
                 result.Add(new IndexConstituentsData() { ConstituentName = "TIGER BRANDS", Country = "SA", Region = "ZAR", Sector = "", Industry = "", SubIndustry = "", Weight = 0.00087734, WeightCountry = 0.013341, WeightIndustry = 0.064857 });
                 result.Add(new IndexConstituentsData() { ConstituentName = "TRUWORTHS INTERNATIONAL", Country = "SA", Region = "ZAR", Sector = "", Industry = "", SubIndustry = "", Weight = 0.00037602, WeightCountry = 0.005718, WeightIndustry = 0.09497 });
-                result.Add(new IndexConstituentsData() { ConstituentName = "WOOLWORTHS HOLDINGS", Country = "SA", Region = "ZAR", Sector = "", Industry = "", SubIndustry = "", Weight = 0.0003116, WeightCountry = 0.004738, WeightIndustry = 0.07484 }); 
+                result.Add(new IndexConstituentsData() { ConstituentName = "WOOLWORTHS HOLDINGS", Country = "SA", Region = "ZAR", Sector = "", Industry = "", SubIndustry = "", Weight = 0.0003116, WeightCountry = 0.004738, WeightIndustry = 0.07484 });
                 #endregion
 
                 return result;
@@ -1986,7 +2004,7 @@ namespace GreenField.Web.Services
             result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 7", Weight = 19.0976, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
             result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 8", Weight = 15.677, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
             result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 9", Weight = 10.3777, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 10", Weight = 10.999, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });            
+            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 10", Weight = 10.999, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
             return result;
         }
 
