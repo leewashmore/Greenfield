@@ -124,6 +124,7 @@
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
     <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\MorningSnapshotData.cs" />
     <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
     <Compile Include="DataContracts\RegionBreakdownData.cs" />
     <Compile Include="DataContracts\FundSelectionData.cs" />

@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="GreenField.Benchmark.Views.ViewMorningSnapshot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="clr-namespace:GreenField.Benchmark.Helpers"
+    xmlns:telerikDragDrop="clr-namespace:Telerik.Windows.Controls.DragDrop;assembly=Telerik.Windows.Controls"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <helpers:DataContextProxy x:Key="DataContextProxy"/>
+        
+        <DataTemplate x:Key="DraggedItemTemplate">
+            <StackPanel Orientation="Horizontal" Margin="2">
+                <TextBlock Text="{Binding BenchmarkName}" FontWeight="Bold"/>
+            </StackPanel>
+        </DataTemplate>
+        
+    </UserControl.Resources>
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding MorningSnapshotUIHeader}" Grid.Row="0" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+            
+            <telerik:RadGridView HorizontalAlignment="Left" Margin="26,12,0,0" Name="radGridBenchmark" VerticalAlignment="Top" 
+                                 ItemsSource="{Binding BenchmarkGroupedData}" ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False"
+                                 AutoGenerateColumns="False" CanUserDeleteRows="False" SelectionMode="Single" CanUserInsertRows="true" 
+                                 RowIndicatorVisibility="Collapsed" SelectedItem="{Binding SelectedRow,Mode=TwoWay}" IsReadOnly="true" 
+                                 telerik:StyleManager.Theme="Metro" AlternationCount="2" AlternateRowBackground="LightSkyBlue"
+                                 telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True">                                
+
+                <telerik:RadGridView.GroupDescriptors>
+                    <telerik:GroupDescriptor Member="GroupName"
+                                     SortDirection="Ascending"/>
+                </telerik:RadGridView.GroupDescriptors>
+
+                <i:Interaction.Behaviors>
+                    <helpers:RowReorderBehavior x:Name="ReorderBehavior" DragCueItemTemplate="{StaticResource DraggedItemTemplate}"  
+                                                DragCueActionContentTemplate="{StaticResource DraggedItemTemplate}" PreserveSelectionOrderWhenReordering="True"/>
+                </i:Interaction.Behaviors>
+
+                <telerik:RadContextMenu.ContextMenu>
+                    <telerik:RadContextMenu Opened="RadContextMenu_Opened">
+                        <telerik:RadContextMenu.Items>
+                            <telerik:RadMenuItem Header="Add Group" Command="{Binding AddGroupNameCommand}"/>
+                            <telerik:RadMenuItem Header="Delete Group" Command="{Binding DeleteGroupCommand}"/>
+                            <telerik:RadMenuItem Header="Add Benchmark in Group" Command="{Binding AddBenchmarkToGroupCommand}"/>
+                            <telerik:RadMenuItem Header="Delete Benchmark from Group" Command="{Binding DeleteBenchmarkfromGroupCommand}"/>
+                        </telerik:RadContextMenu.Items>
+                    </telerik:RadContextMenu>
+                </telerik:RadContextMenu.ContextMenu>
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewSelectColumn/>
+                    <telerik:GridViewDataColumn Header=" " Width="Auto" IsReadOnly="true" TextAlignment="Left">
+                        <telerik:GridViewDataColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding BenchmarkName}"/>
+                                    <TextBlock Text=" "/>
+                                    <TextBlock Text="{Binding BenchmarkReturnType}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </telerik:GridViewDataColumn.CellTemplate>
+                    </telerik:GridViewDataColumn>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding DTD}"
+                                            Width="Auto" IsReadOnly="true" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding WTD}"
+                                            Header="WTD" Width="Auto" IsReadOnly="true" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding MTD}"
+                                            Header="MTD" Width="Auto" IsReadOnly="True" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding QTD}"
+                                            Header="QTD" Width="Auto" IsReadOnly="true" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding YTD}"
+                                            Header="YTD" Width="Auto" IsReadOnly="true" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding PreviousYearPrice}"  Width="Auto" IsReadOnly="true"
+                                            TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding IIPreviousYearPrice}"  Width="Auto" IsReadOnly="true"
+                                            TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn DataMemberBinding="{Binding IIIPreviousYearPrice}"  Width="Auto" IsReadOnly="true"
+                                            TextAlignment="Right"/>
+                </telerik:RadGridView.Columns>    
+                
+              
+                
+            </telerik:RadGridView>
+            
+        </Grid>
+    </Grid>
+</UserControl>

@@ -68,8 +68,13 @@ namespace GreenField.Common
         public static Int32 ERROR_LEVEL = 2;
         public static Int32 FATAL_LEVEL = 1;
     }
-    
 
+    public static class BenchmarkReturnTypes
+    {
+        public static string TotalReturnType = "Total(Gross)";
+        public static string NetReturnType = "Net";
+        public static string PriceReturnType = "Price";
+    }
 
 
 }
