@@ -6,6 +6,8 @@ using System.ComponentModel.Composition;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.ObjectModel;
+using System.Windows;
+
 
 namespace GreenField.ServiceCaller
 {
@@ -535,19 +537,23 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, Action<List<UnrealizedGainLossData>> callback)
+        public void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime);
-            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
-            {
-                if (callback != null)
-                    callback(e.Result.ToList());
-            };
+            
+              ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+                client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
+             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+                {
+                    if (callback != null)
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else 
+                        {
+                            callback(null);
+                        }
+                }; 
         }
-
-
-      
-
     }
 }
