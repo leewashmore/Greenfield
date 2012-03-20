@@ -708,4 +708,31 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
+  <xs:complexType name="ArrayOfUnrealizedGainLossData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUnrealizedGainLossData" nillable="true" type="tns:ArrayOfUnrealizedGainLossData" />
+  <xs:complexType name="UnrealizedGainLossData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdjustedPrice" type="xs:double" />
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyClosingPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyGrossReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyPriceReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailySpotFX" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MovingAverage" type="xs:double" />
+      <xs:element minOccurs="0" name="NinetyDayWtAvg" type="xs:double" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UnrealizedGainLoss" type="xs:double" />
+      <xs:element minOccurs="0" name="Volume" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WtAvgCost" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
 </xs:schema>

@@ -14,12 +14,18 @@ using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    public delegate void UnrealizedGainLossDataLoaded(UnrealizedGainLossDataLoadEventArgs e);
+
+    public class UnrealizedGainLossDataLoadEventArgs : EventArgs
+    {
+        public bool ShowBusy { get; set; }
+    }
+
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private SecurityReferenceData _securityReferenceData;
         private EntitySelectionData _entitySelectionData;
 
         #region Constructor
@@ -32,7 +38,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            
+
             _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
 
             _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
@@ -43,15 +49,18 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
-
         #region UI Fields
-        private RangeObservableCollection<PricingReferenceData> _plottedSeries;
-        public RangeObservableCollection<PricingReferenceData> PlottedSeries
+
+        /// <summary>
+        /// Collection binded to the Comparison chart - consists of unrealized gain loss and pricing data for the primary entity
+        /// </summary>
+        private RangeObservableCollection<UnrealizedGainLossData> _plottedSeries;
+        public RangeObservableCollection<UnrealizedGainLossData> PlottedSeries
         {
             get
             {
                 if (_plottedSeries == null)
-                    _plottedSeries = new RangeObservableCollection<PricingReferenceData>();
+                    _plottedSeries = new RangeObservableCollection<UnrealizedGainLossData>();
                 return _plottedSeries;
             }
             set
@@ -64,6 +73,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region Time Period Selection
+        /// <summary>
+        /// Collection of Time Range Options
+        /// </summary>
+        private ObservableCollection<String> _timeRange;
+        public ObservableCollection<String> TimeRange
+        {
+            get
+            {
+                return new ObservableCollection<string> { "1-Month", "2-Month", "3-Month", "6-Month", "9-Month", "1-Year", "2-Years", 
+                    "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
+            }
+        }
+
+        /// <summary>
+        /// Selection Time Range option
+        /// </summary>
         private string _selectedTimeRange = "1-Year";
         public string SelectedTimeRange
         {
@@ -73,106 +99,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (_selectedTimeRange != value)
                 {
                     _selectedTimeRange = value;
-                    //Retrieve Pricing Data for updated Time Range
-                    RetrievePricingData(new ObservableCollection<String>(PlottedSeries.Select(p => p.Ticker).Distinct().ToList()), RetrievePricingReferenceDataCallBackMethod_TimeRange);
+
+                    if (_entitySelectionData != null)
+                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
         }
-
-        private ObservableCollection<String> _timeRange;
-        public ObservableCollection<String> TimeRange
-        {
-            get
-            {
-                return new ObservableCollection<string> { "1-Month", "2-Month", "3-Month", "6-Month", "YTD", "1-Year", "2-Years", 
-                    "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
-            }
-            set
-            {
-                _timeRange = value;
-                this.RaisePropertyChanged(() => this.TimeRange);
-            }
-        }
-
-        private RangeObservableCollection<PricingReferenceData> _primaryPlottedSeries;
-        public RangeObservableCollection<PricingReferenceData> PrimaryPlottedSeries
-        {
-            get
-            {
-                if (_primaryPlottedSeries == null)
-                    _primaryPlottedSeries = new RangeObservableCollection<PricingReferenceData>();
-                return _primaryPlottedSeries;
-            }
-            set
-            {
-                if (_primaryPlottedSeries != value)
-                {
-                    _primaryPlottedSeries = value;
-                    RaisePropertyChanged(() => this.PrimaryPlottedSeries);
-                }
-            }
-        }
-
-        private ObservableCollection<String> _cbTimeValues;
-        public ObservableCollection<String> CbTimeValues
-        {
-            get
-            {
-                return new ObservableCollection<string> { "1-Month", "2-Month", "3-Month", "6-Month", "YTD", "1-Year", "2-Years", 
-                    "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
-            }
-
-            set
-            {
-                _cbTimeValues = value;
-                this.RaisePropertyChanged(() => this.CbTimeValues);
-            }
-        }
-
-        private ObservableCollection<String> _cbFrequencyValues;
-        public ObservableCollection<String> CbFrequencyValues
-        {
-            get
-            {
-                return new ObservableCollection<string> { "Daily", "Weekly", "Monthly", "Quarterly", "Yearly" };
-            }
-
-            set
-            {
-                _cbFrequencyValues = value;
-                this.RaisePropertyChanged(() => this.CbFrequencyValues);
-            }
-        }
-
-        private DateTime _selectedStartDate;
-        public DateTime SelectedStartDate
-        {
-            get
-            {
-                return _selectedStartDate;
-            }
-            set
-            {
-                _selectedStartDate = value;
-                this.RaisePropertyChanged("SelectedStartDate");
-            }
-        }
-
-        private DateTime _selectedEndDate;
-        public DateTime SelectedEndDate
-        {
-            get
-            {
-                return _selectedEndDate;
-            }
-            set
-            {
-                _selectedEndDate = value;
-                this.RaisePropertyChanged("SelectedEndDate");
-            }
-        }
-
-        public EntitySelectionData SelectedSeriesReference { get; set; }
 
         private CollectionViewSource _seriesReference;
         public CollectionViewSource SeriesReference
@@ -185,99 +118,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Type of entites added to chart
-        /// if true: only securities added
-        /// if false: Commodity/Index/Currency Added
-        /// </summary>
-        private bool _chartEntityTypes;
-        public bool ChartEntityTypes
-        {
-            get
-            {
-                return _chartEntityTypes;
-            }
-            set
-            {
-                _chartEntityTypes = value;
-                this.RaisePropertyChanged(() => this.ChartEntityTypes);
-            }
-        }
-
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
-
-        //private string _selectedTime;
-        //public string SelectedTime
-        //{
-        //    get
-        //    {
-        //        return _selectedTime;
-        //    }
-        //    set
-        //    {
-        //        _selectedTime = value;
-        //        if (value == "1-Year")
-        //        {
-        //            XAxisDataPoint = "entityID";
-        //        }
-        //        else
-        //            XAxisDataPoint = "closingPrice";
-
-        //        this.RaisePropertyChanged("SelectedTime");
-
-        //    }
-        //}
-
-
-        #endregion
-
-        #region FrequencySelection
-
-        private string _frequencyInterval;
-        public string FrequencyInterval
-        {
-            get
-            {
-                return _frequencyInterval;
-            }
-            set
-            {
-                _frequencyInterval = value;
-                this.RaisePropertyChanged(() => this.FrequencyInterval);
-            }
-        }
-
-        #endregion
-
-        #region Chart/Grid Entities
-
-        private string newEntity;
-        public string NewEntity
-        {
-            get { return newEntity; }
-            set
-            {
-                if (newEntity != value)
-                {
-                    newEntity = value;
-                    RaisePropertyChanged(() => NewEntity);
-                }
-            }
-        }
-
-        private bool _returnTypeSelection;
-        public bool ReturnTypeSelection
-        {
-            get
-            {
-                return _returnTypeSelection;
-            }
-            set
-            {
-                _returnTypeSelection = value;
-                this.RaisePropertyChanged(() => this.ReturnTypeSelection);
-            }
-        }
 
         #endregion
 
@@ -299,36 +140,14 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        private void RetrievePricingData(ObservableCollection<String> entityIdentifiers, Action<List<PricingReferenceData>> callback)
+        private void RetrieveUnrealizedGainLossData(String Ticker, Action<List<UnrealizedGainLossData>> callback)
         {
             DateTime periodStartDate;
             DateTime periodEndDate;
             GetPeriod(out periodStartDate, out periodEndDate);
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, callback);
-        }
-
-        private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
-        {
-            //ObservableCollection<PricingReferenceData> objCollection = new ObservableCollection<PricingReferenceData>();
-            //string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().EntityIdentifier;
-            //PrimaryPlottedSeries.Clear();
-            //PlottedSeries.Clear();
-
-            //foreach (PricingReferenceData item in result)
-            //{
-            //    PlottedSeries.Add(item);
-            //    if (item.EntityIdentifier == primarySecurityReferenceIdentifier)
-            //        objCollection.Add(item);
-            //}
-            //PrimaryPlottedSeries = objCollection;
-
-
-            //ObservableCollection<PricingReferenceData> objCollection = new ObservableCollection<PricingReferenceData>();
-            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().Ticker;
-            PrimaryPlottedSeries.Clear();
-            PlottedSeries.Clear();
-            PrimaryPlottedSeries.AddRange((result.Where(r => r.Ticker == primarySecurityReferenceIdentifier)).ToList());
-            PlottedSeries.AddRange(result);
+            if (null != unrealizedGainLossDataLoadedEvent)
+                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = true });
+            _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, callback);
         }
 
         private void GetPeriod(out DateTime startDate, out DateTime endDate)
@@ -369,16 +188,16 @@ namespace GreenField.Gadgets.ViewModels
                 case "10-Years":
                     startDate = endDate.AddMonths(-120);
                     break;
-                case "Custom":
-                    startDate = SelectedStartDate;
-                    endDate = SelectedEndDate;
-                    break;
                 default:
                     startDate = endDate.AddMonths(-12);
                     break;
             }
         }
+        #endregion
+        #endregion
 
+        #region Events
+        public event UnrealizedGainLossDataLoaded unrealizedGainLossDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -388,53 +207,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="securityReferenceData">SecurityReferenceData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
-            //if (securityReferenceData != null)
-            //{
-            //    RetrievePricingData(new ObservableCollection<String>() { securityReferenceData.Ticker }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-            //_dbInteractivity.RetrievePricingReferenceData(new ObservableCollection<String>() { SelectedSeriesReference.EntityIdentifier }, DateTime.Today.AddYears(-1), DateTime.Today, (result) =>
-            //{
-            //    foreach (PricingReferenceData item in result)
-            //        PlottedSeries.Add(item);
-            //    //ComparisonSeries.Add(SelectedSeriesReference);
-            //    SelectedSeriesReference = null;
-            //});
-
-            //ArgumentNullException
             if (entitySelectionData == null)
                 return;
 
-            //Check if security reference data is already present
-            if (PrimaryPlottedSeries.Where(p => p.Ticker == entitySelectionData.ShortName).Count().Equals(0))
-            {
-                //Check if no data exists
-                if (!PrimaryPlottedSeries.Count.Equals(0))
-                {
-                    //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
-                    PlottedSeries.RemoveRange(RemoveItems);
-                    PrimaryPlottedSeries.Clear();
-                }
+            _entitySelectionData = entitySelectionData;
 
-                //Retrieve Pricing Data for Primary Security Reference
-                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.ShortName }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-            }
+            RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
         }
 
-        private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
+        private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
         {
-            //foreach (PricingReferenceData item in result)
-            //{
-            //    //PlottedSeries.Add(item);
-            //    //PrimaryPlottedSeries.Add(item);
-            //    objCollection.Add(item);
-            //    objCollectionPrimary.Add(item);
-            //}
-            //PlottedSeries = objCollection;
-            //PrimaryPlottedSeries = objCollectionPrimary;
-
-
+            PlottedSeries.Clear();
             PlottedSeries.AddRange(result);
-            PrimaryPlottedSeries.AddRange(result);
+            if (null != unrealizedGainLossDataLoadedEvent)
+                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
         }
 
         #endregion

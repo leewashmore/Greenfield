@@ -519,6 +519,451 @@
           <Property Name="Votes" Type="real" />
           <Property Name="ConversionFactor" Type="real" />
         </EntityType>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AshmoreEMMPOC.dbo.tblActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="tblActual">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="PeriodType" />
+            <PropertyRef Name="EstimateType" />
+            <PropertyRef Name="fYearEnd" />
+            <PropertyRef Name="fPeriodEnd" />
+            <PropertyRef Name="PeriodEndDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+          <Property Name="fPeriodEnd" Type="char" Nullable="false" MaxLength="6" />
+          <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="Unit" Type="varchar" MaxLength="2" />
+          <Property Name="ActualValue" Type="real" />
+          <Property Name="AnnouncementDate" Type="datetime" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="tblCompany">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Addr1" Type="varchar" MaxLength="100" />
+          <Property Name="Addr2" Type="varchar" MaxLength="100" />
+          <Property Name="Addr3" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="60" />
+          <Property Name="State" Type="varchar" MaxLength="100" />
+          <Property Name="Zip" Type="varchar" MaxLength="50" />
+          <Property Name="ContactName" Type="varchar" MaxLength="100" />
+          <Property Name="ContactTitle" Type="varchar" MaxLength="100" />
+          <Property Name="Email" Type="varchar" MaxLength="250" />
+          <Property Name="MainPhone" Type="varchar" MaxLength="25" />
+          <Property Name="Fax" Type="varchar" MaxLength="25" />
+          <Property Name="ContactPhone" Type="varchar" MaxLength="25" />
+          <Property Name="PublicSince" Type="varchar" MaxLength="20" />
+          <Property Name="Employees" Type="int" />
+          <Property Name="EmployeeReportDate" Type="datetime" />
+          <Property Name="SharesOut" Type="real" />
+          <Property Name="FloatingShares" Type="real" />
+          <Property Name="ShareReportDate" Type="datetime" />
+          <Property Name="CommonShareholders" Type="int" />
+          <Property Name="ShareholdersReportDate" Type="datetime" />
+          <Property Name="IncorporatedIn" Type="varchar" MaxLength="20" />
+          <Property Name="Currency" Type="varchar" MaxLength="3" />
+          <Property Name="CoStatus" Type="bit" />
+          <Property Name="CoType" Type="varchar" MaxLength="3" />
+          <Property Name="MostRecentExchange" Type="real" />
+          <Property Name="MostRecentExchangeDate" Type="datetime" />
+          <Property Name="LatestAvailableAnnual" Type="datetime" />
+          <Property Name="LatestAvailableInterim" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblCompanyInfo">
+          <Key>
+            <PropertyRef Name="XRef" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="ReportNumber" Type="varchar" MaxLength="5" />
+          <Property Name="Name" Type="varchar" MaxLength="80" />
+          <Property Name="Country" Type="char" MaxLength="3" />
+          <Property Name="Ticker" Type="varchar" MaxLength="15" />
+          <Property Name="CUSIP" Type="varchar" MaxLength="12" />
+          <Property Name="ISIN" Type="varchar" MaxLength="12" />
+          <Property Name="SEDOL" Type="varchar" MaxLength="12" />
+          <Property Name="VALOREN" Type="varchar" MaxLength="12" />
+          <Property Name="RIC" Type="varchar" MaxLength="21" />
+          <Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
+          <Property Name="RecentSplitDate" Type="datetime" />
+          <Property Name="RecentCapitalAdjDate" Type="datetime" />
+          <Property Name="CodeSector" Type="varchar" MaxLength="20" />
+          <Property Name="CodeIndustry" Type="varchar" MaxLength="20" />
+          <Property Name="CodePrimary" Type="varchar" MaxLength="20" />
+          <Property Name="RBSSEconomicSector" Type="varchar" MaxLength="10" />
+          <Property Name="RBSSBusinessSector" Type="varchar" MaxLength="10" />
+          <Property Name="RBSSIndustryGroup" Type="varchar" MaxLength="10" />
+          <Property Name="RBSSIndustry" Type="varchar" MaxLength="10" />
+          <Property Name="Consensus" Type="varchar" MaxLength="20" />
+          <Property Name="Estimate" Type="varchar" MaxLength="10" />
+          <Property Name="Earnings" Type="varchar" MaxLength="10" />
+          <Property Name="Periodicity" Type="varchar" MaxLength="2" />
+          <Property Name="GeneralNote" Type="varchar" MaxLength="1200" />
+          <Property Name="CurrentPeriod" Type="char" MaxLength="2" />
+          <Property Name="pEndDate" Type="smalldatetime" />
+          <Property Name="fYearEnd" Type="char" MaxLength="6" />
+          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+          <Property Name="CurrentPrice" Type="real" />
+          <Property Name="CurrentPriceDate" Type="smalldatetime" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+          <Property Name="OutstandingShares" Type="decimal" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AshmoreEMMPOC.dbo.tblCompanyIssue' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="tblCompanyIssue">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="IssueOrder" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="IssueOrder" Type="smallint" Nullable="false" />
+          <Property Name="IssueType" Type="char" MaxLength="1" />
+          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Ticker" Type="varchar" MaxLength="15" />
+          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
+          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
+          <Property Name="Valoren" Type="varchar" MaxLength="12" />
+          <Property Name="ISIN" Type="varchar" MaxLength="12" />
+          <Property Name="RIC" Type="varchar" MaxLength="20" />
+          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
+          <Property Name="ExchangeCode" Type="char" MaxLength="10" />
+          <Property Name="Country" Type="char" MaxLength="3" />
+          <Property Name="MostRecentSplit" Type="real" />
+          <Property Name="MostRecentSplitDate" Type="datetime" />
+          <Property Name="GlobalListingType" Type="varchar" MaxLength="5" />
+          <Property Name="SharesPerListing" Type="real" />
+          <Property Name="DisplayRIC" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblCompanySummary">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Category" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="Summary" Type="varchar" MaxLength="2000" />
+          <Property Name="LastModified" Type="datetime" />
+          <Property Name="FilingDate" Type="datetime" />
+          <Property Name="FilingType" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblCompanyURL">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="Category" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Category" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="URL" Type="varchar" MaxLength="225" />
+          <Property Name="LastModified" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblConsensusEstimate">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="PeriodEndDate" />
+            <PropertyRef Name="fYearEnd" />
+            <PropertyRef Name="EstimateType" />
+            <PropertyRef Name="PeriodType" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="Unit" Type="varchar" MaxLength="2" />
+          <Property Name="NumOfEsts" Type="int" />
+          <Property Name="High" Type="real" />
+          <Property Name="Low" Type="real" />
+          <Property Name="Mean" Type="real" />
+          <Property Name="StdDev" Type="real" />
+          <Property Name="Median" Type="real" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="tblConsensusRecommendation">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="MeanRating" Type="real" />
+          <Property Name="MeanLabel" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="tblDashboardPreference">
+          <Key>
+            <PropertyRef Name="PreferenceID" />
+          </Key>
+          <Property Name="PreferenceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="GadgetViewClassName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="GadgetViewModelClassName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="GadgetName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="GadgetState" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="GadgetPosition" Type="int" Nullable="false" />
+          <Property Name="PreferenceGroupID" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblDetailedEstimate">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="fYearEnd" />
+            <PropertyRef Name="PeriodEndDate" />
+            <PropertyRef Name="BrokerID" />
+            <PropertyRef Name="PeriodType" />
+            <PropertyRef Name="EstimateType" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
+          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+          <Property Name="PeriodEndDate" Type="datetime" Nullable="false" />
+          <Property Name="BrokerID" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
+          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="ConfirmationDate" Type="datetime" />
+          <Property Name="SuppressStartDate" Type="datetime" />
+          <Property Name="SuppressEndDate" Type="datetime" />
+          <Property Name="SuppressOriginalDate" Type="datetime" />
+          <Property Name="SuppressExpirationDate" Type="datetime" />
+          <Property Name="Unit" Type="varchar" MaxLength="2" />
+          <Property Name="Amount" Type="real" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="tblDetailedRecommendation">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="BrokerID" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="BrokerID" Type="varchar" Nullable="false" MaxLength="12" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="STDOpinionCode" Type="varchar" MaxLength="15" />
+          <Property Name="STDOpinion" Type="varchar" MaxLength="50" />
+          <Property Name="BrokerOpinionCode" Type="varchar" MaxLength="15" />
+          <Property Name="BrokerOpinion" Type="varchar" MaxLength="50" />
+          <Property Name="ConfirmationDate" Type="datetime" />
+          <Property Name="SuppressStartDate" Type="datetime" />
+          <Property Name="SuppressEndDate" Type="datetime" />
+          <Property Name="SuppressOriginalDate" Type="datetime" />
+          <Property Name="SuppressExpirationDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblStatementRef">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="RefNo" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="UpdateType" Type="varchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CompleteStatement" Type="bit" />
+          <Property Name="PeriodLengthCode" Type="char" MaxLength="1" />
+          <Property Name="PeriodLength" Type="int" />
+          <Property Name="PeriodEndDate" Type="datetime" />
+          <Property Name="Source" Type="varchar" MaxLength="50" />
+          <Property Name="SourceDate" Type="datetime" />
+          <Property Name="ReportedAccountingStandardCode" Type="varchar" MaxLength="20" />
+          <Property Name="ReportedAccountingStandard" Type="varchar" MaxLength="100" />
+          <Property Name="STECFlag" Type="bit" />
+          <Property Name="AuditorCode" Type="varchar" MaxLength="50" />
+          <Property Name="AuditOpinion" Type="varchar" MaxLength="10" />
+          <Property Name="CurrencyConvertedTo" Type="char" MaxLength="3" />
+          <Property Name="CurrencyReported" Type="char" MaxLength="3" />
+          <Property Name="RepToConvExRate" Type="real" />
+          <Property Name="UnitConvertedTo" Type="char" MaxLength="3" />
+          <Property Name="UnitReported" Type="char" MaxLength="3" />
+          <Property Name="SystemDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblStd">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="ReportYear" />
+            <PropertyRef Name="COA" />
+            <PropertyRef Name="RefNo" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="ReportYear" Type="int" Nullable="false" />
+          <Property Name="COA" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="Amount" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStdCompanyInfo">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CoType" Type="char" MaxLength="3" />
+          <Property Name="IRSNo" Type="char" MaxLength="10" />
+          <Property Name="CIKNo" Type="char" MaxLength="10" />
+          <Property Name="LatestFinancialsAnnual" Type="datetime" />
+          <Property Name="LatestFinancialsInterim" Type="datetime" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+          <Property Name="CurrentExchangeRate" Type="real" />
+          <Property Name="CurrentExchangeRateDate" Type="datetime" />
+          <Property Name="AuditorCode" Type="varchar" MaxLength="10" />
+          <Property Name="AuditorName" Type="varchar" MaxLength="100" />
+          <Property Name="COAType" Type="char" MaxLength="3" />
+          <Property Name="BalanceSheetDisplayCode" Type="char" MaxLength="3" />
+          <Property Name="CashflowMethod" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="tblStdInterim">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="ReportYear" />
+            <PropertyRef Name="COA" />
+            <PropertyRef Name="RefNo" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="ReportYear" Type="int" Nullable="false" />
+          <Property Name="COA" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="Amount" Type="real" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStdInterimCompanyInfo">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="CoType" Type="char" MaxLength="3" />
+          <Property Name="IRSNo" Type="char" MaxLength="10" />
+          <Property Name="CIKNo" Type="char" MaxLength="10" />
+          <Property Name="LatestFinancialsAnnual" Type="datetime" />
+          <Property Name="LatestFinancialsInterim" Type="datetime" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+          <Property Name="CurrentExchangeRate" Type="real" />
+          <Property Name="CurrentExchangeRateDate" Type="datetime" />
+          <Property Name="AuditorCode" Type="varchar" MaxLength="10" />
+          <Property Name="AuditorName" Type="varchar" MaxLength="100" />
+          <Property Name="COAType" Type="char" MaxLength="3" />
+          <Property Name="BalanceSheetDisplayCode" Type="char" MaxLength="3" />
+          <Property Name="CashflowMethod" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="tblStdInterimIssue">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="IssueID" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="IssueID" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="IssueType" Type="char" MaxLength="1" />
+          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Ticker" Type="varchar" MaxLength="15" />
+          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
+          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
+          <Property Name="Valoren" Type="varchar" MaxLength="12" />
+          <Property Name="ISIN" Type="varchar" MaxLength="12" />
+          <Property Name="RIC" Type="varchar" MaxLength="20" />
+          <Property Name="DisplayRIC" Type="varchar" MaxLength="20" />
+          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="ListingType" Type="varchar" MaxLength="10" />
+          <Property Name="ExchangeCode" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="char" MaxLength="3" />
+          <Property Name="Region" Type="char" MaxLength="2" />
+          <Property Name="MostRecentSplit" Type="real" />
+          <Property Name="MostRecentSplitDate" Type="datetime" />
+          <Property Name="ParCurrency" Type="char" MaxLength="3" />
+          <Property Name="ParValue" Type="real" />
+          <Property Name="SharesAuthorized" Type="real" />
+          <Property Name="SharesOut" Type="real" />
+          <Property Name="FloatingShares" Type="real" />
+          <Property Name="Votes" Type="real" />
+          <Property Name="ConversionFactor" Type="real" />
+        </EntityType>
+        <EntityType Name="tblStdInterimRef">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="RefNo" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="FiscalYear" Type="int" />
+          <Property Name="InterimNumber" Type="smallint" />
+          <Property Name="UpdateType" Type="varchar" MaxLength="10" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CompleteStatement" Type="bit" />
+          <Property Name="PeriodLengthCode" Type="char" MaxLength="1" />
+          <Property Name="PeriodLength" Type="int" />
+          <Property Name="PeriodEndDate" Type="datetime" />
+          <Property Name="Source" Type="varchar" MaxLength="50" />
+          <Property Name="SourceDate" Type="datetime" />
+          <Property Name="ReportedAccountingStandardCode" Type="varchar" MaxLength="20" />
+          <Property Name="ReportedAccountingStandard" Type="varchar" MaxLength="100" />
+          <Property Name="STECFlag" Type="bit" />
+          <Property Name="CurrencyConvertedTo" Type="char" MaxLength="3" />
+          <Property Name="CurrencyReported" Type="char" MaxLength="3" />
+          <Property Name="RepToConvExRate" Type="real" />
+          <Property Name="UnitConvertedTo" Type="char" MaxLength="3" />
+          <Property Name="UnitReported" Type="char" MaxLength="3" />
+          <Property Name="SystemDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblStdIssue">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="IssueID" />
+          </Key>
+          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="IssueID" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="IssueType" Type="char" MaxLength="1" />
+          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Ticker" Type="varchar" MaxLength="15" />
+          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
+          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
+          <Property Name="Valoren" Type="varchar" MaxLength="12" />
+          <Property Name="ISIN" Type="varchar" MaxLength="12" />
+          <Property Name="RIC" Type="varchar" MaxLength="20" />
+          <Property Name="DisplayRIC" Type="varchar" MaxLength="20" />
+          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
+          <Property Name="Active" Type="bit" />
+          <Property Name="ListingType" Type="varchar" MaxLength="10" />
+          <Property Name="ExchangeCode" Type="varchar" MaxLength="50" />
+          <Property Name="Country" Type="char" MaxLength="3" />
+          <Property Name="Region" Type="char" MaxLength="2" />
+          <Property Name="MostRecentSplit" Type="real" />
+          <Property Name="MostRecentSplitDate" Type="datetime" />
+          <Property Name="ParCurrency" Type="char" MaxLength="3" />
+          <Property Name="ParValue" Type="real" />
+          <Property Name="SharesAuthorized" Type="real" />
+          <Property Name="SharesOut" Type="real" />
+          <Property Name="FloatingShares" Type="real" />
+          <Property Name="Votes" Type="real" />
+          <Property Name="ConversionFactor" Type="real" />
+        </EntityType>
         <EntityType Name="tblUserBenchmarkPreference">
           <Key>
             <PropertyRef Name="BenchmarkPreferenceId" />

@@ -9275,6 +9275,181 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblUnrealizedGLData")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tblUnrealizedGLData : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tblUnrealizedGLData object.
+        /// </summary>
+        /// <param name="sNo">Initial value of the SNo property.</param>
+        public static tblUnrealizedGLData CreatetblUnrealizedGLData(global::System.Int32 sNo)
+        {
+            tblUnrealizedGLData tblUnrealizedGLData = new tblUnrealizedGLData();
+            tblUnrealizedGLData.SNo = sNo;
+            return tblUnrealizedGLData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SNo
+        {
+            get
+            {
+                return _SNo;
+            }
+            set
+            {
+                if (_SNo != value)
+                {
+                    OnSNoChanging(value);
+                    ReportPropertyChanging("SNo");
+                    _SNo = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SNo");
+                    OnSNoChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SNo;
+        partial void OnSNoChanging(global::System.Int32 value);
+        partial void OnSNoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> FROMDATE
+        {
+            get
+            {
+                return _FROMDATE;
+            }
+            set
+            {
+                OnFROMDATEChanging(value);
+                ReportPropertyChanging("FROMDATE");
+                _FROMDATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FROMDATE");
+                OnFROMDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _FROMDATE;
+        partial void OnFROMDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnFROMDATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DAILY_CLOSING_PRICE
+        {
+            get
+            {
+                return _DAILY_CLOSING_PRICE;
+            }
+            set
+            {
+                OnDAILY_CLOSING_PRICEChanging(value);
+                ReportPropertyChanging("DAILY_CLOSING_PRICE");
+                _DAILY_CLOSING_PRICE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DAILY_CLOSING_PRICE");
+                OnDAILY_CLOSING_PRICEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DAILY_CLOSING_PRICE;
+        partial void OnDAILY_CLOSING_PRICEChanging(Nullable<global::System.Decimal> value);
+        partial void OnDAILY_CLOSING_PRICEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> VOLUME
+        {
+            get
+            {
+                return _VOLUME;
+            }
+            set
+            {
+                OnVOLUMEChanging(value);
+                ReportPropertyChanging("VOLUME");
+                _VOLUME = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VOLUME");
+                OnVOLUMEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _VOLUME;
+        partial void OnVOLUMEChanging(Nullable<global::System.Decimal> value);
+        partial void OnVOLUMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> DAILY_PRICE_RETURN
+        {
+            get
+            {
+                return _DAILY_PRICE_RETURN;
+            }
+            set
+            {
+                OnDAILY_PRICE_RETURNChanging(value);
+                ReportPropertyChanging("DAILY_PRICE_RETURN");
+                _DAILY_PRICE_RETURN = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DAILY_PRICE_RETURN");
+                OnDAILY_PRICE_RETURNChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _DAILY_PRICE_RETURN;
+        partial void OnDAILY_PRICE_RETURNChanging(Nullable<global::System.Decimal> value);
+        partial void OnDAILY_PRICE_RETURNChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TICKER
+        {
+            get
+            {
+                return _TICKER;
+            }
+            set
+            {
+                OnTICKERChanging(value);
+                ReportPropertyChanging("TICKER");
+                _TICKER = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TICKER");
+                OnTICKERChanged();
+            }
+        }
+        private global::System.String _TICKER;
+        partial void OnTICKERChanging(global::System.String value);
+        partial void OnTICKERChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblUserBenchmarkPreference")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
