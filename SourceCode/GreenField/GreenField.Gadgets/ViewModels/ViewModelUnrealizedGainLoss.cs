@@ -11,6 +11,7 @@ using System.Linq;
 using System.Collections.Generic;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common.Helper;
+using System.Windows;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -73,7 +74,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #region Time Period Selection
+        #region Time Period Selection and Frequncy Selection
         /// <summary>
         /// Collection of Time Range Options
         /// </summary>
@@ -82,13 +83,22 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return new ObservableCollection<string> { "1-Month", "2-Month", "3-Month", "6-Month", "9-Month", "1-Year", "2-Years", 
-                    "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
+                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months", "9-Months", "1-Year", "2-Years", 
+                    "3-Years"};
+            }
+        }
+
+        private ObservableCollection<String> _frequencyRange;
+        public ObservableCollection<String> FrequencyRange
+        {
+            get
+            {
+                return new ObservableCollection<string> { "Daily", "Weekly", "Monthly", "Quarterly", "Yearly" };
             }
         }
 
         /// <summary>
-        /// Selection Time Range option
+        /// Selection Time Range and Frequency Range option
         /// </summary>
         private string _selectedTimeRange = "1-Year";
         public string SelectedTimeRange
@@ -103,6 +113,24 @@ namespace GreenField.Gadgets.ViewModels
                     if (_entitySelectionData != null)
                         RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
                     RaisePropertyChanged(() => this.SelectedTimeRange);
+                }
+            }
+        }
+
+        private string _selectedFrequencyRange = "Daily";
+        public string SelectedFrequencyRange
+        {
+            get { return _selectedFrequencyRange; }
+            set
+            {
+                if (_selectedFrequencyRange != value)
+                {
+                    _selectedFrequencyRange = value;
+
+                    if (_entitySelectionData != null)
+
+                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
         }
@@ -128,26 +156,74 @@ namespace GreenField.Gadgets.ViewModels
 
         private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
-            SeriesReference = new CollectionViewSource();
-            SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
-            SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("EntityCategory"));
-            SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-            {
-                PropertyName = "EntityCategory",
-                Direction = System.ComponentModel.ListSortDirection.Ascending
-            });
-            SeriesReference.Source = SeriesReferenceSource;
+              string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                Logging.LogBeginMethod(_logger, methodNamespace);
+                try
+                {
+                    if (result != null)
+                    {
+                        Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                        SeriesReference = new CollectionViewSource();
+                        SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
+                        SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("EntityCategory"));
+                        SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
+                        {
+                            PropertyName = "EntityCategory",
+                            Direction = System.ComponentModel.ListSortDirection.Ascending
+                        });
+                        SeriesReference.Source = SeriesReferenceSource;
 
-        }
+                    }
+                    else
+                    {
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Logging.LogException(_logger, ex);
+                }
+                
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }         
 
         private void RetrieveUnrealizedGainLossData(String Ticker, Action<List<UnrealizedGainLossData>> callback)
         {
-            DateTime periodStartDate;
-            DateTime periodEndDate;
-            GetPeriod(out periodStartDate, out periodEndDate);
-            if (null != unrealizedGainLossDataLoadedEvent)
-                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, callback);
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (Ticker != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, Ticker, 1);
+                    if (callback != null)
+                    {
+                        Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
+                        DateTime periodStartDate;
+                        DateTime periodEndDate;
+                        GetPeriod(out periodStartDate, out periodEndDate);
+                        if (null != unrealizedGainLossDataLoadedEvent)
+                            unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate,SelectedFrequencyRange,callback);
+                    }
+                    else
+                    {
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 2);                       
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);             
+            
         }
 
         private void GetPeriod(out DateTime startDate, out DateTime endDate)
@@ -207,22 +283,59 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="securityReferenceData">SecurityReferenceData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
-            if (entitySelectionData == null)
-                return;
 
-            _entitySelectionData = entitySelectionData;
-
-            RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+           string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (entitySelectionData != null)
+                {
+                      Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
+                     _entitySelectionData = entitySelectionData;
+                      RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod); 
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);  
         }
 
         private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
         {
-            PlottedSeries.Clear();
-            PlottedSeries.AddRange(result);
-            if (null != unrealizedGainLossDataLoadedEvent)
-                unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    PlottedSeries.Clear();
+                    PlottedSeries.AddRange(result);
+                    if (null != unrealizedGainLossDataLoadedEvent)
+                        unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
+                }
+            }
+            
+            catch (Exception ex)
+            { 
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+             Logging.LogEndMethod(_logger, methodNamespace);  
         }
-
+       
         #endregion
     }
 }
