@@ -160,6 +160,42 @@
   <wsdl:message name="ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
   </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveMorningSnapshotData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMorningSnapshotData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveMorningSnapshotData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMorningSnapshotDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmarkGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkGroup" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmarkGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkGroup" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkGroupResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmark_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmark" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmark_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmark_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmark" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmark_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkResponse" />
+  </wsdl:message>
   <wsdl:portType name="ProxyDataOperations">
     <wsdl:operation name="RetrievePrintValue">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePrintValue" message="tns:ProxyDataOperations_RetrievePrintValue_InputMessage" />
@@ -260,6 +296,30 @@
     <wsdl:operation name="RetrievePortfolioRiskReturnData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnDataResponse" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkDataResponse" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMorningSnapshotData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotData" message="tns:ProxyDataOperations_RetrieveMorningSnapshotData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotDataResponse" message="tns:ProxyDataOperations_RetrieveMorningSnapshotData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUserPreferenceBenchmarkGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroup" message="tns:ProxyDataOperations_AddUserPreferenceBenchmarkGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroupResponse" message="tns:ProxyDataOperations_AddUserPreferenceBenchmarkGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserPreferenceBenchmarkGroup">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroup" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroupResponse" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUserPreferenceBenchmark">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmark" message="tns:ProxyDataOperations_AddUserPreferenceBenchmark_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkResponse" message="tns:ProxyDataOperations_AddUserPreferenceBenchmark_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserPreferenceBenchmark">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmark" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmark_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkResponse" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmark_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ProxyDataOperations" type="tns:ProxyDataOperations">
@@ -482,6 +542,60 @@
     </wsdl:operation>
     <wsdl:operation name="RetrievePortfolioRiskReturnData">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMorningSnapshotData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUserPreferenceBenchmarkGroup">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserPreferenceBenchmarkGroup">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroup" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUserPreferenceBenchmark">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmark" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUserPreferenceBenchmark">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmark" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -16,21 +16,39 @@ namespace GreenField.Benchmark.Views
 {
     public partial class ChildAddNewGroup : ChildWindow
     {
-        public ChildAddNewGroup()
+        private List<string> _groupNames;
+
+        public ChildAddNewGroup(string title, List<string> groupNames)
         {
             InitializeComponent();
+            _groupNames = groupNames;
+            this.Title = title;
         }
 
-        //public ObservableCollection<BenchmarkReferenceData> GroupNames { get; set; }
+        
+        public string GroupName { get; set; }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            GroupName = txtEnterValue.Text;
+            bool duplicateGroupValidation = _groupNames!=null ? _groupNames.Contains(GroupName) : false;
+            if (duplicateGroupValidation)
+            {
+                MessageBox.Show("Group Name already exists. Please enter another group identifier");
+                return;
+            }
+
             this.DialogResult = true;
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
+        }
+
+        private void txtEnterValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            OKButton.IsEnabled = txtEnterValue.Text != "";
         }
     }
 }

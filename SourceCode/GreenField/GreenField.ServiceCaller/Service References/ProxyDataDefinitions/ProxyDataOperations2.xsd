@@ -80,4 +80,22 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ConsensusEstimates_Result" nillable="true" type="tns:ConsensusEstimates_Result" />
+  <xs:complexType name="ArrayOfUserBenchmarkPreference">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserBenchmarkPreference" nillable="true" type="tns:UserBenchmarkPreference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUserBenchmarkPreference" nillable="true" type="tns:ArrayOfUserBenchmarkPreference" />
+  <xs:complexType name="UserBenchmarkPreference">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q4:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BenchmarkName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BenchmarkReturnType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="UserBenchmarkPreference" nillable="true" type="tns:UserBenchmarkPreference" />
 </xs:schema>

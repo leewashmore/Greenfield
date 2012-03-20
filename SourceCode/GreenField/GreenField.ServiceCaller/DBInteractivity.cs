@@ -346,14 +346,23 @@ namespace GreenField.ServiceCaller
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
             };
         }
 
         public void RetrievePricingReferenceData(ObservableCollection<String> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, bool chartEntityTypes, Action<List<PricingReferenceData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
+            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
                 if (callback != null)
@@ -457,6 +466,72 @@ namespace GreenField.ServiceCaller
             {
                 if (callback != null)
                     callback(e.Result.ToList());
+            };
+        }
+        
+        public void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveUserPreferenceBenchmarkDataAsync(userName);
+            client.RetrieveUserPreferenceBenchmarkDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
+
+        public void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveMorningSnapshotDataAsync(userBenchmarkPreference);
+            client.RetrieveMorningSnapshotDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
+
+        public void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.AddUserPreferenceBenchmarkGroupAsync(userName, groupName);
+            client.AddUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        public void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RemoveUserPreferenceBenchmarkGroupAsync(userName, groupName);
+            client.RemoveUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        public void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.AddUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
+            client.AddUserPreferenceBenchmarkCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        public void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RemoveUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
+            client.RemoveUserPreferenceBenchmarkCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
             };
         }
     }

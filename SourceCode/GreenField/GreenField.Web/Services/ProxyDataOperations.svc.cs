@@ -692,7 +692,7 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -723,7 +723,7 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -948,7 +948,7 @@ namespace GreenField.Web.Services
                 return result;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -1014,13 +1014,11 @@ namespace GreenField.Web.Services
             {
                 List<BenchmarkSelectionData> result = new List<BenchmarkSelectionData>();
 
-                for (int i = 0; i < 10; i++)
-                {
-                    result.Add(new BenchmarkSelectionData()
-                    {
-                        Name = "Benchmark " + (i + 1).ToString()
-                    });
-                }
+                result.Add(new BenchmarkSelectionData() { Name = "EM Emerging Markets" });
+                result.Add(new BenchmarkSelectionData() { Name = "IMI Emerging Markets" });
+                result.Add(new BenchmarkSelectionData() { Name = "Indonesia" });
+                result.Add(new BenchmarkSelectionData() { Name = "India" });
+                result.Add(new BenchmarkSelectionData() { Name = "China" });
 
                 return result;
             }
@@ -2036,5 +2034,126 @@ namespace GreenField.Web.Services
 
             return portfolioRiskReturnValues;
         }
+
+        #region Morning Snapshot Operation Contracts
+
+        [OperationContract]
+        public List<UserBenchmarkPreference> RetrieveUserPreferenceBenchmarkData(string userName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    ResearchEntities entity = new ResearchEntities();
+                    List<UserBenchmarkPreference> userPreference = (entity.GetUserBenchmarkPreference(userName)).ToList<UserBenchmarkPreference>();
+                    return userPreference;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        [OperationContract]
+        public List<MorningSnapshotData> RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference)
+        {
+
+            List<MorningSnapshotData> result = new List<MorningSnapshotData>();
+            foreach (UserBenchmarkPreference preference in userBenchmarkPreference)
+            {
+                if (preference.BenchmarkName != null)
+                {
+                    result.Add(new MorningSnapshotData()
+                    {
+                        MorningSnapshotPreferenceInfo = preference,
+                        DTD = -0.1,
+                        WTD = -0.1,
+                        MTD = 4.4,
+                        QTD = 4.4,
+                        YTD = 7.4,
+                        PreviousYearPrice = 4.6,
+                        IIPreviousYearPrice = 52.3,
+                        IIIPreviousYearPrice = -50.8
+                    });
+                }
+                else
+                {
+                    result.Add(new MorningSnapshotData()
+                    {
+                        MorningSnapshotPreferenceInfo = preference                        
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        [OperationContract]
+        public bool AddUserPreferenceBenchmarkGroup(string userName, string groupName)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.SetUserGroupPreference(userName, groupName);
+                return true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [OperationContract]
+        public bool RemoveUserPreferenceBenchmarkGroup(string userName, string groupname)
+        {
+            try
+            {
+                ResearchEntities entity = new ResearchEntities();
+                entity.DeleteUserGroupPreference(userName, groupname);
+                return true;
+            }
+
+            catch (Exception)
+            { 
+                return false; 
+            }
+        }
+
+        [OperationContract]
+        public bool AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.SetUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName, userBenchmarkPreference.BenchmarkReturnType);
+                return true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [OperationContract]
+        public bool RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.DeleteUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName);
+                return true;
+            }
+
+            catch (Exception)
+            { return false; }
+        }
+        #endregion
     }
 }

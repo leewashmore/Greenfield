@@ -251,7 +251,7 @@ namespace GreenField.Web.Services
                 MembershipUser user = Membership.GetUser(username, userIsOnline);
                 return user != null ? ConvertMembershipUser(user) : null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }

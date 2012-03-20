@@ -165,6 +165,9 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="Images/roller.png" Text="Commodities" Size="Large" />
                     </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="Images/morningSnapshot.png" Text="Daily Morning Snapshot" Size="Large" Command="{Binding DailyMorningSnapshotCommand}" />
+                    </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
                 <telerik:RadRibbonTab Header="Gadgets">
                     <telerik:RadRibbonGroup Header="">

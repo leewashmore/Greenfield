@@ -72,8 +72,8 @@ namespace GreenField.Common
     public static class BenchmarkReturnTypes
     {
         public static string TotalReturnType = "Total(Gross)";
-        public static string NetReturnType = "Net";
-        public static string PriceReturnType = "Price";
+        public static string NetReturnType = "( Net Return )";
+        public static string PriceReturnType = "( Price Return )";
     }
 
 
