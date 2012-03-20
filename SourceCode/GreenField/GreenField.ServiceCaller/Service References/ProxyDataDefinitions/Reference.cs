@@ -8636,6 +8636,261 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UnrealizedGainLossData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class UnrealizedGainLossData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private double AdjustedPriceField;
+        
+        private decimal CostField;
+        
+        private decimal DailyClosingPriceField;
+        
+        private decimal DailyGrossReturnField;
+        
+        private decimal DailyPriceReturnField;
+        
+        private decimal DailySpotFXField;
+        
+        private System.DateTime FromDateField;
+        
+        private string InstrumentIDField;
+        
+        private string IssueNameField;
+        
+        private double MovingAverageField;
+        
+        private double NinetyDayWtAvgField;
+        
+        private string TickerField;
+        
+        private string TypeField;
+        
+        private double UnrealizedGainLossField;
+        
+        private decimal VolumeField;
+        
+        private double WtAvgCostField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double AdjustedPrice {
+            get {
+                return this.AdjustedPriceField;
+            }
+            set {
+                if ((this.AdjustedPriceField.Equals(value) != true)) {
+                    this.AdjustedPriceField = value;
+                    this.RaisePropertyChanged("AdjustedPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Cost {
+            get {
+                return this.CostField;
+            }
+            set {
+                if ((this.CostField.Equals(value) != true)) {
+                    this.CostField = value;
+                    this.RaisePropertyChanged("Cost");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyClosingPrice {
+            get {
+                return this.DailyClosingPriceField;
+            }
+            set {
+                if ((this.DailyClosingPriceField.Equals(value) != true)) {
+                    this.DailyClosingPriceField = value;
+                    this.RaisePropertyChanged("DailyClosingPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyGrossReturn {
+            get {
+                return this.DailyGrossReturnField;
+            }
+            set {
+                if ((this.DailyGrossReturnField.Equals(value) != true)) {
+                    this.DailyGrossReturnField = value;
+                    this.RaisePropertyChanged("DailyGrossReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyPriceReturn {
+            get {
+                return this.DailyPriceReturnField;
+            }
+            set {
+                if ((this.DailyPriceReturnField.Equals(value) != true)) {
+                    this.DailyPriceReturnField = value;
+                    this.RaisePropertyChanged("DailyPriceReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailySpotFX {
+            get {
+                return this.DailySpotFXField;
+            }
+            set {
+                if ((this.DailySpotFXField.Equals(value) != true)) {
+                    this.DailySpotFXField = value;
+                    this.RaisePropertyChanged("DailySpotFX");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InstrumentID {
+            get {
+                return this.InstrumentIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InstrumentIDField, value) != true)) {
+                    this.InstrumentIDField = value;
+                    this.RaisePropertyChanged("InstrumentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssueName {
+            get {
+                return this.IssueNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
+                    this.IssueNameField = value;
+                    this.RaisePropertyChanged("IssueName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double MovingAverage {
+            get {
+                return this.MovingAverageField;
+            }
+            set {
+                if ((this.MovingAverageField.Equals(value) != true)) {
+                    this.MovingAverageField = value;
+                    this.RaisePropertyChanged("MovingAverage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double NinetyDayWtAvg {
+            get {
+                return this.NinetyDayWtAvgField;
+            }
+            set {
+                if ((this.NinetyDayWtAvgField.Equals(value) != true)) {
+                    this.NinetyDayWtAvgField = value;
+                    this.RaisePropertyChanged("NinetyDayWtAvg");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Ticker {
+            get {
+                return this.TickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
+                    this.TickerField = value;
+                    this.RaisePropertyChanged("Ticker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double UnrealizedGainLoss {
+            get {
+                return this.UnrealizedGainLossField;
+            }
+            set {
+                if ((this.UnrealizedGainLossField.Equals(value) != true)) {
+                    this.UnrealizedGainLossField = value;
+                    this.RaisePropertyChanged("UnrealizedGainLoss");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Volume {
+            get {
+                return this.VolumeField;
+            }
+            set {
+                if ((this.VolumeField.Equals(value) != true)) {
+                    this.VolumeField = value;
+                    this.RaisePropertyChanged("Volume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double WtAvgCost {
+            get {
+                return this.WtAvgCostField;
+            }
+            set {
+                if ((this.WtAvgCostField.Equals(value) != true)) {
+                    this.WtAvgCostField = value;
+                    this.RaisePropertyChanged("WtAvgCost");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MorningSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MorningSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -8918,6 +9173,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse")]
+        System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkDataRespons" +
             "e")]
@@ -9433,6 +9693,25 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveUnrealizedGainLossDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveUnrealizedGainLossDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveUserPreferenceBenchmarkDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -9699,6 +9978,12 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrievePortfolioRiskReturnDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveUnrealizedGainLossDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveUnrealizedGainLossDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveUnrealizedGainLossDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveUserPreferenceBenchmarkDataDelegate;
         
         private EndOperationDelegate onEndRetrieveUserPreferenceBenchmarkDataDelegate;
@@ -9837,6 +10122,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         public event System.EventHandler<RetrieveTopBenchmarkSecuritiesDataCompletedEventArgs> RetrieveTopBenchmarkSecuritiesDataCompleted;
         
         public event System.EventHandler<RetrievePortfolioRiskReturnDataCompletedEventArgs> RetrievePortfolioRiskReturnDataCompleted;
+        
+        public event System.EventHandler<RetrieveUnrealizedGainLossDataCompletedEventArgs> RetrieveUnrealizedGainLossDataCompleted;
         
         public event System.EventHandler<RetrieveUserPreferenceBenchmarkDataCompletedEventArgs> RetrieveUserPreferenceBenchmarkDataCompleted;
         
@@ -11037,6 +11324,56 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveUnrealizedGainLossData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveUnrealizedGainLossData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string entityIdentifier = ((string)(inValues[0]));
+            System.DateTime startDateTime = ((System.DateTime)(inValues[1]));
+            System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveUnrealizedGainLossData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveUnrealizedGainLossDataCompleted(object state) {
+            if ((this.RetrieveUnrealizedGainLossDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveUnrealizedGainLossDataCompleted(this, new RetrieveUnrealizedGainLossDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime) {
+            this.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, null);
+        }
+        
+        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, object userState) {
+            if ((this.onBeginRetrieveUnrealizedGainLossDataDelegate == null)) {
+                this.onBeginRetrieveUnrealizedGainLossDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveUnrealizedGainLossData);
+            }
+            if ((this.onEndRetrieveUnrealizedGainLossDataDelegate == null)) {
+                this.onEndRetrieveUnrealizedGainLossDataDelegate = new EndOperationDelegate(this.OnEndRetrieveUnrealizedGainLossData);
+            }
+            if ((this.onRetrieveUnrealizedGainLossDataCompletedDelegate == null)) {
+                this.onRetrieveUnrealizedGainLossDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveUnrealizedGainLossDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveUnrealizedGainLossDataDelegate, new object[] {
+                        entityIdentifier,
+                        startDateTime,
+                        endDateTime}, this.onEndRetrieveUnrealizedGainLossDataDelegate, this.onRetrieveUnrealizedGainLossDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUserPreferenceBenchmarkData(string userName, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveUserPreferenceBenchmarkData(userName, callback, asyncState);
         }
@@ -11734,6 +12071,21 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData>)(base.EndInvoke("RetrievePortfolioRiskReturnData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = entityIdentifier;
+                _args[1] = startDateTime;
+                _args[2] = endDateTime;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveUnrealizedGainLossData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData>)(base.EndInvoke("RetrieveUnrealizedGainLossData", _args, result)));
                 return _result;
             }
             

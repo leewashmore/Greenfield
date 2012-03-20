@@ -68,6 +68,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback);
 
+        void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, Action<List<UnrealizedGainLossData>> callback);
+        
         void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback);
 
         void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback);
