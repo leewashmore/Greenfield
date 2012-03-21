@@ -10,17 +10,29 @@ using GreenField.Web.DataContracts;
 using System.Data.SqlClient;
 using System.ServiceModel.Activation;
 using GreenField.Web.Helpers;
+using GreenField.Web.DimensionEntitiesService;
+using System.Configuration;
 
 namespace GreenField.Web.Services
 {
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ProxyDataOperations
-    {
+    {       
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if(null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
-        private DimensionEntitiesService.Entities dimensionEntity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                return dimensionEntity;
+            }
+        }
 
         private StringBuilder secShortList = new StringBuilder();
+
         [OperationContract]
         public String RetrievePrintValue()
         {
@@ -667,7 +679,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
 
                 List<SecurityReferenceData> result = new List<SecurityReferenceData>();
@@ -702,7 +714,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                DimensionEntitiesService.Entities entity = DimensionEntity;
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).First();
 
                 SecurityReferenceData result = new SecurityReferenceData()
@@ -756,7 +768,7 @@ namespace GreenField.Web.Services
 
                 List<PricingReferenceData> pricingDataResult = new List<PricingReferenceData>();
 
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
                 //Plotting a Single Line Chart
                 #region SingleLineChart
@@ -978,7 +990,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = dimensionEntity.GF_SELECTION_BASEVIEW.ToList();
+                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
 
 
@@ -2057,58 +2069,36 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
         {
-            List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> movingAverageResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> ninetyDayWtResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> costResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> wtAvgCostResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> unrealizedGainLossResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = new List<UnrealizedGainLossData>();
             List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
             try
             {
                 if (entityIdentifier != null && startDateTime != null && endDateTime != null && frequencyInterval != null)
                 {
-                    DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                    DimensionEntitiesService.Entities entity = DimensionEntity;
                     int noOfRows;
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
-                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
-                    //ResearchEntities research = new ResearchEntities();
-                    //List<tblUnrealizedGLData> arrangedByDescRecord = research.tblUnrealizedGLDatas.Where(r => (r.TICKER == entityIdentifier) && (r.FROMDATE >= startDateTime) && (r.FROMDATE < endDateTime)).OrderByDescending(res => res.FROMDATE).ToList();
+                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();                    
                     noOfRows = arrangedByDescRecord.Count();
-                    adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
-                    movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
-                    ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
-                    costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
-                    wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
-                    unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
-                    timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
-                    //timeAndFrequencyFilteredGainLossResult = FrequencyCalculator.RetrieveDatesAccordingToFrequency(timeFilteredUnrealizedGainLossResult, startDateTime, endDateTime, frequencyInterval);
+                    List<UnrealizedGainLossData>  adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                    List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                    List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                    List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                    List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();                    
 
-                    List<DateTime> EndDates = new List<DateTime>();
-
-                    foreach (UnrealizedGainLossData item in timeFilteredUnrealizedGainLossResult)
-                    {
-                        EndDates.Add(Convert.ToDateTime(item.FromDate));
-                    }
-
-                    List<DateTime> allEndDates = new List<DateTime>();
-
-                    allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
-
+                    List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
+                                               select p.FromDate).ToList();                    
+                    List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
                     timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
-
-                    
-
                 }
+
                 return timeAndFrequencyFilteredGainLossResult;
             }
             catch (Exception)
             {
                 return null;
-            }
-
-                        
+            }                        
         }
 
         #region Morning Snapshot Operation Contracts
