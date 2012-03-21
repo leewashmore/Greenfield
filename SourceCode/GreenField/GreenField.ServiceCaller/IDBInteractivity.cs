@@ -36,9 +36,9 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioNames(String viewName, Action<List<String>> callback);
 
-        void RetrieveSecurityReferenceData(Action<List<SecurityReferenceData>> callback);
+        void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
-        void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityReferenceData> callback);
+        void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityOverviewData> callback);
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
 

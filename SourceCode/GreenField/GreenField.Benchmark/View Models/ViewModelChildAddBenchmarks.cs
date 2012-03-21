@@ -152,7 +152,7 @@ namespace GreenField.Benchmark.View_Models
             }
         }
 
-        private bool? _priceReturnTypeChecked = true;
+        private bool? _priceReturnTypeChecked = false;
         public bool? PriceReturnTypeChecked
         {
             get { return _priceReturnTypeChecked; }

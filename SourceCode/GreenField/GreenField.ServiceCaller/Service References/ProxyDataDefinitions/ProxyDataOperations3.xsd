@@ -148,7 +148,7 @@
   <xs:element name="RetrieveSecurityReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataResult" nillable="true" type="q10:ArrayOfSecurityReferenceData" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataResult" nillable="true" type="q10:ArrayOfSecurityOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -162,7 +162,7 @@
   <xs:element name="RetrieveSecurityReferenceDataByTickerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataByTickerResult" nillable="true" type="q11:SecurityReferenceData" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataByTickerResult" nillable="true" type="q11:SecurityOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

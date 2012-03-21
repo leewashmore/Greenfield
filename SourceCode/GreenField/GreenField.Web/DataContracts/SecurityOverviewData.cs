@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace GreenField.Web.DataContracts
 {
     [DataContract]
-    public class SecurityReferenceData
+    public class SecurityOverviewData
     {
         [DataMember]
         public String IssueName { get; set; }
@@ -28,7 +28,7 @@ namespace GreenField.Web.DataContracts
         public String SubIndustry { get; set; }
 
         [DataMember]
-        public String Exchange { get; set; }
+        public String PrimaryAnalyst { get; set; }
 
         [DataMember]
         public String Currency { get; set; }

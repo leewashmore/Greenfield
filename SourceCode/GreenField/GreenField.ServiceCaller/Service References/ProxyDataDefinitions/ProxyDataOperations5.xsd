@@ -461,28 +461,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AggregatedData" nillable="true" type="tns:AggregatedData" />
-  <xs:complexType name="ArrayOfSecurityReferenceData">
+  <xs:complexType name="ArrayOfSecurityOverviewData">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecurityReferenceData" nillable="true" type="tns:SecurityReferenceData" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfSecurityReferenceData" nillable="true" type="tns:ArrayOfSecurityReferenceData" />
-  <xs:complexType name="SecurityReferenceData">
+  <xs:element name="ArrayOfSecurityOverviewData" nillable="true" type="tns:ArrayOfSecurityOverviewData" />
+  <xs:complexType name="SecurityOverviewData">
     <xs:sequence>
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Exchange" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FiscalYearEnd" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryAnalyst" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SubIndustry" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="SecurityReferenceData" nillable="true" type="tns:SecurityReferenceData" />
+  <xs:element name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
   <xs:complexType name="ArrayOfPricingReferenceData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />

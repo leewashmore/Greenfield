@@ -6926,8 +6926,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityReferenceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class SecurityReferenceData : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="SecurityOverviewData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class SecurityOverviewData : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string CountryField;
         
@@ -6935,13 +6935,13 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private string DescriptionField;
         
-        private string ExchangeField;
-        
         private string FiscalYearEndField;
         
         private string IndustryField;
         
         private string IssueNameField;
+        
+        private string PrimaryAnalystField;
         
         private string SectorField;
         
@@ -6991,19 +6991,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Exchange {
-            get {
-                return this.ExchangeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ExchangeField, value) != true)) {
-                    this.ExchangeField = value;
-                    this.RaisePropertyChanged("Exchange");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string FiscalYearEnd {
             get {
                 return this.FiscalYearEndField;
@@ -7038,6 +7025,19 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
                     this.IssueNameField = value;
                     this.RaisePropertyChanged("IssueName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryAnalyst {
+            get {
+                return this.PrimaryAnalystField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryAnalystField, value) != true)) {
+                    this.PrimaryAnalystField = value;
+                    this.RaisePropertyChanged("PrimaryAnalyst");
                 }
             }
         }
@@ -9100,13 +9100,13 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveSecurityReferenceData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveSecurityReferenceDataResponse")]
         System.IAsyncResult BeginRetrieveSecurityReferenceData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveSecurityReferenceDataByTicker", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveSecurityReferenceDataByTickerRespo" +
             "nse")]
         System.IAsyncResult BeginRetrieveSecurityReferenceDataByTicker(string ticker, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
+        GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceDataResponse")]
         System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState);
@@ -9417,10 +9417,10 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData>)(this.results[0]));
             }
         }
     }
@@ -9436,10 +9436,10 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             this.results = results;
         }
         
-        public GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData Result {
+        public GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData)(this.results[0]));
+                return ((GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData)(this.results[0]));
             }
         }
     }
@@ -10607,7 +10607,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityReferenceData(result);
         }
         
@@ -10616,7 +10616,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityReferenceData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveSecurityReferenceData(result);
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveSecurityReferenceData(result);
             return new object[] {
                     retVal};
         }
@@ -10651,7 +10651,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
+        GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityReferenceDataByTicker(result);
         }
         
@@ -10661,7 +10661,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
-            GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveSecurityReferenceDataByTicker(result);
+            GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveSecurityReferenceDataByTicker(result);
             return new object[] {
                     retVal};
         }
@@ -11871,9 +11871,9 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData>)(base.EndInvoke("RetrieveSecurityReferenceData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData>)(base.EndInvoke("RetrieveSecurityReferenceData", _args, result)));
                 return _result;
             }
             
@@ -11884,9 +11884,9 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData _result = ((GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData)(base.EndInvoke("RetrieveSecurityReferenceDataByTicker", _args, result)));
+                GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData _result = ((GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData)(base.EndInvoke("RetrieveSecurityReferenceDataByTicker", _args, result)));
                 return _result;
             }
             

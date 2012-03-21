@@ -297,7 +297,7 @@ namespace GreenField.ServiceCaller
             client.RetrievePortfolioNamesCompleted -= client_RetrievePortfolioNamesCompleted;
         }
 
-        public void RetrieveSecurityReferenceData(Action<List<SecurityReferenceData>> callback)
+        public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveSecurityReferenceDataAsync();
@@ -308,7 +308,7 @@ namespace GreenField.ServiceCaller
                 };
         }
 
-        public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityReferenceData> callback)
+        public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityOverviewData> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveSecurityReferenceDataByTickerAsync(ticker);

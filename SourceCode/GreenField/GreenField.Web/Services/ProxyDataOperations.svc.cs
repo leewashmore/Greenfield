@@ -675,17 +675,17 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<SecurityReferenceData> RetrieveSecurityReferenceData()
+        public List<SecurityOverviewData> RetrieveSecurityReferenceData()
         {
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
 
-                List<SecurityReferenceData> result = new List<SecurityReferenceData>();
+                List<SecurityOverviewData> result = new List<SecurityOverviewData>();
                 foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
                 {
-                    result.Add(new SecurityReferenceData()
+                    result.Add(new SecurityOverviewData()
                 {
                     IssueName = record.ISSUE_NAME,
                     Ticker = record.TICKER,
@@ -693,11 +693,11 @@ namespace GreenField.Web.Services
                     Sector = record.GICS_SECTOR_NAME,
                     Industry = record.GICS_INDUSTRY_NAME,
                     SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
-                    Exchange = record.STOCK_EXCHANGE_ID,
+                    PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = record.TRADING_CURRENCY,
                     FiscalYearEnd = record.FISCAL_YEAR_END,
                     Website = record.WEBSITE,
-                    Description = record.ASHEMM_ONE_LINER_DESCRIPTION
+                    Description = record.BLOOMBERG_DESCRIPTION
                 });
                 }
 
@@ -710,14 +710,14 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public SecurityReferenceData RetrieveSecurityReferenceDataByTicker(string ticker)
+        public SecurityOverviewData RetrieveSecurityReferenceDataByTicker(string ticker)
         {
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).First();
 
-                SecurityReferenceData result = new SecurityReferenceData()
+                SecurityOverviewData result = new SecurityOverviewData()
                 {
                     IssueName = data.ISSUE_NAME,
                     Ticker = data.TICKER,
@@ -725,11 +725,11 @@ namespace GreenField.Web.Services
                     Sector = data.GICS_SECTOR_NAME,
                     Industry = data.GICS_INDUSTRY_NAME,
                     SubIndustry = data.GICS_SUB_INDUSTRY_NAME,
-                    Exchange = data.STOCK_EXCHANGE_ID,
+                    PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
                     FiscalYearEnd = data.FISCAL_YEAR_END,
                     Website = data.WEBSITE,
-                    Description = data.ASHEMM_ONE_LINER_DESCRIPTION
+                    Description = data.BLOOMBERG_DESCRIPTION
                 };
 
                 return result;

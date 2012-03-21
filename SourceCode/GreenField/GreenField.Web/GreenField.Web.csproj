@@ -135,7 +135,7 @@
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
-    <Compile Include="DataContracts\SecurityReferenceData.cs" />
+    <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
