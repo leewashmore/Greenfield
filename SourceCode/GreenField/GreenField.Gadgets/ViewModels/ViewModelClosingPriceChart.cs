@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Views;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -61,6 +62,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+
         #region UI Fields
 
         /// <summary>
@@ -78,9 +80,28 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _chartEntityList = value;
+                if (ChartEntityList.Count != 0)
+                {
+                    SelectedBaseSecurity = ChartEntityList[0].ToString();
+                }
                 this.RaisePropertyChanged(() => this.ChartEntityList);
             }
         }
+
+        private string _selectedBaseSecurity = "No Security Added";
+        public string SelectedBaseSecurity
+        {
+            get
+            {
+                return _selectedBaseSecurity;
+            }
+            set
+            {
+                _selectedBaseSecurity = value;
+                this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
+            }
+        }
+
 
         #region Time Period Selection
         /// <summary>
@@ -91,7 +112,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return new ObservableCollection<string> { "1-Month", "2-Month", "3-Month", "6-Month", "YTD", "1-Year", "2-Years", 
+                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months", "YTD", "1-Year", "2-Years", 
                     "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
             }
         }
@@ -102,16 +123,54 @@ namespace GreenField.Gadgets.ViewModels
         private string _selectedTimeRange = "1-Year";
         public string SelectedTimeRange
         {
-            get { return _selectedTimeRange; }
+            get
+            {
+                return _selectedTimeRange; 
+            }
             set
             {
                 if (_selectedTimeRange != value)
                 {
-                    _selectedTimeRange = value;
-                    //Retrieve Pricing Data for updated Time Range
-                    RetrievePricingData(new ObservableCollection<String>
-                        (PlottedSeries.Select(p => p.Ticker).Distinct().ToList()),
-                            RetrievePricingReferenceDataCallBackMethod_TimeRange);
+
+                    if (value == "Custom")
+                    {
+                        ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
+                        customDateWindow.Show();
+                        customDateWindow.Unloaded += (se, e) =>
+                        {
+                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                            {
+                                SelectedStartDate = Convert.ToDateTime(customDateWindow.startDate);
+                                SelectedEndDate = Convert.ToDateTime(customDateWindow.endDate);
+                                _selectedTimeRange = value;
+
+                                //Retrieve Pricing Data for updated Time Range
+                                if (ChartEntityList.Count != 0)
+                                {
+                                    RetrievePricingData(ChartEntityList,
+                                            RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                                }
+                                this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                            }
+                            else
+                            {
+                                _selectedTimeRange = "1-Year";
+                                this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        _selectedTimeRange = value;
+
+                        //Retrieve Pricing Data for updated Time Range
+                        if (ChartEntityList.Count != 0)
+                        {
+                            RetrievePricingData(ChartEntityList,
+                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                        }
+                        this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                    }
                 }
             }
         }
@@ -153,11 +212,21 @@ namespace GreenField.Gadgets.ViewModels
 
         #region FrequencySelection
 
-        private string _frequencyInterval = "";
-        public string FrequencyInterval
+        private ObservableCollection<string> _frequencyInterval;
+        public ObservableCollection<string> FrequencyInterval
         {
             get
             {
+                if (_frequencyInterval == null)
+                {
+                    _frequencyInterval = new ObservableCollection<string>();
+                    _frequencyInterval.Add("Daily");
+                    _frequencyInterval.Add("Weekly");
+                    _frequencyInterval.Add("Monthly");
+                    _frequencyInterval.Add("Quarterly");
+                    _frequencyInterval.Add("Half-Yearly");
+                    _frequencyInterval.Add("Yearly");
+                }
                 return _frequencyInterval;
             }
             set
@@ -166,6 +235,39 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.FrequencyInterval);
             }
         }
+
+        private string _selectedFrequencyInterval = "Weekly";
+        public string SelectedFrequencyInterval
+        {
+            get
+            {
+                return _selectedFrequencyInterval;
+            }
+            set
+            {
+                _selectedFrequencyInterval = value;
+                if (ChartEntityList.Count != 0)
+                {
+                    RetrievePricingData(ChartEntityList,
+                            RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                }
+                this.RaisePropertyChanged(() => this.SelectedFrequencyInterval);
+            }
+        }
+
+        //private string _frequencyInterval = "";
+        //public string FrequencyInterval
+        //{
+        //    get
+        //    {
+        //        return _frequencyInterval;
+        //    }
+        //    set
+        //    {
+        //        _frequencyInterval = value;
+        //        this.RaisePropertyChanged(() => this.FrequencyInterval);
+        //    }
+        //}
 
         #endregion
 
@@ -292,8 +394,16 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                _returnTypeSelection = value;
-                this.RaisePropertyChanged(() => this.ReturnTypeSelection);
+                if (_returnTypeSelection != value)
+                {
+                    _returnTypeSelection = value;
+                    if (ChartEntityList.Count != 0)
+                    {
+                        RetrievePricingData(ChartEntityList,
+                                RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                    }
+                    this.RaisePropertyChanged(() => this.ReturnTypeSelection);
+                }
             }
         }
 
@@ -373,10 +483,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedSeriesReference != null)
             {
-                if (!PlottedSeries.Any(t => t.IssueName == SelectedSeriesReference.LongName))
+                if (!PlottedSeries.Any(t => t.InstrumentID == SelectedSeriesReference.InstrumentID))
                 {
                     //string type = SelectedSeriesReference.Type.ToString();
-                    ChartEntityList.Add(SelectedSeriesReference.ShortName.ToString());
+                    ChartEntityList.Add(Convert.ToString(SelectedSeriesReference.InstrumentID));
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
@@ -388,13 +498,17 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         List<EntitySelectionData> a = SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList();
                         //If it contains type Commodity/Index/Currency, ChartEntityTypes=true else false
-                        if (ChartEntityList.Contains(item.ShortName.ToString()))
+                        if (ChartEntityList.Contains(item.InstrumentID.ToString()))
                         {
                             ChartEntityTypes = false;
                         }
                     }
 
-                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, DateTime.Today.AddYears(-1), DateTime.Today, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, (result) =>
+                    DateTime periodStartDate;
+                    DateTime periodEndDate;
+                    GetPeriod(out periodStartDate, out periodEndDate);
+
+                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, periodStartDate, periodEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, (result) =>
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
@@ -409,12 +523,12 @@ namespace GreenField.Gadgets.ViewModels
         private void DeleteCommandMethod(object param)
         {
             EntitySelectionData a = param as EntitySelectionData;
-            PricingReferenceData removeItem = new PricingReferenceData();
-            removeItem = PlottedSeries.Where(w => w.Ticker == a.ShortName).First();
+            List<PricingReferenceData> removeItem = new List<PricingReferenceData>();
+            removeItem = PlottedSeries.Where(w => w.InstrumentID == a.InstrumentID).ToList();
             if (removeItem != null)
-                PlottedSeries.Remove(removeItem);
+                PlottedSeries.RemoveRange(removeItem);
             ComparisonSeries.Remove(a);
-            ChartEntityList.Remove(a.ShortName);
+            ChartEntityList.Remove(a.InstrumentID);
         }
 
         #endregion
@@ -443,11 +557,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
         {
-            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().Ticker;
+            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
             PlottedSeries.Clear();
             PrimaryPlottedSeries.Clear();
             PlottedSeries.AddRange(result);
-            PrimaryPlottedSeries.AddRange(result.Where(item => item.Ticker == primarySecurityReferenceIdentifier).ToList());
+            PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
+            if (null != closingPriceDataLoadedEvent)
+                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
         }
 
         /// <summary>
@@ -456,10 +572,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
         {
-            PlottedSeries.AddRange(result);
-            PrimaryPlottedSeries.AddRange(result);
+            if (result!=null)
+            {
+                PlottedSeries.AddRange(result);
+                PrimaryPlottedSeries.AddRange(result);
+            }
+            
+            if (null != closingPriceDataLoadedEvent)
+                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
         }
 
+        #endregion
+
+        #region Events
+        public event DataRetrievalProgressIndicator closingPriceDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -475,21 +601,24 @@ namespace GreenField.Gadgets.ViewModels
                 return;
 
             //Check if security reference data is already present
-            if (PrimaryPlottedSeries.Where(p => p.Ticker == entitySelectionData.ShortName).Count().Equals(0))
+            if (PrimaryPlottedSeries.Where(p => p.InstrumentID == entitySelectionData.InstrumentID).Count().Equals(0))
             {
                 //Check if no data exists
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.Ticker != PrimaryPlottedSeries.First().Ticker).ToList();
+                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.InstrumentID != PrimaryPlottedSeries.First().InstrumentID).ToList();
                     PlottedSeries.RemoveRange(RemoveItems);
                     PrimaryPlottedSeries.Clear();
                 }
 
                 ChartEntityList.Clear();
                 //Retrieve Pricing Data for Primary Security Reference
-                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.ShortName }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-                ChartEntityList.Add(entitySelectionData.ShortName);
+                if (null != closingPriceDataLoadedEvent)
+                    closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.InstrumentID }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+                ChartEntityList.Add(entitySelectionData.InstrumentID);
+                SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
             }
 
         }
@@ -508,7 +637,9 @@ namespace GreenField.Gadgets.ViewModels
             DateTime periodStartDate;
             DateTime periodEndDate;
             GetPeriod(out periodStartDate, out periodEndDate);
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, FrequencyInterval, ChartEntityTypes, callback);
+            if (null != closingPriceDataLoadedEvent)
+                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, callback);
         }
 
         /// <summary>
@@ -557,6 +688,10 @@ namespace GreenField.Gadgets.ViewModels
                 case "Custom":
                     startDate = SelectedStartDate;
                     endDate = SelectedEndDate;
+                    break;
+                case "YTD":
+                    startDate = DateTime.Today;
+                    endDate = new DateTime((int)(DateTime.Today.Year), 1, 1);
                     break;
                 default:
                     startDate = endDate.AddMonths(-12);

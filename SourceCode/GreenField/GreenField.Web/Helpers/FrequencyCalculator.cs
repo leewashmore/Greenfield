@@ -8,9 +8,9 @@ namespace GreenField.Web.Helpers
 {
     public static class FrequencyCalculator
     {
-        public static List<UnrealizedGainLossData> RetrieveDataAccordingToFrequency(List<UnrealizedGainLossData> objPricingData, DateTime startDate, DateTime endDate, string FrequencyInterval)
+        public static List<DateTime> RetrieveDatesAccordingToFrequency(List<DateTime> objEndDates, DateTime startDate, DateTime endDate, string FrequencyInterval)
         {
-            List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
+            //List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
             List<DateTime> EndDates = new List<DateTime>();
             DateTime chartStartDate = startDate;
             DateTime chartEndDate = endDate;
@@ -100,7 +100,6 @@ namespace GreenField.Web.Helpers
                         break;
                     }
 
-
                 case ("Quarterly"):
                     {
                         int startDateQuarter = GetQuarter(startDate.Month);
@@ -108,9 +107,6 @@ namespace GreenField.Web.Helpers
 
                         #region CalculateQuartersBetweenDates
 
-                        //DateTime chartStartDate = startDate;
-                        //DateTime chartEndDate = endDate;
-                        //TimeSpan timeSpan = chartEndDate - chartStartDate;
                         int totalMonths = ((chartEndDate.Year - chartStartDate.Year) * 12) + chartEndDate.Month - chartStartDate.Month;
 
                         #endregion
@@ -163,11 +159,11 @@ namespace GreenField.Web.Helpers
                         }
 
                         #endregion
-                        
+
                         break;
                     }
 
-                case ("Semi-Annually"):
+                case ("Half-Yearly"):
                     {
                         int startDateSemiAnnually = GetHalfYearly(startDate.Month);
                         DateTime lastDate = startDate;
@@ -212,43 +208,48 @@ namespace GreenField.Web.Helpers
                         break;
                     }
 
-              default: 
-                    return objPricingData;                    
+                default:
+                    {
+                        return objEndDates;
+                        break;
+                    }
             }
 
-            #region CalculateListData
+            //#region CalculateListData
 
-            foreach (DateTime item in EndDates)
-            {
-                int i = 1;
-                bool dateObjectFound = true;
-                if (objPricingData.Any(r => r.FromDate == item))
-                {
-                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item).First());
-                    dateObjectFound = false;
-                    continue;
-                }
-                else
-                {
-                    dateObjectFound = true;
-                }
-                while (dateObjectFound)
-                {
-                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate == item.AddDays(-i));
-                    if (objDataFoundDec)
-                    {
-                        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.AddDays(-i)).First());
-                        dateObjectFound = false;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-            }
-            #endregion
+            //foreach (DateTime item in EndDates)
+            //{
+            //    int i = 1;
+            //    bool dateObjectFound = true;
 
-            return resultFrequency;
+            //    if (objPricingData.Any(r => r.FromDate == item))
+            //    {
+            //        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item).First());
+            //        dateObjectFound = false;
+            //        continue;
+            //    }
+            //    else
+            //    {
+            //        dateObjectFound = true;
+            //    }
+
+            //    while (dateObjectFound)
+            //    {
+            //        bool objDataFoundDec = objPricingData.Any(r => r.FromDate == item.AddDays(-i));
+            //        if (objDataFoundDec)
+            //        {
+            //            resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.AddDays(-i)).First());
+            //            dateObjectFound = false;
+            //        }
+            //        else
+            //        {
+            //            i++;
+            //        }
+            //    }
+            //}
+            //#endregion
+
+            return EndDates;
         }
 
         #region HelperMethods
@@ -275,5 +276,4 @@ namespace GreenField.Web.Helpers
 
         #endregion
     }
-
 }

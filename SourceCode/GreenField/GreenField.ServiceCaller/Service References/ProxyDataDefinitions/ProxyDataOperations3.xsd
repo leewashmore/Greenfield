@@ -368,6 +368,7 @@
         <xs:element minOccurs="0" name="entityIdentifier" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="frequencyInterval" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

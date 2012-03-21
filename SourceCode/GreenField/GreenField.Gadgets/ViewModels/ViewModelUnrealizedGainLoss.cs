@@ -14,14 +14,7 @@ using GreenField.Common.Helper;
 using System.Windows;
 
 namespace GreenField.Gadgets.ViewModels
-{
-    public delegate void UnrealizedGainLossDataLoaded(UnrealizedGainLossDataLoadEventArgs e);
-
-    public class UnrealizedGainLossDataLoadEventArgs : EventArgs
-    {
-        public bool ShowBusy { get; set; }
-    }
-
+{   
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
         private IEventAggregator _eventAggregator;
@@ -74,7 +67,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #region Time Period Selection and Frequncy Selection
+        #region Time Period Selection and Frequency Selection
         /// <summary>
         /// Collection of Time Range Options
         /// </summary>
@@ -204,7 +197,7 @@ namespace GreenField.Gadgets.ViewModels
                         DateTime periodEndDate;
                         GetPeriod(out periodStartDate, out periodEndDate);
                         if (null != unrealizedGainLossDataLoadedEvent)
-                            unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = true });
+                unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate,SelectedFrequencyRange,callback);
                     }
                     else
@@ -273,7 +266,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Events
-        public event UnrealizedGainLossDataLoaded unrealizedGainLossDataLoadedEvent;
+        public event DataRetrievalProgressIndicator unrealizedGainLossDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -319,12 +312,12 @@ namespace GreenField.Gadgets.ViewModels
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
                     if (null != unrealizedGainLossDataLoadedEvent)
-                        unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
+                unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    unrealizedGainLossDataLoadedEvent(new UnrealizedGainLossDataLoadEventArgs() { ShowBusy = false });
+                    unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             

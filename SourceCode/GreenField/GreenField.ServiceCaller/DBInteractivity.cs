@@ -537,7 +537,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
+        public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
         {
             
               ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();

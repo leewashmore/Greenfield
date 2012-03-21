@@ -13,8 +13,6 @@ using GreenField.Web.Helpers;
 
 namespace GreenField.Web.Services
 {
-
-
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ProxyDataOperations
@@ -753,12 +751,12 @@ namespace GreenField.Web.Services
                 decimal calculatedFXPrice = 0;
                 decimal fxAdjusted = 0;
 
+                //List Containing the names of Securities/Commodities/Indexes to be added
                 List<string> entityNames = entityIdentifiers.ToList();
 
-                List<PricingReferenceData> result = new List<PricingReferenceData>();
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                List<PricingReferenceData> pricingDataResult = new List<PricingReferenceData>();
 
-                //int b = entity.GF_PRICING_BASEVIEW.Where(r => r.TICKER == entityIdentifiers[0]).Count();
+                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
 
                 //Plotting a Single Line Chart
                 #region SingleLineChart
@@ -770,12 +768,11 @@ namespace GreenField.Web.Services
                         string entityName = item;
                         DateTime startDate = Convert.ToDateTime(startDateTime);
                         DateTime endDate = Convert.ToDateTime(endDateTime);
+
+
                         List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                            .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
+                            .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
                             .OrderByDescending(res => res.FROMDATE).ToList();
-                        //List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
-                        //    .Where(r => (r.TICKER == entityName))
-                        //    .OrderByDescending(res => res.FROMDATE).ToList();
 
                         // Calcluating the values of curPrice,curReturn,calculatedPrice
                         if (dimensionServicePricingData.Count != 0)
@@ -799,7 +796,7 @@ namespace GreenField.Web.Services
                                 objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
 
                                 //Checking if the Item is the first item in the list
-                                if ((pricingItem.TICKER == dimensionServicePricingData[0].TICKER) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
+                                if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
                                 {
                                     // if it is the first item in the list then simply save the value of calculated price
                                     objPricingReferenceData.CalculatedPrice = calculatedPrice;
@@ -812,7 +809,7 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.CalculatedPrice = calculatedPrice;
                                     curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
                                 }
-                                result.Add(objPricingReferenceData);
+                                pricingDataResult.Add(objPricingReferenceData);
                             }
                         }
                     }
@@ -836,7 +833,7 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
 
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
@@ -872,16 +869,16 @@ namespace GreenField.Web.Services
                                     {
                                         curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
                                         calculatedPrice = curPrice * (1 + (curReturn / 100));
-                                        fxAdjusted = calculatedFXPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                        calculatedFXPrice = fxAdjusted / previousFXAdjust * calculatedFXPrice;
+                                        fxAdjusted = calculatedPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                                        calculatedFXPrice = (fxAdjusted / previousFXAdjust) * calculatedFXPrice;
                                         curPrice = calculatedPrice;
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
+                                        objPricingReferenceData.CalculatedPrice = calculatedFXPrice;
                                     }
-                                    result.Add(objPricingReferenceData);
+                                    pricingDataResult.Add(objPricingReferenceData);
                                 }
 
                                 //Subtracting 100 from CalculatedFXPrice for all records
-                                foreach (PricingReferenceData objPricingReferenceData in result)
+                                foreach (PricingReferenceData objPricingReferenceData in pricingDataResult)
                                 {
                                     objPricingReferenceData.CalculatedPrice = objPricingReferenceData.CalculatedPrice - 100;
                                 }
@@ -898,12 +895,9 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
-
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TYPE == "CURRENCY") && (r.INSTRUMENT_ID == "365")).OrderByDescending(r => r.TICKER).ToList();
-
+                            
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
                             if (dimensionServicePricingData.Count != 0)
                             {
@@ -938,12 +932,35 @@ namespace GreenField.Web.Services
                                         previousPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                                         objPricingReferenceData.CalculatedPrice = calculatedPrice;
                                     }
-                                    result.Add(objPricingReferenceData);
+                                    pricingDataResult.Add(objPricingReferenceData);
                                 }
                             }
                         }
+
+                        //Reducing the CalculatedPrice by 100.
+                        foreach (PricingReferenceData item in pricingDataResult)
+                        {
+                            item.CalculatedPrice = item.CalculatedPrice - 100;
+                        }
                     }
                 }
+                #endregion
+
+                #region FilterDataAccordingToFrequency
+
+                List<DateTime> endDates = new List<DateTime>();
+
+                foreach (PricingReferenceData item in pricingDataResult)
+                {
+                    endDates.Add(Convert.ToDateTime(item.FromDate));
+                }
+
+                List<DateTime> allEndDates= new List<DateTime>();
+
+                allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(endDates, startDateTime, endDateTime, frequencyDuration);
+
+                List<PricingReferenceData> result = RetrievePricingDataAccordingFrequency(pricingDataResult, allEndDates);
+
                 #endregion
 
                 return result;
@@ -2066,7 +2083,23 @@ namespace GreenField.Web.Services
                     wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
                     unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
                     timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
-                    timeAndFrequencyFilteredGainLossResult = FrequencyCalculator.RetrieveDataAccordingToFrequency(timeFilteredUnrealizedGainLossResult, startDateTime, endDateTime, frequencyInterval);
+                    //timeAndFrequencyFilteredGainLossResult = FrequencyCalculator.RetrieveDatesAccordingToFrequency(timeFilteredUnrealizedGainLossResult, startDateTime, endDateTime, frequencyInterval);
+
+                    List<DateTime> EndDates = new List<DateTime>();
+
+                    foreach (UnrealizedGainLossData item in timeFilteredUnrealizedGainLossResult)
+                    {
+                        EndDates.Add(Convert.ToDateTime(item.FromDate));
+                    }
+
+                    List<DateTime> allEndDates = new List<DateTime>();
+
+                    allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
+
+                    timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
+
+                    
+
                 }
                 return timeAndFrequencyFilteredGainLossResult;
             }
@@ -2197,6 +2230,100 @@ namespace GreenField.Web.Services
             catch (Exception)
             { return false; }
         }
+        #endregion
+
+        #region Pricing Chart Helper MEthods
+
+        /// <summary>
+        /// Method to Retrieve Data Filtered according to Frequency.
+        /// If for a particular day , data is not present then the data for 1-day before is considered.
+        /// </summary>
+        /// <param name="objPricingData"></param>
+        /// <param name="objEndDates"></param>
+        /// <returns></returns>
+        private List<PricingReferenceData> RetrievePricingDataAccordingFrequency(List<PricingReferenceData> objPricingData, List<DateTime> objEndDates)
+        {
+            List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
+            List<DateTime> EndDates = objEndDates;
+
+            foreach (DateTime item in EndDates)
+            {
+                int i = 1;
+                bool dateObjectFound = true;
+
+                if (objPricingData.Any(r => r.FromDate == item))
+                {
+                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item).First());
+                    dateObjectFound = false;
+                    continue;
+                }
+                else
+                {
+                    dateObjectFound = true;
+                }
+
+                while (dateObjectFound)
+                {
+                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate == item.AddDays(-i));
+                    if (objDataFoundDec)
+                    {
+                        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        dateObjectFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            return resultFrequency;
+        }
+
+        /// <summary>
+        /// Method to Retrieve Data Filtered according to Frequency.
+        /// If for a particular day , data is not present then the data for 1-day before is considered.
+        /// </summary>
+        /// <param name="objUnrealizedGainLossData"></param>
+        /// <param name="objEndDates"></param>
+        /// <returns></returns>
+        private List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(List<UnrealizedGainLossData> objUnrealizedGainLossData, List<DateTime> objEndDates)
+        {
+            List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
+            
+            List<DateTime> EndDates = objEndDates;
+            foreach (DateTime item in EndDates)
+            {
+                int i = 1;
+                bool dateObjectFound = true;
+
+                if (objUnrealizedGainLossData.Any(r => r.FromDate == item))
+                {
+                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item).First());
+                    dateObjectFound = false;
+                    continue;
+                }
+                else
+                {
+                    dateObjectFound = true;
+                }
+
+                while (dateObjectFound)
+                {
+                    bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate == item.AddDays(-i));
+                    if (objDataFoundDec)
+                    {
+                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        dateObjectFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            return resultFrequency;
+        }
+
         #endregion
     }
 }

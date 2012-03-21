@@ -157,12 +157,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                 <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                      ItemsSource="{Binding CbFrequencyValues,Mode=TwoWay}">
-                    <telerik:RadComboBoxItem Content="Daily" IsSelected="True"/>
-                    <telerik:RadComboBoxItem Content="Weekly"/>
-                    <telerik:RadComboBoxItem Content="Monthly"/>
-                    <telerik:RadComboBoxItem Content="Quarterly"/>
-                    <telerik:RadComboBoxItem Content="Yearly"/>
+                                      ItemsSource="{Binding FrequencyInterval,Mode=TwoWay}" 
+                                      SelectedItem="{Binding SelectedFrequencyInterval, Mode=TwoWay}">
                 </telerik:RadComboBox>
             </Grid>
 
@@ -176,27 +172,34 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <telerik:RadComboBox Grid.Column="0" 
+                <telerik:RadComboBox Grid.Column="0"  
                                      ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                      IsEditable="True" telerik:TextSearch.TextPath="ShortName" Width="150"
                                      CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
                                      OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                     Text="{Binding SeriesEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
+                                     Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
+                                     SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
                                      ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
                                      HorizontalAlignment="Right"/>
-                <Button Grid.Column="1" HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
+                <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
                     <Image Source="../Images/AddToChart.png"/>
                 </Button>
+                
             </Grid>
 
             <Grid Grid.Row="5" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          IsChecked="{Binding SearchFilterEnabled,Mode=TwoWay}"/>
+                          IsChecked="{Binding ReturnTypeSelection,Mode=TwoWay}" Grid.Row="0" />
+                <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" Grid.Row="1"/>
             </Grid>
 
             <Grid Grid.Row="6" Margin="0,5,0,0">
-                <ItemsControl HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
+                <ItemsControl  HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -221,8 +224,7 @@
 
             <Grid Grid.Row="0" Margin="0,0,0,5">
                 <CheckBox Content="Total Return" HorizontalAlignment="Left" x:Name="returnTypeSelectionCheckBox" 
-                          VerticalAlignment="Top"
-                  IsChecked="{Binding ReturnTypeSelectionCheckBoxValue, Mode=TwoWay}" />
+                          VerticalAlignment="Top" IsChecked="{Binding ReturnTypeSelection, Mode=TwoWay}" />
                 <Button Command="{Binding ExportExcelCommand}" Height="20" HorizontalAlignment="Right" 
                         Margin="0,0,0,0" 
                 Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" >
@@ -275,55 +277,62 @@
 
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
-
-                    <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
+                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                        <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True">
-                        <telerik:RadChart.DefaultView>
-                            <telerik:ChartDefaultView ChartLegendPosition="Top">
-                                <telerik:ChartDefaultView.ChartArea>
-                                    <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" EnableAnimations="False" >
-                                        <telerik:ChartArea.ZoomScrollSettingsX>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0.033" ScrollMode="ScrollAndZoom"/>
-                                        </telerik:ChartArea.ZoomScrollSettingsX>
-                                        <telerik:ChartArea.AxisX>
-                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="M" 
-                                                           LayoutMode="Auto" Title="Period" LabelStep="1"/>
-                                        </telerik:ChartArea.AxisX>
-                                        <telerik:ChartArea.AxisY>
-                                            <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
-                                        </telerik:ChartArea.AxisY>
-                                    </telerik:ChartArea>
-                                </telerik:ChartDefaultView.ChartArea>
-                                <telerik:ChartDefaultView.ChartLegend>
-                                    <telerik:ChartLegend UseAutoGeneratedItems="True" LegendItemMarkerShape="SquareRounded"
+                            <telerik:RadChart.DefaultView>
+                                <telerik:ChartDefaultView ChartLegendPosition="Top">
+                                    <telerik:ChartDefaultView.ChartArea>
+                                        <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" EnableAnimations="False"
+                                                       NoDataString="No Data Available">
+                                            <telerik:ChartArea.ZoomScrollSettingsX>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" />
+                                            </telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ChartArea.ZoomScrollSettingsY>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom"/>
+                                            </telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ChartArea.AxisX>
+                                                <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM" 
+                                                           LayoutMode="Auto" Title="Period" LabelStep="1" LabelRotationAngle="45"/>
+                                            </telerik:ChartArea.AxisX>
+                                            <telerik:ChartArea.AxisY>
+                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed"
+                                                           AutoRange="True" />
+                                            </telerik:ChartArea.AxisY>
+                                        </telerik:ChartArea>
+                                    </telerik:ChartDefaultView.ChartArea>
+                                    <telerik:ChartDefaultView.ChartLegend>
+                                        <telerik:ChartLegend UseAutoGeneratedItems="True" LegendItemMarkerShape="SquareRounded"
                                                          Header="" ItemsPanelOrientation="Horizontal" x:Name="chPricingLegend" />
-                                </telerik:ChartDefaultView.ChartLegend>
-                                <telerikCharting:ChartDefaultView.ChartTitle>
-                                    <telerikCharting:ChartTitle Content="Closing Price" FontSize="11"/>
-                                </telerikCharting:ChartDefaultView.ChartTitle>
-                            </telerik:ChartDefaultView>
-                        </telerik:RadChart.DefaultView>
+                                    </telerik:ChartDefaultView.ChartLegend>
+                                    <telerikCharting:ChartDefaultView.ChartTitle>
+                                        <telerikCharting:ChartTitle Content="Closing Price" FontSize="11"/>
+                                    </telerikCharting:ChartDefaultView.ChartTitle>
+                                </telerik:ChartDefaultView>
+                            </telerik:RadChart.DefaultView>
 
-                        <telerik:RadChart.SeriesMappings>
-                            <telerik:SeriesMapping>
-                                <telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
+                            <telerik:RadChart.SeriesMappings>
+                                <telerik:SeriesMapping>
+                                    <telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                   EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                                  LegendDisplayMode="SeriesLabel"/>
-                                </telerik:SeriesMapping.SeriesDefinition>
-                                <telerik:SeriesMapping.GroupingSettings>
-                                    <telerik:GroupingSettings>
-                                        <telerik:GroupingSettings.GroupDescriptors>
-                                            <telerikCharting:ChartGroupDescriptor Member="IssueName"/>
-                                        </telerik:GroupingSettings.GroupDescriptors>
-                                    </telerik:GroupingSettings>
-                                </telerik:SeriesMapping.GroupingSettings>
-                                <telerik:ItemMapping FieldName="CalculatedPrice" DataPointMember="YValue" />
-                                <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
-                                <telerik:ItemMapping DataPointMember="Tooltip" FieldName="CalculatedPrice"/>
-                            </telerik:SeriesMapping>
-                        </telerik:RadChart.SeriesMappings>
-                    </telerik:RadChart>
+                                                                  LegendDisplayMode="SeriesLabel" 
+                                                                  ItemToolTipFormat="Return : #CalculatedPrice{0.0000}/ Date: #FromDate{dd-MMM}"/>
+                                    </telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:SeriesMapping.GroupingSettings>
+                                        <telerik:GroupingSettings>
+                                            <telerik:GroupingSettings.GroupDescriptors>
+                                                <telerikCharting:ChartGroupDescriptor Member="IssueName"/>
+                                            </telerik:GroupingSettings.GroupDescriptors>
+                                        </telerik:GroupingSettings>
+                                    </telerik:SeriesMapping.GroupingSettings>
+                                    <telerik:ItemMapping FieldName="CalculatedPrice" DataPointMember="YValue" />
+                                    <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
+                                    <!--<telerik:ItemMapping DataPointMember="Tooltip" FieldName="CalculatedPrice"/>-->
+                                </telerik:SeriesMapping>
+                            </telerik:RadChart.SeriesMappings>
+                        </telerik:RadChart>
+                    </telerik:RadBusyIndicator>
                 </Border>
             </Grid>
 
@@ -352,9 +361,12 @@
                                         <telerik:ChartArea.ZoomScrollSettingsX>
                                             <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom"/>
                                         </telerik:ChartArea.ZoomScrollSettingsX>
+                                        <telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.10" ScrollMode="ScrollAndZoom"/>
+                                        </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerik:ChartArea.AxisX>
-                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="M" 
-                                                           LayoutMode="Auto" LabelStep="5"/>
+                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM" 
+                                                           LayoutMode="Auto" LabelStep="5" LabelRotationAngle="45"/>
                                         </telerik:ChartArea.AxisX>
                                         <telerik:ChartArea.AxisY>
                                             <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed"
@@ -373,10 +385,11 @@
                         </telerik:RadChart.DefaultView>
 
                         <telerik:RadChart.SeriesMappings>
+
                             <telerik:SeriesMapping>
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
-                                                                  />
+                                                                 ItemToolTipFormat="Volume: #Volume /Date: #FromDate{dd-MMM}" />
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:SeriesMapping.GroupingSettings>
                                     <telerik:GroupingSettings>
@@ -387,9 +400,9 @@
                                 </telerik:SeriesMapping.GroupingSettings>
                                 <telerik:ItemMapping FieldName="Volume" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
-                                <telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>
-
+                                <!--<telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>-->
                             </telerik:SeriesMapping>
+
                         </telerik:RadChart.SeriesMappings>
                     </telerik:RadChart>
                 </Border>
@@ -397,4 +410,3 @@
         </Grid>
     </Grid>
 </UserControl>
-  

@@ -69,12 +69,22 @@ namespace GreenField.Common
         public static Int32 FATAL_LEVEL = 1;
     }
 
-    public static class BenchmarkReturnTypes
+    public delegate void DataRetrievalProgressIndicator(DataRetrievalProgressIndicatorEventArgs e);
+
+    public class DataRetrievalProgressIndicatorEventArgs : EventArgs
+    {
+        public bool ShowBusy { get; set; }
+    }
+
+      public static class BenchmarkReturnTypes
     {
         public static string TotalReturnType = "Total(Gross)";
         public static string NetReturnType = "( Net Return )";
         public static string PriceReturnType = "( Price Return )";
     }
+
+
+
 
 
 }

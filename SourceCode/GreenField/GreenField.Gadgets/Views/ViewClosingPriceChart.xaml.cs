@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.IO;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -24,6 +25,16 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+            DataContextSource.closingPriceDataLoadedEvent+=new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
+        }
+
+
+        void DataContextSource_closingPriceDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.busyIndicator.IsBusy = true;
+            else
+                this.busyIndicator.IsBusy = false;
         }
 
         /// <summary>
