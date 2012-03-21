@@ -295,7 +295,6 @@ namespace GreenField.App.ViewModel
         #endregion
 
         # region ICommand
-
         public ICommand LogOutCommand
         {
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
@@ -339,6 +338,11 @@ namespace GreenField.App.ViewModel
         public ICommand RoleManagementCommand
         {
             get { return new DelegateCommand<object>(RoleManagementCommandMethod); }
+        }
+
+        public ICommand DailyMorningSnapshotCommand
+        {
+            get { return new DelegateCommand<object>(DailyMorningSnapshotCommandMethod); }
         }
 
         public ICommand MyDashboardCommand
@@ -597,6 +601,11 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+        }
+
+        private void DailyMorningSnapshotCommandMethod(object param)
+        {
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewMorningSnapshot", UriKind.Relative));
         }
 
         /// <summary>

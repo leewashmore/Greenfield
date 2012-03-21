@@ -24,7 +24,8 @@ namespace GreenField.App
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.AdministrationModule.AdministrationModule).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Module.Module).Assembly));            
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.ServiceCaller.DBInteractivity).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashBoardModule.DashBoardModule).Assembly));           
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashBoardModule.DashBoardModule).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Benchmark.BenchmarkModule).Assembly));           
 
         }
 

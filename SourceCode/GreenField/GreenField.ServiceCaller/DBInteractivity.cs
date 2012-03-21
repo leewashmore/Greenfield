@@ -6,6 +6,8 @@ using System.ComponentModel.Composition;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.ObjectModel;
+using System.Windows;
+
 
 namespace GreenField.ServiceCaller
 {
@@ -295,7 +297,7 @@ namespace GreenField.ServiceCaller
             client.RetrievePortfolioNamesCompleted -= client_RetrievePortfolioNamesCompleted;
         }
 
-        public void RetrieveSecurityReferenceData(Action<List<SecurityReferenceData>> callback)
+        public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveSecurityReferenceDataAsync();
@@ -306,7 +308,7 @@ namespace GreenField.ServiceCaller
                 };
         }
 
-        public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityReferenceData> callback)
+        public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityOverviewData> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveSecurityReferenceDataByTickerAsync(ticker);
@@ -346,14 +348,23 @@ namespace GreenField.ServiceCaller
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
             };
         }
 
         public void RetrievePricingReferenceData(ObservableCollection<String> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, bool chartEntityTypes, Action<List<PricingReferenceData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
+            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
                 if (callback != null)
@@ -459,20 +470,101 @@ namespace GreenField.ServiceCaller
                     callback(e.Result.ToList());
             };
         }
-
-        public void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, Action<List<UnrealizedGainLossData>> callback)
+        
+        public void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime);
-            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+            client.RetrieveUserPreferenceBenchmarkDataAsync(userName);
+            client.RetrieveUserPreferenceBenchmarkDataCompleted += (se, e) =>
             {
                 if (callback != null)
                     callback(e.Result.ToList());
             };
         }
 
+        public void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveMorningSnapshotDataAsync(userBenchmarkPreference);
+            client.RetrieveMorningSnapshotDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
 
-      
+        public void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.AddUserPreferenceBenchmarkGroupAsync(userName, groupName);
+            client.AddUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
 
+        public void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RemoveUserPreferenceBenchmarkGroupAsync(userName, groupName);
+            client.RemoveUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        public void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.AddUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
+            client.AddUserPreferenceBenchmarkCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        public void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RemoveUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
+            client.RemoveUserPreferenceBenchmarkCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+        #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
+
+        /// <summary>
+        /// Method that calls the Unrealized Gain Loss service method and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="entityIdentifier"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <param name="frequencyInterval"></param>
+        /// <param name="callback"></param>
+        public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
+        {
+            
+              ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+                client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
+             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+                {
+                    if (callback != null)
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else 
+                        {
+                            callback(null);
+                        }
+                };
+        }
+        #endregion
     }
 }

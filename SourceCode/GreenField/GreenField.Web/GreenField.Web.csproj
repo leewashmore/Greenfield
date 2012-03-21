@@ -40,6 +40,7 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -58,8 +59,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
+    <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
@@ -136,11 +139,12 @@
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
-    <Compile Include="DataContracts\SecurityReferenceData.cs" />
+    <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
+    <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DimensionDataLocalService\Reference.cs">
@@ -192,6 +196,9 @@
     <ServiceReferenceMetadataStorage Include="Service References\DimensionEntitiesService\">
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

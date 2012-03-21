@@ -10,19 +10,29 @@ using GreenField.Web.DataContracts;
 using System.Data.SqlClient;
 using System.ServiceModel.Activation;
 using GreenField.Web.Helpers;
+using GreenField.Web.DimensionEntitiesService;
+using System.Configuration;
 
 namespace GreenField.Web.Services
 {
-
-
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ProxyDataOperations
-    {
+    {       
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if(null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
-        private DimensionEntitiesService.Entities dimensionEntity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                return dimensionEntity;
+            }
+        }
 
         private StringBuilder secShortList = new StringBuilder();
+
         [OperationContract]
         public String RetrievePrintValue()
         {
@@ -665,17 +675,17 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<SecurityReferenceData> RetrieveSecurityReferenceData()
+        public List<SecurityOverviewData> RetrieveSecurityReferenceData()
         {
             try
             {
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_SECURITY_BASEVIEW> data = entity.GF_SECURITY_BASEVIEW.ToList();
 
-                List<SecurityReferenceData> result = new List<SecurityReferenceData>();
+                List<SecurityOverviewData> result = new List<SecurityOverviewData>();
                 foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
                 {
-                    result.Add(new SecurityReferenceData()
+                    result.Add(new SecurityOverviewData()
                 {
                     IssueName = record.ISSUE_NAME,
                     Ticker = record.TICKER,
@@ -683,31 +693,31 @@ namespace GreenField.Web.Services
                     Sector = record.GICS_SECTOR_NAME,
                     Industry = record.GICS_INDUSTRY_NAME,
                     SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
-                    Exchange = record.STOCK_EXCHANGE_ID,
+                    PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = record.TRADING_CURRENCY,
                     FiscalYearEnd = record.FISCAL_YEAR_END,
                     Website = record.WEBSITE,
-                    Description = record.ASHEMM_ONE_LINER_DESCRIPTION
+                    Description = record.BLOOMBERG_DESCRIPTION
                 });
                 }
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
         }
 
         [OperationContract]
-        public SecurityReferenceData RetrieveSecurityReferenceDataByTicker(string ticker)
+        public SecurityOverviewData RetrieveSecurityReferenceDataByTicker(string ticker)
         {
             try
             {
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                DimensionEntitiesService.Entities entity = DimensionEntity;
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).First();
 
-                SecurityReferenceData result = new SecurityReferenceData()
+                SecurityOverviewData result = new SecurityOverviewData()
                 {
                     IssueName = data.ISSUE_NAME,
                     Ticker = data.TICKER,
@@ -715,16 +725,16 @@ namespace GreenField.Web.Services
                     Sector = data.GICS_SECTOR_NAME,
                     Industry = data.GICS_INDUSTRY_NAME,
                     SubIndustry = data.GICS_SUB_INDUSTRY_NAME,
-                    Exchange = data.STOCK_EXCHANGE_ID,
+                    PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
                     FiscalYearEnd = data.FISCAL_YEAR_END,
                     Website = data.WEBSITE,
-                    Description = data.ASHEMM_ONE_LINER_DESCRIPTION
+                    Description = data.BLOOMBERG_DESCRIPTION
                 };
 
                 return result;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -753,12 +763,12 @@ namespace GreenField.Web.Services
                 decimal calculatedFXPrice = 0;
                 decimal fxAdjusted = 0;
 
+                //List Containing the names of Securities/Commodities/Indexes to be added
                 List<string> entityNames = entityIdentifiers.ToList();
 
-                List<PricingReferenceData> result = new List<PricingReferenceData>();
-                DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
+                List<PricingReferenceData> pricingDataResult = new List<PricingReferenceData>();
 
-                //int b = entity.GF_PRICING_BASEVIEW.Where(r => r.TICKER == entityIdentifiers[0]).Count();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
                 //Plotting a Single Line Chart
                 #region SingleLineChart
@@ -770,12 +780,11 @@ namespace GreenField.Web.Services
                         string entityName = item;
                         DateTime startDate = Convert.ToDateTime(startDateTime);
                         DateTime endDate = Convert.ToDateTime(endDateTime);
+
+
                         List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                            .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
+                            .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
                             .OrderByDescending(res => res.FROMDATE).ToList();
-                        //List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
-                        //    .Where(r => (r.TICKER == entityName))
-                        //    .OrderByDescending(res => res.FROMDATE).ToList();
 
                         // Calcluating the values of curPrice,curReturn,calculatedPrice
                         if (dimensionServicePricingData.Count != 0)
@@ -799,7 +808,7 @@ namespace GreenField.Web.Services
                                 objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
 
                                 //Checking if the Item is the first item in the list
-                                if ((pricingItem.TICKER == dimensionServicePricingData[0].TICKER) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
+                                if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
                                 {
                                     // if it is the first item in the list then simply save the value of calculated price
                                     objPricingReferenceData.CalculatedPrice = calculatedPrice;
@@ -812,7 +821,7 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.CalculatedPrice = calculatedPrice;
                                     curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
                                 }
-                                result.Add(objPricingReferenceData);
+                                pricingDataResult.Add(objPricingReferenceData);
                             }
                         }
                     }
@@ -836,7 +845,7 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
 
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
@@ -872,16 +881,16 @@ namespace GreenField.Web.Services
                                     {
                                         curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
                                         calculatedPrice = curPrice * (1 + (curReturn / 100));
-                                        fxAdjusted = calculatedFXPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                        calculatedFXPrice = fxAdjusted / previousFXAdjust * calculatedFXPrice;
+                                        fxAdjusted = calculatedPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                                        calculatedFXPrice = (fxAdjusted / previousFXAdjust) * calculatedFXPrice;
                                         curPrice = calculatedPrice;
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
+                                        objPricingReferenceData.CalculatedPrice = calculatedFXPrice;
                                     }
-                                    result.Add(objPricingReferenceData);
+                                    pricingDataResult.Add(objPricingReferenceData);
                                 }
 
                                 //Subtracting 100 from CalculatedFXPrice for all records
-                                foreach (PricingReferenceData objPricingReferenceData in result)
+                                foreach (PricingReferenceData objPricingReferenceData in pricingDataResult)
                                 {
                                     objPricingReferenceData.CalculatedPrice = objPricingReferenceData.CalculatedPrice - 100;
                                 }
@@ -898,12 +907,9 @@ namespace GreenField.Web.Services
                             DateTime startDate = Convert.ToDateTime(startDateTime);
                             DateTime endDate = Convert.ToDateTime(endDateTime);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TICKER == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
+                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
-
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData1 = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.TYPE == "CURRENCY") && (r.INSTRUMENT_ID == "365")).OrderByDescending(r => r.TICKER).ToList();
-
+                            
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
                             if (dimensionServicePricingData.Count != 0)
                             {
@@ -938,18 +944,41 @@ namespace GreenField.Web.Services
                                         previousPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                                         objPricingReferenceData.CalculatedPrice = calculatedPrice;
                                     }
-                                    result.Add(objPricingReferenceData);
+                                    pricingDataResult.Add(objPricingReferenceData);
                                 }
                             }
+                        }
+
+                        //Reducing the CalculatedPrice by 100.
+                        foreach (PricingReferenceData item in pricingDataResult)
+                        {
+                            item.CalculatedPrice = item.CalculatedPrice - 100;
                         }
                     }
                 }
                 #endregion
 
+                #region FilterDataAccordingToFrequency
+
+                List<DateTime> endDates = new List<DateTime>();
+
+                foreach (PricingReferenceData item in pricingDataResult)
+                {
+                    endDates.Add(Convert.ToDateTime(item.FromDate));
+                }
+
+                List<DateTime> allEndDates= new List<DateTime>();
+
+                allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(endDates, startDateTime, endDateTime, frequencyDuration);
+
+                List<PricingReferenceData> result = RetrievePricingDataAccordingFrequency(pricingDataResult, allEndDates);
+
+                #endregion
+
                 return result;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
@@ -961,7 +990,7 @@ namespace GreenField.Web.Services
         {
             try
             {
-                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = dimensionEntity.GF_SELECTION_BASEVIEW.ToList();
+                List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
 
 
@@ -1016,13 +1045,11 @@ namespace GreenField.Web.Services
             {
                 List<BenchmarkSelectionData> result = new List<BenchmarkSelectionData>();
 
-                for (int i = 0; i < 10; i++)
-                {
-                    result.Add(new BenchmarkSelectionData()
-                    {
-                        Name = "Benchmark " + (i + 1).ToString()
-                    });
-                }
+                result.Add(new BenchmarkSelectionData() { Name = "EM Emerging Markets" });
+                result.Add(new BenchmarkSelectionData() { Name = "IMI Emerging Markets" });
+                result.Add(new BenchmarkSelectionData() { Name = "Indonesia" });
+                result.Add(new BenchmarkSelectionData() { Name = "India" });
+                result.Add(new BenchmarkSelectionData() { Name = "China" });
 
                 return result;
             }
@@ -2038,35 +2065,263 @@ namespace GreenField.Web.Services
 
             return portfolioRiskReturnValues;
         }
+        /// <summary>
+        /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
+        /// </summary>
+        /// <param name="entityIdentifier"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>       
+        /// <param name="frequencyInterval"></param>       
+        /// <returns>List of UnrealozedGainLossData</returns>
+        [OperationContract]
+        public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
+        {
+            
+            List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
+            int noOfRows;
+            try
+            {
+                if (entityIdentifier != null && startDateTime != null && endDateTime != null && frequencyInterval != null)
+                {
+                    DimensionEntitiesService.Entities entity = DimensionEntity;
+                    List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
+                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();                    
+                    noOfRows = arrangedByDescRecord.Count();
+                    List<UnrealizedGainLossData>  adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                    List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                    List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                    List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                    List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();                    
+                    //Filtering the list according to the frequency selected.
+                    List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
+                                               select p.FromDate).ToList();                    
+                    List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
+                    timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
+                }
+
+                return timeAndFrequencyFilteredGainLossResult;
+            }
+            catch (Exception)
+            {
+                return null;
+            }                        
+        }
+
+        #region Morning Snapshot Operation Contracts
 
         [OperationContract]
-        public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime)
+        public List<UserBenchmarkPreference> RetrieveUserPreferenceBenchmarkData(string userName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    ResearchEntities entity = new ResearchEntities();
+                    List<UserBenchmarkPreference> userPreference = (entity.GetUserBenchmarkPreference(userName)).ToList<UserBenchmarkPreference>();
+                    return userPreference;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        [OperationContract]
+        public List<MorningSnapshotData> RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference)
         {
 
-            List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> movingAverageResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> ninetyDayWtResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> costResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> wtAvgCostResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> unrealizedGainLossResult = new List<UnrealizedGainLossData>();
-            List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = new List<UnrealizedGainLossData>();
+            List<MorningSnapshotData> result = new List<MorningSnapshotData>();
+            foreach (UserBenchmarkPreference preference in userBenchmarkPreference)
+            {
+                if (preference.BenchmarkName != null)
+                {
+                    result.Add(new MorningSnapshotData()
+                    {
+                        MorningSnapshotPreferenceInfo = preference,
+                        DTD = -0.1,
+                        WTD = -0.1,
+                        MTD = 4.4,
+                        QTD = 4.4,
+                        YTD = 7.4,
+                        PreviousYearPrice = 4.6,
+                        IIPreviousYearPrice = 52.3,
+                        IIIPreviousYearPrice = -50.8
+                    });
+                }
+                else
+                {
+                    result.Add(new MorningSnapshotData()
+                    {
+                        MorningSnapshotPreferenceInfo = preference                        
+                    });
+                }
+            }
 
-            DimensionEntitiesService.Entities entity = new DimensionEntitiesService.Entities(new Uri("http://172.16.1.137/GreenFieldOData/wcfdataservice.svc/"));
-            int noOfRows;
-            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
-            .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
-            //ResearchEntities research = new ResearchEntities();
-            //List<tblUnrealizedGLData> arrangedByDescRecord = research.tblUnrealizedGLDatas.Where(r => (r.TICKER == entityIdentifier) && (r.FROMDATE >= startDateTime) && (r.FROMDATE < endDateTime)).OrderByDescending(res => res.FROMDATE).ToList();
-            noOfRows = arrangedByDescRecord.Count();
-            adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
-            movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
-            ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
-            costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
-            wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
-            unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
-            timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
-
-            return timeFilteredUnrealizedGainLossResult;
+            return result;
         }
+
+        [OperationContract]
+        public bool AddUserPreferenceBenchmarkGroup(string userName, string groupName)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.SetUserGroupPreference(userName, groupName);
+                return true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [OperationContract]
+        public bool RemoveUserPreferenceBenchmarkGroup(string userName, string groupname)
+        {
+            try
+            {
+                ResearchEntities entity = new ResearchEntities();
+                entity.DeleteUserGroupPreference(userName, groupname);
+                return true;
+            }
+
+            catch (Exception)
+            { 
+                return false; 
+            }
+        }
+
+        [OperationContract]
+        public bool AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.SetUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName, userBenchmarkPreference.BenchmarkReturnType);
+                return true;
+            }
+
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        [OperationContract]
+        public bool RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.DeleteUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName);
+                return true;
+            }
+
+            catch (Exception)
+            { return false; }
+        }
+        #endregion
+
+        #region Pricing Chart Helper MEthods
+
+        /// <summary>
+        /// Method to Retrieve Data Filtered according to Frequency.
+        /// If for a particular day , data is not present then the data for 1-day before is considered.
+        /// </summary>
+        /// <param name="objPricingData"></param>
+        /// <param name="objEndDates"></param>
+        /// <returns></returns>
+        private List<PricingReferenceData> RetrievePricingDataAccordingFrequency(List<PricingReferenceData> objPricingData, List<DateTime> objEndDates)
+        {
+            List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
+            List<DateTime> EndDates = objEndDates;
+
+            foreach (DateTime item in EndDates)
+            {
+                int i = 1;
+                bool dateObjectFound = true;
+
+                if (objPricingData.Any(r => r.FromDate == item))
+                {
+                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item).First());
+                    dateObjectFound = false;
+                    continue;
+                }
+                else
+                {
+                    dateObjectFound = true;
+                }
+
+                while (dateObjectFound)
+                {
+                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate == item.AddDays(-i));
+                    if (objDataFoundDec)
+                    {
+                        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        dateObjectFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            return resultFrequency;
+        }
+
+        /// <summary>
+        /// Method to Retrieve Data Filtered according to Frequency.
+        /// If for a particular day , data is not present then the data for 1-day before is considered.
+        /// </summary>
+        /// <param name="objUnrealizedGainLossData"></param>
+        /// <param name="objEndDates"></param>
+        /// <returns></returns>
+        private List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(List<UnrealizedGainLossData> objUnrealizedGainLossData, List<DateTime> objEndDates)
+        {
+            List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
+            
+            List<DateTime> EndDates = objEndDates;
+            foreach (DateTime item in EndDates)
+            {
+                int i = 1;
+                bool dateObjectFound = true;
+
+                if (objUnrealizedGainLossData.Any(r => r.FromDate == item))
+                {
+                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item).First());
+                    dateObjectFound = false;
+                    continue;
+                }
+                else
+                {
+                    dateObjectFound = true;
+                }
+
+                while (dateObjectFound)
+                {
+                    bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate == item.AddDays(-i));
+                    if (objDataFoundDec)
+                    {
+                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        dateObjectFound = false;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+            }
+            return resultFrequency;
+        }
+
+        #endregion
     }
 }

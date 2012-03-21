@@ -11,31 +11,31 @@ namespace GreenField.Web.DataContracts
     public class MorningSnapshotData
     {
         [DataMember]
-        public UserBenchmarkPreference MorningSnapshotPreferenceData { get; set; }
+        public UserBenchmarkPreference MorningSnapshotPreferenceInfo { get; set; }
 
         [DataMember]
-        public double DTD { get; set; }
+        public double? DTD { get; set; }
 
         [DataMember]
-        public double WTD { get; set; }
+        public double? WTD { get; set; }
 
         [DataMember]
-        public double MTD { get; set; }
+        public double? MTD { get; set; }
 
         [DataMember]
-        public double QTD { get; set; }
+        public double? QTD { get; set; }
 
         [DataMember]
-        public double YTD { get; set; }
+        public double? YTD { get; set; }
 
         [DataMember]
-        public double PreviousYearPrice { get; set; }
+        public double? PreviousYearPrice { get; set; }
 
         [DataMember]
-        public double IIPreviousYearPrice { get; set; }
+        public double? IIPreviousYearPrice { get; set; }
 
         [DataMember]
-        public double IIIPreviousYearPrice { get; set; }
+        public double? IIIPreviousYearPrice { get; set; }
     }
 
 }

@@ -20,13 +20,14 @@
                          Name="txtEnterValue" 
                          BorderBrush="Black"
                          VerticalAlignment="Center" 
+                         TextChanged="txtEnterValue_TextChanged"
                          Width="200"/>
                          <!--TextChanged="txtEnterValue_TextChanged"/>-->
             </StackPanel>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23"/>
+            <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" IsEnabled="False"/>
             <!--IsEnabled="False" />-->
             <telerik:RadButton x:Name="CancelButton" Margin="5,0,0,0" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23"/>
         </StackPanel>

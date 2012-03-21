@@ -143,12 +143,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                 <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                      ItemsSource="{Binding CbFrequencyValues}">
-                    <telerik:RadComboBoxItem Content="Daily" IsSelected="True"/>
-                    <telerik:RadComboBoxItem Content="Weekly"/>
-                    <telerik:RadComboBoxItem Content="Monthly"/>
-                    <telerik:RadComboBoxItem Content="Quarterly"/>
-                    <telerik:RadComboBoxItem Content="Yearly"/>
+                                      ItemsSource="{Binding FrequencyRange}" SelectedValue="{Binding SelectedFrequencyRange,Mode=TwoWay}">                    
                 </telerik:RadComboBox>
             </Grid>
         </Grid>
@@ -161,7 +156,7 @@
 
             <Grid Grid.Row="0" Margin="0,0,0,5">
                 <Button Command="{Binding ExportExcelCommand}" Height="20" HorizontalAlignment="Right" 
-                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" >
+                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
                     <Button.Content>
                         <Image Source="../Images/ExportExcel.png" />
                     </Button.Content>
@@ -191,6 +186,9 @@
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
                                             </telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ChartArea.ZoomScrollSettingsY>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
+                                            </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
                                                 <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM-yyyy" 
                                                            LayoutMode="Auto" Title="Period"  StepLabelLevelHeight="10" LabelRotationAngle="45"/>
@@ -200,7 +198,7 @@
                                             </telerik:ChartArea.AxisY>
                                             <telerik:ChartArea.AdditionalYAxes>
                                                 <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
-                                                   AutoRange="False" MinValue="-1" MaxValue="1" Step="0.2">
+                                                    AutoRange="True">
                                                 </telerik:AxisY>
                                             </telerik:ChartArea.AdditionalYAxes>
                                         </telerik:ChartArea>

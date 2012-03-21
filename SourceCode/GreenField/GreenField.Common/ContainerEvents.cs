@@ -34,8 +34,7 @@ namespace GreenField.Common
     public class DashBoardTileViewItemInfo
     {
         public string DashBoardTileHeader { get; set; }
-        public object DashBoardTileObject { get; set; }
-        public SecurityReferenceData DashBoardTileSecurityReference { get; set; }
+        public object DashBoardTileObject { get; set; }        
     }
 
     /// <summary>

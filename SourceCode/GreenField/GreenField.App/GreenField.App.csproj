@@ -155,6 +155,7 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\balancesheet.png" />
     <Resource Include="Images\saveButtonImage.png" />
     <Resource Include="Images\HoldingsImage.png" />
     <Resource Include="Images\PerformanceChart.png" />
@@ -200,6 +201,10 @@
     <ProjectReference Include="..\GreenField.AdministrationModule\GreenField.AdministrationModule.csproj">
       <Project>{DDB40CCE-A142-4911-8B48-6424B737D8F7}</Project>
       <Name>GreenField.AdministrationModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.Benchmark\GreenField.Benchmark.csproj">
+      <Project>{5251F297-C5DB-40E5-B629-18CAA846E892}</Project>
+      <Name>GreenField.Benchmark</Name>
     </ProjectReference>
     <ProjectReference Include="..\GreenField.Common\GreenField.Common.csproj">
       <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>

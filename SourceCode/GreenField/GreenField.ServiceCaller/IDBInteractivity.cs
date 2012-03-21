@@ -36,9 +36,9 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioNames(String viewName, Action<List<String>> callback);
 
-        void RetrieveSecurityReferenceData(Action<List<SecurityReferenceData>> callback);
+        void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
-        void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityReferenceData> callback);
+        void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityOverviewData> callback);
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
 
@@ -66,7 +66,19 @@ namespace GreenField.ServiceCaller
         
         void RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
-        void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, Action<List<UnrealizedGainLossData>> callback);
+        void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback);        
+        
+        void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval ,Action<List<UnrealizedGainLossData>> callback);
+        
+        void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback);
+
+        void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback);
+
+        void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback);
+
+        void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
+
+        void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
         
     }
 }

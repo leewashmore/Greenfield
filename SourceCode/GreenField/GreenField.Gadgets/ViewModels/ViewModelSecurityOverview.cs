@@ -148,17 +148,17 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Exchange Property
+        /// PrimaryAnalyst Property
         /// </summary>
-        private string _exchange;
-        public string Exchange
+        private string _primaryAnalyst;
+        public string PrimaryAnalyst
         {
-            get { return _exchange; }
+            get { return _primaryAnalyst; }
             set
             {
-                if (_exchange != value)
-                    _exchange = value;
-                RaisePropertyChanged(() => this.Exchange);
+                if (_primaryAnalyst != value)
+                    _primaryAnalyst = value;
+                RaisePropertyChanged(() => this.PrimaryAnalyst);
             }
         }
 
@@ -254,26 +254,26 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
 
-        private void RetrieveSecurityReferenceDataCallBackMethod(SecurityReferenceData securityReferenceData)
+        private void RetrieveSecurityReferenceDataCallBackMethod(SecurityOverviewData securityOverviewData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (securityReferenceData != null)
+                if (securityOverviewData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, securityReferenceData, 1);
-                    this.IssueName = securityReferenceData.IssueName;
-                    this.Ticker = securityReferenceData.Ticker;
-                    this.Country = securityReferenceData.Country;
-                    this.Sector = securityReferenceData.Sector;
-                    this.Industry = securityReferenceData.Industry;
-                    this.SubIndustry = securityReferenceData.SubIndustry;
-                    this.Exchange = securityReferenceData.Exchange;
-                    this.Currency = securityReferenceData.Currency;
-                    this.FiscalYearEnd = securityReferenceData.FiscalYearEnd;
-                    this.Website = securityReferenceData.Website;
-                    this.Description = securityReferenceData.Description; 
+                    Logging.LogMethodParameter(_logger, methodNamespace, securityOverviewData, 1);
+                    this.IssueName = securityOverviewData.IssueName;
+                    this.Ticker = securityOverviewData.Ticker;
+                    this.Country = securityOverviewData.Country;
+                    this.Sector = securityOverviewData.Sector;
+                    this.Industry = securityOverviewData.Industry;
+                    this.SubIndustry = securityOverviewData.SubIndustry;
+                    this.PrimaryAnalyst = securityOverviewData.PrimaryAnalyst;
+                    this.Currency = securityOverviewData.Currency;
+                    this.FiscalYearEnd = securityOverviewData.FiscalYearEnd;
+                    this.Website = securityOverviewData.Website;
+                    this.Description = securityOverviewData.Description; 
                 }
                 else
                 {

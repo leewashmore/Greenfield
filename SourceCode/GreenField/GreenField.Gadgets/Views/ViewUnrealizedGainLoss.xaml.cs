@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.IO;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -22,11 +23,11 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             dataContextSource.unrealizedGainLossDataLoadedEvent +=
-                new UnrealizedGainLossDataLoaded(dataContextSource_unrealizedGainLossDataLoadedEvent);
+                new DataRetrievalProgressIndicator(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
         }
 
-        void dataContextSource_unrealizedGainLossDataLoadedEvent(UnrealizedGainLossDataLoadEventArgs e)
+        void dataContextSource_unrealizedGainLossDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
                 this.busyIndicator.IsBusy = true;

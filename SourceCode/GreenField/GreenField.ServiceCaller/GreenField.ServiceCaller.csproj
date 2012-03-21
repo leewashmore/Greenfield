@@ -183,6 +183,9 @@
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.MarketCapitalizationData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -201,7 +204,7 @@
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SecurityReferenceData.datasource">
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.TopBenchmarkSecuritiesData.datasource">
@@ -211,6 +214,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations.disco" />

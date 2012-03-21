@@ -3,41 +3,46 @@
         <bindings>
             <basicHttpBinding>
                 <binding name="BasicHttpBinding_ProxyDataOperations" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
+                    maxReceivedMessageSize="2147483647" closeTimeout="00:10:00" openTimeout="00:10:00" sendTimeout="00:10:00"
+						  receiveTimeout="00:10:00">
                     <security mode="None" />
                 </binding>
                 <binding name="BasicHttpBinding_LoggingOperations" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
+                    maxReceivedMessageSize="2147483647" closeTimeout="00:10:00" openTimeout="00:10:00" sendTimeout="00:10:00"
+						  receiveTimeout="00:10:00">
                     <security mode="None" />
                 </binding>
                 <binding name="BasicHttpBinding_LoginOperations" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
+                    maxReceivedMessageSize="2147483647" closeTimeout="00:10:00" openTimeout="00:10:00" sendTimeout="00:10:00"
+						  receiveTimeout="00:10:00">
                     <security mode="None" />
                 </binding>
                 <binding name="BasicHttpBinding_SessionOperations" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
+                    maxReceivedMessageSize="2147483647" closeTimeout="00:10:00" openTimeout="00:10:00" sendTimeout="00:10:00"
+						  receiveTimeout="00:10:00">
                     <security mode="None" />
                 </binding>
                 <binding name="DashboardOperations" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
+                    maxReceivedMessageSize="2147483647" closeTimeout="00:10:00" openTimeout="00:10:00" sendTimeout="00:10:00"
+						  receiveTimeout="00:10:00">
                     <security mode="None" />
                 </binding>
             </basicHttpBinding>
         </bindings>
        <client>
-          <endpoint address="http://localhost:59430/Services/ProxyDataOperations.svc"
+          <endpoint address="http://ND1DDYYB6Q1/AshmoreEMM/Services/ProxyDataOperations.svc"
              binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ProxyDataOperations"
              contract="ProxyDataDefinitions.ProxyDataOperations" name="BasicHttpBinding_ProxyDataOperations" />
-          <endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
+          <endpoint address="http://ND1DDYYB6Q1/AshmoreEMM/Services/LoggingOperations.svc"
              binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoggingOperations"
              contract="LoggingDefinitions.LoggingOperations" name="BasicHttpBinding_LoggingOperations" />
-          <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
+          <endpoint address="http://ND1DDYYB6Q1/AshmoreEMM/Services/LoginOperations.svc"
              binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoginOperations"
              contract="LoginDefinitions.LoginOperations" name="BasicHttpBinding_LoginOperations" />
-          <endpoint address="http://localhost:59430/Services/SessionOperations.svc"
+          <endpoint address="http://ND1DDYYB6Q1/AshmoreEMM/Services/SessionOperations.svc"
              binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_SessionOperations"
              contract="SessionDefinitions.SessionOperations" name="BasicHttpBinding_SessionOperations" />
-          <endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
+          <endpoint address="http://ND1DDYYB6Q1/AshmoreEMM/Services/DashboardOperations.svc"
              binding="basicHttpBinding" bindingConfiguration="DashboardOperations"
              contract="DashboardDefinitions.DashboardOperations" name="DashboardOperations" />
        </client>
