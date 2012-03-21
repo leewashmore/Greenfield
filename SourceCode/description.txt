@@ -1,2 +1,4 @@
-This folder is intended for SOurce code.
+This folder is intended for SOurce code and UnitTests .
 Please add every solution in separate subfolder.
+Don't use long pathes!
+GreenField\GreenField.AdministrationModule\Helper\RadGridViewSelectionChangedCommandBehaviour.cs - this is the longest path that we may afford.
