@@ -2065,17 +2065,25 @@ namespace GreenField.Web.Services
 
             return portfolioRiskReturnValues;
         }
-
+        /// <summary>
+        /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
+        /// </summary>
+        /// <param name="entityIdentifier"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>       
+        /// <param name="frequencyInterval"></param>       
+        /// <returns>List of UnrealozedGainLossData</returns>
         [OperationContract]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
         {
+            
             List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
+            int noOfRows;
             try
             {
                 if (entityIdentifier != null && startDateTime != null && endDateTime != null && frequencyInterval != null)
                 {
                     DimensionEntitiesService.Entities entity = DimensionEntity;
-                    int noOfRows;
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
                     .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();                    
                     noOfRows = arrangedByDescRecord.Count();
@@ -2086,7 +2094,7 @@ namespace GreenField.Web.Services
                     List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
                     List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
                     List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();                    
-
+                    //Filtering the list according to the frequency selected.
                     List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
                                                select p.FromDate).ToList();                    
                     List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);

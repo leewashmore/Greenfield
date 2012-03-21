@@ -177,13 +177,13 @@
                         <telerik:RadRibbonButton LargeImage="../Images/PerformanceChart.png" Text="Performance" Size="Large" Command="{Binding GadgetPerformanceCommand}"/>
                     </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/SecurityOverviewImage.png" Text="Security Overview" Size="Large" Command="{Binding GadgetSecurityOverviewCommand}"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/investment.png" Text="Security Overview" Size="Large" Command="{Binding GadgetSecurityOverviewCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/PricingChartImage.png" Text="Pricing" Size="Large" Command="{Binding GadgetPricingCommand}"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/value.png" Text="Pricing" Size="Large" Command="{Binding GadgetPricingCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/TheoreticalUnrealizedGainLossImage.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"/>
                     </telerik:RadRibbonGroup>
                     <!--<telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RegionBreakdownImage.png" Text="Region Breakdown" Size="Large" Command="{Binding GadgetRegionBreakdownCommand}"/>

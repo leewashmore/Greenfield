@@ -155,6 +155,7 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\balancesheet.png" />
     <Resource Include="Images\saveButtonImage.png" />
     <Resource Include="Images\HoldingsImage.png" />
     <Resource Include="Images\PerformanceChart.png" />

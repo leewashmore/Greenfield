@@ -537,6 +537,16 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
+
+        /// <summary>
+        /// Method that calls the Unrealized Gain Loss service method and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="entityIdentifier"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <param name="frequencyInterval"></param>
+        /// <param name="callback"></param>
         public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
         {
             
@@ -553,7 +563,8 @@ namespace GreenField.ServiceCaller
                         {
                             callback(null);
                         }
-                }; 
+                };
         }
+        #endregion
     }
 }

@@ -8,13 +8,20 @@ using GreenField.DAL;
 namespace GreenField.Web.Helpers
 {
     public static class UnrealizedGainLossCalculations
-    {
+    { 
+        /// <summary>
+        /// Method that calculates the adjusted price for a selected security
+        /// </summary>
+        /// <param name="arrangedByDescRecord"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>adjustedPriceResult</returns>
         public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord, int noOfRows)
         {
             List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
             double previousAdjustedPrice;
             double previousPriceReturn;
             UnrealizedGainLossData entry = new UnrealizedGainLossData();
+            //Calculations for the first record
             entry.AdjustedPrice = Convert.ToDouble(arrangedByDescRecord[0].DAILY_CLOSING_PRICE);
             previousAdjustedPrice = entry.AdjustedPrice;
             previousPriceReturn = Convert.ToDouble(arrangedByDescRecord[0].DAILY_PRICE_RETURN);
@@ -23,6 +30,7 @@ namespace GreenField.Web.Helpers
             entry.Volume = Convert.ToDecimal(arrangedByDescRecord[0].VOLUME);
             adjustedPriceResult.Add(entry);
 
+            //Calculations for the rest of the records
             for (int i = 1; i < noOfRows; i++)
             {
                 entry = new UnrealizedGainLossData();
@@ -34,10 +42,15 @@ namespace GreenField.Web.Helpers
                 entry.Volume = Convert.ToDecimal(arrangedByDescRecord[i].VOLUME);
                 adjustedPriceResult.Add(entry);
             }
-
             return adjustedPriceResult;
         }
 
+        /// <summary>
+        /// Method that calculates the Moving Average of a selected security
+        /// </summary>
+        /// <param name="adjustedPriceResult"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>resultAscOrder</returns>
         public static List<UnrealizedGainLossData> CalculateMovingAverage(List<UnrealizedGainLossData> adjustedPriceResult, int noOfRows)
         {
 
@@ -45,7 +58,10 @@ namespace GreenField.Web.Helpers
             List<UnrealizedGainLossData> resultAscOrder = adjustedPriceResult.OrderBy(res => res.FromDate).ToList();
             double totalPrice = resultAscOrder[0].AdjustedPrice;
 
+            //Calculations for the first record
             resultAscOrder[0].MovingAverage = resultAscOrder[0].AdjustedPrice;
+
+            //Calculations for the rest of the records
             for (int i = 0; i < noOfRows - 1; i++)
             {
                 totalPrice = totalPrice + resultAscOrder[i + 1].AdjustedPrice;
@@ -55,6 +71,12 @@ namespace GreenField.Web.Helpers
             return resultAscOrder;
         }
 
+        /// <summary>
+        /// Method that calculates the Ninety Day Weight Average for a selected security
+        /// </summary>
+        /// <param name="movingAverageResult"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>movingAverageResult</returns>
         public static List<UnrealizedGainLossData> CalculateNinetyDayWtAvg(List<UnrealizedGainLossData> movingAverageResult, int noOfRows)
         {
             decimal currentSum = 0;
@@ -74,6 +96,12 @@ namespace GreenField.Web.Helpers
             return movingAverageResult;
         }
 
+        /// <summary>
+        /// Method that calculates the Cost for a selected security
+        /// </summary>
+        /// <param name="ninetyDayWtResult"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>ninetyDayWtResult</returns>
         public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWtResult, int noOfRows)
         {
             for (int i = 0; i < 90; i++)
@@ -88,6 +116,12 @@ namespace GreenField.Web.Helpers
             return ninetyDayWtResult;
         }
 
+        /// <summary>
+        /// Method that calculates the Weight Avg Cost for a selected security
+        /// </summary>
+        /// <param name="costResult"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>costResult</returns>
         public static List<UnrealizedGainLossData> CalculateWtAvgCost(List<UnrealizedGainLossData> costResult, int noOfRows)
         {
             decimal sumCost = 0;
@@ -102,9 +136,14 @@ namespace GreenField.Web.Helpers
                 costResult[i].WtAvgCost = Convert.ToDouble(sumCost);
             }
             return costResult;
-
         }
 
+        /// <summary>
+        /// Method that calculates the Unrealized Gain Loss for a selected security
+        /// </summary>
+        /// <param name="wtAvgCostResult"></param>
+        /// <param name="noOfRows"></param>
+        /// <returns>wtAvgCostResult</returns>
         public static List<UnrealizedGainLossData> CalculateUnrealizedGainLoss(List<UnrealizedGainLossData> wtAvgCostResult, int noOfRows)
         {
             for (int i = 89; i < noOfRows; i++)

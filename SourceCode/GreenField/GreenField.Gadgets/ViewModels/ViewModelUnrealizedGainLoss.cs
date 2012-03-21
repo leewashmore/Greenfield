@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.ViewModels
         #region UI Fields
 
         /// <summary>
-        /// Collection binded to the Comparison chart - consists of unrealized gain loss and pricing data for the primary entity
+        /// Collection binded to the Comparison chart - consists of unrealized gain loss and closing price for the primary entity
         /// </summary>
         private RangeObservableCollection<UnrealizedGainLossData> _plottedSeries;
         public RangeObservableCollection<UnrealizedGainLossData> PlottedSeries
@@ -69,7 +69,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Time Period Selection and Frequency Selection
         /// <summary>
-        /// Collection of Time Range Options
+        /// Collection of Time Range and Frequency Range options
         /// </summary>
         private ObservableCollection<String> _timeRange;
         public ObservableCollection<String> TimeRange
@@ -146,7 +146,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallBack Methods
-
+        /// <summary>
+        /// Callback Method for entity selection
+        /// </summary>
+        /// <param name="result"></param>
         private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
               string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -180,7 +183,11 @@ namespace GreenField.Gadgets.ViewModels
                 
                 Logging.LogEndMethod(_logger, methodNamespace);
             }         
-
+        /// <summary>
+        /// Method that calls the service Method through a call to Service Caller
+        /// </summary>
+        /// <param name="Ticker"></param>
+        /// <param name="callback"></param>
         private void RetrieveUnrealizedGainLossData(String Ticker, Action<List<UnrealizedGainLossData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -218,7 +225,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);             
             
         }
-
+        /// <summary>
+        ///Method that calculates the Start Date and End Date time  
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         private void GetPeriod(out DateTime startDate, out DateTime endDate)
         {
             endDate = DateTime.Today;
@@ -273,7 +284,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Security reference
         /// </summary>
-        /// <param name="securityReferenceData">SecurityReferenceData</param>
+        /// <param name="securityReferenceData">entitySelectionData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
 
@@ -298,8 +309,12 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);  
-        }
-
+        }       
+        
+        /// <summary>
+        /// Plots the series on the chart after getting the resulting collection
+        /// </summary>
+        /// <param name="result"></param>
         private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

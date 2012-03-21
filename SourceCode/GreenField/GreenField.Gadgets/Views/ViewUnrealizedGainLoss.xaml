@@ -156,7 +156,7 @@
 
             <Grid Grid.Row="0" Margin="0,0,0,5">
                 <Button Command="{Binding ExportExcelCommand}" Height="20" HorizontalAlignment="Right" 
-                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" >
+                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
                     <Button.Content>
                         <Image Source="../Images/ExportExcel.png" />
                     </Button.Content>
@@ -186,6 +186,9 @@
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
                                             </telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ChartArea.ZoomScrollSettingsY>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
+                                            </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
                                                 <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM-yyyy" 
                                                            LayoutMode="Auto" Title="Period"  StepLabelLevelHeight="10" LabelRotationAngle="45"/>
@@ -195,7 +198,7 @@
                                             </telerik:ChartArea.AxisY>
                                             <telerik:ChartArea.AdditionalYAxes>
                                                 <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
-                                                   AutoRange="False" MinValue="-1" MaxValue="1" Step="0.2">
+                                                    AutoRange="True">
                                                 </telerik:AxisY>
                                             </telerik:ChartArea.AdditionalYAxes>
                                         </telerik:ChartArea>
