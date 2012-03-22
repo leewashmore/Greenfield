@@ -607,8 +607,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.InstrumentID != PrimaryPlottedSeries.First().InstrumentID).ToList();
-                    PlottedSeries.RemoveRange(RemoveItems);
+                    PlottedSeries.Clear();
                     PrimaryPlottedSeries.Clear();
                 }
 
