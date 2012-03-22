@@ -254,26 +254,26 @@
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
-                                    <TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
+                                    <!--<TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding FundReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />-->
                                 </Grid>
                                 <Grid Grid.Row="1">
-                                    <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
+                                    <!--<TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding BenchmarkReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,2,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding BenchmarkEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedBenchmarkReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />-->
                                 </Grid>
                                 <Grid Grid.Row="2">
-                                    <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
-                                    <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>
+                                    <!--<TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
+                                    <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>-->
                                 </Grid>
                             </Grid>
                         </Border>
