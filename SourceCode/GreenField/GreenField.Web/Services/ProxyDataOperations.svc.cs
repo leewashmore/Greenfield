@@ -18,13 +18,13 @@ namespace GreenField.Web.Services
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ProxyDataOperations
-    {       
+    {
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
             get
             {
-                if(null == dimensionEntity)
+                if (null == dimensionEntity)
                     dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
 
                 return dimensionEntity;
@@ -909,7 +909,7 @@ namespace GreenField.Web.Services
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
                                 .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
                                 .OrderBy(res => res.FROMDATE).ToList();
-                            
+
                             // Calcluating the values of curPrice,curReturn,calculatedPrice
                             if (dimensionServicePricingData.Count != 0)
                             {
@@ -967,7 +967,7 @@ namespace GreenField.Web.Services
                     endDates.Add(Convert.ToDateTime(item.FromDate));
                 }
 
-                List<DateTime> allEndDates= new List<DateTime>();
+                List<DateTime> allEndDates = new List<DateTime>();
 
                 allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(endDates, startDateTime, endDateTime, frequencyDuration);
 
@@ -1119,13 +1119,19 @@ namespace GreenField.Web.Services
             try
             {
                 List<SectorBreakdownData> result = new List<SectorBreakdownData>();
-                result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Energy Equipment", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Energy Equipment", Security = "Security 2", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Oil, Gas and Consumables", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Oil, Gas and Consumables", Security = "Security 2", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Energy", Industry = "Solar", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Sector 2", Industry = "Industry 1", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new SectorBreakdownData() { Sector = "Sector 2", Industry = "Industry 2", Security = "Security 1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new SectorBreakdownData()
+                    {
+                        Sector = row.Field<string>("GICS_SECTOR_NAME"),
+                        Industry = row.Field<string>("GICS_INDUSTRY_NAME"),
+                        Security = row.Field<string>("ISSUE_NAME"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT"),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT"),
+                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                    });
+                }
 
                 return result;
             }
@@ -1141,13 +1147,19 @@ namespace GreenField.Web.Services
             try
             {
                 List<RegionBreakdownData> result = new List<RegionBreakdownData>();
-                result.Add(new RegionBreakdownData() { Region = "Region1", Country = "Country1", Security = "Security1", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region1", Country = "Country1", Security = "Security2", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region1", Country = "Country2", Security = "Security3", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region2", Country = "Country3", Security = "Security4", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region2", Country = "Country4", Security = "Security5", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region3", Country = "Country5", Security = "Security6", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
-                result.Add(new RegionBreakdownData() { Region = "Region4", Country = "Country6", Security = "Security7", PortfolioShare = 0.9, BenchmarkShare = 0.8, BetShare = -0.1 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new RegionBreakdownData()
+                    {
+                        Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
+                        Country = row.Field<string>("ISO_COUNTRY_CODE"),
+                        Security = row.Field<string>("ISSUE_NAME"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT"),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT"),
+                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                    });
+                } 
 
                 return result;
             }
@@ -2076,7 +2088,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
         {
-            
+
             List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
             int noOfRows;
             try
@@ -2085,18 +2097,18 @@ namespace GreenField.Web.Services
                 {
                     DimensionEntitiesService.Entities entity = DimensionEntity;
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
-                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();                    
+                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
                     noOfRows = arrangedByDescRecord.Count();
-                    List<UnrealizedGainLossData>  adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
                     List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
                     List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
                     List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
                     List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
                     List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
-                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();                    
+                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
                     //Filtering the list according to the frequency selected.
                     List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
-                                               select p.FromDate).ToList();                    
+                                               select p.FromDate).ToList();
                     List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
                     timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
                 }
@@ -2106,7 +2118,7 @@ namespace GreenField.Web.Services
             catch (Exception)
             {
                 return null;
-            }                        
+            }
         }
 
         #region Morning Snapshot Operation Contracts
@@ -2159,7 +2171,7 @@ namespace GreenField.Web.Services
                 {
                     result.Add(new MorningSnapshotData()
                     {
-                        MorningSnapshotPreferenceInfo = preference                        
+                        MorningSnapshotPreferenceInfo = preference
                     });
                 }
             }
@@ -2194,8 +2206,8 @@ namespace GreenField.Web.Services
             }
 
             catch (Exception)
-            { 
-                return false; 
+            {
+                return false;
             }
         }
 
@@ -2230,7 +2242,7 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-        #region Pricing Chart Helper MEthods
+        #region Pricing Chart Helper Methods
 
         /// <summary>
         /// Method to Retrieve Data Filtered according to Frequency.
@@ -2287,7 +2299,7 @@ namespace GreenField.Web.Services
         private List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(List<UnrealizedGainLossData> objUnrealizedGainLossData, List<DateTime> objEndDates)
         {
             List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
-            
+
             List<DateTime> EndDates = objEndDates;
             foreach (DateTime item in EndDates)
             {
@@ -2323,5 +2335,46 @@ namespace GreenField.Web.Services
         }
 
         #endregion
+
+        #region Connection String Methods
+        private string GetConnectionString()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = @"ND1DDYYB6Q1\SQLEXPRESS";
+            builder.InitialCatalog = "AshmoreEMMPOC";
+            builder.UserID = "sa";
+            builder.Password = "India@123";
+            builder.MultipleActiveResultSets = true;
+            return builder.ConnectionString;
+        }
+
+        private DataTable GetDataTable(string queryString)
+        {
+            string connectionString = GetConnectionString();
+            using (SqlConnection connection = new SqlConnection(
+                       connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
+                sqlDataAdapter.SelectCommand = command;
+                DataTable dataTable = new DataTable();
+                dataTable.Locale = System.Globalization.CultureInfo.InvariantCulture;
+
+                try
+                {
+                    sqlDataAdapter.Fill(dataTable);
+                    connection.Close();
+                }
+                catch (Exception)
+                {
+
+                    return null;
+                }
+
+                return dataTable;
+            }
+        }
+        #endregion
+
     }
 }

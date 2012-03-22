@@ -593,10 +593,10 @@
   <xs:element name="ArrayOfSectorBreakdownData" nillable="true" type="tns:ArrayOfSectorBreakdownData" />
   <xs:complexType name="SectorBreakdownData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BenchmarkShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BetShare" type="xs:double" />
+      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="BetShare" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioShare" type="xs:double" />
+      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Security" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -610,10 +610,10 @@
   <xs:element name="ArrayOfRegionBreakdownData" nillable="true" type="tns:ArrayOfRegionBreakdownData" />
   <xs:complexType name="RegionBreakdownData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BenchmarkShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BetShare" type="xs:double" />
+      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="BetShare" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioShare" type="xs:double" />
+      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Security" nillable="true" type="xs:string" />
     </xs:sequence>

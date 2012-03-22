@@ -59,9 +59,11 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
+    <Content Include="ClientAccessPolicy.xml" />
+   
+   
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />

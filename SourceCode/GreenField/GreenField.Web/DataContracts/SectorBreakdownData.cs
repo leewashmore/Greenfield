@@ -19,12 +19,12 @@ namespace GreenField.Web.DataContracts
         public string Security { get; set; }
 
         [DataMember]
-        public double PortfolioShare { get; set; }
+        public double? PortfolioShare { get; set; }
 
         [DataMember]
-        public double BenchmarkShare { get; set; }
+        public double? BenchmarkShare { get; set; }
 
         [DataMember]
-        public double BetShare { get; set; }
+        public double? BetShare { get; set; }
     }
 }

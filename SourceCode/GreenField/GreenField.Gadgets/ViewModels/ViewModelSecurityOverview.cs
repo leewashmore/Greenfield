@@ -28,16 +28,19 @@ namespace GreenField.Gadgets.ViewModels
     /// </summary>
     public class ViewModelSecurityOverview : NotificationObject
     {
+        #region Fields
+        //MEF Singletons
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData;
+        private EntitySelectionData _entitySelectionData; 
+        #endregion
 
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="eventAggregator">MEF Eventaggrigator instance</param>
+        /// <param name="eventAggregator">MEF Eventaggregator instance</param>
         public ViewModelSecurityOverview(DashBoardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -227,7 +230,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Entity Selection Data
         /// </summary>
-        /// <param name="securityReferenceData">EntitySelectionData</param>
+        /// <param name="entitySelectionData">EntitySelectionData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -254,6 +257,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
 
+        #region CallBack Method
+        /// <summary>
+        /// Callback method for Security Overview Service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="securityOverviewData">SecurityOverviewData Collection</param>
         private void RetrieveSecurityReferenceDataCallBackMethod(SecurityOverviewData securityOverviewData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -273,7 +281,7 @@ namespace GreenField.Gadgets.ViewModels
                     this.Currency = securityOverviewData.Currency;
                     this.FiscalYearEnd = securityOverviewData.FiscalYearEnd;
                     this.Website = securityOverviewData.Website;
-                    this.Description = securityOverviewData.Description; 
+                    this.Description = securityOverviewData.Description;
                 }
                 else
                 {
@@ -286,6 +294,8 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
+        } 
+
+        #endregion
     }
 }

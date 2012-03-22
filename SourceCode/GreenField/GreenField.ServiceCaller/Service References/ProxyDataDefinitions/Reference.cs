@@ -7829,20 +7829,20 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="SectorBreakdownData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class SectorBreakdownData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double BenchmarkShareField;
+        private System.Nullable<double> BenchmarkShareField;
         
-        private double BetShareField;
+        private System.Nullable<double> BetShareField;
         
         private string IndustryField;
         
-        private double PortfolioShareField;
+        private System.Nullable<double> PortfolioShareField;
         
         private string SectorField;
         
         private string SecurityField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkShare {
+        public System.Nullable<double> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -7855,7 +7855,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BetShare {
+        public System.Nullable<double> BetShare {
             get {
                 return this.BetShareField;
             }
@@ -7881,7 +7881,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioShare {
+        public System.Nullable<double> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
@@ -7934,20 +7934,20 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="RegionBreakdownData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class RegionBreakdownData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double BenchmarkShareField;
+        private System.Nullable<double> BenchmarkShareField;
         
-        private double BetShareField;
+        private System.Nullable<double> BetShareField;
         
         private string CountryField;
         
-        private double PortfolioShareField;
+        private System.Nullable<double> PortfolioShareField;
         
         private string RegionField;
         
         private string SecurityField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkShare {
+        public System.Nullable<double> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -7960,7 +7960,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BetShare {
+        public System.Nullable<double> BetShare {
             get {
                 return this.BetShareField;
             }
@@ -7986,7 +7986,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioShare {
+        public System.Nullable<double> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
