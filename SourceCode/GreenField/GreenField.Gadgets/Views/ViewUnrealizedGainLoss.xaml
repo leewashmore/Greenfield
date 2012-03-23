@@ -113,20 +113,20 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
             <!--Time Range-->
-            <Grid Grid.Row="0" Margin="0,0,5,0">
+            <Grid Grid.Column="0" Margin="0,0,5,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
@@ -136,27 +136,20 @@
                                      ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
             </Grid>
 
-            <Grid Grid.Row="1" Margin="0,5,5,0">
+            <Grid Grid.Column="1" Margin="0,0,5,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                 <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                      ItemsSource="{Binding FrequencyRange}" SelectedValue="{Binding SelectedFrequencyRange,Mode=TwoWay}">                    
+                                      ItemsSource="{Binding FrequencyRange}" SelectedValue="{Binding SelectedFrequencyRange,Mode=TwoWay}">
                 </telerik:RadComboBox>
             </Grid>
-        </Grid>
 
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0" Margin="0,0,0,5">
+            <Grid Grid.Column="2" Margin="0,0,0,5">
                 <Button Command="{Binding ExportExcelCommand}" Height="20" HorizontalAlignment="Right" 
-                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Center" Width="20" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
+                        Margin="0,0,0,0" Name="btnExportExcel" VerticalAlignment="Top" Width="20" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export to Excel">
                     <Button.Content>
                         <Image Source="../Images/ExportExcel.png" />
                     </Button.Content>
@@ -168,78 +161,95 @@
                     </Button.Content>
                 </Button>
             </Grid>
+        </Grid>
 
-            <Grid Grid.Row="1">
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
                 <Grid.Projection>
                     <PlaneProjection x:Name="topGridProjection"/>
                 </Grid.Projection>
 
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-                        <telerik:RadChart x:Name="chUnrealizedGainLoss" Visibility="Visible" telerik:StyleManager.Theme="Metro"
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="16"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <telerik:RadBusyIndicator Grid.Row="1" x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                            <telerik:RadChart x:Name="chUnrealizedGainLoss" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}">
-                            <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView ChartLegendPosition="Top">
-
-                                    <telerik:ChartDefaultView.ChartArea>
-                                        <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" EnableAnimations="False">
-                                            <telerik:ChartArea.ZoomScrollSettingsX>
-                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
-                                            </telerik:ChartArea.ZoomScrollSettingsX>
-                                            <telerik:ChartArea.ZoomScrollSettingsY>
-                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="0.1"/>
-                                            </telerik:ChartArea.ZoomScrollSettingsY>
-                                            <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM-yyyy" 
-                                                           LayoutMode="Auto" Title="Period"  StepLabelLevelHeight="10" LabelRotationAngle="45"/>
-                                            </telerik:ChartArea.AxisX>
-                                            <telerik:ChartArea.AxisY>
-                                                <telerik:AxisY Title="Closing Price" AutoRange="True" MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
-                                            </telerik:ChartArea.AxisY>
-                                            <telerik:ChartArea.AdditionalYAxes>
-                                                <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
+                                <telerik:RadChart.DefaultView>
+                                    <telerik:ChartDefaultView ChartLegendPosition="Bottom">
+                                        <telerik:ChartDefaultView.ChartArea>
+                                            <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" EnableAnimations="False">
+                                                <telerik:ChartArea.ZoomScrollSettingsX>
+                                                    <telerik:ZoomScrollSettings ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
+                                                </telerik:ChartArea.ZoomScrollSettingsX>
+                                                <telerik:ChartArea.ZoomScrollSettingsY>
+                                                    <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollAndZoom" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
+                                                </telerik:ChartArea.ZoomScrollSettingsY>
+                                                <telerik:ChartArea.AxisX>
+                                                    <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="dd-MMM-yyyy" 
+                                                           LayoutMode="Normal" LabelRotationAngle="45"/>
+                                                </telerik:ChartArea.AxisX>
+                                                <telerik:ChartArea.AxisY>
+                                                    <telerik:AxisY Title="Closing Price" AutoRange="True" MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
+                                                </telerik:ChartArea.AxisY>
+                                                <telerik:ChartArea.AdditionalYAxes>
+                                                    <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
                                                     AutoRange="True">
-                                                </telerik:AxisY>
-                                            </telerik:ChartArea.AdditionalYAxes>
-                                        </telerik:ChartArea>
-                                    </telerik:ChartDefaultView.ChartArea>
+                                                    </telerik:AxisY>
+                                                </telerik:ChartArea.AdditionalYAxes>
+                                            </telerik:ChartArea>
 
-                                    <telerik:ChartDefaultView.ChartLegend>
-                                        <telerik:ChartLegend UseAutoGeneratedItems="True" LegendItemMarkerShape="SquareRounded"
+                                        </telerik:ChartDefaultView.ChartArea>
+                                        <telerik:ChartDefaultView.ChartLegend>
+                                            <telerik:ChartLegend UseAutoGeneratedItems="True" LegendItemMarkerShape="SquareRounded"
                                                       Header=""  ItemsPanelOrientation="Horizontal" x:Name="chUnrealizedGainLossLegend" BorderBrush="Transparent" Background="Transparent" />
-                                    </telerik:ChartDefaultView.ChartLegend>
-
-                                    <telerikCharting:ChartDefaultView.ChartTitle>
-                                        <telerikCharting:ChartTitle Content="Comparision Chart" FontSize="12" HorizontalAlignment="Center" Background="White" Foreground="Black"  OuterBorderThickness="0" OuterBorderBrush="White" BorderBrush="Transparent"/>
-                                    </telerikCharting:ChartDefaultView.ChartTitle>
-                                </telerik:ChartDefaultView>
-                            </telerik:RadChart.DefaultView>
-
-                            <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping LegendLabel="Closing Price">
-                                    <telerik:SeriesMapping.SeriesDefinition>
-                                        <telerik:LineSeriesDefinition LegendDisplayMode="SeriesLabel" ShowItemToolTips="True"
+                                        </telerik:ChartDefaultView.ChartLegend>
+                                    </telerik:ChartDefaultView>
+                                </telerik:RadChart.DefaultView>
+                                <telerik:RadChart.SeriesMappings>
+                                    <telerik:SeriesMapping LegendLabel="Closing Price">
+                                        <telerik:SeriesMapping.SeriesDefinition>
+                                            <telerik:LineSeriesDefinition LegendDisplayMode="SeriesLabel" ShowItemToolTips="True"
                                                               ItemToolTipFormat="Price: #Y / Date: #X{dd-MMM-yyyy}"
                                                               ShowItemLabels="False" ShowPointMarks="False" />
-                                    </telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:SeriesMapping.ItemMappings>
-                                        <telerik:ItemMapping DataPointMember="YValue" FieldName="DailyClosingPrice"/>
-                                        <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
-                                    </telerik:SeriesMapping.ItemMappings>
-                                </telerik:SeriesMapping>
-                                <telerik:SeriesMapping LegendLabel="Gain / Loss" >
-                                    <telerik:SeriesMapping.SeriesDefinition>
-                                        <telerik:LineSeriesDefinition ShowItemToolTips="True"  ShowItemLabels="False" ShowPointMarks="False"
+                                        </telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:SeriesMapping.ItemMappings>
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="DailyClosingPrice"/>
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
+                                        </telerik:SeriesMapping.ItemMappings>
+                                    </telerik:SeriesMapping>
+                                    <telerik:SeriesMapping LegendLabel="Gain / Loss" >
+                                        <telerik:SeriesMapping.SeriesDefinition>
+                                            <telerik:LineSeriesDefinition ShowItemToolTips="True"  ShowItemLabels="False" ShowPointMarks="False"
                                                               ItemToolTipFormat="Price: #Y   / Date: #X{dd-MMM-yyyy}" AxisName="Secondary" />
-                                    </telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:SeriesMapping.ItemMappings>
-                                        <telerik:ItemMapping DataPointMember="YValue" FieldName="UnrealizedGainLoss" />
-                                        <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
-                                    </telerik:SeriesMapping.ItemMappings>
-                                </telerik:SeriesMapping>
-                            </telerik:RadChart.SeriesMappings>
-                        </telerik:RadChart>
-                    </telerik:RadBusyIndicator>
+                                        </telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:SeriesMapping.ItemMappings>
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="UnrealizedGainLoss" />
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="FromDate" />
+                                        </telerik:SeriesMapping.ItemMappings>
+                                    </telerik:SeriesMapping>
+                                </telerik:RadChart.SeriesMappings>
+                            </telerik:RadChart>
+                        </telerik:RadBusyIndicator>
+                        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+                        <telerik:RadButton Command="{Binding ZoomInCommand}">
+                            <Image Source="../Images/zoom_in.png" Width="16" Height="16"/>
+                        </telerik:RadButton>
+                        <telerik:RadButton Command="{Binding ZoomOutCommand}">
+                            <Image Source="../Images/zoom_out.png" Width="16" Height="16" />
+                        </telerik:RadButton>
+                        </StackPanel>
+                    </Grid>
                 </Border>
 
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">

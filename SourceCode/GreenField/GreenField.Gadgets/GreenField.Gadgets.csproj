@@ -238,6 +238,10 @@
     <Resource Include="Images\ExportExcel.png" />
     <Resource Include="Images\flipIcon.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\zoom_in.png" />
+    <Resource Include="Images\zoom_out.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

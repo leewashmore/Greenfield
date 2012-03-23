@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common.Helper;
 using System.Windows;
+using System.Windows.Input;
+using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels
 {   
@@ -140,6 +143,20 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
+
+        private ChartArea _chartArea;
+        public ChartArea ChartArea
+        {
+            get
+            {
+                return this._chartArea;
+            }
+            set
+            {
+                this._chartArea = value;
+            }
+        }
+
 
         #endregion
 
@@ -280,6 +297,91 @@ namespace GreenField.Gadgets.ViewModels
         public event DataRetrievalProgressIndicator unrealizedGainLossDataLoadedEvent;
         #endregion
 
+        #region ICommand
+        ICommand _zoomInCommand;
+        public ICommand ZoomInCommand
+        {
+            get
+            {
+                if (_zoomInCommand == null)
+                {
+                    _zoomInCommand = new DelegateCommand(ZoomIn, CanZoomIn);
+                }
+                return _zoomInCommand;
+            }
+        }
+
+        ICommand _zoomOutCommand;
+        public ICommand ZoomOutCommand
+        {
+            get
+            {
+                if (_zoomOutCommand == null)
+                {
+                    _zoomOutCommand = new DelegateCommand(ZoomOut, CanZoomOut);
+                }
+                return _zoomOutCommand;
+            }
+        }
+
+        #endregion
+
+        #region ICommand Methods
+        public void ZoomIn(object parameter)
+        {
+            this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
+
+            double zoomCenter = this.ChartArea.ZoomScrollSettingsX.RangeStart + (this.ChartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Max(this.ChartArea.ZoomScrollSettingsX.MinZoomRange, this.ChartArea.ZoomScrollSettingsX.Range) / 2;
+            this.ChartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
+            this.ChartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
+
+            this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
+
+            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
+        public bool CanZoomIn(object parameter)
+        {
+            if (this.ChartArea == null)
+                return false;
+
+            return this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
+        }
+
+        public void ZoomOut(object parameter)
+        {
+            this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
+
+            double zoomCenter = this.ChartArea.ZoomScrollSettingsX.RangeStart + (this.ChartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Min(1, this.ChartArea.ZoomScrollSettingsX.Range) * 2;
+
+            if (zoomCenter + (newRange / 2) > 1)
+                zoomCenter = 1 - (newRange / 2);
+            else if (zoomCenter - (newRange / 2) < 0)
+                zoomCenter = newRange / 2;
+
+            this.ChartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
+            this.ChartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
+
+            this.ChartArea.ZoomScrollSettingsX.ResumeNotifications();
+
+            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
+        public bool CanZoomOut(object parameter)
+        {
+            if (this.ChartArea == null)
+                return false;
+
+            return this.ChartArea.ZoomScrollSettingsX.Range < 1d;
+        }
+
+
+        #endregion
+
         #region Event Handlers
         /// <summary>
         /// Assigns UI Field Properties based on Security reference
@@ -343,6 +445,13 @@ namespace GreenField.Gadgets.ViewModels
             }
              Logging.LogEndMethod(_logger, methodNamespace);  
         }
+
+        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        {
+            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
        
         #endregion
     }

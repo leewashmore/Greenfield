@@ -24,6 +24,8 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             dataContextSource.unrealizedGainLossDataLoadedEvent +=
                 new DataRetrievalProgressIndicator(dataContextSource_unrealizedGainLossDataLoadedEvent);
+            dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
+            this.chUnrealizedGainLoss.DataBound += dataContextSource.ChartDataBound;
             dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
         }
 
