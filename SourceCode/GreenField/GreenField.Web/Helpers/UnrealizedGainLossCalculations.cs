@@ -7,13 +7,16 @@ using GreenField.DAL;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Class contains methods that calculate the Unrealized Gain Loss of a security. 
+    /// </summary>
     public static class UnrealizedGainLossCalculations
     { 
         /// <summary>
         /// Method that calculates the adjusted price for a selected security
         /// </summary>
-        /// <param name="arrangedByDescRecord"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="arrangedByDescRecord">The input list sorted in descending order of fromdate</param>
+        /// <param name="noOfRows">No. of records in the arrangedByDescRecord list</param>
         /// <returns>adjustedPriceResult</returns>
         public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord, int noOfRows)
         {
@@ -48,8 +51,8 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Method that calculates the Moving Average of a selected security
         /// </summary>
-        /// <param name="adjustedPriceResult"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="adjustedPriceResult">Contains the calculated Adjusted price of the security</param>
+        /// <param name="noOfRows">No. of records</param>
         /// <returns>resultAscOrder</returns>
         public static List<UnrealizedGainLossData> CalculateMovingAverage(List<UnrealizedGainLossData> adjustedPriceResult, int noOfRows)
         {
@@ -74,8 +77,8 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Method that calculates the Ninety Day Weight Average for a selected security
         /// </summary>
-        /// <param name="movingAverageResult"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="movingAverageResult">Contains the Calculated Moving Average of the security</param>
+        /// <param name="noOfRows">No. of records</param>
         /// <returns>movingAverageResult</returns>
         public static List<UnrealizedGainLossData> CalculateNinetyDayWtAvg(List<UnrealizedGainLossData> movingAverageResult, int noOfRows)
         {
@@ -99,8 +102,8 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Method that calculates the Cost for a selected security
         /// </summary>
-        /// <param name="ninetyDayWtResult"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="ninetyDayWtResult">Contains the Calculated Ninety Day Average Weight of the security</param>
+        /// <param name="noOfRows">No. of records</param>
         /// <returns>ninetyDayWtResult</returns>
         public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWtResult, int noOfRows)
         {
@@ -119,8 +122,8 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Method that calculates the Weight Avg Cost for a selected security
         /// </summary>
-        /// <param name="costResult"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="costResult">Contains the Calculated Cost of the security</param>
+        /// <param name="noOfRows">No. of records</param>
         /// <returns>costResult</returns>
         public static List<UnrealizedGainLossData> CalculateWtAvgCost(List<UnrealizedGainLossData> costResult, int noOfRows)
         {
@@ -141,8 +144,8 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Method that calculates the Unrealized Gain Loss for a selected security
         /// </summary>
-        /// <param name="wtAvgCostResult"></param>
-        /// <param name="noOfRows"></param>
+        /// <param name="wtAvgCostResult">Contains the Unrealized Gain Loss of the security</param>
+        /// <param name="noOfRows">No. of records</param>
         /// <returns>wtAvgCostResult</returns>
         public static List<UnrealizedGainLossData> CalculateUnrealizedGainLoss(List<UnrealizedGainLossData> wtAvgCostResult, int noOfRows)
         {

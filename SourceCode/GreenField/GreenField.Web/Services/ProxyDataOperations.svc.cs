@@ -2080,10 +2080,10 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
         /// </summary>
-        /// <param name="entityIdentifier"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>       
-        /// <param name="frequencyInterval"></param>       
+        /// <param name="entityIdentifier">Ticker for the security</param>
+        /// <param name="startDateTime">Start Date of the Time Period that is selected</param>
+        /// <param name="endDateTime">End Date of the Time Period that is selected</param>       
+        /// <param name="frequencyInterval">Frequency Duration selected</param>       
         /// <returns>List of UnrealozedGainLossData</returns>
         [OperationContract]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
@@ -2099,16 +2099,23 @@ namespace GreenField.Web.Services
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
                     .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
                     noOfRows = arrangedByDescRecord.Count();
+                    //Calculating the Adjusted price for a security and storing it in the list.
                     List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    //Calculating the Moving Average for a security and storing it in the list.
                     List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                    //Calculating the Ninety Day Weight for a security and storing it in the list.
                     List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                    //Calculating the Cost for a security and storing it in the list.
                     List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                    //Calculating the Weighted Average Cost for a security and storing it in the list.
                     List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                    //Calculating the Unrealized Gain loss for a security and storing it in the list.
                     List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+                    //Filtering the list according to the time period selected
                     List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
                     //Filtering the list according to the frequency selected.
                     List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
-                                               select p.FromDate).ToList();
+                                               select p.FromDate).ToList();                   
                     List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
                     timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
                 }
