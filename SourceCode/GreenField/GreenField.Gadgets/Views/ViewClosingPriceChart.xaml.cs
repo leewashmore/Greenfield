@@ -35,7 +35,6 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-
         /// <summary>
         /// Constructor
         /// </summary>

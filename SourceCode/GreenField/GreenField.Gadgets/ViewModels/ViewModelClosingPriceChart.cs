@@ -42,11 +42,11 @@ namespace GreenField.Gadgets.ViewModels
         #region Constructor
 
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
-        /// <param name="eventAggregator"></param>
-        /// <param name="dbInteractivity"></param>
-        /// <param name="logger"></param>
+        /// <param name="eventAggregator">Event Aggregation from Shell</param>
+        /// <param name="dbInteractivity">Instance of Service Caller</param>
+        /// <param name="logger">Instance of Logger</param>
         /// <param name="entitySelectionData"></param>
         public ViewModelClosingPriceChart(DashBoardGadgetParam param)
         {
@@ -77,6 +77,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_chartEntityList == null)
                     _chartEntityList = new ObservableCollection<EntitySelectionData>();
+                if (_chartEntityList.Count >= 1)
+                    AddToChartVisibility = "Visible";
+                else
+                    AddToChartVisibility = "Collapsed";
                 return _chartEntityList;
             }
             set
@@ -86,10 +90,14 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     SelectedBaseSecurity = ChartEntityList[0].ToString();
                 }
+
                 this.RaisePropertyChanged(() => this.ChartEntityList);
             }
         }
 
+        /// <summary>
+        /// Display the name of Base Security Selected
+        /// </summary>
         private string _selectedBaseSecurity = "No Security Added";
         public string SelectedBaseSecurity
         {
@@ -103,7 +111,6 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
             }
         }
-
 
         #region Time Period Selection
         /// <summary>
@@ -213,6 +220,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region FrequencySelection
 
+        /// <summary>
+        /// Frequency Interval for chart
+        /// </summary>
         private ObservableCollection<string> _frequencyInterval;
         public ObservableCollection<string> FrequencyInterval
         {
@@ -237,6 +247,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected Frequency interval
+        /// </summary>
         private string _selectedFrequencyInterval = "Daily";
         public string SelectedFrequencyInterval
         {
@@ -247,7 +260,6 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _selectedFrequencyInterval = value;
-                GetXAxisDataFormat();
                 if (ChartEntityList.Count != 0)
                 {
                     RetrievePricingData(ChartEntityList,
@@ -256,77 +268,6 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.SelectedFrequencyInterval);
             }
         }
-
-        private string _chartXAxisDataFormat;
-        public string ChartXAxisDataFormat
-        {
-            get
-            {
-                return _chartXAxisDataFormat;
-            }
-            set
-            {
-                _chartXAxisDataFormat = value;
-                this.RaisePropertyChanged(() => this.ChartXAxisDataFormat);
-            }
-        }
-
-        private double _closingPriceChartXMinimumValue = DateTime.Today.AddYears(-1).ToOADate();
-        public double ClosingPriceChartXMinimumValue
-        {
-            get
-            {
-                return _closingPriceChartXMinimumValue;
-            }
-            set
-            {
-                _closingPriceChartXMinimumValue = value;
-                this.RaisePropertyChanged(() => this.ClosingPriceChartXMinimumValue);
-            }
-        }
-
-        private double _closingPriceChartXMaximumValue = DateTime.Today.ToOADate();
-        public double ClosingPriceChartXMaximumValue
-        {
-            get
-            {
-                return _closingPriceChartXMaximumValue;
-            }
-            set
-            {
-                _closingPriceChartXMaximumValue = value;
-                this.RaisePropertyChanged(() => this.ClosingPriceChartXMaximumValue);
-            }
-        }
-
-        private double _closingPriceChartStep;
-        public double ClosingPriceChartStep
-        {
-            get
-            {
-                return _closingPriceChartStep;
-            }
-            set
-            {
-                _closingPriceChartStep = value;
-                this.RaisePropertyChanged(() => this.ClosingPriceChartStep);
-            }
-        }
-
-        private double _levelCount = 1;
-        public double LevelCount
-        {
-            get
-            {
-                return _levelCount;
-            }
-            set
-            {
-                _levelCount = value;
-                this.RaisePropertyChanged(() => this.LevelCount);
-            }
-        }
-
 
         #endregion
 
@@ -353,11 +294,10 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
 
-
-        private EntitySelectionData _selectedSeriesReference = new EntitySelectionData();
         /// <summary>
         /// Selected Entity
         /// </summary>
+        private EntitySelectionData _selectedSeriesReference = new EntitySelectionData();
         public EntitySelectionData SelectedSeriesReference
         {
             get
@@ -444,6 +384,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// CheckBox Selection for Total Return/Gross Return
+        /// </summary>
         private bool _returnTypeSelection;
         public bool ReturnTypeSelection
         {
@@ -487,6 +430,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Series bound to Volume Chart
+        /// </summary>
         private RangeObservableCollection<PricingReferenceData> _primaryPlottedSeries;
         public RangeObservableCollection<PricingReferenceData> PrimaryPlottedSeries
         {
@@ -506,6 +452,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Series to show List of Securities Added to chart
+        /// </summary>
         private ObservableCollection<EntitySelectionData> _comparisonSeries = new ObservableCollection<EntitySelectionData>();
         public ObservableCollection<EntitySelectionData> ComparisonSeries
         {
@@ -548,17 +497,43 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Show/Hide Add to Chart Control
+        /// </summary>
+        private string _addToChartVisibility = "Collapsed";
+        public string AddToChartVisibility
+        {
+            get
+            {
+                return _addToChartVisibility;
+            }
+            set
+            {
+                _addToChartVisibility = value;
+                this.RaisePropertyChanged(() => this.AddToChartVisibility);
+            }
+        }
+
         #region ICommand
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
         public ICommand AddCommand
         {
             get { return new DelegateCommand<object>(AddCommandMethod); }
         }
 
+        /// <summary>
+        /// Delete Series from Chart
+        /// </summary>
         public ICommand DeleteCommand
         {
             get { return new DelegateCommand<object>(DeleteCommandMethod); }
         }
 
+        /// <summary>
+        /// Zoom-In Command Button
+        /// </summary>
         private ICommand _zoomInCommand;
         public ICommand ZoomInCommand
         {
@@ -572,6 +547,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Zoom-Out Command Button
+        /// </summary>
         private ICommand _zoomOutCommand;
         public ICommand ZoomOutCommand
         {
@@ -590,6 +568,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region ICommand Methods
 
+        /// <summary>
+        /// Add to Chart Command Method
+        /// </summary>
+        /// <param name="param"></param>
         private void AddCommandMethod(object param)
         {
             if (SelectedSeriesReference != null)
@@ -601,8 +583,6 @@ namespace GreenField.Gadgets.ViewModels
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
-
-                    //List<EntitySelectionData> objEntitySelectionData= new List<EntitySelectionData>(SeriesReference);
 
                     //Checking the types of entity in the Chart
                     foreach (EntitySelectionData item in SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList())
@@ -623,7 +603,6 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
-                        List<PricingReferenceData> x = PlottedSeries.ToList();
                         ComparisonSeries.Add(SelectedSeriesReference);
                         SelectedSeriesReference = null;
                     });
@@ -631,6 +610,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Delete Series from Chart
+        /// </summary>
+        /// <param name="param"></param>
         private void DeleteCommandMethod(object param)
         {
             EntitySelectionData a = param as EntitySelectionData;
@@ -642,6 +625,10 @@ namespace GreenField.Gadgets.ViewModels
             ChartEntityList.Remove(a);
         }
 
+        /// <summary>
+        /// Zoom In Command Method
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ZoomInCommandMethod(object parameter)
         {
             ZoomIn(this.ChartAreaPricing);
@@ -650,6 +637,10 @@ namespace GreenField.Gadgets.ViewModels
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
+        /// <summary>
+        /// Zoom In Command Method Validation
+        /// </summary>
+        /// <param name="parameter"></param>
         public bool ZoomInCommandValidation(object parameter)
         {
             if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
@@ -660,6 +651,10 @@ namespace GreenField.Gadgets.ViewModels
                 this.ChartAreaVolume.ZoomScrollSettingsX.Range > this.ChartAreaVolume.ZoomScrollSettingsX.MinZoomRange;
         }
 
+        /// <summary>
+        /// Zoom Out Command Method
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ZoomOutCommandMethod(object parameter)
         {
             ZoomOut(this.ChartAreaPricing);
@@ -668,6 +663,10 @@ namespace GreenField.Gadgets.ViewModels
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
+        /// <summary>
+        /// Zoom Out Command Method Validation
+        ///  </summary>
+        /// <param name="parameter"></param>
         public bool ZoomOutCommandValidation(object parameter)
         {
             if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
@@ -752,15 +751,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
-                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.InstrumentID != PrimaryPlottedSeries.First().InstrumentID).ToList();
-                    //PlottedSeries.RemoveRange(RemoveItems);
-                    //PrimaryPlottedSeries.Clear();
                     PlottedSeries.Clear();
                     PrimaryPlottedSeries.Clear();
                 }
 
                 ChartEntityList.Clear();
                 ChartEntityList.Add(entitySelectionData);
+
                 //Retrieve Pricing Data for Primary Security Reference
                 if (null != closingPriceDataLoadedEvent)
                     closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -777,6 +774,7 @@ namespace GreenField.Gadgets.ViewModels
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
+
         #endregion
 
         #region Helper Methods
@@ -847,51 +845,10 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        private void GetXAxisDataFormat()
-        {
-            TimeSpan timeSpan = SelectedEndDate - SelectedStartDate;
-            ClosingPriceChartXMinimumValue = SelectedStartDate.ToOADate();
-            ClosingPriceChartXMaximumValue = SelectedEndDate.ToOADate();
-
-            switch (SelectedFrequencyInterval)
-            {
-                case ("Daily"):
-                    {
-                        ChartXAxisDataFormat = "d";
-                        LevelCount = timeSpan.Days;
-                        break;
-                    }
-                case ("Weekly"):
-                    {
-                        ChartXAxisDataFormat = "d";
-                        LevelCount = timeSpan.Days / 7;
-                        break;
-                    }
-                case ("Monthly"):
-                    {
-                        ChartXAxisDataFormat = "Y";
-                        LevelCount = timeSpan.Days / 30;
-                        break;
-                    }
-                case ("Half-Yearly"):
-                    {
-                        ChartXAxisDataFormat = "Y";
-                        LevelCount = timeSpan.Days / 180;
-                        break;
-                    }
-                case ("Yearly"):
-                    {
-                        ChartXAxisDataFormat = "yyyy";
-                        LevelCount = timeSpan.Days / 365;
-                        break;
-                    }
-
-                default:
-                    ChartXAxisDataFormat = "M";
-                    break;
-            }
-        }
-
+        /// <summary>
+        /// Zoom In Algo
+        /// </summary>
+        /// <param name="chartArea"></param>
         private void ZoomIn(ChartArea chartArea)
         {
             chartArea.ZoomScrollSettingsX.SuspendNotifications();
@@ -904,6 +861,10 @@ namespace GreenField.Gadgets.ViewModels
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
         }
 
+        /// <summary>
+        /// Zoom out Algo
+        /// </summary>
+        /// <param name="chartArea"></param>
         private void ZoomOut(ChartArea chartArea)
         {
             chartArea.ZoomScrollSettingsX.SuspendNotifications();
