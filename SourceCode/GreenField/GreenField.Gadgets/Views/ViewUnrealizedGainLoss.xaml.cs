@@ -18,6 +18,12 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewUnrealizedGainLoss : UserControl
     {
+        private static class ExportTypes
+        {
+            public const string UNREALIZED_GAINLOSS_CHART = "Unrealized Gain/Loss Chart";
+            public const string UNREALIZED_GAINLOSS_DATA = "Unrealized Gain/Loss Data";
+        }
+
         public ViewUnrealizedGainLoss(ViewModelUnrealizedGainLoss dataContextSource)
         {
             InitializeComponent();
@@ -43,12 +49,12 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnTFlip_Click(object sender, RoutedEventArgs e)
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
-            if (dgUnrealizedGainLoss.Visibility == Visibility.Collapsed)
-                Flipper.FlipItem(chUnrealizedGainLoss, dgUnrealizedGainLoss);
+            if (this.grdRadGridView.Visibility == Visibility.Visible)
+                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
             else
-                Flipper.FlipItem(dgUnrealizedGainLoss, chUnrealizedGainLoss);
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
 
         }
 
@@ -62,16 +68,14 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.DefaultExt = "XLSX";  //Default Format for saving file
-                dialog.Filter = this.GetDefaulExt();
-
-                if (!(bool)dialog.ShowDialog())
-                    return;
-
-                Stream fileStream = dialog.OpenFile();
-                this.ExportTheFile(fileStream);
-                fileStream.Close();
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA, Element = this.dgUnrealizedGainLoss, ExportFilterOption = RadExportFilterOptions.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },                    
+                    
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.UNREALIZED_GAINLOSS);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -80,25 +84,5 @@ namespace GreenField.Gadgets.Views
         }
 
 
-        private string GetDefaulExt()
-        {
-            return string.Format("{1} File (*.{0}) | *.{0}", "xlsx", "XLSX");
-        }
-
-        /// <summary>
-        /// Method writing the stream of chart to an Excel File using ExportToExcelMl method.
-        /// </summary>
-        /// <param name="fileStream"></param>
-        private void ExportTheFile(Stream fileStream)
-        {
-            try
-            {
-                chUnrealizedGainLoss.ExportToExcelML(fileStream);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
     }
 }

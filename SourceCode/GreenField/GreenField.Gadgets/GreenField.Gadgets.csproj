@@ -108,7 +108,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ChildExportOptions.xaml.cs">
+      <DependentUpon>ChildExportOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataContextProxy.cs" />
+    <Compile Include="Helpers\ExportOptions.cs" />
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
@@ -169,6 +173,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Helpers\ChildExportOptions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

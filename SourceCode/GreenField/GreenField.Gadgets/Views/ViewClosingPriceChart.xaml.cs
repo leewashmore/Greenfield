@@ -13,11 +13,29 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.IO;
 using GreenField.Common;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Data;
+using Telerik.Windows.Controls.Primitives;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewClosingPriceChart : UserControl
     {
+        #region Variables
+
+        public DateTime startDate = DateTime.Today.AddYears(-1);
+        public DateTime endDate = DateTime.Today;
+
+        private static class ExportTypes
+        {
+            public const string CLOSING_PRICE_CHART = "Closing Price Chart";
+            public const string PRICING_DATA = "Closing Price Data";
+            public const string VOLUME_CHART = "Volume Chart";
+        }
+
+        #endregion
+
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -25,7 +43,19 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
-            DataContextSource.closingPriceDataLoadedEvent+=new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
+            DataContextSource.closingPriceDataLoadedEvent += new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
+            this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
+            this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
+
+            DataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
+            this.chPricing.DataBound += DataContextSource.ChartDataBound;
+            DataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
+            this.chVolume.DataBound += DataContextSource.ChartDataBound;
         }
 
 
@@ -43,18 +73,16 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnTFlip_Click(object sender, RoutedEventArgs e)
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
-            UIElement elementOver = this.dgPricing.Visibility == System.Windows.Visibility.Visible ? (UIElement)this.dgPricing : (UIElement)this.chPricing;
-            UIElement elementUnder = elementOver == (UIElement)this.chPricing ? (UIElement)this.dgPricing : (UIElement)this.chPricing;
-            Flipper.FlipItem(elementOver, elementUnder);
-        }
-
-        private void btnBFlip_Click(object sender, RoutedEventArgs e)
-        {
-            UIElement elementOver = this.dgVolume.Visibility == System.Windows.Visibility.Visible ? (UIElement)this.dgVolume : (UIElement)this.chVolume;
-            UIElement elementUnder = elementOver == (UIElement)this.chVolume ? (UIElement)this.dgVolume : (UIElement)this.chVolume;
-            Flipper.FlipItem(elementOver, elementUnder);
+            if (this.grdRadGridView.Visibility == System.Windows.Visibility.Visible)
+            {
+                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            }
+            else
+            {
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+            }
         }
 
         /// <summary>
@@ -66,16 +94,15 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.DefaultExt = "XLSX";  //Default Format for saving file
-                dialog.Filter = this.GetDefaulExt();
-
-                if (!(bool)dialog.ShowDialog())
-                    return;
-
-                Stream fileStream = dialog.OpenFile();
-                this.ExportTheFile(fileStream);
-                fileStream.Close();
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOptions.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
+                    
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PRICING);
+                childExportOptions.Show();
             }
             catch (Exception ex)
             {
@@ -83,30 +110,210 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private string GetDefaulExt()
+        private void cmbFrequencyInterval_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            return string.Format("{1} File (*.{0}) | *.{0}", "xlsx", "XLSX");
+            string timeInterval = cmbTime.SelectedValue.ToString();
+            switch (cmbFrequencyInterval.SelectedValue.ToString())
+            {
+                case ("Daily"):
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.Step = 5;
+                        this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.Step = 5;
+                        this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        break;
+                    }
+                case ("Weekly"):
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.Step = 7;
+                        this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.Step = 7;
+                        this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        break;
+                    }
+                case ("Monthly"):
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        break;
+                    }
+                case ("Half-Yearly"):
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.Step = 6;
+                        this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 1;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.Step = 6;
+                        this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 1;
+
+                        break;
+                    }
+                case ("Yearly"):
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
+
+                        break;
+                    }
+                default:
+                    {
+                        this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
+
+                        this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        break;
+                    }
+            }
         }
 
-        /// <summary>
-        /// Method writing the stream of chart to an Excel File using ExportToExcelMl method.
-        /// </summary>
-        /// <param name="fileStream"></param>
-        private void ExportTheFile(Stream fileStream)
+        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            try
+            switch (cmbTime.SelectedValue.ToString())
             {
-                //closingPriceChart.ExportToExcelML(fileStream);
-                //volumeChart.ExportToExcelML(fileStream);
+                case ("1-Month"):
+                    {
+                        //this.chPricing.DefaultView.ChartArea.AxisX.MinValue = Convert.ToDouble(DateTime.Today.AddMonths(-1));
+                        //this.chPricing.DefaultView.ChartArea.AxisX.MaxValue = Convert.ToDouble(DateTime.Today);
+                        break;
+                    }
+                case ("2-Months"):
+                    {
+                        break;
+                    }
+                case ("3-Months"):
+                    {
+                        break;
+                    }
+                case ("6-Months"):
+                    {
+                        break;
+                    }
+                case ("9-Months"):
+                    {
+                        break;
+                    }
+                case "1-Year":
+                    {
+                        break;
+                    }
+                case "2-Years":
+                    break;
+                case "3-Years":
+                    break;
+                case "4-Years":
+                    break;
+                case "5-Years":
+                    break;
+                case "10-Years":
+                    break;
+
+                default:
+                    break;
             }
-            catch (Exception ex)
+        }
+
+        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
+        {
+            if (e.Element == ExportElement.HeaderRow || e.Element == ExportElement.FooterRow
+                || e.Element == ExportElement.GroupFooterRow)
             {
-                MessageBox.Show(ex.Message);
+                e.Background = Colors.Gray;
+                e.Foreground = Colors.Black;
+                e.FontSize = 20;
+                e.FontWeight = FontWeights.Bold;
             }
+            else if (e.Element == ExportElement.Row)
+            {
+                //e.Background = RowBackgroundPicker.SelectedColor;
+                //e.Foreground = RowForegroundPicker.SelectedColor;
+            }
+            else if (e.Element == ExportElement.Cell &&
+                e.Value != null && e.Value.Equals("Chocolade"))
+            {
+                e.FontFamily = new FontFamily("Verdana");
+                e.Background = Colors.LightGray;
+                e.Foreground = Colors.Blue;
+            }
+            else if (e.Element == ExportElement.GroupHeaderRow)
+            {
+                e.FontFamily = new FontFamily("Verdana");
+                e.Background = Colors.LightGray;
+                e.Height = 30;
+            }
+            else if (e.Element == ExportElement.GroupHeaderCell &&
+                e.Value != null && e.Value.Equals("Chocolade"))
+            {
+                e.Value = "MyNewValue";
+            }
+            else if (e.Element == ExportElement.GroupFooterCell)
+            {
+                GridViewDataColumn column = e.Context as GridViewDataColumn;
+                QueryableCollectionViewGroup qcvGroup = e.Value as QueryableCollectionViewGroup;
+
+                if (column != null && qcvGroup != null && column.AggregateFunctions.Count() > 0)
+                {
+                    e.Value = GetAggregates(qcvGroup, column);
+                }
+            }
+        }
+
+        private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
+        {
+            List<string> aggregates = new List<string>();
+
+            foreach (AggregateFunction f in column.AggregateFunctions)
+            {
+                foreach (AggregateResult r in group.AggregateResults)
+                {
+                    if (f.FunctionName == r.FunctionName && r.FormattedValue != null)
+                    {
+                        aggregates.Add(r.FormattedValue.ToString());
+                    }
+                }
+            }
+
+            return String.Join(",", aggregates.ToArray());
         }
     }
 }

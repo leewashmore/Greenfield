@@ -7106,186 +7106,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PricingReferenceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class PricingReferenceData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private decimal CalculatedPriceField;
-        
-        private decimal DailyClosingPriceField;
-        
-        private decimal DailyGrossReturnField;
-        
-        private decimal DailyPriceReturnField;
-        
-        private decimal DailySpotFXField;
-        
-        private System.DateTime FromDateField;
-        
-        private string InstrumentIDField;
-        
-        private string IssueNameField;
-        
-        private string TickerField;
-        
-        private string TypeField;
-        
-        private decimal VolumeField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal CalculatedPrice {
-            get {
-                return this.CalculatedPriceField;
-            }
-            set {
-                if ((this.CalculatedPriceField.Equals(value) != true)) {
-                    this.CalculatedPriceField = value;
-                    this.RaisePropertyChanged("CalculatedPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DailyClosingPrice {
-            get {
-                return this.DailyClosingPriceField;
-            }
-            set {
-                if ((this.DailyClosingPriceField.Equals(value) != true)) {
-                    this.DailyClosingPriceField = value;
-                    this.RaisePropertyChanged("DailyClosingPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DailyGrossReturn {
-            get {
-                return this.DailyGrossReturnField;
-            }
-            set {
-                if ((this.DailyGrossReturnField.Equals(value) != true)) {
-                    this.DailyGrossReturnField = value;
-                    this.RaisePropertyChanged("DailyGrossReturn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DailyPriceReturn {
-            get {
-                return this.DailyPriceReturnField;
-            }
-            set {
-                if ((this.DailyPriceReturnField.Equals(value) != true)) {
-                    this.DailyPriceReturnField = value;
-                    this.RaisePropertyChanged("DailyPriceReturn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DailySpotFX {
-            get {
-                return this.DailySpotFXField;
-            }
-            set {
-                if ((this.DailySpotFXField.Equals(value) != true)) {
-                    this.DailySpotFXField = value;
-                    this.RaisePropertyChanged("DailySpotFX");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string InstrumentID {
-            get {
-                return this.InstrumentIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InstrumentIDField, value) != true)) {
-                    this.InstrumentIDField = value;
-                    this.RaisePropertyChanged("InstrumentID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IssueName {
-            get {
-                return this.IssueNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
-                    this.IssueNameField = value;
-                    this.RaisePropertyChanged("IssueName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ticker {
-            get {
-                return this.TickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
-                    this.TickerField = value;
-                    this.RaisePropertyChanged("Ticker");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Volume {
-            get {
-                return this.VolumeField;
-            }
-            set {
-                if ((this.VolumeField.Equals(value) != true)) {
-                    this.VolumeField = value;
-                    this.RaisePropertyChanged("Volume");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntitySelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class EntitySelectionData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -7360,6 +7180,201 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.TypeField, value) != true)) {
                     this.TypeField = value;
                     this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PricingReferenceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class PricingReferenceData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private decimal AdjustedDollarPriceField;
+        
+        private decimal DailyClosingPriceField;
+        
+        private decimal DailyGrossReturnField;
+        
+        private decimal DailyPriceReturnField;
+        
+        private decimal DailySpotFXField;
+        
+        private System.DateTime FromDateField;
+        
+        private decimal IndexedPriceField;
+        
+        private string InstrumentIDField;
+        
+        private string IssueNameField;
+        
+        private string TickerField;
+        
+        private string TypeField;
+        
+        private decimal VolumeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal AdjustedDollarPrice {
+            get {
+                return this.AdjustedDollarPriceField;
+            }
+            set {
+                if ((this.AdjustedDollarPriceField.Equals(value) != true)) {
+                    this.AdjustedDollarPriceField = value;
+                    this.RaisePropertyChanged("AdjustedDollarPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyClosingPrice {
+            get {
+                return this.DailyClosingPriceField;
+            }
+            set {
+                if ((this.DailyClosingPriceField.Equals(value) != true)) {
+                    this.DailyClosingPriceField = value;
+                    this.RaisePropertyChanged("DailyClosingPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyGrossReturn {
+            get {
+                return this.DailyGrossReturnField;
+            }
+            set {
+                if ((this.DailyGrossReturnField.Equals(value) != true)) {
+                    this.DailyGrossReturnField = value;
+                    this.RaisePropertyChanged("DailyGrossReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailyPriceReturn {
+            get {
+                return this.DailyPriceReturnField;
+            }
+            set {
+                if ((this.DailyPriceReturnField.Equals(value) != true)) {
+                    this.DailyPriceReturnField = value;
+                    this.RaisePropertyChanged("DailyPriceReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal DailySpotFX {
+            get {
+                return this.DailySpotFXField;
+            }
+            set {
+                if ((this.DailySpotFXField.Equals(value) != true)) {
+                    this.DailySpotFXField = value;
+                    this.RaisePropertyChanged("DailySpotFX");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal IndexedPrice {
+            get {
+                return this.IndexedPriceField;
+            }
+            set {
+                if ((this.IndexedPriceField.Equals(value) != true)) {
+                    this.IndexedPriceField = value;
+                    this.RaisePropertyChanged("IndexedPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InstrumentID {
+            get {
+                return this.InstrumentIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InstrumentIDField, value) != true)) {
+                    this.InstrumentIDField = value;
+                    this.RaisePropertyChanged("InstrumentID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssueName {
+            get {
+                return this.IssueNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
+                    this.IssueNameField = value;
+                    this.RaisePropertyChanged("IssueName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Ticker {
+            get {
+                return this.TickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
+                    this.TickerField = value;
+                    this.RaisePropertyChanged("Ticker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Type {
+            get {
+                return this.TypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
+                    this.TypeField = value;
+                    this.RaisePropertyChanged("Type");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Volume {
+            get {
+                return this.VolumeField;
+            }
+            set {
+                if ((this.VolumeField.Equals(value) != true)) {
+                    this.VolumeField = value;
+                    this.RaisePropertyChanged("Volume");
                 }
             }
         }
@@ -9109,7 +9124,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceDataResponse")]
-        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result);
         
@@ -10692,7 +10707,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrievePricingReferenceData(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, chartEntityTypes, callback, asyncState);
         }
         
@@ -10702,7 +10717,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrievePricingReferenceData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<string> entityIdentifiers = ((System.Collections.Generic.List<string>)(inValues[0]));
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData>)(inValues[0]));
             System.DateTime startDateTime = ((System.DateTime)(inValues[1]));
             System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
             bool totalReturnCheck = ((bool)(inValues[3]));
@@ -10724,11 +10739,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             }
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes) {
+        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes) {
             this.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, chartEntityTypes, null);
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, object userState) {
+        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, object userState) {
             if ((this.onBeginRetrievePricingReferenceDataDelegate == null)) {
                 this.onBeginRetrievePricingReferenceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePricingReferenceData);
             }
@@ -11890,7 +11905,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<string> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[6];
                 _args[0] = entityIdentifiers;
                 _args[1] = startDateTime;

@@ -22,6 +22,8 @@ using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Views;
+using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -68,13 +70,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Storing the names of all entities added to chart.
         /// </summary>
-        private ObservableCollection<string> _chartEntityList;
-        public ObservableCollection<string> ChartEntityList
+        private ObservableCollection<EntitySelectionData> _chartEntityList;
+        public ObservableCollection<EntitySelectionData> ChartEntityList
         {
             get
             {
                 if (_chartEntityList == null)
-                    _chartEntityList = new ObservableCollection<string>();
+                    _chartEntityList = new ObservableCollection<EntitySelectionData>();
                 return _chartEntityList;
             }
             set
@@ -125,13 +127,12 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _selectedTimeRange; 
+                return _selectedTimeRange;
             }
             set
             {
                 if (_selectedTimeRange != value)
                 {
-
                     if (value == "Custom")
                     {
                         ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
@@ -162,7 +163,7 @@ namespace GreenField.Gadgets.ViewModels
                     else
                     {
                         _selectedTimeRange = value;
-
+                        GetPeriod();
                         //Retrieve Pricing Data for updated Time Range
                         if (ChartEntityList.Count != 0)
                         {
@@ -178,7 +179,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected StartDate Option in case of Custom Time Range
         /// </summary>
-        private DateTime _selectedStartDate;
+        private DateTime _selectedStartDate = DateTime.Now.AddYears(-1);
         public DateTime SelectedStartDate
         {
             get { return _selectedStartDate; }
@@ -195,7 +196,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected EndDate Option in case of Custom Time Range
         /// </summary>
-        private DateTime _selectedEndDate;
+        private DateTime _selectedEndDate = DateTime.Today;
         public DateTime SelectedEndDate
         {
             get { return _selectedEndDate; }
@@ -236,7 +237,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private string _selectedFrequencyInterval = "Weekly";
+        private string _selectedFrequencyInterval = "Daily";
         public string SelectedFrequencyInterval
         {
             get
@@ -246,6 +247,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _selectedFrequencyInterval = value;
+                GetXAxisDataFormat();
                 if (ChartEntityList.Count != 0)
                 {
                     RetrievePricingData(ChartEntityList,
@@ -255,19 +257,76 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        //private string _frequencyInterval = "";
-        //public string FrequencyInterval
-        //{
-        //    get
-        //    {
-        //        return _frequencyInterval;
-        //    }
-        //    set
-        //    {
-        //        _frequencyInterval = value;
-        //        this.RaisePropertyChanged(() => this.FrequencyInterval);
-        //    }
-        //}
+        private string _chartXAxisDataFormat;
+        public string ChartXAxisDataFormat
+        {
+            get
+            {
+                return _chartXAxisDataFormat;
+            }
+            set
+            {
+                _chartXAxisDataFormat = value;
+                this.RaisePropertyChanged(() => this.ChartXAxisDataFormat);
+            }
+        }
+
+        private double _closingPriceChartXMinimumValue = DateTime.Today.AddYears(-1).ToOADate();
+        public double ClosingPriceChartXMinimumValue
+        {
+            get
+            {
+                return _closingPriceChartXMinimumValue;
+            }
+            set
+            {
+                _closingPriceChartXMinimumValue = value;
+                this.RaisePropertyChanged(() => this.ClosingPriceChartXMinimumValue);
+            }
+        }
+
+        private double _closingPriceChartXMaximumValue = DateTime.Today.ToOADate();
+        public double ClosingPriceChartXMaximumValue
+        {
+            get
+            {
+                return _closingPriceChartXMaximumValue;
+            }
+            set
+            {
+                _closingPriceChartXMaximumValue = value;
+                this.RaisePropertyChanged(() => this.ClosingPriceChartXMaximumValue);
+            }
+        }
+
+        private double _closingPriceChartStep;
+        public double ClosingPriceChartStep
+        {
+            get
+            {
+                return _closingPriceChartStep;
+            }
+            set
+            {
+                _closingPriceChartStep = value;
+                this.RaisePropertyChanged(() => this.ClosingPriceChartStep);
+            }
+        }
+
+        private double _levelCount = 1;
+        public double LevelCount
+        {
+            get
+            {
+                return _levelCount;
+            }
+            set
+            {
+                _levelCount = value;
+                this.RaisePropertyChanged(() => this.LevelCount);
+            }
+        }
+
 
         #endregion
 
@@ -463,6 +522,32 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        private ChartArea _chartAreaPricing;
+        public ChartArea ChartAreaPricing
+        {
+            get
+            {
+                return this._chartAreaPricing;
+            }
+            set
+            {
+                this._chartAreaPricing = value;
+            }
+        }
+
+        private ChartArea _chartAreaVolume;
+        public ChartArea ChartAreaVolume
+        {
+            get
+            {
+                return this._chartAreaVolume;
+            }
+            set
+            {
+                this._chartAreaVolume = value;
+            }
+        }
+
         #region ICommand
         public ICommand AddCommand
         {
@@ -472,6 +557,32 @@ namespace GreenField.Gadgets.ViewModels
         public ICommand DeleteCommand
         {
             get { return new DelegateCommand<object>(DeleteCommandMethod); }
+        }
+
+        private ICommand _zoomInCommand;
+        public ICommand ZoomInCommand
+        {
+            get
+            {
+                if (_zoomInCommand == null)
+                {
+                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
+                }
+                return _zoomInCommand;
+            }
+        }
+
+        private ICommand _zoomOutCommand;
+        public ICommand ZoomOutCommand
+        {
+            get
+            {
+                if (_zoomOutCommand == null)
+                {
+                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
+                }
+                return _zoomOutCommand;
+            }
         }
         #endregion
 
@@ -486,7 +597,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PlottedSeries.Any(t => t.InstrumentID == SelectedSeriesReference.InstrumentID))
                 {
                     //string type = SelectedSeriesReference.Type.ToString();
-                    ChartEntityList.Add(Convert.ToString(SelectedSeriesReference.InstrumentID));
+                    ChartEntityList.Add(SelectedSeriesReference);
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
@@ -498,7 +609,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         List<EntitySelectionData> a = SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList();
                         //If it contains type Commodity/Index/Currency, ChartEntityTypes=true else false
-                        if (ChartEntityList.Contains(item.InstrumentID.ToString()))
+                        if (ChartEntityList.Contains(item))
                         {
                             ChartEntityTypes = false;
                         }
@@ -506,9 +617,9 @@ namespace GreenField.Gadgets.ViewModels
 
                     DateTime periodStartDate;
                     DateTime periodEndDate;
-                    GetPeriod(out periodStartDate, out periodEndDate);
 
-                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, periodStartDate, periodEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, (result) =>
+
+                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, (result) =>
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
@@ -528,9 +639,43 @@ namespace GreenField.Gadgets.ViewModels
             if (removeItem != null)
                 PlottedSeries.RemoveRange(removeItem);
             ComparisonSeries.Remove(a);
-            ChartEntityList.Remove(a.InstrumentID);
+            ChartEntityList.Remove(a);
         }
 
+        public void ZoomInCommandMethod(object parameter)
+        {
+            ZoomIn(this.ChartAreaPricing);
+            ZoomIn(this.ChartAreaVolume);
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
+        public bool ZoomInCommandValidation(object parameter)
+        {
+            if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+                return false;
+
+            return
+                this.ChartAreaPricing.ZoomScrollSettingsX.Range > this.ChartAreaPricing.ZoomScrollSettingsX.MinZoomRange &&
+                this.ChartAreaVolume.ZoomScrollSettingsX.Range > this.ChartAreaVolume.ZoomScrollSettingsX.MinZoomRange;
+        }
+
+        public void ZoomOutCommandMethod(object parameter)
+        {
+            ZoomOut(this.ChartAreaPricing);
+            ZoomOut(this.ChartAreaVolume);
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
+        public bool ZoomOutCommandValidation(object parameter)
+        {
+            if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+                return false;
+
+            return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d &&
+                this.ChartAreaVolume.ZoomScrollSettingsX.Range < 1d;
+        }
         #endregion
 
         #region Callback Methods
@@ -572,12 +717,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
         {
-            if (result!=null)
+            if (result != null)
             {
                 PlottedSeries.AddRange(result);
                 PrimaryPlottedSeries.AddRange(result);
             }
-            
+
             if (null != closingPriceDataLoadedEvent)
                 closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
         }
@@ -607,21 +752,31 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PrimaryPlottedSeries.Count.Equals(0))
                 {
                     //Remove previous primary security reference data
+                    List<PricingReferenceData> RemoveItems = PlottedSeries.Where(p => p.InstrumentID != PrimaryPlottedSeries.First().InstrumentID).ToList();
+                    //PlottedSeries.RemoveRange(RemoveItems);
+                    //PrimaryPlottedSeries.Clear();
                     PlottedSeries.Clear();
                     PrimaryPlottedSeries.Clear();
                 }
 
                 ChartEntityList.Clear();
+                ChartEntityList.Add(entitySelectionData);
                 //Retrieve Pricing Data for Primary Security Reference
                 if (null != closingPriceDataLoadedEvent)
                     closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                RetrievePricingData(new ObservableCollection<String>() { entitySelectionData.InstrumentID }, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-                ChartEntityList.Add(entitySelectionData.InstrumentID);
+                RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+
                 SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
             }
 
         }
 
+
+        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        {
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
         #endregion
 
         #region Helper Methods
@@ -631,14 +786,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="entityIdentifiers">List of Security Identifiers</param>
         /// <param name="callback">CallBack Method Predicate</param>
-        private void RetrievePricingData(ObservableCollection<String> entityIdentifiers, Action<List<PricingReferenceData>> callback)
+        private void RetrievePricingData(ObservableCollection<EntitySelectionData> entityIdentifiers, Action<List<PricingReferenceData>> callback)
         {
-            DateTime periodStartDate;
-            DateTime periodEndDate;
-            GetPeriod(out periodStartDate, out periodEndDate);
             if (null != closingPriceDataLoadedEvent)
                 closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, periodStartDate, periodEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, callback);
+            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, callback);
         }
 
         /// <summary>
@@ -646,57 +798,128 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="startDate">Data lower limit</param>
         /// <param name="endDate">Data upper limit</param>
-        private void GetPeriod(out DateTime startDate, out DateTime endDate)
+        private void GetPeriod()
         {
-            endDate = DateTime.Today;
+            SelectedEndDate = DateTime.Today;
             switch (SelectedTimeRange)
             {
                 case "1-Month":
-                    startDate = endDate.AddMonths(-1);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-1);
                     break;
                 case "2-Months":
-                    startDate = endDate.AddMonths(-2);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-2);
                     break;
                 case "3-Months":
-                    startDate = endDate.AddMonths(-3);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-3);
                     break;
                 case "6-Months":
-                    startDate = endDate.AddMonths(-6);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-6);
                     break;
                 case "9-Months":
-                    startDate = endDate.AddMonths(-9);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-9);
                     break;
                 case "1-Year":
-                    startDate = endDate.AddMonths(-12);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-12);
                     break;
                 case "2-Years":
-                    startDate = endDate.AddMonths(-24);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-24);
                     break;
                 case "3-Years":
-                    startDate = endDate.AddMonths(-36);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-36);
                     break;
                 case "4-Years":
-                    startDate = endDate.AddMonths(-48);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-48);
                     break;
                 case "5-Years":
-                    startDate = endDate.AddMonths(-60);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-60);
                     break;
                 case "10-Years":
-                    startDate = endDate.AddMonths(-120);
-                    break;
-                case "Custom":
-                    startDate = SelectedStartDate;
-                    endDate = SelectedEndDate;
+                    SelectedStartDate = SelectedEndDate.AddMonths(-120);
                     break;
                 case "YTD":
-                    startDate = DateTime.Today;
-                    endDate = new DateTime((int)(DateTime.Today.Year), 1, 1);
+                    SelectedEndDate = DateTime.Today;
+                    SelectedStartDate = new DateTime((int)(DateTime.Today.Year), 1, 1);
                     break;
                 default:
-                    startDate = endDate.AddMonths(-12);
+                    SelectedStartDate = SelectedEndDate.AddMonths(-12);
                     break;
             }
 
+        }
+
+        private void GetXAxisDataFormat()
+        {
+            TimeSpan timeSpan = SelectedEndDate - SelectedStartDate;
+            ClosingPriceChartXMinimumValue = SelectedStartDate.ToOADate();
+            ClosingPriceChartXMaximumValue = SelectedEndDate.ToOADate();
+
+            switch (SelectedFrequencyInterval)
+            {
+                case ("Daily"):
+                    {
+                        ChartXAxisDataFormat = "d";
+                        LevelCount = timeSpan.Days;
+                        break;
+                    }
+                case ("Weekly"):
+                    {
+                        ChartXAxisDataFormat = "d";
+                        LevelCount = timeSpan.Days / 7;
+                        break;
+                    }
+                case ("Monthly"):
+                    {
+                        ChartXAxisDataFormat = "Y";
+                        LevelCount = timeSpan.Days / 30;
+                        break;
+                    }
+                case ("Half-Yearly"):
+                    {
+                        ChartXAxisDataFormat = "Y";
+                        LevelCount = timeSpan.Days / 180;
+                        break;
+                    }
+                case ("Yearly"):
+                    {
+                        ChartXAxisDataFormat = "yyyy";
+                        LevelCount = timeSpan.Days / 365;
+                        break;
+                    }
+
+                default:
+                    ChartXAxisDataFormat = "M";
+                    break;
+            }
+        }
+
+        private void ZoomIn(ChartArea chartArea)
+        {
+            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+
+            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Max(chartArea.ZoomScrollSettingsX.MinZoomRange, chartArea.ZoomScrollSettingsX.Range) / 2;
+            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
+            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
+
+            chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+        private void ZoomOut(ChartArea chartArea)
+        {
+            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+
+            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
+
+            if (zoomCenter + (newRange / 2) > 1)
+                zoomCenter = 1 - (newRange / 2);
+            else if (zoomCenter - (newRange / 2) < 0)
+                zoomCenter = newRange / 2;
+
+            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
+            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
+
+            chartArea.ZoomScrollSettingsX.ResumeNotifications();
         }
 
         #endregion
