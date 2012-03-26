@@ -5,7 +5,7 @@ syntax: glob
 
 # Ignore Visual Studio files
 *.obj
-*.exe
+#*.exe
 *.xap
 *.pdb
 *.user

@@ -1,0 +1,8 @@
+SimpleXmlReplacer.exe - used to edit xml config.
+
+Usage: 
+SimpleXmlReplacer.exe fileName xPath attributeName newVAlue
+
+Usage example:
+SimpleXmlReplacer.exe  "C:\TEMP\ServiceReferences.ClientConfig" //system.serviceModel/client/endpoint[@contract='ProxyDataDefinitions.ProxyDataOperations'] address testValue
+
