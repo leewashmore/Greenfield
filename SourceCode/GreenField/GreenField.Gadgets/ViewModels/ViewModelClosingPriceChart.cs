@@ -684,15 +684,33 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">EntityReferenceData Collection</param>
         private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
-            SeriesReference = new CollectionViewSource();
-            SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
-            SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
-            SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
             {
-                PropertyName = "Type",
-                Direction = System.ComponentModel.ListSortDirection.Ascending
-            });
-            SeriesReference.Source = SeriesReferenceSource;
+                if (result != null)
+                {
+                    SeriesReference = new CollectionViewSource();
+                    SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
+                    SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
+                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
+                    {
+                        PropertyName = "Type",
+                        Direction = System.ComponentModel.ListSortDirection.Ascending
+                    });
+                    SeriesReference.Source = SeriesReferenceSource;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>
@@ -701,13 +719,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_TimeRange(List<PricingReferenceData> result)
         {
-            string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
-            PlottedSeries.Clear();
-            PrimaryPlottedSeries.Clear();
-            PlottedSeries.AddRange(result);
-            PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
-            if (null != closingPriceDataLoadedEvent)
-                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
+                    PlottedSeries.Clear();
+                    PrimaryPlottedSeries.Clear();
+                    PlottedSeries.AddRange(result);
+                    PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
+                    if (null != closingPriceDataLoadedEvent)
+                        closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>
@@ -716,14 +748,25 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">PricingReferenceData collection</param>
         private void RetrievePricingReferenceDataCallBackMethod_SecurityReference(List<PricingReferenceData> result)
         {
-            if (result != null)
-            {
-                PlottedSeries.AddRange(result);
-                PrimaryPlottedSeries.AddRange(result);
-            }
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
 
-            if (null != closingPriceDataLoadedEvent)
-                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            try
+            {
+                if (result != null)
+                {
+                    PlottedSeries.AddRange(result);
+                    PrimaryPlottedSeries.AddRange(result);
+                }
+
+                if (null != closingPriceDataLoadedEvent)
+                    closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         #endregion
@@ -740,34 +783,48 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="securityReferenceData">SecurityReferenceData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
-            //ArgumentNullException
-            if (entitySelectionData == null)
-                return;
-
-            //Check if security reference data is already present
-            if (PrimaryPlottedSeries.Where(p => p.InstrumentID == entitySelectionData.InstrumentID).Count().Equals(0))
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
             {
-                //Check if no data exists
-                if (!PrimaryPlottedSeries.Count.Equals(0))
+                //ArgumentNullException
+                if (entitySelectionData != null)
                 {
-                    //Remove previous primary security reference data
-                    PlottedSeries.Clear();
-                    PrimaryPlottedSeries.Clear();
+
+                    //Check if security reference data is already present
+                    if (PrimaryPlottedSeries.Where(p => p.InstrumentID == entitySelectionData.InstrumentID).Count().Equals(0))
+                    {
+                        //Check if no data exists
+                        if (!PrimaryPlottedSeries.Count.Equals(0))
+                        {
+                            //Remove previous primary security reference data
+                            PlottedSeries.Clear();
+                            PrimaryPlottedSeries.Clear();
+                        }
+
+                        ChartEntityList.Clear();
+                        ChartEntityList.Add(entitySelectionData);
+
+                        //Retrieve Pricing Data for Primary Security Reference
+                        if (null != closingPriceDataLoadedEvent)
+                            closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+
+                        SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
+                    }
+                    else
+                    {
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    }
                 }
-
-                ChartEntityList.Clear();
-                ChartEntityList.Add(entitySelectionData);
-
-                //Retrieve Pricing Data for Primary Security Reference
-                if (null != closingPriceDataLoadedEvent)
-                    closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-
-                SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
 
         }
-
 
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {

@@ -35,6 +35,8 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -43,21 +45,33 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = DataContextSource;
             DataContextSource.closingPriceDataLoadedEvent += new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
-            this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
-            this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
-
             DataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
             this.chPricing.DataBound += DataContextSource.ChartDataBound;
             DataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
             this.chVolume.DataBound += DataContextSource.ChartDataBound;
+            ApplyChartStyles();
         }
 
+        #endregion
 
+        /// <summary>
+        /// Formatting the chart
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
+            this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Data Retrieval Progress Indicator
+        /// </summary>
+        /// <param name="e"></param>
         void DataContextSource_closingPriceDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
@@ -198,57 +212,10 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
                         break;
                     }
-            }
-        }
-
-        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            switch (cmbTime.SelectedValue.ToString())
-            {
-                case ("1-Month"):
-                    {
-                        //this.chPricing.DefaultView.ChartArea.AxisX.MinValue = Convert.ToDouble(DateTime.Today.AddMonths(-1));
-                        //this.chPricing.DefaultView.ChartArea.AxisX.MaxValue = Convert.ToDouble(DateTime.Today);
-                        break;
-                    }
-                case ("2-Months"):
-                    {
-                        break;
-                    }
-                case ("3-Months"):
-                    {
-                        break;
-                    }
-                case ("6-Months"):
-                    {
-                        break;
-                    }
-                case ("9-Months"):
-                    {
-                        break;
-                    }
-                case "1-Year":
-                    {
-                        break;
-                    }
-                case "2-Years":
-                    break;
-                case "3-Years":
-                    break;
-                case "4-Years":
-                    break;
-                case "5-Years":
-                    break;
-                case "10-Years":
-                    break;
-
-                default:
-                    break;
             }
         }
 

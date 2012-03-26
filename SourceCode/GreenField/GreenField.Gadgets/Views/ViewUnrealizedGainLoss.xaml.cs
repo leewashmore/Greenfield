@@ -24,6 +24,10 @@ namespace GreenField.Gadgets.Views
             public const string UNREALIZED_GAINLOSS_DATA = "Unrealized Gain/Loss Data";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewUnrealizedGainLoss(ViewModelUnrealizedGainLoss dataContextSource)
         {
             InitializeComponent();
@@ -32,9 +36,24 @@ namespace GreenField.Gadgets.Views
                 new DataRetrievalProgressIndicator(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
             this.chUnrealizedGainLoss.DataBound += dataContextSource.ChartDataBound;
-            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
+            this.grdRadChart.Visibility = Visibility.Collapsed;
+            this.grdRadGridView.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Formatting the chart
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+        }
+
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
         void dataContextSource_unrealizedGainLossDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
@@ -55,7 +74,6 @@ namespace GreenField.Gadgets.Views
                 Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
             else
                 Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
-
         }
 
 

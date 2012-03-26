@@ -285,7 +285,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                         <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                     HorizontalAlignment="Stretch" SelectionChanged="cmbTime_SelectionChanged"
+                                     HorizontalAlignment="Stretch" 
                                      ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
                     </Grid>
 
@@ -416,8 +416,7 @@
                                 <telerik:ChartDefaultView ChartLegendPosition="Top" >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False"
-                                                           NoDataString="No Data Available" >
+                                                           EnableAnimations="False" NoDataString="No Data Available" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="0.3" />
@@ -454,7 +453,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return : #Y / Date: #FromDate {d}"/>
+                                                                      ItemToolTipFormat="Return : #Y / Date: #FromDate{d}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
