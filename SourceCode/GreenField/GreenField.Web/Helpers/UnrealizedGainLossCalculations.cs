@@ -31,6 +31,9 @@ namespace GreenField.Web.Helpers
             entry.DailyClosingPrice = Convert.ToDecimal(arrangedByDescRecord[0].DAILY_CLOSING_PRICE);
             entry.FromDate = (DateTime)arrangedByDescRecord[0].FROMDATE;
             entry.Volume = Convert.ToDecimal(arrangedByDescRecord[0].VOLUME);
+            entry.Ticker = arrangedByDescRecord[0].TICKER;
+            entry.IssueName = arrangedByDescRecord[0].ISSUE_NAME;
+            entry.Type = arrangedByDescRecord[0].TYPE;
             adjustedPriceResult.Add(entry);
 
             //Calculations for the rest of the records
@@ -43,6 +46,9 @@ namespace GreenField.Web.Helpers
                 entry.DailyClosingPrice = Convert.ToDecimal(arrangedByDescRecord[i].DAILY_CLOSING_PRICE);
                 entry.FromDate = (DateTime)arrangedByDescRecord[i].FROMDATE;
                 entry.Volume = Convert.ToDecimal(arrangedByDescRecord[i].VOLUME);
+                entry.Ticker = arrangedByDescRecord[i].TICKER;
+                entry.IssueName = arrangedByDescRecord[i].ISSUE_NAME;
+                entry.Type = arrangedByDescRecord[i].TYPE;
                 adjustedPriceResult.Add(entry);
             }
             return adjustedPriceResult;

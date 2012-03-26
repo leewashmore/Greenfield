@@ -210,13 +210,13 @@
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro" Visibility="Visible">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding UnrealizedGainLoss}" />
-                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding UnrealizedGainLoss}" />
-                            <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding UnrealizedGainLoss}" />
-                            <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding FromDate}" DataFormatString="{}{0:MM/dd/yyyy}" />
-                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice,StringFormat=c}" />
+                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}" />
+                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" />
+                            <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding Type}" />
+                            <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"/>
+                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}" />
                             <telerik:GridViewDataColumn Header="Unrealized Gain/Loss" DataMemberBinding="{Binding UnrealizedGainLoss}"
-                                                        DataFormatString="{}{0:n5}}" />
+                                                        DataFormatString="{}{0:n5}" />
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </Border>
