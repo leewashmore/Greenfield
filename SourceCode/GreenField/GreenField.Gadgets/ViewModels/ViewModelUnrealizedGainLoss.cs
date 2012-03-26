@@ -18,18 +18,37 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels
 {   
+    /// <summary>
+    /// Class that provides the interaction of the view model with the Service caller and the View.
+    /// </summary>
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
+        /// <summary>
+        /// private member object of the IEventAggregator for event aggregation
+        /// </summary>
         private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// private member object of the IDBInteractivity for interaction with the Service Caller
+        /// </summary>
         private IDBInteractivity _dbInteractivity;
+
+        /// <summary>
+        /// private member object of ILoggerFacade for logging
+        /// </summary>
         private ILoggerFacade _logger;
+
+        /// <summary>
+        /// private member object of the EntitySelectionData class for storing Entity Selection Data
+        /// </summary>
         private EntitySelectionData _entitySelectionData;
 
         #region Constructor
+
         /// <summary>
-        /// Constructor
+        /// Constructor of the class that initializes various objects
         /// </summary>
-        /// <param name="eventAggregator">MEF Eventaggrigator instance</param>
+        /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelUnrealizedGainLoss(DashBoardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
@@ -49,7 +68,7 @@ namespace GreenField.Gadgets.ViewModels
         #region UI Fields
 
         /// <summary>
-        /// Collection binded to the Comparison chart - consists of unrealized gain loss and closing price for the primary entity
+        /// Collection binded to the Comparison chart - consists of unrealized gain loss,closing price and Closing date for the primary entity
         /// </summary>
         private RangeObservableCollection<UnrealizedGainLossData> _plottedSeries;
         public RangeObservableCollection<UnrealizedGainLossData> PlottedSeries
@@ -72,7 +91,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Time Period Selection and Frequency Selection
         /// <summary>
-        /// Collection of Time Range and Frequency Range options
+        /// Collection of Time Range options
         /// </summary>
         private ObservableCollection<String> _timeRange;
         public ObservableCollection<String> TimeRange
@@ -84,6 +103,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Collection of Frequency Range Options
+        /// </summary>
         private ObservableCollection<String> _frequencyRange;
         public ObservableCollection<String> FrequencyRange
         {
@@ -94,7 +116,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Selection Time Range and Frequency Range option
+        /// Property to be updated on Selection of Time Range option
         /// </summary>
         private string _selectedTimeRange = "1-Year";
         public string SelectedTimeRange
@@ -113,6 +135,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Property to be updated on Selection of Frequency Range Option 
+        /// </summary>
         private string _selectedFrequencyRange = "Daily";
         public string SelectedFrequencyRange
         {
@@ -131,6 +156,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Property for grouping in the combo box
+        /// </summary>
         private CollectionViewSource _seriesReference;
         public CollectionViewSource SeriesReference
         {
@@ -142,6 +170,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores the SeriesReference result
+        /// </summary>
         public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
 
         private ChartArea _chartArea;
@@ -166,7 +197,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Callback Method for entity selection
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="result">List containing the Entity Selection Data</param>
         private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
               string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -203,8 +234,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Method that calls the service Method through a call to Service Caller
         /// </summary>
-        /// <param name="Ticker"></param>
-        /// <param name="callback"></param>
+        /// <param name="Ticker">Unique Identifier for a security</param>
+        /// <param name="callback">Callback for this method</param>
         private void RetrieveUnrealizedGainLossData(String Ticker, Action<List<UnrealizedGainLossData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -245,8 +276,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         ///Method that calculates the Start Date and End Date time  
         /// </summary>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
+        /// <param name="startDate">returns the start date</param>
+        /// <param name="endDate">returns the end date</param>
         private void GetPeriod(out DateTime startDate, out DateTime endDate)
         {
             endDate = DateTime.Today;
@@ -294,6 +325,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Events
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
         public event DataRetrievalProgressIndicator unrealizedGainLossDataLoadedEvent;
         #endregion
 
@@ -416,7 +450,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Plots the series on the chart after getting the resulting collection
         /// </summary>
-        /// <param name="result"></param>
+        /// <param name="result">Contains the Unrealized Gain Loss Data</param>
         private void RetrieveUnrealizedGainLossDataCallBackMethod(List<UnrealizedGainLossData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

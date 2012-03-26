@@ -40,6 +40,9 @@ namespace GreenField.Web.DataContracts
         public string InstrumentID { get; set; }
 
         [DataMember]
-        public decimal CalculatedPrice { get; set; }
+        public decimal IndexedPrice { get; set; }
+
+        [DataMember]
+        public decimal AdjustedDollarPrice { get; set; }
     }
 }

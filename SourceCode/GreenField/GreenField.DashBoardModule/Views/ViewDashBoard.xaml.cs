@@ -39,7 +39,7 @@ namespace GreenField.DashBoardModule.Views
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private DashboardGadgetPayLoad _dashboardGadgetPayLoad;        
+        private DashboardGadgetPayLoad _dashboardGadgetPayLoad;
         #endregion
 
         #region Constructor
@@ -48,7 +48,7 @@ namespace GreenField.DashBoardModule.Views
             IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
         {
             InitializeComponent();
-            
+
             //Initialize MEF singletons
             _eventAggregator = eventAggregator;
             _manageDashboard = manageDashboard;
@@ -65,14 +65,14 @@ namespace GreenField.DashBoardModule.Views
                 {
                     this.txtNoGadgetMessage.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
                     this.rtvDashBoard.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
-                    for(int index = 0; index < rtvDashBoard.Items.Count; index++)
+                    for (int index = 0; index < rtvDashBoard.Items.Count; index++)
                     {
                         (rtvDashBoard.Items[index] as RadTileViewItem).Opacity =
                             (rtvDashBoard.Items[index] as RadTileViewItem).TileState == TileViewItemState.Minimized ? 0.5 : 1;
-                    }                    
+                    }
                 };
 
-        } 
+        }
         #endregion
 
         private void DashBoardTileViewItemRemoved(object sender, RoutedEventArgs e)
@@ -91,7 +91,7 @@ namespace GreenField.DashBoardModule.Views
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
         }
-       
+
         /// <summary>
         /// Handle Dashboard Gadget Add event
         /// </summary>
@@ -108,7 +108,7 @@ namespace GreenField.DashBoardModule.Views
                         RestoredHeight = 400,
                         Header = param.DashBoardTileHeader,
                         Content = param.DashBoardTileObject,
-                    });                
+                    });
             }
             catch (InvalidOperationException)
             {
@@ -137,30 +137,47 @@ namespace GreenField.DashBoardModule.Views
                                 if (preference.Count > 0 && rtvDashBoard.Items.Count.Equals(0))
                                 {
                                     if (preference.Count > 1)
-                                        rtvDashBoard.RowHeight = new GridLength(400);
-                                    foreach (tblDashboardPreference item in preference)
                                     {
-                                        RadTileViewItem radTileViewItem = new RadTileViewItem
+                                        rtvDashBoard.RowHeight = new GridLength(400);
+                                        foreach (tblDashboardPreference item in preference)
                                         {
-                                            Header = item.GadgetName,
-                                            RestoredHeight = 400,
-                                            Content = GetDashBoardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
-                                            TileState = GetTileState(item.GadgetState),
-                                            Position = item.GadgetPosition
-                                        };
-                                        this.rtvDashBoard.Items.Add(radTileViewItem);
+                                            RadTileViewItem radTileViewItem = new RadTileViewItem
+                                            {
+                                                Header = item.GadgetName,
+                                                RestoredHeight = 400,
+                                                Content = GetDashBoardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
+                                                TileState = GetTileState(item.GadgetState),
+                                                Position = item.GadgetPosition
+                                            };
+                                            this.rtvDashBoard.Items.Add(radTileViewItem);
 
+                                        }
                                     }
-                                }                                
+                                    if (preference.Count == 1)
+                                    {
+                                        foreach (tblDashboardPreference item in preference)
+                                        {
+                                            RadTileViewItem radTileViewItem = new RadTileViewItem
+                                            {
+                                                Header = item.GadgetName,
+                                                RestoredHeight = 400,
+                                                Content = GetDashBoardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
+                                                TileState = GetTileState("Restored"),
+                                                Position = item.GadgetPosition
+                                            };
+                                            this.rtvDashBoard.Items.Add(radTileViewItem);
+                                        }
+                                    }
+                                }
                             });
                 }
             }
             catch (Exception ex)
             {
                 _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);   
-            }            
-        }        
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+            }
+        }
 
         /// <summary>
         /// Handles Dashboard Gadget Save event - records preference to database.
@@ -187,20 +204,20 @@ namespace GreenField.DashBoardModule.Views
                             GadgetPosition = (rtvDashBoard.Items[index] as RadTileViewItem).Position
                         };
 
-                        dashboardPreference.Add(entry);                        
+                        dashboardPreference.Add(entry);
                     }
                 }
                 _manageDashboard.SetDashBoardPreference(dashboardPreference, (result) =>
                     {
                         if (result)
-                            MessageBox.Show("User Preseference saved");
+                            MessageBox.Show("User Preference saved");
                         else
-                            MessageBox.Show("User Preseference save failed");
+                            MessageBox.Show("User Preference save failed");
                     });
             }
             catch (Exception ex)
             {
-                _logger.Log("User : " + SessionManager.SESSION.UserName +"\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
+                _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
         }
@@ -213,7 +230,7 @@ namespace GreenField.DashBoardModule.Views
         private TileViewItemState GetTileState(string state)
         {
             switch (state)
-            {                    
+            {
                 case "Maximized":
                     return TileViewItemState.Maximized;
                 case "Minimized":
@@ -258,14 +275,14 @@ namespace GreenField.DashBoardModule.Views
             }
             catch (Exception ex)
             {
-                _logger.Log("User : " + SessionManager.SESSION.UserName +"\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
+                _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
 
             return content;
-                
+
         }
 
-        
+
     }
 }

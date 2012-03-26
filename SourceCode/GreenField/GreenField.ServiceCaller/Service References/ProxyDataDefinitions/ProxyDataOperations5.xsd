@@ -483,28 +483,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
-  <xs:complexType name="ArrayOfPricingReferenceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPricingReferenceData" nillable="true" type="tns:ArrayOfPricingReferenceData" />
-  <xs:complexType name="PricingReferenceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CalculatedPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyClosingPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyGrossReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyPriceReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailySpotFX" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Volume" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
   <xs:complexType name="ArrayOfEntitySelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
@@ -521,6 +499,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+  <xs:complexType name="ArrayOfPricingReferenceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPricingReferenceData" nillable="true" type="tns:ArrayOfPricingReferenceData" />
+  <xs:complexType name="PricingReferenceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdjustedDollarPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyClosingPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyGrossReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyPriceReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailySpotFX" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IndexedPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Volume" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
   <xs:complexType name="ArrayOfFundSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FundSelectionData" nillable="true" type="tns:FundSelectionData" />

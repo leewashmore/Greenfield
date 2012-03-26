@@ -751,10 +751,15 @@ namespace GreenField.Web.Services
         /// <param name="chartEntityTypes"></param>
         /// <returns>List of PricingReferenceData</returns>
         [OperationContract]
-        public List<PricingReferenceData> RetrievePricingReferenceData(string[] entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes)
+        public List<PricingReferenceData> RetrievePricingReferenceData(List<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes)
         {
             try
             {
+                decimal objAdjustedDollarPrice = 0;
+                decimal objPreviousDailySpotFx = 0;
+                decimal objIndexedPrice = 0;
+                decimal objReturn = 0;
+
                 decimal curPrice = 0;
                 decimal curReturn = 0;
                 decimal calculatedPrice = 0;
@@ -762,9 +767,14 @@ namespace GreenField.Web.Services
                 decimal previousFXAdjust = 0;
                 decimal calculatedFXPrice = 0;
                 decimal fxAdjusted = 0;
+                string entityType = "";
+                string entityInstrumentID = "";
+                DateTime startDate = Convert.ToDateTime(startDateTime);
+                DateTime endDate = Convert.ToDateTime(endDateTime);
 
                 //List Containing the names of Securities/Commodities/Indexes to be added
-                List<string> entityNames = entityIdentifiers.ToList();
+                List<string> entityNames = (from p in entityIdentifiers
+                                            select p.InstrumentID).ToList();
 
                 List<PricingReferenceData> pricingDataResult = new List<PricingReferenceData>();
 
@@ -775,54 +785,49 @@ namespace GreenField.Web.Services
 
                 if (entityIdentifiers.Count() == 1)
                 {
-                    foreach (string item in entityIdentifiers)
+                    entityInstrumentID = Convert.ToString(entityIdentifiers[0].InstrumentID);
+                    entityType = Convert.ToString(entityIdentifiers[0].Type);
+
+                    List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
+                        .Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
+                        .OrderByDescending(res => res.FROMDATE).ToList();
+
+                    // Calcluating the values of curPrice,curReturn,calculatedPrice
+                    if (dimensionServicePricingData.Count != 0)
                     {
-                        string entityName = item;
-                        DateTime startDate = Convert.ToDateTime(startDateTime);
-                        DateTime endDate = Convert.ToDateTime(endDateTime);
+                        curPrice = Convert.ToDecimal(dimensionServicePricingData[0].DAILY_CLOSING_PRICE);
+                        curReturn = (totalReturnCheck) ? (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_GROSS_RETURN)) : (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_PRICE_RETURN));
+                        calculatedPrice = curPrice;
 
-
-                        List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                            .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
-                            .OrderByDescending(res => res.FROMDATE).ToList();
-
-                        // Calcluating the values of curPrice,curReturn,calculatedPrice
-                        if (dimensionServicePricingData.Count != 0)
+                        foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                         {
-                            curPrice = Convert.ToDecimal(dimensionServicePricingData[0].DAILY_CLOSING_PRICE);
-                            curReturn = (totalReturnCheck) ? (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_GROSS_RETURN)) : (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_PRICE_RETURN));
-                            calculatedPrice = curPrice;
+                            PricingReferenceData objPricingReferenceData = new PricingReferenceData();
+                            objPricingReferenceData.Type = pricingItem.TYPE;
+                            objPricingReferenceData.Ticker = pricingItem.TICKER;
+                            objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
+                            objPricingReferenceData.FromDate = pricingItem.FROMDATE;
+                            objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
+                            objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                            objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
+                            objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
+                            objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
+                            objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
 
-                            foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
+                            //Checking if the Item is the first item in the list
+                            if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
                             {
-                                PricingReferenceData objPricingReferenceData = new PricingReferenceData();
-                                objPricingReferenceData.Type = pricingItem.TYPE;
-                                objPricingReferenceData.Ticker = pricingItem.TICKER;
-                                objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
-                                objPricingReferenceData.FromDate = pricingItem.FROMDATE;
-                                objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
-                                objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
-                                objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
-                                objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
-                                objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
-
-                                //Checking if the Item is the first item in the list
-                                if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
-                                {
-                                    // if it is the first item in the list then simply save the value of calculated price
-                                    objPricingReferenceData.CalculatedPrice = calculatedPrice;
-                                }
-                                else
-                                {
-                                    //if it is not the first item then executing the logic.
-                                    calculatedPrice = (curPrice / (curReturn + 1));
-                                    curPrice = calculatedPrice;
-                                    objPricingReferenceData.CalculatedPrice = calculatedPrice;
-                                    curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
-                                }
-                                pricingDataResult.Add(objPricingReferenceData);
+                                // if it is the first item in the list then simply save the value of calculated price
+                                objPricingReferenceData.IndexedPrice = calculatedPrice;
                             }
+                            else
+                            {
+                                //if it is not the first item then executing the logic.
+                                calculatedPrice = (curPrice / (curReturn + 1));
+                                curPrice = calculatedPrice;
+                                objPricingReferenceData.IndexedPrice = calculatedPrice;
+                                curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
+                            }
+                            pricingDataResult.Add(objPricingReferenceData);
                         }
                     }
                 }
@@ -834,29 +839,18 @@ namespace GreenField.Web.Services
 
                 if (entityIdentifiers.Count() > 1)
                 {
-                    //Checking the type of the item added to chart:
-                    if (chartEntityTypes)
+                    foreach (EntitySelectionData item in entityIdentifiers)
                     {
-                        //if only security is added:
-
-                        foreach (string item in entityIdentifiers)
+                        if (Convert.ToString(item.Type) == "SECURITY")
                         {
-                            string entityName = item.ToString();
-                            DateTime startDate = Convert.ToDateTime(startDateTime);
-                            DateTime endDate = Convert.ToDateTime(endDateTime);
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
-                                .OrderBy(res => res.FROMDATE).ToList();
+                            entityInstrumentID = Convert.ToString(item.InstrumentID);
+                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
+                                entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
+                                    startDate) && (r.FROMDATE <= endDate)).OrderByDescending(res => res.FROMDATE).ToList();
 
-                            // Calcluating the values of curPrice,curReturn,calculatedPrice
+
                             if (dimensionServicePricingData.Count != 0)
                             {
-                                curPrice = 100;
-                                calculatedPrice = 100;
-                                previousFXAdjust = 100 / (Convert.ToDecimal(dimensionServicePricingData[0].DAILY_SPOT_FX));
-                                calculatedFXPrice = 100;
-
-                                //Storing the Values in the DataContract
                                 foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                                 {
                                     PricingReferenceData objPricingReferenceData = new PricingReferenceData();
@@ -870,109 +864,108 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                                     objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
                                     objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
-                                    previousFXAdjust = 100 / (Convert.ToDecimal(pricingItem.DAILY_SPOT_FX));
 
-                                    //Checking if the Item is the first item in the list
+                                    //Checking if the current object is first in the series
                                     if (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE)
                                     {
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
+                                        objPricingReferenceData.AdjustedDollarPrice = (Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE) / objPricingReferenceData.DailySpotFX);
                                     }
                                     else
                                     {
-                                        curReturn = (totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN));
-                                        calculatedPrice = curPrice * (1 + (curReturn / 100));
-                                        fxAdjusted = calculatedPrice / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                        calculatedFXPrice = (fxAdjusted / previousFXAdjust) * calculatedFXPrice;
-                                        curPrice = calculatedPrice;
-                                        objPricingReferenceData.CalculatedPrice = calculatedFXPrice;
+                                        objPricingReferenceData.AdjustedDollarPrice =
+                                            objAdjustedDollarPrice / ((1 + (objReturn / 100)) * (Convert.ToDecimal(pricingItem.DAILY_SPOT_FX) / objPreviousDailySpotFx));
                                     }
+                                    objAdjustedDollarPrice = objPricingReferenceData.AdjustedDollarPrice;
+                                    objPreviousDailySpotFx = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                                    objReturn = ((totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN)));
                                     pricingDataResult.Add(objPricingReferenceData);
                                 }
+                            }
+                        }
 
-                                //Subtracting 100 from CalculatedFXPrice for all records
-                                foreach (PricingReferenceData objPricingReferenceData in pricingDataResult)
+                        else if ((Convert.ToString(item.Type) == "COMMODITY") || ((Convert.ToString(item.Type) == "INDEX")) || ((Convert.ToString(item.Type) == "FX")))
+                        {
+                            entityInstrumentID = Convert.ToString(item.InstrumentID);
+                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
+                                entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
+                                    startDate) && (r.FROMDATE <= endDate)).OrderBy(res => res.FROMDATE).ToList();
+
+                            if (dimensionServicePricingData.Count != 0)
+                            {
+                                foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                                 {
-                                    objPricingReferenceData.CalculatedPrice = objPricingReferenceData.CalculatedPrice - 100;
+                                    PricingReferenceData objPricingReferenceData = new PricingReferenceData();
+                                    objPricingReferenceData.Type = pricingItem.TYPE;
+                                    objPricingReferenceData.Ticker = pricingItem.TICKER;
+                                    objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
+                                    objPricingReferenceData.FromDate = pricingItem.FROMDATE;
+                                    objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
+                                    objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
+                                    objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
+                                    objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
+                                    objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
+                                    objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
+                                    objReturn = ((totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN)));
+                                    objPricingReferenceData.AdjustedDollarPrice =
+                                        (Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE) / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX));
+                                    pricingDataResult.Add(objPricingReferenceData);
                                 }
+                            }
+                        }
+
+                        pricingDataResult = pricingDataResult.OrderBy(r => r.FromDate).ToList();
+
+                        pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).First().IndexedPrice = 100;
+
+                        foreach (PricingReferenceData objPricingDataResult in pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).ToList())
+                        {
+                            if (objPricingDataResult.FromDate == pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).First().FromDate)
+                            {
+                                objAdjustedDollarPrice = objPricingDataResult.AdjustedDollarPrice;
+                                objIndexedPrice = objPricingDataResult.IndexedPrice;
+                            }
+                            else
+                            {
+                                objPricingDataResult.IndexedPrice = (objPricingDataResult.AdjustedDollarPrice / objAdjustedDollarPrice) * objIndexedPrice;
+                                objIndexedPrice = objPricingDataResult.IndexedPrice;
+                                objAdjustedDollarPrice = objPricingDataResult.AdjustedDollarPrice;
                             }
                         }
                     }
 
-                    //If commodities/indexes/currencies are also added
-                    else
+                    foreach (PricingReferenceData item in pricingDataResult)
                     {
-                        foreach (string item in entityIdentifiers)
-                        {
-                            string entityName = item.ToString();
-                            DateTime startDate = Convert.ToDateTime(startDateTime);
-                            DateTime endDate = Convert.ToDateTime(endDateTime);
-                            List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                                .Where(r => (r.INSTRUMENT_ID == entityName) && (r.FROMDATE >= startDate) && (r.FROMDATE <= endDate))
-                                .OrderBy(res => res.FROMDATE).ToList();
-
-                            // Calcluating the values of curPrice,curReturn,calculatedPrice
-                            if (dimensionServicePricingData.Count != 0)
-                            {
-                                curPrice = 100;
-                                calculatedPrice = 100;
-                                previousPrice = Convert.ToDecimal(dimensionServicePricingData[0].DAILY_CLOSING_PRICE) / Convert.ToDecimal(dimensionServicePricingData[0].DAILY_SPOT_FX);
-
-                                //Storing the Values in the DataContract
-                                foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
-                                {
-                                    PricingReferenceData objPricingReferenceData = new PricingReferenceData();
-                                    objPricingReferenceData.Type = pricingItem.TYPE;
-                                    objPricingReferenceData.Ticker = pricingItem.TICKER;
-                                    objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
-                                    objPricingReferenceData.FromDate = pricingItem.FROMDATE;
-                                    objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
-                                    objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
-                                    objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
-                                    objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
-                                    objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
-                                    objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
-
-                                    if (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE)
-                                    {
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
-                                    }
-                                    else
-                                    {
-                                        curReturn = ((Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE) / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX)) / (previousPrice));
-                                        calculatedPrice = curPrice * (1 + curReturn);
-                                        curPrice = calculatedPrice;
-                                        previousPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
-                                        objPricingReferenceData.CalculatedPrice = calculatedPrice;
-                                    }
-                                    pricingDataResult.Add(objPricingReferenceData);
-                                }
-                            }
-                        }
-
-                        //Reducing the CalculatedPrice by 100.
-                        foreach (PricingReferenceData item in pricingDataResult)
-                        {
-                            item.CalculatedPrice = item.CalculatedPrice - 100;
-                        }
+                        item.IndexedPrice = item.IndexedPrice - 100;
                     }
                 }
+
                 #endregion
 
                 #region FilterDataAccordingToFrequency
 
                 List<DateTime> endDates = new List<DateTime>();
-
-                foreach (PricingReferenceData item in pricingDataResult)
-                {
-                    endDates.Add(Convert.ToDateTime(item.FromDate));
-                }
+                endDates = (from p in pricingDataResult
+                            select p.FromDate).Distinct().ToList();
 
                 List<DateTime> allEndDates = new List<DateTime>();
 
                 allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(endDates, startDateTime, endDateTime, frequencyDuration);
 
-                List<PricingReferenceData> result = RetrievePricingDataAccordingFrequency(pricingDataResult, allEndDates);
+                List<PricingReferenceData> result = new List<PricingReferenceData>();
 
+                if (frequencyDuration != "Daily")
+                {
+                    foreach (EntitySelectionData item in entityIdentifiers)
+                    {
+                        List<PricingReferenceData> individualSeriesResult = RetrievePricingDataAccordingFrequency(pricingDataResult.Where(r => r.InstrumentID == item.InstrumentID).ToList(), allEndDates);
+                        result.AddRange(individualSeriesResult);
+                    }
+
+                }
+                else
+                {
+                    result = pricingDataResult;
+                }
                 #endregion
 
                 return result;
@@ -984,6 +977,7 @@ namespace GreenField.Web.Services
             }
 
         }
+
 
         [OperationContract]
         public List<EntitySelectionData> RetrieveEntitySelectionData()
@@ -2080,10 +2074,10 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
         /// </summary>
-        /// <param name="entityIdentifier"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>       
-        /// <param name="frequencyInterval"></param>       
+        /// <param name="entityIdentifier">Ticker for the security</param>
+        /// <param name="startDateTime">Start Date of the Time Period that is selected</param>
+        /// <param name="endDateTime">End Date of the Time Period that is selected</param>       
+        /// <param name="frequencyInterval">Frequency Duration selected</param>       
         /// <returns>List of UnrealozedGainLossData</returns>
         [OperationContract]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
@@ -2099,16 +2093,23 @@ namespace GreenField.Web.Services
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
                     .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
                     noOfRows = arrangedByDescRecord.Count();
+                    //Calculating the Adjusted price for a security and storing it in the list.
                     List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    //Calculating the Moving Average for a security and storing it in the list.
                     List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                    //Calculating the Ninety Day Weight for a security and storing it in the list.
                     List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                    //Calculating the Cost for a security and storing it in the list.
                     List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                    //Calculating the Weighted Average Cost for a security and storing it in the list.
                     List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                    //Calculating the Unrealized Gain loss for a security and storing it in the list.
                     List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+                    //Filtering the list according to the time period selected
                     List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
                     //Filtering the list according to the frequency selected.
                     List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
-                                               select p.FromDate).ToList();
+                                               select p.FromDate).ToList();                   
                     List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
                     timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
                 }

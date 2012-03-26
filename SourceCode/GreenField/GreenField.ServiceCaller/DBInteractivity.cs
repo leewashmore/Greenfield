@@ -361,7 +361,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrievePricingReferenceData(ObservableCollection<String> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, bool chartEntityTypes, Action<List<PricingReferenceData>> callback)
+        public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, bool chartEntityTypes, Action<List<PricingReferenceData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
@@ -542,10 +542,10 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Method that calls the Unrealized Gain Loss service method and provides interation between the Viewmodel and Service.
         /// </summary>
-        /// <param name="entityIdentifier"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>
-        /// <param name="frequencyInterval"></param>
+        /// <param name="entityIdentifier">Unique Identifier for each security</param>
+        /// <param name="startDateTime">Start Date time of the time period selected</param>
+        /// <param name="endDateTime">End Date time of the time period selected</param>
+        /// <param name="frequencyInterval">frequency Interval selected</param>
         /// <param name="callback"></param>
         public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
         {
