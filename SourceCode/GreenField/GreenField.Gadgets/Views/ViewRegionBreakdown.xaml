@@ -47,14 +47,14 @@
                             <telerik:GroupDescriptor.AggregateFunctions>
                                 <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%" />
                                 <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%" />
-                                <telerik:SumFunction SourceField="BetShare" Caption="Bet - " ResultFormatString="{}{0:n2}%"/>
+                                <telerik:SumFunction SourceField="BetShare" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
                             </telerik:GroupDescriptor.AggregateFunctions>
                         </telerik:GroupDescriptor>
                         <telerik:GroupDescriptor Member="Country" SortDirection="Ascending">
                             <telerik:GroupDescriptor.AggregateFunctions>
                                 <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%"/>
                                 <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%"/>
-                                <telerik:SumFunction SourceField="BetShare" Caption="Bet - " ResultFormatString="{}{0:n2}%"/>
+                                <telerik:SumFunction SourceField="BetShare" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
                             </telerik:GroupDescriptor.AggregateFunctions>
                         </telerik:GroupDescriptor>
                     </telerik:RadGridView.GroupDescriptors>
@@ -62,7 +62,7 @@
                         <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Bet" DataMemberBinding="{Binding BetShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Active Position" DataMemberBinding="{Binding BetShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Border>

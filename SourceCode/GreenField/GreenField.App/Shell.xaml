@@ -191,7 +191,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/SectorBreakdownImage.png" Text="Sector Breakdown" Size="Large" Command="{Binding GadgetSectorBreakdownCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
+                   <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/IndexConstituentsImage.png" Text="Index Constituents" Size="Large" Command="{Binding GadgetIndexConstituentsCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">

@@ -1114,6 +1114,9 @@ namespace GreenField.Web.Services
             {
                 List<SectorBreakdownData> result = new List<SectorBreakdownData>();
                 DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+
                 foreach (DataRow row in dataTable.Rows)
                 {
                     result.Add(new SectorBreakdownData()
@@ -1121,8 +1124,8 @@ namespace GreenField.Web.Services
                         Sector = row.Field<string>("GICS_SECTOR_NAME"),
                         Industry = row.Field<string>("GICS_INDUSTRY_NAME"),
                         Security = row.Field<string>("ISSUE_NAME"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT"),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
                         BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
                     });
                 }
@@ -1142,6 +1145,9 @@ namespace GreenField.Web.Services
             {
                 List<RegionBreakdownData> result = new List<RegionBreakdownData>();
                 DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+
                 foreach (DataRow row in dataTable.Rows)
                 {
                     result.Add(new RegionBreakdownData()
@@ -1149,8 +1155,8 @@ namespace GreenField.Web.Services
                         Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
                         Country = row.Field<string>("ISO_COUNTRY_CODE"),
                         Security = row.Field<string>("ISSUE_NAME"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT"),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
                         BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
                     });
                 } 

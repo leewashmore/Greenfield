@@ -11,15 +11,13 @@
 
     <UserControl.Resources>
         <helpers:DataContextProxy x:Key="DataContextProxy"/>
-        
         <DataTemplate x:Key="DraggedItemTemplate">
             <StackPanel Orientation="Horizontal" Margin="2">
                 <TextBlock Text="{Binding BenchmarkName}" FontWeight="Bold"/>
             </StackPanel>
         </DataTemplate>
-        
     </UserControl.Resources>
-    
+
     <Grid x:Name="LayoutRoot">
         <Grid>
             <Grid.RowDefinitions>
@@ -27,27 +25,18 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
+            <!--gadget header-->
             <TextBlock Text="{Binding MorningSnapshotHeader}" Grid.Row="0" HorizontalAlignment="Center"
                        VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
 
+            <!--grid containing benchmark data-->
             <telerik:RadGridView HorizontalAlignment="Left" Margin="26,12,0,0" Name="radGridBenchmark" VerticalAlignment="Top" IsReadOnly="true" 
                                  ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                  AutoGenerateColumns="False" CanUserDeleteRows="False" SelectionMode="Single" CanUserInsertRows="true"                                  
                                  telerik:StyleManager.Theme="Metro" AlternationCount="2" AlternateRowBackground="LightSkyBlue"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
-                                 ItemsSource="{Binding MorningSnapshotInfo}" 
-                                 SelectedItem="{Binding SelectedMorningSnapshotRow,Mode=TwoWay}">                                
-
-                <telerik:RadGridView.GroupDescriptors>
-                    <telerik:GroupDescriptor Member="MorningSnapshotPreferenceInfo.GroupName"
-                                     SortDirection="Ascending"/>
-                </telerik:RadGridView.GroupDescriptors>
-
-                <i:Interaction.Behaviors>
-                    <helpers:RowReorderBehavior x:Name="ReorderBehavior" DragCueItemTemplate="{StaticResource DraggedItemTemplate}"  
-                                                DragCueActionContentTemplate="{StaticResource DraggedItemTemplate}" PreserveSelectionOrderWhenReordering="True"/>
-                </i:Interaction.Behaviors>
-
+                                 ItemsSource="{Binding MorningSnapshotInfo}" SelectedItem="{Binding SelectedMorningSnapshotRow,Mode=TwoWay}" AutoExpandGroups="True">
+               
                 <telerik:RadContextMenu.ContextMenu>
                     <telerik:RadContextMenu Opened="RadContextMenu_Opened">
                         <telerik:RadContextMenu.Items>
@@ -87,12 +76,21 @@
                                             TextAlignment="Right"/>
                     <telerik:GridViewDataColumn DataMemberBinding="{Binding IIIPreviousYearPrice}"  Width="*" IsReadOnly="true"
                                             TextAlignment="Right"/>
-                </telerik:RadGridView.Columns>    
-                
-              
-                
+                </telerik:RadGridView.Columns>
+
+                <!--enabling the grid to group by "GroupName"-->
+                <telerik:RadGridView.GroupDescriptors>
+                    <telerik:GroupDescriptor Member="MorningSnapshotPreferenceInfo.GroupName"
+                                     SortDirection="Ascending"/>
+                </telerik:RadGridView.GroupDescriptors>
+
+                <!--drag and drop functionality-->
+                <i:Interaction.Behaviors>
+                    <helpers:RowReorderBehavior x:Name="ReorderBehavior" DragCueItemTemplate="{StaticResource DraggedItemTemplate}"  
+                                                DragCueActionContentTemplate="{StaticResource DraggedItemTemplate}" PreserveSelectionOrderWhenReordering="True"/>
+                </i:Interaction.Behaviors>
+
             </telerik:RadGridView>
-            
         </Grid>
     </Grid>
 </UserControl>
