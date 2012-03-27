@@ -301,7 +301,7 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> EndGetDashboardPreferenceByUserName(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DashboardOperations/SetDashBoardPreference", ReplyAction="http://tempuri.org/DashboardOperations/SetDashBoardPreferenceResponse")]
-        System.IAsyncResult BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName, System.AsyncCallback callback, object asyncState);
         
         bool EndSetDashBoardPreference(System.IAsyncResult result);
     }
@@ -472,8 +472,8 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations.BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSetDashBoardPreference(dashBoardPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations.BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetDashBoardPreference(dashBoardPreference, userName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -483,7 +483,8 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         
         private System.IAsyncResult OnBeginSetDashBoardPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
             System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference>)(inValues[0]));
-            return ((GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations)(this)).BeginSetDashBoardPreference(dashBoardPreference, callback, asyncState);
+            string userName = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations)(this)).BeginSetDashBoardPreference(dashBoardPreference, userName, callback, asyncState);
         }
         
         private object[] OnEndSetDashBoardPreference(System.IAsyncResult result) {
@@ -499,11 +500,11 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
             }
         }
         
-        public void SetDashBoardPreferenceAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference) {
-            this.SetDashBoardPreferenceAsync(dashBoardPreference, null);
+        public void SetDashBoardPreferenceAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName) {
+            this.SetDashBoardPreferenceAsync(dashBoardPreference, userName, null);
         }
         
-        public void SetDashBoardPreferenceAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, object userState) {
+        public void SetDashBoardPreferenceAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName, object userState) {
             if ((this.onBeginSetDashBoardPreferenceDelegate == null)) {
                 this.onBeginSetDashBoardPreferenceDelegate = new BeginOperationDelegate(this.OnBeginSetDashBoardPreference);
             }
@@ -514,7 +515,8 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
                 this.onSetDashBoardPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetDashBoardPreferenceCompleted);
             }
             base.InvokeAsync(this.onBeginSetDashBoardPreferenceDelegate, new object[] {
-                        dashBoardPreference}, this.onEndSetDashBoardPreferenceDelegate, this.onSetDashBoardPreferenceCompletedDelegate, userState);
+                        dashBoardPreference,
+                        userName}, this.onEndSetDashBoardPreferenceDelegate, this.onSetDashBoardPreferenceCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -606,9 +608,10 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginSetDashBoardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = dashBoardPreference;
+                _args[1] = userName;
                 System.IAsyncResult _result = base.BeginInvoke("SetDashBoardPreference", _args, callback, asyncState);
                 return _result;
             }

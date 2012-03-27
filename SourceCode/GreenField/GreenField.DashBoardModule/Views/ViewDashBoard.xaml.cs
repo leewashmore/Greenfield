@@ -207,7 +207,7 @@ namespace GreenField.DashBoardModule.Views
                         dashboardPreference.Add(entry);
                     }
                 }
-                _manageDashboard.SetDashBoardPreference(dashboardPreference, (result) =>
+                _manageDashboard.SetDashBoardPreference(dashboardPreference,SessionManager.SESSION.UserName, (result) =>
                     {
                         if (result)
                             MessageBox.Show("User Preference saved");

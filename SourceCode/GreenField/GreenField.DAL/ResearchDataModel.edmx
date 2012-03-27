@@ -699,7 +699,7 @@
             <Parameter Name="benchmarkname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserBenchmarkPreference" ReturnType="Collection(ResearchModel.UserBenchmarkPreference)">
-            <Parameter Name="userid" Mode="In" Type="String" />
+          <Parameter Name="userid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SetUserBenchmarkPreference">
             <Parameter Name="userId" Mode="In" Type="String" />

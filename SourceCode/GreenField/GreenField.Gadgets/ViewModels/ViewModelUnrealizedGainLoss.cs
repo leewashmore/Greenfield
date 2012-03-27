@@ -23,6 +23,8 @@ namespace GreenField.Gadgets.ViewModels
     /// </summary>
     public class ViewModelUnrealizedGainLoss : NotificationObject
     {
+        #region PrivateMembers
+
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
@@ -42,6 +44,8 @@ namespace GreenField.Gadgets.ViewModels
         /// private member object of the EntitySelectionData class for storing Entity Selection Data
         /// </summary>
         private EntitySelectionData _entitySelectionData;
+
+        #endregion
 
         #region Constructor
 
@@ -446,7 +450,10 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);  
         }       
-        
+
+        #endregion
+
+        #region CallbackMethods
         /// <summary>
         /// Plots the series on the chart after getting the resulting collection
         /// </summary>
