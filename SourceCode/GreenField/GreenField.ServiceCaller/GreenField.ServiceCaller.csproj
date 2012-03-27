@@ -201,6 +201,12 @@
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RegionBreakdownData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

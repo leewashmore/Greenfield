@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Text;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.ServiceCaller.ProxyDataDefinitions;
+using System.Collections.Generic;
 
 
 namespace GreenField.Common
@@ -53,6 +55,7 @@ namespace GreenField.Common
         public static string HOLDINGS_PIECHART = "Holdings PieChart";
         public static string PORTFOLIO_RISK_RETURNS = "Portfolio Risk Returns";
         public static string TOP_BENCHMARK_SECURITIES = "Top Benchmark Securities";
+        public static string RELATIVE_PERFORMANCE = "Relative Performance";
     }
 
     public static class EntityTypes
@@ -74,6 +77,14 @@ namespace GreenField.Common
     public class DataRetrievalProgressIndicatorEventArgs : EventArgs
     {
         public bool ShowBusy { get; set; }
+    }
+
+    public delegate void RelativePerformanceGridBuild(RelativePerformanceGridBuildEventArgs e);
+
+    public class RelativePerformanceGridBuildEventArgs : EventArgs
+    {
+        public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
+        public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
 
       public static class BenchmarkReturnTypes

@@ -281,5 +281,7 @@ namespace GreenField.Gadgets.Views
 
             return String.Join(",", aggregates.ToArray());
         }
+
+        
     }
 }

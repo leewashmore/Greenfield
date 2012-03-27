@@ -117,6 +117,9 @@
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\RangeObservableCollection.cs" />
+    <Compile Include="Helpers\RelativePerformanceTooltip.xaml.cs">
+      <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +130,7 @@
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
     <Compile Include="ViewModels\ViewModelRegionBreakDown.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakDown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
@@ -156,6 +160,9 @@
     <Compile Include="Views\ViewRegionBreakdown.xaml.cs">
       <DependentUpon>ViewRegionBreakdown.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewRelativePerformance.xaml.cs">
+      <DependentUpon>ViewRelativePerformance.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewSectorBreakdown.xaml.cs">
       <DependentUpon>ViewSectorBreakdown.xaml</DependentUpon>
     </Compile>
@@ -176,6 +183,10 @@
     <Page Include="Helpers\ChildExportOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Helpers\RelativePerformanceTooltip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
@@ -208,6 +219,10 @@
     <Page Include="Views\ViewRegionBreakdown.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewRelativePerformance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewSectorBreakdown.xaml">
       <SubType>Designer</SubType>

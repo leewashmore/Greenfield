@@ -213,6 +213,9 @@
                         <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"/>
                     </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformaceCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>

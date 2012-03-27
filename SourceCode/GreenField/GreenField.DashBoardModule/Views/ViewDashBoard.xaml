@@ -431,8 +431,7 @@
                                  PreservePositionWhenMaximized="True"
                                  IsAutoScrollingEnabled="True" 
                                  HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"
-                                 
+                                 VerticalAlignment="Top"                                 
                                  ColumnWidth="*">
                 </telerik:RadTileView>
             </Border>

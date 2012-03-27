@@ -1159,7 +1159,7 @@ namespace GreenField.Web.Services
                         BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
                         BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
                     });
-                } 
+                }
 
                 return result;
             }
@@ -2115,7 +2115,7 @@ namespace GreenField.Web.Services
                     List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
                     //Filtering the list according to the frequency selected.
                     List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
-                                               select p.FromDate).ToList();                   
+                                               select p.FromDate).ToList();
                     List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
                     timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
                 }
@@ -2380,6 +2380,127 @@ namespace GreenField.Web.Services
 
                 return dataTable;
             }
+        }
+        #endregion
+
+        #region Relative Performance
+        [OperationContract]
+        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        {
+            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+            List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                result.Add(new RelativePerformanceSectorData()
+                {
+                    SectorID = row.Field<int>("GICS_SECTOR"),
+                    SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                });
+            }
+            result = result.Distinct().ToList();
+            return result;
+        }
+
+        [OperationContract]
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        {
+            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+            List<string> countryCodes = new List<string>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                countryCodes.Add(row.Field<string>("ISO_COUNTRY_CODE"));
+            }
+            countryCodes = countryCodes.Distinct().ToList();
+
+            dataTable = GetDataTable("Select * from tblHoldingsData");
+            List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                sectors.Add(new RelativePerformanceSectorData()
+                {
+                    SectorID = row.Field<int>("GICS_SECTOR"),
+                    SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                });
+            }
+            sectors = sectors.Distinct().ToList();
+
+
+            List<RelativePerformanceData> result = new List<RelativePerformanceData>();
+            foreach (string countryCode in countryCodes)
+            {
+                double? aggcsActivePosition = 0.0;
+                double? aggcsAlpha = 0.0;
+                double? aggcsPortfolioShare = 0.0;
+                double? aggcsBenchmarkShare = 0.0;
+                List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
+                foreach (RelativePerformanceSectorData sectorData in sectors)
+                {
+                    double? aggActivePosition = 0.0;
+                    double? aggAlpha = 0.0;
+                    double? aggPortfolioShare = 0.0;
+                    double? aggBenchmarkShare = 0.0;
+                    DataTable specificData = GetDataTable("Select * from tblHoldingsData where ISO_COUNTRY_CODE = '" + countryCode + "' and GICS_SECTOR = " + sectorData.SectorID.ToString());
+                    
+
+                    foreach (DataRow row in specificData.Rows)
+                    {
+                        if (row.Field<Single?>("BENCHMARK_WEIGHT") != null)
+                        {
+                            aggPortfolioShare = aggPortfolioShare + (double)row.Field<Single>("PORTFOLIO_WEIGHT");
+                            aggBenchmarkShare = aggBenchmarkShare + (double)row.Field<Single>("BENCHMARK_WEIGHT");
+                            aggActivePosition = aggPortfolioShare - aggBenchmarkShare;
+                            aggAlpha = aggAlpha + 2;
+                        }
+                    }
+
+                    if (aggPortfolioShare > 0 || aggBenchmarkShare > 0)
+                    {
+                        sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                                    {
+                                        SectorID = sectorData.SectorID,
+                                        SectorName = sectorData.SectorName,
+                                        Alpha = aggAlpha,
+                                        PortfolioShare = aggPortfolioShare,
+                                        BenchmarkShare = aggBenchmarkShare,
+                                        ActivePosition = aggActivePosition,
+                                    });
+                    }
+                    else
+                    {
+                        sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                        {
+                            SectorID = sectorData.SectorID,
+                            SectorName = sectorData.SectorName,
+                            Alpha = null,
+                            PortfolioShare = null,
+                            BenchmarkShare = null,
+                            ActivePosition = null,
+                        });
+                    }
+
+                    aggcsAlpha = aggcsAlpha + aggAlpha;
+                    aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
+                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
+                    aggcsBenchmarkShare = aggcsActivePosition + aggActivePosition;
+                }
+
+                if (sectorSpecificData.Count > 0)
+                {
+                    result.Add(new RelativePerformanceData()
+                    {
+                        CountryID = countryCode,
+                        RelativePerformanceCountrySpecificInfo = sectorSpecificData,
+                        AggregateCountryAlpha = aggcsAlpha,
+                        AggregateCountryPortfolioShare = aggcsPortfolioShare,
+                        AggregateCountryBenchmarkShare = aggcsBenchmarkShare,
+                        AggregateCountryActivePosition = aggcsBenchmarkShare,
+                    });
+                }
+
+
+            }
+
+            return result;
         }
         #endregion
 
