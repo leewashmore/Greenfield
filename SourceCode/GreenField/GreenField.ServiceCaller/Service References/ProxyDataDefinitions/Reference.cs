@@ -8165,25 +8165,13 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private double DailyReturnUSDField;
         
-        private double FXPriceCurrencyField;
-        
-        private double ForeignInclusionFactorField;
-        
         private string IndustryField;
-        
-        private double PriceField;
-        
-        private double PriceCurrencyField;
         
         private string RegionField;
         
         private string SectorField;
         
-        private long SharesField;
-        
         private string SubIndustryField;
-        
-        private string TickerField;
         
         private double WeightField;
         
@@ -8231,32 +8219,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FXPriceCurrency {
-            get {
-                return this.FXPriceCurrencyField;
-            }
-            set {
-                if ((this.FXPriceCurrencyField.Equals(value) != true)) {
-                    this.FXPriceCurrencyField = value;
-                    this.RaisePropertyChanged("FXPriceCurrency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ForeignInclusionFactor {
-            get {
-                return this.ForeignInclusionFactorField;
-            }
-            set {
-                if ((this.ForeignInclusionFactorField.Equals(value) != true)) {
-                    this.ForeignInclusionFactorField = value;
-                    this.RaisePropertyChanged("ForeignInclusionFactor");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Industry {
             get {
                 return this.IndustryField;
@@ -8265,32 +8227,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.IndustryField, value) != true)) {
                     this.IndustryField = value;
                     this.RaisePropertyChanged("Industry");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Price {
-            get {
-                return this.PriceField;
-            }
-            set {
-                if ((this.PriceField.Equals(value) != true)) {
-                    this.PriceField = value;
-                    this.RaisePropertyChanged("Price");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PriceCurrency {
-            get {
-                return this.PriceCurrencyField;
-            }
-            set {
-                if ((this.PriceCurrencyField.Equals(value) != true)) {
-                    this.PriceCurrencyField = value;
-                    this.RaisePropertyChanged("PriceCurrency");
                 }
             }
         }
@@ -8322,19 +8258,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long Shares {
-            get {
-                return this.SharesField;
-            }
-            set {
-                if ((this.SharesField.Equals(value) != true)) {
-                    this.SharesField = value;
-                    this.RaisePropertyChanged("Shares");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SubIndustry {
             get {
                 return this.SubIndustryField;
@@ -8343,19 +8266,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.SubIndustryField, value) != true)) {
                     this.SubIndustryField = value;
                     this.RaisePropertyChanged("SubIndustry");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ticker {
-            get {
-                return this.TickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
-                    this.TickerField = value;
-                    this.RaisePropertyChanged("Ticker");
                 }
             }
         }

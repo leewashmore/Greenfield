@@ -648,16 +648,10 @@
       <xs:element minOccurs="0" name="ConstituentName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DailyReturnUSD" type="xs:double" />
-      <xs:element minOccurs="0" name="FXPriceCurrency" type="xs:double" />
-      <xs:element minOccurs="0" name="ForeignInclusionFactor" type="xs:double" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Price" type="xs:double" />
-      <xs:element minOccurs="0" name="PriceCurrency" type="xs:double" />
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Shares" type="xs:long" />
       <xs:element minOccurs="0" name="SubIndustry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Weight" type="xs:double" />
       <xs:element minOccurs="0" name="WeightCountry" type="xs:double" />
       <xs:element minOccurs="0" name="WeightIndustry" type="xs:double" />
