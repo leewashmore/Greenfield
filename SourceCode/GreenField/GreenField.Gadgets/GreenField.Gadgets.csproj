@@ -116,7 +116,6 @@
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
-    <Compile Include="Helpers\RangeObservableCollection.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

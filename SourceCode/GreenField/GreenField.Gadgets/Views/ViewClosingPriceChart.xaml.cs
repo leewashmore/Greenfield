@@ -148,13 +148,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 7;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 7;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
@@ -164,13 +164,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
@@ -180,13 +180,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 6;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 1;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 6;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 1;
 
@@ -196,13 +196,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 

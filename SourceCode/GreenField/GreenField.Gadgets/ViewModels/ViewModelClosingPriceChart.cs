@@ -24,6 +24,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Views;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
+using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -148,8 +149,8 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
                             {
-                                SelectedStartDate = Convert.ToDateTime(customDateWindow.startDate);
-                                SelectedEndDate = Convert.ToDateTime(customDateWindow.endDate);
+                                SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                                SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
                                 _selectedTimeRange = value;
 
                                 //Retrieve Pricing Data for updated Time Range
@@ -726,11 +727,20 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
+                    if (ChartEntityList.Count == 1)
+                    {
+                        PrimaryPlottedSeries.Clear();
+                        PrimaryPlottedSeries.AddRange(result);
+                    }
+                    else
+                    {
+                        string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
+                        PrimaryPlottedSeries.Clear();
+                        PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
+                    }
+
                     PlottedSeries.Clear();
-                    PrimaryPlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
                     if (null != closingPriceDataLoadedEvent)
                         closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

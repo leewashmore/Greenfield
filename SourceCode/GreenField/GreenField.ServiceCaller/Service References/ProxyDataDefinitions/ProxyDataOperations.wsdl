@@ -166,6 +166,18 @@
   <wsdl:message name="ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
   </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePortfolioDetailsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioDetailsData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePortfolioDetailsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioDetailsDataResponse" />
+  </wsdl:message>
   <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkData" />
   </wsdl:message>
@@ -306,6 +318,14 @@
     <wsdl:operation name="RetrieveUnrealizedGainLossData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceDataResponse" message="tns:ProxyDataOperations_RetrieveRelativePerformanceData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioDetailsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsData" message="tns:ProxyDataOperations_RetrievePortfolioDetailsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsDataResponse" message="tns:ProxyDataOperations_RetrievePortfolioDetailsData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage" />
@@ -561,6 +581,24 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveUnrealizedGainLossData">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioDetailsData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

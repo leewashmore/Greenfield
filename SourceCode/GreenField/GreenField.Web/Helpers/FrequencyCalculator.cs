@@ -29,7 +29,7 @@ namespace GreenField.Web.Helpers
                         #region calculating LastDayOfAllWeeks
 
                         DateTime endDay = (chartStartDate.AddDays(5 - (int)chartStartDate.DayOfWeek));
-                        GetEndDatesForEachWeek(endDay, totalWeeks,ref EndDates);
+                        GetEndDatesForEachWeek(endDay, totalWeeks, ref EndDates);
                         #endregion
                         break;
                     }
@@ -48,11 +48,11 @@ namespace GreenField.Web.Helpers
                         int month = chartStartDate.Month;
                         int year = chartStartDate.Year;
 
-                        int monthsLeftInCurrentYear = 12 - month;                        
+                        int monthsLeftInCurrentYear = 12 - month;
 
                         for (int i = 0; i <= monthsLeftInCurrentYear; i++)
                         {
-                            GetEndDatesForEachMonth(ref year,ref month , ref EndDates);
+                            GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
                         }
 
                         for (int i = 0; i < totalYear - 1; i++)
@@ -76,7 +76,7 @@ namespace GreenField.Web.Helpers
                                 month = 1;
                                 while (month <= totalMonthsLeft)
                                 {
-                                    GetEndDatesForEachMonth(ref year,ref month, ref EndDates);
+                                    GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
                                 }
 
                             }
@@ -104,26 +104,26 @@ namespace GreenField.Web.Helpers
                             case (1):
                                 {
                                     lastDate = new DateTime(chartStartDate.Year, 3, 31);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate,ref EndDates);
+                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
                             case (2):
                                 {
                                     lastDate = new DateTime(chartStartDate.Year, 6, 30);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate,ref EndDates);
+                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
                             case (3):
                                 {
-                                    lastDate = new DateTime(chartStartDate.Year, 9, 31);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate,ref EndDates);
+                                    lastDate = new DateTime(chartStartDate.Year, 9, 30);
+                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
 
                             case (4):
                                 {
                                     lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate,ref EndDates);
+                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
                         }
@@ -143,14 +143,14 @@ namespace GreenField.Web.Helpers
                             case (1):
                                 {
                                     lastDate = new DateTime(chartStartDate.Year, 6, 30);
-                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate,ref EndDates);
+                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
 
                             case (2):
                                 {
                                     lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate,ref EndDates);
+                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
                                     break;
                                 }
                         }
@@ -162,7 +162,7 @@ namespace GreenField.Web.Helpers
                     {
                         int totalYearBetweenDates = chartEndDate.Year - chartStartDate.Year;
                         DateTime lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                        GetEndDatesForEachYear(lastDate, chartEndDate,ref EndDates);
+                        GetEndDatesForEachYear(lastDate, chartEndDate, ref EndDates);
                         break;
                     }
 
@@ -172,7 +172,7 @@ namespace GreenField.Web.Helpers
                         break;
                     }
             }
-                   
+
 
             return EndDates;
         }
@@ -217,13 +217,13 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachWeek(DateTime endDay, int totalWeeks, ref List<DateTime> EndDates)
         {
-           
+
             for (int i = 1; i <= totalWeeks; i++)
             {
                 DateTime lastDaysAllWeek = endDay.AddDays(7 * i);
                 EndDates.Add(lastDaysAllWeek);
-            }        
-       }
+            }
+        }
 
         /// <summary>
         /// This method calculates the end dates for each quarter.
@@ -233,7 +233,7 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachQuarter(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates)
         {
-            
+
             while (lastDate <= chartEndDate)
             {
                 EndDates.Add(lastDate);
@@ -245,7 +245,7 @@ namespace GreenField.Web.Helpers
                     lastDate = lastDate.AddDays(1);
                 }
             }
-        
+
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace GreenField.Web.Helpers
         /// <param name="lastDate"></param>
         /// <param name="chartEndDate"></param>
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
-        private static void GetEndDatesForEachHalfYear(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates) 
+        private static void GetEndDatesForEachHalfYear(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates)
         {
             while (lastDate <= chartEndDate)
             {
@@ -271,11 +271,11 @@ namespace GreenField.Web.Helpers
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
         private static void GetEndDatesForEachYear(DateTime lastDate, DateTime chartEndDate, ref List<DateTime> EndDates)
         {
-           
+
             while (lastDate <= chartEndDate)
             {
                 EndDates.Add(lastDate);
-                lastDate.AddYears(1);
+                lastDate = lastDate.AddYears(1);
             }
         }
 
@@ -285,13 +285,13 @@ namespace GreenField.Web.Helpers
         /// <param name="year"></param>
         /// <param name="month"></param>
         /// <param name="EndDates">A list of datetime that stores the enddates.</param>
-        private static void GetEndDatesForEachMonth(ref int year, ref int month,ref List<DateTime> EndDates)
+        private static void GetEndDatesForEachMonth(ref int year, ref int month, ref List<DateTime> EndDates)
         {
             int numberOfDays = DateTime.DaysInMonth(year, month);
             DateTime lastDay = new DateTime(year, month, numberOfDays);
             EndDates.Add(lastDay);
             month++;
-        
+
         }
 
         #endregion

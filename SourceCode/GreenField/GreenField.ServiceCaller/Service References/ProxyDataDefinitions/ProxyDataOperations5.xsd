@@ -737,6 +737,61 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
+  <xs:complexType name="ArrayOfRelativePerformanceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceData" nillable="true" type="tns:RelativePerformanceData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRelativePerformanceData" nillable="true" type="tns:ArrayOfRelativePerformanceData" />
+  <xs:complexType name="RelativePerformanceData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EntityIdentifier" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastYearReturn" type="xs:double" />
+      <xs:element minOccurs="0" name="QTDReturn" type="xs:double" />
+      <xs:element minOccurs="0" name="YTDReturn" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelativePerformanceData" nillable="true" type="tns:RelativePerformanceData" />
+  <xs:complexType name="ArrayOfPortfolioDetailsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioDetailsData" nillable="true" type="tns:PortfolioDetailsData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPortfolioDetailsData" nillable="true" type="tns:ArrayOfPortfolioDetailsData" />
+  <xs:complexType name="PortfolioDetailsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkPerc" type="xs:double" />
+      <xs:element minOccurs="0" name="BetPerc" type="xs:double" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EVEBITDA_FWD" type="xs:double" />
+      <xs:element minOccurs="0" name="EVEBITDA_Fair" type="xs:double" />
+      <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityTicker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FreeFlowCashMarginCurrentYear" type="xs:double" />
+      <xs:element minOccurs="0" name="MarketCap" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NetDebtEquityCurrentYear" type="xs:double" />
+      <xs:element minOccurs="0" name="NetIncomeGrowthCurrentYear" type="xs:double" />
+      <xs:element minOccurs="0" name="NetIncomeGrowthNextYear" type="xs:double" />
+      <xs:element minOccurs="0" name="PBE_FWD" type="xs:double" />
+      <xs:element minOccurs="0" name="PBE_Fair" type="xs:double" />
+      <xs:element minOccurs="0" name="PE_FWD" type="xs:double" />
+      <xs:element minOccurs="0" name="PE_Fair" type="xs:double" />
+      <xs:element minOccurs="0" name="PortfolioPerc" type="xs:double" />
+      <xs:element minOccurs="0" name="Price" type="xs:double" />
+      <xs:element minOccurs="0" name="ROECurrentYear" type="xs:double" />
+      <xs:element minOccurs="0" name="SalesGrowthCurrentYear" type="xs:double" />
+      <xs:element minOccurs="0" name="SalesGrowthNextYear" type="xs:double" />
+      <xs:element minOccurs="0" name="Shares" type="xs:double" />
+      <xs:element minOccurs="0" name="TargetPerc" type="xs:double" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Upside" type="xs:double" />
+      <xs:element minOccurs="0" name="Value" type="xs:double" />
+      <xs:element minOccurs="0" name="YTDReturn" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioDetailsData" nillable="true" type="tns:PortfolioDetailsData" />
   <xs:complexType name="ArrayOfMorningSnapshotData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MorningSnapshotData" nillable="true" type="tns:MorningSnapshotData" />

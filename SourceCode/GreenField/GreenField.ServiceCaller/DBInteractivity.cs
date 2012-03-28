@@ -277,7 +277,7 @@ namespace GreenField.ServiceCaller
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
 
-            client.RetrievePortfolioNamesCompleted += 
+            client.RetrievePortfolioNamesCompleted +=
                 new EventHandler<RetrievePortfolioNamesCompletedEventArgs>(client_RetrievePortfolioNamesCompleted);
 
             client.RetrievePortfolioNamesAsync(viewName, callback);
@@ -326,7 +326,7 @@ namespace GreenField.ServiceCaller
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());                    
+                    callback(e.Result.ToList());
             };
         }
 
@@ -374,12 +374,12 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveMarketCapitalizationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback)
         {
- 	        ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);                    
+                    callback(e.Result);
             };
         }
 
@@ -393,7 +393,7 @@ namespace GreenField.ServiceCaller
                     callback(e.Result.ToList());
             };
         }
-        
+
         public void RetrieveSectorBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -470,7 +470,7 @@ namespace GreenField.ServiceCaller
                     callback(e.Result.ToList());
             };
         }
-        
+
         public void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -537,6 +537,33 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Build2
+
+        public void RetrieveRelativePerformanceData(string objPortfolioIdentifier, string objEntityIdentifier, Action<List<RelativePerformanceData>> callback)
+        {
+            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+            client.RetrieveRelativePerformanceDataAsync(objPortfolioIdentifier, objEntityIdentifier);
+            client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
+
+        public void RetrievePortfolioDetailsData(string objPortfolioIdentifier, Action<List<PortfolioDetailsData>> callback)
+        {
+            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier);
+            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
+
+        #endregion
+
+
         #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
 
         /// <summary>
@@ -547,23 +574,23 @@ namespace GreenField.ServiceCaller
         /// <param name="endDateTime">End Date time of the time period selected</param>
         /// <param name="frequencyInterval">frequency Interval selected</param>
         /// <param name="callback"></param>
-        public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval,Action<List<UnrealizedGainLossData>> callback)
+        public void RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval, Action<List<UnrealizedGainLossData>> callback)
         {
-            
-              ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-                client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
-             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
-                {
-                    if (callback != null)
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else 
-                        {
-                            callback(null);
-                        }
-                };
+
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
+            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+               {
+                   if (callback != null)
+                       if (e.Result != null)
+                       {
+                           callback(e.Result.ToList());
+                       }
+                       else
+                       {
+                           callback(null);
+                       }
+               };
         }
         #endregion
     }

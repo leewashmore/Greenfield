@@ -379,6 +379,35 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveRelativePerformanceData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="objPortfolioIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="objEntityIdentifier" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceDataResult" nillable="true" type="q42:ArrayOfRelativePerformanceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioDetailsData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="objPortfolioIdentifier" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioDetailsDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePortfolioDetailsDataResult" nillable="true" type="q43:ArrayOfPortfolioDetailsData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveUserPreferenceBenchmarkData">
     <xs:complexType>
       <xs:sequence>
@@ -389,21 +418,21 @@
   <xs:element name="RetrieveUserPreferenceBenchmarkDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveUserPreferenceBenchmarkDataResult" nillable="true" type="q42:ArrayOfUserBenchmarkPreference" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveUserPreferenceBenchmarkDataResult" nillable="true" type="q44:ArrayOfUserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMorningSnapshotData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q43:ArrayOfUserBenchmarkPreference" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q45:ArrayOfUserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMorningSnapshotDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMorningSnapshotDataResult" nillable="true" type="q44:ArrayOfMorningSnapshotData" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMorningSnapshotDataResult" nillable="true" type="q46:ArrayOfMorningSnapshotData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -441,7 +470,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q45:UserBenchmarkPreference" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q47:UserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -456,7 +485,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q46:UserBenchmarkPreference" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q48:UserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

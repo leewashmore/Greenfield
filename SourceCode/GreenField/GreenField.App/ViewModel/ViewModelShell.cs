@@ -473,6 +473,22 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand RelativePerformanceCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(RelativePerformanceCommandMethod);
+            }
+        }
+
+        public ICommand PortfolioDetailsCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(PortfolioDetailsCommandMethod);
+            }
+        }
+
         #endregion
         #endregion
 
@@ -958,6 +974,17 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
+
+        private void RelativePerformanceCommandMethod(object param)
+        {
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewRelativePerformance", UriKind.Relative));
+        }
+
+        private void PortfolioDetailsCommandMethod(object param)
+        {
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
+        }
+
 
         #endregion
 
