@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
@@ -19,6 +20,24 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+        }
+
+        /// <summary>
+        /// Flipping between Grid & PieChart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.crtSectorBreakdown.Visibility == System.Windows.Visibility.Visible)
+            {
+                Flipper.FlipItem(this.crtSectorBreakdown, this.dgSectorBreakdown);
+            }
+            else
+            {
+                Flipper.FlipItem(this.dgSectorBreakdown, this.crtSectorBreakdown);
+            }
         }
     }
 }

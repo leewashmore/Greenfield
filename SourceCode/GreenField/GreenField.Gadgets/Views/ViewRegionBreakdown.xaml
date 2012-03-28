@@ -9,13 +9,21 @@
     mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.25*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            </telerik:RadButton>
+        </Grid>
+
+
+        <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" telerik:StyleManager.Theme="Metro">
+                <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
                     <telerik:RadChart.DefaultView>
                         <telerik:ChartDefaultView ChartLegendPosition="Bottom"/>
                     </telerik:RadChart.DefaultView>                        
@@ -35,8 +43,6 @@
                     </telerik:RadChart.SeriesMappings>
                 </telerik:RadChart>
             </Border>
-        </Grid>
-        <Grid Grid.Column="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Name="dgRegionBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding RegionBreakdownInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
@@ -59,7 +65,7 @@
                         </telerik:GroupDescriptor>
                     </telerik:RadGridView.GroupDescriptors>
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Active Position" DataMemberBinding="{Binding BetShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
