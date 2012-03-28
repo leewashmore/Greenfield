@@ -465,6 +465,14 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand GadgetRelativePerformaceCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetRelativePerformaceCommandMethod);
+            }
+        }
+
         public ICommand GadgetSaveCommand
         {
             get
@@ -946,6 +954,31 @@ namespace GreenField.App.ViewModel
                         {
                             DashBoardTileHeader = GadgetNames.TOP_BENCHMARK_SECURITIES,
                             DashBoardTileObject = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(GetDashBoardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetRelativePerformaceCommand Execution Method - Add Gadget - RELATIVE_PERFORMANCE
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetRelativePerformaceCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
+                        (new DashBoardTileViewItemInfo
+                        {
+                            DashBoardTileHeader = GadgetNames.RELATIVE_PERFORMANCE,
+                            DashBoardTileObject = new ViewRelativePerformance(new ViewModelRelativePerformance(GetDashBoardGadgetParam()))
                         });
             }
             catch (Exception ex)

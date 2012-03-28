@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="GreenField.Gadgets.Helpers.RelativePerformanceTooltip"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Grid x:Name="LayoutRoot" Background="White" Margin="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>            
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Top Securities" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Alpha" FontWeight="Bold"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Active Position" FontWeight="Bold"/>
+        
+        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="FirstSecurityName"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="FirstSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="FirstSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="SecondSecurityName"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="SecondSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="SecondSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ThirdSecurityName"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ThirdSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" x:Name="ThirdSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" x:Name="FourthSecurityName"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="FourthSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" x:Name="FourthSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" x:Name="FifthSecurityName"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="FifthSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" x:Name="FifthSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" x:Name="CountryID"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="SectorID" Margin="5,0,0,0"/>
+    </Grid>
+</UserControl>
