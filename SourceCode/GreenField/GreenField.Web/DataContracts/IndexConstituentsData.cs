@@ -37,24 +37,6 @@ namespace GreenField.Web.DataContracts
         public double WeightIndustry { get; set; }
 
         [DataMember]
-        public string Ticker { get; set; }
-
-        [DataMember]
-        public long Shares { get; set; }
-
-        [DataMember]
-        public double Price { get; set; }
-
-        [DataMember]
-        public double PriceCurrency { get; set; }
-
-        [DataMember]
-        public double FXPriceCurrency { get; set; }
-
-        [DataMember]
-        public double ForeignInclusionFactor { get; set; }
-
-        [DataMember]
         public double DailyReturnUSD { get; set; }
     }
 }

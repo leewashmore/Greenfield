@@ -87,6 +87,14 @@ namespace GreenField.Common
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
 
+
+    public delegate void RelativePerformanceGridClick(RelativePerformanceGridClickEventArgs e);
+    public class RelativePerformanceGridClickEventArgs : EventArgs
+    {
+        public string countryID { get; set; }
+        public int? sectorID { get; set; }
+    }
+
       public static class BenchmarkReturnTypes
     {
         public static string TotalReturnType = "Total(Gross)";
@@ -94,7 +102,7 @@ namespace GreenField.Common
         public static string PriceReturnType = "( Price Return )";
     }
 
-
+      
 
 
 

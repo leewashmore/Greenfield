@@ -39,8 +39,8 @@
                              CanUserSelect="True" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro" SelectionMode="Single"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime" ShowGroupFooters="True"
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="True"
-                                 MouseMove="dgRelativePerformance_MouseMove">
-                
+                             RowLoaded="dgRelativePerformance_RowLoaded">
+
                 <telerik:RadGridView.Columns>
                     <!--CountryID Column-->
                     <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id">
@@ -58,10 +58,12 @@
                     <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total">
                         <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Gray" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Gray" FontWeight="Bold"/>                                    
-                                </StackPanel>
+                                <Border MouseLeftButtonDown="dgRelativePerformance_MouseLeftButtonDown">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Gray" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Gray" FontWeight="Bold"/>
+                                    </StackPanel>
+                                </Border>
                             </DataTemplate>
                         </telerik:GridViewDataColumn.CellTemplate>
                         <telerik:GridViewDataColumn.AggregateFunctions>

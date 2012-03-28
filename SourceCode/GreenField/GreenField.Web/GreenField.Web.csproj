@@ -139,6 +139,7 @@
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
     <Compile Include="DataContracts\RelativePerformanceData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
     <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />

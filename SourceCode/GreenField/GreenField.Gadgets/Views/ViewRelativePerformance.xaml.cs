@@ -15,11 +15,22 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Windows.Markup;
 using System.Text;
 using Telerik.Windows.Data;
+using Telerik.Windows.Controls.GridView;
+using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
+using Microsoft.Practices.Prism.Logging;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewRelativePerformance : UserControl
     {
+        private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
+        private FundSelectionData _fundSelectionData;
+        private BenchmarkSelectionData _benchmarkSelectionData;
+        private DateTime _effectiveDate;
+        private IDBInteractivity _dbInteractivity;
+        private ILoggerFacade _logger;
+
         public ViewRelativePerformance(ViewModelRelativePerformance DataContextSource)
         {
             InitializeComponent();
@@ -39,9 +50,14 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #region Events
+        public RelativePerformanceGridClick RelativePerformanceGridClickEvent { get; set; }
+        #endregion
+
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
-            
+            _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
+
             //Clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < dgRelativePerformance.Columns.Count - 1; columnIndex++)
             {
@@ -66,13 +82,14 @@ namespace GreenField.Gadgets.Views
                 //actual namespace and assembly here
                 CellTemp.Append("xmlns:local = 'clr-namespace:GreenField.Gadgets.Views");
                 CellTemp.Append(";assembly=GreenField.Gadgets'>");
-
+                //CellTemp.Append("<Border MouseLeftButtonDown='dgRelativePerformance_MouseLeftButtonDown'>");
                 CellTemp.Append("<StackPanel Orientation='Horizontal'>");
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].ActivePosition, StringFormat=(\\{0:n2\\}%)}'/>");
                 CellTemp.Append("</StackPanel>");
+                //CellTemp.Append("</Border>");
                 CellTemp.Append("</DataTemplate>");
 
                 dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
@@ -93,11 +110,63 @@ namespace GreenField.Gadgets.Views
             }
 
             RelativePerformanceInfo = e.RelativePerformanceInfo;
+
+            _fundSelectionData = (this.DataContext as ViewModelRelativePerformance)._fundSelectionData;
+            _benchmarkSelectionData = (this.DataContext as ViewModelRelativePerformance)._benchmarkSelectionData;
+            _effectiveDate = (this.DataContext as ViewModelRelativePerformance)._effectiveDate;
+            _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
         }
 
-        private void dgRelativePerformance_MouseMove(object sender, MouseEventArgs e)
+        
+
+        private void dgRelativePerformance_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            
+            if (e.Row is GridViewHeaderRow)
+                return;
+            if (e.Row.Cells[0] is GridViewFooterCell)
+                return;
+            foreach (GridViewCell cell in e.Row.Cells)
+            {
+                //Null Check
+                if (cell.Value == null)
+                    continue;
+
+                //No toolTip service for Blank cells
+                if ((cell.Value as RelativePerformanceCountrySpecificData).Alpha == null)
+                    continue;
+
+                //No toolTip service for CountryId Column
+                if (cell.Column.DisplayIndex == 0)
+                    continue;
+                
+                //No toolTip service for Totals Column
+                if (cell.Column.DisplayIndex == this.dgRelativePerformance.Columns.Count - 1)
+                    continue;
+                
+                int cellSectorID = (cell.Value as RelativePerformanceCountrySpecificData).SectorID;
+                string cellCountryID = (cell.ParentRow.DataContext as RelativePerformanceData).CountryID;
+                
+                ToolTip toolTip = new ToolTip()
+                {
+                    Content = new RelativePerformanceTooltip(_dbInteractivity, _fundSelectionData, _benchmarkSelectionData, _effectiveDate, cellCountryID, cellSectorID)
+                };
+
+                ToolTipService.SetToolTip(cell, toolTip);
+            }
+        }
+
+        private void dgRelativePerformance_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            string countryID = ((e.OriginalSource as TextBlock).DataContext as RelativePerformanceData).CountryID;
+            string sectorName = ((((e.OriginalSource as TextBlock).Parent as StackPanel).Parent as Border).Parent as GridViewCell).Column.Header as string;
+            int sectorID = _relativePerformanceSectorInfo.Where(s => s.SectorName == sectorName).First().SectorID;
+
+            RelativePerformanceGridClickEvent.Invoke(new RelativePerformanceGridClickEventArgs()
+            {
+                countryID = countryID,
+                sectorID = sectorID
+            });
         }
 
 

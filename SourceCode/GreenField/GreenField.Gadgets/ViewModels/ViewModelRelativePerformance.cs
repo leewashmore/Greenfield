@@ -23,13 +23,13 @@ namespace GreenField.Gadgets.ViewModels
         #region Fields
         //MEF Singletons
         private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+        public IDBInteractivity _dbInteractivity;
+        public ILoggerFacade _logger;
 
         //Selection Data
-        private FundSelectionData _fundSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDate;
+        public FundSelectionData _fundSelectionData;
+        public BenchmarkSelectionData _benchmarkSelectionData;
+        public DateTime _effectiveDate;
 
         //Gadget Data
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;

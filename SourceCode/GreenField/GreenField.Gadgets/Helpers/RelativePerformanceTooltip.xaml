@@ -7,12 +7,12 @@
     
     <Grid x:Name="LayoutRoot" Background="White" Margin="2">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -22,28 +22,29 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Top Securities" FontWeight="Bold"/>
         <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Alpha" FontWeight="Bold"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Active Position (Country)" FontWeight="Bold"/>
-        <TextBlock Grid.Row="0" Grid.Column="3" Margin="5,0,0,0" Text="Active Position (Sector)" FontWeight="Bold"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SecurityNames[0]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding SecurityAlpha[0]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding SecurityActivePositionCountry[0]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Text="{Binding SecurityActivePositionSector[0]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SecurityNames[1]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding SecurityAlpha[1]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding SecurityActivePositionCountry[1]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Text="{Binding SecurityActivePositionSector[1]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SecurityNames[2]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding SecurityAlpha[2]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding SecurityActivePositionCountry[2]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Text="{Binding SecurityActivePositionSector[2]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SecurityNames[3]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding SecurityAlpha[3]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding SecurityActivePositionCountry[3]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Text="{Binding SecurityActivePositionSector[3]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding SecurityNames[4]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Text="{Binding SecurityAlpha[4]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,0,0,0" Text="{Binding SecurityActivePositionCountry[4]}"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Text="{Binding SecurityActivePositionSector[4]}"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Margin="5,0,0,0" Text="Active Position" FontWeight="Bold"/>
         
+        <TextBlock Grid.Row="1" Grid.Column="0" x:Name="FirstSecurityName"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="FirstSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" x:Name="FirstSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" x:Name="SecondSecurityName"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="SecondSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" x:Name="SecondSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" x:Name="ThirdSecurityName"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="ThirdSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" x:Name="ThirdSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" x:Name="FourthSecurityName"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="FourthSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" x:Name="FourthSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" x:Name="FifthSecurityName"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="FifthSecurityAlpha" Margin="5,0,0,0"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" x:Name="FifthSecurityActivePosition" Margin="5,0,0,0"/>
+
+        <TextBlock Grid.Row="6" Grid.Column="0" x:Name="CountryID"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="SectorID" Margin="5,0,0,0"/>
     </Grid>
 </UserControl>

@@ -208,6 +208,12 @@
   <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceSectorData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorDataResponse" />
   </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceSecurityData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceSecurityData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityDataResponse" />
+  </wsdl:message>
   <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceData" />
   </wsdl:message>
@@ -346,6 +352,10 @@
     <wsdl:operation name="RetrieveRelativePerformanceSectorData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceSectorData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorDataResponse" message="tns:ProxyDataOperations_RetrieveRelativePerformanceSectorData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSecurityData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceSecurityData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSecurityDataResponse" message="tns:ProxyDataOperations_RetrieveRelativePerformanceSecurityData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveRelativePerformanceData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceData_InputMessage" />
@@ -644,6 +654,15 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveRelativePerformanceSectorData">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSecurityData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

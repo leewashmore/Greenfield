@@ -207,6 +207,9 @@
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

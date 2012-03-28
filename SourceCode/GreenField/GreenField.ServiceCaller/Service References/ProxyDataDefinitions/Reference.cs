@@ -8165,25 +8165,13 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private double DailyReturnUSDField;
         
-        private double FXPriceCurrencyField;
-        
-        private double ForeignInclusionFactorField;
-        
         private string IndustryField;
-        
-        private double PriceField;
-        
-        private double PriceCurrencyField;
         
         private string RegionField;
         
         private string SectorField;
         
-        private long SharesField;
-        
         private string SubIndustryField;
-        
-        private string TickerField;
         
         private double WeightField;
         
@@ -8231,32 +8219,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FXPriceCurrency {
-            get {
-                return this.FXPriceCurrencyField;
-            }
-            set {
-                if ((this.FXPriceCurrencyField.Equals(value) != true)) {
-                    this.FXPriceCurrencyField = value;
-                    this.RaisePropertyChanged("FXPriceCurrency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ForeignInclusionFactor {
-            get {
-                return this.ForeignInclusionFactorField;
-            }
-            set {
-                if ((this.ForeignInclusionFactorField.Equals(value) != true)) {
-                    this.ForeignInclusionFactorField = value;
-                    this.RaisePropertyChanged("ForeignInclusionFactor");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Industry {
             get {
                 return this.IndustryField;
@@ -8265,32 +8227,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.IndustryField, value) != true)) {
                     this.IndustryField = value;
                     this.RaisePropertyChanged("Industry");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Price {
-            get {
-                return this.PriceField;
-            }
-            set {
-                if ((this.PriceField.Equals(value) != true)) {
-                    this.PriceField = value;
-                    this.RaisePropertyChanged("Price");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PriceCurrency {
-            get {
-                return this.PriceCurrencyField;
-            }
-            set {
-                if ((this.PriceCurrencyField.Equals(value) != true)) {
-                    this.PriceCurrencyField = value;
-                    this.RaisePropertyChanged("PriceCurrency");
                 }
             }
         }
@@ -8322,19 +8258,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long Shares {
-            get {
-                return this.SharesField;
-            }
-            set {
-                if ((this.SharesField.Equals(value) != true)) {
-                    this.SharesField = value;
-                    this.RaisePropertyChanged("Shares");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SubIndustry {
             get {
                 return this.SubIndustryField;
@@ -8343,19 +8266,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((object.ReferenceEquals(this.SubIndustryField, value) != true)) {
                     this.SubIndustryField = value;
                     this.RaisePropertyChanged("SubIndustry");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Ticker {
-            get {
-                return this.TickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
-                    this.TickerField = value;
-                    this.RaisePropertyChanged("Ticker");
                 }
             }
         }
@@ -9101,6 +9011,96 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RelativePerformanceSecurityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class RelativePerformanceSecurityData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private double SecurityActivePositionField;
+        
+        private double SecurityAlphaField;
+        
+        private string SecurityCountryIDField;
+        
+        private string SecurityNameField;
+        
+        private string SecuritySectorNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double SecurityActivePosition {
+            get {
+                return this.SecurityActivePositionField;
+            }
+            set {
+                if ((this.SecurityActivePositionField.Equals(value) != true)) {
+                    this.SecurityActivePositionField = value;
+                    this.RaisePropertyChanged("SecurityActivePosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double SecurityAlpha {
+            get {
+                return this.SecurityAlphaField;
+            }
+            set {
+                if ((this.SecurityAlphaField.Equals(value) != true)) {
+                    this.SecurityAlphaField = value;
+                    this.RaisePropertyChanged("SecurityAlpha");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityCountryID {
+            get {
+                return this.SecurityCountryIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityCountryIDField, value) != true)) {
+                    this.SecurityCountryIDField = value;
+                    this.RaisePropertyChanged("SecurityCountryID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityName {
+            get {
+                return this.SecurityNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityNameField, value) != true)) {
+                    this.SecurityNameField = value;
+                    this.RaisePropertyChanged("SecurityName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecuritySectorName {
+            get {
+                return this.SecuritySectorNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecuritySectorNameField, value) != true)) {
+                    this.SecuritySectorNameField = value;
+                    this.RaisePropertyChanged("SecuritySectorName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="RelativePerformanceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class RelativePerformanceData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -9486,6 +9486,12 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.IAsyncResult BeginRetrieveRelativePerformanceSectorData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData> EndRetrieveRelativePerformanceSectorData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSecurityData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSecurityDataRes" +
+            "ponse")]
+        System.IAsyncResult BeginRetrieveRelativePerformanceSecurityData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> EndRetrieveRelativePerformanceSecurityData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceDataResponse")]
         System.IAsyncResult BeginRetrieveRelativePerformanceData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
@@ -10126,6 +10132,25 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveRelativePerformanceSecurityDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveRelativePerformanceSecurityDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveRelativePerformanceDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -10345,6 +10370,12 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveRelativePerformanceSectorDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveRelativePerformanceSecurityDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveRelativePerformanceSecurityDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveRelativePerformanceSecurityDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveRelativePerformanceDataDelegate;
         
         private EndOperationDelegate onEndRetrieveRelativePerformanceDataDelegate;
@@ -10469,6 +10500,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         public event System.EventHandler<RemoveUserPreferenceBenchmarkCompletedEventArgs> RemoveUserPreferenceBenchmarkCompleted;
         
         public event System.EventHandler<RetrieveRelativePerformanceSectorDataCompletedEventArgs> RetrieveRelativePerformanceSectorDataCompleted;
+        
+        public event System.EventHandler<RetrieveRelativePerformanceSecurityDataCompletedEventArgs> RetrieveRelativePerformanceSecurityDataCompleted;
         
         public event System.EventHandler<RetrieveRelativePerformanceDataCompletedEventArgs> RetrieveRelativePerformanceDataCompleted;
         
@@ -12045,6 +12078,64 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveRelativePerformanceSecurityData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveRelativePerformanceSecurityData(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID, order, maxRecords, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveRelativePerformanceSecurityData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveRelativePerformanceSecurityData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveRelativePerformanceSecurityData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData = ((GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData)(inValues[0]));
+            GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData)(inValues[1]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[2]));
+            string countryID = ((string)(inValues[3]));
+            System.Nullable<int> sectorID = ((System.Nullable<int>)(inValues[4]));
+            int order = ((int)(inValues[5]));
+            System.Nullable<int> maxRecords = ((System.Nullable<int>)(inValues[6]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveRelativePerformanceSecurityData(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID, order, maxRecords, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveRelativePerformanceSecurityData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveRelativePerformanceSecurityData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveRelativePerformanceSecurityDataCompleted(object state) {
+            if ((this.RetrieveRelativePerformanceSecurityDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveRelativePerformanceSecurityDataCompleted(this, new RetrieveRelativePerformanceSecurityDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveRelativePerformanceSecurityDataAsync(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords) {
+            this.RetrieveRelativePerformanceSecurityDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID, order, maxRecords, null);
+        }
+        
+        public void RetrieveRelativePerformanceSecurityDataAsync(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords, object userState) {
+            if ((this.onBeginRetrieveRelativePerformanceSecurityDataDelegate == null)) {
+                this.onBeginRetrieveRelativePerformanceSecurityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRelativePerformanceSecurityData);
+            }
+            if ((this.onEndRetrieveRelativePerformanceSecurityDataDelegate == null)) {
+                this.onEndRetrieveRelativePerformanceSecurityDataDelegate = new EndOperationDelegate(this.OnEndRetrieveRelativePerformanceSecurityData);
+            }
+            if ((this.onRetrieveRelativePerformanceSecurityDataCompletedDelegate == null)) {
+                this.onRetrieveRelativePerformanceSecurityDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveRelativePerformanceSecurityDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveRelativePerformanceSecurityDataDelegate, new object[] {
+                        fundSelectionData,
+                        benchmarkSelectionData,
+                        effectiveDate,
+                        countryID,
+                        sectorID,
+                        order,
+                        maxRecords}, this.onEndRetrieveRelativePerformanceSecurityDataDelegate, this.onRetrieveRelativePerformanceSecurityDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveRelativePerformanceData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveRelativePerformanceData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
         }
@@ -12621,6 +12712,25 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData> EndRetrieveRelativePerformanceSectorData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData>)(base.EndInvoke("RetrieveRelativePerformanceSectorData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveRelativePerformanceSecurityData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[7];
+                _args[0] = fundSelectionData;
+                _args[1] = benchmarkSelectionData;
+                _args[2] = effectiveDate;
+                _args[3] = countryID;
+                _args[4] = sectorID;
+                _args[5] = order;
+                _args[6] = maxRecords;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveRelativePerformanceSecurityData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> EndRetrieveRelativePerformanceSecurityData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData>)(base.EndInvoke("RetrieveRelativePerformanceSecurityData", _args, result)));
                 return _result;
             }
             
