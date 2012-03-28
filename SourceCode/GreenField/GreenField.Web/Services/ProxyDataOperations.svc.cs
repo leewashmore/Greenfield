@@ -975,7 +975,6 @@ namespace GreenField.Web.Services
             {
                 return null;
             }
-
         }
 
 
@@ -2077,6 +2076,7 @@ namespace GreenField.Web.Services
 
             return portfolioRiskReturnValues;
         }
+
         /// <summary>
         /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
         /// </summary>
@@ -2127,6 +2127,231 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+
+        #region Build2 Services
+
+        /// <summary>
+        /// To Retrieve the Data for the SelectedSecurity in a Portfolio and the Data for the Benchmark assigned to that Portfolio
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">SelectedPortfolio</param>
+        /// <param name="objEntityIdentifier">SelectedSecurity</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(string objPortfolioIdentifier, string objEntityIdentifier)
+        {
+            List<RelativePerformanceData> result = new List<RelativePerformanceData>();
+
+            try
+            {
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "TATA CONSULTANCY SVCS LTD",
+                    EntityIdentifier = "TCS IN",
+                    QTDReturn = 11.5433,
+                    YTDReturn = 12.2334,
+                    LastYearReturn = 11.5
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "Morgon Stanley Common Index IMI",
+                    EntityIdentifier = "MSCI IMI",
+                    QTDReturn = 13.533,
+                    YTDReturn = 18.987,
+                    LastYearReturn = 11.5567
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "BSE India",
+                    EntityIdentifier = "BSE",
+                    QTDReturn = 16.533,
+                    YTDReturn = 14.987,
+                    LastYearReturn = 19.5567
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "CATCHER TECHNOLOGY CO LTD",
+                    EntityIdentifier = "2472 TT",
+                    QTDReturn = 11.5433,
+                    YTDReturn = 12.2334,
+                    LastYearReturn = 11.5
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "Morgon Stanley Common Index IMI",
+                    EntityIdentifier = "MSCI I",
+                    QTDReturn = 15.533,
+                    YTDReturn = 26.987,
+                    LastYearReturn = 37.5567
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "Indonesia",
+                    EntityIdentifier = "Indn",
+                    QTDReturn = 21.533,
+                    YTDReturn = 24.987,
+                    LastYearReturn = 7.5567
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "PETROBRAS - PETROLEO BRASs",
+                    EntityIdentifier = "PBR/A US",
+                    QTDReturn = 67.5433,
+                    YTDReturn = 16.2334,
+                    LastYearReturn = 24.5
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "Morgon Stanley Common Index USA",
+                    EntityIdentifier = "MSCI US",
+                    QTDReturn = 11.533,
+                    YTDReturn = 42.987,
+                    LastYearReturn = 49.5567
+                });
+
+                result.Add(new RelativePerformanceData()
+                {
+                    EntityName = "Dow Jones",
+                    EntityIdentifier = "DJN",
+                    QTDReturn = 23.533,
+                    YTDReturn = 31.987,
+                    LastYearReturn = 2.5567
+                });
+                return result.Where((r => r.EntityIdentifier == objEntityIdentifier)).ToList();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// To Retrieve the Data for the PortfolioDetails UI
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Selected Portfolio</param>
+        /// <returns>List of PortfolioDetailsData</returns>
+        [OperationContract]
+        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(string objPortfolioIdentifier)
+        {
+            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+            try
+            {
+                Random random = new Random();
+                for (int i = 0; i < 5; i++)
+                {
+                    result.Add(new PortfolioDetailsData()
+                    {
+                        EntityTicker = "TCS IN",
+                        EntityName = "TATA CONSULTANCY SVCS LTD",
+                        Type = "Security",
+                        Country = "India",
+                        Shares = 345565,
+                        Price = random.Next(200, 1000),
+                        Currency = "INR",
+                        Value = 0.019995,
+                        TargetPerc = random.Next(10, 30),
+                        PortfolioPerc = random.Next(10, 30),
+                        BenchmarkPerc = random.Next(10, 30),
+                        BetPerc = random.Next(0, 20),
+                        Upside = random.Next(10, 30),
+                        YTDReturn = random.Next(0, 30),
+                        MarketCap = 100000000,
+                        PE_FWD = 0.5,
+                        PE_Fair = 0.7,
+                        PBE_Fair = 0.23,
+                        PBE_FWD = 0.456,
+                        EVEBITDA_FWD = 2344786,
+                        EVEBITDA_Fair = 2277648,
+                        SalesGrowthCurrentYear = 12.34,
+                        SalesGrowthNextYear = 23.56,
+                        NetIncomeGrowthCurrentYear = 17.897,
+                        NetIncomeGrowthNextYear = 19.56,
+                        NetDebtEquityCurrentYear = 21.876,
+                        FreeFlowCashMarginCurrentYear = -18.987
+                    });
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    result.Add(new PortfolioDetailsData()
+                    {
+                        EntityTicker = "PBR/A US",
+                        EntityName = "PETROBRAS - PETROLEO BRASs",
+                        Type = "Security",
+                        Country = "USA",
+                        Shares = random.Next(20000, 50000),
+                        Price = random.Next(200, 700),
+                        Currency = "USD",
+                        Value = 1,
+                        TargetPerc = random.Next(10, 30),
+                        PortfolioPerc = random.Next(10, 30),
+                        BenchmarkPerc = random.Next(10, 30),
+                        BetPerc = random.Next(0, 20),
+                        Upside = random.Next(10, 30),
+                        YTDReturn = random.Next(0, 30),
+                        MarketCap = 1000000000,
+                        PE_FWD = 0.5,
+                        PE_Fair = 0.7,
+                        PBE_Fair = 0.23,
+                        PBE_FWD = 0.456,
+                        EVEBITDA_FWD = 2344786,
+                        EVEBITDA_Fair = 2277648,
+                        SalesGrowthCurrentYear = 12.34,
+                        SalesGrowthNextYear = 23.56,
+                        NetIncomeGrowthCurrentYear = 17.897,
+                        NetIncomeGrowthNextYear = 19.56,
+                        NetDebtEquityCurrentYear = 21.876,
+                        FreeFlowCashMarginCurrentYear = -18.987
+                    });
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    result.Add(new PortfolioDetailsData()
+                    {
+                        EntityTicker = "MSCI US",
+                        EntityName = "Morgon Stanley Common Index USA",
+                        Type = "Index",
+                        Country = "USA",
+                        Shares = random.Next(20000, 50000),
+                        Price = random.Next(200, 700),
+                        Currency = "USD",
+                        Value = 1,
+                        TargetPerc = random.Next(10, 30),
+                        PortfolioPerc = random.Next(10, 30),
+                        BenchmarkPerc = random.Next(10, 30),
+                        BetPerc = random.Next(0, 20),
+                        Upside = random.Next(10, 30),
+                        YTDReturn = random.Next(0, 30),
+                        MarketCap = 500000000,
+                        PE_FWD = 0.45,
+                        PE_Fair = 0.17,
+                        PBE_Fair = 0.83,
+                        PBE_FWD = 0.856,
+                        EVEBITDA_FWD = 4344786,
+                        EVEBITDA_Fair = 8277648,
+                        SalesGrowthCurrentYear = 22.34,
+                        SalesGrowthNextYear = 17.56,
+                        NetIncomeGrowthCurrentYear = 9.897,
+                        NetIncomeGrowthNextYear = 2.56,
+                        NetDebtEquityCurrentYear = 8.876,
+                        FreeFlowCashMarginCurrentYear = -9.987
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        #endregion
 
         #region Morning Snapshot Operation Contracts
 
