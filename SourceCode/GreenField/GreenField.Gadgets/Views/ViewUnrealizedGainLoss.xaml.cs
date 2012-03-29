@@ -57,9 +57,15 @@ namespace GreenField.Gadgets.Views
         void dataContextSource_unrealizedGainLossDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
-                this.busyIndicator.IsBusy = true;
+            {
+                this.busyIndicatorChart.IsBusy = true;
+                this.busyIndicatorGrid.IsBusy = true;
+            }
             else
-                this.busyIndicator.IsBusy = false;
+            {
+                this.busyIndicatorChart.IsBusy = false;
+                this.busyIndicatorGrid.IsBusy = false;
+            }
         }
 
         /// <summary>
