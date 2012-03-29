@@ -88,8 +88,7 @@ namespace GreenField.Common
     }
 
 
-    public delegate void RelativePerformanceGridClick(RelativePerformanceGridClickEventArgs e);
-    public class RelativePerformanceGridClickEventArgs : EventArgs
+    public class RelativePerformanceGridCellData
     {
         public string countryID { get; set; }
         public int? sectorID { get; set; }

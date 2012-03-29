@@ -17,6 +17,8 @@ using GreenField.Common.Helper;
 
 namespace GreenField.Common
 {
+    public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
+
     public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
     public class FundReferenceSetEvent : CompositePresentationEvent<FundSelectionData> { }
