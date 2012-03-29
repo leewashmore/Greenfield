@@ -102,6 +102,12 @@ namespace GreenField.Common
         public static string PriceReturnType = "( Price Return )";
     }
 
+      public static class HoldingsPercentageSegmentClassifier
+      {
+          public static int SECTOR = 0;
+          public static int REGIOM = 1;
+      }
+
       
 
 

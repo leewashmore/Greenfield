@@ -202,16 +202,16 @@
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/AssetAllocationImage.png" Text="Asset Allocation" Size="Large" Command="{Binding GadgetAssetAllocationCommand}"/>
+                    </telerik:RadRibbonGroup>                   
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/PortfolioRiskReturnsImage.png" Text="Portfolio Risk Returns" Size="Large" Command="{Binding GadgetPortfolioRiskReturnsCommand}"/>
+                    </telerik:RadRibbonGroup>-->
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/PortfolioRiskReturnsImage.png" Text="Portfolio Risk Returns" Size="Large" Command="{Binding GadgetPortfolioRiskReturnsCommand}"/>
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"/>
-                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformaceCommand}"/>
                     </telerik:RadRibbonGroup>

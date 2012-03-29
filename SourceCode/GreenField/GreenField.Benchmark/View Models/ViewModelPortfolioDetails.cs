@@ -147,7 +147,7 @@ namespace GreenField.Benchmark.ViewModels
         /// <param name="objPortfolioName">PortfolioName</param>
         private void RetrievePortfolioDetailsData(string objPortfolioName)
         {
-            _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioName, RetrievePortfolioDetailsDataCallbackMethod);
+            //_dbInteractivity.RetrievePortfolioDetailsData(objPortfolioName, RetrievePortfolioDetailsDataCallbackMethod);
         }
 
         #endregion

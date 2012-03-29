@@ -666,7 +666,11 @@
   <xs:element name="ArrayOfHoldingsPercentageData" nillable="true" type="tns:ArrayOfHoldingsPercentageData" />
   <xs:complexType name="HoldingsPercentageData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="SegmentHoldingsShare" type="xs:int" />
+      <xs:element minOccurs="0" name="BenchmarkName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="EffectiveDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FundName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioWeight" type="xs:double" />
       <xs:element minOccurs="0" name="SegmentName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -731,22 +735,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
-  <xs:complexType name="ArrayOfRelativePerformanceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceData" nillable="true" type="tns:RelativePerformanceData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfRelativePerformanceData" nillable="true" type="tns:ArrayOfRelativePerformanceData" />
-  <xs:complexType name="RelativePerformanceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="EntityIdentifier" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LastYearReturn" type="xs:double" />
-      <xs:element minOccurs="0" name="QTDReturn" type="xs:double" />
-      <xs:element minOccurs="0" name="YTDReturn" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="RelativePerformanceData" nillable="true" type="tns:RelativePerformanceData" />
   <xs:complexType name="ArrayOfPortfolioDetailsData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioDetailsData" nillable="true" type="tns:PortfolioDetailsData" />

@@ -94,7 +94,7 @@ namespace GreenField.Benchmark.ViewModels
             //Fetch the Data for selected Security
             if (EntityRelativePerformanceData.Count == 0)
             {
-                _dbInteractivity.RetrieveRelativePerformanceData(PortfolioIdentifier,entitySelectionData.ShortName, RetrieveRelativePerformanceDataCallBackMethod);
+                //_dbInteractivity.RetrieveRelativePerformanceData(PortfolioIdentifier,entitySelectionData.ShortName, RetrieveRelativePerformanceDataCallBackMethod);
             }
         }
 

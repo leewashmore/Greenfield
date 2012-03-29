@@ -60,7 +60,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback);
 
-        void RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HoldingsPercentageData>> callback);
+        void RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate,String filterType,String filterValue,Action<List<HoldingsPercentageData>> callback);
+
+        void RetrieveHoldingsPercentageDataForRegion(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback);
 
         void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback);
         
@@ -79,6 +81,8 @@ namespace GreenField.ServiceCaller
         void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
 
         void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
+
+        void RetriveValuesForFilters(String filterType, Action<List<String>> callback);
 
         void RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback);
 

@@ -1233,13 +1233,160 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate,String filterType,String filterValue)
         {
+            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
+
             List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
-            result.Add(new HoldingsPercentageData() { SegmentName = "Segment1", SegmentHoldingsShare = 20 });
-            result.Add(new HoldingsPercentageData() { SegmentName = "Segment2", SegmentHoldingsShare = 10 });
-            result.Add(new HoldingsPercentageData() { SegmentName = "Segment3", SegmentHoldingsShare = 30 });
-            result.Add(new HoldingsPercentageData() { SegmentName = "Segment4", SegmentHoldingsShare = 40 });
+            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+            HoldingsPercentageData entry = new HoldingsPercentageData();
+            ResearchEntities research = new ResearchEntities();
+            holdingData = research.tblHoldingsDatas.ToList();          
+          
+            switch (filterType)
+            {
+                case "Region":
+                  var q = from p in holdingData 
+                          where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
+                          group p by p.GICS_SECTOR_NAME into g                          
+                          select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };          
+
+                          foreach (var a in q)
+                         {
+                           entry = new HoldingsPercentageData();
+                           entry.SegmentName = a.SectorName;
+                           entry.BenchmarkWeight =(Convert.ToDouble(a.BenchmarkSum))*100;
+                           entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                           result.Add(entry);
+                         }
+                    break;
+                case "Country":
+                     var l = from p in holdingData 
+                          where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                          group p by p.GICS_SECTOR_NAME into g                          
+                          select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };          
+
+                          foreach (var a in l)
+                         {
+                           entry = new HoldingsPercentageData();
+                           entry.SegmentName = a.SectorName;
+                           entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                           entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                           result.Add(entry);
+                         }
+                    break;
+                case "Industry":
+                    var m = from p in holdingData 
+                          where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                          group p by p.GICS_SECTOR_NAME into g                          
+                          select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };          
+
+                          foreach (var a in m)
+                         {
+                           entry = new HoldingsPercentageData();
+                           entry.SegmentName = a.SectorName;
+                           entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                           entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                           result.Add(entry);
+                         }
+                    break;
+                case "Sector":
+                     var n = from p in holdingData 
+                          where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                          group p by p.GICS_SUB_INDUSTRY_NAME into g                          
+                          select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };          
+
+                          foreach (var a in n)
+                         {
+                           entry = new HoldingsPercentageData();
+                           entry.SegmentName = a.SectorName;
+                           entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                           entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                           result.Add(entry);
+                         }
+                    break;
+                default:
+                    break;
+            }
+            return result;         
+        }
+
+        [OperationContract]
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        {
+            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
+
+            List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+            HoldingsPercentageData entry = new HoldingsPercentageData();
+            ResearchEntities research = new ResearchEntities();
+            holdingData = research.tblHoldingsDatas.ToList();
+
+            switch (filterType)
+            {
+                case "Region":
+                    var q = from p in holdingData
+                            where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
+                            group p by p.ISO_COUNTRY_CODE into g
+                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+
+                    foreach (var a in q)
+                    {
+                        entry = new HoldingsPercentageData();
+                        entry.SegmentName = a.SectorName;
+                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                        result.Add(entry);
+                    }
+                    break;
+                case "Country":
+                    var l = from p in holdingData
+                            where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+
+                    foreach (var a in l)
+                    {
+                        entry = new HoldingsPercentageData();
+                        entry.SegmentName = a.SectorName;
+                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                        result.Add(entry);
+                    }
+                    break;
+                case "Industry":
+                    var m = from p in holdingData
+                            where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+
+                    foreach (var a in m)
+                    {
+                        entry = new HoldingsPercentageData();
+                        entry.SegmentName = a.SectorName;
+                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                        result.Add(entry);
+                    }
+                    break;
+                case "Sector":
+                    var n = from p in holdingData
+                            where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+
+                    foreach (var a in n)
+                    {
+                        entry = new HoldingsPercentageData();
+                        entry.SegmentName = a.SectorName;
+                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum))*100;
+                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum))*100;
+                        result.Add(entry);
+                    }
+                    break;
+                default:
+                    break;
+            }
             return result;
         }
 
@@ -1247,16 +1394,20 @@ namespace GreenField.Web.Services
         public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 1", Weight = 10.111, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 2", Weight = 1.999, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 3", Weight = 3.99988, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 4", Weight = 1.9909, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 5", Weight = 18.098, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 6", Weight = 19.987, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 7", Weight = 19.0976, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 8", Weight = 15.677, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 9", Weight = 10.3777, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
-            result.Add(new TopBenchmarkSecuritiesData() { IssuerName = "Company 10", Weight = 10.999, MTD = 5, QTD = 6, YTD = 8, PreviousYear = 9, SecondPreviousYear = 7, ThirdPreviousYear = 12 });
+            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+            List<tblHoldingsData> top10HoldingData = new List<tblHoldingsData>();
+            TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
+            ResearchEntities research = new ResearchEntities();
+            holdingData = research.tblHoldingsDatas.ToList();
+            top10HoldingData = (from p in holdingData orderby p.BENCHMARK_WEIGHT descending select p).Take(10).ToList();
+
+            foreach (tblHoldingsData item in top10HoldingData)
+            {
+                entry = new TopBenchmarkSecuritiesData();
+                entry.Weight = Convert.ToDouble(item.BENCHMARK_WEIGHT);
+                entry.IssuerName = item.ISSUE_NAME;
+                result.Add(entry);
+            }
             return result;
         }
 
@@ -1365,108 +1516,34 @@ namespace GreenField.Web.Services
             }
         }
 
-        #region Build2 Services
-
-        /// <summary>
-        /// To Retrieve the Data for the SelectedSecurity in a Portfolio and the Data for the Benchmark assigned to that Portfolio
-        /// </summary>
-        /// <param name="objPortfolioIdentifier">SelectedPortfolio</param>
-        /// <param name="objEntityIdentifier">SelectedSecurity</param>
-        /// <returns></returns>
         [OperationContract]
-        public List<RelativePerformanceData> RetrieveRelativePerformanceData(string objPortfolioIdentifier, string objEntityIdentifier)
+        public List<String> RetrieveValuesForFilters(String filterType)
         {
-            List<RelativePerformanceData> result = new List<RelativePerformanceData>();
-
-            try
-            {
-                result.Add(new RelativePerformanceData()
+            List<String> result = new List<String>();
+            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+            ResearchEntities research = new ResearchEntities();
+            holdingData = research.tblHoldingsDatas.ToList();
+            switch(filterType)
                 {
-                    EntityName = "TATA CONSULTANCY SVCS LTD",
-                    EntityIdentifier = "TCS IN",
-                    QTDReturn = 11.5433,
-                    YTDReturn = 12.2334,
-                    LastYearReturn = 11.5
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "Morgon Stanley Common Index IMI",
-                    EntityIdentifier = "MSCI IMI",
-                    QTDReturn = 13.533,
-                    YTDReturn = 18.987,
-                    LastYearReturn = 11.5567
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "BSE India",
-                    EntityIdentifier = "BSE",
-                    QTDReturn = 16.533,
-                    YTDReturn = 14.987,
-                    LastYearReturn = 19.5567
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "CATCHER TECHNOLOGY CO LTD",
-                    EntityIdentifier = "2472 TT",
-                    QTDReturn = 11.5433,
-                    YTDReturn = 12.2334,
-                    LastYearReturn = 11.5
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "Morgon Stanley Common Index IMI",
-                    EntityIdentifier = "MSCI I",
-                    QTDReturn = 15.533,
-                    YTDReturn = 26.987,
-                    LastYearReturn = 37.5567
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "Indonesia",
-                    EntityIdentifier = "Indn",
-                    QTDReturn = 21.533,
-                    YTDReturn = 24.987,
-                    LastYearReturn = 7.5567
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "PETROBRAS - PETROLEO BRASs",
-                    EntityIdentifier = "PBR/A US",
-                    QTDReturn = 67.5433,
-                    YTDReturn = 16.2334,
-                    LastYearReturn = 24.5
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "Morgon Stanley Common Index USA",
-                    EntityIdentifier = "MSCI US",
-                    QTDReturn = 11.533,
-                    YTDReturn = 42.987,
-                    LastYearReturn = 49.5567
-                });
-
-                result.Add(new RelativePerformanceData()
-                {
-                    EntityName = "Dow Jones",
-                    EntityIdentifier = "DJN",
-                    QTDReturn = 23.533,
-                    YTDReturn = 31.987,
-                    LastYearReturn = 2.5567
-                });
-                return result.Where((r => r.EntityIdentifier == objEntityIdentifier)).ToList();
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+                  case "Region" :
+                        result = (from p in holdingData select p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Distinct().ToList();
+                   break;
+                 case "Country":
+                        result = (from p in holdingData select p.ISO_COUNTRY_CODE.ToString()).Distinct().ToList();
+                   break;         
+                 case "Industry":
+                       result = (from p in holdingData select p.GICS_INDUSTRY_NAME.ToString()).Distinct().ToList();
+                    break;
+                 case "Sector":
+                    result = (from p in holdingData select p.GICS_SECTOR_NAME.ToString()).Distinct().ToList();
+                    break;
+                 default:
+                   break;
+              }
+            return result;       
         }
+
+        #region Build2 Services
 
         /// <summary>
         /// To Retrieve the Data for the PortfolioDetails UI

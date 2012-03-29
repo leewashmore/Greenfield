@@ -438,10 +438,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HoldingsPercentageData>> callback)
+        public void RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType,String filterValue, Action<List<HoldingsPercentageData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveHoldingsPercentageDataAsync(benchmarkSelectionData, effectiveDate);
+            client.RetrieveHoldingsPercentageDataAsync(benchmarkSelectionData, effectiveDate,filterType,filterValue);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
                 if (callback != null)
@@ -537,18 +537,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        #region Build2
-
-        public void RetrieveRelativePerformanceData(string objPortfolioIdentifier, string objEntityIdentifier, Action<List<RelativePerformanceData>> callback)
-        {
-            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
-            client.RetrieveRelativePerformanceDataAsync(objPortfolioIdentifier, objEntityIdentifier);
-            client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
-            {
-                if (callback != null)
-                    callback(e.Result.ToList());
-            };
-        }
+        #region Build2       
 
         public void RetrievePortfolioDetailsData(string objPortfolioIdentifier, Action<List<PortfolioDetailsData>> callback)
         {
@@ -594,6 +583,31 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
+
+        public void RetriveValuesForFilters(String filterType, Action<List<String>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveValuesForFiltersAsync(filterType);
+            client.RetrieveValuesForFiltersCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result);
+            };
+        }
+
+
+
+
+        public void RetrieveHoldingsPercentageDataForRegion(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveHoldingsPercentageDataForRegionAsync(benchmarkSelectionData, effectiveDate, filterType, filterValue);
+            client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    callback(e.Result.ToList());
+            };
+        }
         public void RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
