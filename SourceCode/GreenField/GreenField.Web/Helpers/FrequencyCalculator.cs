@@ -291,7 +291,6 @@ namespace GreenField.Web.Helpers
             DateTime lastDay = new DateTime(year, month, numberOfDays);
             EndDates.Add(lastDay);
             month++;
-
         }
 
         #endregion

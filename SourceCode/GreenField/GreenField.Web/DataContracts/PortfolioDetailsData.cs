@@ -9,88 +9,139 @@ namespace GreenField.Web.DataContracts
     [DataContract]
     public class PortfolioDetailsData
     {
-        [DataMember]
-        public string EntityTicker { get; set; }
+        //#region DataGridColumns
+
+        //[DataMember]
+        //public string EntityTicker { get; set; }
+
+        //[DataMember]
+        //public string EntityName { get; set; }
+
+        //[DataMember]
+        //public string Type { get; set; }
+
+        //[DataMember]
+        //public string Country { get; set; }
+
+        //[DataMember]
+        //public double Shares { get; set; }
+
+        //[DataMember]
+        //public double Price { get; set; }
+
+        //[DataMember]
+        //public string Currency { get; set; }
+
+        //[DataMember]
+        //public double Value { get; set; }
+
+        //[DataMember]
+        //public double TargetPerc { get; set; }
+
+        //[DataMember]
+        //public double PortfolioPerc { get; set; }
+
+        //[DataMember]
+        //public double BenchmarkPerc { get; set; }
+
+        //[DataMember]
+        //public double BetPerc { get; set; }
+
+        //[DataMember]
+        //public double Upside { get; set; }
+
+        //[DataMember]
+        //public double YTDReturn { get; set; }
+
+        //[DataMember]
+        //public decimal MarketCap { get; set; }
+
+        //[DataMember]
+        //public double PE_FWD { get; set; }
+
+        //[DataMember]
+        //public double PE_Fair { get; set; }
+
+        //[DataMember]
+        //public double PBE_FWD { get; set; }
+
+        //[DataMember]
+        //public double PBE_Fair { get; set; }
+
+        //[DataMember]
+        //public double EVEBITDA_FWD { get; set; }
+
+        //[DataMember]
+        //public double EVEBITDA_Fair { get; set; }
+
+        //[DataMember]
+        //public double SalesGrowthCurrentYear { get; set; }
+
+        //[DataMember]
+        //public double SalesGrowthNextYear { get; set; }
+
+        //[DataMember]
+        //public double NetIncomeGrowthCurrentYear { get; set; }
+
+        //[DataMember]
+        //public double NetIncomeGrowthNextYear { get; set; }
+
+        //[DataMember]
+        //public double ROECurrentYear { get; set; }
+
+        //[DataMember]
+        //public double NetDebtEquityCurrentYear { get; set; }
+
+        //[DataMember]
+        //public double FreeFlowCashMarginCurrentYear { get; set; }
+
+        //#endregion
 
         [DataMember]
-        public string EntityName { get; set; }
+        public string AsecSecShortName { get; set; }
 
         [DataMember]
-        public string Type { get; set; }
+        public string IssueName { get; set; }
 
         [DataMember]
-        public string Country { get; set; }
+        public string Ticker { get; set; }
+        [DataMember]
+        public string ProprietaryRegionCode { get; set; }
 
         [DataMember]
-        public double Shares { get; set; }
+        public string IsoCountryCode { get; set; }
 
         [DataMember]
-        public double Price { get; set; }
+        public string SectorName { get; set; }
+        [DataMember]
+        public string IndustryName { get; set; }
 
         [DataMember]
-        public string Currency { get; set; }
+        public string SubIndustryName { get; set; }
 
         [DataMember]
-        public double Value { get; set; }
+        public string SecurityType { get; set; }
 
         [DataMember]
-        public double TargetPerc { get; set; }
+        public decimal BalanceNominal { get; set; }
 
         [DataMember]
-        public double PortfolioPerc { get; set; }
+        public decimal DirtyvaluePC { get; set; }
 
         [DataMember]
-        public double BenchmarkPerc { get; set; }
+        public decimal PortfolioDirtyValuePC { get; set; }
 
         [DataMember]
-        public double BetPerc { get; set; }
+        public decimal AshEmmModelWeight { get; set; }
 
         [DataMember]
-        public double Upside { get; set; }
+        public decimal PortfolioWeight { get; set; }
 
         [DataMember]
-        public double YTDReturn { get; set; }
+        public decimal BenchmarkWeight { get; set; }
 
         [DataMember]
-        public decimal MarketCap { get; set; }
+        public decimal MarketCapUSD { get; set; }
 
-        [DataMember]
-        public double PE_FWD { get; set; }
-
-        [DataMember]
-        public double PE_Fair { get; set; }
-
-        [DataMember]
-        public double PBE_FWD { get; set; }
-
-        [DataMember]
-        public double PBE_Fair { get; set; }
-
-        [DataMember]
-        public double EVEBITDA_FWD { get; set; }
-
-        [DataMember]
-        public double EVEBITDA_Fair { get; set; }
-
-        [DataMember]
-        public double SalesGrowthCurrentYear { get; set; }
-
-        [DataMember]
-        public double SalesGrowthNextYear { get; set; }
-
-        [DataMember]
-        public double NetIncomeGrowthCurrentYear { get; set; }
-
-        [DataMember]
-        public double NetIncomeGrowthNextYear { get; set; }
-
-        [DataMember]
-        public double ROECurrentYear { get; set; }
-
-        [DataMember]
-        public double NetDebtEquityCurrentYear { get; set; }
-
-        [DataMember]
-        public double FreeFlowCashMarginCurrentYear { get; set; }
     }
 }

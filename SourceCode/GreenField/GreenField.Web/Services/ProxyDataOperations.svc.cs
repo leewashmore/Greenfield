@@ -985,20 +985,20 @@ namespace GreenField.Web.Services
             {
                 List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
-
-
-                foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW record in data)
+                if (data != null)
                 {
-                    result.Add(new EntitySelectionData()
+                    foreach (DimensionEntitiesService.GF_SELECTION_BASEVIEW record in data)
                     {
-                        ShortName = record.SHORT_NAME,
-                        LongName = record.LONG_NAME,
-                        InstrumentID = record.INSTRUMENT_ID,
-                        Type = record.TYPE,
-                        SecurityType = record.SECURITY_TYPE
-                    });
+                        result.Add(new EntitySelectionData()
+                        {
+                            ShortName = record.SHORT_NAME,
+                            LongName = record.LONG_NAME,
+                            InstrumentID = record.INSTRUMENT_ID,
+                            Type = record.TYPE,
+                            SecurityType = record.SECURITY_TYPE
+                        });
+                    }
                 }
-
                 return result;
             }
             catch (Exception)
