@@ -161,7 +161,7 @@ namespace GreenField.Gadgets.Views
             //Ignore cells on Column ID column
             if (e.AddedCells[0].Column.DisplayIndex == 0)
                 return;
-            
+
             string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID;
             int? sectorID = null;
             if (e.AddedCells[0].Column.DisplayIndex != this.dgRelativePerformance.Columns.Count - 1)
@@ -174,6 +174,7 @@ namespace GreenField.Gadgets.Views
                 countryID = countryID,
                 sectorID = sectorID
             });            
+ 
         }
 
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

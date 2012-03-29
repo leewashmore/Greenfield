@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewTopDetractor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerikQuickstart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400" >
+
+    <Grid x:Name="LayoutRoot" Background="White">
+            <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <telerik:RadGridView Name="dgTopContributor" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
+                                    CanUserReorderColumns="False" CanUserSelect="False" telerik:StyleManager.Theme="Metro"
+                                    IsReadOnly="True" ScrollMode="Deferred" ShowGroupPanel="False" CanUserSortColumns="False"
+                                    RowIndicatorVisibility="Collapsed" ItemsSource="{Binding TopDetractorInfo}" AlternationCount="2" AlternateRowBackground="Wheat">
+                <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryID}" Width="Auto" HeaderTextAlignment="Center" TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="*" HeaderTextAlignment="Center" TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha}" Width="Auto" HeaderTextAlignment="Center" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto" HeaderTextAlignment="Center" TextAlignment="Right"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Border>
+    </Grid>
+</UserControl>

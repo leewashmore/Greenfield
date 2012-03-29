@@ -55,7 +55,10 @@ namespace GreenField.Common
         public static string HOLDINGS_PIECHART = "Holdings PieChart";
         public static string PORTFOLIO_RISK_RETURNS = "Portfolio Risk Returns";
         public static string TOP_BENCHMARK_SECURITIES = "Top Benchmark Securities";
+        public static string TOP_CONTRIBUTOR = "Top 5 Contributors";
         public static string RELATIVE_PERFORMANCE = "Relative Performance";
+        public static string TOP_DETRACTOR = "Top 5 Detractors";
+        public static string CONTRIBUTOR_DETRACTOR = "All Securities";
     }
 
     public static class EntityTypes
@@ -86,7 +89,6 @@ namespace GreenField.Common
         public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
-
 
     public class RelativePerformanceGridCellData
     {

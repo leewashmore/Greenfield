@@ -124,6 +124,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
+    <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
@@ -132,6 +133,8 @@
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakDown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
+    <Compile Include="ViewModels\ViewModelTopContributor.cs" />
+    <Compile Include="ViewModels\ViewModelTopDetractor.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
@@ -140,6 +143,9 @@
     </Compile>
     <Compile Include="Views\ViewClosingPriceChart.xaml.cs">
       <DependentUpon>ViewClosingPriceChart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewContributorDetractor.xaml.cs">
+      <DependentUpon>ViewContributorDetractor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCustomDateChildWindow.xaml.cs">
       <DependentUpon>ViewCustomDateChildWindow.xaml</DependentUpon>
@@ -168,6 +174,12 @@
     <Compile Include="Views\ViewSecurityOverview.xaml.cs">
       <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewTopContributor.xaml.cs">
+      <DependentUpon>ViewTopContributor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewTopDetractor.xaml.cs">
+      <DependentUpon>ViewTopDetractor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewTopHoldings.xaml.cs">
       <DependentUpon>ViewTopHoldings.xaml</DependentUpon>
     </Compile>
@@ -184,14 +196,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Helpers\RelativePerformanceTooltip.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewClosingPriceChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewContributorDetractor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -228,6 +244,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewSecurityOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTopContributor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewTopDetractor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
