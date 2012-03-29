@@ -50,10 +50,4 @@
 </UserControl>
 
 
-<!--<telerik:GridViewDataColumn x:Name="dgcTicker" Header="Ticker" DataMemberBinding="{Binding Ticker}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-<telerik:GridViewDataColumn x:Name="dgcShares" Header="Shares" DataMemberBinding="{Binding Shares}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-<telerik:GridViewDataColumn x:Name="dgcPrice" Header="Price" DataMemberBinding="{Binding Price}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-<telerik:GridViewDataColumn x:Name="dgcPriceCurrency" Header="Price Currency" DataMemberBinding="{Binding PriceCurrency}" Width="Auto" HeaderTextAlignment="Right"/>
-<telerik:GridViewDataColumn x:Name="dgcFXPriceCurrency" Header="F/X (Price Currency)" DataMemberBinding="{Binding FXPriceCurrency}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-<telerik:GridViewDataColumn x:Name="dgcForeignInclusionFactor" Header="Foreign Inclusion Factor (Free Float Factor)" DataMemberBinding="{Binding ForeignInclusionFactor}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>-->
-                       
+                    

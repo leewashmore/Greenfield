@@ -473,6 +473,30 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand GadgetTopContributorCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetTopContributorCommandMethod);
+            }
+        }
+
+        public ICommand GadgetTopDetractorCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetTopDetractorCommandMethod);
+            }
+        }
+
+        public ICommand GadgetContributorDetractorCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetContributorDetractorCommandMethod);
+            }
+        }
+
         public ICommand GadgetSaveCommand
         {
             get
@@ -990,6 +1014,81 @@ namespace GreenField.App.ViewModel
         }
 
         /// <summary>
+        /// GadgetTopContributorCommand Execution Method - Add Gadget - TOP_CONTRIBUTOR
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetTopContributorCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
+                        (new DashBoardTileViewItemInfo
+                        {
+                            DashBoardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
+                            DashBoardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashBoardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetTopDetractorCommand Execution Method - Add Gadget - TOP_DETRACTOR
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetTopDetractorCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
+                        (new DashBoardTileViewItemInfo
+                        {
+                            DashBoardTileHeader = GadgetNames.TOP_DETRACTOR,
+                            DashBoardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashBoardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetContributorDetractorCommand Execution Method - Add Gadget - CONTRIBUTOR_DETRACTOR
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetContributorDetractorCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
+                        (new DashBoardTileViewItemInfo
+                        {
+                            DashBoardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
+                            DashBoardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashBoardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
         /// GadgetSaveCommand Execution Method - Save Dashboard Preference
         /// </summary>
         /// <param name="param">SenderInfo</param>
@@ -1017,7 +1116,6 @@ namespace GreenField.App.ViewModel
         {
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
         }
-
 
         #endregion
 

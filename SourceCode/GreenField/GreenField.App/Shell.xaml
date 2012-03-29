@@ -216,6 +216,15 @@
                         <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformaceCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/TopContributorImage.png" Text="Top 5 Contributors" Size="Large" Command="{Binding GadgetTopContributorCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/TopDetractorImage.png" Text="Top 5 Detractors" Size="Large" Command="{Binding GadgetTopDetractorCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="../Images/ContributorDetractorImage.png" Text="All Contributors/Detractors" Size="Large" Command="{Binding GadgetContributorDetractorCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
