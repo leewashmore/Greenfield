@@ -55,33 +55,30 @@
         </telerik:RadExpander>
         <Grid Grid.Column="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
+                <!--<ColumnDefinition Width="1*"/>-->
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>                    
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <TextBlock Text="MSCI Standard Region Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding EffectiveDate}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Text="{Binding EffectiveDateString}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadChart x:Name="crtHoldingsPercentageSector"  Visibility="Visible" ItemsSource="{Binding HoldingsPercentageInfo}" 
-                                          telerik:StyleManager.Theme="Metro">
-                            <telerik:RadChart.DefaultSeriesDefinition>
-                                <telerikCharting:DoughnutSeriesDefinition>
-                                    <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                        <telerikCharting:RadialLabelSettings ShowConnectors="True" SpiderModeEnabled="True" />
-                                    </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                </telerikCharting:DoughnutSeriesDefinition>
-                            </telerik:RadChart.DefaultSeriesDefinition>
+                                          telerik:StyleManager.Theme="Metro">                            
                             <telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView>
                                     <telerik:ChartDefaultView.ChartArea>
-                                        <telerik:ChartArea SmartLabelsEnabled="True"/>
+                                        <telerikCharting:ChartArea SmartLabelsEnabled="True"/>
                                     </telerik:ChartDefaultView.ChartArea>
                                     <telerik:ChartDefaultView.ChartLegend>
                                         <telerik:ChartLegend x:Name="crtHoldingsPercentageSectorLegend" Visibility="Collapsed"/>
@@ -92,10 +89,14 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Drop" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})"
+                                                                       ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
                                             <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                                 <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"  />
                                             </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                            <telerik:DoughnutSeriesDefinition.LabelSettings>
+                                                <telerik:RadialLabelSettings Distance="10" ShowConnectors="True" SpiderModeEnabled="True" />
+                                            </telerik:DoughnutSeriesDefinition.LabelSettings>
                                         </telerik:DoughnutSeriesDefinition>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping FieldName="BenchmarkWeight" DataPointMember="YValue" />
@@ -114,14 +115,14 @@
                                      UseLayoutRounding="True"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="0" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <TextBlock Text="MSCI Standard Region Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding EffectiveDate}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Text="{Binding EffectiveDateString}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
@@ -129,7 +130,7 @@
                             <telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView>
                                     <telerik:ChartDefaultView.ChartArea>
-                                        <telerik:ChartArea SmartLabelsEnabled="True"/>
+                                        <telerikCharting:ChartArea SmartLabelsEnabled="True"/>
                                     </telerik:ChartDefaultView.ChartArea>
                                     <telerik:ChartDefaultView.ChartLegend>
                                         <telerik:ChartLegend x:Name="crtHoldingsPercentageRegionLegend" Visibility="Collapsed"/>
@@ -140,10 +141,14 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Drop" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" 
+                                                                          ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})" >
                                             <telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                                <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"/>
+                                                <telerik:InteractivitySettings HoverScope="Item" SelectionScope="Item" SelectionMode="Single"/>
                                             </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                            <telerik:DoughnutSeriesDefinition.LabelSettings>
+                                                <telerik:RadialLabelSettings Distance="10" ShowConnectors="True" SpiderModeEnabled="True" />
+                                            </telerik:DoughnutSeriesDefinition.LabelSettings>
                                         </telerik:DoughnutSeriesDefinition>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping FieldName="BenchmarkWeight" DataPointMember="YValue" />

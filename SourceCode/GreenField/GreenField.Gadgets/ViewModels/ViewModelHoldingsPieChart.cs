@@ -80,10 +80,22 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        public String EffectiveDateString
+        {
+            get
+            {
+                return "as of " + EffectiveDate.ToLongDateString();
+            }
+        }
+
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
-            get { return _effectiveDate; }
+            get 
+            {
+                _effectiveDate = System.DateTime.Now.AddDays(-1);
+                return _effectiveDate; 
+            }
             set
             {
                 _effectiveDate = value;
