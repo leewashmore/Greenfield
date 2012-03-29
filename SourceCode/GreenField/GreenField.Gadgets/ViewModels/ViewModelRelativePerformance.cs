@@ -22,7 +22,7 @@ namespace GreenField.Gadgets.ViewModels
     {
         #region Fields
         //MEF Singletons
-        private IEventAggregator _eventAggregator;
+        public IEventAggregator _eventAggregator;
         public IDBInteractivity _dbInteractivity;
         public ILoggerFacade _logger;
 
