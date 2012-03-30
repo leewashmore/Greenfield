@@ -419,7 +419,7 @@
                         <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
                             <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView ChartLegendPosition="Top" >
+                                <telerik:ChartDefaultView ChartLegendPosition="Top">
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" 
                                                            EnableAnimations="False" NoDataString="No Data Available for the Selected Item in the provided Time-Period" >
@@ -436,7 +436,6 @@
                                                                LayoutMode="Between"  
                                                                Step="5"
                                                                LabelStep="2" DefaultLabelFormat="d"/>
-
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
@@ -449,10 +448,8 @@
                                                              LegendItemMarkerShape="SquareRounded" Header=""
                                                              ItemsPanelOrientation="Horizontal" x:Name="chPricingLegend" />
                                     </telerik:ChartDefaultView.ChartLegend>
-
                                 </telerik:ChartDefaultView>
                             </telerik:RadChart.DefaultView>
-
                             <telerik:RadChart.SeriesMappings>
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
@@ -506,7 +503,6 @@
                                 </telerik:ChartDefaultView>
                             </telerik:RadChart.DefaultView>
                             <telerik:RadChart.SeriesMappings>
-
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
