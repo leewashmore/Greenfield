@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableSessionState="True" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,14 +20,7 @@
             height: 100%;
             text-align: center;
         }
-    </style>
-    <script language="C#" runat="server">
-        void Page_Load(Object Src, EventArgs e)
-        {
-            if (HttpContext.Current.Session["Session"] == null)
-                Response.Redirect("Login.aspx");
-        }        
-    </script>
+    </style>   
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/javascript">
         function onSilverlightError(sender, args) {
