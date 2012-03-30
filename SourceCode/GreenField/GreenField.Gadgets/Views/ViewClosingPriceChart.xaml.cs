@@ -327,19 +327,33 @@ namespace GreenField.Gadgets.Views
 
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
-            this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+            if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
+            {
+                ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
+                        customDateWindow.Show();
+                        customDateWindow.Unloaded += (se, a) =>
+                        {
+                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                            {
+                                DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                                DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
+                            }
+                            else
+                            {
+                                this.cmbTime.SelectedValue = "1-Year";
+                            }
+                            this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                        };                                  
+            }
+            else
+            {
+                this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+            }
         }
 
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            //if (cmbTime.SelectedValue.ToString() == "Custom")
-            //{
-            //    checkCustomAlreadySelected = true;
-            //}
-            //else
-            //{
-            //    checkCustomAlreadySelected = false;
-            //}
+            
         }
 
     }

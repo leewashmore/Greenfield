@@ -142,44 +142,32 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                if (value == "Custom")
+                if ((_selectedTimeRange != value) || (value == "Custom"))
                 {
-                    ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
-                    customDateWindow.Show();
-                    customDateWindow.Unloaded += (se, e) =>
+                    if (value == "Custom")
                     {
-                        if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
-                        {
-                            SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
-                            SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
-                            _selectedTimeRange = value;
+                        _selectedTimeRange = value;
 
-                            //Retrieve Pricing Data for updated Time Range
-                            if (ChartEntityList.Count != 0)
-                            {
-                                RetrievePricingData(ChartEntityList,
-                                        RetrievePricingReferenceDataCallBackMethod_TimeRange);
-                            }
-                            this.RaisePropertyChanged(() => this.SelectedTimeRange);
-                        }
-                        else
+                        //Retrieve Pricing Data for updated Time Range
+                        if (ChartEntityList.Count != 0)
                         {
-                            _selectedTimeRange = "1-Year";
-                            this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                            RetrievePricingData(ChartEntityList,
+                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
                         }
-                    };
-                }
-                else
-                {
-                    _selectedTimeRange = value;
-                    GetPeriod();
-                    //Retrieve Pricing Data for updated Time Range
-                    if (ChartEntityList.Count != 0)
-                    {
-                        RetrievePricingData(ChartEntityList,
-                                RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                        this.RaisePropertyChanged(() => this.SelectedTimeRange);
                     }
-                    this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                    else
+                    {
+                        _selectedTimeRange = value;
+                        GetPeriod();
+                        //Retrieve Pricing Data for updated Time Range
+                        if (ChartEntityList.Count != 0)
+                        {
+                            RetrievePricingData(ChartEntityList,
+                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                        }
+                        this.RaisePropertyChanged(() => this.SelectedTimeRange);
+                    }
                 }
             }
         }
