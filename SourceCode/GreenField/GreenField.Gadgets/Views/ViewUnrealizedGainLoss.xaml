@@ -235,9 +235,13 @@
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}">
                             <telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView ChartLegendPosition="Bottom">
+                                    <telerik:ChartDefaultView.ChartTitle>
+                                        <telerik:ChartTitle Content="{Binding PlottedSecurityName}" FontSize="10" FontFamily="Verdana" FontWeight="ExtraBold">                                            
+                                        </telerik:ChartTitle>
+                                    </telerik:ChartDefaultView.ChartTitle>
                                     <telerik:ChartDefaultView.ChartArea>
                                         <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString="No Data Available">
+                                                           EnableAnimations="False" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings ScrollMode="ScrollOnly" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                             </telerik:ChartArea.ZoomScrollSettingsX>
@@ -256,6 +260,10 @@
                                             <telerik:ChartArea.AdditionalYAxes>
                                                 <telerik:AxisY x:Name="secondaxis" AxisName="Secondary" Title="Unrealized Gain/Loss"  
                                                     AutoRange="True" >
+                                                    <telerik:AxisY.AxisStyles>
+                                                    <telerik:AxisStyles                                                                
+                                                                ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
+                                                    </telerik:AxisY.AxisStyles>
                                                 </telerik:AxisY>
                                             </telerik:ChartArea.AdditionalYAxes>
                                         </telerik:ChartArea>
