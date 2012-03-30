@@ -173,6 +173,7 @@
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,0,2,0">
@@ -182,7 +183,7 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                         <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                     HorizontalAlignment="Stretch"
+                                     HorizontalAlignment="Stretch" 
                                      ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
                     </Grid>
 
@@ -192,9 +193,13 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
-                                      ItemsSource="{Binding FrequencyRange}" SelectedValue="{Binding SelectedFrequencyRange,Mode=TwoWay}">
+                        <telerik:RadComboBox Name="cmbFrequencyInterval" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                                             ItemsSource="{Binding FrequencyRange}" SelectedValue="{Binding SelectedFrequencyRange,Mode=TwoWay}"
+                                             SelectionChanged="cmbFrequencyInterval_SelectionChanged">
                         </telerik:RadComboBox>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,2,2,0">
+                        <TextBlock Name="txtSelectedSecurity" Margin="5,0,0,0" VerticalAlignment="Top" Text="{Binding PlottedSecurityName}"/>
                     </Grid>
                 </Grid>
             </telerik:RadExpander.Content>

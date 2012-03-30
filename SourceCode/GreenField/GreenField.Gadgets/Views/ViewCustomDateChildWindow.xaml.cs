@@ -26,17 +26,17 @@ namespace GreenField.Gadgets.Views
         {
             if (dpStartDate.SelectedDate == null)
             {
-                MessageBox.Show("Please enter a valid start Date");
+                MessageBox.Show("Please enter a valid start Date in MM/DD/YY format");
             }
             else if (dpEndDate.SelectedDate == null)
             {
-                MessageBox.Show("Please enter a valid end Date");
+                MessageBox.Show("Please enter a valid end Date in MM/DD/YY format");
             }
             else
             {
                 if (dpStartDate.SelectedDate > dpEndDate.SelectedDate)
                 {
-                    MessageBox.Show("Start Date cannot be greater then End Date");
+                    MessageBox.Show("Start Date cannot be greater then End Date ");
                 }
                 else
                 {

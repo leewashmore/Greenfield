@@ -265,7 +265,7 @@
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True" HorizontalAlignment="Left"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />
                                     <TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding FundReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"

@@ -751,7 +751,7 @@ namespace GreenField.Web.Services
         /// <param name="chartEntityTypes"></param>
         /// <returns>List of PricingReferenceData</returns>
         [OperationContract]
-        public List<PricingReferenceData> RetrievePricingReferenceData(List<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes)
+        public List<PricingReferenceData> RetrievePricingReferenceData(List<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
         {
             try
             {
@@ -803,7 +803,7 @@ namespace GreenField.Web.Services
                         {
                             PricingReferenceData objPricingReferenceData = new PricingReferenceData();
                             objPricingReferenceData.Type = pricingItem.TYPE;
-                            objPricingReferenceData.Ticker = pricingItem.TICKER;
+                            objPricingReferenceData.Ticker = pricingItem.TICKER + ((totalReturnCheck) ? " (Total)" : "");
                             objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
                             objPricingReferenceData.FromDate = pricingItem.FROMDATE;
                             objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
@@ -855,7 +855,7 @@ namespace GreenField.Web.Services
                                 {
                                     PricingReferenceData objPricingReferenceData = new PricingReferenceData();
                                     objPricingReferenceData.Type = pricingItem.TYPE;
-                                    objPricingReferenceData.Ticker = pricingItem.TICKER;
+                                    objPricingReferenceData.Ticker = pricingItem.TICKER + ((totalReturnCheck) ? " (Total)" : "");
                                     objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
                                     objPricingReferenceData.FromDate = pricingItem.FROMDATE;
                                     objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
@@ -957,7 +957,7 @@ namespace GreenField.Web.Services
                 {
                     foreach (EntitySelectionData item in entityIdentifiers)
                     {
-                        List<PricingReferenceData> individualSeriesResult = RetrievePricingDataAccordingFrequency(pricingDataResult.Where(r => r.InstrumentID == item.InstrumentID).ToList(), allEndDates);
+                        List<PricingReferenceData> individualSeriesResult = RetrievePricingDataAccordingFrequency(pricingDataResult.Where(r => r.InstrumentID == item.InstrumentID).OrderBy(r => r.FromDate).ToList(), allEndDates);
                         result.AddRange(individualSeriesResult);
                     }
 
@@ -976,7 +976,6 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
-
 
         [OperationContract]
         public List<EntitySelectionData> RetrieveEntitySelectionData()
@@ -1573,147 +1572,144 @@ namespace GreenField.Web.Services
             List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
             ResearchEntities research = new ResearchEntities();
             holdingData = research.tblHoldingsDatas.ToList();
-            switch(filterType)
-                {
-                  case "Region" :
-                        result = (from p in holdingData select p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Distinct().ToList();
-                   break;
-                 case "Country":
-                        result = (from p in holdingData select p.ISO_COUNTRY_CODE.ToString()).Distinct().ToList();
-                   break;         
-                 case "Industry":
-                       result = (from p in holdingData select p.GICS_INDUSTRY_NAME.ToString()).Distinct().ToList();
+            switch (filterType)
+            {
+                case "Region":
+                    result = (from p in holdingData select p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Distinct().ToList();
                     break;
-                 case "Sector":
+                case "Country":
+                    result = (from p in holdingData select p.ISO_COUNTRY_CODE.ToString()).Distinct().ToList();
+                    break;
+                case "Industry":
+                    result = (from p in holdingData select p.GICS_INDUSTRY_NAME.ToString()).Distinct().ToList();
+                    break;
+                case "Sector":
                     result = (from p in holdingData select p.GICS_SECTOR_NAME.ToString()).Distinct().ToList();
                     break;
-                 default:
-                   break;
-              }
-            return result;       
+                default:
+                    break;
+            }
+            return result;
         }
-
         #region Build2 Services
 
-        /// <summary>
-        /// To Retrieve the Data for the PortfolioDetails UI
-        /// </summary>
-        /// <param name="objPortfolioIdentifier">Selected Portfolio</param>
-        /// <returns>List of PortfolioDetailsData</returns>
-        [OperationContract]
-        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(string objPortfolioIdentifier)
-        {
-            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
-            try
-            {
-                Random random = new Random();
-                for (int i = 0; i < 5; i++)
-                {
-                    result.Add(new PortfolioDetailsData()
-                    {
-                        EntityTicker = "TCS IN",
-                        EntityName = "TATA CONSULTANCY SVCS LTD",
-                        Type = "Security",
-                        Country = "India",
-                        Shares = 345565,
-                        Price = random.Next(200, 1000),
-                        Currency = "INR",
-                        Value = 0.019995,
-                        TargetPerc = random.Next(10, 30),
-                        PortfolioPerc = random.Next(10, 30),
-                        BenchmarkPerc = random.Next(10, 30),
-                        BetPerc = random.Next(0, 20),
-                        Upside = random.Next(10, 30),
-                        YTDReturn = random.Next(0, 30),
-                        MarketCap = 100000000,
-                        PE_FWD = 0.5,
-                        PE_Fair = 0.7,
-                        PBE_Fair = 0.23,
-                        PBE_FWD = 0.456,
-                        EVEBITDA_FWD = 2344786,
-                        EVEBITDA_Fair = 2277648,
-                        SalesGrowthCurrentYear = 12.34,
-                        SalesGrowthNextYear = 23.56,
-                        NetIncomeGrowthCurrentYear = 17.897,
-                        NetIncomeGrowthNextYear = 19.56,
-                        NetDebtEquityCurrentYear = 21.876,
-                        FreeFlowCashMarginCurrentYear = -18.987
-                    });
-                }
+        ///// </summary>
+        ///// <param name="objPortfolioIdentifier">Selected Portfolio</param>
+        ///// <returns>List of PortfolioDetailsData</returns>
+        //[OperationContract]
+        //public List<PortfolioDetailsData> RetrievePortfolioDetailsData(string objPortfolioIdentifier, DateTime objSelectedDate)
+        //{
+        //    List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+        //    try
+        //    {
+        //        Random random = new Random();
+        //        for (int i = 0; i < 5; i++)
+        //        {
+        //            result.Add(new PortfolioDetailsData()
+        //            {
+        //                EntityTicker = "TCS IN",
+        //                EntityName = "TATA CONSULTANCY SVCS LTD",
+        //                Type = "Security",
+        //                Country = "India",
+        //                Shares = 345565,
+        //                Price = random.Next(200, 1000),
+        //                Currency = "INR",
+        //                Value = 0.019995,
+        //                TargetPerc = random.Next(10, 30),
+        //                PortfolioPerc = random.Next(10, 30),
+        //                BenchmarkPerc = random.Next(10, 30),
+        //                BetPerc = random.Next(0, 20),
+        //                Upside = random.Next(10, 30),
+        //                YTDReturn = random.Next(0, 30),
+        //                MarketCap = 100000000,
+        //                PE_FWD = 0.5,
+        //                PE_Fair = 0.7,
+        //                PBE_Fair = 0.23,
+        //                PBE_FWD = 0.456,
+        //                EVEBITDA_FWD = 2344786,
+        //                EVEBITDA_Fair = 2277648,
+        //                SalesGrowthCurrentYear = 12.34,
+        //                SalesGrowthNextYear = 23.56,
+        //                NetIncomeGrowthCurrentYear = 17.897,
+        //                NetIncomeGrowthNextYear = 19.56,
+        //                NetDebtEquityCurrentYear = 21.876,
+        //                FreeFlowCashMarginCurrentYear = -18.987
+        //            });
+        //        }
 
-                for (int i = 0; i < 5; i++)
-                {
-                    result.Add(new PortfolioDetailsData()
-                    {
-                        EntityTicker = "PBR/A US",
-                        EntityName = "PETROBRAS - PETROLEO BRASs",
-                        Type = "Security",
-                        Country = "USA",
-                        Shares = random.Next(20000, 50000),
-                        Price = random.Next(200, 700),
-                        Currency = "USD",
-                        Value = 1,
-                        TargetPerc = random.Next(10, 30),
-                        PortfolioPerc = random.Next(10, 30),
-                        BenchmarkPerc = random.Next(10, 30),
-                        BetPerc = random.Next(0, 20),
-                        Upside = random.Next(10, 30),
-                        YTDReturn = random.Next(0, 30),
-                        MarketCap = 1000000000,
-                        PE_FWD = 0.5,
-                        PE_Fair = 0.7,
-                        PBE_Fair = 0.23,
-                        PBE_FWD = 0.456,
-                        EVEBITDA_FWD = 2344786,
-                        EVEBITDA_Fair = 2277648,
-                        SalesGrowthCurrentYear = 12.34,
-                        SalesGrowthNextYear = 23.56,
-                        NetIncomeGrowthCurrentYear = 17.897,
-                        NetIncomeGrowthNextYear = 19.56,
-                        NetDebtEquityCurrentYear = 21.876,
-                        FreeFlowCashMarginCurrentYear = -18.987
-                    });
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    result.Add(new PortfolioDetailsData()
-                    {
-                        EntityTicker = "MSCI US",
-                        EntityName = "Morgon Stanley Common Index USA",
-                        Type = "Index",
-                        Country = "USA",
-                        Shares = random.Next(20000, 50000),
-                        Price = random.Next(200, 700),
-                        Currency = "USD",
-                        Value = 1,
-                        TargetPerc = random.Next(10, 30),
-                        PortfolioPerc = random.Next(10, 30),
-                        BenchmarkPerc = random.Next(10, 30),
-                        BetPerc = random.Next(0, 20),
-                        Upside = random.Next(10, 30),
-                        YTDReturn = random.Next(0, 30),
-                        MarketCap = 500000000,
-                        PE_FWD = 0.45,
-                        PE_Fair = 0.17,
-                        PBE_Fair = 0.83,
-                        PBE_FWD = 0.856,
-                        EVEBITDA_FWD = 4344786,
-                        EVEBITDA_Fair = 8277648,
-                        SalesGrowthCurrentYear = 22.34,
-                        SalesGrowthNextYear = 17.56,
-                        NetIncomeGrowthCurrentYear = 9.897,
-                        NetIncomeGrowthNextYear = 2.56,
-                        NetDebtEquityCurrentYear = 8.876,
-                        FreeFlowCashMarginCurrentYear = -9.987
-                    });
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
+        //        for (int i = 0; i < 5; i++)
+        //        {
+        //            result.Add(new PortfolioDetailsData()
+        //            {
+        //                EntityTicker = "PBR/A US",
+        //                EntityName = "PETROBRAS - PETROLEO BRASs",
+        //                Type = "Security",
+        //                Country = "USA",
+        //                Shares = random.Next(20000, 50000),
+        //                Price = random.Next(200, 700),
+        //                Currency = "USD",
+        //                Value = 1,
+        //                TargetPerc = random.Next(10, 30),
+        //                PortfolioPerc = random.Next(10, 30),
+        //                BenchmarkPerc = random.Next(10, 30),
+        //                BetPerc = random.Next(0, 20),
+        //                Upside = random.Next(10, 30),
+        //                YTDReturn = random.Next(0, 30),
+        //                MarketCap = 1000000000,
+        //                PE_FWD = 0.5,
+        //                PE_Fair = 0.7,
+        //                PBE_Fair = 0.23,
+        //                PBE_FWD = 0.456,
+        //                EVEBITDA_FWD = 2344786,
+        //                EVEBITDA_Fair = 2277648,
+        //                SalesGrowthCurrentYear = 12.34,
+        //                SalesGrowthNextYear = 23.56,
+        //                NetIncomeGrowthCurrentYear = 17.897,
+        //                NetIncomeGrowthNextYear = 19.56,
+        //                NetDebtEquityCurrentYear = 21.876,
+        //                FreeFlowCashMarginCurrentYear = -18.987
+        //            });
+        //        }
+        //        for (int i = 0; i < 5; i++)
+        //        {
+        //            result.Add(new PortfolioDetailsData()
+        //            {
+        //                EntityTicker = "MSCI US",
+        //                EntityName = "Morgon Stanley Common Index USA",
+        //                Type = "Index",
+        //                Country = "USA",
+        //                Shares = random.Next(20000, 50000),
+        //                Price = random.Next(200, 700),
+        //                Currency = "USD",
+        //                Value = 1,
+        //                TargetPerc = random.Next(10, 30),
+        //                PortfolioPerc = random.Next(10, 30),
+        //                BenchmarkPerc = random.Next(10, 30),
+        //                BetPerc = random.Next(0, 20),
+        //                Upside = random.Next(10, 30),
+        //                YTDReturn = random.Next(0, 30),
+        //                MarketCap = 500000000,
+        //                PE_FWD = 0.45,
+        //                PE_Fair = 0.17,
+        //                PBE_Fair = 0.83,
+        //                PBE_FWD = 0.856,
+        //                EVEBITDA_FWD = 4344786,
+        //                EVEBITDA_Fair = 8277648,
+        //                SalesGrowthCurrentYear = 22.34,
+        //                SalesGrowthNextYear = 17.56,
+        //                NetIncomeGrowthCurrentYear = 9.897,
+        //                NetIncomeGrowthNextYear = 2.56,
+        //                NetDebtEquityCurrentYear = 8.876,
+        //                FreeFlowCashMarginCurrentYear = -9.987
+        //            });
+        //        }
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
 
         #endregion
 
@@ -1857,9 +1853,9 @@ namespace GreenField.Web.Services
                 int i = 1;
                 bool dateObjectFound = true;
 
-                if (objPricingData.Any(r => r.FromDate == item))
+                if (objPricingData.Any(r => r.FromDate.Date == item.Date))
                 {
-                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item).First());
+                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.Date).First());
                     dateObjectFound = false;
                     continue;
                 }
@@ -1870,10 +1866,10 @@ namespace GreenField.Web.Services
 
                 while (dateObjectFound)
                 {
-                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate == item.AddDays(-i));
+                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
                     if (objDataFoundDec)
                     {
-                        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        resultFrequency.Add(objPricingData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
                         dateObjectFound = false;
                     }
                     else
@@ -1882,7 +1878,7 @@ namespace GreenField.Web.Services
                     }
                 }
             }
-            return resultFrequency;
+            return resultFrequency.Distinct().ToList();
         }
 
         /// <summary>
@@ -1902,9 +1898,9 @@ namespace GreenField.Web.Services
                 int i = 1;
                 bool dateObjectFound = true;
 
-                if (objUnrealizedGainLossData.Any(r => r.FromDate == item))
+                if (objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.Date))
                 {
-                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item).First());
+                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.Date).First());
                     dateObjectFound = false;
                     continue;
                 }
@@ -1915,10 +1911,10 @@ namespace GreenField.Web.Services
 
                 while (dateObjectFound)
                 {
-                    bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate == item.AddDays(-i));
+                    bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
                     if (objDataFoundDec)
                     {
-                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate == item.AddDays(-i)).First());
+                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
                         dateObjectFound = false;
                     }
                     else
@@ -1927,7 +1923,7 @@ namespace GreenField.Web.Services
                     }
                 }
             }
-            return resultFrequency;
+            return resultFrequency.Distinct().ToList();
         }
 
         #endregion
@@ -2005,7 +2001,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
-            
+
 
             DataTable dataTable = new DataTable();
             string query = "Select " + (maxRecords == null ? "*" : "Top " + maxRecords.ToString() + " *") + " From tblHoldingsData ";
@@ -2047,7 +2043,7 @@ namespace GreenField.Web.Services
                     SecuritySectorName = row.Field<string>("GICS_SECTOR_NAME"),
                     SecurityAlpha = alpha++,
                     SecurityActivePosition = (double)
-                    ( row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
+                    (row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
                     - row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100)
                 });
             }
@@ -2093,7 +2089,7 @@ namespace GreenField.Web.Services
                     double? aggPortfolioShare = 0.0;
                     double? aggBenchmarkShare = 0.0;
                     DataTable specificData = GetDataTable("Select * from tblHoldingsData where ISO_COUNTRY_CODE = '" + countryCode + "' and GICS_SECTOR = " + sectorData.SectorID.ToString());
-                    
+
 
                     foreach (DataRow row in specificData.Rows)
                     {

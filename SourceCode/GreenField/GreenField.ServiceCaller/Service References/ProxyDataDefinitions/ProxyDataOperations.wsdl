@@ -178,12 +178,6 @@
   <wsdl:message name="ProxyDataOperations_RetrieveValuesForFilters_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveValuesForFiltersResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrievePortfolioDetailsData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioDetailsData" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrievePortfolioDetailsData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioDetailsDataResponse" />
-  </wsdl:message>
   <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkData" />
   </wsdl:message>
@@ -350,10 +344,6 @@
     <wsdl:operation name="RetrieveValuesForFilters">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFilters" message="tns:ProxyDataOperations_RetrieveValuesForFilters_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFiltersResponse" message="tns:ProxyDataOperations_RetrieveValuesForFilters_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioDetailsData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsData" message="tns:ProxyDataOperations_RetrievePortfolioDetailsData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsDataResponse" message="tns:ProxyDataOperations_RetrievePortfolioDetailsData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage" />
@@ -639,15 +629,6 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveValuesForFilters">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFilters" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioDetailsData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -285,8 +285,9 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                         <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                     HorizontalAlignment="Stretch" 
-                                     ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
+                                             HorizontalAlignment="Stretch" 
+                                             ItemsSource="{Binding TimeRange}" 
+                                             DropDownClosed="cmbTime_DropDownClosed"  />
                     </Grid>
 
                     <Grid Grid.Row="2" Margin="0,2,2,0" Visibility="Collapsed">
@@ -319,7 +320,8 @@
                     </Grid>
 
                     <Grid Grid.Row="4" Margin="0,2,0,0">
-                        <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}"/>
                     </Grid>
 
                     <Grid Grid.Row="5" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
@@ -328,7 +330,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <telerik:RadComboBox Grid.Column="0"  
+                        <telerik:RadComboBox Grid.Column="0"  Name="cmbAddSeries"
                                      ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                      IsEditable="True" telerik:TextSearch.TextPath="ShortName" Width="150"
                                      CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
@@ -336,7 +338,7 @@
                                      Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
                                      SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
                                      ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
-                                     HorizontalAlignment="Right"/>
+                                     HorizontalAlignment="Right" TextSearchMode="Contains" IsTextSearchEnabled="False" />
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
                             <Image Source="../Images/AddToChart.png"/>
@@ -350,18 +352,19 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          IsChecked="{Binding ReturnTypeSelection,Mode=TwoWay}" Grid.Row="0" />
-                        <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" Grid.Row="1"/>
+                          Checked="chkSearchFilter_Checked" Unchecked="chkSearchFilter_Unchecked" Grid.Row="0" Name="chkSearchFilter" />
+                        <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
+                                   Grid.Row="1" HorizontalAlignment="Center" />
                     </Grid>
 
                     <Grid Grid.Row="7" Margin="0,2,0,0">
                         <ItemsControl  HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding ShortName, Mode=TwoWay}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding ShortName, Mode=TwoWay}" HorizontalAlignment="Left" />
                                         <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
-                                        CommandParameter="{Binding}"  Width="20">
+                                        CommandParameter="{Binding}"  Width="20" HorizontalAlignment="Left">
                                             <Image Source="../Images/Delete.png"/>
                                         </Button>
                                     </StackPanel>
@@ -375,31 +378,34 @@
 
         <Grid Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
-                <telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0">
+                    <telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
                                     ItemsSource="{Binding PlottedSeries}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                     SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                     CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
                                     CanUserSortColumns="True" ScrollMode="Deferred" 
                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                     UseLayoutRounding="True" telerik:StyleManager.Theme="Metro">
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"/>
-                        <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"/>
-                        <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"/>
-                        <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"/>
-                        <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"/>
+                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"/>
+                            <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"/>
+                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"/>
+                            <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
                                                     DataFormatString="{}{0:n2}"/>
-                        <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
+                            <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
                                                     DataFormatString="{}{0:n2}"/>
-                        <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}" />
-                        <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
+                            <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}" />
+                            <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
                                                     DataFormatString="{}{0:n2}"/>
-                        <telerik:GridViewDataColumn Header="Dollar Adjusted Price" DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}" />
-                        <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
+                            <telerik:GridViewDataColumn Header="Dollar Adjusted Price" DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}" />
+                            <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
                                                     DataFormatString="{}{0:n2}"/>
-                    </telerik:RadGridView.Columns>
+                        </telerik:RadGridView.Columns>
 
-                </telerik:RadGridView>
+                    </telerik:RadGridView>
+                </telerik:RadBusyIndicator>
             </Grid>
             <Grid x:Name="grdRadChart">
                 <Grid.RowDefinitions>
@@ -416,14 +422,14 @@
                                 <telerik:ChartDefaultView ChartLegendPosition="Top" >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea LegendName="chPricingLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString="No Data Available" >
+                                                           EnableAnimations="False" NoDataString="No Data Available for the Selected Item in the provided Time-Period" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
-                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="0.3" />
+                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
                                             </telerik:ChartArea.ZoomScrollSettingsX>
                                             <telerik:ChartArea.ZoomScrollSettingsY>
-                                                <telerik:ZoomScrollSettings MinZoomRange="0.010" ScrollMode="ScrollOnly"
-                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="0.3"/>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"
+                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                             </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
                                                 <telerik:AxisX AutoRange="True" IsDateTime="True" 
@@ -453,12 +459,12 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return : #Y / Date: #FromDate{d}"/>
+                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
                                             <telerik:GroupingSettings.GroupDescriptors>
-                                                <telerikCharting:ChartGroupDescriptor Member="IssueName"/>
+                                                <telerikCharting:ChartGroupDescriptor Member="Ticker"/>
                                             </telerik:GroupingSettings.GroupDescriptors>
                                         </telerik:GroupingSettings>
                                     </telerik:SeriesMapping.GroupingSettings>
@@ -473,50 +479,53 @@
 
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" x:Name="volumeChartBorder" Margin="0,2,0,0" Grid.Row="1">
-                    <telerik:RadChart x:Name="chVolume" telerik:StyleManager.Theme="Metro" 
+                    <telerik:RadBusyIndicator x:Name="busyIndicatorchartVolume" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0">
+                        <telerik:RadChart x:Name="chVolume" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PrimaryPlottedSeries}" IsHitTestVisible="True">
-                        <telerik:RadChart.DefaultView>
-                            <telerik:ChartDefaultView >
-                                <telerik:ChartDefaultView.ChartArea>
-                                    <telerik:ChartArea SmartLabelsEnabled="True" 
-                                                       EnableAnimations="False">
-                                        <telerik:ChartArea.ZoomScrollSettingsX>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"/>
-                                        </telerik:ChartArea.ZoomScrollSettingsX>
-                                        <telerik:ChartArea.ZoomScrollSettingsY>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0.10" ScrollMode="ScrollOnly"/>
-                                        </telerik:ChartArea.ZoomScrollSettingsY>
-                                        <telerik:ChartArea.AxisX>
-                                            <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="d" 
+                            <telerik:RadChart.DefaultView>
+                                <telerik:ChartDefaultView >
+                                    <telerik:ChartDefaultView.ChartArea>
+                                        <telerik:ChartArea SmartLabelsEnabled="True" 
+                                                       EnableAnimations="False" NoDataString="No Data Available for the Selected Item in the provided Time-Period">
+                                            <telerik:ChartArea.ZoomScrollSettingsX>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"/>
+                                            </telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ChartArea.ZoomScrollSettingsY>
+                                                <telerik:ZoomScrollSettings MinZoomRange="0.10" ScrollMode="ScrollOnly"/>
+                                            </telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ChartArea.AxisX>
+                                                <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="d" 
                                                            LayoutMode="Between" LabelStep="2" />
-                                        </telerik:ChartArea.AxisX>
-                                        <telerik:ChartArea.AxisY>
-                                            <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
-                                        </telerik:ChartArea.AxisY>
-                                    </telerik:ChartArea>
-                                </telerik:ChartDefaultView.ChartArea>
-                            </telerik:ChartDefaultView>
-                        </telerik:RadChart.DefaultView>
-                        <telerik:RadChart.SeriesMappings>
+                                            </telerik:ChartArea.AxisX>
+                                            <telerik:ChartArea.AxisY>
+                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
+                                            </telerik:ChartArea.AxisY>
+                                        </telerik:ChartArea>
+                                    </telerik:ChartDefaultView.ChartArea>
+                                </telerik:ChartDefaultView>
+                            </telerik:RadChart.DefaultView>
+                            <telerik:RadChart.SeriesMappings>
 
-                            <telerik:SeriesMapping>
-                                <telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
-                                                                 ItemToolTipFormat="Volume: #Volume /Date: #FromDate{d}" />
-                                </telerik:SeriesMapping.SeriesDefinition>
-                                <telerik:SeriesMapping.GroupingSettings>
-                                    <telerik:GroupingSettings>
-                                        <telerik:GroupingSettings.GroupDescriptors>
-                                            <telerikCharting:ChartGroupDescriptor Member="IssueName"/>
-                                        </telerik:GroupingSettings.GroupDescriptors>
-                                    </telerik:GroupingSettings>
-                                </telerik:SeriesMapping.GroupingSettings>
-                                <telerik:ItemMapping FieldName="Volume" DataPointMember="YValue" />
-                                <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
-                                <!--<telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>-->
-                            </telerik:SeriesMapping>
-                        </telerik:RadChart.SeriesMappings>
-                    </telerik:RadChart>
+                                <telerik:SeriesMapping>
+                                    <telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
+                                                                 ItemToolTipFormat="Volume: #Y /Date: #X{dd-MMM-yyyy}" />
+                                    </telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:SeriesMapping.GroupingSettings>
+                                        <telerik:GroupingSettings>
+                                            <telerik:GroupingSettings.GroupDescriptors>
+                                                <telerikCharting:ChartGroupDescriptor Member="IssueName"/>
+                                            </telerik:GroupingSettings.GroupDescriptors>
+                                        </telerik:GroupingSettings>
+                                    </telerik:SeriesMapping.GroupingSettings>
+                                    <telerik:ItemMapping FieldName="Volume" DataPointMember="YValue" />
+                                    <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue" />
+                                    <!--<telerik:ItemMapping FieldName="Volume" DataPointMember="Tooltip"/>-->
+                                </telerik:SeriesMapping>
+                            </telerik:RadChart.SeriesMappings>
+                        </telerik:RadChart>
+                    </telerik:RadBusyIndicator>
                 </Border>
             </Grid>
         </Grid>

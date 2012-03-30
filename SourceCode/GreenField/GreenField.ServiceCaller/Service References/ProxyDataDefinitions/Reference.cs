@@ -8876,441 +8876,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PortfolioDetailsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class PortfolioDetailsData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private double BenchmarkPercField;
-        
-        private double BetPercField;
-        
-        private string CountryField;
-        
-        private string CurrencyField;
-        
-        private double EVEBITDA_FWDField;
-        
-        private double EVEBITDA_FairField;
-        
-        private string EntityNameField;
-        
-        private string EntityTickerField;
-        
-        private double FreeFlowCashMarginCurrentYearField;
-        
-        private decimal MarketCapField;
-        
-        private double NetDebtEquityCurrentYearField;
-        
-        private double NetIncomeGrowthCurrentYearField;
-        
-        private double NetIncomeGrowthNextYearField;
-        
-        private double PBE_FWDField;
-        
-        private double PBE_FairField;
-        
-        private double PE_FWDField;
-        
-        private double PE_FairField;
-        
-        private double PortfolioPercField;
-        
-        private double PriceField;
-        
-        private double ROECurrentYearField;
-        
-        private double SalesGrowthCurrentYearField;
-        
-        private double SalesGrowthNextYearField;
-        
-        private double SharesField;
-        
-        private double TargetPercField;
-        
-        private string TypeField;
-        
-        private double UpsideField;
-        
-        private double ValueField;
-        
-        private double YTDReturnField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkPerc {
-            get {
-                return this.BenchmarkPercField;
-            }
-            set {
-                if ((this.BenchmarkPercField.Equals(value) != true)) {
-                    this.BenchmarkPercField = value;
-                    this.RaisePropertyChanged("BenchmarkPerc");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BetPerc {
-            get {
-                return this.BetPercField;
-            }
-            set {
-                if ((this.BetPercField.Equals(value) != true)) {
-                    this.BetPercField = value;
-                    this.RaisePropertyChanged("BetPerc");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Currency {
-            get {
-                return this.CurrencyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
-                    this.CurrencyField = value;
-                    this.RaisePropertyChanged("Currency");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double EVEBITDA_FWD {
-            get {
-                return this.EVEBITDA_FWDField;
-            }
-            set {
-                if ((this.EVEBITDA_FWDField.Equals(value) != true)) {
-                    this.EVEBITDA_FWDField = value;
-                    this.RaisePropertyChanged("EVEBITDA_FWD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double EVEBITDA_Fair {
-            get {
-                return this.EVEBITDA_FairField;
-            }
-            set {
-                if ((this.EVEBITDA_FairField.Equals(value) != true)) {
-                    this.EVEBITDA_FairField = value;
-                    this.RaisePropertyChanged("EVEBITDA_Fair");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EntityName {
-            get {
-                return this.EntityNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EntityNameField, value) != true)) {
-                    this.EntityNameField = value;
-                    this.RaisePropertyChanged("EntityName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EntityTicker {
-            get {
-                return this.EntityTickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EntityTickerField, value) != true)) {
-                    this.EntityTickerField = value;
-                    this.RaisePropertyChanged("EntityTicker");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FreeFlowCashMarginCurrentYear {
-            get {
-                return this.FreeFlowCashMarginCurrentYearField;
-            }
-            set {
-                if ((this.FreeFlowCashMarginCurrentYearField.Equals(value) != true)) {
-                    this.FreeFlowCashMarginCurrentYearField = value;
-                    this.RaisePropertyChanged("FreeFlowCashMarginCurrentYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal MarketCap {
-            get {
-                return this.MarketCapField;
-            }
-            set {
-                if ((this.MarketCapField.Equals(value) != true)) {
-                    this.MarketCapField = value;
-                    this.RaisePropertyChanged("MarketCap");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double NetDebtEquityCurrentYear {
-            get {
-                return this.NetDebtEquityCurrentYearField;
-            }
-            set {
-                if ((this.NetDebtEquityCurrentYearField.Equals(value) != true)) {
-                    this.NetDebtEquityCurrentYearField = value;
-                    this.RaisePropertyChanged("NetDebtEquityCurrentYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double NetIncomeGrowthCurrentYear {
-            get {
-                return this.NetIncomeGrowthCurrentYearField;
-            }
-            set {
-                if ((this.NetIncomeGrowthCurrentYearField.Equals(value) != true)) {
-                    this.NetIncomeGrowthCurrentYearField = value;
-                    this.RaisePropertyChanged("NetIncomeGrowthCurrentYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double NetIncomeGrowthNextYear {
-            get {
-                return this.NetIncomeGrowthNextYearField;
-            }
-            set {
-                if ((this.NetIncomeGrowthNextYearField.Equals(value) != true)) {
-                    this.NetIncomeGrowthNextYearField = value;
-                    this.RaisePropertyChanged("NetIncomeGrowthNextYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PBE_FWD {
-            get {
-                return this.PBE_FWDField;
-            }
-            set {
-                if ((this.PBE_FWDField.Equals(value) != true)) {
-                    this.PBE_FWDField = value;
-                    this.RaisePropertyChanged("PBE_FWD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PBE_Fair {
-            get {
-                return this.PBE_FairField;
-            }
-            set {
-                if ((this.PBE_FairField.Equals(value) != true)) {
-                    this.PBE_FairField = value;
-                    this.RaisePropertyChanged("PBE_Fair");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PE_FWD {
-            get {
-                return this.PE_FWDField;
-            }
-            set {
-                if ((this.PE_FWDField.Equals(value) != true)) {
-                    this.PE_FWDField = value;
-                    this.RaisePropertyChanged("PE_FWD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PE_Fair {
-            get {
-                return this.PE_FairField;
-            }
-            set {
-                if ((this.PE_FairField.Equals(value) != true)) {
-                    this.PE_FairField = value;
-                    this.RaisePropertyChanged("PE_Fair");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioPerc {
-            get {
-                return this.PortfolioPercField;
-            }
-            set {
-                if ((this.PortfolioPercField.Equals(value) != true)) {
-                    this.PortfolioPercField = value;
-                    this.RaisePropertyChanged("PortfolioPerc");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Price {
-            get {
-                return this.PriceField;
-            }
-            set {
-                if ((this.PriceField.Equals(value) != true)) {
-                    this.PriceField = value;
-                    this.RaisePropertyChanged("Price");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ROECurrentYear {
-            get {
-                return this.ROECurrentYearField;
-            }
-            set {
-                if ((this.ROECurrentYearField.Equals(value) != true)) {
-                    this.ROECurrentYearField = value;
-                    this.RaisePropertyChanged("ROECurrentYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double SalesGrowthCurrentYear {
-            get {
-                return this.SalesGrowthCurrentYearField;
-            }
-            set {
-                if ((this.SalesGrowthCurrentYearField.Equals(value) != true)) {
-                    this.SalesGrowthCurrentYearField = value;
-                    this.RaisePropertyChanged("SalesGrowthCurrentYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double SalesGrowthNextYear {
-            get {
-                return this.SalesGrowthNextYearField;
-            }
-            set {
-                if ((this.SalesGrowthNextYearField.Equals(value) != true)) {
-                    this.SalesGrowthNextYearField = value;
-                    this.RaisePropertyChanged("SalesGrowthNextYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Shares {
-            get {
-                return this.SharesField;
-            }
-            set {
-                if ((this.SharesField.Equals(value) != true)) {
-                    this.SharesField = value;
-                    this.RaisePropertyChanged("Shares");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double TargetPerc {
-            get {
-                return this.TargetPercField;
-            }
-            set {
-                if ((this.TargetPercField.Equals(value) != true)) {
-                    this.TargetPercField = value;
-                    this.RaisePropertyChanged("TargetPerc");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Upside {
-            get {
-                return this.UpsideField;
-            }
-            set {
-                if ((this.UpsideField.Equals(value) != true)) {
-                    this.UpsideField = value;
-                    this.RaisePropertyChanged("Upside");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Value {
-            get {
-                return this.ValueField;
-            }
-            set {
-                if ((this.ValueField.Equals(value) != true)) {
-                    this.ValueField = value;
-                    this.RaisePropertyChanged("Value");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double YTDReturn {
-            get {
-                return this.YTDReturnField;
-            }
-            set {
-                if ((this.YTDReturnField.Equals(value) != true)) {
-                    this.YTDReturnField = value;
-                    this.RaisePropertyChanged("YTDReturn");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MorningSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MorningSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -9874,7 +9439,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrievePricingReferenceDataResponse")]
-        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result);
         
@@ -9954,11 +9519,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.IAsyncResult BeginRetrieveValuesForFilters(string filterType, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<string> EndRetrieveValuesForFilters(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioDetailsDataResponse")]
-        System.IAsyncResult BeginRetrievePortfolioDetailsData(string objPortfolioIdentifier, System.AsyncCallback callback, object asyncState);
-        
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> EndRetrievePortfolioDetailsData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkDataRespons" +
             "e")]
@@ -10548,25 +10108,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrievePortfolioDetailsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RetrievePortfolioDetailsDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveUserPreferenceBenchmarkDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -10908,12 +10449,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveValuesForFiltersCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrievePortfolioDetailsDataDelegate;
-        
-        private EndOperationDelegate onEndRetrievePortfolioDetailsDataDelegate;
-        
-        private System.Threading.SendOrPostCallback onRetrievePortfolioDetailsDataCompletedDelegate;
-        
         private BeginOperationDelegate onBeginRetrieveUserPreferenceBenchmarkDataDelegate;
         
         private EndOperationDelegate onEndRetrieveUserPreferenceBenchmarkDataDelegate;
@@ -11076,8 +10611,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         public event System.EventHandler<RetrieveUnrealizedGainLossDataCompletedEventArgs> RetrieveUnrealizedGainLossDataCompleted;
         
         public event System.EventHandler<RetrieveValuesForFiltersCompletedEventArgs> RetrieveValuesForFiltersCompleted;
-        
-        public event System.EventHandler<RetrievePortfolioDetailsDataCompletedEventArgs> RetrievePortfolioDetailsDataCompleted;
         
         public event System.EventHandler<RetrieveUserPreferenceBenchmarkDataCompletedEventArgs> RetrieveUserPreferenceBenchmarkDataCompleted;
         
@@ -11652,8 +11185,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, chartEntityTypes, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -11667,8 +11200,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
             bool totalReturnCheck = ((bool)(inValues[3]));
             string frequencyDuration = ((string)(inValues[4]));
-            bool chartEntityTypes = ((bool)(inValues[5]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, chartEntityTypes, callback, asyncState);
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, callback, asyncState);
         }
         
         private object[] OnEndRetrievePricingReferenceData(System.IAsyncResult result) {
@@ -11684,11 +11216,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             }
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes) {
-            this.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, chartEntityTypes, null);
+        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration) {
+            this.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, null);
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, object userState) {
+        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, object userState) {
             if ((this.onBeginRetrievePricingReferenceDataDelegate == null)) {
                 this.onBeginRetrievePricingReferenceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePricingReferenceData);
             }
@@ -11703,8 +11235,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                         startDateTime,
                         endDateTime,
                         totalReturnCheck,
-                        frequencyDuration,
-                        chartEntityTypes}, this.onEndRetrievePricingReferenceDataDelegate, this.onRetrievePricingReferenceDataCompletedDelegate, userState);
+                        frequencyDuration}, this.onEndRetrievePricingReferenceDataDelegate, this.onRetrievePricingReferenceDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -12438,52 +11969,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrievePortfolioDetailsData(string objPortfolioIdentifier, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrievePortfolioDetailsData(System.IAsyncResult result) {
-            return base.Channel.EndRetrievePortfolioDetailsData(result);
-        }
-        
-        private System.IAsyncResult OnBeginRetrievePortfolioDetailsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string objPortfolioIdentifier = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, callback, asyncState);
-        }
-        
-        private object[] OnEndRetrievePortfolioDetailsData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrievePortfolioDetailsData(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRetrievePortfolioDetailsDataCompleted(object state) {
-            if ((this.RetrievePortfolioDetailsDataCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrievePortfolioDetailsDataCompleted(this, new RetrievePortfolioDetailsDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RetrievePortfolioDetailsDataAsync(string objPortfolioIdentifier) {
-            this.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, null);
-        }
-        
-        public void RetrievePortfolioDetailsDataAsync(string objPortfolioIdentifier, object userState) {
-            if ((this.onBeginRetrievePortfolioDetailsDataDelegate == null)) {
-                this.onBeginRetrievePortfolioDetailsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePortfolioDetailsData);
-            }
-            if ((this.onEndRetrievePortfolioDetailsDataDelegate == null)) {
-                this.onEndRetrievePortfolioDetailsDataDelegate = new EndOperationDelegate(this.OnEndRetrievePortfolioDetailsData);
-            }
-            if ((this.onRetrievePortfolioDetailsDataCompletedDelegate == null)) {
-                this.onRetrievePortfolioDetailsDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePortfolioDetailsDataCompleted);
-            }
-            base.InvokeAsync(this.onBeginRetrievePortfolioDetailsDataDelegate, new object[] {
-                        objPortfolioIdentifier}, this.onEndRetrievePortfolioDetailsDataDelegate, this.onRetrievePortfolioDetailsDataCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUserPreferenceBenchmarkData(string userName, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveUserPreferenceBenchmarkData(userName, callback, asyncState);
         }
@@ -13156,14 +12641,13 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, bool chartEntityTypes, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[6];
+            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = entityIdentifiers;
                 _args[1] = startDateTime;
                 _args[2] = endDateTime;
                 _args[3] = totalReturnCheck;
                 _args[4] = frequencyDuration;
-                _args[5] = chartEntityTypes;
                 System.IAsyncResult _result = base.BeginInvoke("RetrievePricingReferenceData", _args, callback, asyncState);
                 return _result;
             }
@@ -13386,19 +12870,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             public System.Collections.Generic.List<string> EndRetrieveValuesForFilters(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<string> _result = ((System.Collections.Generic.List<string>)(base.EndInvoke("RetrieveValuesForFilters", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginRetrievePortfolioDetailsData(string objPortfolioIdentifier, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = objPortfolioIdentifier;
-                System.IAsyncResult _result = base.BeginInvoke("RetrievePortfolioDetailsData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> EndRetrievePortfolioDetailsData(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData>)(base.EndInvoke("RetrievePortfolioDetailsData", _args, result)));
                 return _result;
             }
             

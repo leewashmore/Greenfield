@@ -14,5 +14,7 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public string Category { get; set; }
+
+        
     }
 }

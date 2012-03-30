@@ -169,7 +169,6 @@ namespace GreenField.Web.Helpers
                 default:
                     {
                         return objEndDates;
-                        break;
                     }
             }
 
@@ -218,7 +217,7 @@ namespace GreenField.Web.Helpers
         private static void GetEndDatesForEachWeek(DateTime endDay, int totalWeeks, ref List<DateTime> EndDates)
         {
 
-            for (int i = 1; i <= totalWeeks; i++)
+            for (int i = 0; i <= totalWeeks; i++)
             {
                 DateTime lastDaysAllWeek = endDay.AddDays(7 * i);
                 EndDates.Add(lastDaysAllWeek);

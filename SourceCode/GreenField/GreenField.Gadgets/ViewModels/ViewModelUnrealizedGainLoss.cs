@@ -17,7 +17,7 @@ using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels
-{   
+{
     /// <summary>
     /// Class that provides the interaction of the view model with the Service caller and the View.
     /// </summary>
@@ -93,6 +93,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private string _selectedSecurityName = "";
+        public string PlottedSecurityName
+        {
+            get
+            {
+                return _selectedSecurityName;
+            }
+            set
+            {
+                _selectedSecurityName = value;
+                this.RaisePropertyChanged(() => this.PlottedSecurityName);
+            }
+        }
+
+
         #region Time Period Selection and Frequency Selection
         /// <summary>
         /// Collection of Time Range options
@@ -102,7 +117,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months", "9-Months", "1-Year", "2-Years", 
+                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months","YTD", "9-Months", "1-Year", "2-Years", 
                     "3-Years"};
             }
         }
@@ -204,37 +219,37 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">List containing the Entity Selection Data</param>
         private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
-              string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                Logging.LogBeginMethod(_logger, methodNamespace);
-                try
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
                 {
-                    if (result != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    SeriesReference = new CollectionViewSource();
+                    SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
+                    SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("EntityCategory"));
+                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
                     {
-                        Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                        SeriesReference = new CollectionViewSource();
-                        SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
-                        SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("EntityCategory"));
-                        SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                        {
-                            PropertyName = "EntityCategory",
-                            Direction = System.ComponentModel.ListSortDirection.Ascending
-                        });
-                        SeriesReference.Source = SeriesReferenceSource;
+                        PropertyName = "EntityCategory",
+                        Direction = System.ComponentModel.ListSortDirection.Ascending
+                    });
+                    SeriesReference.Source = SeriesReferenceSource;
 
-                    }
-                    else
-                    {
-                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                    Logging.LogException(_logger, ex);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                
-                Logging.LogEndMethod(_logger, methodNamespace);
-            }         
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         /// <summary>
         /// Method that calls the service Method through a call to Service Caller
         /// </summary>
@@ -256,12 +271,12 @@ namespace GreenField.Gadgets.ViewModels
                         DateTime periodEndDate;
                         GetPeriod(out periodStartDate, out periodEndDate);
                         if (null != unrealizedGainLossDataLoadedEvent)
-                unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate,SelectedFrequencyRange,callback);
+                            unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
                     }
                     else
                     {
-                        Logging.LogMethodParameterNull(_logger, methodNamespace, 2);                       
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 2);
                     }
                 }
                 else
@@ -274,8 +289,8 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);             
-            
+            Logging.LogEndMethod(_logger, methodNamespace);
+
         }
         /// <summary>
         ///Method that calculates the Start Date and End Date time  
@@ -301,6 +316,9 @@ namespace GreenField.Gadgets.ViewModels
                     break;
                 case "9-Months":
                     startDate = endDate.AddMonths(-9);
+                    break;
+                case "YTD":
+                    startDate = new DateTime(DateTime.Today.Year, 1, 1);
                     break;
                 case "1-Year":
                     startDate = endDate.AddMonths(-12);
@@ -428,15 +446,15 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
 
-           string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                      Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                     _entitySelectionData = entitySelectionData;
-                      RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod); 
+                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
+                    _entitySelectionData = entitySelectionData;
+                    RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
                 }
                 else
                 {
@@ -448,8 +466,8 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);  
-        }       
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
         #endregion
 
@@ -469,8 +487,10 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
+                    if (result.Count != 0)
+                        PlottedSecurityName = result[0].IssueName.ToString();
                     if (null != unrealizedGainLossDataLoadedEvent)
-                unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                        unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
@@ -478,13 +498,13 @@ namespace GreenField.Gadgets.ViewModels
                     unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
-            
+
             catch (Exception ex)
-            { 
+            {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-             Logging.LogEndMethod(_logger, methodNamespace);  
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
@@ -493,7 +513,7 @@ namespace GreenField.Gadgets.ViewModels
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
-       
+
         #endregion
     }
 }

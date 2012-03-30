@@ -105,7 +105,7 @@ namespace GreenField.Web.DataContracts
 
         //[DataMember]
         //public string Ticker { get; set; }
-        //[DataMember]
+
         //public string ProprietaryRegionCode { get; set; }
 
         //[DataMember]
@@ -113,7 +113,7 @@ namespace GreenField.Web.DataContracts
 
         //[DataMember]
         //public string SectorName { get; set; }
-        //[DataMember]
+
         //public string IndustryName { get; set; }
 
         //[DataMember]

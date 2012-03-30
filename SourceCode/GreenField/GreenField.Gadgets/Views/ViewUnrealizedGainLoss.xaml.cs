@@ -36,8 +36,9 @@ namespace GreenField.Gadgets.Views
                 new DataRetrievalProgressIndicator(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
             this.chUnrealizedGainLoss.DataBound += dataContextSource.ChartDataBound;
-            this.grdRadChart.Visibility = Visibility.Collapsed;
-            this.grdRadGridView.Visibility = Visibility.Visible;
+            this.grdRadChart.Visibility = Visibility.Visible;
+            this.grdRadGridView.Visibility = Visibility.Collapsed;
+            ApplyChartStyles();
         }
 
         /// <summary>
@@ -45,7 +46,6 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void ApplyChartStyles()
         {
-            dgUnrealizedGainLoss.Visibility = Visibility.Collapsed;
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
@@ -107,6 +107,56 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private void cmbFrequencyInterval_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            switch (cmbFrequencyInterval.SelectedValue.ToString())
+            {
+                case ("Daily"):
+                    {
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.Step = 5;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        break;
+                    }
+                case ("Weekly"):
+                    {
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.Step = 7;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
+                        break;
+                    }
+                case ("Monthly"):
+                    {
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        break;
+                    }
+                case ("Yearly"):
+                    {
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        break;
+                    }
+                default:
+                    {
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        break;
+                    }
+            }
+        }
     }
 }

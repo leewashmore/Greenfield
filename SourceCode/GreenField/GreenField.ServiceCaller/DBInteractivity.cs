@@ -325,8 +325,15 @@ namespace GreenField.ServiceCaller
             client.RetrieveEntitySelectionDataAsync();
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    callback(e.Result.ToList());
+                if (e.Result != null)
+                {
+                    if (callback != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
@@ -361,14 +368,32 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, bool chartEntityTypes, Action<List<PricingReferenceData>> callback)
+        /// <summary>
+        /// Service Caller Method for Closing Price Chart
+        /// </summary>
+        /// <param name="entityIdentifiers"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <param name="totalReturnCheck"></param>
+        /// <param name="frequencyInterval"></param>
+        /// <param name="chartEntityTypes"></param>
+        /// <param name="callback"></param>
+        public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval, chartEntityTypes);
+            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    callback(e.Result.ToList());
+
+                if (e.Result != null)
+                {
+                    if (callback != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
@@ -537,21 +562,31 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        #region Build2       
+        //#region Build2
 
-        public void RetrievePortfolioDetailsData(string objPortfolioIdentifier, Action<List<PortfolioDetailsData>> callback)
-        {
-            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
-            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier);
-            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
-            {
-                if (callback != null)
-                    callback(e.Result.ToList());
-            };
-        }
+        //public void RetrieveRelativePerformanceData(string objPortfolioIdentifier, string objEntityIdentifier, Action<List<RelativePerformanceData>> callback)
+        //{
+        //    ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+        //    client.RetrieveRelativePerformanceDataAsync(objPortfolioIdentifier, objEntityIdentifier);
+        //    client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
+        //    {
+        //        if (callback != null)
+        //            callback(e.Result.ToList());
+        //    };
+        //}
 
-        #endregion
+        ////public void RetrievePortfolioDetailsData(string objPortfolioIdentifier, Action<List<PortfolioDetailsData>> callback)
+        ////{
+        ////    ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+        ////    client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier);
+        ////    client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
+        ////    {
+        ////        if (callback != null)
+        ////            callback(e.Result.ToList());
+        ////    };
+        ////}
 
+        //#endregion
 
         #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
 

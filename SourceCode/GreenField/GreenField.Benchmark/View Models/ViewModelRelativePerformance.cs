@@ -28,79 +28,79 @@ namespace GreenField.Benchmark.ViewModels
     [Export]
     public class ViewModelRelativePerformance : NotificationObject
     {
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private IEventAggregator _eventAggregator;
-        private RelativePerformanceData _relativePerformanceData;
-        private EntitySelectionData _entitySelectionData;
+        //private IDBInteractivity _dbInteractivity;
+        //private ILoggerFacade _logger;
+        //private IEventAggregator _eventAggregator;
+        //private RelativePerformanceData _relativePerformanceData;
+        //private EntitySelectionData _entitySelectionData;
 
-        [ImportingConstructor]
-        public ViewModelRelativePerformance(IDBInteractivity dbInteractivity, ILoggerFacade logger,IEventAggregator eventAggregator)
-        {
-            _eventAggregator = eventAggregator;
-            _dbInteractivity = dbInteractivity;
-            _logger = logger;
-            //_dbInteractivity.RetrieveRelativePerformanceData("Dummy Security Name", RetrieveRelativePerformanceDataCallBackMethod);
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
-            if (_entitySelectionData != null)
-                HandleSecurityReferenceSet(_entitySelectionData);
-        }
+        //[ImportingConstructor]
+        //public ViewModelRelativePerformance(IDBInteractivity dbInteractivity, ILoggerFacade logger,IEventAggregator eventAggregator)
+        //{
+        //    _eventAggregator = eventAggregator;
+        //    _dbInteractivity = dbInteractivity;
+        //    _logger = logger;
+        //    //_dbInteractivity.RetrieveRelativePerformanceData("Dummy Security Name", RetrieveRelativePerformanceDataCallBackMethod);
+        //    _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
+        //    if (_entitySelectionData != null)
+        //        HandleSecurityReferenceSet(_entitySelectionData);
+        //}
 
-        #region PropertyDeclaration
+        //#region PropertyDeclaration
 
-        private RangeObservableCollection<RelativePerformanceData> _entityRelativePerformanceData =
-            new RangeObservableCollection<RelativePerformanceData>();
+        //private RangeObservableCollection<RelativePerformanceData> _entityRelativePerformanceData =
+        //    new RangeObservableCollection<RelativePerformanceData>();
 
-        public RangeObservableCollection<RelativePerformanceData> EntityRelativePerformanceData
-        {
-            get
-            {
-                return _entityRelativePerformanceData;
-            }
-            set
-            {
-                _entityRelativePerformanceData = value;
-                this.RaisePropertyChanged(() => this.EntityRelativePerformanceData);
-            }
-        }
+        //public RangeObservableCollection<RelativePerformanceData> EntityRelativePerformanceData
+        //{
+        //    get
+        //    {
+        //        return _entityRelativePerformanceData;
+        //    }
+        //    set
+        //    {
+        //        _entityRelativePerformanceData = value;
+        //        this.RaisePropertyChanged(() => this.EntityRelativePerformanceData);
+        //    }
+        //}
 
-        private string _portfolioIdentifier="";
+        //private string _portfolioIdentifier="";
 
-        public string PortfolioIdentifier
-        {
-            get
-            { 
-                return _portfolioIdentifier;
-            }
-            set
-            { 
-                _portfolioIdentifier = value;
-                this.RaisePropertyChanged(() => this.PortfolioIdentifier);
-            }
-        }
+        //public string PortfolioIdentifier
+        //{
+        //    get
+        //    { 
+        //        return _portfolioIdentifier;
+        //    }
+        //    set
+        //    { 
+        //        _portfolioIdentifier = value;
+        //        this.RaisePropertyChanged(() => this.PortfolioIdentifier);
+        //    }
+        //}
         
 
-        #endregion
+        //#endregion
 
-        /// <summary>
-        /// Event Handler to subscribed event 'SecurityReferenceSet'
-        /// </summary>
-        /// <param name="securityReferenceData">SecurityReferenceData</param>
-        public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
-        {
-            //ArgumentNullException
-            if (entitySelectionData == null)
-                return;
-            //Fetch the Data for selected Security
-            if (EntityRelativePerformanceData.Count == 0)
-            {
-                //_dbInteractivity.RetrieveRelativePerformanceData(PortfolioIdentifier,entitySelectionData.ShortName, RetrieveRelativePerformanceDataCallBackMethod);
-            }
-        }
+        ///// <summary>
+        ///// Event Handler to subscribed event 'SecurityReferenceSet'
+        ///// </summary>
+        ///// <param name="securityReferenceData">SecurityReferenceData</param>
+        //public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
+        //{
+        //    //ArgumentNullException
+        //    if (entitySelectionData == null)
+        //        return;
+        //    //Fetch the Data for selected Security
+        //    if (EntityRelativePerformanceData.Count == 0)
+        //    {
+        //        _dbInteractivity.RetrieveRelativePerformanceData(PortfolioIdentifier,entitySelectionData.ShortName, RetrieveRelativePerformanceDataCallBackMethod);
+        //    }
+        //}
 
-        void RetrieveRelativePerformanceDataCallBackMethod(List<RelativePerformanceData> result)
-        {
-            EntityRelativePerformanceData.AddRange(result);
-        }
+        //void RetrieveRelativePerformanceDataCallBackMethod(List<RelativePerformanceData> result)
+        //{
+        //    EntityRelativePerformanceData.AddRange(result);
+        //}
     }
 }
