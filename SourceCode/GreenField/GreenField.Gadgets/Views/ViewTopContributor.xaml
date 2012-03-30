@@ -9,18 +9,9 @@
     d:DesignHeight="300" d:DesignWidth="400">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="Top 5 Contributors" FontWeight="Bold"/>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1">-->
-            <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadGridView Name="dgTopContributor" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
+        <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+            <!--Grid to display data-->
+            <telerik:RadGridView Name="dgTopContributor" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
                                     CanUserReorderColumns="False" CanUserSelect="False" telerik:StyleManager.Theme="Metro"
                                     IsReadOnly="True" ScrollMode="Deferred" ShowGroupPanel="False" CanUserSortColumns="False"
                                     RowIndicatorVisibility="Collapsed" ItemsSource="{Binding TopContributorInfo}" AlternationCount="2" AlternateRowBackground="Wheat">
@@ -32,6 +23,5 @@
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Border>
-        <!--</Grid>-->
     </Grid>
 </UserControl>

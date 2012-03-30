@@ -41,6 +41,14 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="eventAggregator">Event Aggregation from Shell</param>
+        /// <param name="dbInteractivity">Instance of Service Caller</param>
+        /// <param name="logger">Instance of Logger</param>
+        /// <param name="param">DashboardGadgetparam</param>
         public ViewModelTopContributor(DashBoardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -69,6 +77,10 @@ namespace GreenField.Gadgets.ViewModels
         #region Properties
         
         #region UI Fields
+
+        /// <summary>
+        /// contains all data to be displayed in the gadget.
+        /// </summary>
         private ObservableCollection<RelativePerformanceSecurityData> _topContributorInfo;
         public ObservableCollection<RelativePerformanceSecurityData> TopContributorInfo
         {
@@ -89,6 +101,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
+
+        /// <summary>
+        /// Event Handler to subscribed event 'FundReferenceSetEvent'
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData</param>
         public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -118,6 +135,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'EffectiveDateSet'
+        /// </summary>
+        /// <param name="effectiveDate">DateTime</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -146,6 +167,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
         public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -174,6 +199,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
+        /// </summary>
+        /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
         public void HandleRelativePerformanceGridClickevent(RelativePerformanceGridCellData relativePerformanceGridCellData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -204,6 +233,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+
+        /// <summary>
+        /// Callback method for RetrieveRelativePerformanceSecurityData Service call
+        /// </summary>
+        /// <param name="result">RelativePerformanceSecurityData Collection</param>
         public void RetrieveRelativePerformanceSecurityDataCallBackMethod(List<RelativePerformanceSecurityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

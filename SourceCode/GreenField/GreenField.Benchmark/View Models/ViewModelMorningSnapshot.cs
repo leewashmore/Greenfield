@@ -521,13 +521,19 @@ namespace GreenField.Benchmark.ViewModel
 
         #endregion
 
+        #region HelperMethod
+
+        /// <summary>
+        /// method to refresh context menuitem commands
+        /// </summary>
         private void RefreshContextMenu()
         {
             RaisePropertyChanged(() => this.AddBenchmarkGroupCommand);
             RaisePropertyChanged(() => this.RemoveBenchmarkGroupCommand);
             RaisePropertyChanged(() => this.AddBenchmarkToGroupCommand);
             RaisePropertyChanged(() => this.RemoveBenchmarkfromGroupCommand);
-        }
+        } 
+        #endregion
        
     }
 
