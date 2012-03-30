@@ -241,7 +241,7 @@
                                     </telerik:ChartDefaultView.ChartTitle>
                                     <telerik:ChartDefaultView.ChartArea>
                                         <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
+                                                           EnableAnimations="False" NoDataString=" No Data Available">
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings ScrollMode="ScrollOnly" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                             </telerik:ChartArea.ZoomScrollSettingsX>

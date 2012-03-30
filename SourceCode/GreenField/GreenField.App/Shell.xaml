@@ -185,7 +185,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
+                    <!--<telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RegionBreakdownImage.png" Text="Region Breakdown" Size="Large" Command="{Binding GadgetRegionBreakdownCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
@@ -197,7 +197,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/IndexConstituentsImage.png" Text="Index Constituents" Size="Large" Command="{Binding GadgetIndexConstituentsCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="">
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/MarketCapitalizationImage.png" Text="Market Capitalization" Size="Large" Command="{Binding GadgetMarketCapitalizationCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
@@ -205,7 +205,7 @@
                     </telerik:RadRibbonGroup>                   
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/PortfolioRiskReturnsImage.png" Text="Portfolio Risk Returns" Size="Large" Command="{Binding GadgetPortfolioRiskReturnsCommand}"/>
-                    </telerik:RadRibbonGroup>-->
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -223,7 +223,7 @@
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/ContributorDetractorImage.png" Text="All Contributors/Detractors" Size="Large" Command="{Binding GadgetContributorDetractorCommand}"/>
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -266,15 +266,15 @@
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />
-                                    <TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
+                                    <!--<TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding FundReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />-->
                                 </Grid>
-                                <Grid Grid.Row="1">
+                                <!--<Grid Grid.Row="1">
                                     <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding BenchmarkReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,2,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
@@ -286,7 +286,7 @@
                                 <Grid Grid.Row="2">
                                     <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
                                     <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>
-                                </Grid>
+                                </Grid>-->
                             </Grid>
                         </Border>
                     </telerik:RadExpander.Content>

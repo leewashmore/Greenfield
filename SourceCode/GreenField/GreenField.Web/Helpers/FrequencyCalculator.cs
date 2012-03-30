@@ -238,10 +238,15 @@ namespace GreenField.Web.Helpers
                 EndDates.Add(lastDate);
                 if (lastDate.Month == 3 || lastDate.Month == 6)
                     lastDate = lastDate.AddMonths(3);
+                else if (lastDate.Month == 12)
+                {
+                    int year = lastDate.Year;
+                    lastDate = new DateTime(year + 1, 3, 31);
+                }
                 else
                 {
-                    lastDate = lastDate.AddMonths(3);
-                    lastDate = lastDate.AddDays(1);
+                    int year = lastDate.Year;
+                    lastDate = new DateTime(year, 12, 31);
                 }
             }
 
