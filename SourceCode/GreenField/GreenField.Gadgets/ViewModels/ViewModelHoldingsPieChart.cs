@@ -53,7 +53,7 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+         //   _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
         }
         #endregion
 
@@ -69,16 +69,114 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfoForRegion;
+        public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfoForRegion
+        {
+            get { return _holdingsPercentageInfoForRegion; }
+            set
+            {
+                _holdingsPercentageInfoForRegion = value;
+                RaisePropertyChanged(() => this.HoldingsPercentageInfoForRegion);
+            }
+        }
+
+        public String EffectiveDateString
+        {
+            get
+            {
+                return "as of " + EffectiveDate.ToLongDateString();
+            }
+        }
+
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
-            get { return _effectiveDate; }
+            get 
+            {
+                _effectiveDate = System.DateTime.Now.AddDays(-1);
+                return _effectiveDate; 
+            }
             set
             {
                 _effectiveDate = value;
                 RaisePropertyChanged(() => this.EffectiveDate);
             }
         }
+
+        private ObservableCollection<String> _filterTypes;
+        public ObservableCollection<String> FilterTypes
+        {
+            get
+            {
+                return new ObservableCollection<string> { "Region", "Country", "Industry", "Sector" };
+            }
+        }
+
+        private String _filterTypesSelection;
+        public String FilterTypesSelection
+        {
+            get 
+            { 
+                return _filterTypesSelection;
+            }
+            set
+            {
+               
+                    _filterTypesSelection = value;
+                    _dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod); 
+                     RaisePropertyChanged(() => this.FilterTypesSelection);
+            }
+        }
+
+        private List<String> _valueTypes;
+        public List<String> ValueTypes
+        {
+            get { return _valueTypes; }
+            set
+            {
+                if (_valueTypes != value)
+                {
+                    _valueTypes = value;
+
+                    RaisePropertyChanged(() => this.ValueTypes);
+                }
+            }            
+        }
+
+
+        private String _valueTypesSelection;
+        public String ValueTypesSelection
+        {
+            get { return _valueTypesSelection; }
+            set
+            {
+                    _valueTypesSelection = value;
+                    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_benchmarkSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                    RaisePropertyChanged(() => this.ValueTypesSelection);
+                
+            }
+        }
+
+        //private List<String> _customLabels;
+        //public List<String> CustomLabels
+        //{
+        //    get 
+        //    {           
+        //        return _customLabels;
+        //    }
+
+        //    set 
+        //    {
+        //        _customLabels = value;
+
+        //        RaisePropertyChanged(() => this.CustomLabels);
+            
+        //    }
+        
+        //}
+
+
         
         #endregion
 
@@ -95,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+                      //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -123,7 +221,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (EffectiveDate != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+                       // _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -149,7 +247,13 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
+
                     HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);
+                    //for (int i = 0; i < result.Count; i++)
+                    //{
+                    //    String label = result[i].SegmentName + result[i].BenchmarkWeight + result[i].PortfolioWeight;
+                    //    CustomLabels.Add(label);
+                    //}
                 }
                 else
                 {
@@ -163,6 +267,38 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        public void RetrieveHoldingsPercentageDataForRegionCallbackMethod(List<HoldingsPercentageData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>(result);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        public void RetrieveValuesForFiltersCallbackMethod(List<String> result)
+        {
+            ValueTypes = result;
+        
+        }
+
+
+
         #endregion
     }
 }

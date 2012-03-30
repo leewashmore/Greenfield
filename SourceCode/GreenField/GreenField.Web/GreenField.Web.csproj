@@ -59,11 +59,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
-    <Content Include="ClientAccessPolicy.xml" />
-   
-   
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
@@ -130,6 +128,7 @@
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
     <Compile Include="DataContracts\IndexConstituentsData.cs" />
     <Compile Include="DataContracts\MorningSnapshotData.cs" />
+    <Compile Include="DataContracts\PortfolioDetailsData.cs" />
     <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
     <Compile Include="DataContracts\RegionBreakdownData.cs" />
     <Compile Include="DataContracts\FundSelectionData.cs" />
@@ -140,6 +139,7 @@
     <Compile Include="DataContracts\PerformanceData.cs" />
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
     <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />
@@ -149,6 +149,7 @@
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataContracts\RelativePerformanceData.cs" />
     <Compile Include="Service References\DimensionDataLocalService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

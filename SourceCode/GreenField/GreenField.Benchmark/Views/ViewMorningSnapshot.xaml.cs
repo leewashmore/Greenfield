@@ -21,24 +21,18 @@ namespace GreenField.Benchmark.Views
     [Export(typeof(ViewMorningSnapshot))]
     public partial class ViewMorningSnapshot : UserControl
     {
-        //private RadGridView grid = null;
         /// <summary>
-        /// Constructor
+        /// constructor
         /// </summary>        
         public ViewMorningSnapshot()
         {
             InitializeComponent();
+            //Assign date values dynamically to the some column headers in the grid 
             this.radGridBenchmark.Columns[2].Header = DateTime.Today.AddDays(-1).ToShortDateString();
             this.radGridBenchmark.Columns[7].Header = DateTime.Today.AddYears(-1).Year;
             this.radGridBenchmark.Columns[8].Header = DateTime.Today.AddYears(-2).Year;
             this.radGridBenchmark.Columns[9].Header = DateTime.Today.AddYears(-3).Year;
-            
         }
-
-        //public ViewMorningSnapshot(RadGridView grid)
-        //{
-        //    this.radGridBenchmark = grid;
-        //}
 
         [Import]
         public ViewModelMorningSnapshot DataContextSource
@@ -47,8 +41,13 @@ namespace GreenField.Benchmark.Views
             {
                 this.DataContext = value;
             }
-        }       
+        }
 
+        /// <summary>
+        /// Method to catch click event to open context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadContextMenu_Opened(object sender, RoutedEventArgs e)
         {
             RadContextMenu menu = (RadContextMenu)sender;

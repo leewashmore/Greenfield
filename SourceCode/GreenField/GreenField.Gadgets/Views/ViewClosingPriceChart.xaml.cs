@@ -25,6 +25,8 @@ namespace GreenField.Gadgets.Views
 
         public DateTime startDate = DateTime.Today.AddYears(-1);
         public DateTime endDate = DateTime.Today;
+        public bool checkCustomAlreadySelected = false;
+        public string timePeriodSelected = "";
 
         private static class ExportTypes
         {
@@ -32,6 +34,15 @@ namespace GreenField.Gadgets.Views
             public const string PRICING_DATA = "Closing Price Data";
             public const string VOLUME_CHART = "Volume Chart";
         }
+
+        private ViewModelClosingPriceChart _dataContextClosingPriceChart;
+
+        public ViewModelClosingPriceChart DataContextClosingPriceChart
+        {
+            get { return _dataContextClosingPriceChart; }
+            set { _dataContextClosingPriceChart = value; }
+        }
+        
 
         #endregion
 
@@ -44,6 +55,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+            this.DataContextClosingPriceChart = DataContextSource;
             DataContextSource.closingPriceDataLoadedEvent += new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
             DataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
             this.chPricing.DataBound += DataContextSource.ChartDataBound;
@@ -66,6 +78,9 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
             this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
+            this.cmbAddSeries.CanAutocompleteSelectItems = false;
+            this.cmbTime.SelectedValue = "1-Year";
+
         }
 
         /// <summary>
@@ -75,9 +90,17 @@ namespace GreenField.Gadgets.Views
         void DataContextSource_closingPriceDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
+            {
                 this.busyIndicator.IsBusy = true;
+                this.busyIndicatorchartVolume.IsBusy = true;
+                this.busyIndicatorGrid.IsBusy = true;
+            }
             else
+            {
                 this.busyIndicator.IsBusy = false;
+                this.busyIndicatorchartVolume.IsBusy = false;
+                this.busyIndicatorGrid.IsBusy = false;
+            }
         }
 
         /// <summary>
@@ -125,7 +148,7 @@ namespace GreenField.Gadgets.Views
 
         private void cmbFrequencyInterval_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            string timeInterval = cmbTime.SelectedValue.ToString();
+            string timeInterval = Convert.ToString(cmbTime.SelectedValue);
             switch (cmbFrequencyInterval.SelectedValue.ToString())
             {
                 case ("Daily"):
@@ -148,13 +171,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 7;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 7;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
@@ -164,13 +187,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
@@ -180,13 +203,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 6;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 1;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "m";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 6;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 1;
 
@@ -196,13 +219,13 @@ namespace GreenField.Gadgets.Views
                     {
                         this.chPricing.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
                         this.chPricing.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chPricing.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chPricing.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chPricing.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
                         this.chVolume.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "Y";
                         this.chVolume.DefaultView.ChartArea.SmartLabelsEnabled = true;
-                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = false;
+                        this.chVolume.DefaultView.ChartArea.AxisX.AutoRange = true;
                         this.chVolume.DefaultView.ChartArea.AxisX.Step = 1;
                         this.chVolume.DefaultView.ChartArea.AxisX.LabelStep = 2;
 
@@ -281,5 +304,57 @@ namespace GreenField.Gadgets.Views
 
             return String.Join(",", aggregates.ToArray());
         }
+
+        /// <summary>
+        /// To check if Total Return checkbox is checked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkSearchFilter_Checked(object sender, RoutedEventArgs e)
+        {
+            this.cmbAddSeries.TextSearchMode = TextSearchMode.StartsWith;
+        }
+
+        /// <summary>
+        /// To check if Total Return checkbox is Unchecked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void chkSearchFilter_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.cmbAddSeries.TextSearchMode = TextSearchMode.Contains;
+        }
+
+        private void cmbTime_DropDownClosed(object sender, EventArgs e)
+        {
+            if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
+            {
+                ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
+                        customDateWindow.Show();
+                        customDateWindow.Unloaded += (se, a) =>
+                        {
+                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                            {
+                                DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                                DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
+                            }
+                            else
+                            {
+                                this.cmbTime.SelectedValue = "1-Year";
+                            }
+                            this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                        };                                  
+            }
+            else
+            {
+                this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+            }
+        }
+
+        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            
+        }
+
     }
 }

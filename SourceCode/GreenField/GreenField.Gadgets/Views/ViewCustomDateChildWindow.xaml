@@ -12,13 +12,13 @@
 
         <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
         <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
-        <sdk:Label Height="25" HorizontalAlignment="Left" Margin="46,54,0,0" 
+        <sdk:Label Height="25" HorizontalAlignment="Left" Margin="46,58,0,0" 
                    Name="lblStartDate" VerticalAlignment="Top" Width="104" Content="Start Date" />
-        <sdk:Label Height="26" HorizontalAlignment="Left" Margin="44,100,0,0" Name="lblEndDate" 
+        <sdk:Label Height="26" HorizontalAlignment="Left" Margin="46,105,0,0" Name="lblEndDate" 
                    VerticalAlignment="Top" Width="105" Content="End Date" />
-        <sdk:DatePicker Height="17" HorizontalAlignment="Left" Margin="194,52,0,0" 
-                        Name="dpStartDate" VerticalAlignment="Top" Width="63" />
-        <sdk:DatePicker Height="17" HorizontalAlignment="Left" Margin="194,100,0,0" Name="dpEndDate" 
-                        VerticalAlignment="Top" Width="63" />
+        <sdk:DatePicker Height="27" HorizontalAlignment="Left" Margin="194,52,0,0" 
+                        Name="dpStartDate" VerticalAlignment="Top" Width="105" />
+        <sdk:DatePicker Height="26" HorizontalAlignment="Left" Margin="194,100,0,0" Name="dpEndDate" 
+                        VerticalAlignment="Top" Width="105" />
     </Grid>
 </controls:ChildWindow>

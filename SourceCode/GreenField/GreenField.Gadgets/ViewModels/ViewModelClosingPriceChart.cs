@@ -24,6 +24,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Views;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
+using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -107,7 +108,10 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                _selectedBaseSecurity = value;
+                if (ReturnTypeSelection)
+                    _selectedBaseSecurity = value + "(Total)";
+                else
+                    _selectedBaseSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
             }
         }
@@ -138,34 +142,19 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                if (_selectedTimeRange != value)
+                if ((_selectedTimeRange != value) || (value == "Custom"))
                 {
                     if (value == "Custom")
                     {
-                        ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
-                        customDateWindow.Show();
-                        customDateWindow.Unloaded += (se, e) =>
-                        {
-                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
-                            {
-                                SelectedStartDate = Convert.ToDateTime(customDateWindow.startDate);
-                                SelectedEndDate = Convert.ToDateTime(customDateWindow.endDate);
-                                _selectedTimeRange = value;
+                        _selectedTimeRange = value;
 
-                                //Retrieve Pricing Data for updated Time Range
-                                if (ChartEntityList.Count != 0)
-                                {
-                                    RetrievePricingData(ChartEntityList,
-                                            RetrievePricingReferenceDataCallBackMethod_TimeRange);
-                                }
-                                this.RaisePropertyChanged(() => this.SelectedTimeRange);
-                            }
-                            else
-                            {
-                                _selectedTimeRange = "1-Year";
-                                this.RaisePropertyChanged(() => this.SelectedTimeRange);
-                            }
-                        };
+                        //Retrieve Pricing Data for updated Time Range
+                        if (ChartEntityList.Count != 0)
+                        {
+                            RetrievePricingData(ChartEntityList,
+                                    RetrievePricingReferenceDataCallBackMethod_TimeRange);
+                        }
+                        this.RaisePropertyChanged(() => this.SelectedTimeRange);
                     }
                     else
                     {
@@ -182,6 +171,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
 
         /// <summary>
         /// Selected StartDate Option in case of Custom Time Range
@@ -599,7 +589,7 @@ namespace GreenField.Gadgets.ViewModels
                     DateTime periodEndDate;
 
 
-                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, (result) =>
+                    _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
                     {
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
@@ -623,6 +613,10 @@ namespace GreenField.Gadgets.ViewModels
                 PlottedSeries.RemoveRange(removeItem);
             ComparisonSeries.Remove(a);
             ChartEntityList.Remove(a);
+            if (ChartEntityList.Count == 1)
+            {
+                RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+            }
         }
 
         /// <summary>
@@ -686,7 +680,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
-
             try
             {
                 if (result != null)
@@ -726,13 +719,26 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
+                    if (ChartEntityList.Count == 1)
+                    {
+                        PrimaryPlottedSeries.Clear();
+                        PrimaryPlottedSeries.AddRange(result);
+                    }
+                    else
+                    {
+                        string primarySecurityReferenceIdentifier = PrimaryPlottedSeries.First().InstrumentID;
+                        PrimaryPlottedSeries.Clear();
+                        PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
+                    }
+
                     PlottedSeries.Clear();
-                    PrimaryPlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    PrimaryPlottedSeries.AddRange(result.Where(item => item.InstrumentID == primarySecurityReferenceIdentifier).ToList());
                     if (null != closingPriceDataLoadedEvent)
                         closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
@@ -755,8 +761,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
+                    PlottedSeries.Clear();
+                    PrimaryPlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
                     PrimaryPlottedSeries.AddRange(result);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
                 if (null != closingPriceDataLoadedEvent)
@@ -845,7 +857,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (null != closingPriceDataLoadedEvent)
                 closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, ChartEntityTypes, callback);
+            _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
         }
 
         /// <summary>

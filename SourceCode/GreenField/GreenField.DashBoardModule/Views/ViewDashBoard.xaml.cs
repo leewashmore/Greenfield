@@ -26,6 +26,7 @@ using System.Reflection;
 using GreenField.DashBoardModule.Helpers;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common.Helper;
+using GreenField.Gadgets.Helpers;
 
 
 namespace GreenField.DashBoardModule.Views
@@ -207,7 +208,7 @@ namespace GreenField.DashBoardModule.Views
                         dashboardPreference.Add(entry);
                     }
                 }
-                _manageDashboard.SetDashBoardPreference(dashboardPreference, (result) =>
+                _manageDashboard.SetDashBoardPreference(dashboardPreference,SessionManager.SESSION.UserName, (result) =>
                     {
                         if (result)
                             MessageBox.Show("User Preference saved");

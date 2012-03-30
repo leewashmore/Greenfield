@@ -54,14 +54,21 @@ namespace GreenField.Web
         /// <param name="objUserID"></param>
         /// <param name="objPersistData"></param>
         [OperationContract]
-        public bool SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference)
+        public bool SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                foreach (tblDashboardPreference item in dashBoardPreference)
-                {                    
-                    entity.SetDashBoardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition); 
+                if (dashBoardPreference.Count > 0)
+                {
+                    foreach (tblDashboardPreference item in dashBoardPreference)
+                    {
+                        entity.SetDashBoardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition);
+                    }
+                }
+                else
+                {
+                    entity.SetDashBoardPreference(userName, "null", "null", "null", "null","null",0);
                 }
                 return true;
             }

@@ -79,6 +79,7 @@
     <Compile Include="ContainerEvents.cs" />
     <Compile Include="Helper\DashboardGadgetPayLoad.cs" />
     <Compile Include="Helper\PersistPreference.cs" />
+    <Compile Include="Helper\RangeObservableCollection.cs" />
     <Compile Include="Helper\Serializer.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

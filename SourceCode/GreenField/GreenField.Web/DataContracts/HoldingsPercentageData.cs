@@ -13,6 +13,18 @@ namespace GreenField.Web.DataContracts
         public String SegmentName { get; set; }
 
         [DataMember]
-        public int SegmentHoldingsShare { get; set; }
+        public String BenchmarkName { get; set; }
+
+        [DataMember]
+        public String FundName { get; set; }
+
+        [DataMember]
+        public DateTime EffectiveDate { get; set; }
+
+        [DataMember]
+        public double PortfolioWeight { get; set; }
+
+        [DataMember]
+        public double BenchmarkWeight { get; set; }
     }
 }

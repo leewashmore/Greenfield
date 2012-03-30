@@ -256,7 +256,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-
         #region CallBack Method
         /// <summary>
         /// Callback method for Security Overview Service call - assigns value to UI Field Properties

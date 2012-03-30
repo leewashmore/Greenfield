@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Text;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.ServiceCaller.ProxyDataDefinitions;
+using System.Collections.Generic;
 
 
 namespace GreenField.Common
@@ -53,6 +55,10 @@ namespace GreenField.Common
         public static string HOLDINGS_PIECHART = "Holdings PieChart";
         public static string PORTFOLIO_RISK_RETURNS = "Portfolio Risk Returns";
         public static string TOP_BENCHMARK_SECURITIES = "Top Benchmark Securities";
+        public static string TOP_CONTRIBUTOR = "Top 5 Contributors";
+        public static string RELATIVE_PERFORMANCE = "Relative Performance";
+        public static string TOP_DETRACTOR = "Top 5 Detractors";
+        public static string CONTRIBUTOR_DETRACTOR = "All Securities";
     }
 
     public static class EntityTypes
@@ -76,6 +82,20 @@ namespace GreenField.Common
         public bool ShowBusy { get; set; }
     }
 
+    public delegate void RelativePerformanceGridBuild(RelativePerformanceGridBuildEventArgs e);
+
+    public class RelativePerformanceGridBuildEventArgs : EventArgs
+    {
+        public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
+        public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
+    }
+
+    public class RelativePerformanceGridCellData
+    {
+        public string countryID { get; set; }
+        public int? sectorID { get; set; }
+    }
+
       public static class BenchmarkReturnTypes
     {
         public static string TotalReturnType = "Total(Gross)";
@@ -83,7 +103,13 @@ namespace GreenField.Common
         public static string PriceReturnType = "( Price Return )";
     }
 
+      public static class HoldingsPercentageSegmentClassifier
+      {
+          public static int SECTOR = 0;
+          public static int REGIOM = 1;
+      }
 
+      
 
 
 

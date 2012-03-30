@@ -22,10 +22,14 @@ using Microsoft.Practices.Prism.Logging;
 
 namespace GreenField.Benchmark.ViewModel
 {
+    /// <summary>
+    /// view modelclass for Morning Snapshot
+    /// </summary>
     [Export(typeof(ViewModelMorningSnapshot))]
     public class ViewModelMorningSnapshot : NotificationObject
     {
         #region PrivateFields
+        //MEF Singletons
         private IDBInteractivity _dbInteractivity;
         private IManageSessions _manageSessions;
         private ILoggerFacade _logger;
@@ -273,7 +277,7 @@ namespace GreenField.Benchmark.ViewModel
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     BenchmarkSelectionInfo = new ObservableCollection<BenchmarkSelectionData>(result);
-                    RefreshContextMenu();
+                    RefreshContextMenu();                 
                 }
                 else
                 {

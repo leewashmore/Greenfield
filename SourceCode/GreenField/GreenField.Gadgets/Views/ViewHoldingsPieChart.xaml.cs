@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
@@ -19,6 +20,13 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            RadialLabelSettings radialSettings = new RadialLabelSettings();
+            radialSettings.SpiderModeEnabled = true;
+            radialSettings.ShowConnectors = true;
+            DoughnutSeriesDefinition doughtnutSeries = new DoughnutSeriesDefinition();
+            doughtnutSeries.LabelSettings = radialSettings;
+            this.crtHoldingsPercentageSector.DefaultSeriesDefinition = doughtnutSeries;
+            this.crtHoldingsPercentageSector.DefaultView.ChartArea.SmartLabelsEnabled = true;
         }
     }
 }

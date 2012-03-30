@@ -10,15 +10,16 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewAssetAllocation : UserControl
+    public partial class ViewAssetAllocation
     {
         public ViewAssetAllocation(ViewModelAssetAllocation DataContextSource)
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
-        }
+        }        
     }
 }

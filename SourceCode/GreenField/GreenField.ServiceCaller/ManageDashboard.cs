@@ -75,12 +75,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="dashBoardPreference">tblDashboardPreference collection</param>
         /// <param name="callback">True/False</param>
-        public void SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, Action<bool> callback)
+        public void SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName, Action<bool> callback)
         {
             try
             {
                 DashboardOperationsClient client = new DashboardOperationsClient();
-                client.SetDashBoardPreferenceAsync(dashBoardPreference);
+                client.SetDashBoardPreferenceAsync(dashBoardPreference,userName);
                 client.SetDashBoardPreferenceCompleted += (se, e) =>
                 {
                     if (callback != null)
