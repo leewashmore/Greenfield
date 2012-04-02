@@ -22,6 +22,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -29,14 +30,22 @@
             <TextBlock Text="{Binding MorningSnapshotHeader}" Grid.Row="0" HorizontalAlignment="Center"
                        VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
 
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <telerik:RadButton x:Name="btnSaveRowPosition" Height="20" Width="auto" Content="Save Grid View" HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center" Command="{Binding SaveGridRowPositionsCommand}"/>
+                </StackPanel>
+            </Grid>
+
             <!--grid containing benchmark data-->
             <telerik:RadGridView HorizontalAlignment="Left" Margin="26,12,0,0" Name="radGridBenchmark" VerticalAlignment="Top" IsReadOnly="true" 
-                                 ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
+                                 ShowGroupPanel="False" Grid.Row="2" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                  AutoGenerateColumns="False" CanUserDeleteRows="False" SelectionMode="Single" CanUserInsertRows="true"                                  
                                  telerik:StyleManager.Theme="Metro" AlternationCount="2" AlternateRowBackground="LightSkyBlue"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
                                  ItemsSource="{Binding MorningSnapshotInfo}" SelectedItem="{Binding SelectedMorningSnapshotRow,Mode=TwoWay}" AutoExpandGroups="True">
                
+                <!--context menu on the grid-->
                 <telerik:RadContextMenu.ContextMenu>
                     <telerik:RadContextMenu Opened="RadContextMenu_Opened">
                         <telerik:RadContextMenu.Items>
