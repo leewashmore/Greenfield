@@ -22,6 +22,16 @@
         }
     </style>   
     <script type="text/javascript" src="Silverlight.js"></script>
+    <script type="text/C#" runat="server">
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            GreenField.Web.DataContracts.Session session = 
+                (GreenField.Web.DataContracts.Session)HttpContext.Current.Session["Session"];
+            if (null == session)
+                Response.Redirect("Login.aspx");
+        }
+
+    </script>
     <script type="text/javascript">
         function onSilverlightError(sender, args) {
             var appSource = "";

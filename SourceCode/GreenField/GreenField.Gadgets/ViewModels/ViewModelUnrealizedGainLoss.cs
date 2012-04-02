@@ -60,8 +60,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
 
             _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
-
-            _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
+            
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
                 HandleSecurityReferenceSet(_entitySelectionData);
@@ -173,27 +172,11 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
-        }
+        }       
 
         /// <summary>
-        /// Property for grouping in the combo box
+        /// Defines the Chart area Unrealized gain loss chart
         /// </summary>
-        private CollectionViewSource _seriesReference;
-        public CollectionViewSource SeriesReference
-        {
-            get { return _seriesReference; }
-            set
-            {
-                _seriesReference = value;
-                RaisePropertyChanged(() => this.SeriesReference);
-            }
-        }
-
-        /// <summary>
-        /// Stores the SeriesReference result
-        /// </summary>
-        public ObservableCollection<EntitySelectionData> SeriesReferenceSource { get; set; }
-
         private ChartArea _chartArea;
         public ChartArea ChartArea
         {
@@ -212,44 +195,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region CallBack Methods
-        /// <summary>
-        /// Callback Method for entity selection
-        /// </summary>
-        /// <param name="result">List containing the Entity Selection Data</param>
-        private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SeriesReference = new CollectionViewSource();
-                    SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result);
-                    SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("EntityCategory"));
-                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "EntityCategory",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    SeriesReference.Source = SeriesReferenceSource;
-
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
+        #region CallBack Methods        
         /// <summary>
         /// Method that calls the service Method through a call to Service Caller
         /// </summary>
