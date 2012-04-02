@@ -53,13 +53,13 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor of the class that initializes various objects
         /// </summary>
         /// <param name="param">MEF Eventaggrigator instance</param>
-        public ViewModelUnrealizedGainLoss(DashBoardGadgetParam param)
+        public ViewModelUnrealizedGainLoss(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
@@ -216,8 +216,8 @@ namespace GreenField.Gadgets.ViewModels
                         DateTime periodStartDate;
                         DateTime periodEndDate;
                         GetPeriod(out periodStartDate, out periodEndDate);
-                        if (null != unrealizedGainLossDataLoadedEvent)
-                            unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != UnrealizedGainLossDataLoadedEvent)
+                UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
                     }
                     else
@@ -296,7 +296,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicator unrealizedGainLossDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler UnrealizedGainLossDataLoadedEvent;
         #endregion
 
         #region ICommand
@@ -435,13 +435,13 @@ namespace GreenField.Gadgets.ViewModels
                     PlottedSeries.AddRange(result);
                     if (result.Count != 0)
                         PlottedSecurityName = result[0].IssueName.ToString();
-                    if (null != unrealizedGainLossDataLoadedEvent)
-                        unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != UnrealizedGainLossDataLoadedEvent)
+                UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
 

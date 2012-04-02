@@ -16,10 +16,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewSectorBreakdown : UserControl
     {
-        public ViewSectorBreakdown(ViewModelSectorBreakDown DataContextSource)
+        public ViewSectorBreakdown(ViewModelSectorBreakDown dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }
 
         /// <summary>

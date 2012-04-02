@@ -17,13 +17,6 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SessionOperations
     {
-        #region Fields
-        /// <summary>
-        /// Logging Service Instance
-        /// </summary>
-        private LoggingOperations loggingOperations = new LoggingOperations();
-        #endregion
-
         #region Operation Contracts
         /// <summary>
         /// Get static class "Session" from CurrentSession
@@ -36,9 +29,8 @@ namespace GreenField.Web.Services
             {
                 return System.Web.HttpContext.Current.Session["Session"] as Session;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
                 return null;
             }
         }
@@ -49,18 +41,24 @@ namespace GreenField.Web.Services
         /// <param name="sessionVariable">Session</param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool SetSession(Session sessionVariable)
+        public bool? SetSession(Session sessionVariable)
         {
             try
             {
                 if (sessionVariable != null)
+                {
                     HttpContext.Current.Session["Session"] = sessionVariable;
-                return true;
+                    return true;
+                }
+                else
+                {
+                    return null;
+                }
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                return null;
             }
         } 
         #endregion

@@ -566,38 +566,68 @@ namespace GreenField.LoginModule.ViewModel
                         {
                             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
                             Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
-                            if (credentialValidation)
+                            if (credentialValidation != null)
                             {
-                                Logging.LogLoginMethodParameter(_logger, methodNamespace, credentialValidation, 1, _loginIdText);
-
-                                #region ChangePassword Service Call
-                                _manageLogins.ChangePassword(LoginIdText, PasswordText, NewPasswordText, (resetValidation) =>
+                                try
                                 {
-                                    string changeMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                    Logging.LogLoginBeginMethod(_logger, changeMethodNamespace, LoginIdText);
-
-                                    if (resetValidation)
+                                    if ((bool)credentialValidation)
                                     {
-                                        Logging.LogLoginMethodParameter(_logger, changeMethodNamespace, resetValidation, 1, _loginIdText);
-                                        Logging.LogAccountPasswordChange(_logger, LoginIdText);
-                                        ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
-                                        NotificationText = NotificationManager.GetString("PasswordChangeNotification").Replace("[LoginID]", LoginIdText);
-                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
+                                        Logging.LogLoginMethodParameter(_logger, methodNamespace, credentialValidation, 1, _loginIdText);
+
+                                        #region ChangePassword Service Call
+                                        _manageLogins.ChangePassword(LoginIdText, PasswordText, NewPasswordText, (resetValidation) =>
+                                        {
+                                            string changeMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                            Logging.LogLoginBeginMethod(_logger, changeMethodNamespace, LoginIdText);
+
+                                            try
+                                            {
+                                                if (resetValidation != null)
+                                                {
+                                                    Logging.LogLoginMethodParameter(_logger, changeMethodNamespace, resetValidation, 1, _loginIdText);
+                                                    if ((bool)resetValidation)
+                                                    {
+                                                        Logging.LogAccountPasswordChange(_logger, LoginIdText);
+                                                        ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
+                                                        NotificationText = NotificationManager.GetString("PasswordChangeNotification").Replace("[LoginID]", LoginIdText);
+                                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
+                                                    }
+                                                    else
+                                                    {
+                                                        Logging.LogLoginMethodParameterNull(_logger, changeMethodNamespace, 1, LoginIdText);
+                                                        ResetErrorPopupIsOpen = true;
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    Logging.LogMethodParameterNull(_logger, changeMethodNamespace, 1);
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                                Logging.LogLoginException(_logger, ex);
+                                            }
+                                            Logging.LogLoginEndMethod(_logger, changeMethodNamespace, LoginIdText);
+                                        });
+                                        #endregion
                                     }
                                     else
                                     {
-                                        Logging.LogLoginMethodParameterNull(_logger, changeMethodNamespace, 1, LoginIdText);
-                                        ResetErrorPopupIsOpen = true;
+                                        Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
+                                        LoginIdState = FieldState.InvalidField;
+                                        PasswordState = FieldState.InvalidField;
                                     }
-                                    Logging.LogLoginEndMethod(_logger, changeMethodNamespace, LoginIdText);
-                                });
-                                #endregion
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                    Logging.LogLoginException(_logger, ex);
+                                }
                             }
                             else
                             {
                                 Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
-                                LoginIdState = FieldState.InvalidField;
-                                PasswordState = FieldState.InvalidField;
                             }
                             Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
                         });

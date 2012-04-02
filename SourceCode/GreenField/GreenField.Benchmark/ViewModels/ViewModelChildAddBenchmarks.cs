@@ -14,7 +14,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.Common;
 
-namespace GreenField.Benchmark.View_Models
+namespace GreenField.Benchmark.ViewModels
 {
     public class ViewModelChildAddBenchmarks : NotificationObject
     {

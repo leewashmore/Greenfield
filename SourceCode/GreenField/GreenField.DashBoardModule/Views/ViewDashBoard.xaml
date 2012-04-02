@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GreenField.DashBoardModule.Views.ViewDashBoard"
+﻿<UserControl x:Class="GreenField.DashboardModule.Views.ViewDashboard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -366,7 +366,7 @@
                                                                              Command="tileView:TileViewCommands.ToggleTileState"
                                                                 Style="{StaticResource maximizeToggleStyle}" />
                                                             <Button Width="17" Height="17" HorizontalAlignment="Right"
-                                                                Click="DashBoardTileViewItemRemoved"
+                                                                Click="DashboardTileViewItemRemoved"
                                                                 Style="{StaticResource CloseButtonStyle}" />
                                                         </StackPanel>
                                                     </Grid>
@@ -416,7 +416,7 @@
         <TextBlock x:Name="txtNoGadgetMessage" Text="Add Gadgets" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="Gray" Opacity="0.5"/>
         <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderThickness="0.25" BorderBrush="Gray">
-                <telerik:RadTileView x:Name="rtvDashBoard"
+                <telerik:RadTileView x:Name="rtvDashboard"
                                  Background="White"
                                  ColumnsCount="2"  
                                  MinimizedItemsPosition="Right" 

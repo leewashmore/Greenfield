@@ -36,15 +36,15 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelPortfolioRiskReturns(DashBoardGadgetParam param)
+        public ViewModelPortfolioRiskReturns(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _fundSelectionData = param.DashboardGadgetPayLoad.FundSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {

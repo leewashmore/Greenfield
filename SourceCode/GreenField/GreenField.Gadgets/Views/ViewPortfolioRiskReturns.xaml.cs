@@ -15,10 +15,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewPortfolioRiskReturns : UserControl
     {
-        public ViewPortfolioRiskReturns(ViewModelPortfolioRiskReturns DataContextSource)
+        public ViewPortfolioRiskReturns(ViewModelPortfolioRiskReturns dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;   
+            this.DataContext = dataContextSource;   
         }
 
        

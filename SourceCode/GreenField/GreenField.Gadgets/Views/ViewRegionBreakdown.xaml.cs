@@ -16,10 +16,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewRegionBreakdown : UserControl
     {
-        public ViewRegionBreakdown(ViewModelRegionBreakDown DataContextSource)
+        public ViewRegionBreakdown(ViewModelRegionBreakDown dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }
 
         /// <summary>

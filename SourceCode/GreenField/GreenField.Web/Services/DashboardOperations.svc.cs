@@ -38,7 +38,7 @@ namespace GreenField.Web
             try
             {
                 ResearchEntities entity = new ResearchEntities();
-                result = entity.GetDashBoardPreferenceByUserName(userName).ToList();
+                result = entity.GetDashboardPreferenceByUserName(userName).ToList();
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace GreenField.Web
         /// <param name="objUserID"></param>
         /// <param name="objPersistData"></param>
         [OperationContract]
-        public bool SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName)
+        public bool SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName)
         {
             ResearchEntities entity = new ResearchEntities();
             try
@@ -63,12 +63,12 @@ namespace GreenField.Web
                 {
                     foreach (tblDashboardPreference item in dashBoardPreference)
                     {
-                        entity.SetDashBoardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition);
+                        entity.SetDashboardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition);
                     }
                 }
                 else
                 {
-                    entity.SetDashBoardPreference(userName, "null", "null", "null", "null","null",0);
+                    entity.SetDashboardPreference(userName, "null", "null", "null", "null","null",0);
                 }
                 return true;
             }

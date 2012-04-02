@@ -51,16 +51,16 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewClosingPriceChart(ViewModelClosingPriceChart DataContextSource)
+        public ViewClosingPriceChart(ViewModelClosingPriceChart dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
-            this.DataContextClosingPriceChart = DataContextSource;
-            DataContextSource.closingPriceDataLoadedEvent += new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
-            DataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
-            this.chPricing.DataBound += DataContextSource.ChartDataBound;
-            DataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
-            this.chVolume.DataBound += DataContextSource.ChartDataBound;
+            this.DataContext = dataContextSource;
+            this.DataContextClosingPriceChart = dataContextSource;
+            dataContextSource.ClosingPriceDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
+            dataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
+            this.chPricing.DataBound += dataContextSource.ChartDataBound;
+            dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
+            this.chVolume.DataBound += dataContextSource.ChartDataBound;
             ApplyChartStyles();
         }
 
@@ -132,9 +132,9 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOptions.RADGRIDVIEW_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
                     
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PRICING);

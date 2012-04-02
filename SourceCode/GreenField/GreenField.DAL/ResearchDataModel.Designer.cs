@@ -848,7 +848,7 @@ namespace GreenField.DAL
         /// <param name="gadgetState">No Metadata Documentation available.</param>
         /// <param name="preferenceGroupID">No Metadata Documentation available.</param>
         /// <param name="gadgetPosition">No Metadata Documentation available.</param>
-        public int SetDashBoardPreference(global::System.String userName, global::System.String gadgetViewClassName, global::System.String gadgetViewModelClassName, global::System.String gadgetName, global::System.String gadgetState, global::System.String preferenceGroupID, Nullable<global::System.Int32> gadgetPosition)
+        public int SetDashboardPreference(global::System.String userName, global::System.String gadgetViewClassName, global::System.String gadgetViewModelClassName, global::System.String gadgetName, global::System.String gadgetState, global::System.String preferenceGroupID, Nullable<global::System.Int32> gadgetPosition)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -920,14 +920,14 @@ namespace GreenField.DAL
                 gadgetPositionParameter = new ObjectParameter("GadgetPosition", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction("SetDashBoardPreference", userNameParameter, gadgetViewClassNameParameter, gadgetViewModelClassNameParameter, gadgetNameParameter, gadgetStateParameter, preferenceGroupIDParameter, gadgetPositionParameter);
+            return base.ExecuteFunction("SetDashboardPreference", userNameParameter, gadgetViewClassNameParameter, gadgetViewModelClassNameParameter, gadgetNameParameter, gadgetStateParameter, preferenceGroupIDParameter, gadgetPositionParameter);
         }
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
-        public ObjectResult<tblDashboardPreference> GetDashBoardPreferenceByUserName(global::System.String userName)
+        public ObjectResult<tblDashboardPreference> GetDashboardPreferenceByUserName(global::System.String userName)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -939,14 +939,14 @@ namespace GreenField.DAL
                 userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<tblDashboardPreference>("GetDashBoardPreferenceByUserName", userNameParameter);
+            return base.ExecuteFunction<tblDashboardPreference>("GetDashboardPreferenceByUserName", userNameParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
         /// <param name="userName">No Metadata Documentation available.</param>
-        public ObjectResult<tblDashboardPreference> GetDashBoardPreferenceByUserName(global::System.String userName, MergeOption mergeOption)
+        public ObjectResult<tblDashboardPreference> GetDashboardPreferenceByUserName(global::System.String userName, MergeOption mergeOption)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -958,7 +958,7 @@ namespace GreenField.DAL
                 userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<tblDashboardPreference>("GetDashBoardPreferenceByUserName", mergeOption, userNameParameter);
+            return base.ExecuteFunction<tblDashboardPreference>("GetDashboardPreferenceByUserName", mergeOption, userNameParameter);
         }
     
         /// <summary>

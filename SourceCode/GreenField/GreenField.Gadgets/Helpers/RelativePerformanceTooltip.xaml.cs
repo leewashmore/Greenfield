@@ -20,10 +20,7 @@ namespace GreenField.Gadgets.Helpers
         public RelativePerformanceTooltip(IDBInteractivity dbInteractivity, FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID, int? sectorID)
         {
             InitializeComponent();
-            dbInteractivity.RetrieveRelativePerformanceSecurityData(fundSelectionData, benchmarkSelectionData, effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, countryID, sectorID);
-            this.CountryID.Text = countryID.ToString();
-            this.SectorID.Text = sectorID.ToString();
-            
+            dbInteractivity.RetrieveRelativePerformanceSecurityData(fundSelectionData, benchmarkSelectionData, effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, countryID, sectorID);                        
         }
 
         private ObservableCollection<RelativePerformanceSecurityData> _relativePerformanceToolTipInfo;

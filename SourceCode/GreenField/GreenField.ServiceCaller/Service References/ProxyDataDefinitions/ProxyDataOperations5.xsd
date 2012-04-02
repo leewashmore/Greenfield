@@ -768,6 +768,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RelativePerformanceSectorData" nillable="true" type="tns:RelativePerformanceSectorData" />
+  <xs:complexType name="ArrayOfRelativePerformanceActivePositionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceActivePositionData" nillable="true" type="tns:RelativePerformanceActivePositionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRelativePerformanceActivePositionData" nillable="true" type="tns:ArrayOfRelativePerformanceActivePositionData" />
+  <xs:complexType name="RelativePerformanceActivePositionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Entity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FundWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelativePerformanceActivePositionData" nillable="true" type="tns:RelativePerformanceActivePositionData" />
   <xs:complexType name="ArrayOfRelativePerformanceSecurityData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceSecurityData" nillable="true" type="tns:RelativePerformanceSecurityData" />

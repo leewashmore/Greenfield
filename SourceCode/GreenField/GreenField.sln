@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.App", "GreenFiel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Web", "GreenField.Web\GreenField.Web.csproj", "{64C3D391-3815-4125-9AEE-2C253B7A80A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Module", "GreenField.Module\GreenField.Module.csproj", "{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.ServiceCaller", "GreenField.ServiceCaller\GreenField.ServiceCaller.csproj", "{F46363AA-C93C-4396-8C99-3C513EF3A875}"
 	ProjectSection(ProjectDependencies) = postProject
 		{64C3D391-3815-4125-9AEE-2C253B7A80A3} = {64C3D391-3815-4125-9AEE-2C253B7A80A3}
@@ -22,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Common", "GreenF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.AdministrationModule", "GreenField.AdministrationModule\GreenField.AdministrationModule.csproj", "{DDB40CCE-A142-4911-8B48-6424B737D8F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.DashBoardModule", "GreenField.DashBoardModule\GreenField.DashBoardModule.csproj", "{BEFDA960-2EED-4D30-A2A6-36C0E899516E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.DashboardModule", "GreenField.DashBoardModule\GreenField.DashboardModule.csproj", "{BEFDA960-2EED-4D30-A2A6-36C0E899516E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Gadgets", "GreenField.Gadgets\GreenField.Gadgets.csproj", "{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}"
 EndProject
@@ -42,10 +40,6 @@ Global
 		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64C3D391-3815-4125-9AEE-2C253B7A80A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F46363AA-C93C-4396-8C99-3C513EF3A875}.Release|Any CPU.ActiveCfg = Release|Any CPU

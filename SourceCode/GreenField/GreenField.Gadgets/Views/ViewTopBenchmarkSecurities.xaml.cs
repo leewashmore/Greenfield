@@ -15,10 +15,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewTopBenchmarkSecurities : UserControl
     {
-        public ViewTopBenchmarkSecurities(ViewModelTopBenchmarkSecurities DataContextSource)
+        public ViewTopBenchmarkSecurities(ViewModelTopBenchmarkSecurities dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;   
+            this.DataContext = dataContextSource;   
         }
 
        

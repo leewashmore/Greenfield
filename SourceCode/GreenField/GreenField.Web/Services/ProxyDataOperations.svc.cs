@@ -1996,6 +1996,254 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
+        /// Retrieves Country Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+            List<string> countryCodes = new List<string>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                countryCodes.Add(row.Field<string>("ISO_COUNTRY_CODE"));
+            }
+            countryCodes = countryCodes.Distinct().ToList();
+
+            string query = "Select * From tblHoldingsData";
+            string queryWhereCondition = String.Empty;
+
+            if (countryID == null && sectorID == null)
+            {
+                queryWhereCondition = String.Empty;
+            }
+
+            else if (countryID == null && sectorID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            else if (sectorID == null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+            }
+
+            else if (sectorID != null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            query = query + queryWhereCondition;
+            dataTable = GetDataTable(query);
+            List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+            foreach (string countryCode in countryCodes)
+            {
+                if (countryID != null)
+                {
+                    if (!countryCode.Equals(countryID.ToString()))
+                    {
+                        continue;
+                    }
+                }
+
+                RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                double MarketValue = 0;
+                double FundWeight = 0;
+                double BenchmarkWeight = 0;
+
+                record.Entity = countryCode.ToString();
+                DataTable countrySpecificData = new DataTable();
+                EnumerableRowCollection<DataRow> rowCollection = dataTable.AsEnumerable().Where(row => row.Field<string>("ISO_COUNTRY_CODE") == countryCode);
+                if (rowCollection.Count() > 0)
+                {
+                    countrySpecificData = dataTable.AsEnumerable().Where(row => row.Field<string>("ISO_COUNTRY_CODE") == countryCode).CopyToDataTable();
+
+                    foreach (DataRow row in countrySpecificData.Rows)
+                    {
+                        MarketValue = MarketValue + (double)(row.Field<Single?>("MARKET_CAP_IN_USD") == null ? 0 : row.Field<Single?>("MARKET_CAP_IN_USD"));
+                        FundWeight = FundWeight + (double)(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100);
+                        BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);
+                    }
+
+                    record.MarketValue = MarketValue;
+                    record.FundWeight = FundWeight;
+                    record.BenchmarkWeight = BenchmarkWeight;
+                    record.ActivePosition = FundWeight - BenchmarkWeight;
+
+                    result.Add(record);
+                }
+            }
+
+            return result.OrderByDescending(t => t.ActivePosition).ToList();
+        }
+
+        /// <summary>
+        /// Retrieves Sector Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+            List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                sectorCodes.Add(new RelativePerformanceSectorData()
+                {
+                    SectorID = row.Field<int>("GICS_SECTOR"),
+                    SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                });
+            }
+            sectorCodes = sectorCodes.Distinct().ToList();
+
+            string query = "Select * From tblHoldingsData";
+            string queryWhereCondition = String.Empty;
+
+            if (countryID == null && sectorID == null)
+            {
+                queryWhereCondition = String.Empty;
+            }
+
+            else if (countryID == null && sectorID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            else if (sectorID == null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+            }
+
+            else if (sectorID != null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            query = query + queryWhereCondition;
+            dataTable = GetDataTable(query);
+            List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+            foreach (RelativePerformanceSectorData sector in sectorCodes)
+            {
+                if (sectorID != null)
+                {
+                    if (!sector.SectorID.Equals(sectorID))
+                    {
+                        continue;
+                    }
+                }
+
+                RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                double MarketValue = 0;
+                double FundWeight = 0;
+                double BenchmarkWeight = 0;
+                
+                record.Entity = sector.SectorName.ToString();
+                DataTable sectorSpecificData = new DataTable();
+                EnumerableRowCollection<DataRow> rowCollection = dataTable.AsEnumerable().Where(row => row.Field<int>("GICS_SECTOR") == sector.SectorID);
+                if (rowCollection.Count() > 0)
+                {
+                    sectorSpecificData = dataTable.AsEnumerable().Where(row => row.Field<int>("GICS_SECTOR") == sector.SectorID).CopyToDataTable();
+
+                    foreach (DataRow row in sectorSpecificData.Rows)
+                    {
+                        MarketValue = MarketValue + (double)(row.Field<Single?>("MARKET_CAP_IN_USD") == null ? 0 : row.Field<Single?>("MARKET_CAP_IN_USD"));
+                        FundWeight = FundWeight + (double)(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100);
+                        BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);                        
+                    }
+
+                    record.MarketValue = MarketValue;
+                    record.FundWeight = FundWeight;
+                    record.BenchmarkWeight = BenchmarkWeight;
+                    record.ActivePosition = FundWeight - BenchmarkWeight;
+
+                    result.Add(record);
+                }
+            }
+
+            return result.OrderByDescending(t => t.ActivePosition).ToList();
+        }
+
+        /// <summary>
+        /// Retrieves Security Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            string query = "Select * From tblHoldingsData";
+            string queryWhereCondition = String.Empty;
+
+            if (countryID == null && sectorID == null)
+            {
+                queryWhereCondition = String.Empty;
+            }
+
+            else if (countryID == null && sectorID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            else if (sectorID == null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+            }
+
+            else if (sectorID != null && countryID != null)
+            {
+                queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+            }
+
+            query = query + queryWhereCondition;
+            
+            DataTable dataTable = GetDataTable(query);
+            List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                double? fundWeight = (double?)(row.Field<Single?>("PORTFOLIO_WEIGHT") != null ? row.Field<Single?>("PORTFOLIO_WEIGHT") * 100 : null);
+                double? benchmarkWeight = (double?)(row.Field<Single?>("BENCHMARK_WEIGHT") != null ? row.Field<Single?>("BENCHMARK_WEIGHT") * 100 : null);
+                double? activePosition = null;
+                if (fundWeight == null && benchmarkWeight != null)
+                    activePosition = benchmarkWeight * -1;
+                else if (fundWeight != null && benchmarkWeight == null)
+                    activePosition = fundWeight;
+                else if (fundWeight != null && benchmarkWeight != null)
+                    activePosition = fundWeight - benchmarkWeight;
+
+                result.Add(new RelativePerformanceActivePositionData()
+                {
+                    Entity = row.Field<string>("ISSUE_NAME"),
+                    MarketValue = (double?)(row.Field<Single?>("MARKET_CAP_IN_USD")),
+                    FundWeight = fundWeight,
+                    BenchmarkWeight = benchmarkWeight,
+                    ActivePosition = activePosition
+                });               
+            }
+
+            return result.OrderByDescending(t => t.ActivePosition).ToList();
+        }
+
+        /// <summary>
         /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
@@ -2006,7 +2254,7 @@ namespace GreenField.Web.Services
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <param name="order">(optional)1 for Ascending - data ordering - By default descending</param>
         /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
-        /// <returns></returns>
+        /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
         public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
@@ -2059,6 +2307,7 @@ namespace GreenField.Web.Services
             return order == 1 ? result.OrderBy(e => e.SecurityAlpha).ToList() : result.OrderByDescending(e => e.SecurityAlpha).ToList();
         }
 
+
         [OperationContract]
         public List<RelativePerformanceData> RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
@@ -2070,7 +2319,6 @@ namespace GreenField.Web.Services
             }
             countryCodes = countryCodes.Distinct().ToList();
 
-            dataTable = GetDataTable("Select * from tblHoldingsData");
             List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
             foreach (DataRow row in dataTable.Rows)
             {
@@ -2086,14 +2334,12 @@ namespace GreenField.Web.Services
             List<RelativePerformanceData> result = new List<RelativePerformanceData>();
             foreach (string countryCode in countryCodes)
             {
-                double? aggcsActivePosition = 0.0;
                 double? aggcsAlpha = 0.0;
                 double? aggcsPortfolioShare = 0.0;
                 double? aggcsBenchmarkShare = 0.0;
                 List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
                 foreach (RelativePerformanceSectorData sectorData in sectors)
                 {
-                    double? aggActivePosition = 0.0;
                     double? aggAlpha = 0.0;
                     double? aggPortfolioShare = 0.0;
                     double? aggBenchmarkShare = 0.0;
@@ -2106,7 +2352,6 @@ namespace GreenField.Web.Services
                         {
                             aggPortfolioShare = aggPortfolioShare + (double)row.Field<Single>("PORTFOLIO_WEIGHT") * 100;
                             aggBenchmarkShare = aggBenchmarkShare + (double)row.Field<Single>("BENCHMARK_WEIGHT") * 100;
-                            aggActivePosition = aggPortfolioShare - aggBenchmarkShare;
                             aggAlpha = aggAlpha + 2;
                         }
                     }
@@ -2120,7 +2365,7 @@ namespace GreenField.Web.Services
                                         Alpha = aggAlpha,
                                         PortfolioShare = aggPortfolioShare,
                                         BenchmarkShare = aggBenchmarkShare,
-                                        ActivePosition = aggActivePosition,
+                                        ActivePosition = aggPortfolioShare - aggBenchmarkShare,
                                     });
                     }
                     else
@@ -2138,8 +2383,7 @@ namespace GreenField.Web.Services
 
                     aggcsAlpha = aggcsAlpha + aggAlpha;
                     aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
-                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
-                    aggcsBenchmarkShare = aggcsActivePosition + aggActivePosition;
+                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;                    
                 }
 
                 if (sectorSpecificData.Count > 0)
@@ -2151,7 +2395,7 @@ namespace GreenField.Web.Services
                         AggregateCountryAlpha = aggcsAlpha,
                         AggregateCountryPortfolioShare = aggcsPortfolioShare,
                         AggregateCountryBenchmarkShare = aggcsBenchmarkShare,
-                        AggregateCountryActivePosition = aggcsBenchmarkShare,
+                        AggregateCountryActivePosition = aggcsPortfolioShare - aggcsBenchmarkShare,
                     });
                 }
 

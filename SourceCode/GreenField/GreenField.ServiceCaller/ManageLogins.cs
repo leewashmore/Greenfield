@@ -31,7 +31,7 @@ namespace GreenField.ServiceCaller
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <param name="callback">True/False</param>
-        public void ValidateUser(string username, string password, Action<bool> callback)
+        public void ValidateUser(string username, string password, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.ValidateUserAsync(username, password, callback);
@@ -84,7 +84,7 @@ namespace GreenField.ServiceCaller
         /// <param name="oldPassword"></param>
         /// <param name="newPassword"></param>
         /// <param name="callback">True/False</param>
-        public void ChangePassword(string username, string oldPassword, string newPassword, Action<bool> callback)
+        public void ChangePassword(string username, string oldPassword, string newPassword, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.ChangePasswordAsync(username, oldPassword, newPassword, callback);
@@ -131,7 +131,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="user"></param>
         /// <param name="callback">True/False</param>
-        public void UpdateApprovalForUser(MembershipUserInfo user, Action<bool> callback)
+        public void UpdateApprovalForUser(MembershipUserInfo user, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.UpdateApprovalForUserAsync(user, callback);
@@ -155,7 +155,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="users"></param>
         /// <param name="callback">True/False</param>
-        public void UpdateApprovalForUsers(ObservableCollection<MembershipUserInfo> users, Action<bool> callback)
+        public void UpdateApprovalForUsers(ObservableCollection<MembershipUserInfo> users, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.UpdateApprovalForUsersAsync(users, callback);
@@ -178,7 +178,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="callback">True/False</param>
-        public void UnlockUser(string userName, Action<bool> callback)
+        public void UnlockUser(string userName, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.UnlockUserAsync(userName);
@@ -201,7 +201,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="userNames"></param>
         /// <param name="callback">True/False</param>
-        public void UnlockUsers(ObservableCollection<string> userNames, Action<bool> callback)
+        public void UnlockUsers(ObservableCollection<string> userNames, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.UnlockUsersAsync(userNames);
@@ -270,7 +270,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="username"></param>
         /// <param name="callback">True/False</param>
-        public void DeleteUser(string username, Action<bool> callback)
+        public void DeleteUser(string username, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.DeleteUserAsync(username);
@@ -293,7 +293,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="username"></param>
         /// <param name="callback">True/False</param>
-        public void DeleteUsers(ObservableCollection<string> usernames, Action<bool> callback)
+        public void DeleteUsers(ObservableCollection<string> usernames, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.DeleteUsersAsync(usernames);
@@ -318,7 +318,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="roleName"></param>
         /// <param name="callback">True/False</param>
-        public void CreateRole(string roleName, Action<bool> callback)
+        public void CreateRole(string roleName, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.CreateRoleAsync(roleName, callback);
@@ -387,7 +387,7 @@ namespace GreenField.ServiceCaller
         /// <param name="usernames"></param>
         /// <param name="roleNames"></param>
         /// <param name="callback">True/False</param>
-        public void RemoveUsersFromRoles(ObservableCollection<string> usernames, ObservableCollection<string> roleNames, Action<bool> callback)
+        public void RemoveUsersFromRoles(ObservableCollection<string> usernames, ObservableCollection<string> roleNames, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.RemoveUsersFromRolesAsync(usernames, roleNames);
@@ -411,7 +411,7 @@ namespace GreenField.ServiceCaller
         /// <param name="usernames"></param>
         /// <param name="roleNames"></param>
         /// <param name="callback"></param>
-        public void AddUsersToRoles(ObservableCollection<string> usernames, ObservableCollection<string> roleNames, Action<bool> callback)
+        public void AddUsersToRoles(ObservableCollection<string> usernames, ObservableCollection<string> roleNames, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.AddUsersToRolesAsync(usernames, roleNames);
@@ -435,7 +435,7 @@ namespace GreenField.ServiceCaller
         /// <param name="username"></param>
         /// <param name="throwOnPopulatedRole"></param>
         /// <param name="callback">True/False</param>
-        public void DeleteRole(string username, bool throwOnPopulatedRole, Action<bool> callback)
+        public void DeleteRole(string username, bool throwOnPopulatedRole, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.DeleteRoleAsync(username, throwOnPopulatedRole, callback);
@@ -460,7 +460,7 @@ namespace GreenField.ServiceCaller
         /// <param name="addRoleNames"></param>
         /// <param name="deleteRoleNames"></param>
         /// <param name="callback">True/False</param>
-        public void UpdateUserRoles(string userName, ObservableCollection<string> addRoleNames, ObservableCollection<string> deleteRoleNames, Action<bool> callback)
+        public void UpdateUserRoles(string userName, ObservableCollection<string> addRoleNames, ObservableCollection<string> deleteRoleNames, Action<bool?> callback)
         {
             LoginDefinitions.LoginOperationsClient client = new LoginDefinitions.LoginOperationsClient();
             client.UpdateUserRolesAsync(userName, addRoleNames, deleteRoleNames);

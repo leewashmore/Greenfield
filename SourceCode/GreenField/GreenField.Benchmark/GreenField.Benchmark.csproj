@@ -111,10 +111,10 @@
     <Compile Include="Helpers\RowReorderBehavior.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View Models\ViewModelChildAddBenchmarks.cs" />
-    <Compile Include="View Models\ViewModelMorningSnapshot.cs" />
-    <Compile Include="View Models\ViewModelPortfolioDetails.cs" />
-    <Compile Include="View Models\ViewModelRelativePerformance.cs" />
+    <Compile Include="ViewModels\ViewModelChildAddBenchmarks.cs" />
+    <Compile Include="ViewModels\ViewModelMorningSnapshot.cs" />
+    <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
     <Compile Include="Views\ChildAddBenchmarks.xaml.cs">
       <DependentUpon>ChildAddBenchmarks.xaml</DependentUpon>
     </Compile>

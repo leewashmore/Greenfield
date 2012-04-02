@@ -34,14 +34,14 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelTopBenchmarkSecurities(DashBoardGadgetParam param)
+        public ViewModelTopBenchmarkSecurities(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {

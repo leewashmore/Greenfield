@@ -8,7 +8,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:support="clr-namespace:GreenField.LoginModule.Support_Classes"
+    xmlns:support="clr-namespace:GreenField.LoginModule.SupportClasses"
     mc:Ignorable="d" FontSize="12" Width="400" >
 
     <UserControl.Resources>

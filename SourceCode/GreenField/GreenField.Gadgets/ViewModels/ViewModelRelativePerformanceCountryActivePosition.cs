@@ -13,12 +13,13 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common;
+using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelAssetAllocation : NotificationObject
+    public class ViewModelRelativePerformanceCountryActivePosition : NotificationObject
     {
         #region Fields
         //MEF Singletons
@@ -32,7 +33,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelAssetAllocation(DashboardGadgetParam param)
+        public ViewModelRelativePerformanceCountryActivePosition(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
@@ -44,33 +45,35 @@ namespace GreenField.Gadgets.ViewModels
 
             //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
             //{
-            //    _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+            //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+            _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+            
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }
-        } 
+        }
         #endregion
 
         #region Properties
         #region UI Fields
-        private List<AssetAllocationData> _assetAllocationInfo;
-        public List<AssetAllocationData> AssetAllocationInfo
+        private ObservableCollection<RelativePerformanceActivePositionData> _relativePerformanceActivePositionInfo;
+        public ObservableCollection<RelativePerformanceActivePositionData> RelativePerformanceActivePositionInfo
         {
-            get { return _assetAllocationInfo; }
+            get { return _relativePerformanceActivePositionInfo; }
             set
             {
-                if (_assetAllocationInfo != value)
+                if (_relativePerformanceActivePositionInfo != value)
                 {
-                    _assetAllocationInfo = value;
-                    RaisePropertyChanged(() => this.AssetAllocationInfo);
+                    _relativePerformanceActivePositionInfo = value;
+                    RaisePropertyChanged(() => this.RelativePerformanceActivePositionInfo);
                 }
             }
-        } 
+        }        
         #endregion
         #endregion
 
@@ -88,7 +91,7 @@ namespace GreenField.Gadgets.ViewModels
                     _fundSelectionData = fundSelectionData;
                     if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -116,7 +119,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -144,7 +147,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -158,20 +161,22 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
-        #endregion
+        }
 
-        #region Callback Methods
-        private void RetrieveAssetAllocationDataCallbackMethod(List<AssetAllocationData> assetAllocationData)
+        public void HandleRelativePerformanceGridClickEvent(RelativePerformanceGridCellData filter)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (assetAllocationData != null)
+                if (filter != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, assetAllocationData, 1);
-                    AssetAllocationInfo = assetAllocationData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
+                    //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    //{
+                    //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                    //}
+                    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                 }
                 else
                 {
@@ -184,8 +189,34 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
-        #endregion         
+        }
+        #endregion
 
+        #region Callback Methods
+        private void RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod(List<RelativePerformanceActivePositionData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(result);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
     }
+
 }

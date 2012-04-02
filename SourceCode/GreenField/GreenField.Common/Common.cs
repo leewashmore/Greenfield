@@ -57,8 +57,11 @@ namespace GreenField.Common
         public static string TOP_BENCHMARK_SECURITIES = "Top Benchmark Securities";
         public static string TOP_CONTRIBUTOR = "Top 5 Contributors";
         public static string RELATIVE_PERFORMANCE = "Relative Performance";
+        public static string COUNTRY_ACTIVE_POSITION = "Country Active Position (Relative Performance)";
+        public static string SECTOR_ACTIVE_POSITION = "Sector Active Position (Relative Performance)";
         public static string TOP_DETRACTOR = "Top 5 Detractors";
         public static string CONTRIBUTOR_DETRACTOR = "All Securities";
+        public static string SECURITY_ACTIVE_POSITION = "Security Active Position (Relative Performance)";
     }
 
     public static class EntityTypes
@@ -75,15 +78,14 @@ namespace GreenField.Common
         public static Int32 FATAL_LEVEL = 1;
     }
 
-    public delegate void DataRetrievalProgressIndicator(DataRetrievalProgressIndicatorEventArgs e);
+    public delegate void DataRetrievalProgressIndicatorEventHandler(DataRetrievalProgressIndicatorEventArgs e);
 
     public class DataRetrievalProgressIndicatorEventArgs : EventArgs
     {
         public bool ShowBusy { get; set; }
     }
 
-    public delegate void RelativePerformanceGridBuild(RelativePerformanceGridBuildEventArgs e);
-
+    public delegate void RelativePerformanceGridBuildEventHandler(RelativePerformanceGridBuildEventArgs e);
     public class RelativePerformanceGridBuildEventArgs : EventArgs
     {
         public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
@@ -92,8 +94,8 @@ namespace GreenField.Common
 
     public class RelativePerformanceGridCellData
     {
-        public string countryID { get; set; }
-        public int? sectorID { get; set; }
+        public string CountryID { get; set; }
+        public int? SectorID { get; set; }        
     }
 
       public static class BenchmarkReturnTypes

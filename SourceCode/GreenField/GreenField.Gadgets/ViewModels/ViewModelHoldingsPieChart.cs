@@ -29,19 +29,19 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private IEventAggregator _eventAggregator;
         /// <summary>
-        /// DashboardGadgetPayLoad fields
+        /// DashboardGadgetPayload fields
         /// </summary>
         private BenchmarkSelectionData _benchmarkSelectionData;
         #endregion
 
         #region Constructor
-        public ViewModelHoldingsPieChart(DashBoardGadgetParam param)
+        public ViewModelHoldingsPieChart(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            EffectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {

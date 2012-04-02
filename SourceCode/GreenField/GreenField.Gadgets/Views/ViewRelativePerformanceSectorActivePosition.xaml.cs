@@ -13,9 +13,9 @@ using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewMarketCapitalization : UserControl
+    public partial class ViewRelativePerformanceSectorActivePosition : UserControl
     {
-        public ViewMarketCapitalization(ViewModelMarketCapitalization dataContextSource)
+        public ViewRelativePerformanceSectorActivePosition(ViewModelRelativePerformanceSectorActivePosition dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;

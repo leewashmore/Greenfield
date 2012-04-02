@@ -43,8 +43,5 @@
         <TextBlock Grid.Row="5" Grid.Column="0" x:Name="FifthSecurityName"/>
         <TextBlock Grid.Row="5" Grid.Column="1" x:Name="FifthSecurityAlpha" Margin="5,0,0,0"/>
         <TextBlock Grid.Row="5" Grid.Column="2" x:Name="FifthSecurityActivePosition" Margin="5,0,0,0"/>
-
-        <TextBlock Grid.Row="6" Grid.Column="0" x:Name="CountryID"/>
-        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="SectorID" Margin="5,0,0,0"/>
     </Grid>
 </UserControl>

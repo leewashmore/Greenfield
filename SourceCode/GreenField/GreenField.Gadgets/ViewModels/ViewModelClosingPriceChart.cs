@@ -49,12 +49,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="dbInteractivity">Instance of Service Caller</param>
         /// <param name="logger">Instance of Logger</param>
         /// <param name="entitySelectionData"></param>
-        public ViewModelClosingPriceChart(DashBoardGadgetParam param)
+        public ViewModelClosingPriceChart(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
             _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
@@ -733,8 +733,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    if (null != closingPriceDataLoadedEvent)
-                        closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != ClosingPriceDataLoadedEvent)
+                        ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
@@ -771,8 +771,8 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
-                if (null != closingPriceDataLoadedEvent)
-                    closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                if (null != ClosingPriceDataLoadedEvent)
+                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -784,7 +784,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Events
-        public event DataRetrievalProgressIndicator closingPriceDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler ClosingPriceDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -818,8 +818,8 @@ namespace GreenField.Gadgets.ViewModels
                         ChartEntityList.Add(entitySelectionData);
 
                         //Retrieve Pricing Data for Primary Security Reference
-                        if (null != closingPriceDataLoadedEvent)
-                            closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != ClosingPriceDataLoadedEvent)
+                            ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
 
                         SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
@@ -855,8 +855,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="callback">CallBack Method Predicate</param>
         private void RetrievePricingData(ObservableCollection<EntitySelectionData> entityIdentifiers, Action<List<PricingReferenceData>> callback)
         {
-            if (null != closingPriceDataLoadedEvent)
-                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            if (null != ClosingPriceDataLoadedEvent)
+                ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
             _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
         }
 

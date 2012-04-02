@@ -561,64 +561,105 @@ namespace GreenField.LoginModule.ViewModel
                         {
                             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
                             Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
-                            
-                            if (user != null)
-                            {
-                                Logging.LogLoginMethodParameter(_logger, methodNamespace, user, 1, LoginIdText);
-                                
-                                #region GetRolesForUser Service Call
-                                _manageLogins.GetRolesForUser(user.UserName, (userRoles) =>
-                                {
-                                    string userRolesMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                    Logging.LogLoginBeginMethod(_logger, userRolesMethodNamespace, LoginIdText);
-                                    Logging.LogLoginMethodParameter(_logger, userRolesMethodNamespace, userRoles, 1, _loginIdText);
-                                    UserRoles = userRoles;
-                                    #region ValidateUser Service Call
-                                    _manageLogins.ValidateUser(LoginIdText, PasswordText, (result) =>
-                                    {
-                                        string validationmethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                        Logging.LogLoginBeginMethod(_logger, validationmethodNamespace, LoginIdText);
-                                        Logging.LogLoginMethodParameter(_logger, validationmethodNamespace, result, 1, _loginIdText);
 
-                                        if (result)
+                            try
+                            {
+                                if (user != null)
+                                {
+                                    Logging.LogLoginMethodParameter(_logger, methodNamespace, user, 1, LoginIdText);
+
+                                    #region GetRolesForUser Service Call
+                                    _manageLogins.GetRolesForUser(user.UserName, (userRoles) =>
+                                    {
+                                        string userRolesMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                        Logging.LogLoginBeginMethod(_logger, userRolesMethodNamespace, LoginIdText);
+
+                                        try
                                         {
-                                            LoadModule();
-                                        }
-                                        else
-                                        {
-                                            if (!user.IsApproved)
+                                            if (userRoles != null)
                                             {
-                                                Logging.LogAccountInactiveLoginAttempt(_logger, LoginIdText);
-                                                LoginIdState = FieldState.LoginUnapproved;
-                                                PasswordState = FieldState.LoginUnapproved;
-                                            }
-                                            else if (user.IsLockedOut)
-                                            {
-                                                Logging.LogAccountLockedLoginAttempt(_logger, LoginIdText);
-                                                LoginIdState = FieldState.LoginLocked;
-                                                PasswordState = FieldState.LoginLocked;
+                                                Logging.LogLoginMethodParameter(_logger, userRolesMethodNamespace, userRoles, 1, _loginIdText);
+                                                UserRoles = userRoles;
+
+                                                #region ValidateUser Service Call
+                                                _manageLogins.ValidateUser(LoginIdText, PasswordText, (result) =>
+                                                {
+                                                    string userValidationmethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                                    Logging.LogLoginBeginMethod(_logger, userValidationmethodNamespace, LoginIdText);
+
+                                                    try
+                                                    {
+                                                        if (result != null)
+                                                        {
+                                                            Logging.LogLoginMethodParameter(_logger, userValidationmethodNamespace, result, 1, _loginIdText);
+                                                            if ((bool)result)
+                                                            {
+                                                                LoadModule();
+                                                            }
+                                                            else
+                                                            {
+                                                                if (!user.IsApproved)
+                                                                {
+                                                                    Logging.LogAccountInactiveLoginAttempt(_logger, LoginIdText);
+                                                                    LoginIdState = FieldState.LoginUnapproved;
+                                                                    PasswordState = FieldState.LoginUnapproved;
+                                                                }
+                                                                else if (user.IsLockedOut)
+                                                                {
+                                                                    Logging.LogAccountLockedLoginAttempt(_logger, LoginIdText);
+                                                                    LoginIdState = FieldState.LoginLocked;
+                                                                    PasswordState = FieldState.LoginLocked;
+                                                                }
+                                                                else
+                                                                {
+                                                                    Logging.LogAccountInvalidLoginAttempt(_logger, LoginIdText);
+                                                                    LoginIdState = FieldState.InvalidField;
+                                                                    PasswordState = FieldState.InvalidField;
+                                                                }
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            Logging.LogLoginMethodParameterNull(_logger, userValidationmethodNamespace, 1, LoginIdText);
+                                                            LoginIdState = FieldState.InvalidField;
+                                                            PasswordState = FieldState.InvalidField;
+                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                                        Logging.LogLoginException(_logger, ex);
+                                                    }
+
+                                                    Logging.LogLoginEndMethod(_logger, userValidationmethodNamespace, LoginIdText);
+                                                });
+                                                #endregion
                                             }
                                             else
                                             {
-                                                Logging.LogAccountInvalidLoginAttempt(_logger, LoginIdText);
-                                                LoginIdState = FieldState.InvalidField;
-                                                PasswordState = FieldState.InvalidField;
+                                                Logging.LogLoginMethodParameterNull(_logger, userRolesMethodNamespace, 1, LoginIdText);
                                             }
                                         }
-
-                                        Logging.LogLoginEndMethod(_logger, validationmethodNamespace, LoginIdText);
-                                    }); 
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                            Logging.LogLoginException(_logger, ex);
+                                        }
+                                        Logging.LogLoginEndMethod(_logger, userRolesMethodNamespace, LoginIdText);
+                                    });
                                     #endregion
-
-                                    Logging.LogLoginEndMethod(_logger, userRolesMethodNamespace, LoginIdText);
-                                });
-                                #endregion
+                                }
+                                else
+                                {
+                                    Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
+                                    LoginIdState = FieldState.InvalidField;
+                                    PasswordState = FieldState.InvalidField;
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
-                                LoginIdState = FieldState.InvalidField;
-                                PasswordState = FieldState.InvalidField;
+                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                Logging.LogLoginException(_logger, ex);
                             }
                             Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
                         });
@@ -642,19 +683,28 @@ namespace GreenField.LoginModule.ViewModel
         /// <returns>True/False</returns>
         private bool MissingValidations()
         {
-            #region Validation Conditions
-            bool passwordValidation = PasswordText != string.Empty;
-            bool loginValidation = LoginIdText != string.Empty;
-            bool missingValidation = passwordValidation && loginValidation;
-            #endregion
+            try
+            {
+                #region Validation Conditions
+                bool passwordValidation = PasswordText != string.Empty;
+                bool loginValidation = LoginIdText != string.Empty;
+                bool missingValidation = passwordValidation && loginValidation;
+                #endregion
 
-            #region Field State Updation
-            PasswordState = passwordValidation ? FieldState.ValidField : FieldState.MissingField;
-            LoginIdState = loginValidation ? FieldState.ValidField : FieldState.MissingField;
-            MissingFieldPopupIsOpen = !(missingValidation);
-            #endregion
+                #region Field State Updation
+                PasswordState = passwordValidation ? FieldState.ValidField : FieldState.MissingField;
+                LoginIdState = loginValidation ? FieldState.ValidField : FieldState.MissingField;
+                MissingFieldPopupIsOpen = !(missingValidation);
+                #endregion
 
-            return missingValidation;
+                return missingValidation;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogLoginException(_logger, ex);
+                return false;
+            }
         }
         #endregion
 
@@ -674,9 +724,29 @@ namespace GreenField.LoginModule.ViewModel
                     };
 
                 _manageSessions.SetSession(sessionVariable, (result) =>
+                {
+                    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                    Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
+
+                    try
                     {
-                        if (result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
-                    });
+                        if (result != null)
+                        {
+                            if ((bool)result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
+                        }
+                        else
+                        {
+                            Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                        Logging.LogLoginException(_logger, ex);
+                    }
+
+                    Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
+                });
             }
             catch (Exception ex)
             {

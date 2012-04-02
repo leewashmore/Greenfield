@@ -150,27 +150,40 @@ namespace GreenField.AdministrationModule.ViewModels
                          NewRoleName = childCreateNewRole.txtEnterValue.Text;
                          if (_manageLogins != null)
                          {
+                             #region CreateRole Service Call
                              _manageLogins.CreateRole(NewRoleName, (result) =>
-                             {
-                                 try
-                                 {
-                                     if (result)
-                                     {
-                                         AllRoles.Add(NewRoleName);
-                                         Logging.LogRoleCreate(_logger, NewRoleName);
-                                     }
-                                     else
-                                     {
-                                         MessageBox.Show("Message: Role creation failed\nStacktrace: " + methodNamespace);
-                                         Logging.LogRoleCreateFailed(_logger, NewRoleName);
-                                     }
-                                 }
-                                 catch (Exception ex)
-                                 {
-                                     MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                     Logging.LogException(_logger, ex);
-                                 }
-                             });
+                            {
+                                string createRoleMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                Logging.LogBeginMethod(_logger, createRoleMethodNamespace);
+                                try
+                                {
+                                    if (result != null)
+                                    {
+                                        Logging.LogMethodParameter(_logger, createRoleMethodNamespace, result, 1);
+                                        if ((bool)result)
+                                        {
+                                            AllRoles.Add(NewRoleName);
+                                            Logging.LogRoleCreate(_logger, NewRoleName);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Message: Role creation failed\nStacktrace: " + methodNamespace);
+                                            Logging.LogRoleCreateFailed(_logger, NewRoleName);
+                                        } 
+                                    }
+                                    else
+                                    {
+                                        Logging.LogMethodParameterNull(_logger, createRoleMethodNamespace, 1);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                    Logging.LogLoginException(_logger, ex);
+                                }
+                                Logging.LogEndMethod(_logger, methodNamespace);
+                            }); 
+                             #endregion
                          }
                      }
                  };
@@ -209,27 +222,41 @@ namespace GreenField.AdministrationModule.ViewModels
                     {
                         if (_manageLogins != null)
                         {
+                            #region DeleteRole Service Call
                             _manageLogins.DeleteRole(role, false, (result) =>
                             {
+                                string deleteRoleMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                Logging.LogBeginMethod(_logger, deleteRoleMethodNamespace);
                                 try
                                 {
-                                    if (result)
+                                    if (result != null)
                                     {
-                                        AllRoles.Remove(role);
-                                        Logging.LogRoleDelete(_logger, role);
+                                        Logging.LogMethodParameter(_logger, deleteRoleMethodNamespace, result, 1);
+                                        if ((bool)result)
+                                        {
+                                            AllRoles.Remove(role);
+                                            Logging.LogRoleDelete(_logger, role);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Message: Role deletion failed\nStacktrace: " + methodNamespace);
+                                            Logging.LogRoleDeleteFailed(_logger, role);
+                                        } 
                                     }
+
                                     else
                                     {
-                                        MessageBox.Show("Message: Role deletion failed\nStacktrace: " + methodNamespace);
-                                        Logging.LogRoleDeleteFailed(_logger, role);
+                                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                                     }
                                 }
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogException(_logger, ex);
+                                    Logging.LogLoginException(_logger, ex);
                                 }
-                            });
+                                Logging.LogEndMethod(_logger, methodNamespace);
+                            }); 
+                            #endregion
                         }
                     }
                 }

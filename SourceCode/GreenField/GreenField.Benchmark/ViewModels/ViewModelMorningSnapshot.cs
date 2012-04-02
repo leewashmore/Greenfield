@@ -20,7 +20,7 @@ using GreenField.Benchmark.Views;
 using GreenField.Common;
 using Microsoft.Practices.Prism.Logging;
 
-namespace GreenField.Benchmark.ViewModel
+namespace GreenField.Benchmark.ViewModels
 {
     /// <summary>
     /// view modelclass for Morning Snapshot
@@ -157,7 +157,7 @@ namespace GreenField.Benchmark.ViewModel
         {
             get
             {
-                return new DelegateCommand<object>(RemoveBenchmarkfromGroupCommandMethod, RemoveBenchmarkFromGroupCommandValidation);
+                return new DelegateCommand<object>(RemoveBenchmarkFromGroupCommandMethod, RemoveBenchmarkFromGroupCommandValidation);
             }
         }
 
@@ -251,7 +251,7 @@ namespace GreenField.Benchmark.ViewModel
             if (SelectedMorningSnapshotRow.MorningSnapshotPreferenceInfo.GroupName == null) return false;
             return SelectedMorningSnapshotRow.MorningSnapshotPreferenceInfo.BenchmarkName != null;            
         }
-        private void RemoveBenchmarkfromGroupCommandMethod(object param)
+        private void RemoveBenchmarkFromGroupCommandMethod(object param)
         {
             if (MessageBox.Show("Remove Benchmark - '" + _selectedMorningSnapshotRow.MorningSnapshotPreferenceInfo.BenchmarkName + "'?", "Remove Benchmark", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {

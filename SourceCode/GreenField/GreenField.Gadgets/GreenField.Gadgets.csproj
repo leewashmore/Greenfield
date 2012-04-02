@@ -116,6 +116,7 @@
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
+    <Compile Include="Helpers\PercentageValueConverter.cs" />
     <Compile Include="Helpers\RelativePerformanceTooltip.xaml.cs">
       <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
     </Compile>
@@ -131,6 +132,9 @@
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
     <Compile Include="ViewModels\ViewModelRegionBreakDown.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePerformanceCountryActivePosition.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakDown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
     <Compile Include="ViewModels\ViewModelTopContributor.cs" />
@@ -138,13 +142,22 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
+    <Compile Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml.cs">
+      <DependentUpon>ViewRelativePerformanceSecurityActivePosition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewRelativePerformanceSectorActivePosition.xaml.cs">
+      <DependentUpon>ViewRelativePerformanceSectorActivePosition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewAssetAllocation.xaml.cs">
       <DependentUpon>ViewAssetAllocation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewClosingPriceChart.xaml.cs">
       <DependentUpon>ViewClosingPriceChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewContributorDetractor.xaml.cs">
+    <Compile Include="Views\ViewRelativePerformanceCountryActivePosition.xaml.cs">
+      <DependentUpon>ViewRelativePerformanceCountryActivePosition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewContributorDetractor.xaml.cs">    
       <DependentUpon>ViewContributorDetractor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCustomDateChildWindow.xaml.cs">
@@ -199,11 +212,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewRelativePerformanceSectorActivePosition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ViewAssetAllocation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewClosingPriceChart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewRelativePerformanceCountryActivePosition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

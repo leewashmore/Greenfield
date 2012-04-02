@@ -18,10 +18,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewIndexConstituents : UserControl
     {
-        public ViewIndexConstituents(ViewModelIndexConstituents DataContextSource)
+        public ViewIndexConstituents(ViewModelIndexConstituents dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
