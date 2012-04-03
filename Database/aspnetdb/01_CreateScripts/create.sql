@@ -1,13 +1,4 @@
-CREATE DATABASE [EMMGreenField] ON  PRIMARY 
-( NAME = N'EMMGreenField', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS2\MSSQL\DATA\EMMGreenField.mdf' , SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = N'EMMGreenField_log', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS2\MSSQL\DATA\EMMGreenField_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
-GO
 
-
-
-USE [EMMGreenField]
-GO
 /****** Object:  Role [aspnet_Membership_BasicAccess]    Script Date: 03/23/2012 10:24:22 ******/
 CREATE ROLE [aspnet_Membership_BasicAccess] AUTHORIZATION [dbo]
 GO
