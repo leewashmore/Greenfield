@@ -42,7 +42,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextClosingPriceChart; }
             set { _dataContextClosingPriceChart = value; }
         }
-        
+
 
         #endregion
 
@@ -305,45 +305,25 @@ namespace GreenField.Gadgets.Views
             return String.Join(",", aggregates.ToArray());
         }
 
-        /// <summary>
-        /// To check if Total Return checkbox is checked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkSearchFilter_Checked(object sender, RoutedEventArgs e)
-        {
-            this.cmbAddSeries.TextSearchMode = TextSearchMode.StartsWith;
-        }
-
-        /// <summary>
-        /// To check if Total Return checkbox is Unchecked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkSearchFilter_Unchecked(object sender, RoutedEventArgs e)
-        {
-            this.cmbAddSeries.TextSearchMode = TextSearchMode.Contains;
-        }
-
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
             if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
             {
                 ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
-                        customDateWindow.Show();
-                        customDateWindow.Unloaded += (se, a) =>
-                        {
-                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
-                            {
-                                DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
-                                DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
-                            }
-                            else
-                            {
-                                this.cmbTime.SelectedValue = "1-Year";
-                            }
-                            this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
-                        };                                  
+                customDateWindow.Show();
+                customDateWindow.Unloaded += (se, a) =>
+                {
+                    if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                    {
+                        DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                        DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
+                    }
+                    else
+                    {
+                        this.cmbTime.SelectedValue = "1-Year";
+                    }
+                    this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                };
             }
             else
             {
@@ -353,7 +333,7 @@ namespace GreenField.Gadgets.Views
 
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            
+
         }
 
     }

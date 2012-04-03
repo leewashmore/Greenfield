@@ -762,7 +762,11 @@ namespace GreenField.Web.Services
 
                 decimal curPrice = 0;
                 decimal curReturn = 0;
-                decimal calculatedPrice = 0;                
+                decimal calculatedPrice = 0;
+                decimal previousPrice = 0;
+                decimal previousFXAdjust = 0;
+                decimal calculatedFXPrice = 0;
+                decimal fxAdjusted = 0;
                 string entityType = "";
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
@@ -842,7 +846,6 @@ namespace GreenField.Web.Services
 
                 #endregion
 
-
                 //Plotting a Multi-Line Comparison Chart
                 #region MultiLineChart
 
@@ -892,7 +895,7 @@ namespace GreenField.Web.Services
                             }
                         }
 
-                        else if ((Convert.ToString(item.Type) == "COMMODITY") || ((Convert.ToString(item.Type) == "INDEX")) || ((Convert.ToString(item.Type) == "FX")))
+                        else if ((Convert.ToString(item.Type) == "COMMODITY") || ((Convert.ToString(item.Type) == "INDEX")) || ((Convert.ToString(item.Type) == "CURRENCY")))
                         {
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
@@ -924,7 +927,10 @@ namespace GreenField.Web.Services
 
                         pricingDataResult = pricingDataResult.OrderBy(r => r.FromDate).ToList();
 
-                        pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).First().IndexedPrice = 100;
+                        if ((pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID))).ToList().Count() > 0)
+                        {
+                            pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).FirstOrDefault().IndexedPrice = 100;
+                        }
 
                         foreach (PricingReferenceData objPricingDataResult in pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).ToList())
                         {
@@ -999,6 +1005,7 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new EntitySelectionData()
                         {
+                            SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
                             ShortName = record.SHORT_NAME,
                             LongName = record.LONG_NAME,
                             InstrumentID = record.INSTRUMENT_ID,
@@ -1014,6 +1021,7 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+
 
         [OperationContract]
         public List<FundSelectionData> RetrieveFundSelectionData()
