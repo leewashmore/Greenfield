@@ -239,7 +239,7 @@ namespace GreenField.Gadgets.Views
                     else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)
                     {
                         string result = value.AggregateCountryAlpha.ToString()
-                            + "(" + value.AggregateCountryActivePosition.ToString() + "%)";
+                            + "(" + Math.Round((decimal)value.AggregateCountryActivePosition, 2).ToString() + "%)";
                         return result;
                     }
                 }
@@ -251,7 +251,7 @@ namespace GreenField.Gadgets.Views
                     string result = String.Empty;
                     if (value.Alpha != null)
                     {
-                        result = value.Alpha.ToString() + "(" + value.ActivePosition.ToString() + "%)";
+                        result = value.Alpha.ToString() + "(" + Math.Round((decimal)value.ActivePosition, 2).ToString() + "%)";
                     }
                     return result;
                 }

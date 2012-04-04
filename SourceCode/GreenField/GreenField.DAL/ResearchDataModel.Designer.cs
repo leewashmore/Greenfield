@@ -393,6 +393,22 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<tblHoldingsData> tblHoldingsDatas
+        {
+            get
+            {
+                if ((_tblHoldingsDatas == null))
+                {
+                    _tblHoldingsDatas = base.CreateObjectSet<tblHoldingsData>("tblHoldingsDatas");
+                }
+                return _tblHoldingsDatas;
+            }
+        }
+        private ObjectSet<tblHoldingsData> _tblHoldingsDatas;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<tblUserBenchmarkPreference> tblUserBenchmarkPreferences
         {
             get
@@ -421,22 +437,6 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<tblUserGroupPreference> _tblUserGroupPreferences;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<tblHoldingsData> tblHoldingsDatas
-        {
-            get
-            {
-                if ((_tblHoldingsDatas == null))
-                {
-                    _tblHoldingsDatas = base.CreateObjectSet<tblHoldingsData>("tblHoldingsDatas");
-                }
-                return _tblHoldingsDatas;
-            }
-        }
-        private ObjectSet<tblHoldingsData> _tblHoldingsDatas;
 
         #endregion
         #region AddTo Methods
@@ -602,6 +602,14 @@ namespace GreenField.DAL
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the tblHoldingsDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTotblHoldingsDatas(tblHoldingsData tblHoldingsData)
+        {
+            base.AddObject("tblHoldingsDatas", tblHoldingsData);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the tblUserBenchmarkPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddTotblUserBenchmarkPreferences(tblUserBenchmarkPreference tblUserBenchmarkPreference)
@@ -615,14 +623,6 @@ namespace GreenField.DAL
         public void AddTotblUserGroupPreferences(tblUserGroupPreference tblUserGroupPreference)
         {
             base.AddObject("tblUserGroupPreferences", tblUserGroupPreference);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the tblHoldingsDatas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddTotblHoldingsDatas(tblHoldingsData tblHoldingsData)
-        {
-            base.AddObject("tblHoldingsDatas", tblHoldingsData);
         }
 
         #endregion
@@ -966,6 +966,107 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="userId">No Metadata Documentation available.</param>
         /// <param name="groupname">No Metadata Documentation available.</param>
+        public int SetUserGroupPreference(global::System.String userId, global::System.String groupname)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter groupnameParameter;
+            if (groupname != null)
+            {
+                groupnameParameter = new ObjectParameter("groupname", groupname);
+            }
+            else
+            {
+                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("SetUserGroupPreference", userIdParameter, groupnameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="groupname">No Metadata Documentation available.</param>
+        /// <param name="benchmarkName">No Metadata Documentation available.</param>
+        /// <param name="benchmarkReturnType">No Metadata Documentation available.</param>
+        public int SetUserBenchmarkPreference(global::System.String userId, global::System.String groupname, global::System.String benchmarkName, global::System.String benchmarkReturnType)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter groupnameParameter;
+            if (groupname != null)
+            {
+                groupnameParameter = new ObjectParameter("groupname", groupname);
+            }
+            else
+            {
+                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
+            }
+    
+            ObjectParameter benchmarkNameParameter;
+            if (benchmarkName != null)
+            {
+                benchmarkNameParameter = new ObjectParameter("benchmarkName", benchmarkName);
+            }
+            else
+            {
+                benchmarkNameParameter = new ObjectParameter("benchmarkName", typeof(global::System.String));
+            }
+    
+            ObjectParameter benchmarkReturnTypeParameter;
+            if (benchmarkReturnType != null)
+            {
+                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", benchmarkReturnType);
+            }
+            else
+            {
+                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("SetUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarkNameParameter, benchmarkReturnTypeParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userid">No Metadata Documentation available.</param>
+        public ObjectResult<UserBenchmarkPreference> GetUserBenchmarkPreference(global::System.String userid)
+        {
+            ObjectParameter useridParameter;
+            if (userid != null)
+            {
+                useridParameter = new ObjectParameter("userid", userid);
+            }
+            else
+            {
+                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<UserBenchmarkPreference>("GetUserBenchmarkPreference", useridParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="groupname">No Metadata Documentation available.</param>
         public int DeleteUserGroupPreference(global::System.String userId, global::System.String groupname)
         {
             ObjectParameter userIdParameter;
@@ -1030,107 +1131,6 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction("DeleteUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarknameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userid">No Metadata Documentation available.</param>
-        public ObjectResult<UserBenchmarkPreference> GetUserBenchmarkPreference(global::System.String userid)
-        {
-            ObjectParameter useridParameter;
-            if (userid != null)
-            {
-                useridParameter = new ObjectParameter("userid", userid);
-            }
-            else
-            {
-                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<UserBenchmarkPreference>("GetUserBenchmarkPreference", useridParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        /// <param name="benchmarkName">No Metadata Documentation available.</param>
-        /// <param name="benchmarkReturnType">No Metadata Documentation available.</param>
-        public int SetUserBenchmarkPreference(global::System.String userId, global::System.String groupname, global::System.String benchmarkName, global::System.String benchmarkReturnType)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            ObjectParameter benchmarkNameParameter;
-            if (benchmarkName != null)
-            {
-                benchmarkNameParameter = new ObjectParameter("benchmarkName", benchmarkName);
-            }
-            else
-            {
-                benchmarkNameParameter = new ObjectParameter("benchmarkName", typeof(global::System.String));
-            }
-    
-            ObjectParameter benchmarkReturnTypeParameter;
-            if (benchmarkReturnType != null)
-            {
-                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", benchmarkReturnType);
-            }
-            else
-            {
-                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("SetUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarkNameParameter, benchmarkReturnTypeParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        public int SetUserGroupPreference(global::System.String userId, global::System.String groupname)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("SetUserGroupPreference", userIdParameter, groupnameParameter);
         }
 
         #endregion
@@ -10281,12 +10281,14 @@ namespace GreenField.DAL
         /// <param name="benchmarkPreferenceId">Initial value of the BenchmarkPreferenceId property.</param>
         /// <param name="groupPreferenceID">Initial value of the GroupPreferenceID property.</param>
         /// <param name="benchmarkName">Initial value of the BenchmarkName property.</param>
-        public static tblUserBenchmarkPreference CreatetblUserBenchmarkPreference(global::System.Int32 benchmarkPreferenceId, global::System.Int32 groupPreferenceID, global::System.String benchmarkName)
+        /// <param name="benchmarkOrder">Initial value of the BenchmarkOrder property.</param>
+        public static tblUserBenchmarkPreference CreatetblUserBenchmarkPreference(global::System.Int32 benchmarkPreferenceId, global::System.Int32 groupPreferenceID, global::System.String benchmarkName, global::System.Int32 benchmarkOrder)
         {
             tblUserBenchmarkPreference tblUserBenchmarkPreference = new tblUserBenchmarkPreference();
             tblUserBenchmarkPreference.BenchmarkPreferenceId = benchmarkPreferenceId;
             tblUserBenchmarkPreference.GroupPreferenceID = groupPreferenceID;
             tblUserBenchmarkPreference.BenchmarkName = benchmarkName;
+            tblUserBenchmarkPreference.BenchmarkOrder = benchmarkOrder;
             return tblUserBenchmarkPreference;
         }
 
@@ -10391,6 +10393,30 @@ namespace GreenField.DAL
         private global::System.String _BenchmarkReturnType;
         partial void OnBenchmarkReturnTypeChanging(global::System.String value);
         partial void OnBenchmarkReturnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 BenchmarkOrder
+        {
+            get
+            {
+                return _BenchmarkOrder;
+            }
+            set
+            {
+                OnBenchmarkOrderChanging(value);
+                ReportPropertyChanging("BenchmarkOrder");
+                _BenchmarkOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BenchmarkOrder");
+                OnBenchmarkOrderChanged();
+            }
+        }
+        private global::System.Int32 _BenchmarkOrder;
+        partial void OnBenchmarkOrderChanging(global::System.Int32 value);
+        partial void OnBenchmarkOrderChanged();
 
         #endregion
     
@@ -10453,12 +10479,14 @@ namespace GreenField.DAL
         /// <param name="groupPreferenceID">Initial value of the GroupPreferenceID property.</param>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="groupName">Initial value of the GroupName property.</param>
-        public static tblUserGroupPreference CreatetblUserGroupPreference(global::System.Int32 groupPreferenceID, global::System.String userId, global::System.String groupName)
+        /// <param name="groupOrder">Initial value of the GroupOrder property.</param>
+        public static tblUserGroupPreference CreatetblUserGroupPreference(global::System.Int32 groupPreferenceID, global::System.String userId, global::System.String groupName, global::System.Int32 groupOrder)
         {
             tblUserGroupPreference tblUserGroupPreference = new tblUserGroupPreference();
             tblUserGroupPreference.GroupPreferenceID = groupPreferenceID;
             tblUserGroupPreference.UserId = userId;
             tblUserGroupPreference.GroupName = groupName;
+            tblUserGroupPreference.GroupOrder = groupOrder;
             return tblUserGroupPreference;
         }
 
@@ -10539,6 +10567,30 @@ namespace GreenField.DAL
         private global::System.String _GroupName;
         partial void OnGroupNameChanging(global::System.String value);
         partial void OnGroupNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GroupOrder
+        {
+            get
+            {
+                return _GroupOrder;
+            }
+            set
+            {
+                OnGroupOrderChanging(value);
+                ReportPropertyChanging("GroupOrder");
+                _GroupOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GroupOrder");
+                OnGroupOrderChanged();
+            }
+        }
+        private global::System.Int32 _GroupOrder;
+        partial void OnGroupOrderChanging(global::System.Int32 value);
+        partial void OnGroupOrderChanged();
 
         #endregion
     
@@ -11780,10 +11832,12 @@ namespace GreenField.DAL
         /// Create a new UserBenchmarkPreference object.
         /// </summary>
         /// <param name="groupName">Initial value of the GroupName property.</param>
-        public static UserBenchmarkPreference CreateUserBenchmarkPreference(global::System.String groupName)
+        /// <param name="groupOrder">Initial value of the GroupOrder property.</param>
+        public static UserBenchmarkPreference CreateUserBenchmarkPreference(global::System.String groupName, global::System.Int32 groupOrder)
         {
             UserBenchmarkPreference userBenchmarkPreference = new UserBenchmarkPreference();
             userBenchmarkPreference.GroupName = groupName;
+            userBenchmarkPreference.GroupOrder = groupOrder;
             return userBenchmarkPreference;
         }
 
@@ -11813,6 +11867,30 @@ namespace GreenField.DAL
         private global::System.String _GroupName;
         partial void OnGroupNameChanging(global::System.String value);
         partial void OnGroupNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GroupOrder
+        {
+            get
+            {
+                return _GroupOrder;
+            }
+            set
+            {
+                OnGroupOrderChanging(value);
+                ReportPropertyChanging("GroupOrder");
+                _GroupOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GroupOrder");
+                OnGroupOrderChanged();
+            }
+        }
+        private global::System.Int32 _GroupOrder;
+        partial void OnGroupOrderChanging(global::System.Int32 value);
+        partial void OnGroupOrderChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -11861,6 +11939,30 @@ namespace GreenField.DAL
         private global::System.String _BenchmarkReturnType;
         partial void OnBenchmarkReturnTypeChanging(global::System.String value);
         partial void OnBenchmarkReturnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BenchmarkOrder
+        {
+            get
+            {
+                return _BenchmarkOrder;
+            }
+            set
+            {
+                OnBenchmarkOrderChanging(value);
+                ReportPropertyChanging("BenchmarkOrder");
+                _BenchmarkOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BenchmarkOrder");
+                OnBenchmarkOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BenchmarkOrder;
+        partial void OnBenchmarkOrderChanging(Nullable<global::System.Int32> value);
+        partial void OnBenchmarkOrderChanged();
 
         #endregion
     }

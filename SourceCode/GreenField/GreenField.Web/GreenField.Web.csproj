@@ -13,7 +13,7 @@
     <RootNamespace>GreenField.Web</RootNamespace>
     <AssemblyName>GreenField.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GreenField.App\GreenField.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False</SilverlightApplicationList>
+    <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GATEVA.App\GATEVA.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False</SilverlightApplicationList>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -67,25 +67,6 @@
     <Content Include="HomePage.html" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
-    <None Include="Service References\DimensionDataLocalService\Schema.wsdl" />
-    <None Include="Service References\DimensionDataLocalService\Schema.xsd" />
-    <None Include="Service References\DimensionDataLocalService\Schema1.xsd" />
-    <None Include="Service References\DimensionDataLocalService\Schema2.xsd" />
-    <None Include="Service References\DimensionDataLocalService\Schema3.xsd" />
-    <None Include="Service References\DimensionDataService\Schema.disco" />
-    <None Include="Service References\DimensionDataService\configuration91.svcinfo" />
-    <None Include="Service References\DimensionDataService\configuration.svcinfo" />
-    <None Include="Service References\DimensionDataService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\DimensionDataLocalService\Schema.disco" />
-    <None Include="Service References\DimensionDataLocalService\configuration91.svcinfo" />
-    <None Include="Service References\DimensionDataLocalService\configuration.svcinfo" />
-    <None Include="Service References\DimensionDataLocalService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <Content Include="Login.aspx" />
     <None Include="Service References\DimensionEntitiesService\Reference.datasvcmap">
       <Generator>DataServiceClientGenerator</Generator>
@@ -106,19 +87,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <None Include="Service References\DimensionDataService\Schema.wsdl" />
-    <None Include="Service References\DimensionDataService\Schema.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DimensionDataService\Schema1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DimensionDataService\Schema2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DimensionDataService\Schema3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
@@ -151,16 +119,6 @@
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataContracts\RelativePerformanceData.cs" />
-    <Compile Include="Service References\DimensionDataLocalService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\DimensionDataService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,10 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\DimensionDataLocalService\" />
-    <WCFMetadataStorage Include="Service References\DimensionDataService\" />
   </ItemGroup>
   <ItemGroup>
     <ServiceReferenceMetadataStorage Include="Service References\DimensionEntitiesService\">

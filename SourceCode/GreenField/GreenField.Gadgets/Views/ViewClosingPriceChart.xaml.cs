@@ -244,47 +244,7 @@ namespace GreenField.Gadgets.Views
 
         private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
         {
-            if (e.Element == ExportElement.HeaderRow || e.Element == ExportElement.FooterRow
-                || e.Element == ExportElement.GroupFooterRow)
-            {
-                e.Background = Colors.Gray;
-                e.Foreground = Colors.Black;
-                e.FontSize = 20;
-                e.FontWeight = FontWeights.Bold;
-            }
-            else if (e.Element == ExportElement.Row)
-            {
-                //e.Background = RowBackgroundPicker.SelectedColor;
-                //e.Foreground = RowForegroundPicker.SelectedColor;
-            }
-            else if (e.Element == ExportElement.Cell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Foreground = Colors.Blue;
-            }
-            else if (e.Element == ExportElement.GroupHeaderRow)
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Height = 30;
-            }
-            else if (e.Element == ExportElement.GroupHeaderCell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.Value = "MyNewValue";
-            }
-            else if (e.Element == ExportElement.GroupFooterCell)
-            {
-                GridViewDataColumn column = e.Context as GridViewDataColumn;
-                QueryableCollectionViewGroup qcvGroup = e.Value as QueryableCollectionViewGroup;
-
-                if (column != null && qcvGroup != null && column.AggregateFunctions.Count() > 0)
-                {
-                    e.Value = GetAggregates(qcvGroup, column);
-                }
-            }
+            RadGridView_ElementExport.ElementExporting(e);
         }
 
         private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)

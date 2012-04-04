@@ -211,7 +211,7 @@
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"/>
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformanceCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -224,7 +224,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/SecurityActivePositionImage.png" Text="Security Active Position" Size="Large" Command="{Binding GadgetSecurityActivePositionCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
+                    <!--<telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/TopContributorImage.png" Text="Top 5 Contributors" Size="Large" Command="{Binding GadgetTopContributorCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">

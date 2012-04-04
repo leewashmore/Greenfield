@@ -1084,11 +1084,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
-                            DashBoardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
+                            DashboardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1109,11 +1109,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_DETRACTOR,
-                            DashBoardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_DETRACTOR,
+                            DashboardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1134,11 +1134,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
-                            DashBoardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
+                            DashboardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)

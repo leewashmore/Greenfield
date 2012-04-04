@@ -689,7 +689,7 @@ namespace GreenField.Gadgets.ViewModels
                     SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
                     SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
                     {
-                        PropertyName = "Type",
+                        PropertyName = "SortOrder",
                         Direction = System.ComponentModel.ListSortDirection.Ascending
                     });
                     SeriesReference.Source = SeriesReferenceSource;

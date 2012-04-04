@@ -211,7 +211,7 @@
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgUnrealizedGainLoss" AutoGenerateColumns="False"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
-                                 CanUserDeleteRows="False" IsReadOnly="True"
+                                 CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="dgUnrealizedGainLoss_ElementExporting"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro" Visibility="Visible">

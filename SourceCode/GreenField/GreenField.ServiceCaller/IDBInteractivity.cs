@@ -9,33 +9,6 @@ namespace GreenField.ServiceCaller
 {
     public interface IDBInteractivity
     {
-        void GetMessage(Action<String> callback);
-
-        void RetrieveDetailedEstimates(String companyName, String periodType, String estimateType,
-            Action<List<DetailedEstimates_Result>> callback);
-
-        void RetrieveConsensusEstimates(String companyName, String periodType, Action<List<ConsensusEstimates_Result>> callback);
-
-        void RetrieveCompaniesList(Action<List<GetCompanies_Result>> callback);
-
-        void RetrieveDimensionDataListView(Action<List<String>> callback);
-
-        void RetrieveDimensionDataForSelectedView(String viewName, Action<List<HoldingsData>> callback);
-
-        void RetrievePerformanceDataForSelectedView(String viewName, Action<List<PerformanceData>> callback);
-
-        void RetrievePerformanceDataListView(Action<List<String>> callback);
-
-        void RetrieveReferenceDataForSelectedView(String viewName, Action<List<ReferenceData>> callback);
-
-        void RetrieveReferenceDataListView(Action<List<String>> callback);
-
-        void RetrieveAggregateDataListView(Action<List<String>> callback);
-
-        void RetrieveAggregateDataForSelectedView(String portfolioName, Action<List<AggregatedData>> callback);
-
-        void RetrievePortfolioNames(String viewName, Action<List<String>> callback);
-
         void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
         void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityOverviewData> callback);

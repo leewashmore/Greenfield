@@ -52,13 +52,12 @@ namespace GreenField.Gadgets.ViewModels
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             //Service Call to Retrieve Sector Data relating Fund Selection Data/ Benchmark Selection Data and Effective Date
-            if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
-            {
-                _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
-            }
-            //_dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+            //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+            //{
+            //    _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+            //}
+            _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
 
-            //_dbInteractivity.RetrieveRelativePerformanceData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);

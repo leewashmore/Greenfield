@@ -159,5 +159,10 @@ namespace GreenField.Gadgets.Views
                     }
             }
         }
+
+        private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
     }
 }
