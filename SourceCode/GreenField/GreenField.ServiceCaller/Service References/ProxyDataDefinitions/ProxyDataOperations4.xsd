@@ -12,8 +12,10 @@
       <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="BenchmarkName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="BenchmarkOrder" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="BenchmarkReturnType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupOrder" type="xs:int" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

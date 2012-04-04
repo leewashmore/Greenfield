@@ -527,6 +527,30 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand PerformanceGraphCommand
+        {
+            get 
+            {
+                return new DelegateCommand<object>(PerformanceGraphCommandMethod);
+            }       
+        }
+
+        public ICommand PerformanceGridCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(PerformanceGridCommandMethod);
+            }
+        }
+
+        public ICommand AttributionCommand
+        {
+            get 
+            {
+                return new DelegateCommand<object>(AttributionCommandMethod);
+            }        
+        }
+
         #endregion
         #endregion
 
@@ -1062,7 +1086,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.SECURITY_ACTIVE_POSITION,
+                            DashboardTileHeader = GadgetNames.SECTOR_ACTIVE_POSITION,
                             DashboardTileObject = new ViewRelativePerformanceSecurityActivePosition(new ViewModelRelativePerformanceSecurityActivePosition(GetDashboardGadgetParam()))
                         });
             }
@@ -1178,6 +1202,71 @@ namespace GreenField.App.ViewModel
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
         }
 
+       
+
+        private void PerformanceGraphCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_GRAPH,
+                            DashboardTileObject = new ViewPerformanceGadget(new ViewModelPerformanceGadget(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void PerformanceGridCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_GRID,
+                            DashboardTileObject = new ViewPerformanceGrid(new ViewModelPerformanceGrid(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+
+        private void AttributionCommandMethod(object param) 
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.ATTRIBUTION,
+                            DashboardTileObject = new ViewAttribution(new ViewModelAttribution(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         #endregion
 
         #region Callback Methods

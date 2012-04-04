@@ -61,7 +61,9 @@ namespace GreenField.Common
         public static string SECTOR_ACTIVE_POSITION = "Sector Active Position (Relative Performance)";
         public static string TOP_DETRACTOR = "Top 5 Detractors";
         public static string CONTRIBUTOR_DETRACTOR = "All Securities";
-        public static string SECURITY_ACTIVE_POSITION = "Security Active Position (Relative Performance)";
+        public static string PERFORMANCE_GRAPH = "Performance Graph";       
+        public static string ATTRIBUTION = "Attribution";
+        public static string PERFORMANCE_GRID = "Performance Grid";
     }
 
     public static class EntityTypes

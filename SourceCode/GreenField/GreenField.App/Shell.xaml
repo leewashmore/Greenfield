@@ -170,12 +170,12 @@
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
                 <telerik:RadRibbonTab Header="Gadgets">
-                    <!--<telerik:RadRibbonGroup Header="">
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsImage.png" Text="Holdings" Size="Large" Command="{Binding GadgetHoldingsCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/PerformanceChart.png" Text="Performance" Size="Large" Command="{Binding GadgetPerformanceCommand}"/>
-                    </telerik:RadRibbonGroup>-->
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/investment.png" Text="Security Overview" Size="Large" Command="{Binding GadgetSecurityOverviewCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -185,7 +185,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="">
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RegionBreakdownImage.png" Text="Region Breakdown" Size="Large" Command="{Binding GadgetRegionBreakdownCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
@@ -211,7 +211,7 @@
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"/>
-                    </telerik:RadRibbonGroup>-->
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformanceCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -224,7 +224,7 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/SecurityActivePositionImage.png" Text="Security Active Position" Size="Large" Command="{Binding GadgetSecurityActivePositionCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="">
+                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/TopContributorImage.png" Text="Top 5 Contributors" Size="Large" Command="{Binding GadgetTopContributorCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
@@ -232,7 +232,16 @@
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/ContributorDetractorImage.png" Text="All Contributors/Detractors" Size="Large" Command="{Binding GadgetContributorDetractorCommand}"/>
-                    </telerik:RadRibbonGroup>-->
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Performance Graph" Size="Large" Command="{Binding PerformanceGraphCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Performance Grid" Size="Large" Command="{Binding PerformanceGridCommand}"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Attribution" Size="Large" Command="{Binding AttributionCommand}"/>
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -248,9 +257,9 @@
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/Dashcode.png" Size="Large" Text="Dashboard" Command="{Binding MyDashboardCommand}" />
-                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="">                
+                    <telerik:RadRibbonButton LargeImage="Images/Dashcode.png" Size="Large" Text="Dashboard" Command="{Binding MyDashboardCommand}" />
+                    </telerik:RadRibbonGroup>                              
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
         </Grid>
@@ -275,15 +284,15 @@
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />
-                                    <!--<TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
+                                    <TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding FundReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />-->
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
                                 </Grid>
-                                <!--<Grid Grid.Row="1">
+                                <Grid Grid.Row="1">
                                     <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
                                     <telerik:RadComboBox ItemsSource="{Binding BenchmarkReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="365,2,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
@@ -295,21 +304,19 @@
                                 <Grid Grid.Row="2">
                                     <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
                                     <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>
-                                </Grid>-->
+                                </Grid>
                             </Grid>
                         </Border>
                     </telerik:RadExpander.Content>
                 </telerik:RadExpander>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+                  </Grid>
+              </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                  Name="tbUserName"/>
                     <HyperlinkButton Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"
                                  Name="hypbtnLogout" Foreground="DarkBlue" Command="{Binding LogOutCommand}" />
-                </StackPanel>
-            </Grid>
-        </Border>
-
+            </StackPanel>           
         <ContentControl
             Grid.Row="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
             prism:RegionManager.RegionName="MainRegion"/>

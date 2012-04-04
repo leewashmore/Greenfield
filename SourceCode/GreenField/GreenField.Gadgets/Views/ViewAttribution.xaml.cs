@@ -10,24 +10,23 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
-using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
-    /// View Class of Holdings Pie Chart
+    /// Class for the Attribution View
     /// </summary>
-    public partial class ViewHoldingsPieChart : UserControl
+    public partial class ViewAttribution : UserControl
     {
-        #region Constructor
+        #region constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="dataContextSource">ViewModelHoldingsPieChart as the data context</param>
-        public ViewHoldingsPieChart(ViewModelHoldingsPieChart dataContextSource)
+        /// <param name="DataContextSource">ViewModelAttribution as Data context for this View</param>
+        public ViewAttribution(ViewModelAttribution DataContextSource )
         {
             InitializeComponent();
-            this.DataContext = dataContextSource;
+            this.DataContext = DataContextSource;
         }
         #endregion
     }

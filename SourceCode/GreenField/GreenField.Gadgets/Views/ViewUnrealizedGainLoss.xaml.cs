@@ -32,7 +32,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.UnrealizedGainLossDataLoadedEvent +=
+            dataContextSource.unrealizedGainLossDataLoadedEvent +=
                 new DataRetrievalProgressIndicatorEventHandler(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
             this.chUnrealizedGainLoss.DataBound += dataContextSource.ChartDataBound;

@@ -60,7 +60,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
 
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
                 HandleSecurityReferenceSet(_entitySelectionData);
@@ -174,9 +173,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }       
 
-        /// <summary>
         /// Defines the Chart area Unrealized gain loss chart
-        /// </summary>
         private ChartArea _chartArea;
         public ChartArea ChartArea
         {
@@ -196,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallBack Methods        
-        /// <summary>
+
         /// Method that calls the service Method through a call to Service Caller
         /// </summary>
         /// <param name="Ticker">Unique Identifier for a security</param>
@@ -216,8 +213,8 @@ namespace GreenField.Gadgets.ViewModels
                         DateTime periodStartDate;
                         DateTime periodEndDate;
                         GetPeriod(out periodStartDate, out periodEndDate);
-                        if (null != UnrealizedGainLossDataLoadedEvent)
-                UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != unrealizedGainLossDataLoadedEvent)
+                            unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
                     }
                     else
@@ -290,14 +287,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
-        #endregion
-
-        #region Events
-        /// <summary>
-        /// Event for the notification of Data Load Completion
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler UnrealizedGainLossDataLoadedEvent;
-        #endregion
 
         #region ICommand
         ICommand _zoomInCommand;
@@ -326,6 +315,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #endregion
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler unrealizedGainLossDataLoadedEvent;
         #endregion
 
         #region ICommand Methods
@@ -435,13 +432,13 @@ namespace GreenField.Gadgets.ViewModels
                     PlottedSeries.AddRange(result);
                     if (result.Count != 0)
                         PlottedSecurityName = result[0].IssueName.ToString();
-                    if (null != UnrealizedGainLossDataLoadedEvent)
-                UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != unrealizedGainLossDataLoadedEvent)
+                        unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    UnrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
 
@@ -453,13 +450,16 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Data Context Source for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
             ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
-
-
         #endregion
     }
 }

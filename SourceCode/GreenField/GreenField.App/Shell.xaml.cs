@@ -21,7 +21,7 @@ using GreenField.App.ViewModel;
 
 namespace GreenField.App
 {
-    [Export]//
+     [Export]
     public partial class Shell : UserControl
     {
         public Shell()

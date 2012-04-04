@@ -82,36 +82,6 @@
   <wsdl:message name="ProxyDataOperations_RetrieveIndexConstituentsData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveIndexConstituentsDataResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageData" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegion" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegionResponse" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesData" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrievePortfolioRiskReturnData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveUnrealizedGainLossData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossData" />
-  </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
-  </wsdl:message>
   <wsdl:message name="ProxyDataOperations_RetrieveValuesForFilters_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveValuesForFilters" />
   </wsdl:message>
@@ -190,6 +160,54 @@
   <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceDataResponse" />
   </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePerformanceGraphData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePerformanceGraphData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePerformanceGridData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGridData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePerformanceGridData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGridDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveAttributionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAttributionData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveAttributionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveAttributionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveUnrealizedGainLossData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegion" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePortfolioRiskReturnData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
+  </wsdl:message>
   <wsdl:portType name="ProxyDataOperations">
     <wsdl:operation name="RetrieveSecurityReferenceData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveSecurityReferenceData" message="tns:ProxyDataOperations_RetrieveSecurityReferenceData_InputMessage" />
@@ -238,26 +256,6 @@
     <wsdl:operation name="RetrieveIndexConstituentsData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveIndexConstituentsData" message="tns:ProxyDataOperations_RetrieveIndexConstituentsData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveIndexConstituentsDataResponse" message="tns:ProxyDataOperations_RetrieveIndexConstituentsData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveHoldingsPercentageData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageData" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataResponse" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveHoldingsPercentageDataForRegion">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegion" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegionResponse" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveTopBenchmarkSecuritiesData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesData" message="tns:ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesDataResponse" message="tns:ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioRiskReturnData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnDataResponse" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveUnrealizedGainLossData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveValuesForFilters">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFilters" message="tns:ProxyDataOperations_RetrieveValuesForFilters_InputMessage" />
@@ -310,6 +308,38 @@
     <wsdl:operation name="RetrieveRelativePerformanceData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceDataResponse" message="tns:ProxyDataOperations_RetrieveRelativePerformanceData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGraphData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGraphData" message="tns:ProxyDataOperations_RetrievePerformanceGraphData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGraphDataResponse" message="tns:ProxyDataOperations_RetrievePerformanceGraphData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGridData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGridData" message="tns:ProxyDataOperations_RetrievePerformanceGridData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGridDataResponse" message="tns:ProxyDataOperations_RetrievePerformanceGridData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAttributionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveAttributionData" message="tns:ProxyDataOperations_RetrieveAttributionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveAttributionDataResponse" message="tns:ProxyDataOperations_RetrieveAttributionData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUnrealizedGainLossData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse" message="tns:ProxyDataOperations_RetrieveUnrealizedGainLossData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveHoldingsPercentageData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageData" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataResponse" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveHoldingsPercentageDataForRegion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegion" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegionResponse" message="tns:ProxyDataOperations_RetrieveHoldingsPercentageDataForRegion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveTopBenchmarkSecuritiesData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesData" message="tns:ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesDataResponse" message="tns:ProxyDataOperations_RetrieveTopBenchmarkSecuritiesData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioRiskReturnData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnDataResponse" message="tns:ProxyDataOperations_RetrievePortfolioRiskReturnData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ProxyDataOperations" type="tns:ProxyDataOperations">
@@ -415,51 +445,6 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveIndexConstituentsData">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveIndexConstituentsData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveHoldingsPercentageData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveHoldingsPercentageDataForRegion">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegion" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveTopBenchmarkSecuritiesData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioRiskReturnData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RetrieveUnrealizedGainLossData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -577,6 +562,78 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveRelativePerformanceData">
       <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGraphData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGraphData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGridData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePerformanceGridData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveAttributionData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveAttributionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUnrealizedGainLossData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveHoldingsPercentageData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveHoldingsPercentageDataForRegion">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveHoldingsPercentageDataForRegion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveTopBenchmarkSecuritiesData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveTopBenchmarkSecuritiesData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioRiskReturnData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrievePortfolioRiskReturnData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

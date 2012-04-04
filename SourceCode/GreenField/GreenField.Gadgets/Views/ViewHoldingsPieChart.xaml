@@ -23,7 +23,7 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>                  
         </Grid.ColumnDefinitions>
         <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
                              telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
@@ -65,9 +65,10 @@
             </telerik:RadExpander.Content>
         </telerik:RadExpander>
         <Grid Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <!--<Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -81,7 +82,7 @@
                     <TextBlock Text="MSCI Standard Sector Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
                     <TextBlock Text="{Binding EffectiveDateString}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
-                <Grid Grid.Row="1">
+               <Grid Grid.Row="1">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadChart x:Name="crtHoldingsPercentageSector"  Visibility="Visible" ItemsSource="{Binding HoldingsPercentageInfo}" telerik:StyleManager.Theme="Metro">
                             <telerik:RadChart.DefaultView>
@@ -98,7 +99,7 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})" >
                                             <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                                 <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"  />
                                             </telerik:DoughnutSeriesDefinition.InteractivitySettings>
@@ -150,7 +151,7 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})" >
                                             <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                                 <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"/>
                                             </telerik:DoughnutSeriesDefinition.InteractivitySettings>
