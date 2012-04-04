@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using GreenField.ServiceCaller;
 using System.Linq;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
-using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.Generic;
@@ -21,10 +13,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.Views;
 using Telerik.Windows.Controls.Charting;
-using Telerik.Windows.Controls;
-using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -68,6 +57,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region UI Fields
 
+
+        #endregion
+
         /// <summary>
         /// Storing the names of all entities added to chart.
         /// </summary>
@@ -108,10 +100,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                if (ReturnTypeSelection)
-                    _selectedBaseSecurity = value + "(Total)";
-                else
-                    _selectedBaseSecurity = value;
+                _selectedBaseSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
             }
         }
@@ -394,6 +383,28 @@ namespace GreenField.Gadgets.ViewModels
                         RetrievePricingData(ChartEntityList,
                                 RetrievePricingReferenceDataCallBackMethod_TimeRange);
                     }
+                    if (_returnTypeSelection)
+                    {
+                        SelectedBaseSecurity = SelectedBaseSecurity + " (total)";
+                        foreach (EntitySelectionData item in ComparisonSeries)
+                        {
+                            if (item.Type == "SECURITY")
+                            {
+                                item.ShortName = item.ShortName + " (total)";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SelectedBaseSecurity = SelectedBaseSecurity.Replace(" (total)", "");
+                        foreach (EntitySelectionData item in ComparisonSeries)
+                        {
+                            if (item.Type == "SECURITY")
+                            {
+                                item.ShortName = item.ShortName.Replace(" (total)", "");
+                            }
+                        }
+                    }
                     this.RaisePropertyChanged(() => this.ReturnTypeSelection);
                 }
             }
@@ -459,7 +470,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #endregion
+
 
         private ChartArea _chartAreaPricing;
         public ChartArea ChartAreaPricing
@@ -585,8 +596,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
 
-                    DateTime periodStartDate;
-                    DateTime periodEndDate;
+
 
 
                     _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
@@ -594,6 +604,16 @@ namespace GreenField.Gadgets.ViewModels
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
                         ComparisonSeries.Add(SelectedSeriesReference);
+                        if (ReturnTypeSelection)
+                        {
+                            foreach (EntitySelectionData item in (ComparisonSeries))
+                            {
+                                if (item.InstrumentID == SelectedSeriesReference.InstrumentID)
+                                {
+                                    item.ShortName = item.ShortName + " (total)";
+                                }
+                            }
+                        }
                         SelectedSeriesReference = null;
                     });
                 }
@@ -785,6 +805,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Events
         public event DataRetrievalProgressIndicatorEventHandler ClosingPriceDataLoadedEvent;
+
         #endregion
 
         #region Event Handlers
@@ -953,5 +974,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
     }
 }

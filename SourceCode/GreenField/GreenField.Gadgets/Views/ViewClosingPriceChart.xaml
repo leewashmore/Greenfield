@@ -352,19 +352,20 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          Checked="chkSearchFilter_Checked" Unchecked="chkSearchFilter_Unchecked" Grid.Row="0" Name="chkSearchFilter" />
+                                  IsChecked="{Binding SearchFilterEnabled, Mode=TwoWay}" Grid.Row="0" Name="chkSearchFilter" 
+                                  Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" />
                         <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
-                                   Grid.Row="1" HorizontalAlignment="Center" />
+                                   Grid.Row="1" HorizontalAlignment="Right" />
                     </Grid>
 
                     <Grid Grid.Row="7" Margin="0,2,0,0">
-                        <ItemsControl  HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
+                        <ItemsControl  HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                        <TextBlock Text="{Binding ShortName, Mode=TwoWay}" HorizontalAlignment="Left" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding ShortName, Mode=TwoWay}" HorizontalAlignment="Right" />
                                         <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
-                                        CommandParameter="{Binding}"  Width="20" HorizontalAlignment="Left">
+                                        CommandParameter="{Binding}"  Width="20" HorizontalAlignment="Right">
                                             <Image Source="../Images/Delete.png"/>
                                         </Button>
                                     </StackPanel>
