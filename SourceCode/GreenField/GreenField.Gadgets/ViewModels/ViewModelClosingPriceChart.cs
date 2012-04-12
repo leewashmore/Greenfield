@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using GreenField.ServiceCaller;
 using System.Linq;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
-using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.Generic;
@@ -21,10 +13,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.Views;
 using Telerik.Windows.Controls.Charting;
-using Telerik.Windows.Controls;
-using GreenField.Common.Helper;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -49,12 +38,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="dbInteractivity">Instance of Service Caller</param>
         /// <param name="logger">Instance of Logger</param>
         /// <param name="entitySelectionData"></param>
-        public ViewModelClosingPriceChart(DashBoardGadgetParam param)
+        public ViewModelClosingPriceChart(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
             _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
@@ -67,6 +56,9 @@ namespace GreenField.Gadgets.ViewModels
         #region Properties
 
         #region UI Fields
+
+
+        #endregion
 
         /// <summary>
         /// Storing the names of all entities added to chart.
@@ -108,10 +100,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                if (ReturnTypeSelection)
-                    _selectedBaseSecurity = value + "(Total)";
-                else
-                    _selectedBaseSecurity = value;
+                _selectedBaseSecurity = value;
                 this.RaisePropertyChanged(() => this.SelectedBaseSecurity);
             }
         }
@@ -394,6 +383,28 @@ namespace GreenField.Gadgets.ViewModels
                         RetrievePricingData(ChartEntityList,
                                 RetrievePricingReferenceDataCallBackMethod_TimeRange);
                     }
+                    if (_returnTypeSelection)
+                    {
+                        SelectedBaseSecurity = SelectedBaseSecurity + " (total)";
+                        foreach (EntitySelectionData item in ComparisonSeries)
+                        {
+                            if (item.Type == "SECURITY")
+                            {
+                                item.ShortName = item.ShortName + " (total)";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        SelectedBaseSecurity = SelectedBaseSecurity.Replace(" (total)", "");
+                        foreach (EntitySelectionData item in ComparisonSeries)
+                        {
+                            if (item.Type == "SECURITY")
+                            {
+                                item.ShortName = item.ShortName.Replace(" (total)", "");
+                            }
+                        }
+                    }
                     this.RaisePropertyChanged(() => this.ReturnTypeSelection);
                 }
             }
@@ -459,7 +470,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #endregion
+
 
         private ChartArea _chartAreaPricing;
         public ChartArea ChartAreaPricing
@@ -585,8 +596,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
 
-                    DateTime periodStartDate;
-                    DateTime periodEndDate;
+
 
 
                     _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
@@ -594,6 +604,16 @@ namespace GreenField.Gadgets.ViewModels
                         PlottedSeries.Clear();
                         PlottedSeries.AddRange(result);
                         ComparisonSeries.Add(SelectedSeriesReference);
+                        if (ReturnTypeSelection)
+                        {
+                            foreach (EntitySelectionData item in (ComparisonSeries))
+                            {
+                                if (item.InstrumentID == SelectedSeriesReference.InstrumentID)
+                                {
+                                    item.ShortName = item.ShortName + " (total)";
+                                }
+                            }
+                        }
                         SelectedSeriesReference = null;
                     });
                 }
@@ -689,7 +709,7 @@ namespace GreenField.Gadgets.ViewModels
                     SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
                     SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
                     {
-                        PropertyName = "Type",
+                        PropertyName = "SortOrder",
                         Direction = System.ComponentModel.ListSortDirection.Ascending
                     });
                     SeriesReference.Source = SeriesReferenceSource;
@@ -733,8 +753,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    if (null != closingPriceDataLoadedEvent)
-                        closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != ClosingPriceDataLoadedEvent)
+                        ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
@@ -771,8 +791,8 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
-                if (null != closingPriceDataLoadedEvent)
-                    closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                if (null != ClosingPriceDataLoadedEvent)
+                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -784,7 +804,8 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Events
-        public event DataRetrievalProgressIndicator closingPriceDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler ClosingPriceDataLoadedEvent;
+
         #endregion
 
         #region Event Handlers
@@ -818,8 +839,8 @@ namespace GreenField.Gadgets.ViewModels
                         ChartEntityList.Add(entitySelectionData);
 
                         //Retrieve Pricing Data for Primary Security Reference
-                        if (null != closingPriceDataLoadedEvent)
-                            closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != ClosingPriceDataLoadedEvent)
+                            ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
 
                         SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
@@ -855,8 +876,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="callback">CallBack Method Predicate</param>
         private void RetrievePricingData(ObservableCollection<EntitySelectionData> entityIdentifiers, Action<List<PricingReferenceData>> callback)
         {
-            if (null != closingPriceDataLoadedEvent)
-                closingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            if (null != ClosingPriceDataLoadedEvent)
+                ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
             _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
         }
 
@@ -953,5 +974,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
     }
 }

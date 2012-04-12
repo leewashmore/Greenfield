@@ -15,10 +15,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewTopHoldings : UserControl
     {
-        public ViewTopHoldings(ViewModelTopHoldings DataContextSource)
+        public ViewTopHoldings(ViewModelTopHoldings dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }
     }
 }

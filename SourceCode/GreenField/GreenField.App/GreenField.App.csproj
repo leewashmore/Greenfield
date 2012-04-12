@@ -31,6 +31,8 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <LinkedServerProject>
     </LinkedServerProject>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
   </PropertyGroup>
   <!-- This property group is only here to support building this project using the 
        MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
@@ -210,18 +212,13 @@
       <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
       <Name>GreenField.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GreenField.DashBoardModule\GreenField.DashBoardModule.csproj">
+    <ProjectReference Include="..\GreenField.DashBoardModule\GreenField.DashboardModule.csproj">
       <Project>{BEFDA960-2EED-4D30-A2A6-36C0E899516E}</Project>
-      <Name>GreenField.DashBoardModule</Name>
+      <Name>GreenField.DashboardModule</Name>
     </ProjectReference>
     <ProjectReference Include="..\GreenField.Gadgets\GreenField.Gadgets.csproj">
       <Project>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</Project>
       <Name>GreenField.Gadgets</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GreenField.Module\GreenField.Module.csproj">
-      <Project>{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}</Project>
-      <Name>GreenField.Module</Name>
-      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
       <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>

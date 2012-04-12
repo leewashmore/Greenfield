@@ -20,31 +20,58 @@ using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// Class that provides the interaction of the view model with the Service caller and the View.
+    /// </summary>
     public class ViewModelPortfolioRiskReturns : NotificationObject
     {
         #region Fields
         /// <summary>
-        /// MEF Singletons
+        /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
         private IEventAggregator _eventAggregator;
 
+        /// <summary>
+        /// private member object of the IDBInteractivity for interaction with the Service Caller
+        /// </summary>
+        private IDBInteractivity _dbInteractivity;
+
+        /// <summary>
+        /// private member object of ILoggerFacade for logging
+        /// </summary>
+        private ILoggerFacade _logger;
+
+        /// <summary>
+        /// private member object of the FundSelectionData class for storing Fund Selection Data
+        /// </summary>
         private FundSelectionData _fundSelectionData;
+
+        /// <summary>
+        ///  private member object of the BenchmarkSelectionData class for storing Benchmark Selection Data
+        /// </summary>
         private BenchmarkSelectionData _benchmarkSelectionData;
+
+        /// <summary>
+        /// Contains the effective date
+        /// </summary>
         private DateTime _effectiveDate;
         #endregion
 
         #region Constructor
-        public ViewModelPortfolioRiskReturns(DashBoardGadgetParam param)
+
+        // <summary>
+        /// Constructor of the class that initializes various objects
+        /// </summary>
+        /// <param name="param">MEF Eventaggrigator instance</param>
+        public ViewModelPortfolioRiskReturns(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _fundSelectionData = param.DashboardGadgetPayLoad.FundSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {
@@ -53,11 +80,11 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
             }
 
-            //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
-            //{
-            //    _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+            if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+            {
+                _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+            }
+           // _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
         }
         #endregion
 
@@ -77,7 +104,18 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Events
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler portfolioRiskReturnDataLoadedEvent;
+        #endregion
+
         #region Event Handlers
+        /// <summary>
+        /// Assigns UI Field Properties based on Fund reference
+        /// </summary>
+        /// <param name="fundSelectionData">Object of FundSelectionData Class containing Fund data</param>
         public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -107,6 +145,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Assigns UI Field Properties based on Effective Date
+        /// </summary>
+        /// <param name="effectiveDate"></param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -135,6 +177,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Assigns UI Field Properties based on Benchmark reference
+        /// </summary>
+        /// <param name="benchmarkSelectionData">Object of BenchmarkSelectionData Class containg Benchmark data</param>
         public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -165,6 +211,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+
+        /// <summary>
+        /// Plots the result in the grid after getting the resulting collection
+        /// </summary>
+        /// <param name="result">Contains the Portfolio Risk Return Data</param>
         public void RetrievePortfolioRiskReturnDataCallbackMethod(List<PortfolioRiskReturnData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -175,10 +226,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PortfolioRiskReturnInfo = new ObservableCollection<PortfolioRiskReturnData>(result);
+                    if (null != portfolioRiskReturnDataLoadedEvent)
+                        portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)

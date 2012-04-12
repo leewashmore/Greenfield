@@ -21,7 +21,6 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.Module.Views;
 using GreenField.Gadgets.Views;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
@@ -131,7 +130,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _securityReference = value;
-                RaisePropertyChanged(() => this.SecurityReference);
+                RaisePropertyChanged(() => this.SecurityReference);                
             }
         }
 
@@ -222,8 +221,8 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(()=> this.SelectedSecurityReference);
                 if (value != null)
                 {
-                    DashboardGadgetPayLoad.EntitySelectionData = SecurityReferenceData.Where(entity => entity.ShortName == ((value.Category == "Ticker") ? value.Header : value.Detail)).First();
-                    _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(DashboardGadgetPayLoad.EntitySelectionData);
+                    DashboardGadgetPayload.EntitySelectionData = SecurityReferenceData.Where(entity => entity.ShortName == ((value.Category == "Ticker") ? value.Header : value.Detail)).First();
+                    _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(DashboardGadgetPayload.EntitySelectionData);
                 }
             }
         }
@@ -238,8 +237,8 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SelectedFundReference);
                 if (value != null)
                 {
-                    DashboardGadgetPayLoad.FundSelectionData = FundReferenceData.Where(entity => entity.Name == value.Detail).First();
-                    _eventAggregator.GetEvent<FundReferenceSetEvent>().Publish(DashboardGadgetPayLoad.FundSelectionData);
+                    DashboardGadgetPayload.FundSelectionData = FundReferenceData.Where(entity => entity.Name == value.Detail).First();
+                    _eventAggregator.GetEvent<FundReferenceSetEvent>().Publish(DashboardGadgetPayload.FundSelectionData);
                 }
             }
         }
@@ -254,8 +253,8 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SelectedBenchmarkReference);
                 if (value != null)
                 {
-                    DashboardGadgetPayLoad.BenchmarkSelectionData = BenchmarkReferenceData.Where(entity => entity.Name == value.Header).First();
-                    _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Publish(DashboardGadgetPayLoad.BenchmarkSelectionData);
+                    DashboardGadgetPayload.BenchmarkSelectionData = BenchmarkReferenceData.Where(entity => entity.Name == value.Header).First();
+                    _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Publish(DashboardGadgetPayload.BenchmarkSelectionData);
                 }
             }
         }
@@ -273,23 +272,25 @@ namespace GreenField.App.ViewModel
                 {
                     _selectedEffectiveDateReference = value;
                     RaisePropertyChanged(() => this.SelectedEffectiveDateReference);
-                    DashboardGadgetPayLoad.EffectiveDate = value;
-                    _eventAggregator.GetEvent<EffectiveDateSet>().Publish(DashboardGadgetPayLoad.EffectiveDate);
+                    DashboardGadgetPayload.EffectiveDate = value;
+                    _eventAggregator.GetEvent<EffectiveDateSet>().Publish(DashboardGadgetPayload.EffectiveDate);
                 }
             }
         }
 
-        private DashboardGadgetPayLoad _dashboardGadgetPayLoad;
-
-        public DashboardGadgetPayLoad DashboardGadgetPayLoad
+        private DashboardGadgetPayload _dashboardGadgetPayload;
+        public DashboardGadgetPayload DashboardGadgetPayload
         {
             get
             {
-                if (_dashboardGadgetPayLoad == null)
-                    _dashboardGadgetPayLoad = new DashboardGadgetPayLoad();
-                return _dashboardGadgetPayLoad; 
+                if (_dashboardGadgetPayload == null)
+                    _dashboardGadgetPayload = new DashboardGadgetPayload();
+                return _dashboardGadgetPayload; 
             }
-            set { _dashboardGadgetPayLoad = value; }
+            set 
+            {
+                _dashboardGadgetPayload = value;                
+            }
         }        
 
         #endregion
@@ -298,6 +299,21 @@ namespace GreenField.App.ViewModel
         public ICommand LogOutCommand
         {
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
+        }
+
+        public ICommand DashboardCompanySnapshotSummaryCommand 
+        {
+            get { return new DelegateCommand<object>(DashboardCompanySnapshotSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingClosingPriceCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingClosingPriceCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingUnrealizedGainCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingUnrealizedGainCommandMethod); }
         }
 
         public ICommand DetailedEstimateCommand
@@ -350,22 +366,6 @@ namespace GreenField.App.ViewModel
             get
             {
                 return new DelegateCommand<object>(MyDashboardCommandMethod);
-            }
-        }
-
-        public ICommand GadgetHoldingsCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetHoldingsCommandMethod);
-            }
-        }
-
-        public ICommand GadgetPerformanceCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetPerformanceCommandMethod);
             }
         }
 
@@ -465,11 +465,35 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        public ICommand GadgetRelativePerformaceCommand
+        public ICommand GadgetRelativePerformanceCommand
         {
             get
             {
-                return new DelegateCommand<object>(GadgetRelativePerformaceCommandMethod);
+                return new DelegateCommand<object>(GadgetRelativePerformanceCommandMethod);
+            }
+        }
+
+        public ICommand GadgetCountryActivePositionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetCountryActivePositionCommandMethod);
+            }
+        }
+
+        public ICommand GadgetSectorActivePositionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetSectorActivePositionCommandMethod);
+            }
+        }
+
+        public ICommand GadgetSecurityActivePositionCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetSecurityActivePositionCommandMethod);
             }
         }
 
@@ -521,6 +545,30 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand PerformanceGraphCommand
+        {
+            get 
+            {
+                return new DelegateCommand<object>(PerformanceGraphCommandMethod);
+            }       
+        }
+
+        public ICommand PerformanceGridCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(PerformanceGridCommandMethod);
+            }
+        }
+
+        public ICommand AttributionCommand
+        {
+            get 
+            {
+                return new DelegateCommand<object>(AttributionCommandMethod);
+            }        
+        }
+
         #endregion
         #endregion
 
@@ -541,6 +589,57 @@ namespace GreenField.App.ViewModel
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+        }
+
+        private void DashboardCompanySnapshotSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanyChartingClosingPriceCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingClosingPrice", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanyChartingUnrealizedGainCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingUnrealizedGainLoss", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         private void DetailedEstimateCommandMethod(object param)
@@ -665,8 +764,8 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayLoad);
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashBoard", UriKind.Relative));
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboard", UriKind.Relative));
             }
             catch (Exception ex)
             {
@@ -674,26 +773,6 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
-        }
-
-        private void GadgetHoldingsCommandMethod(object param)
-        {
-            _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                (new DashBoardTileViewItemInfo
-                {
-                    DashBoardTileHeader = "Holdings Data",
-                    DashBoardTileObject = new HoldingsView()
-                });
-        }
-
-        private void GadgetPerformanceCommandMethod(object param)
-        {
-            _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                (new DashBoardTileViewItemInfo
-                {
-                    DashBoardTileHeader = "Performance Data",
-                    DashBoardTileObject = new PerformanceView()
-                });
         }
 
         /// <summary>
@@ -705,11 +784,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                       (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                       (new DashboardTileViewItemInfo
                        {
-                           DashBoardTileHeader = GadgetNames.SECURITY_OVERVIEW,
-                           DashBoardTileObject = new ViewSecurityOverview(new ViewModelSecurityOverview(GetDashBoardGadgetParam()))
+                           DashboardTileHeader = GadgetNames.SECURITY_OVERVIEW,
+                           DashboardTileObject = new ViewSecurityOverview(new ViewModelSecurityOverview(GetDashboardGadgetParam()))
                        });
             }
             catch (Exception ex)
@@ -729,11 +808,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                       (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                       (new DashboardTileViewItemInfo
                        {
-                           DashBoardTileHeader = GadgetNames.PRICING,
-                           DashBoardTileObject = new ViewClosingPriceChart(new ViewModelClosingPriceChart(GetDashBoardGadgetParam()))
+                           DashboardTileHeader = GadgetNames.PRICING,
+                           DashboardTileObject = new ViewClosingPriceChart(new ViewModelClosingPriceChart(GetDashboardGadgetParam()))
                        });
             }
             catch (Exception ex)
@@ -753,11 +832,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.UNREALIZED_GAINLOSS,
-                            DashBoardTileObject = new ViewUnrealizedGainLoss(new ViewModelUnrealizedGainLoss(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.UNREALIZED_GAINLOSS,
+                            DashboardTileObject = new ViewUnrealizedGainLoss(new ViewModelUnrealizedGainLoss(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -777,11 +856,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.REGION_BREAKDOWN,
-                            DashBoardTileObject = new ViewRegionBreakdown(new ViewModelRegionBreakDown(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.REGION_BREAKDOWN,
+                            DashboardTileObject = new ViewRegionBreakdown(new ViewModelRegionBreakDown(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -801,11 +880,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.SECTOR_BREAKDOWN,
-                            DashBoardTileObject = new ViewSectorBreakdown(new ViewModelSectorBreakDown(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.SECTOR_BREAKDOWN,
+                            DashboardTileObject = new ViewSectorBreakdown(new ViewModelSectorBreakDown(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -825,11 +904,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.INDEX_CONSTITUENTS,
-                            DashBoardTileObject = new ViewIndexConstituents(new ViewModelIndexConstituents(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.INDEX_CONSTITUENTS,
+                            DashboardTileObject = new ViewIndexConstituents(new ViewModelIndexConstituents(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -849,11 +928,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.MARKET_CAPITALIZATION,
-                            DashBoardTileObject = new ViewMarketCapitalization(new ViewModelMarketCapitalization(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.MARKET_CAPITALIZATION,
+                            DashboardTileObject = new ViewMarketCapitalization(new ViewModelMarketCapitalization(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -873,11 +952,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_HOLDINGS,
-                            DashBoardTileObject = new ViewTopHoldings(new ViewModelTopHoldings(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_HOLDINGS,
+                            DashboardTileObject = new ViewTopHoldings(new ViewModelTopHoldings(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -898,11 +977,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.ASSET_ALLOCATION,
-                            DashBoardTileObject = new ViewAssetAllocation(new ViewModelAssetAllocation(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.ASSET_ALLOCATION,
+                            DashboardTileObject = new ViewAssetAllocation(new ViewModelAssetAllocation(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -923,11 +1002,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.HOLDINGS_PIECHART,
-                            DashBoardTileObject = new ViewHoldingsPieChart(new ViewModelHoldingsPieChart(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.HOLDINGS_PIECHART,
+                            DashboardTileObject = new ViewHoldingsPieChart(new ViewModelHoldingsPieChart(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -948,11 +1027,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.PORTFOLIO_RISK_RETURNS,
-                            DashBoardTileObject = new ViewPortfolioRiskReturns(new ViewModelPortfolioRiskReturns(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.PORTFOLIO_RISK_RETURNS,
+                            DashboardTileObject = new ViewPortfolioRiskReturns(new ViewModelPortfolioRiskReturns(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -973,11 +1052,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_BENCHMARK_SECURITIES,
-                            DashBoardTileObject = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_BENCHMARK_SECURITIES,
+                            DashboardTileObject = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -992,17 +1071,92 @@ namespace GreenField.App.ViewModel
         /// GadgetRelativePerformaceCommand Execution Method - Add Gadget - RELATIVE_PERFORMANCE
         /// </summary>
         /// <param name="param">SenderInfo</param>
-        private void GadgetRelativePerformaceCommandMethod(object param)
+        private void GadgetRelativePerformanceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.RELATIVE_PERFORMANCE,
-                            DashBoardTileObject = new ViewRelativePerformance(new ViewModelRelativePerformance(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE,
+                            DashboardTileObject = new ViewRelativePerformance(new ViewModelRelativePerformance(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetCountryActivePositionCommand Execution Method - Add Gadget - COUNTRY_ACTIVE_POSITION
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetCountryActivePositionCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.COUNTRY_ACTIVE_POSITION,
+                            DashboardTileObject = new ViewRelativePerformanceCountryActivePosition(new ViewModelRelativePerformanceCountryActivePosition(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetSectorActivePositionCommand Execution Method - Add Gadget - SECTOR_ACTIVE_POSITION
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetSectorActivePositionCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.SECTOR_ACTIVE_POSITION,
+                            DashboardTileObject = new ViewRelativePerformanceSectorActivePosition(new ViewModelRelativePerformanceSectorActivePosition(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetSecurityActivePositionCommand Execution Method - Add Gadget - SECURITY_ACTIVE_POSITION
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetSecurityActivePositionCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.SECTOR_ACTIVE_POSITION,
+                            DashboardTileObject = new ViewRelativePerformanceSecurityActivePosition(new ViewModelRelativePerformanceSecurityActivePosition(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1023,11 +1177,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
-                            DashBoardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
+                            DashboardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1048,11 +1202,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.TOP_DETRACTOR,
-                            DashBoardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.TOP_DETRACTOR,
+                            DashboardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1073,11 +1227,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Publish
-                        (new DashBoardTileViewItemInfo
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
                         {
-                            DashBoardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
-                            DashBoardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashBoardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
+                            DashboardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1117,6 +1271,73 @@ namespace GreenField.App.ViewModel
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
         }
 
+
+        
+
+
+        private void PerformanceGraphCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_GRAPH,
+                            DashboardTileObject = new ViewPerformanceGadget(new ViewModelPerformanceGadget(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void PerformanceGridCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_GRID,
+                            DashboardTileObject = new ViewPerformanceGrid(new ViewModelPerformanceGrid(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+
+        private void AttributionCommandMethod(object param) 
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.ATTRIBUTION,
+                            DashboardTileObject = new ViewAttribution(new ViewModelAttribution(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         #endregion
 
         #region Callback Methods
@@ -1277,21 +1498,21 @@ namespace GreenField.App.ViewModel
 
         #region Helper Methods
         /// <summary>
-        /// Get DashBoardGadgetParam object
+        /// Get DashboardGadgetParam object
         /// </summary>
-        /// <returns>DashBoardGadgetParam</returns>
-        private DashBoardGadgetParam GetDashBoardGadgetParam()
+        /// <returns>DashboardGadgetParam</returns>
+        private DashboardGadgetParam GetDashboardGadgetParam()
         {
-            DashBoardGadgetParam param;
+            DashboardGadgetParam param;
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
             {
-                param = new DashBoardGadgetParam()
+                param = new DashboardGadgetParam()
                     {
                         DBInteractivity = _dbInteractivity,
                         EventAggregator = _eventAggregator,
                         LoggerFacade = _logger,
-                        DashboardGadgetPayLoad = DashboardGadgetPayLoad
+                        DashboardGadgetPayload = DashboardGadgetPayload
                     };
             }
             catch (Exception ex)

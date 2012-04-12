@@ -50,7 +50,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="sessionVariable">Session</param>
         /// <param name="callback">True/False</param>
-        public void SetSession(Session sessionVariable, Action<bool> callback)
+        public void SetSession(Session sessionVariable, Action<bool?> callback)
         {
             SessionOperationsClient client = new SessionOperationsClient();
             client.SetSessionAsync(sessionVariable);

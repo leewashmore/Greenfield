@@ -311,6 +311,7 @@ namespace GreenField.AdministrationModule.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
+            
             try
             {
                 if (_manageLogins != null)
@@ -348,46 +349,57 @@ namespace GreenField.AdministrationModule.ViewModels
 
                     if (MessageBox.Show(confirmationMessage, "Approve Logins", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
-
-
                         foreach (MembershipUserInfo user in SelectedMembershipUsers)
                         {
                             user.IsApproved = !(user.IsApproved);
                         }
 
+                        #region UpdateApprovalForUsers Service Call
                         _manageLogins.UpdateApprovalForUsers(SelectedMembershipUsers, (result) =>
                         {
+                            string updateApprovalMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                            Logging.LogBeginMethod(_logger, updateApprovalMethodNamespace);
+
                             try
                             {
-                                if (result)
+                                if (result != null)
                                 {
-                                    foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                    Logging.LogMethodParameter(_logger, updateApprovalMethodNamespace, result, 1);
+                                    if ((bool)result)
                                     {
-                                        if (selectedUser.IsApproved)
-                                            Logging.LogLoginActivate(_logger, selectedUser.UserName);
-                                        else
-                                            Logging.LogLoginBlock(_logger, selectedUser.UserName);
+                                        foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                        {
+                                            if (selectedUser.IsApproved)
+                                                Logging.LogLoginActivate(_logger, selectedUser.UserName);
+                                            else
+                                                Logging.LogLoginBlock(_logger, selectedUser.UserName);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                        {
+                                            if (selectedUser.IsApproved)
+                                                Logging.LogLoginActivateFailed(_logger, selectedUser.UserName);
+                                            else
+                                                Logging.LogLoginBlockFailed(_logger, selectedUser.UserName);
+                                            MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName).First().IsApproved = !(selectedUser.IsApproved);
+
+                                        }
                                     }
                                 }
                                 else
                                 {
-                                    foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
-                                    {
-                                        if (selectedUser.IsApproved)
-                                            Logging.LogLoginActivateFailed(_logger, selectedUser.UserName);
-                                        else
-                                            Logging.LogLoginBlockFailed(_logger, selectedUser.UserName);
-                                        MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName).First().IsApproved = !(selectedUser.IsApproved);
-
-                                    }
+                                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                                 }
                             }
                             catch (Exception ex)
                             {
                                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                Logging.LogException(_logger, ex);
+                                Logging.LogLoginException(_logger, ex);
                             }
-                        });
+                        }); 
+                        #endregion
                     }
                 }
             }
@@ -437,25 +449,38 @@ namespace GreenField.AdministrationModule.ViewModels
 
                         if (MessageBox.Show(confirmationMessage, "Release Lockout", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
+                            #region UnlockUsers Service Call
                             _manageLogins.UnlockUsers(lockedLogins, (result) =>
                             {
+                                string unlockUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                Logging.LogBeginMethod(_logger, unlockUsersMethodNamespace);
                                 try
                                 {
-                                    if (result)
+                                    if (result != null)
                                     {
-                                        foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
-                                            MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName && lockedLogins.Contains(selectedUser.UserName)).First().IsLockedOut = false;
-                                        foreach (string item in lockedLogins)
-                                            _logger.Log(String.Format("Account '{0}' unlocked by {1}",
-                                                item, SessionManager.SESSION.UserName), Category.Info, Priority.None);
+                                        Logging.LogMethodParameter(_logger, unlockUsersMethodNamespace, result, 1);
+                                        if ((bool)result)
+                                        {
+                                            foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                                MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName && lockedLogins.Contains(selectedUser.UserName)).First().IsLockedOut = false;
+                                            foreach (string item in lockedLogins)
+                                                _logger.Log(String.Format("Account '{0}' unlocked by {1}",
+                                                    item, SessionManager.SESSION.UserName), Category.Info, Priority.None);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Logging.LogMethodParameterNull(_logger, unlockUsersMethodNamespace, 1);
                                     }
                                 }
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogException(_logger, ex);
+                                    Logging.LogLoginException(_logger, ex);
                                 }
-                            });
+                                Logging.LogEndMethod(_logger, methodNamespace);
+                            }); 
+                            #endregion
                         }
                     }
                     else
@@ -502,42 +527,53 @@ namespace GreenField.AdministrationModule.ViewModels
 
                         _manageLogins.DeleteUsers(deleteUsers, (result) =>
                             {
+                                string deleteUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                Logging.LogBeginMethod(_logger, deleteUsersMethodNamespace);
                                 try
                                 {
-                                    if (result)
+                                    if (result != null)
                                     {
-                                        foreach (string user in deleteUsers)
+                                        Logging.LogMethodParameter(_logger, deleteUsersMethodNamespace, result, 1);
+                                        if ((bool)result)
                                         {
-                                            Logging.LogLoginDelete(_logger, user);
-                                        }
-                                        _manageLogins.GetAllUsers(GetAllUsersCallBackMethod);
+                                            foreach (string user in deleteUsers)
+                                            {
+                                                Logging.LogLoginDelete(_logger, user);
+                                            }
+                                            _manageLogins.GetAllUsers(GetAllUsersCallBackMethod);
 
-                                        if (UserRoles != null)
-                                        {
-                                            UserRoles.Clear();
+                                            if (UserRoles != null)
+                                            {
+                                                UserRoles.Clear();
+                                            }
+                                            if (AvailableRoles != null)
+                                            {
+                                                AvailableRoles.Clear();
+                                            }
+                                            if (SelectedMembershipUser != null)
+                                            {
+                                                SelectedMembershipUser = null;
+                                            }
                                         }
-                                        if (AvailableRoles != null)
+                                        else
                                         {
-                                            AvailableRoles.Clear();
-                                        }
-                                        if (SelectedMembershipUser != null)
-                                        {
-                                            SelectedMembershipUser = null;
+                                            foreach (string user in deleteUsers)
+                                            {
+                                                Logging.LogLoginDeleteFailed(_logger, user);
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        foreach (string user in deleteUsers)
-                                        {
-                                            Logging.LogLoginDeleteFailed(_logger, user);
-                                        }
+                                        Logging.LogMethodParameterNull(_logger, deleteUsersMethodNamespace, 1);
                                     }
                                 }
                                 catch (Exception ex)
                                 {
                                     MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogException(_logger, ex);
+                                    Logging.LogLoginException(_logger, ex);
                                 }
+                                Logging.LogEndMethod(_logger, methodNamespace);
                             });
                     }
                 }
@@ -727,44 +763,57 @@ namespace GreenField.AdministrationModule.ViewModels
                             additionRoles.Add(role);
 
 
+                    #region UpdateUserRoles Service Call
                     _manageLogins.UpdateUserRoles(SelectedMembershipUser.UserName, additionRoles, deletionRoles, (result) =>
                     {
+                        string updateUserRolesMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                        Logging.LogBeginMethod(_logger, updateUserRolesMethodNamespace);
                         try
                         {
-                            if (result)
+                            if (result != null)
                             {
-                                foreach (string role in additionRoles)
+                                Logging.LogMethodParameter(_logger, updateUserRolesMethodNamespace, result, 1);
+                                if ((bool)result)
                                 {
-                                    Logging.LogLoginRoleAssign(_logger, SelectedMembershipUser.UserName, role);
-                                }
+                                    foreach (string role in additionRoles)
+                                    {
+                                        Logging.LogLoginRoleAssign(_logger, SelectedMembershipUser.UserName, role);
+                                    }
 
-                                foreach (string role in deletionRoles)
+                                    foreach (string role in deletionRoles)
+                                    {
+                                        Logging.LogLoginRoleRemove(_logger, SelectedMembershipUser.UserName, role);
+                                    }
+                                }
+                                else
                                 {
-                                    Logging.LogLoginRoleRemove(_logger, SelectedMembershipUser.UserName, role);
+                                    foreach (string role in additionRoles)
+                                    {
+                                        Logging.LogLoginRoleAssignFailed(_logger, SelectedMembershipUser.UserName, role);
+                                    }
+
+                                    foreach (string role in deletionRoles)
+                                    {
+                                        Logging.LogLoginRoleRemoveFailed(_logger, SelectedMembershipUser.UserName, role);
+                                    }
+
+                                    UserRoles = DbUserRoles;
+                                    AvailableRoles = DbAvailableRoles;
                                 }
                             }
                             else
                             {
-                                foreach (string role in additionRoles)
-                                {
-                                    Logging.LogLoginRoleAssignFailed(_logger, SelectedMembershipUser.UserName, role);
-                                }
-
-                                foreach (string role in deletionRoles)
-                                {
-                                    Logging.LogLoginRoleRemoveFailed(_logger, SelectedMembershipUser.UserName, role);
-                                }
-
-                                UserRoles = DbUserRoles;
-                                AvailableRoles = DbAvailableRoles;
+                                Logging.LogMethodParameterNull(_logger, updateUserRolesMethodNamespace, 1);
                             }
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                            Logging.LogException(_logger, ex);
+                            Logging.LogLoginException(_logger, ex);
                         }
-                    });
+                        Logging.LogEndMethod(_logger, methodNamespace);
+                    }); 
+                    #endregion
                 }
             }
             catch (Exception ex)

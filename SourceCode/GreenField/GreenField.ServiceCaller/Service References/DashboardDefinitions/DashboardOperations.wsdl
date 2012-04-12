@@ -15,20 +15,20 @@
   <wsdl:message name="DashboardOperations_GetDashboardPreferenceByUserName_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDashboardPreferenceByUserNameResponse" />
   </wsdl:message>
-  <wsdl:message name="DashboardOperations_SetDashBoardPreference_InputMessage">
-    <wsdl:part name="parameters" element="tns:SetDashBoardPreference" />
+  <wsdl:message name="DashboardOperations_SetDashboardPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDashboardPreference" />
   </wsdl:message>
-  <wsdl:message name="DashboardOperations_SetDashBoardPreference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:SetDashBoardPreferenceResponse" />
+  <wsdl:message name="DashboardOperations_SetDashboardPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDashboardPreferenceResponse" />
   </wsdl:message>
   <wsdl:portType name="DashboardOperations">
     <wsdl:operation name="GetDashboardPreferenceByUserName">
       <wsdl:input wsaw:Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserName" message="tns:DashboardOperations_GetDashboardPreferenceByUserName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserNameResponse" message="tns:DashboardOperations_GetDashboardPreferenceByUserName_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="SetDashBoardPreference">
-      <wsdl:input wsaw:Action="http://tempuri.org/DashboardOperations/SetDashBoardPreference" message="tns:DashboardOperations_SetDashBoardPreference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/DashboardOperations/SetDashBoardPreferenceResponse" message="tns:DashboardOperations_SetDashBoardPreference_OutputMessage" />
+    <wsdl:operation name="SetDashboardPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/DashboardOperations/SetDashboardPreference" message="tns:DashboardOperations_SetDashboardPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DashboardOperations/SetDashboardPreferenceResponse" message="tns:DashboardOperations_SetDashboardPreference_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DashboardOperations" type="tns:DashboardOperations">
@@ -42,8 +42,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="SetDashBoardPreference">
-      <soap:operation soapAction="http://tempuri.org/DashboardOperations/SetDashBoardPreference" style="document" />
+    <wsdl:operation name="SetDashboardPreference">
+      <soap:operation soapAction="http://tempuri.org/DashboardOperations/SetDashboardPreference" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

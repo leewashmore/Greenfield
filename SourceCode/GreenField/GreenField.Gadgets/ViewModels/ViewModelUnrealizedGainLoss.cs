@@ -53,14 +53,13 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor of the class that initializes various objects
         /// </summary>
         /// <param name="param">MEF Eventaggrigator instance</param>
-        public ViewModelUnrealizedGainLoss(DashBoardGadgetParam param)
+        public ViewModelUnrealizedGainLoss(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
-            
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
                 HandleSecurityReferenceSet(_entitySelectionData);
@@ -174,9 +173,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }       
 
-        /// <summary>
         /// Defines the Chart area Unrealized gain loss chart
-        /// </summary>
         private ChartArea _chartArea;
         public ChartArea ChartArea
         {
@@ -196,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallBack Methods        
-        /// <summary>
+
         /// Method that calls the service Method through a call to Service Caller
         /// </summary>
         /// <param name="Ticker">Unique Identifier for a security</param>
@@ -290,14 +287,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
-        #endregion
-
-        #region Events
-        /// <summary>
-        /// Event for the notification of Data Load Completion
-        /// </summary>
-        public event DataRetrievalProgressIndicator unrealizedGainLossDataLoadedEvent;
-        #endregion
 
         #region ICommand
         ICommand _zoomInCommand;
@@ -326,6 +315,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #endregion
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler unrealizedGainLossDataLoadedEvent;
         #endregion
 
         #region ICommand Methods
@@ -453,13 +450,16 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Data Context Source for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
             ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
-
-
         #endregion
     }
 }

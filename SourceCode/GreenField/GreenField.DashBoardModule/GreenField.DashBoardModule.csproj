@@ -119,11 +119,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DashBoardModule.cs" />
+    <Compile Include="DashboardModule.cs" />
+    <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingClosingPrice.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingClosingPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanySnapshotSummary.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotSummary.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -135,19 +145,26 @@
       <Project>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</Project>
       <Name>GreenField.Gadgets</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GreenField.Module\GreenField.Module.csproj">
-      <Project>{C1B39AD0-BE76-4AF0-9EBA-753B90EEBE32}</Project>
-      <Name>GreenField.Module</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
       <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
       <Name>GreenField.ServiceCaller</Name>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ViewDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingClosingPrice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingUnrealizedGain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanySnapshotSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,145 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
-  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
-  <xs:element name="RetrievePrintValue">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePrintValueResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="RetrievePrintValueResult" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDetailedEstimates">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="companyName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="periodType" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="estimateType" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDetailedEstimatesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveDetailedEstimatesResult" nillable="true" type="q1:ArrayOfDetailedEstimates_Result" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveCompaniesList">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveCompaniesListResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCompaniesListResult" nillable="true" type="q2:ArrayOfGetCompanies_Result" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDimensionDataListView">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDimensionDataListViewResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveDimensionDataListViewResult" nillable="true" type="q3:ArrayOfstring" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDimensionDataForSelectedView">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="viewName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDimensionDataForSelectedViewResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveDimensionDataForSelectedViewResult" nillable="true" type="q4:ArrayOfHoldingsData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveConsensusEstimates">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="companyName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="periodType" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveConsensusEstimatesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveConsensusEstimatesResult" nillable="true" type="q5:ArrayOfConsensusEstimates_Result" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePerformanceDataForSelectedView">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="viewName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePerformanceDataForSelectedViewResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePerformanceDataForSelectedViewResult" nillable="true" type="q6:ArrayOfPerformanceData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveReferenceDataForSelectedView">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="viewName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveReferenceDataForSelectedViewResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveReferenceDataForSelectedViewResult" nillable="true" type="q7:ArrayOfReferenceData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveAggregateDataForSelectedView">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="portfolioName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveAggregateDataForSelectedViewResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAggregateDataForSelectedViewResult" nillable="true" type="q8:ArrayOfAggregatedData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePortfolioNames">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="viewName" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePortfolioNamesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrievePortfolioNamesResult" nillable="true" type="q9:ArrayOfstring" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:element name="RetrieveSecurityReferenceData">
     <xs:complexType>
       <xs:sequence />
@@ -148,7 +11,7 @@
   <xs:element name="RetrieveSecurityReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataResult" nillable="true" type="q10:ArrayOfSecurityOverviewData" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataResult" nillable="true" type="q1:ArrayOfSecurityOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -162,14 +25,14 @@
   <xs:element name="RetrieveSecurityReferenceDataByTickerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataByTickerResult" nillable="true" type="q11:SecurityOverviewData" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataByTickerResult" nillable="true" type="q2:SecurityOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrievePricingReferenceData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q12:ArrayOfEntitySelectionData" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q3:ArrayOfEntitySelectionData" />
         <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="totalReturnCheck" type="xs:boolean" />
@@ -180,7 +43,7 @@
   <xs:element name="RetrievePricingReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePricingReferenceDataResult" nillable="true" type="q13:ArrayOfPricingReferenceData" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePricingReferenceDataResult" nillable="true" type="q4:ArrayOfPricingReferenceData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -192,7 +55,7 @@
   <xs:element name="RetrieveEntitySelectionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveEntitySelectionDataResult" nillable="true" type="q14:ArrayOfEntitySelectionData" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveEntitySelectionDataResult" nillable="true" type="q5:ArrayOfEntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -204,7 +67,7 @@
   <xs:element name="RetrieveFundSelectionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveFundSelectionDataResult" nillable="true" type="q15:ArrayOfFundSelectionData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveFundSelectionDataResult" nillable="true" type="q6:ArrayOfFundSelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -216,11 +79,59 @@
   <xs:element name="RetrieveBenchmarkSelectionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveBenchmarkSelectionDataResult" nillable="true" type="q16:ArrayOfBenchmarkSelectionData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveBenchmarkSelectionDataResult" nillable="true" type="q7:ArrayOfBenchmarkSelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMarketCapitalizationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q8:FundSelectionData" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q9:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMarketCapitalizationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMarketCapitalizationDataResult" nillable="true" type="q10:MarketCapitalizationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAssetAllocationData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q11:FundSelectionData" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q12:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAssetAllocationDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAssetAllocationDataResult" nillable="true" type="q13:ArrayOfAssetAllocationData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSectorBreakdownData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q14:FundSelectionData" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q15:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSectorBreakdownDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSectorBreakdownDataResult" nillable="true" type="q16:ArrayOfSectorBreakdownData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRegionBreakdownData">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q17:FundSelectionData" />
@@ -229,14 +140,14 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveMarketCapitalizationDataResponse">
+  <xs:element name="RetrieveRegionBreakdownDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMarketCapitalizationDataResult" nillable="true" type="q19:MarketCapitalizationData" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRegionBreakdownDataResult" nillable="true" type="q19:ArrayOfRegionBreakdownData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveAssetAllocationData">
+  <xs:element name="RetrieveTopHoldingsData">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q20:FundSelectionData" />
@@ -245,65 +156,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveAssetAllocationDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAssetAllocationDataResult" nillable="true" type="q22:ArrayOfAssetAllocationData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveSectorBreakdownData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q23:FundSelectionData" />
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q24:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveSectorBreakdownDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSectorBreakdownDataResult" nillable="true" type="q25:ArrayOfSectorBreakdownData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveRegionBreakdownData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q26:FundSelectionData" />
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q27:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveRegionBreakdownDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRegionBreakdownDataResult" nillable="true" type="q28:ArrayOfRegionBreakdownData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveTopHoldingsData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q29:FundSelectionData" />
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q30:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="RetrieveTopHoldingsDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveTopHoldingsDataResult" nillable="true" type="q31:ArrayOfTopHoldingsData" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveTopHoldingsDataResult" nillable="true" type="q22:ArrayOfTopHoldingsData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveIndexConstituentsData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q32:BenchmarkSelectionData" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q23:BenchmarkSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
@@ -311,89 +174,7 @@
   <xs:element name="RetrieveIndexConstituentsDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveIndexConstituentsDataResult" nillable="true" type="q33:ArrayOfIndexConstituentsData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveHoldingsPercentageData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q34:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveHoldingsPercentageDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveHoldingsPercentageDataResult" nillable="true" type="q35:ArrayOfHoldingsPercentageData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveHoldingsPercentageDataForRegion">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q36:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveHoldingsPercentageDataForRegionResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveHoldingsPercentageDataForRegionResult" nillable="true" type="q37:ArrayOfHoldingsPercentageData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveTopBenchmarkSecuritiesData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q38:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveTopBenchmarkSecuritiesDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveTopBenchmarkSecuritiesDataResult" nillable="true" type="q39:ArrayOfTopBenchmarkSecuritiesData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePortfolioRiskReturnData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q40:FundSelectionData" />
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q41:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePortfolioRiskReturnDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePortfolioRiskReturnDataResult" nillable="true" type="q42:ArrayOfPortfolioRiskReturnData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveUnrealizedGainLossData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="entityIdentifier" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
-        <xs:element minOccurs="0" name="frequencyInterval" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveUnrealizedGainLossDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q43:ArrayOfUnrealizedGainLossData" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveIndexConstituentsDataResult" nillable="true" type="q24:ArrayOfIndexConstituentsData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -407,7 +188,7 @@
   <xs:element name="RetrieveValuesForFiltersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveValuesForFiltersResult" nillable="true" type="q44:ArrayOfstring" />
+        <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveValuesForFiltersResult" nillable="true" type="q25:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -421,21 +202,21 @@
   <xs:element name="RetrieveUserPreferenceBenchmarkDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveUserPreferenceBenchmarkDataResult" nillable="true" type="q45:ArrayOfUserBenchmarkPreference" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveUserPreferenceBenchmarkDataResult" nillable="true" type="q26:ArrayOfUserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMorningSnapshotData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q46:ArrayOfUserBenchmarkPreference" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q27:ArrayOfUserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMorningSnapshotDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMorningSnapshotDataResult" nillable="true" type="q47:ArrayOfMorningSnapshotData" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveMorningSnapshotDataResult" nillable="true" type="q28:ArrayOfMorningSnapshotData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -473,7 +254,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q48:UserBenchmarkPreference" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q29:UserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -488,7 +269,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q49:UserBenchmarkPreference" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="userBenchmarkPreference" nillable="true" type="q30:UserBenchmarkPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -502,8 +283,8 @@
   <xs:element name="RetrieveRelativePerformanceSectorData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q50:FundSelectionData" />
-        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q51:BenchmarkSelectionData" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q31:FundSelectionData" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q32:BenchmarkSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
@@ -511,15 +292,69 @@
   <xs:element name="RetrieveRelativePerformanceSectorDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSectorDataResult" nillable="true" type="q52:ArrayOfRelativePerformanceSectorData" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSectorDataResult" nillable="true" type="q33:ArrayOfRelativePerformanceSectorData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceCountryActivePositionData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q34:FundSelectionData" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q35:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="countryID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sectorID" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceCountryActivePositionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceCountryActivePositionDataResult" nillable="true" type="q36:ArrayOfRelativePerformanceActivePositionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceSectorActivePositionData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q37:FundSelectionData" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q38:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="countryID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sectorID" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceSectorActivePositionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSectorActivePositionDataResult" nillable="true" type="q39:ArrayOfRelativePerformanceActivePositionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceSecurityActivePositionData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q40:FundSelectionData" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q41:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="countryID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sectorID" nillable="true" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRelativePerformanceSecurityActivePositionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSecurityActivePositionDataResult" nillable="true" type="q42:ArrayOfRelativePerformanceActivePositionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveRelativePerformanceSecurityData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q53:FundSelectionData" />
-        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q54:BenchmarkSelectionData" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q43:FundSelectionData" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q44:BenchmarkSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="countryID" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sectorID" nillable="true" type="xs:int" />
@@ -531,15 +366,15 @@
   <xs:element name="RetrieveRelativePerformanceSecurityDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSecurityDataResult" nillable="true" type="q55:ArrayOfRelativePerformanceSecurityData" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceSecurityDataResult" nillable="true" type="q45:ArrayOfRelativePerformanceSecurityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveRelativePerformanceData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q56:FundSelectionData" />
-        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q57:BenchmarkSelectionData" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q46:FundSelectionData" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q47:BenchmarkSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
@@ -547,7 +382,131 @@
   <xs:element name="RetrieveRelativePerformanceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceDataResult" nillable="true" type="q58:ArrayOfRelativePerformanceData" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveRelativePerformanceDataResult" nillable="true" type="q48:ArrayOfRelativePerformanceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGraphData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nameOfFund" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGraphDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePerformanceGraphDataResult" nillable="true" type="q49:ArrayOfPerformanceGraphData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGridData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nameOfFund" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGridDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePerformanceGridDataResult" nillable="true" type="q50:ArrayOfPerformanceGridData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAttributionData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="nameOfFund" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveAttributionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAttributionDataResult" nillable="true" type="q51:ArrayOfAttributionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveUnrealizedGainLossData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="entityIdentifier" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="frequencyInterval" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveUnrealizedGainLossDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q52:ArrayOfUnrealizedGainLossData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveHoldingsPercentageData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q53:FundSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveHoldingsPercentageDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q54="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveHoldingsPercentageDataResult" nillable="true" type="q54:ArrayOfHoldingsPercentageData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveHoldingsPercentageDataForRegion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q55="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q55:FundSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveHoldingsPercentageDataForRegionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q56="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveHoldingsPercentageDataForRegionResult" nillable="true" type="q56:ArrayOfHoldingsPercentageData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveTopBenchmarkSecuritiesData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q57="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q57:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveTopBenchmarkSecuritiesDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q58="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveTopBenchmarkSecuritiesDataResult" nillable="true" type="q58:ArrayOfTopBenchmarkSecuritiesData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioRiskReturnData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q59="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q59:FundSelectionData" />
+        <xs:element xmlns:q60="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q60:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioRiskReturnDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q61="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePortfolioRiskReturnDataResult" nillable="true" type="q61:ArrayOfPortfolioRiskReturnData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

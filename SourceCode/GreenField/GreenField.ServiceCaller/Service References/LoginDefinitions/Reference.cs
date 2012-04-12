@@ -247,7 +247,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ValidateUser", ReplyAction="http://tempuri.org/LoginOperations/ValidateUserResponse")]
         System.IAsyncResult BeginValidateUser(string username, string password, System.AsyncCallback callback, object asyncState);
         
-        bool EndValidateUser(System.IAsyncResult result);
+        System.Nullable<bool> EndValidateUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/CreateUser", ReplyAction="http://tempuri.org/LoginOperations/CreateUserResponse")]
         System.IAsyncResult BeginCreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, System.AsyncCallback callback, object asyncState);
@@ -257,7 +257,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ChangePassword", ReplyAction="http://tempuri.org/LoginOperations/ChangePasswordResponse")]
         System.IAsyncResult BeginChangePassword(string username, string oldPassword, string newPassword, System.AsyncCallback callback, object asyncState);
         
-        bool EndChangePassword(System.IAsyncResult result);
+        System.Nullable<bool> EndChangePassword(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ResetPassword", ReplyAction="http://tempuri.org/LoginOperations/ResetPasswordResponse")]
         System.IAsyncResult BeginResetPassword(string username, string answer, System.AsyncCallback callback, object asyncState);
@@ -267,22 +267,22 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateApprovalForUser", ReplyAction="http://tempuri.org/LoginOperations/UpdateApprovalForUserResponse")]
         System.IAsyncResult BeginUpdateApprovalForUser(GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo membershipUserInfo, System.AsyncCallback callback, object asyncState);
         
-        bool EndUpdateApprovalForUser(System.IAsyncResult result);
+        System.Nullable<bool> EndUpdateApprovalForUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateApprovalForUsers", ReplyAction="http://tempuri.org/LoginOperations/UpdateApprovalForUsersResponse")]
         System.IAsyncResult BeginUpdateApprovalForUsers(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo> users, System.AsyncCallback callback, object asyncState);
         
-        bool EndUpdateApprovalForUsers(System.IAsyncResult result);
+        System.Nullable<bool> EndUpdateApprovalForUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteUser", ReplyAction="http://tempuri.org/LoginOperations/DeleteUserResponse")]
         System.IAsyncResult BeginDeleteUser(string username, System.AsyncCallback callback, object asyncState);
         
-        bool EndDeleteUser(System.IAsyncResult result);
+        System.Nullable<bool> EndDeleteUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteUsers", ReplyAction="http://tempuri.org/LoginOperations/DeleteUsersResponse")]
         System.IAsyncResult BeginDeleteUsers(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.AsyncCallback callback, object asyncState);
         
-        bool EndDeleteUsers(System.IAsyncResult result);
+        System.Nullable<bool> EndDeleteUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetUser", ReplyAction="http://tempuri.org/LoginOperations/GetUserResponse")]
         System.IAsyncResult BeginGetUser(string username, bool userIsOnline, System.AsyncCallback callback, object asyncState);
@@ -297,12 +297,12 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UnlockUser", ReplyAction="http://tempuri.org/LoginOperations/UnlockUserResponse")]
         System.IAsyncResult BeginUnlockUser(string userName, System.AsyncCallback callback, object asyncState);
         
-        bool EndUnlockUser(System.IAsyncResult result);
+        System.Nullable<bool> EndUnlockUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UnlockUsers", ReplyAction="http://tempuri.org/LoginOperations/UnlockUsersResponse")]
         System.IAsyncResult BeginUnlockUsers(System.Collections.ObjectModel.ObservableCollection<string> userNames, System.AsyncCallback callback, object asyncState);
         
-        bool EndUnlockUsers(System.IAsyncResult result);
+        System.Nullable<bool> EndUnlockUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetAllRoles", ReplyAction="http://tempuri.org/LoginOperations/GetAllRolesResponse")]
         System.IAsyncResult BeginGetAllRoles(System.AsyncCallback callback, object asyncState);
@@ -312,7 +312,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/CreateRole", ReplyAction="http://tempuri.org/LoginOperations/CreateRoleResponse")]
         System.IAsyncResult BeginCreateRole(string roleName, System.AsyncCallback callback, object asyncState);
         
-        bool EndCreateRole(System.IAsyncResult result);
+        System.Nullable<bool> EndCreateRole(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetRolesForUser", ReplyAction="http://tempuri.org/LoginOperations/GetRolesForUserResponse")]
         System.IAsyncResult BeginGetRolesForUser(string username, System.AsyncCallback callback, object asyncState);
@@ -322,22 +322,22 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/RemoveUsersFromRoles", ReplyAction="http://tempuri.org/LoginOperations/RemoveUsersFromRolesResponse")]
         System.IAsyncResult BeginRemoveUsersFromRoles(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.Collections.ObjectModel.ObservableCollection<string> roleNames, System.AsyncCallback callback, object asyncState);
         
-        bool EndRemoveUsersFromRoles(System.IAsyncResult result);
+        System.Nullable<bool> EndRemoveUsersFromRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/AddUsersToRoles", ReplyAction="http://tempuri.org/LoginOperations/AddUsersToRolesResponse")]
         System.IAsyncResult BeginAddUsersToRoles(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.Collections.ObjectModel.ObservableCollection<string> roleNames, System.AsyncCallback callback, object asyncState);
         
-        bool EndAddUsersToRoles(System.IAsyncResult result);
+        System.Nullable<bool> EndAddUsersToRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateUserRoles", ReplyAction="http://tempuri.org/LoginOperations/UpdateUserRolesResponse")]
         System.IAsyncResult BeginUpdateUserRoles(string userName, System.Collections.ObjectModel.ObservableCollection<string> addRoleNames, System.Collections.ObjectModel.ObservableCollection<string> deleteRoleNames, System.AsyncCallback callback, object asyncState);
         
-        bool EndUpdateUserRoles(System.IAsyncResult result);
+        System.Nullable<bool> EndUpdateUserRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteRole", ReplyAction="http://tempuri.org/LoginOperations/DeleteRoleResponse")]
         System.IAsyncResult BeginDeleteRole(string username, bool throwOnPopulatedRole, System.AsyncCallback callback, object asyncState);
         
-        bool EndDeleteRole(System.IAsyncResult result);
+        System.Nullable<bool> EndDeleteRole(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -355,10 +355,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -393,10 +393,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -431,10 +431,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -450,10 +450,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -469,10 +469,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -488,10 +488,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -545,10 +545,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -564,10 +564,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -602,10 +602,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -640,10 +640,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -659,10 +659,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -678,10 +678,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -697,10 +697,10 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -924,7 +924,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndValidateUser(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndValidateUser(System.IAsyncResult result) {
             return base.Channel.EndValidateUser(result);
         }
         
@@ -935,7 +935,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndValidateUser(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndValidateUser(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndValidateUser(result);
             return new object[] {
                     retVal};
         }
@@ -1028,7 +1028,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndChangePassword(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndChangePassword(System.IAsyncResult result) {
             return base.Channel.EndChangePassword(result);
         }
         
@@ -1040,7 +1040,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndChangePassword(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndChangePassword(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndChangePassword(result);
             return new object[] {
                     retVal};
         }
@@ -1126,7 +1126,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateApprovalForUser(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateApprovalForUser(System.IAsyncResult result) {
             return base.Channel.EndUpdateApprovalForUser(result);
         }
         
@@ -1136,7 +1136,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndUpdateApprovalForUser(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateApprovalForUser(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateApprovalForUser(result);
             return new object[] {
                     retVal};
         }
@@ -1172,7 +1172,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateApprovalForUsers(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateApprovalForUsers(System.IAsyncResult result) {
             return base.Channel.EndUpdateApprovalForUsers(result);
         }
         
@@ -1182,7 +1182,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndUpdateApprovalForUsers(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateApprovalForUsers(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateApprovalForUsers(result);
             return new object[] {
                     retVal};
         }
@@ -1218,7 +1218,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteUser(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteUser(System.IAsyncResult result) {
             return base.Channel.EndDeleteUser(result);
         }
         
@@ -1228,7 +1228,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndDeleteUser(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteUser(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteUser(result);
             return new object[] {
                     retVal};
         }
@@ -1264,7 +1264,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteUsers(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteUsers(System.IAsyncResult result) {
             return base.Channel.EndDeleteUsers(result);
         }
         
@@ -1274,7 +1274,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndDeleteUsers(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteUsers(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteUsers(result);
             return new object[] {
                     retVal};
         }
@@ -1402,7 +1402,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUnlockUser(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUnlockUser(System.IAsyncResult result) {
             return base.Channel.EndUnlockUser(result);
         }
         
@@ -1412,7 +1412,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndUnlockUser(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUnlockUser(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUnlockUser(result);
             return new object[] {
                     retVal};
         }
@@ -1448,7 +1448,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUnlockUsers(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUnlockUsers(System.IAsyncResult result) {
             return base.Channel.EndUnlockUsers(result);
         }
         
@@ -1458,7 +1458,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndUnlockUsers(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUnlockUsers(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUnlockUsers(result);
             return new object[] {
                     retVal};
         }
@@ -1538,7 +1538,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndCreateRole(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndCreateRole(System.IAsyncResult result) {
             return base.Channel.EndCreateRole(result);
         }
         
@@ -1548,7 +1548,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndCreateRole(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndCreateRole(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndCreateRole(result);
             return new object[] {
                     retVal};
         }
@@ -1630,7 +1630,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndRemoveUsersFromRoles(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndRemoveUsersFromRoles(System.IAsyncResult result) {
             return base.Channel.EndRemoveUsersFromRoles(result);
         }
         
@@ -1641,7 +1641,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndRemoveUsersFromRoles(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndRemoveUsersFromRoles(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndRemoveUsersFromRoles(result);
             return new object[] {
                     retVal};
         }
@@ -1678,7 +1678,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndAddUsersToRoles(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndAddUsersToRoles(System.IAsyncResult result) {
             return base.Channel.EndAddUsersToRoles(result);
         }
         
@@ -1689,7 +1689,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndAddUsersToRoles(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndAddUsersToRoles(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndAddUsersToRoles(result);
             return new object[] {
                     retVal};
         }
@@ -1726,7 +1726,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateUserRoles(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndUpdateUserRoles(System.IAsyncResult result) {
             return base.Channel.EndUpdateUserRoles(result);
         }
         
@@ -1738,7 +1738,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndUpdateUserRoles(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateUserRoles(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndUpdateUserRoles(result);
             return new object[] {
                     retVal};
         }
@@ -1776,7 +1776,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteRole(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.LoginDefinitions.LoginOperations.EndDeleteRole(System.IAsyncResult result) {
             return base.Channel.EndDeleteRole(result);
         }
         
@@ -1787,7 +1787,7 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
         }
         
         private object[] OnEndDeleteRole(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteRole(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.LoginDefinitions.LoginOperations)(this)).EndDeleteRole(result);
             return new object[] {
                     retVal};
         }
@@ -1902,9 +1902,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndValidateUser(System.IAsyncResult result) {
+            public System.Nullable<bool> EndValidateUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("ValidateUser", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("ValidateUser", _args, result)));
                 return _result;
             }
             
@@ -1935,9 +1935,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndChangePassword(System.IAsyncResult result) {
+            public System.Nullable<bool> EndChangePassword(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("ChangePassword", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("ChangePassword", _args, result)));
                 return _result;
             }
             
@@ -1962,9 +1962,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndUpdateApprovalForUser(System.IAsyncResult result) {
+            public System.Nullable<bool> EndUpdateApprovalForUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("UpdateApprovalForUser", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UpdateApprovalForUser", _args, result)));
                 return _result;
             }
             
@@ -1975,9 +1975,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndUpdateApprovalForUsers(System.IAsyncResult result) {
+            public System.Nullable<bool> EndUpdateApprovalForUsers(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("UpdateApprovalForUsers", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UpdateApprovalForUsers", _args, result)));
                 return _result;
             }
             
@@ -1988,9 +1988,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndDeleteUser(System.IAsyncResult result) {
+            public System.Nullable<bool> EndDeleteUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("DeleteUser", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("DeleteUser", _args, result)));
                 return _result;
             }
             
@@ -2001,9 +2001,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndDeleteUsers(System.IAsyncResult result) {
+            public System.Nullable<bool> EndDeleteUsers(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("DeleteUsers", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("DeleteUsers", _args, result)));
                 return _result;
             }
             
@@ -2040,9 +2040,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndUnlockUser(System.IAsyncResult result) {
+            public System.Nullable<bool> EndUnlockUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("UnlockUser", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UnlockUser", _args, result)));
                 return _result;
             }
             
@@ -2053,9 +2053,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndUnlockUsers(System.IAsyncResult result) {
+            public System.Nullable<bool> EndUnlockUsers(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("UnlockUsers", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UnlockUsers", _args, result)));
                 return _result;
             }
             
@@ -2078,9 +2078,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndCreateRole(System.IAsyncResult result) {
+            public System.Nullable<bool> EndCreateRole(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("CreateRole", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("CreateRole", _args, result)));
                 return _result;
             }
             
@@ -2105,9 +2105,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndRemoveUsersFromRoles(System.IAsyncResult result) {
+            public System.Nullable<bool> EndRemoveUsersFromRoles(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("RemoveUsersFromRoles", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("RemoveUsersFromRoles", _args, result)));
                 return _result;
             }
             
@@ -2119,9 +2119,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndAddUsersToRoles(System.IAsyncResult result) {
+            public System.Nullable<bool> EndAddUsersToRoles(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("AddUsersToRoles", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("AddUsersToRoles", _args, result)));
                 return _result;
             }
             
@@ -2134,9 +2134,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndUpdateUserRoles(System.IAsyncResult result) {
+            public System.Nullable<bool> EndUpdateUserRoles(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("UpdateUserRoles", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UpdateUserRoles", _args, result)));
                 return _result;
             }
             
@@ -2148,9 +2148,9 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
                 return _result;
             }
             
-            public bool EndDeleteRole(System.IAsyncResult result) {
+            public System.Nullable<bool> EndDeleteRole(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("DeleteRole", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("DeleteRole", _args, result)));
                 return _result;
             }
         }

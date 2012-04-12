@@ -35,8 +35,8 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Visualizations for field validation states
         /// </summary>
-        private static Brush VALID_BRUSH = new SolidColorBrush(Colors.Black);
-        private static Brush INVALID_BRUSH = new SolidColorBrush(Colors.Red);
+        private static Brush VALId_BRUSH = new SolidColorBrush(Colors.Black);
+        private static Brush INVALId_BRUSH = new SolidColorBrush(Colors.Red);
 
         /// <summary>
         /// Enumeration for field validation states
@@ -64,7 +64,7 @@ namespace GreenField.LoginModule.ViewModel
         #region Properties
         #region UI Fields
         /// <summary>
-        /// Property binding Login ID TextBlock Text property
+        /// Property binding Login Id TextBlock Text property
         /// </summary>
         private string _loginIdText = string.Empty;
         public string LoginIdText
@@ -81,7 +81,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property storing Login ID field validation state
+        /// Property storing Login Id field validation state
         /// </summary>
         private FieldState _loginIdState = FieldState.ValidField;
         public FieldState LoginIdState
@@ -91,8 +91,8 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _loginIdState = value;
                 //Visualization changes based on field validation state
-                LoginBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
-                InvalidLoginIDPopupIsOpen = value == FieldState.InvalidField ? true : false;
+                LoginBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
+                InvalidLoginIdPopupIsOpen = value == FieldState.InvalidField ? true : false;
             }
         }
 
@@ -124,7 +124,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _passwordState = value;
                 //Visualization changes based on field validation state
-                PasswordBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                PasswordBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
                 InvalidPasswordPopupIsOpen = value == FieldState.InvalidField ? true : false;
             }
         }
@@ -157,7 +157,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _confirmPasswordState = value;
                 //Visualization changes based on field validation state
-                ConfPasswordBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                ConfPasswordBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
                 InvalidConfPasswordPopupIsOpen = value == FieldState.InvalidField ? true : false;
             }
         }
@@ -190,7 +190,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _emailState = value;
                 //Visualization changes based on field validation state
-                EmailBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                EmailBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
                 InvalidEmailPopupIsOpen = value == FieldState.InvalidField ? true : false;
             }
         }
@@ -223,7 +223,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _securityQuestionState = value;
                 //Visualization changes based on field validation state
-                SecurityQuestionBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                SecurityQuestionBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
             }
         }
 
@@ -255,7 +255,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _securityAnswerState = value;
                 //Visualization changes based on field validation state
-                SecurityAnswerBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                SecurityAnswerBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
             }
         }
 
@@ -285,9 +285,9 @@ namespace GreenField.LoginModule.ViewModel
         #region Visualization
         #region UI Field Brush
         /// <summary>
-        /// Property binding to the Login ID Textbox BorderBrush and Login ID TextBlock Foreground attributes
+        /// Property binding to the Login Id Textbox BorderBrush and Login Id TextBlock Foreground attributes
         /// </summary>
-        private Brush _loginBorderBrush = VALID_BRUSH;
+        private Brush _loginBorderBrush = VALId_BRUSH;
         public Brush LoginBorderBrush
         {
             get { return _loginBorderBrush; }
@@ -304,7 +304,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the Password PasswordBox BorderBrush and Password TextBlock Foreground attributes
         /// </summary>
-        private Brush _passwordBorderBrush = VALID_BRUSH;
+        private Brush _passwordBorderBrush = VALId_BRUSH;
         public Brush PasswordBorderBrush
         {
             get { return _passwordBorderBrush; }
@@ -321,7 +321,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the ConfirmPassword PasswordBox BorderBrush and ConfirmPassword TextBlock Foreground attributes
         /// </summary>
-        private Brush _confPasswordBorderBrush = VALID_BRUSH;
+        private Brush _confPasswordBorderBrush = VALId_BRUSH;
         public Brush ConfPasswordBorderBrush
         {
             get { return _confPasswordBorderBrush; }
@@ -338,7 +338,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the Email Textbox BorderBrush and Email TextBlock Foreground attributes
         /// </summary>
-        private Brush _emailBorderBrush = VALID_BRUSH;
+        private Brush _emailBorderBrush = VALId_BRUSH;
         public Brush EmailBorderBrush
         {
             get { return _emailBorderBrush; }
@@ -355,7 +355,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the SecurityQuestion ComboBox BorderBrush and SecurityQuestion TextBlock Foreground attributes
         /// </summary>
-        private Brush _securityQuestionBorderBrush = VALID_BRUSH;
+        private Brush _securityQuestionBorderBrush = VALId_BRUSH;
         public Brush SecurityQuestionBorderBrush
         {
             get { return _securityQuestionBorderBrush; }
@@ -372,7 +372,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the SecurityAnswer Textbox BorderBrush and SecurityAnswer TextBlock Foreground attributes
         /// </summary>
-        private Brush _securityAnswerBorderBrush = VALID_BRUSH;
+        private Brush _securityAnswerBorderBrush = VALId_BRUSH;
         public Brush SecurityAnswerBorderBrush
         {
             get { return _securityAnswerBorderBrush; }
@@ -408,20 +408,20 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to InvalidLoginIDPopup IsOpen attribute
+        /// Property binding to InvalidLoginIdPopup IsOpen attribute
         /// </summary>
-        private bool _invalidLoginIDPopupIsOpen = false;
-        public bool InvalidLoginIDPopupIsOpen
+        private bool _invalidLoginIdPopupIsOpen = false;
+        public bool InvalidLoginIdPopupIsOpen
         {
-            get { return _invalidLoginIDPopupIsOpen; }
+            get { return _invalidLoginIdPopupIsOpen; }
             set
             {
-                if (_invalidLoginIDPopupIsOpen != value)
+                if (_invalidLoginIdPopupIsOpen != value)
                 {
                     if (value == true)
                         SwitchOffPopups();
-                    _invalidLoginIDPopupIsOpen = value;
-                    RaisePropertyChanged(() => this.InvalidLoginIDPopupIsOpen);
+                    _invalidLoginIdPopupIsOpen = value;
+                    RaisePropertyChanged(() => this.InvalidLoginIdPopupIsOpen);
                 }
             }
         }
@@ -517,23 +517,23 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to InvalidLoginIDPopup Child attribute
+        /// Property binding to InvalidLoginIdPopup Child attribute
         /// </summary>
-        private UIElement _invalidLoginIDPopupChild;
-        public UIElement InvalidLoginIDPopupChild
+        private UIElement _invalidLoginIdPopupChild;
+        public UIElement InvalidLoginIdPopupChild
         {
             get
             {
-                if (_invalidLoginIDPopupChild == null)
-                    _invalidLoginIDPopupChild = new ErrorMessage(ErrorResourceManager.GetString("InvalidLoginIDError"));
-                return _invalidLoginIDPopupChild;
+                if (_invalidLoginIdPopupChild == null)
+                    _invalidLoginIdPopupChild = new ErrorMessage(ErrorResourceManager.GetString("InvalidLoginIdError"));
+                return _invalidLoginIdPopupChild;
             }
             set
             {
-                if (_invalidLoginIDPopupChild != value)
+                if (_invalidLoginIdPopupChild != value)
                 {
-                    _invalidLoginIDPopupChild = value;
-                    RaisePropertyChanged(() => this.InvalidLoginIDPopupChild);
+                    _invalidLoginIdPopupChild = value;
+                    RaisePropertyChanged(() => this.InvalidLoginIdPopupChild);
                 }
             }
         }
@@ -642,7 +642,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to Register button click event or Login ID/Password/ConfPassword/Email/SecurityAnswer Enter Press event
+        /// Property binding to Register button click event or Login Id/Password/ConfPassword/Email/SecurityAnswer Enter Press event
         /// </summary>        
         public ICommand RegisterCommand
         {
@@ -670,7 +670,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Register button click event or Login ID/Password/ConfPassword/Email/SecurityAnswer
+        /// Register button click event or Login Id/Password/ConfPassword/Email/SecurityAnswer
         /// Enter Press event implementation - validate errors, navigate to notification screen
         /// </summary>
         /// <param name="param"></param>
@@ -682,29 +682,46 @@ namespace GreenField.LoginModule.ViewModel
                 {
                     if (ErrorValidation())
                     {
+                        #region CreateUser Service Call
                         _manageLogins.CreateUser(LoginIdText, PasswordText, EmailText, SecurityQuestionText, SecurityAnswerText, false, (status) =>
                         {
                             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
                             Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
-                            
-                            if (status == MembershipCreateStatus.SUCCESS)
+
+                            try
                             {
-                                Logging.LogLoginMethodParameter(_logger, methodNamespace, status, 1, LoginIdText);
-                                Logging.LogAccountRegister(_logger, LoginIdText);
+                                if (status != null)
+                                {
+                                    if (status == MembershipCreateStatus.SUCCESS)
+                                    {
+                                        Logging.LogLoginMethodParameter(_logger, methodNamespace, status, 1, LoginIdText);
+                                        Logging.LogAccountRegister(_logger, LoginIdText);
 
-                                ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
-                                NotificationText = NotificationManager.GetString("RegisterNotification").Replace("[LoginID]", LoginIdText);
+                                        ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
+                                        NotificationText = NotificationManager.GetString("RegisterNotification").Replace("[LoginId]", LoginIdText);
 
-                                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
+                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
+                                    }
+                                    else
+                                    {
+                                        Logging.LogLoginMethodParameter(_logger, methodNamespace, status, 1, LoginIdText);
+                                        LoginIdState = FieldState.InvalidField;
+                                    }
+                                }
+                                else
+                                {
+                                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Logging.LogLoginMethodParameter(_logger, methodNamespace, status, 1, LoginIdText);
-                                LoginIdState = FieldState.InvalidField;
+                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                Logging.LogLoginException(_logger, ex);
                             }
 
                             Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
-                        });
+                        }); 
+                        #endregion
                     } 
                 }
             }
@@ -797,7 +814,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Validate Login ID Field
+        /// Validate Login Id Field
         /// </summary>
         /// <returns>True/False</returns>
         private bool LoginValidation()
@@ -937,7 +954,7 @@ namespace GreenField.LoginModule.ViewModel
         private void SwitchOffPopups()
         {
             MissingFieldPopupIsOpen = false;
-            InvalidLoginIDPopupIsOpen = false;
+            InvalidLoginIdPopupIsOpen = false;
             InvalidPasswordPopupIsOpen = false;
             InvalidConfPasswordPopupIsOpen = false;
             InvalidEmailPopupIsOpen = false;

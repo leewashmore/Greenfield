@@ -48,15 +48,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="dbInteractivity">Instance of Service Caller</param>
         /// <param name="logger">Instance of Logger</param>
         /// <param name="param">DashboardGadgetparam</param>
-        public ViewModelTopDetractor(DashBoardGadgetParam param)
+        public ViewModelTopDetractor(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _fundSelectionData = param.DashboardGadgetPayLoad.FundSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
             {
@@ -212,7 +212,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSecurityData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate,
-                            RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.countryID, relativePerformanceGridCellData.sectorID, 1, 5);
+                            RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID, 1, 5);
                     }
                 }
                 else

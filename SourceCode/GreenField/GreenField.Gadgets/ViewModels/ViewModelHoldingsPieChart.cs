@@ -19,35 +19,56 @@ using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// Class that provides the interaction of the view model with the Service caller and the View.
+    /// </summary>
     public class ViewModelHoldingsPieChart : NotificationObject
     {
-        #region Fields
+       #region PrivateMembers
+
         /// <summary>
-        /// MEF Singletons
+        /// private member object of the IEventAggregator for event aggregation
+        /// </summary>
+        private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private IEventAggregator _eventAggregator;
+
         /// <summary>
-        /// DashboardGadgetPayLoad fields
+        /// private member object of ILoggerFacade for logging
         /// </summary>
-        private BenchmarkSelectionData _benchmarkSelectionData;
+        private ILoggerFacade _logger;
+
+        /// <summary>
+        /// private member object of the FundSelectionData class for storing Fund Selection Data
+        /// </summary>
+        private FundSelectionData _fundSelectionData;  
+      
         #endregion
 
-        #region Constructor
-        public ViewModelHoldingsPieChart(DashBoardGadgetParam param)
+       #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">MEF Eventaggrigator instance</param>
+        public ViewModelHoldingsPieChart(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            EffectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
-
+            _eventAggregator = param.EventAggregator;           
+            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+       
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
+                _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
                 _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
             }
+
+            if (_fundSelectionData != null)
+                HandleFundReferenceSet(_fundSelectionData);
 
             //if (_benchmarkSelectionData != null && EffectiveDate != null)
             //{
@@ -57,7 +78,12 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region Properties
+       #region Properties
+        #region UI Fields
+
+        /// <summary>
+        /// Collection that contains the holdings data to be binded to the sector chart
+        /// </summary>
         private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfo;
         public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfo
         {
@@ -69,6 +95,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Collection that contains the holdings data to be binded to the region chart
+        /// </summary>
         private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfoForRegion;
         public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfoForRegion
         {
@@ -79,7 +108,9 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.HoldingsPercentageInfoForRegion);
             }
         }
-
+        /// <summary>
+        /// Effective date appended by as of
+        /// </summary>
         public String EffectiveDateString
         {
             get
@@ -88,6 +119,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        ///Effective Date as selected by the user 
+        /// </summary>
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
@@ -103,7 +137,11 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ObservableCollection<String> _filterTypes;
+
+
+       /// <summary>
+       /// Collection that contains the filter types to be displayed in the combo box
+       /// </summary>
         public ObservableCollection<String> FilterTypes
         {
             get
@@ -112,6 +150,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// String that contains the selected filter type
+        /// </summary>
         private String _filterTypesSelection;
         public String FilterTypesSelection
         {
@@ -127,7 +168,9 @@ namespace GreenField.Gadgets.ViewModels
                      RaisePropertyChanged(() => this.FilterTypesSelection);
             }
         }
-
+        /// <summary>
+        ///  Collection that contains the value types to be displayed in the combo box
+        /// </summary>
         private List<String> _valueTypes;
         public List<String> ValueTypes
         {
@@ -143,44 +186,39 @@ namespace GreenField.Gadgets.ViewModels
             }            
         }
 
-
+        /// <summary>
+        /// String that contains the selected value type
+        /// </summary>
         private String _valueTypesSelection;
         public String ValueTypesSelection
         {
             get { return _valueTypesSelection; }
             set
             {
+                if (_valueTypesSelection != value)
+                {
                     _valueTypesSelection = value;
-                    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
-                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_benchmarkSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+
+                    if (_fundSelectionData != null)
+                    {
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+
+                    }
                     RaisePropertyChanged(() => this.ValueTypesSelection);
+                }  
                 
             }
         }
 
-        //private List<String> _customLabels;
-        //public List<String> CustomLabels
-        //{
-        //    get 
-        //    {           
-        //        return _customLabels;
-        //    }
-
-        //    set 
-        //    {
-        //        _customLabels = value;
-
-        //        RaisePropertyChanged(() => this.CustomLabels);
-            
-        //    }
-        
-        //}
-
-
-        
+        #endregion
         #endregion
 
-        #region Event Handlers
+       #region Event Handlers
+        /// <summary>
+        /// Assigns UI Field Properties based on Selected Effective Date
+        /// </summary>
+        /// <param name="effectiveDate">Effectice date as selected by the user</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -191,7 +229,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _benchmarkSelectionData != null)
+                    if (EffectiveDate != null && _fundSelectionData != null)
                     {
                       //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
@@ -209,20 +247,23 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
+        /// <summary>
+        /// Assigns UI Field Properties based on Fund reference
+        /// </summary>
+        /// <param name="fundSelectionData">Object of FundSelectionData Class</param>
+        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
         {
+
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (benchmarkSelectionData != null)
+                if (fundSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (EffectiveDate != null && _benchmarkSelectionData != null)
-                    {
-                       // _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
-                    }
+                    Logging.LogMethodParameter(_logger, methodNamespace, fundSelectionData, 1);
+                    _fundSelectionData = fundSelectionData;
+                    _dbInteractivity.RetrieveHoldingsPercentageData(fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                 }
                 else
                 {
@@ -235,25 +276,25 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
+        }        
         #endregion
 
-        #region Callback Methods
+       #region Callback Methods
+
+        /// <summary>
+        /// Callback method that assigns value to the HoldingsPercentageInfo property
+        /// </summary>
+        /// <param name="result">contains the holdings data for the sector pie chart</param>
         public void RetrieveHoldingsPercentageDataCallbackMethod(List<HoldingsPercentageData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
-            try
+            try 
             {
                 if (result != null)
                 {
 
-                    HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);
-                    //for (int i = 0; i < result.Count; i++)
-                    //{
-                    //    String label = result[i].SegmentName + result[i].BenchmarkWeight + result[i].PortfolioWeight;
-                    //    CustomLabels.Add(label);
-                    //}
+                    HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);                   
                 }
                 else
                 {
@@ -268,6 +309,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+
+        /// <summary>
+        /// Callback method that assigns value to the HoldingsPercentageInfoForRegion property
+        /// </summary>
+        /// <param name="result">contains the holdings data for the region  pie chart</param>
         public void RetrieveHoldingsPercentageDataForRegionCallbackMethod(List<HoldingsPercentageData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -291,6 +337,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Callback method that assigns value to ValueTypes
+        /// </summary>
+        /// <param name="result">Contains the list of value types for a selected region</param>
         public void RetrieveValuesForFiltersCallbackMethod(List<String> result)
         {
             ValueTypes = result;

@@ -19,6 +19,6 @@ namespace GreenField.ServiceCaller
     {
         void GetDashboardPreferenceByUserName(String userName, Action<List<tblDashboardPreference>> callback);
 
-        void SetDashBoardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName, Action<bool> callback);
+        void SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName, Action<bool> callback);
     }
 }

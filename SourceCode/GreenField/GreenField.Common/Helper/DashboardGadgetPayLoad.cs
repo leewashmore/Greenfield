@@ -12,7 +12,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 
 namespace GreenField.Common.Helper
 {
-    public class DashboardGadgetPayLoad
+    public class DashboardGadgetPayload
     {
         public EntitySelectionData EntitySelectionData { get; set; }
 

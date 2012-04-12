@@ -72,7 +72,7 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SessionOperations/SetSession", ReplyAction="http://tempuri.org/SessionOperations/SetSessionResponse")]
         System.IAsyncResult BeginSetSession(GreenField.ServiceCaller.SessionDefinitions.Session sessionVariable, System.AsyncCallback callback, object asyncState);
         
-        bool EndSetSession(System.IAsyncResult result);
+        System.Nullable<bool> EndSetSession(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -109,10 +109,10 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -244,7 +244,7 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.SessionDefinitions.SessionOperations.EndSetSession(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.SessionDefinitions.SessionOperations.EndSetSession(System.IAsyncResult result) {
             return base.Channel.EndSetSession(result);
         }
         
@@ -254,7 +254,7 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
         }
         
         private object[] OnEndSetSession(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.SessionDefinitions.SessionOperations)(this)).EndSetSession(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.SessionDefinitions.SessionOperations)(this)).EndSetSession(result);
             return new object[] {
                     retVal};
         }
@@ -379,9 +379,9 @@ namespace GreenField.ServiceCaller.SessionDefinitions {
                 return _result;
             }
             
-            public bool EndSetSession(System.IAsyncResult result) {
+            public System.Nullable<bool> EndSetSession(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("SetSession", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("SetSession", _args, result)));
                 return _result;
             }
         }

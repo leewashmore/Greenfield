@@ -33,7 +33,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             dataContextSource.unrealizedGainLossDataLoadedEvent +=
-                new DataRetrievalProgressIndicator(dataContextSource_unrealizedGainLossDataLoadedEvent);
+                new DataRetrievalProgressIndicatorEventHandler(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
             this.chUnrealizedGainLoss.DataBound += dataContextSource.ChartDataBound;
             this.grdRadChart.Visibility = Visibility.Visible;
@@ -95,8 +95,8 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA, Element = this.dgUnrealizedGainLoss, ExportFilterOption = RadExportFilterOptions.RADGRIDVIEW_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },                    
+                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_DATA, Element = this.dgUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.UNREALIZED_GAINLOSS);
@@ -158,6 +158,11 @@ namespace GreenField.Gadgets.Views
                         break;
                     }
             }
+        }
+
+        private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
         }
     }
 }

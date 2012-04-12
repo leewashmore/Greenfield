@@ -14,7 +14,7 @@ namespace GreenField.App
     public class Bootstrapper : MefBootstrapper
     {
         [Import]
-        public ILogger _logger { get; set; }
+        public ILogger Logger { get; set; }
 
         protected override void ConfigureAggregateCatalog()
         {
@@ -22,9 +22,8 @@ namespace GreenField.App
 
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.AdministrationModule.AdministrationModule).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Module.Module).Assembly));            
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.ServiceCaller.DBInteractivity).Assembly));
-            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashBoardModule.DashBoardModule).Assembly));
+            this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.DashboardModule.DashboardModule).Assembly));
             this.AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(GreenField.Benchmark.BenchmarkModule).Assembly));           
 
         }
@@ -49,7 +48,7 @@ namespace GreenField.App
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
-            this.Container.ComposeExportedValue<ILoggerFacade>(this._logger);
+            this.Container.ComposeExportedValue<ILoggerFacade>(this.Logger);
         }
     }
 }

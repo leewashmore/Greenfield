@@ -23,16 +23,15 @@ using GreenField.Gadgets;
 using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
 using System.Reflection;
-using GreenField.DashBoardModule.Helpers;
+using GreenField.DashboardModule.Helpers;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
 
-
-namespace GreenField.DashBoardModule.Views
+namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashBoard : UserControl
+    public partial class ViewDashboard : UserControl
     {
 
         #region Fields
@@ -40,12 +39,12 @@ namespace GreenField.DashBoardModule.Views
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private DashboardGadgetPayLoad _dashboardGadgetPayLoad;
+        private DashboardGadgetPayload _dashboardGadgetPayLoad;
         #endregion
 
         #region Constructor
         [ImportingConstructor]
-        public ViewDashBoard(IManageDashboard manageDashboard, ILoggerFacade logger,
+        public ViewDashboard(IManageDashboard manageDashboard, ILoggerFacade logger,
             IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
         {
             InitializeComponent();
@@ -59,31 +58,30 @@ namespace GreenField.DashBoardModule.Views
             //Subscribe to MEF Events
             _eventAggregator.GetEvent<DashboardGadgetSave>().Subscribe(HandleDashboardGadgetSave);
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            _eventAggregator.GetEvent<DashBoardTileViewItemAdded>().Subscribe(HandleDashBoardTileViewItemAdded);
+            _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Subscribe(HandleDashboardTileViewItemAdded);
 
             //Check for Empty Dashboard
-            this.rtvDashBoard.LayoutUpdated += (se, e) =>
+            this.rtvDashboard.LayoutUpdated += (se, e) =>
                 {
-                    this.txtNoGadgetMessage.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-                    this.rtvDashBoard.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
-                    for (int index = 0; index < rtvDashBoard.Items.Count; index++)
+                    this.txtNoGadgetMessage.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                    this.rtvDashboard.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+                    for (int index = 0; index < rtvDashboard.Items.Count; index++)
                     {
-                        (rtvDashBoard.Items[index] as RadTileViewItem).Opacity =
-                            (rtvDashBoard.Items[index] as RadTileViewItem).TileState == TileViewItemState.Minimized ? 0.5 : 1;
+                        (rtvDashboard.Items[index] as RadTileViewItem).Opacity =
+                            (rtvDashboard.Items[index] as RadTileViewItem).TileState == TileViewItemState.Minimized ? 0.5 : 1;
                     }
                 };
-
         }
         #endregion
 
-        private void DashBoardTileViewItemRemoved(object sender, RoutedEventArgs e)
+        private void DashboardTileViewItemRemoved(object sender, RoutedEventArgs e)
         {
             try
             {
                 RadTileViewItem tileViewItem = (sender as Button).ParentOfType<RadTileViewItem>();
-                this.rtvDashBoard.Items.Remove(tileViewItem);
-                this.rtvDashBoard.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
-                this.txtNoGadgetMessage.Visibility = this.rtvDashBoard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+                this.rtvDashboard.Items.Remove(tileViewItem);
+                this.rtvDashboard.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
+                this.txtNoGadgetMessage.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 
             }
             catch (Exception ex)
@@ -96,20 +94,26 @@ namespace GreenField.DashBoardModule.Views
         /// <summary>
         /// Handle Dashboard Gadget Add event
         /// </summary>
-        /// <param name="param">DashBoardTileViewItemInfo</param>
-        public void HandleDashBoardTileViewItemAdded(DashBoardTileViewItemInfo param)
+        /// <param name="param">DashboardTileViewItemInfo</param>
+        public void HandleDashboardTileViewItemAdded(DashboardTileViewItemInfo param)
         {
             try
             {
-                if (rtvDashBoard.Items.Count == 1)
-                    rtvDashBoard.RowHeight = new GridLength(400);
+                if (rtvDashboard.Items.Count == 1)
+                    rtvDashboard.RowHeight = new GridLength(400);
 
-                this.rtvDashBoard.Items.Add(new RadTileViewItem
-                    {
-                        RestoredHeight = 400,
-                        Header = param.DashBoardTileHeader,
-                        Content = param.DashBoardTileObject,
-                    });
+                RadTileViewItem item = new RadTileViewItem();
+                item.RestoredHeight = 400;
+                item.Header = param.DashboardTileHeader;
+                item.Content = param.DashboardTileObject;
+                //this.SetHeaderColor(item, Colors.White);
+                this.rtvDashboard.Items.Add(item);
+                //this.rtvDashboard.Items.Add(new RadTileViewItem
+                //    {
+                //        RestoredHeight = 400,
+                //        Header = param.DashboardTileHeader,
+                //        Content = param.DashboardTileObject,
+                //    });
             }
             catch (InvalidOperationException)
             {
@@ -121,36 +125,40 @@ namespace GreenField.DashBoardModule.Views
         /// Handles Dashboard Gadget Load event - reconstructs gadgets based on preference got from database.
         /// </summary>
         /// <param name="param"></param>
-        public void HandleDashboardGadgetLoad(DashboardGadgetPayLoad payLoad)
+        public void HandleDashboardGadgetLoad(DashboardGadgetPayload payLoad)
         {
             try
             {
                 if (SessionManager.SESSION != null)
                 {
                     this.busyIndicator.IsBusy = true;
-
+                    if (_dashboardGadgetPayLoad != null)
+                    {
+                        this.busyIndicator.IsBusy = false;
+                        return;
+                    }
                     _dashboardGadgetPayLoad = payLoad;
                     _manageDashboard.GetDashboardPreferenceByUserName(SessionManager.SESSION.UserName, (dashboardPreference) =>
                             {
                                 this.busyIndicator.IsBusy = false;
 
                                 ObservableCollection<tblDashboardPreference> preference = new ObservableCollection<tblDashboardPreference>(dashboardPreference.OrderBy(t => t.GadgetPosition));
-                                if (preference.Count > 0 && rtvDashBoard.Items.Count.Equals(0))
+                                if (preference.Count > 0 && rtvDashboard.Items.Count.Equals(0))
                                 {
                                     if (preference.Count > 1)
                                     {
-                                        rtvDashBoard.RowHeight = new GridLength(400);
+                                        rtvDashboard.RowHeight = new GridLength(400);
                                         foreach (tblDashboardPreference item in preference)
                                         {
                                             RadTileViewItem radTileViewItem = new RadTileViewItem
                                             {
                                                 Header = item.GadgetName,
                                                 RestoredHeight = 400,
-                                                Content = GetDashBoardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
+                                                Content = GetDashboardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
                                                 TileState = GetTileState(item.GadgetState),
                                                 Position = item.GadgetPosition
                                             };
-                                            this.rtvDashBoard.Items.Add(radTileViewItem);
+                                            this.rtvDashboard.Items.Add(radTileViewItem);
 
                                         }
                                     }
@@ -162,11 +170,11 @@ namespace GreenField.DashBoardModule.Views
                                             {
                                                 Header = item.GadgetName,
                                                 RestoredHeight = 400,
-                                                Content = GetDashBoardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
+                                                Content = GetDashboardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
                                                 TileState = GetTileState("Restored"),
                                                 Position = item.GadgetPosition
                                             };
-                                            this.rtvDashBoard.Items.Add(radTileViewItem);
+                                            this.rtvDashboard.Items.Add(radTileViewItem);
                                         }
                                     }
                                 }
@@ -189,26 +197,26 @@ namespace GreenField.DashBoardModule.Views
             try
             {
                 ObservableCollection<tblDashboardPreference> dashboardPreference = new ObservableCollection<tblDashboardPreference>();
-                if (this.rtvDashBoard.Items.Count > 0)
+                if (this.rtvDashboard.Items.Count > 0)
                 {
                     string uniqueKey = SessionManager.SESSION.UserName + "-" + DateTime.Now.ToString();
-                    for (int index = 0; index < rtvDashBoard.Items.Count; index++)
+                    for (int index = 0; index < rtvDashboard.Items.Count; index++)
                     {
                         tblDashboardPreference entry = new tblDashboardPreference()
                         {
                             UserName = SessionManager.SESSION.UserName,
                             PreferenceGroupID = uniqueKey,
-                            GadgetViewClassName = TypeResolution.GetTypeFullName((rtvDashBoard.Items[index] as RadTileViewItem).Content),
-                            GadgetViewModelClassName = TypeResolution.GetTypeDataContextFullName((rtvDashBoard.Items[index] as RadTileViewItem).Content),
-                            GadgetName = (rtvDashBoard.Items[index] as RadTileViewItem).Header.ToString(),
-                            GadgetState = (rtvDashBoard.Items[index] as RadTileViewItem).TileState.ToString(),
-                            GadgetPosition = (rtvDashBoard.Items[index] as RadTileViewItem).Position
+                            GadgetViewClassName = TypeResolution.GetTypeFullName((rtvDashboard.Items[index] as RadTileViewItem).Content),
+                            GadgetViewModelClassName = TypeResolution.GetTypeDataContextFullName((rtvDashboard.Items[index] as RadTileViewItem).Content),
+                            GadgetName = (rtvDashboard.Items[index] as RadTileViewItem).Header.ToString(),
+                            GadgetState = (rtvDashboard.Items[index] as RadTileViewItem).TileState.ToString(),
+                            GadgetPosition = (rtvDashboard.Items[index] as RadTileViewItem).Position
                         };
 
                         dashboardPreference.Add(entry);
                     }
                 }
-                _manageDashboard.SetDashBoardPreference(dashboardPreference,SessionManager.SESSION.UserName, (result) =>
+                _manageDashboard.SetDashboardPreference(dashboardPreference, SessionManager.SESSION.UserName, (result) =>
                     {
                         if (result)
                             MessageBox.Show("User Preference saved");
@@ -250,7 +258,7 @@ namespace GreenField.DashBoardModule.Views
         /// <param name="gadgetViewClassName">Gadget view Type</param>
         /// <param name="gadgetViewModelClassName">Gadget View Model Type</param>
         /// <returns></returns>
-        private object GetDashBoardTileContent(string gadgetViewClassName, string gadgetViewModelClassName)
+        private object GetDashboardTileContent(string gadgetViewClassName, string gadgetViewModelClassName)
         {
             object content = null;
 
@@ -262,13 +270,13 @@ namespace GreenField.DashBoardModule.Views
 
                 if (viewType.IsClass && viewModelType.IsClass)
                 {
-                    Type[] argumentTypes = new Type[] { typeof(DashBoardGadgetParam) };
-                    object[] argumentValues = new object[] { new DashBoardGadgetParam()
+                    Type[] argumentTypes = new Type[] { typeof(DashboardGadgetParam) };
+                    object[] argumentValues = new object[] { new DashboardGadgetParam()
                     {
                         LoggerFacade = _logger,
                         EventAggregator = _eventAggregator,
                         DBInteractivity = _dbInteractivity,
-                        DashboardGadgetPayLoad = _dashboardGadgetPayLoad                        
+                        DashboardGadgetPayload = _dashboardGadgetPayLoad                        
                     }};
                     object viewModelObject = TypeResolution.GetNewTypeObject(viewModelType, argumentTypes, argumentValues);
                     content = TypeResolution.GetNewTypeObject(viewType, new Type[] { viewModelType }, new object[] { viewModelObject });
@@ -284,6 +292,17 @@ namespace GreenField.DashBoardModule.Views
 
         }
 
+        //private void SetHeaderColor(RadTileViewItem item, Color color)
+        //{
+        //    this.Dispatcher.BeginInvoke(() =>
+        //    {
+        //        StackPanel headerBackground = item.ChildrenOfType<StackPanel>().Where(child => child.Name == "HeaderStack").FirstOrDefault();
+        //        if (headerBackground != null)
+        //        {
+        //            headerBackground.back = new SolidColorBrush(color);
+        //        }
+        //    });
+        //}
 
     }
 }

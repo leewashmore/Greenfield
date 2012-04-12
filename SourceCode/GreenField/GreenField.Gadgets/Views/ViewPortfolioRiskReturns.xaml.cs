@@ -10,17 +10,44 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View Class for Portfolio Risk Returns Gadget that has ViewModelPortfolioRiskReturns as its data source
+    /// </summary>
     public partial class ViewPortfolioRiskReturns : UserControl
     {
-        public ViewPortfolioRiskReturns(ViewModelPortfolioRiskReturns DataContextSource)
+        /// <summary>
+        /// Constructor for the class having ViewModelPortfolioRiskReturns as its data context
+        /// </summary>
+        /// <param name="dataContextSource"></param>
+        public ViewPortfolioRiskReturns(ViewModelPortfolioRiskReturns dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;   
+            this.DataContext = dataContextSource;
+            dataContextSource.portfolioRiskReturnDataLoadedEvent +=
+            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
 
-       
+        #region Private Methods
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void dataContextSource_portfolioRiskReturnDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
+
+        #endregion
     }
 }

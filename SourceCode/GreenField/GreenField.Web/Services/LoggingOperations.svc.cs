@@ -10,7 +10,7 @@ using System.ServiceModel.Activation;
 namespace GreenField.Web.Services
 {
     /// <summary>
-    /// lass implementing Logging Operation Contracts
+    /// Class implementing Logging Operation Contracts
     /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -18,18 +18,9 @@ namespace GreenField.Web.Services
     {
         #region Fields
         /// <summary>
-        /// ILog instance
+        /// GreenField.Logging.LoggingOperation Instance instance
         /// </summary>
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(LoggingOperations));
-
-        #region Log Levels
-        //Logging Levels
-        private const Int32 DEBUG_LEVEL = 5;
-        private const Int32 INFO_LEVEL = 4;
-        private const Int32 WARN_LEVEL = 3;
-        private const Int32 ERROR_LEVEL = 2;
-        private const Int32 FATAL_LEVEL = 1;
-        #endregion 
+        private GreenField.Logging.LoggingOperations _loggingOperations = new Logging.LoggingOperations();
         #endregion
 
         #region Operation Contracts
@@ -42,52 +33,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         public void LogToFile(string message, string category, string priority)
         {
-            string logLevel = "Info";
-
-            if (category.ToLower().Equals("debug"))
-                logLevel = "Debug";
-
-            if (category.ToLower().Equals("info"))
-                logLevel = "Info";
-
-            if (category.ToLower().Equals("exception") && priority.ToLower().Equals("low"))
-                logLevel = "Warn";
-
-            if (category.ToLower().Equals("exception") && priority.ToLower().Equals("medium"))
-                logLevel = "Error";
-
-            if (category.ToLower().Equals("exception") && priority.ToLower().Equals("high"))
-                logLevel = "Fatal";
-
-            if (category.ToLower().Equals("debug"))
-                logLevel = "Debug";
-
-            switch (logLevel)
-            {
-                case "Debug":
-                    if (LOG.IsDebugEnabled)
-                        LOG.Debug(message);
-                    break;
-                case "Info":
-                    if (LOG.IsInfoEnabled)
-                        LOG.Info(message);
-                    break;
-                case "Warn":
-                    if (LOG.IsWarnEnabled)
-                        LOG.Warn(message);
-                    break;
-                case "Error":
-                    if (LOG.IsErrorEnabled)
-                        LOG.Error(message);
-                    break;
-                case "Fatal":
-                    if (LOG.IsFatalEnabled)
-                        LOG.Fatal(message);
-                    break;
-                default:
-                    LOG.Info(message);
-                    break;
-            }
+            _loggingOperations.LogToFile(message, category, priority);
         }
 
         /// <summary>
@@ -97,19 +43,8 @@ namespace GreenField.Web.Services
         [OperationContract]
         public Int32 GetLoggingLevel()
         {
-            if (LOG.IsDebugEnabled)
-                return DEBUG_LEVEL;
-            if (LOG.IsInfoEnabled)
-                return INFO_LEVEL;
-            if (LOG.IsWarnEnabled)
-                return WARN_LEVEL;
-            if (LOG.IsErrorEnabled)
-                return ERROR_LEVEL;
-            if (LOG.IsFatalEnabled)
-                return FATAL_LEVEL;
-            else
-                return INFO_LEVEL;
-        } 
+            return _loggingOperations.GetLoggingLevel();
+        }
         #endregion
     }
 }

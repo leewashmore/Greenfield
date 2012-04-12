@@ -259,60 +259,60 @@ namespace GreenField.Common
         #endregion
 
         #region Login Management
-        public static void LogAccountInactiveLoginAttempt(ILoggerFacade logger, string loginID)
+        public static void LogAccountInactiveLoginAttempt(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountInactiveLoginAttempt", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountInactiveLoginAttempt", Category.Info, Priority.None);
             }
         }
 
-        public static void LogAccountLockedLoginAttempt(ILoggerFacade logger, string loginID)
+        public static void LogAccountLockedLoginAttempt(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountLockedLoginAttempt", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountLockedLoginAttempt", Category.Info, Priority.None);
             }
         }
 
-        public static void LogAccountInvalidLoginAttempt(ILoggerFacade logger, string loginID)
+        public static void LogAccountInvalidLoginAttempt(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountInvalidLoginAttempt", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountInvalidLoginAttempt", Category.Info, Priority.None);
             }
         }
 
-        public static void LogLoginBeginMethod(ILoggerFacade logger, string methodNamespace, string loginID)
+        public static void LogLoginBeginMethod(ILoggerFacade logger, string methodNamespace, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")]" + " | BeginMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")]" + " | BeginMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
             }
         }
 
-        public static void LogLoginEndMethod(ILoggerFacade logger, string methodNamespace, string loginID)
+        public static void LogLoginEndMethod(ILoggerFacade logger, string methodNamespace, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")]" + " | EndMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")]" + " | EndMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
 
             }
         }
 
-        public static void LogLoginMethodParameter(ILoggerFacade logger, object methodName, object parameter, int index, string loginID)
+        public static void LogLoginMethodParameter(ILoggerFacade logger, object methodName, object parameter, int index, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(" + parameter.ToString() + ")]", Category.Debug, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(" + parameter.ToString() + ")]", Category.Debug, Priority.None);
             }
         }
 
-        public static void LogLoginMethodParameterNull(ILoggerFacade logger, object methodName, int index, string loginID)
+        public static void LogLoginMethodParameterNull(ILoggerFacade logger, object methodName, int index, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
             }
         }
 
@@ -321,27 +321,27 @@ namespace GreenField.Common
             logger.Log("User : [(Null)] | Exception: [(" + exception.Message + ")] | StackTrace: [(" + StackTraceToString(exception) + ")]", Category.Exception, Priority.Medium);
         }
 
-        public static void LogAccountRegister(ILoggerFacade logger, string loginID)
+        public static void LogAccountRegister(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountRegistration", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountRegistration", Category.Info, Priority.None);
             }
         }
 
-        public static void LogAccountPasswordChange(ILoggerFacade logger, string loginID)
+        public static void LogAccountPasswordChange(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountPasswordChange", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountPasswordChange", Category.Info, Priority.None);
             }
         }
 
-        public static void LogAccountPasswordReset(ILoggerFacade logger, string loginID)
+        public static void LogAccountPasswordReset(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginID + ")] | AccountPasswordReset", Category.Info, Priority.None);
+                logger.Log("LoginID : [(" + loginId + ")] | AccountPasswordReset", Category.Info, Priority.None);
             }
         }
         #endregion

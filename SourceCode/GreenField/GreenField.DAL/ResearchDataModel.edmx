@@ -572,6 +572,7 @@
           <Property Name="GroupPreferenceID" Type="int" Nullable="false" />
           <Property Name="BenchmarkName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BenchmarkReturnType" Type="nvarchar" MaxLength="50" />
+          <Property Name="BenchmarkOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tblUserGroupPreference">
           <Key>
@@ -580,6 +581,7 @@
           <Property Name="GroupPreferenceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserId" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GroupOrder" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AshmoreEMMPOC.dbo.UserDashboardPreferance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -634,9 +636,6 @@
           <Parameter Name="Country" Type="varchar" Mode="In" />
           <Parameter Name="Currency" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="GetDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="nvarchar" Mode="In" />
-        </Function>
         <Function Name="GetDashBoardPreferenceByUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
@@ -661,10 +660,6 @@
         <Function Name="SetUserGroupPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="varchar" Mode="In" />
           <Parameter Name="groupname" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="StoreDashboardInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserId" Type="varchar" Mode="In" />
-          <Parameter Name="StoredValue" Type="varchar(max)" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -708,32 +703,31 @@
           <Parameter Name="SEC_SECSHORT_List" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="UserDashboardPreferances" EntityType="ResearchModel.UserDashboardPreferance" />
-          <FunctionImport Name="GetDashboardData" EntitySet="UserDashboardPreferances" ReturnType="Collection(ResearchModel.UserDashboardPreferance)">
-          <Parameter Name="UserID" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="StoreDashboardInfo">
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="StoredValue" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblDashboardPreferences" EntityType="ResearchModel.tblDashboardPreference" />
-          <FunctionImport Name="SetDashBoardPreference">
-            <Parameter Name="UserName" Mode="In" Type="String" />
-            <Parameter Name="GadgetViewClassName" Mode="In" Type="String" />
-            <Parameter Name="GadgetViewModelClassName" Mode="In" Type="String" />
-            <Parameter Name="GadgetName" Mode="In" Type="String" />
-            <Parameter Name="GadgetState" Mode="In" Type="String" />
-            <Parameter Name="PreferenceGroupID" Mode="In" Type="String" />
-            <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetDashBoardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
-          <Parameter Name="UserName" Mode="In" Type="String" />
-          </FunctionImport>
+          <EntitySet Name="tblHoldingsDatas" EntityType="ResearchModel.tblHoldingsData" />
           <EntitySet Name="tblUserBenchmarkPreferences" EntityType="ResearchModel.tblUserBenchmarkPreference" />
           <EntitySet Name="tblUserGroupPreferences" EntityType="ResearchModel.tblUserGroupPreference" />
           <AssociationSet Name="FK_tblUserBenchmarkPreference_tblUserGroupPreference" Association="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference">
             <End Role="tblUserGroupPreference" EntitySet="tblUserGroupPreferences" />
             <End Role="tblUserBenchmarkPreference" EntitySet="tblUserBenchmarkPreferences" />
           </AssociationSet>
+          <FunctionImport Name="SetUserGroupPreference">
+            <Parameter Name="userId" Mode="In" Type="String" />
+            <Parameter Name="groupname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetUserBenchmarkPreference">
+            <Parameter Name="userId" Mode="In" Type="String" />
+            <Parameter Name="groupname" Mode="In" Type="String" />
+            <Parameter Name="benchmarkName" Mode="In" Type="String" />
+            <Parameter Name="benchmarkReturnType" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserBenchmarkPreference" ReturnType="Collection(ResearchModel.UserBenchmarkPreference)">
+          <Parameter Name="userid" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="DeleteUserGroupPreference">
             <Parameter Name="userId" Mode="In" Type="String" />
             <Parameter Name="groupname" Mode="In" Type="String" />
@@ -743,20 +737,18 @@
             <Parameter Name="groupname" Mode="In" Type="String" />
             <Parameter Name="benchmarkname" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetUserBenchmarkPreference" ReturnType="Collection(ResearchModel.UserBenchmarkPreference)">
-          <Parameter Name="userid" Mode="In" Type="String" />
+          <FunctionImport Name="GetDashBoardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SetUserBenchmarkPreference">
-            <Parameter Name="userId" Mode="In" Type="String" />
-            <Parameter Name="groupname" Mode="In" Type="String" />
-            <Parameter Name="benchmarkName" Mode="In" Type="String" />
-            <Parameter Name="benchmarkReturnType" Mode="In" Type="String" />
+          <FunctionImport Name="SetDashBoardPreference">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="GadgetViewClassName" Mode="In" Type="String" />
+            <Parameter Name="GadgetViewModelClassName" Mode="In" Type="String" />
+            <Parameter Name="GadgetName" Mode="In" Type="String" />
+            <Parameter Name="GadgetState" Mode="In" Type="String" />
+            <Parameter Name="PreferenceGroupID" Mode="In" Type="String" />
+            <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="SetUserGroupPreference">
-            <Parameter Name="userId" Mode="In" Type="String" />
-            <Parameter Name="groupname" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="tblHoldingsDatas" EntityType="ResearchModel.tblHoldingsData" />
         </EntityContainer>
         <EntityType Name="tblActual">
           <Key>
@@ -1254,42 +1246,6 @@
           <Property Type="Int32" Name="GadgetPosition" Nullable="false" />
           <Property Type="String" Name="PreferenceGroupID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="tblUserBenchmarkPreference">
-          <Key>
-            <PropertyRef Name="BenchmarkPreferenceId" />
-          </Key>
-          <Property Type="Int32" Name="BenchmarkPreferenceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="GroupPreferenceID" Nullable="false" />
-          <Property Type="String" Name="BenchmarkName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="BenchmarkReturnType" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblUserGroupPreference" Relationship="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" FromRole="tblUserBenchmarkPreference" ToRole="tblUserGroupPreference" />
-        </EntityType>
-        <EntityType Name="tblUserGroupPreference">
-          <Key>
-            <PropertyRef Name="GroupPreferenceID" />
-          </Key>
-          <Property Type="Int32" Name="GroupPreferenceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="UserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblUserBenchmarkPreferences" Relationship="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" FromRole="tblUserGroupPreference" ToRole="tblUserBenchmarkPreference" />
-        </EntityType>
-        <Association Name="FK_tblUserBenchmarkPreference_tblUserGroupPreference">
-          <End Type="ResearchModel.tblUserGroupPreference" Role="tblUserGroupPreference" Multiplicity="1" />
-          <End Type="ResearchModel.tblUserBenchmarkPreference" Role="tblUserBenchmarkPreference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUserGroupPreference">
-              <PropertyRef Name="GroupPreferenceID" />
-            </Principal>
-            <Dependent Role="tblUserBenchmarkPreference">
-              <PropertyRef Name="GroupPreferenceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="UserBenchmarkPreference">
-          <Property Type="String" Name="GroupName" Nullable="false" />
-          <Property Type="String" Name="BenchmarkName" Nullable="true" />
-          <Property Type="String" Name="BenchmarkReturnType" Nullable="true" MaxLength="50" />
-        </ComplexType>
         <EntityType Name="tblHoldingsData">
           <Key>
             <PropertyRef Name="ID" />
@@ -1334,6 +1290,46 @@
           <Property Type="Single" Name="BARRA_RISK_FACTOR_LIQUIDITY" />
           <Property Type="Single" Name="BARRA_RISK_FACTOR_LEVERAGE" />
         </EntityType>
+        <EntityType Name="tblUserBenchmarkPreference">
+          <Key>
+            <PropertyRef Name="BenchmarkPreferenceId" />
+          </Key>
+          <Property Type="Int32" Name="BenchmarkPreferenceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="GroupPreferenceID" Nullable="false" />
+          <Property Type="String" Name="BenchmarkName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BenchmarkReturnType" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="BenchmarkOrder" Nullable="false" />
+          <NavigationProperty Name="tblUserGroupPreference" Relationship="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" FromRole="tblUserBenchmarkPreference" ToRole="tblUserGroupPreference" />
+        </EntityType>
+        <EntityType Name="tblUserGroupPreference">
+          <Key>
+            <PropertyRef Name="GroupPreferenceID" />
+          </Key>
+          <Property Type="Int32" Name="GroupPreferenceID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="GroupOrder" Nullable="false" />
+          <NavigationProperty Name="tblUserBenchmarkPreferences" Relationship="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" FromRole="tblUserGroupPreference" ToRole="tblUserBenchmarkPreference" />
+        </EntityType>
+        <Association Name="FK_tblUserBenchmarkPreference_tblUserGroupPreference">
+          <End Type="ResearchModel.tblUserGroupPreference" Role="tblUserGroupPreference" Multiplicity="1" />
+          <End Type="ResearchModel.tblUserBenchmarkPreference" Role="tblUserBenchmarkPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUserGroupPreference">
+              <PropertyRef Name="GroupPreferenceID" />
+            </Principal>
+            <Dependent Role="tblUserBenchmarkPreference">
+              <PropertyRef Name="GroupPreferenceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="UserBenchmarkPreference">
+          <Property Type="String" Name="GroupName" Nullable="false" />
+          <Property Type="Int32" Name="GroupOrder" Nullable="false" />
+          <Property Type="String" Name="BenchmarkName" Nullable="true" />
+          <Property Type="String" Name="BenchmarkReturnType" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="BenchmarkOrder" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1749,8 +1745,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDashboardData" FunctionName="ResearchModel.Store.GetDashboardData" />
-          <FunctionImportMapping FunctionImportName="StoreDashboardInfo" FunctionName="ResearchModel.Store.StoreDashboardInfo" />
           <EntitySetMapping Name="tblDashboardPreferences">
             <EntityTypeMapping TypeName="ResearchModel.tblDashboardPreference">
               <MappingFragment StoreEntitySet="tblDashboardPreference">
@@ -1765,40 +1759,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="SetDashBoardPreference" FunctionName="ResearchModel.Store.SetDashBoardPreference" />
-          <FunctionImportMapping FunctionImportName="GetDashBoardPreferenceByUserName" FunctionName="ResearchModel.Store.GetDashBoardPreferenceByUserName" />
-          <EntitySetMapping Name="tblUserBenchmarkPreferences">
-            <EntityTypeMapping TypeName="ResearchModel.tblUserBenchmarkPreference">
-              <MappingFragment StoreEntitySet="tblUserBenchmarkPreference">
-                <ScalarProperty Name="BenchmarkReturnType" ColumnName="BenchmarkReturnType" />
-                <ScalarProperty Name="BenchmarkName" ColumnName="BenchmarkName" />
-                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
-                <ScalarProperty Name="BenchmarkPreferenceId" ColumnName="BenchmarkPreferenceId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblUserGroupPreferences">
-            <EntityTypeMapping TypeName="ResearchModel.tblUserGroupPreference">
-              <MappingFragment StoreEntitySet="tblUserGroupPreference">
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="DeleteUserGroupPreference" FunctionName="ResearchModel.Store.DeleteUserGroupPreference" />
-          <FunctionImportMapping FunctionImportName="DeleteUserBenchmarkPreference" FunctionName="ResearchModel.Store.DeleteUserBenchmarkPreference" />
-          <FunctionImportMapping FunctionImportName="GetUserBenchmarkPreference" FunctionName="ResearchModel.Store.GetUserBenchmarkPreference">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ResearchModel.UserBenchmarkPreference">
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="BenchmarkName" ColumnName="BenchmarkName" />
-                <ScalarProperty Name="BenchmarkReturnType" ColumnName="BenchmarkReturnType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SetUserBenchmarkPreference" FunctionName="ResearchModel.Store.SetUserBenchmarkPreference" />
-          <FunctionImportMapping FunctionImportName="SetUserGroupPreference" FunctionName="ResearchModel.Store.SetUserGroupPreference" />
           <EntitySetMapping Name="tblHoldingsDatas">
             <EntityTypeMapping TypeName="ResearchModel.tblHoldingsData">
               <MappingFragment StoreEntitySet="tblHoldingsData">
@@ -1844,6 +1804,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblUserBenchmarkPreferences">
+            <EntityTypeMapping TypeName="ResearchModel.tblUserBenchmarkPreference">
+              <MappingFragment StoreEntitySet="tblUserBenchmarkPreference">
+                <ScalarProperty Name="BenchmarkOrder" ColumnName="BenchmarkOrder" />
+                <ScalarProperty Name="BenchmarkReturnType" ColumnName="BenchmarkReturnType" />
+                <ScalarProperty Name="BenchmarkName" ColumnName="BenchmarkName" />
+                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
+                <ScalarProperty Name="BenchmarkPreferenceId" ColumnName="BenchmarkPreferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUserGroupPreferences">
+            <EntityTypeMapping TypeName="ResearchModel.tblUserGroupPreference">
+              <MappingFragment StoreEntitySet="tblUserGroupPreference">
+                <ScalarProperty Name="GroupOrder" ColumnName="GroupOrder" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SetUserGroupPreference" FunctionName="ResearchModel.Store.SetUserGroupPreference" />
+          <FunctionImportMapping FunctionImportName="SetUserBenchmarkPreference" FunctionName="ResearchModel.Store.SetUserBenchmarkPreference" />
+          <FunctionImportMapping FunctionImportName="GetUserBenchmarkPreference" FunctionName="ResearchModel.Store.GetUserBenchmarkPreference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchModel.UserBenchmarkPreference">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupOrder" ColumnName="GroupOrder" />
+                <ScalarProperty Name="BenchmarkName" ColumnName="BenchmarkName" />
+                <ScalarProperty Name="BenchmarkReturnType" ColumnName="BenchmarkReturnType" />
+                <ScalarProperty Name="BenchmarkOrder" ColumnName="BenchmarkOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteUserGroupPreference" FunctionName="ResearchModel.Store.DeleteUserGroupPreference" />
+          <FunctionImportMapping FunctionImportName="DeleteUserBenchmarkPreference" FunctionName="ResearchModel.Store.DeleteUserBenchmarkPreference" />
+          <FunctionImportMapping FunctionImportName="GetDashBoardPreferenceByUserName" FunctionName="ResearchModel.Store.GetDashBoardPreferenceByUserName" />
+          <FunctionImportMapping FunctionImportName="SetDashBoardPreference" FunctionName="ResearchModel.Store.SetDashBoardPreference" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1885,13 +1883,13 @@
         <EntityTypeShape EntityType="ResearchModel.tblStdIssue" Width="1.5" PointX="6.75" PointY="13.75" Height="6.2109179687500031" IsExpanded="true" />
         <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="13.375" PointY="13.75" Height="1.5956835937500031" />
         <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="0.75" PointY="14.75" Height="2.5571907552083317" />
-        <EntityTypeShape EntityType="ResearchModel.tblUserBenchmarkPreference" Width="1.5" PointX="17.625" PointY="0.875" Height="1.9802864583333388" />
-        <EntityTypeShape EntityType="ResearchModel.tblUserGroupPreference" Width="1.5" PointX="15.375" PointY="1" Height="1.7879850260416674" />
-        <AssociationConnector Association="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" >
-          <ConnectorPoint PointX="16.875" PointY="1.8939925130208337" />
-          <ConnectorPoint PointX="17.625" PointY="1.8939925130208337" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="15.375" PointY="3.75" Height="8.51853515625001" />
+        <EntityTypeShape EntityType="ResearchModel.tblUserBenchmarkPreference" Width="1.5" PointX="17.625" PointY="13.875" Height="2.172587890624996" />
+        <EntityTypeShape EntityType="ResearchModel.tblUserGroupPreference" Width="1.5" PointX="15.375" PointY="14" Height="1.9802864583333264" />
+        <AssociationConnector Association="ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference" >
+          <ConnectorPoint PointX="16.875" PointY="14.990143229166662" />
+          <ConnectorPoint PointX="17.625" PointY="14.990143229166662" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

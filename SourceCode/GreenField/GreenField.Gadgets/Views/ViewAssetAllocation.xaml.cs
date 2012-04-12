@@ -16,10 +16,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewAssetAllocation
     {
-        public ViewAssetAllocation(ViewModelAssetAllocation DataContextSource)
+        public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }        
     }
 }

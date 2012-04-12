@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Runtime.Serialization;
+using System.Drawing;
 
 namespace GreenField.Web.DataContracts
 {
@@ -44,5 +45,8 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public decimal AdjustedDollarPrice { get; set; }
+
+        [DataMember]
+        public Brush ChartColor { get; set; } 
     }
 }

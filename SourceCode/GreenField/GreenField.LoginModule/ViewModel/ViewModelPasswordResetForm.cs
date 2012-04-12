@@ -35,8 +35,8 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Visualizations for field validation states
         /// </summary>
-        private static Brush VALID_BRUSH = new SolidColorBrush(Colors.Black);
-        private static Brush INVALID_BRUSH = new SolidColorBrush(Colors.Red);
+        private static Brush VALId_BRUSH = new SolidColorBrush(Colors.Black);
+        private static Brush INVALId_BRUSH = new SolidColorBrush(Colors.Red);
 
         /// <summary>
         /// Enumeration for field validation states
@@ -64,7 +64,7 @@ namespace GreenField.LoginModule.ViewModel
         #region Properties
         #region UI Fields
         /// <summary>
-        /// Property binding Login ID TextBlock Text property
+        /// Property binding Login Id TextBlock Text property
         /// </summary>
         private string _loginIdText = string.Empty;
         public string LoginIdText
@@ -81,7 +81,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property storing Login ID field validation state
+        /// Property storing Login Id field validation state
         /// </summary>
         private FieldState _loginIdState = FieldState.ValidField;
         public FieldState LoginIdState
@@ -91,8 +91,8 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _loginIdState = value;
                 //Visualization changes based on field validation state
-                LoginBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
-                InvalidLoginIDPopupIsOpen = value == FieldState.InvalidField ? true : false;
+                LoginBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
+                InvalidLoginIdPopupIsOpen = value == FieldState.InvalidField ? true : false;
             }
         }
 
@@ -124,7 +124,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _securityQuestionState = value;
                 //Visualization changes based on field validation state
-                SecurityQuestionBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                SecurityQuestionBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
             }
         }
 
@@ -156,7 +156,7 @@ namespace GreenField.LoginModule.ViewModel
             {
                 _securityAnswerState = value;
                 //Visualization changes based on field validation state
-                SecurityAnswerBorderBrush = value != FieldState.ValidField ? INVALID_BRUSH : VALID_BRUSH;
+                SecurityAnswerBorderBrush = value != FieldState.ValidField ? INVALId_BRUSH : VALId_BRUSH;
                 InvalidSecurityAnswerPopupIsOpen = value == FieldState.InvalidField;
             }
         }
@@ -185,9 +185,9 @@ namespace GreenField.LoginModule.ViewModel
         #region Visualization
         #region UI Field Brush
         /// <summary>
-        /// Property binding to the Login ID Textbox BorderBrush and Login ID TextBlock Foreground attributes
+        /// Property binding to the Login Id Textbox BorderBrush and Login Id TextBlock Foreground attributes
         /// </summary>
-        private Brush _loginBorderBrush = VALID_BRUSH;
+        private Brush _loginBorderBrush = VALId_BRUSH;
         public Brush LoginBorderBrush
         {
             get { return _loginBorderBrush; }
@@ -204,7 +204,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the SecurityQuestion ComboBox BorderBrush and SecurityQuestion TextBlock Foreground attributes
         /// </summary>
-        private Brush _securityQuestionBorderBrush = VALID_BRUSH;
+        private Brush _securityQuestionBorderBrush = VALId_BRUSH;
         public Brush SecurityQuestionBorderBrush
         {
             get { return _securityQuestionBorderBrush; }
@@ -221,7 +221,7 @@ namespace GreenField.LoginModule.ViewModel
         /// <summary>
         /// Property binding to the SecurityAnswer Textbox BorderBrush and SecurityAnswer TextBlock Foreground attributes
         /// </summary>
-        private Brush _securityAnswerBorderBrush = VALID_BRUSH;
+        private Brush _securityAnswerBorderBrush = VALId_BRUSH;
         public Brush SecurityAnswerBorderBrush
         {
             get { return _securityAnswerBorderBrush; }
@@ -257,20 +257,20 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to InvalidLoginIDPopup IsOpen attribute
+        /// Property binding to InvalidLoginIdPopup IsOpen attribute
         /// </summary>
-        private bool _invalidLoginIDPopupIsOpen = false;
-        public bool InvalidLoginIDPopupIsOpen
+        private bool _invalidLoginIdPopupIsOpen = false;
+        public bool InvalidLoginIdPopupIsOpen
         {
-            get { return _invalidLoginIDPopupIsOpen; }
+            get { return _invalidLoginIdPopupIsOpen; }
             set
             {
-                if (_invalidLoginIDPopupIsOpen != value)
+                if (_invalidLoginIdPopupIsOpen != value)
                 {
                     if (value == true)
                         SwitchOffPopups();
-                    _invalidLoginIDPopupIsOpen = value;
-                    RaisePropertyChanged(() => this.InvalidLoginIDPopupIsOpen);
+                    _invalidLoginIdPopupIsOpen = value;
+                    RaisePropertyChanged(() => this.InvalidLoginIdPopupIsOpen);
                 }
             }
         }
@@ -328,23 +328,23 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to InvalidLoginIDPopup Child attribute
+        /// Property binding to InvalidLoginIdPopup Child attribute
         /// </summary>
-        private UIElement _invalidLoginIDPopupChild;
-        public UIElement InvalidLoginIDPopupChild
+        private UIElement _invalidLoginIdPopupChild;
+        public UIElement InvalidLoginIdPopupChild
         {
             get
             {
-                if (_invalidLoginIDPopupChild == null)
-                    _invalidLoginIDPopupChild = new ErrorMessage(ErrorResourceManager.GetString("InvalidPasswordResetLoginIDError"));
-                return _invalidLoginIDPopupChild;
+                if (_invalidLoginIdPopupChild == null)
+                    _invalidLoginIdPopupChild = new ErrorMessage(ErrorResourceManager.GetString("InvalidPasswordResetLoginIdError"));
+                return _invalidLoginIdPopupChild;
             }
             set
             {
-                if (_invalidLoginIDPopupChild != value)
+                if (_invalidLoginIdPopupChild != value)
                 {
-                    _invalidLoginIDPopupChild = value;
-                    RaisePropertyChanged(() => this.InvalidLoginIDPopupChild);
+                    _invalidLoginIdPopupChild = value;
+                    RaisePropertyChanged(() => this.InvalidLoginIdPopupChild);
                 }
             }
         }
@@ -409,7 +409,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Property binding to Reset button click event or Login ID/SecurityAnswer Enter Press event
+        /// Property binding to Reset button click event or Login Id/SecurityAnswer Enter Press event
         /// </summary>        
         public ICommand ResetCommand
         {
@@ -437,7 +437,7 @@ namespace GreenField.LoginModule.ViewModel
         }
 
         /// <summary>
-        /// Reset button click event or Login ID/SecurityAnswer Enter Press event implementation - validate errors, navigate to notification screen
+        /// Reset button click event or Login Id/SecurityAnswer Enter Press event implementation - validate errors, navigate to notification screen
         /// </summary>
         /// <param name="param"></param>
         private void ResetCommandMethod(object param)
@@ -448,49 +448,67 @@ namespace GreenField.LoginModule.ViewModel
                 {
                     if (ErrorValidation())
                     {
+                        #region GetUser Service Call
                         _manageLogins.GetUser(LoginIdText, false, (membershipUser) =>
                         {
                             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
                             Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
 
-                            if (membershipUser != null)
+                            try
                             {
-                                Logging.LogLoginMethodParameter(_logger, methodNamespace, membershipUser, 1, _loginIdText);
-
-                                #region ResetPassword Service Call
-                                _manageLogins.ResetPassword(LoginIdText, SecurityAnswerText, (password) =>
+                                if (membershipUser != null)
                                 {
-                                    string resetMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                    Logging.LogLoginBeginMethod(_logger, resetMethodNamespace, LoginIdText);
+                                    Logging.LogLoginMethodParameter(_logger, methodNamespace, membershipUser, 1, _loginIdText);
 
-                                    if (password != null)
+                                    #region ResetPassword Service Call
+                                    _manageLogins.ResetPassword(LoginIdText, SecurityAnswerText, (password) =>
                                     {
-                                        Logging.LogLoginMethodParameter(_logger, resetMethodNamespace, password, 1, _loginIdText);
-                                        Logging.LogAccountPasswordReset(_logger, LoginIdText);
-                                        MessageBox.Show(password); // Password displayed as messagebox, to be sent as email alert later
-                                        ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
-                                        NotificationText = NotificationManager.GetString("PasswordResetNotification").Replace("[LoginID]", LoginIdText);
+                                        string resetMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                        Logging.LogLoginBeginMethod(_logger, resetMethodNamespace, LoginIdText);
 
-                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
-                                    }
-                                    else
-                                    {
-                                        Logging.LogLoginMethodParameterNull(_logger, resetMethodNamespace, 1, LoginIdText);
-                                        SecurityAnswerState = FieldState.InvalidField;
-                                    }
+                                        try
+                                        {
+                                            if (password != null)
+                                            {
+                                                Logging.LogLoginMethodParameter(_logger, resetMethodNamespace, password, 1, _loginIdText);
+                                                Logging.LogAccountPasswordReset(_logger, LoginIdText);
+                                                MessageBox.Show(password); // Password displayed as messagebox, to be sent as email alert later
+                                                ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
+                                                NotificationText = NotificationManager.GetString("PasswordResetNotification").Replace("[LoginId]", LoginIdText);
 
-                                    Logging.LogLoginEndMethod(_logger, resetMethodNamespace, LoginIdText);
-                                }); 
-                                #endregion
+                                                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewNotifications", UriKind.Relative));
+                                            }
+                                            else
+                                            {
+                                                Logging.LogLoginMethodParameterNull(_logger, resetMethodNamespace, 1, LoginIdText);
+                                                SecurityAnswerState = FieldState.InvalidField;
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                            Logging.LogLoginException(_logger, ex);
+                                        }
+
+                                        Logging.LogLoginEndMethod(_logger, resetMethodNamespace, LoginIdText);
+                                    });
+                                    #endregion
+                                }
+                                else
+                                {
+                                    Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
+                                    LoginIdState = FieldState.InvalidField;
+                                }
                             }
-                            else
+                            catch (Exception ex)
                             {
-                                Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
-                                LoginIdState = FieldState.InvalidField;
+                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                Logging.LogLoginException(_logger, ex);
                             }
 
                             Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
-                        });
+                        }); 
+                        #endregion
                     } 
                 }
             }
@@ -595,7 +613,7 @@ namespace GreenField.LoginModule.ViewModel
         private void SwitchOffPopups()
         {
             MissingFieldPopupIsOpen = false;
-            InvalidLoginIDPopupIsOpen = false;
+            InvalidLoginIdPopupIsOpen = false;
             InvalidSecurityAnswerPopupIsOpen = false;
         }
 

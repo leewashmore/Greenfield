@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 
-namespace GreenField.LoginModule.Support_Classes
+namespace GreenField.LoginModule.SupportClasses
 {
     /// <summary>
     /// Implement KeyDown Command - 'Enter key' binding for FrameworkElement (TextBox/PasswordBox)

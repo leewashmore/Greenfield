@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using System.Windows.Resources;
 using System.Reflection;
 
-namespace GreenField.DashBoardModule.Helpers
+namespace GreenField.DashboardModule.Helpers
 {
     public static class TypeResolution
     {

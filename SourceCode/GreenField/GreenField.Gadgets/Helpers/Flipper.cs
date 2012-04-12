@@ -13,7 +13,7 @@ namespace GreenField.Gadgets.Helpers
 {
     public class Flipper
     {
-        public enum Directions { LeftToRight, RightToLeft }
+        public enum Direction { LeftToRight, RightToLeft }
 
         /// <summary>
         /// Method to flip the Controls
@@ -22,7 +22,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="under">The Control which is currently hidden.</param>
         /// <param name="direction"></param>
         /// <param name="duration"></param>
-        public static void FlipItem(UIElement over, UIElement under, Directions direction = Directions.LeftToRight, int duration = 2000)
+        public static void FlipItem(UIElement over, UIElement under, Direction direction = Direction.LeftToRight, int duration = 2000)
         {
             // setup visible plane
             over.Visibility = Visibility.Visible;
@@ -41,12 +41,12 @@ namespace GreenField.Gadgets.Helpers
             _StoryBoard.Children.Add(CreateVisibility(_Duration, under, true));
 
             // add animation: rotate items
-            if (direction == Directions.LeftToRight)
+            if (direction == Direction.LeftToRight)
             {
                 _StoryBoard.Children.Add(CreateRotation(_Duration, 0, -90, -180, (PlaneProjection)over.Projection));
                 _StoryBoard.Children.Add(CreateRotation(_Duration, 180, 90, 0, (PlaneProjection)under.Projection));
             }
-            else if (direction == Directions.RightToLeft)
+            else if (direction == Direction.RightToLeft)
             {
                 _StoryBoard.Children.Add(CreateRotation(_Duration, 0, 90, 180, (PlaneProjection)over.Projection));
                 _StoryBoard.Children.Add(CreateRotation(_Duration, -180, -90, 0, (PlaneProjection)under.Projection));

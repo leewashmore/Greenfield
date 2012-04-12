@@ -42,7 +42,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextClosingPriceChart; }
             set { _dataContextClosingPriceChart = value; }
         }
-        
+
 
         #endregion
 
@@ -51,17 +51,18 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewClosingPriceChart(ViewModelClosingPriceChart DataContextSource)
+        public ViewClosingPriceChart(ViewModelClosingPriceChart dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
-            this.DataContextClosingPriceChart = DataContextSource;
-            DataContextSource.closingPriceDataLoadedEvent += new DataRetrievalProgressIndicator(DataContextSource_closingPriceDataLoadedEvent);
-            DataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
-            this.chPricing.DataBound += DataContextSource.ChartDataBound;
-            DataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
-            this.chVolume.DataBound += DataContextSource.ChartDataBound;
+            this.DataContext = dataContextSource;
+            this.DataContextClosingPriceChart = dataContextSource;
+            dataContextSource.ClosingPriceDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
+            dataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
+            this.chPricing.DataBound += dataContextSource.ChartDataBound;
+            dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
+            this.chVolume.DataBound += dataContextSource.ChartDataBound;
             ApplyChartStyles();
+            this.chPricing.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -80,7 +81,6 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
-
         }
 
         /// <summary>
@@ -132,9 +132,9 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOptions.RADGRIDVIEW_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOptions.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
                     
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PRICING);
@@ -244,47 +244,7 @@ namespace GreenField.Gadgets.Views
 
         private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
         {
-            if (e.Element == ExportElement.HeaderRow || e.Element == ExportElement.FooterRow
-                || e.Element == ExportElement.GroupFooterRow)
-            {
-                e.Background = Colors.Gray;
-                e.Foreground = Colors.Black;
-                e.FontSize = 20;
-                e.FontWeight = FontWeights.Bold;
-            }
-            else if (e.Element == ExportElement.Row)
-            {
-                //e.Background = RowBackgroundPicker.SelectedColor;
-                //e.Foreground = RowForegroundPicker.SelectedColor;
-            }
-            else if (e.Element == ExportElement.Cell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Foreground = Colors.Blue;
-            }
-            else if (e.Element == ExportElement.GroupHeaderRow)
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Height = 30;
-            }
-            else if (e.Element == ExportElement.GroupHeaderCell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.Value = "MyNewValue";
-            }
-            else if (e.Element == ExportElement.GroupFooterCell)
-            {
-                GridViewDataColumn column = e.Context as GridViewDataColumn;
-                QueryableCollectionViewGroup qcvGroup = e.Value as QueryableCollectionViewGroup;
-
-                if (column != null && qcvGroup != null && column.AggregateFunctions.Count() > 0)
-                {
-                    e.Value = GetAggregates(qcvGroup, column);
-                }
-            }
+            RadGridView_ElementExport.ElementExporting(e);
         }
 
         private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
@@ -305,45 +265,25 @@ namespace GreenField.Gadgets.Views
             return String.Join(",", aggregates.ToArray());
         }
 
-        /// <summary>
-        /// To check if Total Return checkbox is checked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkSearchFilter_Checked(object sender, RoutedEventArgs e)
-        {
-            this.cmbAddSeries.TextSearchMode = TextSearchMode.StartsWith;
-        }
-
-        /// <summary>
-        /// To check if Total Return checkbox is Unchecked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void chkSearchFilter_Unchecked(object sender, RoutedEventArgs e)
-        {
-            this.cmbAddSeries.TextSearchMode = TextSearchMode.Contains;
-        }
-
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
             if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
             {
                 ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
-                        customDateWindow.Show();
-                        customDateWindow.Unloaded += (se, a) =>
-                        {
-                            if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
-                            {
-                                DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
-                                DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
-                            }
-                            else
-                            {
-                                this.cmbTime.SelectedValue = "1-Year";
-                            }
-                            this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
-                        };                                  
+                customDateWindow.Show();
+                customDateWindow.Unloaded += (se, a) =>
+                {
+                    if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                    {
+                        DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                        DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
+                    }
+                    else
+                    {
+                        this.cmbTime.SelectedValue = "1-Year";
+                    }
+                    this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                };
             }
             else
             {
@@ -353,7 +293,7 @@ namespace GreenField.Gadgets.Views
 
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            
+
         }
 
     }

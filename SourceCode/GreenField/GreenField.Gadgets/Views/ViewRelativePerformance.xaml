@@ -39,7 +39,7 @@
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <telerik:RadButton x:Name="btnExportExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   ToolTipService.ToolTip="Export to Excel">
+                                   ToolTipService.ToolTip="Export to Excel" Click="btnExportExcel_Click">
                     <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </telerik:RadButton>
                 <telerik:RadButton x:Name="btnExportPDF" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -57,7 +57,7 @@
             <telerik:RadGridView Name="dgRelativePerformance" AutoGenerateColumns="False" IsFilteringAllowed="True" FrozenColumnCount="1"
                              CanUserSelect="True" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro" SelectionMode="Single"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime" ShowGroupFooters="True"
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="True" SelectionUnit="Cell"
+                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="True" SelectionUnit="Cell" ElementExporting="dgRelativePerformance_ElementExporting"
                              RowLoaded="dgRelativePerformance_RowLoaded" SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged">
 
                 <telerik:RadGridView.Columns>
@@ -74,7 +74,7 @@
                     </telerik:GridViewDataColumn>
 
                     <!--Totals Column-->
-                    <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total">
+                    <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterCellStyle="{StaticResource GridViewCustomFooterCellStyle}">
                         <telerik:GridViewDataColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

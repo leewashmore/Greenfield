@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common;
-using GreenField.Benchmark.View_Models;
+using GreenField.Benchmark.ViewModels;
 
 namespace GreenField.Benchmark.Views
 {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Web.Security;
 using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Web.Services
 {
@@ -17,13 +18,6 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class LoginOperations
     {
-        #region Fields
-        /// <summary>
-        /// Logging Service Instance
-        /// </summary>
-        private LoggingOperations loggingOperations = new LoggingOperations(); 
-        #endregion
-
         #region Operation Contracts
         #region Membership
         /// <summary>
@@ -33,7 +27,7 @@ namespace GreenField.Web.Services
         /// <param name="password"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool ValidateUser(string username, string password)
+        public bool? ValidateUser(string username, string password)
         {
             try
             {
@@ -41,8 +35,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -94,12 +88,12 @@ namespace GreenField.Web.Services
                         break;
                 }
 
-                return string.Empty;
+                return null;
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return string.Empty;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -111,7 +105,7 @@ namespace GreenField.Web.Services
         /// <param name="newPassword"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        public bool? ChangePassword(string username, string oldPassword, string newPassword)
         {
             try
             {
@@ -119,8 +113,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -137,11 +131,11 @@ namespace GreenField.Web.Services
             {
                 return Membership.Provider.ResetPassword(username, answer);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-
         }
 
         /// <summary>
@@ -150,21 +144,28 @@ namespace GreenField.Web.Services
         /// <param name="membershipUserInfo">MembershipUserInfo</param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool UpdateApprovalForUser(MembershipUserInfo membershipUserInfo)
+        public bool? UpdateApprovalForUser(MembershipUserInfo membershipUserInfo)
         {
             try
             {
                 MembershipUser membershipUser = Membership.GetUser(membershipUserInfo.UserName, membershipUserInfo.IsOnline);
                 membershipUser.IsApproved = membershipUserInfo.IsApproved;
                 if (membershipUser != null)
+                {
                     Membership.UpdateUser(membershipUser);
-                return true;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
+
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace GreenField.Web.Services
         /// <param name="users"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool UpdateApprovalForUsers(MembershipUserInfo[] users)
+        public bool? UpdateApprovalForUsers(MembershipUserInfo[] users)
         {
             try
             {
@@ -182,15 +183,22 @@ namespace GreenField.Web.Services
                     MembershipUser membershipUser = Membership.GetUser(user.UserName, user.IsOnline);
                     membershipUser.IsApproved = user.IsApproved;
                     if (membershipUser != null)
+                    {
                         Membership.UpdateUser(membershipUser);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
 
                 return true;
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -200,7 +208,7 @@ namespace GreenField.Web.Services
         /// <param name="username"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool DeleteUser(string username)
+        public bool? DeleteUser(string username)
         {
             try
             {
@@ -208,8 +216,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -219,7 +227,7 @@ namespace GreenField.Web.Services
         /// <param name="username"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool DeleteUsers(string[] usernames)
+        public bool? DeleteUsers(string[] usernames)
         {
             try
             {
@@ -232,8 +240,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -251,8 +259,9 @@ namespace GreenField.Web.Services
                 MembershipUser user = Membership.GetUser(username, userIsOnline);
                 return user != null ? ConvertMembershipUser(user) : null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -264,11 +273,11 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<MembershipUserInfo> GetAllUsers()
         {
-            MembershipUserCollection membershipUserCollection = new MembershipUserCollection();
-            List<MembershipUserInfo> membershipUserInfo = new List<MembershipUserInfo>();
-
             try
             {
+                MembershipUserCollection membershipUserCollection = new MembershipUserCollection();
+                List<MembershipUserInfo> membershipUserInfo = new List<MembershipUserInfo>();
+
                 membershipUserCollection = Membership.GetAllUsers();
                 foreach (MembershipUser user in membershipUserCollection)
                     membershipUserInfo.Add(ConvertMembershipUser(user));
@@ -276,10 +285,10 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-            
+
         }
 
         /// <summary>
@@ -288,7 +297,7 @@ namespace GreenField.Web.Services
         /// <param name="userName"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool UnlockUser(string userName)
+        public bool? UnlockUser(string userName)
         {
             try
             {
@@ -296,8 +305,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -307,7 +316,7 @@ namespace GreenField.Web.Services
         /// <param name="userNames"></param>
         /// <returns></returns>
         [OperationContract]
-        public bool UnlockUsers(string[] userNames)
+        public bool? UnlockUsers(string[] userNames)
         {
             try
             {
@@ -317,8 +326,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
         #endregion
@@ -337,10 +346,9 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-            
         }
 
         /// <summary>
@@ -349,7 +357,7 @@ namespace GreenField.Web.Services
         /// <param name="roleName"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool CreateRole(string roleName)
+        public bool? CreateRole(string roleName)
         {
             try
             {
@@ -358,8 +366,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -373,14 +381,13 @@ namespace GreenField.Web.Services
         {
             try
             {
-                return Roles.GetRolesForUser(username);                
+                return Roles.GetRolesForUser(username);
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-            
         }
 
         /// <summary>
@@ -390,7 +397,7 @@ namespace GreenField.Web.Services
         /// <param name="roleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool RemoveUsersFromRoles(string[] usernames, string[] roleNames)
+        public bool? RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
             try
             {
@@ -399,8 +406,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -411,7 +418,7 @@ namespace GreenField.Web.Services
         /// <param name="roleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool AddUsersToRoles(string[] usernames, string[] roleNames)
+        public bool? AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             try
             {
@@ -420,8 +427,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
@@ -433,37 +440,29 @@ namespace GreenField.Web.Services
         /// <param name="deleteRoleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool UpdateUserRoles(string userName, string[] addRoleNames, string[] deleteRoleNames)
+        public bool? UpdateUserRoles(string userName, string[] addRoleNames, string[] deleteRoleNames)
         {
-            bool addRolesValidation = true;
-            if (addRoleNames.Count() > 0)
+            try
             {
-                try
+                bool addRolesValidation = true;
+                if (addRoleNames.Count() > 0)
                 {
                     Roles.AddUserToRoles(userName, addRoleNames);
                 }
-                catch (Exception ex)
-                {
-                    loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                    addRolesValidation = false;
-                }
-            }
 
-            bool deleteRolesValidation = true;
-            if (deleteRoleNames.Count() > 0)
-            {
-                try
+                bool deleteRolesValidation = true;
+                if (deleteRoleNames.Count() > 0)
                 {
                     Roles.RemoveUserFromRoles(userName, deleteRoleNames);
                 }
-                catch (Exception ex)
-                {
-                    loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                    deleteRolesValidation = false;
-                }
-            }
 
-            return addRolesValidation && deleteRolesValidation;
+                return addRolesValidation && deleteRolesValidation;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -473,7 +472,7 @@ namespace GreenField.Web.Services
         /// <param name="throwOnPopulatedRole"></param>
         /// <returns>True/False</returns>
         [OperationContract]
-        public bool DeleteRole(string username, bool throwOnPopulatedRole)
+        public bool? DeleteRole(string username, bool throwOnPopulatedRole)
         {
             try
             {
@@ -481,11 +480,11 @@ namespace GreenField.Web.Services
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
-                return false;
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
-        #endregion 
+        #endregion
         #endregion
 
         #region Helper
@@ -496,24 +495,39 @@ namespace GreenField.Web.Services
         /// <returns>MembershipUserInfo</returns>
         private MembershipUserInfo ConvertMembershipUser(MembershipUser user)
         {
-            return new MembershipUserInfo
+            try
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                IsApproved = user.IsApproved,
-                IsLockedOut = user.IsLockedOut,
-                IsOnline = user.IsOnline,
-                Comment = user.Comment,
-                CreateDate = user.CreationDate,
-                LastActivityDate = user.LastActivityDate,
-                LastLockOutDate = user.LastLockoutDate,
-                LastLogInDate = user.LastLoginDate,
-                ProviderUserKey = user.ProviderUserKey.ToString(),
-                ProviderName = user.ProviderName,
-                PasswordQuestion = user.PasswordQuestion,
-                LastPassWordChangedDate = user.LastPasswordChangedDate
-            };
-        } 
+                if (user != null)
+                {
+                    return new MembershipUserInfo
+                    {
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        IsApproved = user.IsApproved,
+                        IsLockedOut = user.IsLockedOut,
+                        IsOnline = user.IsOnline,
+                        Comment = user.Comment,
+                        CreateDate = user.CreationDate,
+                        LastActivityDate = user.LastActivityDate,
+                        LastLockOutDate = user.LastLockoutDate,
+                        LastLogInDate = user.LastLoginDate,
+                        ProviderUserKey = user.ProviderUserKey.ToString(),
+                        ProviderName = user.ProviderName,
+                        PasswordQuestion = user.PasswordQuestion,
+                        LastPassWordChangedDate = user.LastPasswordChangedDate
+                    };
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
         #endregion
     }
 }

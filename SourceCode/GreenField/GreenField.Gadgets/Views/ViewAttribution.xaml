@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewAttribution"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"         
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>            
+        </Grid.RowDefinitions>        
+        <telerik:RadGridView Grid.Row="0" Name="dgTopTenSecurities"  AutoGenerateColumns="False" 
+                                     ItemsSource="{Binding AttributionDataInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
+                                     SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
+                                     CanUserDeleteRows="False" IsReadOnly="True"
+                                     CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
+                                     UseLayoutRounding="True">
+            <telerik:RadGridView.Columns>                
+                <telerik:GridViewDataColumn Header="CountryID" 
+                                            DataMemberBinding="{Binding COUNTRY_ID}" />                
+                <telerik:GridViewDataColumn Header="Portfolio Weight"
+                                            DataMemberBinding="{Binding PORTFOLIO_WEIGHT}" DataFormatString="{}{0:n4}%"/>
+                <telerik:GridViewDataColumn Header="Benchmark Weight" 
+                                            DataMemberBinding="{Binding BENCHMARK_WEIGHT}" DataFormatString="{}{0:n4}%"/> 
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</UserControl>

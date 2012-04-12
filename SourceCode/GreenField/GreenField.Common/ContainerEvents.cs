@@ -19,6 +19,8 @@ namespace GreenField.Common
 {
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
+    public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
+
     public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
     public class FundReferenceSetEvent : CompositePresentationEvent<FundSelectionData> { }
@@ -27,29 +29,28 @@ namespace GreenField.Common
 
     public class EffectiveDateSet : CompositePresentationEvent<DateTime> { }
 
-    public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayLoad> { }
+    public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
 
     public class DashboardGadgetSave : CompositePresentationEvent<object> { }
 
-    public class DashBoardTileViewItemAdded : CompositePresentationEvent<DashBoardTileViewItemInfo> { }
+    public class DashboardTileViewItemAdded : CompositePresentationEvent<DashboardTileViewItemInfo> { }
 
-    public class DashBoardTileViewItemInfo
+    public class DashboardTileViewItemInfo
     {
-        public string DashBoardTileHeader { get; set; }
-        public object DashBoardTileObject { get; set; }        
+        public string DashboardTileHeader { get; set; }
+        public object DashboardTileObject { get; set; }        
     }
 
     /// <summary>
     /// Prism parameters passed to Gadget viewmodel class
     /// </summary>
-    public class DashBoardGadgetParam
+    public class DashboardGadgetParam
     {
         public IEventAggregator EventAggregator { get; set; }
         public IDBInteractivity DBInteractivity { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
-        public DashboardGadgetPayLoad DashboardGadgetPayLoad { get; set; }        
-    }
-
+        public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
+    }    
 
 }
 

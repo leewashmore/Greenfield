@@ -16,17 +16,18 @@ using System.ComponentModel.Composition;
 using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.App.ViewModel;
+using Telerik.Windows.Controls;
 
 
 
 namespace GreenField.App
 {
-    [Export]//
+     [Export]
     public partial class Shell : UserControl
     {
         public Shell()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
         [Import]

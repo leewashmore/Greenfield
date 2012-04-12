@@ -9,33 +9,6 @@ namespace GreenField.ServiceCaller
 {
     public interface IDBInteractivity
     {
-        void GetMessage(Action<String> callback);
-
-        void RetrieveDetailedEstimates(String companyName, String periodType, String estimateType,
-            Action<List<DetailedEstimates_Result>> callback);
-
-        void RetrieveConsensusEstimates(String companyName, String periodType, Action<List<ConsensusEstimates_Result>> callback);
-
-        void RetrieveCompaniesList(Action<List<GetCompanies_Result>> callback);
-
-        void RetrieveDimensionDataListView(Action<List<String>> callback);
-
-        void RetrieveDimensionDataForSelectedView(String viewName, Action<List<HoldingsData>> callback);
-
-        void RetrievePerformanceDataForSelectedView(String viewName, Action<List<PerformanceData>> callback);
-
-        void RetrievePerformanceDataListView(Action<List<String>> callback);
-
-        void RetrieveReferenceDataForSelectedView(String viewName, Action<List<ReferenceData>> callback);
-
-        void RetrieveReferenceDataListView(Action<List<String>> callback);
-
-        void RetrieveAggregateDataListView(Action<List<String>> callback);
-
-        void RetrieveAggregateDataForSelectedView(String portfolioName, Action<List<AggregatedData>> callback);
-
-        void RetrievePortfolioNames(String viewName, Action<List<String>> callback);
-
         void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
         void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityOverviewData> callback);
@@ -60,9 +33,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback);
 
-        void RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate,String filterType,String filterValue,Action<List<HoldingsPercentageData>> callback);
+        void RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, DateTime effectiveDate,String filterType,String filterValue,Action<List<HoldingsPercentageData>> callback);
 
-        void RetrieveHoldingsPercentageDataForRegion(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback);
+        void RetrieveHoldingsPercentageDataForRegion(FundSelectionData fundmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback);
 
         void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback);
         
@@ -89,6 +62,19 @@ namespace GreenField.ServiceCaller
         void RetrieveRelativePerformanceSectorData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback);
 
         void RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null);
-        
+
+        void RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null);
+
+        void RetrieveRelativePerformanceSectorActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null);
+
+        void RetrieveRelativePerformanceSecurityActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null);
+
+
+        void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback);
+
+        void RetrievePerformanceGridData(String name, Action<List<PerformanceGridData>> callback);
+
+        void RetrieveAttributionData(String name, Action<List<AttributionData>> callback);
+
     }
 }

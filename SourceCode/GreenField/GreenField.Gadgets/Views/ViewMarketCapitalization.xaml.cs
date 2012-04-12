@@ -15,10 +15,10 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewMarketCapitalization : UserControl
     {
-        public ViewMarketCapitalization(ViewModelMarketCapitalization DataContextSource)
+        public ViewMarketCapitalization(ViewModelMarketCapitalization dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = dataContextSource;
         }
     }
 }

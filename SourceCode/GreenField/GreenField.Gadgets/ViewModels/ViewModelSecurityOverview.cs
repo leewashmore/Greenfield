@@ -41,12 +41,12 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor
         /// </summary>
         /// <param name="eventAggregator">MEF Eventaggregator instance</param>
-        public ViewModelSecurityOverview(DashBoardGadgetParam param)
+        public ViewModelSecurityOverview(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _entitySelectionData = param.DashboardGadgetPayLoad.EntitySelectionData;
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
             //Subscription to SecurityReferenceSet event
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);

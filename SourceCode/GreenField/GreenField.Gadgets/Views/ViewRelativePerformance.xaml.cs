@@ -20,6 +20,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Events;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -37,7 +38,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
-            DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuild(DataContextSource_RelativePerformanceGridBuildEvent);
+            DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
         }
 
         private List<RelativePerformanceData> _relativePerformanceInfo;
@@ -84,7 +85,7 @@ namespace GreenField.Gadgets.Views
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
                 CellTemp.Append("<TextBlock ");
-                CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].ActivePosition, StringFormat=(\\{0:n2\\}%)}'/>");
+                CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].ActivePosition, StringFormat= (\\{0:n2\\}%)}'/>");
                 CellTemp.Append("</StackPanel>");
                 CellTemp.Append("</DataTemplate>");
 
@@ -158,21 +159,30 @@ namespace GreenField.Gadgets.Views
             if (e.AddedCells.Count == 0)
                 return;
 
+            int selectedColumnIndex = e.AddedCells[0].Column.DisplayIndex;
+
             //Ignore cells on Column ID column
-            if (e.AddedCells[0].Column.DisplayIndex == 0)
+            if (selectedColumnIndex == 0)
                 return;
+
+            //Ignore null cells
+            if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
+            {
+                if (((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[selectedColumnIndex - 1] as RelativePerformanceCountrySpecificData).Alpha == null)
+                    return;
+            }
 
             string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID;
             int? sectorID = null;
-            if (e.AddedCells[0].Column.DisplayIndex != this.dgRelativePerformance.Columns.Count - 1)
+            if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
             {
-                sectorID = (e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1].SectorID;
+                sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] as RelativePerformanceCountrySpecificData).SectorID;
             }
 
             _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
             {
-                countryID = countryID,
-                sectorID = sectorID
+                CountryID = countryID,
+                SectorID = sectorID,                
             });            
  
         }
@@ -180,14 +190,75 @@ namespace GreenField.Gadgets.Views
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             int sectorID;
-            bool sectorIDNullValidation = int.TryParse(((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName, out sectorID);
-            if (sectorIDNullValidation)
+
+            if (e.OriginalSource is TextBlock)
             {
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                bool sectorIDNullValidation = int.TryParse(((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName, out sectorID);
+                if (sectorIDNullValidation)
                 {
-                    sectorID = sectorID
-                });
+                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                    {
+                        SectorID = sectorID
+                    });
+                }
+                else
+                {
+                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData());
+                }
             }
-        }        
+        }
+
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ChildExportOptions childExportOptions = new ChildExportOptions
+                (
+                new List<RadExportOptions>
+                {
+                    new RadExportOptions() 
+                    {
+                        Element = this.dgRelativePerformance,
+                        ElementName = "Relative Performace Data",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    } 
+                }, "Export Options: " + GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE);
+            childExportOptions.Show();
+        }
+
+        private void dgRelativePerformance_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, () =>
+            {
+                if (e.Value is RelativePerformanceData)
+                {
+                    RelativePerformanceData value = e.Value as RelativePerformanceData;
+                    int columnIndex = (e.Context as GridViewDataColumn).DisplayIndex;
+                    if (columnIndex == 0)
+                    {
+                        return value.CountryID;
+                    }
+                    else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)
+                    {
+                        string result = value.AggregateCountryAlpha.ToString()
+                            + "(" + Math.Round((decimal)value.AggregateCountryActivePosition, 2).ToString() + "%)";
+                        return result;
+                    }
+                }
+
+                if (e.Value is RelativePerformanceCountrySpecificData)
+                {
+                    RelativePerformanceCountrySpecificData value = e.Value as RelativePerformanceCountrySpecificData;
+
+                    string result = String.Empty;
+                    if (value.Alpha != null)
+                    {
+                        result = value.Alpha.ToString() + "(" + Math.Round((decimal)value.ActivePosition, 2).ToString() + "%)";
+                    }
+                    return result;
+                }
+                return e.Value;
+            });
+        }
+
+        
     }
 }

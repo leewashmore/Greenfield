@@ -14,19 +14,21 @@ using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View Class of Holdings Pie Chart
+    /// </summary>
     public partial class ViewHoldingsPieChart : UserControl
     {
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource">ViewModelHoldingsPieChart as the data context</param>
         public ViewHoldingsPieChart(ViewModelHoldingsPieChart dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            RadialLabelSettings radialSettings = new RadialLabelSettings();
-            radialSettings.SpiderModeEnabled = true;
-            radialSettings.ShowConnectors = true;
-            DoughnutSeriesDefinition doughtnutSeries = new DoughnutSeriesDefinition();
-            doughtnutSeries.LabelSettings = radialSettings;
-            this.crtHoldingsPercentageSector.DefaultSeriesDefinition = doughtnutSeries;
-            this.crtHoldingsPercentageSector.DefaultView.ChartArea.SmartLabelsEnabled = true;
         }
+        #endregion
     }
 }

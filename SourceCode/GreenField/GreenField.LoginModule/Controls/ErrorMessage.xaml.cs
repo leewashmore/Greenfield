@@ -18,11 +18,11 @@ namespace GreenField.LoginModule.Controls
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="Message"> Error Message</param>
-        public ErrorMessage(string Message)
+        /// <param name="message"> Error Message</param>
+        public ErrorMessage(string message)
         {
             InitializeComponent();
-            this.MessageBlock.Text = Message;
+            this.MessageBlock.Text = message;
         }
     }
 }

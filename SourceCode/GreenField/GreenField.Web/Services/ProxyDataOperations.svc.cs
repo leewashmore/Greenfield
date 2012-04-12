@@ -12,6 +12,7 @@ using System.ServiceModel.Activation;
 using GreenField.Web.Helpers;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
+using System.Drawing;
 
 namespace GreenField.Web.Services
 {
@@ -29,649 +30,6 @@ namespace GreenField.Web.Services
 
                 return dimensionEntity;
             }
-        }
-
-        private StringBuilder secShortList = new StringBuilder();
-
-        [OperationContract]
-        public String RetrievePrintValue()
-        {
-            return "Message from web service";
-        }
-
-        [OperationContract]
-        public List<DetailedEstimates_Result> RetrieveDetailedEstimates(String companyName, String periodType, String estimateType)
-        {
-            List<DetailedEstimates_Result> result = new List<DetailedEstimates_Result>();
-            using (ResearchEntities entity = new ResearchEntities())
-            {
-                String company = String.IsNullOrEmpty(companyName) ? null : companyName;
-                String period = String.IsNullOrEmpty(periodType) ? null : periodType;
-                String estimate = String.IsNullOrEmpty(estimateType) ? null : estimateType;
-
-                var resultVal = entity.DetailedEstimates(null, company, period, estimate);
-
-                result = resultVal.ToList();
-            }
-
-            return result;
-        }
-
-        [OperationContract]
-        public List<GetCompanies_Result> RetrieveCompaniesList()
-        {
-            List<GetCompanies_Result> result = new List<GetCompanies_Result>();
-            using (ResearchEntities entity = new ResearchEntities())
-            {
-                var resultVal = entity.GetCompanies(null, null);
-
-                result = resultVal.ToList();
-            }
-
-            return result;
-        }
-
-        [OperationContract]
-        public List<String> RetrieveDimensionDataListView()
-        {
-            List<String> Result = new List<String>();
-            try
-            {
-                DimensionDataLocalService.SchemaClient client = new DimensionDataLocalService.SchemaClient();
-                String[] ListResult = client.ListViews();
-
-                Result = ListResult.ToList();
-            }
-            catch
-            { //TODO: Add appropriate exception handler
-            }
-            return Result;
-        }
-
-        [OperationContract]
-        public List<HoldingsData> RetrieveDimensionDataForSelectedView(String viewName)
-        {
-            List<HoldingsData> resultHoldings = new List<HoldingsData>();
-            viewName = "U_POS_EXP_BASEVIEW WHERE " + viewName;
-
-            try
-            {
-                DimensionDataLocalService.SchemaClient client = new DimensionDataLocalService.SchemaClient();
-                DataSet result = client.RunView(viewName);
-
-                foreach (DataRow row in result.Tables[0].Rows)
-                {
-                    HoldingsData holding = new HoldingsData()
-                    {
-                        PFCD_FROMDATE = row[0].ToString(),
-                        PFCD_TODATE = row[1].ToString(),
-                        PORTFOLIOTHEMEGROUPCODE = row[2].ToString(),
-                        PORTFOLIOTHEMEGROUP = row[3].ToString(),
-                        PORTFOLIOTHEMEGROUP_SORT = row[4].ToString(),
-                        PORTFOLIOTHEMESUBGROUPCODE = row[5].ToString(),
-                        PORTFOLIOTHEMESUBGROUP = row[6].ToString(),
-                        PORTFOLIOTHEMESUBGROUP_SORT = row[7].ToString(),
-                        PORTFOLIOCODE = row[8].ToString(),
-                        PORTFOLIONAME = row[9].ToString(),
-                        PORTFOLIO_SORT = row[10].ToString(),
-                        IRP_LEVERAGELIMIT = row[11].ToString(),
-                        PFCH_BALNOMVAL = row[12].ToString(),
-                        PFCH_BALBOOKVALPC = row[13].ToString(),
-                        PFCH_BALBOOKVALQC = row[14].ToString(),
-                        PFCH_BALCOSTVALPC = row[15].ToString(),
-                        PFCH_BALCOSTVALQC = row[16].ToString(),
-                        PFCH_BALCOSTPRI = row[17].ToString(),
-                        PFCH_BCOSTYLD = row[18].ToString(),
-                        PFCH_UNSETAMTINPC = row[19].ToString(),
-                        PFCH_UNSETAMTOUTPC = row[20].ToString(),
-                        PFCH_BALBOOKPRI = row[21].ToString(),
-                        PFKR_CURYLD = row[22].ToString(),
-                        PFKR_FXRATEQP = row[23].ToString(),
-                        PFKR_PFCHOLIK = row[24].ToString(),
-                        PFKR_PV01 = row[25].ToString(),
-                        PFCM_PFCM = row[26].ToString(),
-                        HOLK_PORIK = row[27].ToString(),
-                        HOLK_SECIK = row[28].ToString(),
-                        BENCHMARKSECURITY = row[29].ToString(),
-                        PFKR_ACR = row[30].ToString(),
-                        PFKR_ACRVALPC = row[31].ToString(),
-                        PFKR_CLEAN = row[32].ToString(),
-                        PFKR_DIRTY = row[33].ToString(),
-                        PFKR_DIRTYVALPC = row[34].ToString(),
-                        PFKR_DIRTYVALQC = row[35].ToString(),
-                        PFKR_EXPOSUREPC = row[36].ToString(),
-                        PFKR_DOLDURVALDFPC = row[37].ToString(),
-                        DOLDUR_0TO3YRS = row[38].ToString(),
-                        DOLDUR_3TO5YRS = row[39].ToString(),
-                        DOLDUR_5TO7YRS = row[40].ToString(),
-                        DOLDUR_7TO10YRS = row[41].ToString(),
-                        DOLDUR_5TO10YRS = row[42].ToString(),
-                        DOLDUR_GT10YRS = row[43].ToString(),
-                        DOLDUR_0TO3MODDUR = row[44].ToString(),
-                        DOLDUR_3TO5MODDUR = row[45].ToString(),
-                        DOLDUR_5TO7MODDUR = row[46].ToString(),
-                        DOLDUR_7TO10MODDUR = row[47].ToString(),
-                        DOLDUR_5TO10MODDUR = row[48].ToString(),
-                        DOLDUR_GT10MODDUR = row[49].ToString(),
-                        PFKR_MODSPRDUR = row[50].ToString(),
-                        PFKR_YTMYLD = row[51].ToString(),
-                        PFKR_YLDFIN = row[52].ToString(),
-                        PFKR_COUDATENEXT = row[53].ToString(),
-                        PFKR_COURATEBOOK = row[54].ToString(),
-                        PFKR_YLDTOWORST = row[55].ToString(),
-                        PFKR_MATDATE = row[56].ToString(),
-                        PFKR_MAT = row[57].ToString(),
-                        EXP_0TO3YRS = row[58].ToString(),
-                        EXP_3TO5YRS = row[59].ToString(),
-                        EXP_5TO7YRS = row[60].ToString(),
-                        EXP_7TO10YRS = row[61].ToString(),
-                        EXP_5TO10YRS = row[62].ToString(),
-                        EXP_GT10YRS = row[63].ToString(),
-                        EXP_0TO3MODDUR = row[64].ToString(),
-                        EXP_3TO5MODDUR = row[65].ToString(),
-                        EXP_5TO7MODDUR = row[66].ToString(),
-                        EXP_7TO10MODDUR = row[67].ToString(),
-                        EXP_5TO10MODDUR = row[68].ToString(),
-                        EXP_GT10MODDUR = row[69].ToString(),
-                        PFKR_MODDURDF = row[70].ToString(),
-                        PFKR_UPRLCOSTSECPC = row[71].ToString(),
-                        PFKR_UPRLCOSTCURPC = row[72].ToString(),
-                        PFKR_UPRLBOOKSECPC = row[73].ToString(),
-                        PFKR_UPRLBOOKCURPC = row[74].ToString(),
-                        PFCP_PERPRLBOOKSECPC = row[75].ToString(),
-                        PFCP_PERPRLBOOKCURPC = row[76].ToString(),
-                        PFKR_PRICETYPE = row[77].ToString(),
-                        PFKR_QUOTEDATE = row[78].ToString(),
-                        COUNTRYZONECODE = row[79].ToString(),
-                        COUNTRYZONENAME = row[80].ToString(),
-                        COUNTRYZONE_SORT = row[81].ToString(),
-                        CNTY_CTYIK = row[82].ToString(),
-                        COUNTRYCODE = row[83].ToString(),
-                        COUNTRYNAME = row[84].ToString(),
-                        CNTY_NON_EM = row[85].ToString(),
-                        HOLK_QUOCUR = row[86].ToString(),
-                        CURR_NON_EM = row[87].ToString(),
-                        SEC_SECFC90_CURRENCYOFRISK = row[88].ToString(),
-                        CURR_RISK_CUR = row[89].ToString(),
-                        CURR_RISK_NON_EM = row[90].ToString(),
-                        CURR_QUORISK_BEST = row[91].ToString(),
-                        CURR_QUORISK_NONEM_BEST = row[92].ToString(),
-                        IRP_INSTYPE_GROUPS_1 = row[93].ToString(),
-                        IRP_INSTYPE_GROUPS_2 = row[94].ToString(),
-                        ISIN = row[95].ToString(),
-                        SEC_SECFC2IK = row[96].ToString(),
-                        SEC_SECSHORT = row[97].ToString(),
-                        SEC_SECNAME = row[98].ToString(),
-                        SIDS_IDENT = row[99].ToString(),
-                        IXCT_UNDERLY = row[100].ToString(),
-                        IXCS_SECNO = row[101].ToString(),
-                        IXCS_SECSHORT = row[102].ToString(),
-                        SEC_SECNAMEROW1 = row[103].ToString(),
-                        SEC_ISSVOL = row[104].ToString(),
-                        SEC_ISSVOLOUT = row[105].ToString(),
-                        SEC_ISSVOL_BEST = row[106].ToString(),
-                        SEC_DEFQUOCUR = row[107].ToString(),
-                        SEC_INSTYPE = row[108].ToString(),
-                        INSTRUMENTTYPE = row[109].ToString(),
-                        SEC_INSTYPE_NAME = row[110].ToString(),
-                        INSTRUMENTTYPENAME = row[111].ToString(),
-                        SEC_SECFC88_LIQUIDITY = row[112].ToString(),
-                        SEC_SECFC89_BETA = row[113].ToString(),
-                        SECT_SECTYPE = row[114].ToString(),
-                        SECT_SORT = row[115].ToString(),
-                        IBI_SPREAD = row[116].ToString(),
-                        SECURITYTHEMECODE = row[117].ToString(),
-                        SECURITYTHEMENAME = row[118].ToString(),
-                        SECURITYTHEME_SORT = row[119].ToString(),
-                        PARG_PARGRP = row[120].ToString(),
-                        PARG_PARGRPNAME = row[121].ToString(),
-                        PART_PARIK = row[122].ToString(),
-                        PART_PAR = row[123].ToString(),
-                        ISSUERNAME = row[124].ToString(),
-                        OWNERSHIPCODE = row[125].ToString(),
-                        OWNERSHIPNAME = row[126].ToString(),
-                        OWNERSHIP_SORT = row[127].ToString(),
-                        BM1_BMIK = row[128].ToString(),
-                        BM2_BMIK = row[129].ToString(),
-                        BM3_BMIK = row[130].ToString(),
-                        SECFC15_SECFC15 = row[131].ToString(),
-                        SECFC15_PERFORMANCECURRENCY = row[132].ToString(),
-                        SECFC5_OWNERSHIP_PCENT = row[133].ToString(),
-                        COUNTRYCODEEXP = row[134].ToString(),
-                        COUNTRYNAMEEXP = row[135].ToString(),
-                        COUNTRYZONECODEEXP = row[136].ToString(),
-                        COUNTRYZONENAMEEXP = row[137].ToString(),
-                        COUNTRYZONESORTEXP = row[138].ToString(),
-                        ASHMMORE_EXP_DEF = row[139].ToString(),
-                        ASHMORE_EXP_DEF_CCY = row[140].ToString(),
-                        ASHMORE_EXP_BRK = row[141].ToString(),
-                        SECFC12_MANAGEDBYCODE = row[142].ToString(),
-                        SECFC12_MANAGEDBYNAME = row[143].ToString(),
-                        SECFC17_QUASISOVGUARCODE = row[144].ToString(),
-                        SECFC17_QUASISOVGUARNAME = row[145].ToString(),
-                        SECFC18_SECURITYLIQUIDITYCODE = row[146].ToString(),
-                        SECFC18_SECURITYLIQUIDITYNAME = row[147].ToString(),
-                        SECFC18_SECURITYLIQUIDITYSORT = row[148].ToString(),
-                        SECFC19_ORDERREASON = row[149].ToString(),
-                        SECFC19_ORDERREASONSORT = row[150].ToString(),
-                        SECFC20_IRPLOOKTHRUPOSS = row[151].ToString(),
-                        TOTAL_CORPORATE_RESTRICT_LIMIT = row[152].ToString(),
-                        TOTAL_CORPORATE_HOUSE_LIMIT = row[153].ToString(),
-                        LEVERAGE_LIMIT = row[154].ToString(),
-                        EXTERNAL_DEBT_SUB_GROUP = row[155].ToString(),
-                        CORP_ISSUER_LIMIT = row[156].ToString(),
-                        BENCHMARKSECTHEMECODE = row[157].ToString(),
-                        PF_BENCHMARK1CODE = row[158].ToString(),
-                        PF_BM1_IXCOVERAGE = row[159].ToString(),
-                        PF_BM1_BMFC4 = row[160].ToString(),
-                        PF_BENCHMARK2CODE = row[161].ToString(),
-                        PF_BM2_IXCOVERAGE = row[162].ToString(),
-                        PF_BM2_BMFC4 = row[163].ToString(),
-                        PF_BENCHMARK3CODE = row[164].ToString(),
-                        PF_BM3_IXCOVERAGE = row[165].ToString(),
-                        PF_BM3_BMFC4 = row[166].ToString(),
-                        ST_BENCHMARK1CODE = row[167].ToString(),
-                        ST_BM1_IXCOVERAGE = row[168].ToString(),
-                        ST_BM1_BMFC4 = row[169].ToString(),
-                        ST_BENCHMARK2CODE = row[170].ToString(),
-                        ST_BM2_IXCOVERAGE = row[171].ToString(),
-                        ST_BM2_BMFC4 = row[172].ToString(),
-                        ST_BENCHMARK3CODE = row[173].ToString(),
-                        ST_BM3_IXCOVERAGE = row[174].ToString(),
-                        ST_BM3_BMFC4 = row[175].ToString(),
-                        PFSC_COMPTYPE = row[176].ToString(),
-                        HOLK_QUOCUR_PERFCUR_OVERRIDE = row[177].ToString(),
-                        HOLK_LEGNO = row[178].ToString(),
-                        PFKR_EXPOSUREPC_SWAP_EXCL_LEG2 = row[179].ToString(),
-                        PFKR_EXPOSUREPC_SWAP_INCL_LEG2 = row[180].ToString(),
-                        SECFC43_SEC_LIQUID_IL_CODE = row[181].ToString(),
-                        SECFC43_SEC_LIQUID_IL_NAME = row[182].ToString(),
-                        SECFC43_SEC_LIQUID_IL_SORT = row[183].ToString(),
-                        SECFC83_SECURITY_TRS_CPARTY = row[184].ToString(),
-                        SECFC4_NON_PERFORMING = row[185].ToString(),
-                        SECFC97_IS_PIK_PPN = row[186].ToString(),
-                        PFKR_MODDURUND = row[187].ToString(),
-                        SEC_SECFC78_ZSPREAD = row[188].ToString()
-                    };
-                    resultHoldings.Add(holding);
-                }
-            }
-            catch
-            {
-                //TODO: Add appropriate exception handler
-            }
-            return resultHoldings;
-        }
-
-        [OperationContract]
-        public List<ConsensusEstimates_Result> RetrieveConsensusEstimates(String companyName, String periodType)
-        {
-            List<ConsensusEstimates_Result> result = new List<ConsensusEstimates_Result>();
-            using (ResearchEntities entity = new ResearchEntities())
-            {
-                String company = String.IsNullOrEmpty(companyName) ? null : companyName;
-                String period = String.IsNullOrEmpty(periodType) ? null : periodType;
-
-                var resultVal = entity.ConsensusEstimates(null, company, period);
-
-                result = resultVal.ToList();
-            }
-
-            return result;
-        }
-
-        [OperationContract]
-        public List<PerformanceData> RetrievePerformanceDataForSelectedView(String viewName)
-        {
-            List<PerformanceData> performanceData = new List<PerformanceData>();
-            viewName = "irp_perf_bmk_curr WHERE " + viewName;
-            try
-            {
-                DimensionDataLocalService.SchemaClient client = new DimensionDataLocalService.SchemaClient();
-                DataSet result = client.RunView(viewName);
-
-                foreach (DataRow row in result.Tables[0].Rows)
-                {
-                    PerformanceData performanceDataItem = new PerformanceData()
-                    {
-                        PORTFOLIOCODE = row[0].ToString(),
-                        QUOTATIONCURRENCYCODE = row[1].ToString(),
-                        PERFORMANCECURRENCYCODE = row[2].ToString(),
-                        CONTRIBRETBM1CURRRCMTD = Convert.ToDecimal(row[3].ToString()),
-                        CONTRIBRETBM1CURRTOPRCMTD = Convert.ToDecimal(row[4].ToString()),
-                        IRP_TWRBM1CURRMTDRC = Convert.ToDecimal(row[5].ToString()),
-                        A_PERFREP_BM1WEIGHT_TO_TOP_EOD = Convert.ToDecimal(row[6].ToString()),
-                        A_PERFREP_BM1WEIGHT_TO_TOP_SOD = Convert.ToDecimal(row[7].ToString()),
-                        A_PERFREP_TO_DATE = Convert.ToDateTime(row[8].ToString())
-                    };
-
-                    performanceData.Add(performanceDataItem);
-                }
-            }
-            catch
-            {
-                //TODO: Add appropriate exception handler
-            }
-            return performanceData;
-        }
-
-
-        [OperationContract]
-        public List<ReferenceData> RetrieveReferenceDataForSelectedView(String viewName)
-        {
-            List<ReferenceData> referenceData = new List<ReferenceData>();
-            viewName = "IRP2_SEC_MASTER_BASEVIEW WHERE " + viewName;
-            try
-            {
-                DimensionDataService.SchemaClient client = new DimensionDataService.SchemaClient();
-                DataSet result = client.RunView(viewName);
-
-                foreach (DataRow row in result.Tables[0].Rows)
-                {
-
-                    //if (row[8].ToString().Equals("AREF"))
-                    //{
-                    ReferenceData ReferenceDataItem = new ReferenceData()
-                {
-                    PFCD_FROMDATE = row[0].ToString(),
-                    PFCD_TODATE = row[1].ToString(),
-                    PORTFOLIOTHEMEGROUPCODE = row[2].ToString(),
-                    PORTFOLIOTHEMEGROUP = row[3].ToString(),
-                    PORTFOLIOTHEMEGROUP_SORT = row[4].ToString(),
-                    PORTFOLIOTHEMESUBGROUPCODE = row[5].ToString(),
-                    PORTFOLIOTHEMESUBGROUP = row[6].ToString(),
-                    PORTFOLIOTHEMESUBGROUP_SORT = row[7].ToString(),
-                    PORTFOLIOCODE = row[8].ToString(),
-                    PORTFOLIONAME = row[9].ToString(),
-                    PORTFOLIO_SORT = row[10].ToString(),
-                    IRP_LEVERAGELIMIT = row[11].ToString(),
-                    PFCH_BALNOMVAL = row[12].ToString(),
-                    PFCH_BALBOOKVALPC = row[13].ToString(),
-                    PFCH_BALBOOKVALQC = row[14].ToString(),
-                    PFCH_BALCOSTVALPC = row[15].ToString(),
-                    PFCH_BALCOSTVALQC = row[16].ToString(),
-                    PFCH_BALCOSTPRI = row[17].ToString(),
-                    PFCH_BCOSTYLD = row[18].ToString(),
-                    PFCH_UNSETAMTINPC = row[19].ToString(),
-                    PFCH_UNSETAMTOUTPC = row[20].ToString(),
-                    PFCH_BALBOOKPRI = row[21].ToString(),
-                    PFKR_CURYLD = row[22].ToString(),
-                    PFKR_FXRATEQP = row[23].ToString(),
-                    PFKR_PFCHOLIK = row[24].ToString(),
-                    PFKR_PV01 = row[25].ToString(),
-                    PFCM_PFCM = row[26].ToString(),
-                    HOLK_PORIK = row[27].ToString(),
-                    HOLK_SECIK = row[28].ToString(),
-                    BENCHMARKSECURITY = row[29].ToString(),
-                    PFKR_ACR = row[30].ToString(),
-                    PFKR_ACRVALPC = row[31].ToString(),
-                    PFKR_CLEAN = row[32].ToString(),
-                    PFKR_DIRTY = row[33].ToString(),
-                    PFKR_DIRTYVALPC = row[34].ToString(),
-                    PFKR_DIRTYVALQC = row[35].ToString(),
-                    PFKR_EXPOSUREPC = row[36].ToString(),
-                    PFKR_DOLDURVALDFPC = row[37].ToString(),
-                    DOLDUR_0TO3YRS = row[38].ToString(),
-                    DOLDUR_3TO5YRS = row[39].ToString(),
-                    DOLDUR_5TO7YRS = row[40].ToString(),
-                    DOLDUR_7TO10YRS = row[41].ToString(),
-                    DOLDUR_5TO10YRS = row[42].ToString(),
-                    DOLDUR_GT10YRS = row[43].ToString(),
-                    DOLDUR_0TO3MODDUR = row[44].ToString(),
-                    DOLDUR_3TO5MODDUR = row[45].ToString(),
-                    DOLDUR_5TO7MODDUR = row[46].ToString(),
-                    DOLDUR_7TO10MODDUR = row[47].ToString(),
-                    DOLDUR_5TO10MODDUR = row[48].ToString(),
-                    DOLDUR_GT10MODDUR = row[49].ToString(),
-                    PFKR_MODSPRDUR = row[50].ToString(),
-                    PFKR_YTMYLD = row[51].ToString(),
-                    PFKR_YLDFIN = row[52].ToString(),
-                    PFKR_COUDATENEXT = row[53].ToString(),
-                    PFKR_COURATEBOOK = row[54].ToString(),
-                    PFKR_YLDTOWORST = row[55].ToString(),
-                    PFKR_MATDATE = row[56].ToString(),
-                    PFKR_MAT = row[57].ToString(),
-                    EXP_0TO3YRS = row[58].ToString(),
-                    EXP_3TO5YRS = row[59].ToString(),
-                    EXP_5TO7YRS = row[60].ToString(),
-                    EXP_7TO10YRS = row[61].ToString(),
-                    EXP_5TO10YRS = row[62].ToString(),
-                    EXP_GT10YRS = row[63].ToString(),
-                    EXP_0TO3MODDUR = row[64].ToString(),
-                    EXP_3TO5MODDUR = row[65].ToString(),
-                    EXP_5TO7MODDUR = row[66].ToString(),
-                    EXP_7TO10MODDUR = row[67].ToString(),
-                    EXP_5TO10MODDUR = row[68].ToString(),
-                    EXP_GT10MODDUR = row[69].ToString(),
-                    PFKR_MODDURDF = row[70].ToString(),
-                    PFKR_UPRLCOSTSECPC = row[71].ToString(),
-                    PFKR_UPRLCOSTCURPC = row[72].ToString(),
-                    PFKR_UPRLBOOKSECPC = row[73].ToString(),
-                    PFKR_UPRLBOOKCURPC = row[74].ToString(),
-                    PFCP_PERPRLBOOKSECPC = row[75].ToString(),
-                    PFCP_PERPRLBOOKCURPC = row[76].ToString(),
-                    PFKR_PRICETYPE = row[77].ToString(),
-                    PFKR_QUOTEDATE = row[78].ToString(),
-                    COUNTRYZONECODE = row[79].ToString(),
-                    COUNTRYZONENAME = row[80].ToString(),
-                    COUNTRYZONE_SORT = row[81].ToString(),
-                    CNTY_CTYIK = row[82].ToString(),
-                    COUNTRYCODE = row[83].ToString(),
-                    COUNTRYNAME = row[84].ToString(),
-                    CNTY_NON_EM = row[85].ToString(),
-                    HOLK_QUOCUR = row[86].ToString(),
-                    CURR_NON_EM = row[87].ToString(),
-                    SEC_SECFC90_CURRENCYOFRISK = row[88].ToString(),
-                    CURR_RISK_CUR = row[89].ToString(),
-                    CURR_RISK_NON_EM = row[90].ToString(),
-                    CURR_QUORISK_BEST = row[91].ToString(),
-                    CURR_QUORISK_NONEM_BEST = row[92].ToString(),
-                    IRP_INSTYPE_GROUPS_1 = row[93].ToString(),
-                    IRP_INSTYPE_GROUPS_2 = row[94].ToString(),
-                    ISIN = row[95].ToString(),
-                    SEC_SECFC2IK = row[96].ToString(),
-                    SEC_SECSHORT = row[97].ToString(),
-                    SEC_SECNAME = row[98].ToString(),
-                    SIDS_IDENT = row[99].ToString(),
-                    IXCT_UNDERLY = row[100].ToString(),
-                    IXCS_SECNO = row[101].ToString(),
-                    IXCS_SECSHORT = row[102].ToString(),
-                    SEC_SECNAMEROW1 = row[103].ToString(),
-                    SEC_ISSVOL = row[104].ToString(),
-                    SEC_ISSVOLOUT = row[105].ToString(),
-                    SEC_ISSVOL_BEST = row[106].ToString(),
-                    SEC_DEFQUOCUR = row[107].ToString(),
-                    SEC_INSTYPE = row[108].ToString(),
-                    INSTRUMENTTYPE = row[109].ToString(),
-                    SEC_INSTYPE_NAME = row[110].ToString(),
-                    INSTRUMENTTYPENAME = row[111].ToString(),
-                    SEC_SECFC88_LIQUIDITY = row[112].ToString(),
-                    SEC_SECFC89_BETA = row[113].ToString(),
-                    SECT_SECTYPE = row[114].ToString(),
-                    SECT_SORT = row[115].ToString(),
-                    IBI_SPREAD = row[116].ToString(),
-                    SECURITYTHEMECODE = row[117].ToString(),
-                    SECURITYTHEMENAME = row[118].ToString(),
-                    SECURITYTHEME_SORT = row[119].ToString(),
-                    PARG_PARGRP = row[120].ToString(),
-                    PARG_PARGRPNAME = row[121].ToString(),
-                    PART_PARIK = row[122].ToString(),
-                    PART_PAR = row[123].ToString(),
-                    ISSUERNAME = row[124].ToString(),
-                    OWNERSHIPCODE = row[125].ToString(),
-                    OWNERSHIPNAME = row[126].ToString(),
-                    OWNERSHIP_SORT = row[127].ToString(),
-                    BM1_BMIK = row[128].ToString(),
-                    BM2_BMIK = row[129].ToString(),
-                    BM3_BMIK = row[130].ToString(),
-                    SECFC15_SECFC15 = row[131].ToString(),
-                    SECFC15_PERFORMANCECURRENCY = row[132].ToString(),
-                    SECFC5_OWNERSHIP_PCENT = row[133].ToString(),
-                    COUNTRYCODEEXP = row[134].ToString(),
-                    COUNTRYNAMEEXP = row[135].ToString(),
-                    COUNTRYZONECODEEXP = row[136].ToString(),
-                    COUNTRYZONENAMEEXP = row[137].ToString(),
-                    COUNTRYZONESORTEXP = row[138].ToString(),
-                    ASHMMORE_EXP_DEF = row[139].ToString(),
-                    ASHMORE_EXP_DEF_CCY = row[140].ToString(),
-                    ASHMORE_EXP_BRK = row[141].ToString(),
-                    SECFC12_MANAGEDBYCODE = row[142].ToString(),
-                    SECFC12_MANAGEDBYNAME = row[143].ToString(),
-                    SECFC17_QUASISOVGUARCODE = row[144].ToString(),
-                    SECFC17_QUASISOVGUARNAME = row[145].ToString(),
-                    SECFC18_SECURITYLIQUIDITYCODE = row[146].ToString(),
-                    SECFC18_SECURITYLIQUIDITYNAME = row[147].ToString(),
-                    SECFC18_SECURITYLIQUIDITYSORT = row[148].ToString(),
-                    SECFC19_ORDERREASON = row[149].ToString(),
-                    SECFC19_ORDERREASONSORT = row[150].ToString(),
-                    SECFC20_IRPLOOKTHRUPOSS = row[151].ToString(),
-                    TOTAL_CORPORATE_RESTRICT_LIMIT = row[152].ToString(),
-                    TOTAL_CORPORATE_HOUSE_LIMIT = row[153].ToString(),
-                    LEVERAGE_LIMIT = row[154].ToString(),
-                    EXTERNAL_DEBT_SUB_GROUP = row[155].ToString(),
-                    CORP_ISSUER_LIMIT = row[156].ToString(),
-                    BENCHMARKSECTHEMECODE = row[157].ToString(),
-                    PF_BENCHMARK1CODE = row[158].ToString(),
-                    PF_BM1_IXCOVERAGE = row[159].ToString(),
-                    PF_BM1_BMFC4 = row[160].ToString(),
-                    PF_BENCHMARK2CODE = row[161].ToString(),
-                    PF_BM2_IXCOVERAGE = row[162].ToString(),
-                    PF_BM2_BMFC4 = row[163].ToString(),
-                    PF_BENCHMARK3CODE = row[164].ToString(),
-                    PF_BM3_IXCOVERAGE = row[165].ToString(),
-                    PF_BM3_BMFC4 = row[166].ToString(),
-                    ST_BENCHMARK1CODE = row[167].ToString(),
-                    ST_BM1_IXCOVERAGE = row[168].ToString(),
-                    ST_BM1_BMFC4 = row[169].ToString(),
-                    ST_BENCHMARK2CODE = row[170].ToString(),
-                    ST_BM2_IXCOVERAGE = row[171].ToString(),
-                    ST_BM2_BMFC4 = row[172].ToString(),
-                    ST_BENCHMARK3CODE = row[173].ToString(),
-                    ST_BM3_IXCOVERAGE = row[174].ToString(),
-                    ST_BM3_BMFC4 = row[175].ToString(),
-                    PFSC_COMPTYPE = row[176].ToString(),
-                    HOLK_QUOCUR_PERFCUR_OVERRIDE = row[177].ToString(),
-                    HOLK_LEGNO = row[178].ToString(),
-                    PFKR_EXPOSUREPC_SWAP_EXCL_LEG2 = row[179].ToString(),
-                    PFKR_EXPOSUREPC_SWAP_INCL_LEG2 = row[180].ToString(),
-                    SECFC43_SEC_LIQUID_IL_CODE = row[181].ToString(),
-                    SECFC43_SEC_LIQUID_IL_NAME = row[182].ToString(),
-                    SECFC43_SEC_LIQUID_IL_SORT = row[183].ToString(),
-                    SECFC83_SECURITY_TRS_CPARTY = row[184].ToString(),
-                    SECFC4_NON_PERFORMING = row[185].ToString(),
-                    SECFC97_IS_PIK_PPN = row[186].ToString(),
-                    PFKR_MODDURUND = row[187].ToString(),
-                    SEC_SECFC78_ZSPREAD = row[188].ToString(),
-                    SEC_SECIK = row[189].ToString(),
-                    SECFC18_SECFC18IK = row[190].ToString(),
-                    SECFC19_SECFC19IK = row[191].ToString(),
-                    SECFC2_SECFC2SHORT = row[192].ToString(),
-                    SECFC20_SECFC20IK = row[193].ToString(),
-                    CURR_QT_CUR = row[194].ToString(),
-                    SEC_QUOCUR_PERFCUR_OVERRIDE = row[195].ToString(),
-                    SEC_TRS_UNDERLY = row[196].ToString()
-
-                };
-
-                    referenceData.Add(ReferenceDataItem);
-                }
-
-            }
-            //}
-
-            catch
-            {
-                //TODO: Add appropriate exception handler
-            }
-            return referenceData;
-        }
-
-
-        [OperationContract]
-        public List<AggregatedData> RetrieveAggregateDataForSelectedView(String portfolioName)
-        {
-            List<AggregatedData> resultAggData = new List<AggregatedData>();
-            try
-            {
-                DimensionDataLocalService.SchemaClient client = new DimensionDataLocalService.SchemaClient();
-                DataSet result = client.RunView("U_POS_EXP_BASEVIEW");
-                DataRow[] fileteredValues = result.Tables[0].Select(String.Format("PORTFOLIOCODE='{0}'", portfolioName));
-
-                foreach (DataRow row in fileteredValues)
-                {
-                    AggregatedData holding = new AggregatedData()
-                    {
-                        PFCD_FROMDATE = row[0].ToString(),
-                        PORTFOLIOTHEMEGROUPCODE = row[2].ToString(),
-                        PORTFOLIOCODE = row[8].ToString(),
-                        PORTFOLIONAME = row[9].ToString(),
-                        PFCH_BALBOOKVALPC = Convert.ToDouble(row[13].ToString()),
-                        PFKR_FXRATEQP = Convert.ToDouble(row[23].ToString()),
-                        COUNTRYZONENAME = row[80].ToString(),
-                        COUNTRYCODE = row[83].ToString(),
-                        COUNTRYNAME = row[84].ToString(),
-                        CURR_QUORISK_BEST = row[91].ToString(),
-                        ISIN = row[95].ToString(),
-                        SEC_SECSHORT = row[97].ToString(),
-                        SEC_SECNAME = row[98].ToString(),
-                        SEC_INSTYPE_NAME = row[110].ToString(),
-                        //COMPANY_NAME = row[14].ToString(),
-
-                    };
-                    resultAggData.Add(holding);
-                    secShortList.Append(holding.SEC_SECSHORT);
-                    secShortList.Append(",");
-                }
-
-                secShortList.Append("CNSHENDEVE");
-                //secShortList.Remove(secShortList.Length - 1, 1);
-
-                List<A_PROC_Result> annualResult = new List<A_PROC_Result>();
-                using (ResearchEntities entity = new ResearchEntities())
-                {
-                    var resultList = entity.A_PROC(secShortList.ToString());
-                    annualResult = resultList.ToList();
-                }
-
-                for (int i = 0; i < annualResult.Count; i++)
-                {
-                    AggregatedData data = (from p in resultAggData
-                                           where p.SEC_SECSHORT.Equals(annualResult[i].SEC_SECSHORT)
-                                           select p).First();
-
-                    data.NET_INCOME_ACT_2009 = annualResult[i].YEAR2009;
-                    data.NET_INCOME_ACT_2010 = annualResult[i].YEAR2010;
-                    data.NET_INCOME_EST_2011 = annualResult[i].YEAR2011;
-                    data.NET_INCOME_EST_2012 = annualResult[i].YEAR2012;
-                    data.NET_INCOME_EST_2013 = annualResult[i].YEAR2013;
-                }
-            }
-            catch
-            {
-                //TODO: Add appropriate exception handler
-            }
-            return resultAggData;
-        }
-
-        [OperationContract]
-        public List<String> RetrievePortfolioNames(String viewName)
-        {
-            List<String> result = new List<String>();
-            try
-            {
-                DimensionDataLocalService.SchemaClient client = new DimensionDataLocalService.SchemaClient();
-
-                DataSet resultDataSet = client.RunView(viewName);
-
-                foreach (DataRow row in resultDataSet.Tables[0].Rows)
-                {
-                    result.Add(row[8].ToString());
-                }
-            }
-            catch
-            { //TODO: Add appropriate exception handler
-            }
-            return result.Distinct().ToList();
         }
 
         [OperationContract]
@@ -703,8 +61,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -715,7 +74,10 @@ namespace GreenField.Web.Services
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).First();
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).FirstOrDefault();
+
+                if (data == null)
+                    return new SecurityOverviewData();
 
                 SecurityOverviewData result = new SecurityOverviewData()
                 {
@@ -734,8 +96,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -762,7 +125,7 @@ namespace GreenField.Web.Services
 
                 decimal curPrice = 0;
                 decimal curReturn = 0;
-                decimal calculatedPrice = 0;                
+                decimal calculatedPrice = 0;
                 string entityType = "";
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
@@ -842,7 +205,6 @@ namespace GreenField.Web.Services
 
                 #endregion
 
-
                 //Plotting a Multi-Line Comparison Chart
                 #region MultiLineChart
 
@@ -892,7 +254,7 @@ namespace GreenField.Web.Services
                             }
                         }
 
-                        else if ((Convert.ToString(item.Type) == "COMMODITY") || ((Convert.ToString(item.Type) == "INDEX")) || ((Convert.ToString(item.Type) == "FX")))
+                        else if ((Convert.ToString(item.Type) == "COMMODITY") || ((Convert.ToString(item.Type) == "INDEX")) || ((Convert.ToString(item.Type) == "CURRENCY")))
                         {
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
@@ -924,7 +286,10 @@ namespace GreenField.Web.Services
 
                         pricingDataResult = pricingDataResult.OrderBy(r => r.FromDate).ToList();
 
-                        pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).First().IndexedPrice = 100;
+                        if ((pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID))).ToList().Count() > 0)
+                        {
+                            pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).FirstOrDefault().IndexedPrice = 100;
+                        }
 
                         foreach (PricingReferenceData objPricingDataResult in pricingDataResult.Where(r => r.InstrumentID == Convert.ToString(item.InstrumentID)).OrderBy(r => r.FromDate).ToList())
                         {
@@ -980,8 +345,9 @@ namespace GreenField.Web.Services
                 return result;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -999,6 +365,7 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new EntitySelectionData()
                         {
+                            SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
                             ShortName = record.SHORT_NAME,
                             LongName = record.LONG_NAME,
                             InstrumentID = record.INSTRUMENT_ID,
@@ -1009,12 +376,13 @@ namespace GreenField.Web.Services
                 }
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
-
+        
         [OperationContract]
         public List<FundSelectionData> RetrieveFundSelectionData()
         {
@@ -1033,8 +401,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1054,8 +423,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1088,8 +458,9 @@ namespace GreenField.Web.Services
                         BenchmarkMicroShare = 0
                     };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1099,17 +470,37 @@ namespace GreenField.Web.Services
         {
             try
             {
+                //List<AssetAllocationData> result = new List<AssetAllocationData>();
+                //result.Add(new AssetAllocationData() { Country = "Mideast Regional", PortfolioShare = 4.4, ModelShare = 4.5, BenchmarkShare = 0, BetShare = 4.5 });
+                //result.Add(new AssetAllocationData() { Country = "Ex-South Africa", PortfolioShare = 1.9, ModelShare = 2.0, BenchmarkShare = 0.6, BetShare = 1.4 });
+                //result.Add(new AssetAllocationData() { Country = "Cash", PortfolioShare = 0.7, ModelShare = 0.7, BenchmarkShare = 0, BetShare = 0.7 });
+                //result.Add(new AssetAllocationData() { Country = "Russia", PortfolioShare = 6.6, ModelShare = 6.6, BenchmarkShare = 6.1, BetShare = 0.5 });
+                //result.Add(new AssetAllocationData() { Country = "Mexico", PortfolioShare = 4.5, ModelShare = 4.4, BenchmarkShare = 4.1, BetShare = 0.3 });
+                //result.Add(new AssetAllocationData() { Country = "Korea", PortfolioShare = 15.6, ModelShare = 15.3, BenchmarkShare = 15.1, BetShare = 0.2 });
+                //return result;
                 List<AssetAllocationData> result = new List<AssetAllocationData>();
-                result.Add(new AssetAllocationData() { Country = "Mideast Regional", PortfolioShare = 4.4, ModelShare = 4.5, BenchmarkShare = 0, BetShare = 4.5 });
-                result.Add(new AssetAllocationData() { Country = "Ex-South Africa", PortfolioShare = 1.9, ModelShare = 2.0, BenchmarkShare = 0.6, BetShare = 1.4 });
-                result.Add(new AssetAllocationData() { Country = "Cash", PortfolioShare = 0.7, ModelShare = 0.7, BenchmarkShare = 0, BetShare = 0.7 });
-                result.Add(new AssetAllocationData() { Country = "Russia", PortfolioShare = 6.6, ModelShare = 6.6, BenchmarkShare = 6.1, BetShare = 0.5 });
-                result.Add(new AssetAllocationData() { Country = "Mexico", PortfolioShare = 4.5, ModelShare = 4.4, BenchmarkShare = 4.1, BetShare = 0.3 });
-                result.Add(new AssetAllocationData() { Country = "Korea", PortfolioShare = 15.6, ModelShare = 15.3, BenchmarkShare = 15.1, BetShare = 0.2 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new AssetAllocationData()
+                    {
+                        Country = row.Field<string>("ISO_COUNTRY_CODE"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        ModelShare = row.Field<Single?>("ASH_EMM_MODEL_WEIGHT"),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                        BetShare = (row.Field<Single?>("ASH_EMM_MODEL_WEIGHT")) - (row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?))
+                    });
+                }
+
                 return result;
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1139,8 +530,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1170,8 +562,9 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1182,21 +575,27 @@ namespace GreenField.Web.Services
             try
             {
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
-                result.Add(new TopHoldingsData() { Ticker = "Ticker1", Holding = "Holding1", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker2", Holding = "Holding2", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker3", Holding = "Holding3", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker4", Holding = "Holding4", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker5", Holding = "Holding5", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker6", Holding = "Holding6", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker7", Holding = "Holding7", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker8", Holding = "Holding8", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker9", Holding = "Holding9", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker10", Holding = "Holding10", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
 
-                return result;
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new TopHoldingsData()
+                    {
+                        Ticker = row.Field<string>("TICKER"),
+                        Holding = row.Field<string>("ISSUE_NAME"),
+                        MarketValue = row.Field<Single?>("DIRTY_VALUE_PC"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                    });
+                }
+                return result.OrderByDescending( t => t.MarketValue).ToList().Take(10).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1217,6 +616,7 @@ namespace GreenField.Web.Services
 
                     string industry = row.Field<string>("GICS_INDUSTRY_NAME");
                     object sumMarketValueIndustry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "GICS_INDUSTRY_NAME = '" + industry + "'");
+
                     result.Add(new IndexConstituentsData()
                     {
                         ConstituentName = row.Field<string>("ISSUE_NAME"),
@@ -1225,380 +625,56 @@ namespace GreenField.Web.Services
                         Sector = row.Field<string>("GICS_SECTOR_NAME"),
                         Industry = industry,
                         SubIndustry = row.Field<string>("GICS_SUB_INDUSTRY_NAME"),
-                        Weight = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValue,
-                        WeightCountry = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValueCountry,
-                        WeightIndustry = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValueIndustry,
-                        DailyReturnUSD = row.Field<double>("ISSUE_NAME")
+                        Weight = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValue as Single?),
+                        WeightCountry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueCountry as Single?),
+                        WeightIndustry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueIndustry as Single?),
+                        //DailyReturnUSD = row.Field<string>("ISSUE_NAME")
                     });
                 }
-
                 return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
 
-        [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue)
-        {
-            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
 
-            List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
-            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-            HoldingsPercentageData entry = new HoldingsPercentageData();
-            ResearchEntities research = new ResearchEntities();
-            holdingData = research.tblHoldingsDatas.ToList();
-
-
-            switch (filterType)
-            {
-                case "Region":
-                    var q = from p in holdingData
-                            where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
-                            group p by p.GICS_SECTOR_NAME into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarks = 0;
-                    Double sumforPortfolios = 0;
-                    foreach (var a in q)
-                    {
-                        sumForBenchmarks = sumForBenchmarks + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfolios = sumforPortfolios + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in q)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarks) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfolios) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Country":
-                    var l = from p in holdingData
-                            where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                            group p by p.GICS_SECTOR_NAME into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-
-                    Double sumForBenchmarksCountry = 0;
-                    Double sumforPortfoliosCountry = 0;
-                    foreach (var a in l)
-                    {
-                        sumForBenchmarksCountry = sumForBenchmarksCountry + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosCountry = sumforPortfoliosCountry + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in l)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksCountry) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosCountry) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Industry":
-                    var m = from p in holdingData
-                            where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                            group p by p.GICS_SECTOR_NAME into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarksIndustry = 0;
-                    Double sumforPortfoliosIndustry = 0;
-                    foreach (var a in m)
-                    {
-                        sumForBenchmarksIndustry = sumForBenchmarksIndustry + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosIndustry = sumforPortfoliosIndustry + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in m)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksIndustry) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosIndustry) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Sector":
-                    var n = from p in holdingData
-                            where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                            group p by p.GICS_SUB_INDUSTRY_NAME into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarksSector = 0;
-                    Double sumforPortfoliosSector = 0;
-                    foreach (var a in n)
-                    {
-                        sumForBenchmarksSector = sumForBenchmarksSector + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosSector = sumforPortfoliosSector + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in n)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksSector) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosSector) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return result;
-        }
-
-        [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue)
-        {
-            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
-
-            List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
-            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-            HoldingsPercentageData entry = new HoldingsPercentageData();
-            ResearchEntities research = new ResearchEntities();
-            holdingData = research.tblHoldingsDatas.ToList();
-
-            switch (filterType)
-            {
-                case "Region":
-                    var q = from p in holdingData
-                            where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
-                            group p by p.ISO_COUNTRY_CODE into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarks = 0;
-                    Double sumforPortfolios = 0;
-                    foreach (var a in q)
-                    {
-                        sumForBenchmarks = sumForBenchmarks + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfolios = sumforPortfolios + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in q)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarks) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfolios) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Country":
-                    var l = from p in holdingData
-                            where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarksCountry = 0;
-                    Double sumforPortfoliosCountry = 0;
-                    foreach (var a in l)
-                    {
-                        sumForBenchmarksCountry = sumForBenchmarksCountry + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosCountry = sumforPortfoliosCountry + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in l)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksCountry) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosCountry) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Industry":
-                    var m = from p in holdingData
-                            where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarksIndustry = 0;
-                    Double sumforPortfoliosIndustry = 0;
-                    foreach (var a in m)
-                    {
-                        sumForBenchmarksIndustry = sumForBenchmarksIndustry + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosIndustry = sumforPortfoliosIndustry + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in m)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksIndustry) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosIndustry) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                case "Sector":
-                    var n = from p in holdingData
-                            where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                            group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
-                            select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
-                    Double sumForBenchmarksSector = 0;
-                    Double sumforPortfoliosSector = 0;
-                    foreach (var a in n)
-                    {
-                        sumForBenchmarksSector = sumForBenchmarksSector + Convert.ToDouble(a.BenchmarkSum);
-                        sumforPortfoliosSector = sumforPortfoliosSector + Convert.ToDouble(a.PortfolioSum);
-                    }
-                    foreach (var a in n)
-                    {
-                        entry = new HoldingsPercentageData();
-                        entry.SegmentName = a.SectorName;
-                        entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksSector) * 100;
-                        entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosSector) * 100;
-                        result.Add(entry);
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return result;
-        }
-
-        [OperationContract]
-        public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
-        {
-            List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
-            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-            List<tblHoldingsData> top10HoldingData = new List<tblHoldingsData>();
-            TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
-            ResearchEntities research = new ResearchEntities();
-            holdingData = research.tblHoldingsDatas.ToList();
-            top10HoldingData = (from p in holdingData orderby p.BENCHMARK_WEIGHT descending select p).Take(10).ToList();
-
-            foreach (tblHoldingsData item in top10HoldingData)
-            {
-                entry = new TopBenchmarkSecuritiesData();
-                entry.Weight = Convert.ToDouble(item.BENCHMARK_WEIGHT);
-                entry.IssuerName = item.ISSUE_NAME;
-                result.Add(entry);
-            }
-            return result;
-        }
-
-        [OperationContract]
-        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
-        {
-            List<PortfolioRiskReturnData> portfolioRiskReturnValues = new List<PortfolioRiskReturnData>();
-            try
-            {
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Expected Return",
-                    PortfolioValue = 18.1.ToString(),
-                    BenchMarkValue = 15.3.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Alpha",
-                    PortfolioValue = 1.8.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Beta",
-                    PortfolioValue = 0.95.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Standard Deviation",
-                    PortfolioValue = 15.1.ToString(),
-                    BenchMarkValue = 15.7.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Sharpe Ratio",
-                    PortfolioValue = 0.18.ToString(),
-                    BenchMarkValue = 0.13.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Information Ratio",
-                    PortfolioValue = 1.81.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Turnover Ratio",
-                    PortfolioValue = 11.14.ToString()
-                });
-            }
-            catch
-            {
-            }
-
-            return portfolioRiskReturnValues;
-        }
-
-        /// <summary>
-        /// Retrieving the Theoretical Unrealized Gain Loss Data for selected Entity.
-        /// </summary>
-        /// <param name="entityIdentifier">Ticker for the security</param>
-        /// <param name="startDateTime">Start Date of the Time Period that is selected</param>
-        /// <param name="endDateTime">End Date of the Time Period that is selected</param>       
-        /// <param name="frequencyInterval">Frequency Duration selected</param>       
-        /// <returns>List of UnrealozedGainLossData</returns>
-        [OperationContract]
-        public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
-        {
-
-            List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
-            int noOfRows;
-            try
-            {
-                if (entityIdentifier != null && startDateTime != null && endDateTime != null && frequencyInterval != null)
-                {
-                    DimensionEntitiesService.Entities entity = DimensionEntity;
-                    List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
-                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
-                    noOfRows = arrangedByDescRecord.Count();
-                    //Calculating the Adjusted price for a security and storing it in the list.
-                    List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
-                    //Calculating the Moving Average for a security and storing it in the list.
-                    List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
-                    //Calculating the Ninety Day Weight for a security and storing it in the list.
-                    List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
-                    //Calculating the Cost for a security and storing it in the list.
-                    List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
-                    //Calculating the Weighted Average Cost for a security and storing it in the list.
-                    List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
-                    //Calculating the Unrealized Gain loss for a security and storing it in the list.
-                    List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
-                    //Filtering the list according to the time period selected
-                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
-                    //Filtering the list according to the frequency selected.
-                    List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
-                                               select p.FromDate).ToList();
-                    List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
-                    timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
-                }
-
-                return timeAndFrequencyFilteredGainLossResult;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
 
         [OperationContract]
         public List<String> RetrieveValuesForFilters(String filterType)
         {
-            List<String> result = new List<String>();
-            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-            ResearchEntities research = new ResearchEntities();
-            holdingData = research.tblHoldingsDatas.ToList();
-            switch (filterType)
+            try
             {
-                case "Region":
-                    result = (from p in holdingData select p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Distinct().ToList();
-                    break;
-                case "Country":
-                    result = (from p in holdingData select p.ISO_COUNTRY_CODE.ToString()).Distinct().ToList();
-                    break;
-                case "Industry":
-                    result = (from p in holdingData select p.GICS_INDUSTRY_NAME.ToString()).Distinct().ToList();
-                    break;
-                case "Sector":
-                    result = (from p in holdingData select p.GICS_SECTOR_NAME.ToString()).Distinct().ToList();
-                    break;
-                default:
-                    break;
+                List<String> result = new List<String>();
+                List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                ResearchEntities research = new ResearchEntities();
+                holdingData = research.tblHoldingsDatas.ToList();
+                switch (filterType)
+                {
+                    case "Region":
+                        result = (from p in holdingData select p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Distinct().ToList();
+                        break;
+                    case "Country":
+                        result = (from p in holdingData select p.ISO_COUNTRY_CODE.ToString()).Distinct().ToList();
+                        break;
+                    case "Industry":
+                        result = (from p in holdingData select p.GICS_INDUSTRY_NAME.ToString()).Distinct().ToList();
+                        break;
+                    case "Sector":
+                        result = (from p in holdingData select p.GICS_SECTOR_NAME.ToString()).Distinct().ToList();
+                        break;
+                    default:
+                        break;
+                }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
         #region Build2 Services
 
@@ -1740,8 +816,9 @@ namespace GreenField.Web.Services
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -1750,34 +827,42 @@ namespace GreenField.Web.Services
         public List<MorningSnapshotData> RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference)
         {
 
-            List<MorningSnapshotData> result = new List<MorningSnapshotData>();
-            foreach (UserBenchmarkPreference preference in userBenchmarkPreference)
+            try
             {
-                if (preference.BenchmarkName != null)
+                List<MorningSnapshotData> result = new List<MorningSnapshotData>();
+                foreach (UserBenchmarkPreference preference in userBenchmarkPreference)
                 {
-                    result.Add(new MorningSnapshotData()
+                    if (preference.BenchmarkName != null)
                     {
-                        MorningSnapshotPreferenceInfo = preference,
-                        DTD = -0.1,
-                        WTD = -0.1,
-                        MTD = 4.4,
-                        QTD = 4.4,
-                        YTD = 7.4,
-                        PreviousYearPrice = 4.6,
-                        IIPreviousYearPrice = 52.3,
-                        IIIPreviousYearPrice = -50.8
-                    });
-                }
-                else
-                {
-                    result.Add(new MorningSnapshotData()
+                        result.Add(new MorningSnapshotData()
+                        {
+                            MorningSnapshotPreferenceInfo = preference,
+                            DTD = -0.1,
+                            WTD = -0.1,
+                            MTD = 4.4,
+                            QTD = 4.4,
+                            YTD = 7.4,
+                            PreviousYearPrice = 4.6,
+                            IIPreviousYearPrice = 52.3,
+                            IIIPreviousYearPrice = -50.8
+                        });
+                    }
+                    else
                     {
-                        MorningSnapshotPreferenceInfo = preference
-                    });
+                        result.Add(new MorningSnapshotData()
+                        {
+                            MorningSnapshotPreferenceInfo = preference
+                        });
+                    }
                 }
-            }
 
-            return result;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         [OperationContract]
@@ -1790,8 +875,9 @@ namespace GreenField.Web.Services
                 return true;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return false;
             }
         }
@@ -1806,8 +892,9 @@ namespace GreenField.Web.Services
                 return true;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return false;
             }
         }
@@ -1822,8 +909,9 @@ namespace GreenField.Web.Services
                 return true;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return false;
             }
         }
@@ -1838,8 +926,11 @@ namespace GreenField.Web.Services
                 return true;
             }
 
-            catch (Exception)
-            { return false; }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
         }
         #endregion
 
@@ -1854,40 +945,48 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         private List<PricingReferenceData> RetrievePricingDataAccordingFrequency(List<PricingReferenceData> objPricingData, List<DateTime> objEndDates)
         {
-            List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
-            List<DateTime> EndDates = objEndDates;
-
-            foreach (DateTime item in EndDates)
+            try
             {
-                int i = 1;
-                bool dateObjectFound = true;
+                List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
+                List<DateTime> EndDates = objEndDates;
 
-                if (objPricingData.Any(r => r.FromDate.Date == item.Date))
+                foreach (DateTime item in EndDates)
                 {
-                    resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.Date).First());
-                    dateObjectFound = false;
-                    continue;
-                }
-                else
-                {
-                    dateObjectFound = true;
-                }
+                    int i = 1;
+                    bool dateObjectFound = true;
 
-                while (dateObjectFound)
-                {
-                    bool objDataFoundDec = objPricingData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
-                    if (objDataFoundDec)
+                    if (objPricingData.Any(r => r.FromDate.Date == item.Date))
                     {
-                        resultFrequency.Add(objPricingData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
+                        resultFrequency.Add(objPricingData.Where(r => r.FromDate == item.Date).First());
                         dateObjectFound = false;
+                        continue;
                     }
                     else
                     {
-                        i++;
+                        dateObjectFound = true;
+                    }
+
+                    while (dateObjectFound)
+                    {
+                        bool objDataFoundDec = objPricingData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
+                        if (objDataFoundDec)
+                        {
+                            resultFrequency.Add(objPricingData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
+                            dateObjectFound = false;
+                        }
+                        else
+                        {
+                            i++;
+                        }
                     }
                 }
+                return resultFrequency.Distinct().ToList();
             }
-            return resultFrequency.Distinct().ToList();
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -1899,40 +998,48 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         private List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(List<UnrealizedGainLossData> objUnrealizedGainLossData, List<DateTime> objEndDates)
         {
-            List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
-
-            List<DateTime> EndDates = objEndDates;
-            foreach (DateTime item in EndDates)
+            try
             {
-                int i = 1;
-                bool dateObjectFound = true;
+                List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
 
-                if (objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.Date))
+                List<DateTime> EndDates = objEndDates;
+                foreach (DateTime item in EndDates)
                 {
-                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.Date).First());
-                    dateObjectFound = false;
-                    continue;
-                }
-                else
-                {
-                    dateObjectFound = true;
-                }
+                    int i = 1;
+                    bool dateObjectFound = true;
 
-                while (dateObjectFound)
-                {
-                    bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
-                    if (objDataFoundDec)
+                    if (objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.Date))
                     {
-                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
+                        resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.Date).First());
                         dateObjectFound = false;
+                        continue;
                     }
                     else
                     {
-                        i++;
+                        dateObjectFound = true;
+                    }
+
+                    while (dateObjectFound)
+                    {
+                        bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
+                        if (objDataFoundDec)
+                        {
+                            resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
+                            dateObjectFound = false;
+                        }
+                        else
+                        {
+                            i++;
+                        }
                     }
                 }
+                return resultFrequency.Distinct().ToList();
             }
-            return resultFrequency.Distinct().ToList();
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         #endregion
@@ -1981,18 +1088,298 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
-            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-            List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
-            foreach (DataRow row in dataTable.Rows)
+            try
             {
-                result.Add(new RelativePerformanceSectorData()
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    SectorID = row.Field<int>("GICS_SECTOR"),
-                    SectorName = row.Field<string>("GICS_SECTOR_NAME")
-                });
+                    result.Add(new RelativePerformanceSectorData()
+                    {
+                        SectorID = row.Field<int>("GICS_SECTOR"),
+                        SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                    });
+                }
+                result = result.Distinct().ToList();
+                return result;
             }
-            result = result.Distinct().ToList();
-            return result;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Country Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            try
+            {
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                List<string> countryCodes = new List<string>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    countryCodes.Add(row.Field<string>("ISO_COUNTRY_CODE"));
+                }
+                countryCodes = countryCodes.Distinct().ToList();
+
+                string query = "Select * From tblHoldingsData";
+                string queryWhereCondition = String.Empty;
+
+                if (countryID == null && sectorID == null)
+                {
+                    queryWhereCondition = String.Empty;
+                }
+
+                else if (countryID == null && sectorID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                query = query + queryWhereCondition;
+                dataTable = GetDataTable(query);
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (string countryCode in countryCodes)
+                {
+                    if (countryID != null)
+                    {
+                        if (!countryCode.Equals(countryID.ToString()))
+                        {
+                            continue;
+                        }
+                    }
+
+                    RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                    double MarketValue = 0;
+                    double FundWeight = 0;
+                    double BenchmarkWeight = 0;
+
+                    record.Entity = countryCode.ToString();
+                    DataTable countrySpecificData = new DataTable();
+                    EnumerableRowCollection<DataRow> rowCollection = dataTable.AsEnumerable().Where(row => row.Field<string>("ISO_COUNTRY_CODE") == countryCode);
+                    if (rowCollection.Count() > 0)
+                    {
+                        countrySpecificData = dataTable.AsEnumerable().Where(row => row.Field<string>("ISO_COUNTRY_CODE") == countryCode).CopyToDataTable();
+
+                        foreach (DataRow row in countrySpecificData.Rows)
+                        {
+                            MarketValue = MarketValue + (double)(row.Field<Single?>("MARKET_CAP_IN_USD") == null ? 0 : row.Field<Single?>("MARKET_CAP_IN_USD"));
+                            FundWeight = FundWeight + (double)(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100);
+                            BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);
+                        }
+
+                        record.MarketValue = MarketValue;
+                        record.FundWeight = FundWeight;
+                        record.BenchmarkWeight = BenchmarkWeight;
+                        record.ActivePosition = FundWeight - BenchmarkWeight;
+
+                        result.Add(record);
+                    }
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Sector Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            try
+            {
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    sectorCodes.Add(new RelativePerformanceSectorData()
+                    {
+                        SectorID = row.Field<int>("GICS_SECTOR"),
+                        SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                    });
+                }
+                sectorCodes = sectorCodes.Distinct().ToList();
+
+                string query = "Select * From tblHoldingsData";
+                string queryWhereCondition = String.Empty;
+
+                if (countryID == null && sectorID == null)
+                {
+                    queryWhereCondition = String.Empty;
+                }
+
+                else if (countryID == null && sectorID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                query = query + queryWhereCondition;
+                dataTable = GetDataTable(query);
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (RelativePerformanceSectorData sector in sectorCodes)
+                {
+                    if (sectorID != null)
+                    {
+                        if (!sector.SectorID.Equals(sectorID))
+                        {
+                            continue;
+                        }
+                    }
+
+                    RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                    double MarketValue = 0;
+                    double FundWeight = 0;
+                    double BenchmarkWeight = 0;
+
+                    record.Entity = sector.SectorName.ToString();
+                    DataTable sectorSpecificData = new DataTable();
+                    EnumerableRowCollection<DataRow> rowCollection = dataTable.AsEnumerable().Where(row => row.Field<int>("GICS_SECTOR") == sector.SectorID);
+                    if (rowCollection.Count() > 0)
+                    {
+                        sectorSpecificData = dataTable.AsEnumerable().Where(row => row.Field<int>("GICS_SECTOR") == sector.SectorID).CopyToDataTable();
+
+                        foreach (DataRow row in sectorSpecificData.Rows)
+                        {
+                            MarketValue = MarketValue + (double)(row.Field<Single?>("MARKET_CAP_IN_USD") == null ? 0 : row.Field<Single?>("MARKET_CAP_IN_USD"));
+                            FundWeight = FundWeight + (double)(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100);
+                        BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);                        
+                        }
+
+                        record.MarketValue = MarketValue;
+                        record.FundWeight = FundWeight;
+                        record.BenchmarkWeight = BenchmarkWeight;
+                        record.ActivePosition = FundWeight - BenchmarkWeight;
+
+                        result.Add(record);
+                    }
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Security Level Active Position Data for a particular composite/fund, benchmark and effective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        {
+            try
+            {
+                string query = "Select * From tblHoldingsData";
+                string queryWhereCondition = String.Empty;
+
+                if (countryID == null && sectorID == null)
+                {
+                    queryWhereCondition = String.Empty;
+                }
+
+                else if (countryID == null && sectorID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "'";
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + " Where ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                query = query + queryWhereCondition;
+
+                DataTable dataTable = GetDataTable(query);
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    double? fundWeight = (double?)(row.Field<Single?>("PORTFOLIO_WEIGHT") != null ? row.Field<Single?>("PORTFOLIO_WEIGHT") * 100 : null);
+                    double? benchmarkWeight = (double?)(row.Field<Single?>("BENCHMARK_WEIGHT") != null ? row.Field<Single?>("BENCHMARK_WEIGHT") * 100 : null);
+                    double? activePosition = null;
+                    if (fundWeight == null && benchmarkWeight != null)
+                        activePosition = benchmarkWeight * -1;
+                    else if (fundWeight != null && benchmarkWeight == null)
+                        activePosition = fundWeight;
+                    else if (fundWeight != null && benchmarkWeight != null)
+                        activePosition = fundWeight - benchmarkWeight;
+
+                    result.Add(new RelativePerformanceActivePositionData()
+                    {
+                        Entity = row.Field<string>("ISSUE_NAME"),
+                        MarketValue = (double?)(row.Field<Single?>("MARKET_CAP_IN_USD")),
+                        FundWeight = fundWeight,
+                        BenchmarkWeight = benchmarkWeight,
+                        ActivePosition = activePosition
+                });               
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -2006,161 +1393,669 @@ namespace GreenField.Web.Services
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <param name="order">(optional)1 for Ascending - data ordering - By default descending</param>
         /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
-        /// <returns></returns>
+        /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
         public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
 
 
-            DataTable dataTable = new DataTable();
-            string query = "Select " + (maxRecords == null ? "*" : "Top " + maxRecords.ToString() + " *") + " From tblHoldingsData ";
-            string queryWhereCondition = "Where ";
-
-            if (countryID == null && sectorID == null)
+            try
             {
-                queryWhereCondition = String.Empty;
-            }
+                DataTable dataTable = new DataTable();
+                string query = "Select " + (maxRecords == null ? "*" : "Top " + maxRecords.ToString() + " *") + " From tblHoldingsData ";
+                string queryWhereCondition = "Where ";
 
-            else if (countryID == null && sectorID != null)
-            {
-                queryWhereCondition = queryWhereCondition + "GICS_SECTOR = " + sectorID.ToString();
-            }
-
-            else if (sectorID == null && countryID != null)
-            {
-                queryWhereCondition = queryWhereCondition + "ISO_COUNTRY_CODE = '" + countryID + "'";
-            }
-
-            else if (sectorID != null && countryID != null)
-            {
-                queryWhereCondition = queryWhereCondition + "ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
-            }
-
-            query = query + queryWhereCondition + " Order By DIRTY_VALUE_PC " + (order == 1 ? "Asc" : "Desc");
-
-
-            dataTable = GetDataTable(query);
-
-            int alpha = 2;
-            List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                result.Add(new RelativePerformanceSecurityData()
+                if (countryID == null && sectorID == null)
                 {
-                    SecurityName = row.Field<string>("ISSUE_NAME"),
-                    SecurityCountryID = row.Field<string>("ISO_COUNTRY_CODE"),
-                    SecuritySectorName = row.Field<string>("GICS_SECTOR_NAME"),
-                    SecurityAlpha = alpha++,
-                    SecurityActivePosition = (double)
-                    (row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
-                    - row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100)
-                });
-            }
-            return order == 1 ? result.OrderBy(e => e.SecurityAlpha).ToList() : result.OrderByDescending(e => e.SecurityAlpha).ToList();
-        }
+                    queryWhereCondition = String.Empty;
+                }
 
+                else if (countryID == null && sectorID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + "GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + "ISO_COUNTRY_CODE = '" + countryID + "'";
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    queryWhereCondition = queryWhereCondition + "ISO_COUNTRY_CODE = '" + countryID + "' And GICS_SECTOR = " + sectorID.ToString();
+                }
+
+                query = query + queryWhereCondition + " Order By DIRTY_VALUE_PC " + (order == 1 ? "Asc" : "Desc");
+
+
+                dataTable = GetDataTable(query);
+
+                int alpha = 2;
+                List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new RelativePerformanceSecurityData()
+                    {
+                        SecurityName = row.Field<string>("ISSUE_NAME"),
+                        SecurityCountryID = row.Field<string>("ISO_COUNTRY_CODE"),
+                        SecuritySectorName = row.Field<string>("GICS_SECTOR_NAME"),
+                        SecurityAlpha = alpha++,
+                        SecurityActivePosition = (double)
+                        (row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
+                        - row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100)
+                    });
+                }
+                return order == 1 ? result.OrderBy(e => e.SecurityAlpha).ToList() : result.OrderByDescending(e => e.SecurityAlpha).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+        
         [OperationContract]
         public List<RelativePerformanceData> RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
-            DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-            List<string> countryCodes = new List<string>();
-            foreach (DataRow row in dataTable.Rows)
+            try
             {
-                countryCodes.Add(row.Field<string>("ISO_COUNTRY_CODE"));
-            }
-            countryCodes = countryCodes.Distinct().ToList();
-
-            dataTable = GetDataTable("Select * from tblHoldingsData");
-            List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
-            foreach (DataRow row in dataTable.Rows)
-            {
-                sectors.Add(new RelativePerformanceSectorData()
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                List<string> countryCodes = new List<string>();
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    SectorID = row.Field<int>("GICS_SECTOR"),
-                    SectorName = row.Field<string>("GICS_SECTOR_NAME")
-                });
-            }
-            sectors = sectors.Distinct().ToList();
+                    countryCodes.Add(row.Field<string>("ISO_COUNTRY_CODE"));
+                }
+                countryCodes = countryCodes.Distinct().ToList();
 
-
-            List<RelativePerformanceData> result = new List<RelativePerformanceData>();
-            foreach (string countryCode in countryCodes)
-            {
-                double? aggcsActivePosition = 0.0;
-                double? aggcsAlpha = 0.0;
-                double? aggcsPortfolioShare = 0.0;
-                double? aggcsBenchmarkShare = 0.0;
-                List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
-                foreach (RelativePerformanceSectorData sectorData in sectors)
+                List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    double? aggActivePosition = 0.0;
-                    double? aggAlpha = 0.0;
-                    double? aggPortfolioShare = 0.0;
-                    double? aggBenchmarkShare = 0.0;
-                    DataTable specificData = GetDataTable("Select * from tblHoldingsData where ISO_COUNTRY_CODE = '" + countryCode + "' and GICS_SECTOR = " + sectorData.SectorID.ToString());
-
-
-                    foreach (DataRow row in specificData.Rows)
+                    sectors.Add(new RelativePerformanceSectorData()
                     {
-                        if (row.Field<Single?>("BENCHMARK_WEIGHT") != null)
+                        SectorID = row.Field<int>("GICS_SECTOR"),
+                        SectorName = row.Field<string>("GICS_SECTOR_NAME")
+                    });
+                }
+                sectors = sectors.Distinct().ToList();
+
+
+                List<RelativePerformanceData> result = new List<RelativePerformanceData>();
+                foreach (string countryCode in countryCodes)
+                {
+                    double? aggcsAlpha = 0.0;
+                    double? aggcsPortfolioShare = 0.0;
+                    double? aggcsBenchmarkShare = 0.0;
+                    List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
+                    foreach (RelativePerformanceSectorData sectorData in sectors)
+                    {
+                        double? aggAlpha = 0.0;
+                        double? aggPortfolioShare = 0.0;
+                        double? aggBenchmarkShare = 0.0;
+                        DataTable specificData = GetDataTable("Select * from tblHoldingsData where ISO_COUNTRY_CODE = '" + countryCode + "' and GICS_SECTOR = " + sectorData.SectorID.ToString());
+
+
+                        foreach (DataRow row in specificData.Rows)
                         {
-                            aggPortfolioShare = aggPortfolioShare + (double)row.Field<Single>("PORTFOLIO_WEIGHT") * 100;
-                            aggBenchmarkShare = aggBenchmarkShare + (double)row.Field<Single>("BENCHMARK_WEIGHT") * 100;
-                            aggActivePosition = aggPortfolioShare - aggBenchmarkShare;
-                            aggAlpha = aggAlpha + 2;
+                            if (row.Field<Single?>("BENCHMARK_WEIGHT") != null)
+                            {
+                                aggPortfolioShare = aggPortfolioShare + (double)row.Field<Single>("PORTFOLIO_WEIGHT") * 100;
+                                aggBenchmarkShare = aggBenchmarkShare + (double)row.Field<Single>("BENCHMARK_WEIGHT") * 100;
+                                aggAlpha = aggAlpha + 2;
+                            }
                         }
+
+                        if (aggPortfolioShare > 0 || aggBenchmarkShare > 0)
+                        {
+                            sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                                        {
+                                            SectorID = sectorData.SectorID,
+                                            SectorName = sectorData.SectorName,
+                                            Alpha = aggAlpha,
+                                            PortfolioShare = aggPortfolioShare,
+                                            BenchmarkShare = aggBenchmarkShare,
+                                            ActivePosition = aggPortfolioShare - aggBenchmarkShare,
+                                        });
+                        }
+                        else
+                        {
+                            sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                            {
+                                SectorID = sectorData.SectorID,
+                                SectorName = sectorData.SectorName,
+                                Alpha = null,
+                                PortfolioShare = null,
+                                BenchmarkShare = null,
+                                ActivePosition = null,
+                            });
+                        }
+
+                        aggcsAlpha = aggcsAlpha + aggAlpha;
+                        aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
+                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;                    
                     }
 
-                    if (aggPortfolioShare > 0 || aggBenchmarkShare > 0)
+                    if (sectorSpecificData.Count > 0)
                     {
-                        sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
-                                    {
-                                        SectorID = sectorData.SectorID,
-                                        SectorName = sectorData.SectorName,
-                                        Alpha = aggAlpha,
-                                        PortfolioShare = aggPortfolioShare,
-                                        BenchmarkShare = aggBenchmarkShare,
-                                        ActivePosition = aggActivePosition,
-                                    });
-                    }
-                    else
-                    {
-                        sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                        result.Add(new RelativePerformanceData()
                         {
-                            SectorID = sectorData.SectorID,
-                            SectorName = sectorData.SectorName,
-                            Alpha = null,
-                            PortfolioShare = null,
-                            BenchmarkShare = null,
-                            ActivePosition = null,
+                            CountryID = countryCode,
+                            RelativePerformanceCountrySpecificInfo = sectorSpecificData,
+                            AggregateCountryAlpha = aggcsAlpha,
+                            AggregateCountryPortfolioShare = aggcsPortfolioShare,
+                            AggregateCountryBenchmarkShare = aggcsBenchmarkShare,
+                            AggregateCountryActivePosition = aggcsPortfolioShare - aggcsBenchmarkShare,
                         });
                     }
 
-                    aggcsAlpha = aggcsAlpha + aggAlpha;
-                    aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
-                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
-                    aggcsBenchmarkShare = aggcsActivePosition + aggActivePosition;
+
                 }
 
-                if (sectorSpecificData.Count > 0)
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+      
+        /// <summary>
+        /// Retrieves Performance graph data for a particular composite/fund.
+        /// Filtering data based on the fund name.
+        /// </summary>
+        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<PerformanceGraphData> RetrievePerformanceGraphData(String nameOfFund)
+        {
+            List<PerformanceGraphData> result = new List<PerformanceGraphData>();
+            try
+            {
+                if (nameOfFund != null)
                 {
-                    result.Add(new RelativePerformanceData()
-                    {
-                        CountryID = countryCode,
-                        RelativePerformanceCountrySpecificInfo = sectorSpecificData,
-                        AggregateCountryAlpha = aggcsAlpha,
-                        AggregateCountryPortfolioShare = aggcsPortfolioShare,
-                        AggregateCountryBenchmarkShare = aggcsBenchmarkShare,
-                        AggregateCountryActivePosition = aggcsBenchmarkShare,
-                    });
+                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                    PerformanceGraphData entry = new PerformanceGraphData();
+                    ResearchEntities research = new ResearchEntities();
+                    holdingData = research.tblHoldingsDatas.ToList();
+                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P1", BENCHMARK_ID = "B1", PORTFOLIO_PERFORMANCE = 33.3, BENCHMARK_PERFORMANCE = 58.6, EFFECTIVE_DATE = new DateTime(2011, 12, 31), MTD = 23, QTD = 29, YTD = 13, FIRST_YEAR = 12, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
+                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P2", BENCHMARK_ID = "B2", PORTFOLIO_PERFORMANCE = 38.3, BENCHMARK_PERFORMANCE = 68.6, EFFECTIVE_DATE = new DateTime(2011, 10, 14), MTD = 13, QTD = 19, YTD = 23, FIRST_YEAR = 15, THIRD_YEAR = 17, FIFTH_YEAR = 09, TENTH_YEAR = 39 });
+                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P3", BENCHMARK_ID = "B3", PORTFOLIO_PERFORMANCE = 31.5, BENCHMARK_PERFORMANCE = 53.9, EFFECTIVE_DATE = new DateTime(2011, 09, 13), MTD = 24, QTD = 28, YTD = 19, FIRST_YEAR = 15, THIRD_YEAR = 11, FIFTH_YEAR = 16, TENTH_YEAR = 19 });
+                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P4", BENCHMARK_ID = "B4", PORTFOLIO_PERFORMANCE = 39.9, BENCHMARK_PERFORMANCE = 78.6, EFFECTIVE_DATE = new DateTime(2011, 08, 29), MTD = 25, QTD = 26, YTD = 15, FIRST_YEAR = 13, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
                 }
-
-
+                return result;
             }
 
-            return result;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+      
+        /// <summary>
+        /// Retrieves Performance grid data for a particular composite/fund.
+        /// Filtering data based on the fund name.
+        /// </summary>
+        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<PerformanceGridData> RetrievePerformanceGridData(String nameOfFund)
+        {
+            List<PerformanceGridData> result = new List<PerformanceGridData>();
+            try
+            {
+                if (nameOfFund != null)
+                {
+                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                    PerformanceGridData entry = new PerformanceGridData();
+                    ResearchEntities research = new ResearchEntities();
+                    holdingData = research.tblHoldingsDatas.ToList();
+                    result.Add(new PerformanceGridData() { MTD = 23, QTD = 29, YTD = 13, FIRST_YEAR = 12, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
+                    result.Add(new PerformanceGridData() { MTD = 13, QTD = 19, YTD = 23, FIRST_YEAR = 15, THIRD_YEAR = 17, FIFTH_YEAR = 09, TENTH_YEAR = 39 });
+                    result.Add(new PerformanceGridData() { MTD = 24, QTD = 28, YTD = 19, FIRST_YEAR = 15, THIRD_YEAR = 11, FIFTH_YEAR = 16, TENTH_YEAR = 19 });
+                    result.Add(new PerformanceGridData() { MTD = 25, QTD = 26, YTD = 15, FIRST_YEAR = 13, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
+                }
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+
+        }
+
+        /// <summary>
+        /// Retrieves Attribution Data for a particular composite/fund
+        /// Filtering data based on fund name
+        /// </summary>
+        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<AttributionData> RetrieveAttributionData(String nameOfFund)
+        {
+            List<AttributionData> result = new List<AttributionData>();
+            try
+            {
+                if (nameOfFund != null)
+                {
+                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                    AttributionData entry = new AttributionData();
+                    ResearchEntities research = new ResearchEntities();
+                    holdingData = research.tblHoldingsDatas.ToList();
+
+                    foreach (tblHoldingsData d in holdingData)
+                    {
+                        entry = new AttributionData();
+                        entry.COUNTRY_ID = d.ISO_COUNTRY_CODE;
+                        entry.PORTFOLIO_WEIGHT = Convert.ToDouble(d.PORTFOLIO_WEIGHT);
+                        entry.BENCHMARK_WEIGHT = Convert.ToDouble(d.BENCHMARK_WEIGHT);
+                        result.Add(entry);
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
         #endregion
 
+        #region Unrealized Gain Loss Operation contract
+        /// <summary>
+        /// Retrieves the Theoretical Unrealized Gain Loss Data for selected Entity.
+        /// </summary>
+        /// <param name="entityIdentifier">Ticker for the security</param>
+        /// <param name="startDateTime">Start Date of the Time Period that is selected</param>
+        /// <param name="endDateTime">End Date of the Time Period that is selected</param>       
+        /// <param name="frequencyInterval">Frequency Duration selected</param>       
+        /// <returns>List of UnrealozedGainLossData</returns>
+        [OperationContract]
+        public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(string entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
+        {
+
+            List<UnrealizedGainLossData> timeAndFrequencyFilteredGainLossResult = new List<UnrealizedGainLossData>();
+            int noOfRows;
+            try
+            {
+                if (entityIdentifier != null && startDateTime != null && endDateTime != null && frequencyInterval != null)
+                {
+                    DimensionEntitiesService.Entities entity = DimensionEntity;
+                    List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord = entity.GF_PRICING_BASEVIEW
+                    .Where(r => (r.TICKER == entityIdentifier)).OrderByDescending(res => res.FROMDATE).ToList();
+                    noOfRows = arrangedByDescRecord.Count();
+                    //Calculating the Adjusted price for a security and storing it in the list.
+                    List<UnrealizedGainLossData> adjustedPriceResult = UnrealizedGainLossCalculations.CalculateAdjustedPrice(arrangedByDescRecord, noOfRows);
+                    //Calculating the Moving Average for a security and storing it in the list.
+                    List<UnrealizedGainLossData> movingAverageResult = UnrealizedGainLossCalculations.CalculateMovingAverage(adjustedPriceResult, noOfRows);
+                    //Calculating the Ninety Day Weight for a security and storing it in the list.
+                    List<UnrealizedGainLossData> ninetyDayWtResult = UnrealizedGainLossCalculations.CalculateNinetyDayWtAvg(movingAverageResult, noOfRows);
+                    //Calculating the Cost for a security and storing it in the list.
+                    List<UnrealizedGainLossData> costResult = UnrealizedGainLossCalculations.CalculateCost(ninetyDayWtResult, noOfRows);
+                    //Calculating the Weighted Average Cost for a security and storing it in the list.
+                    List<UnrealizedGainLossData> wtAvgCostResult = UnrealizedGainLossCalculations.CalculateWtAvgCost(costResult, noOfRows);
+                    //Calculating the Unrealized Gain loss for a security and storing it in the list.
+                    List<UnrealizedGainLossData> unrealizedGainLossResult = UnrealizedGainLossCalculations.CalculateUnrealizedGainLoss(wtAvgCostResult, noOfRows);
+                    //Filtering the list according to the time period selected
+                    List<UnrealizedGainLossData> timeFilteredUnrealizedGainLossResult = unrealizedGainLossResult.Where(r => (r.FromDate >= startDateTime) && (r.FromDate < endDateTime)).ToList();
+                    //Filtering the list according to the frequency selected.
+                    List<DateTime> EndDates = (from p in timeFilteredUnrealizedGainLossResult
+                                               select p.FromDate).ToList();
+                    List<DateTime> allEndDates = FrequencyCalculator.RetrieveDatesAccordingToFrequency(EndDates, startDateTime, endDateTime, frequencyInterval);
+                    timeAndFrequencyFilteredGainLossResult = RetrieveUnrealizedGainLossData(timeFilteredUnrealizedGainLossResult, allEndDates);
+                }
+
+                return timeAndFrequencyFilteredGainLossResult;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+        #endregion
+
+        #region HoldingPieChart Operation Contracts
+        /// <summary>
+        /// Retrieves Holdings data for showing pie chart for sector allocation
+        /// </summary>
+        /// <param name="fundSelectionData">Object of FundSelectionData Class containing Fund Selection Data</param>
+        /// <param name="effectiveDate">Effectice date as selected by the user</param>
+        /// <param name="filterType">The Filter type selected by the user</param>
+        /// <param name="filterValue">The Filter value selected by the user</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        {
+            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
+
+            try
+            {
+                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                HoldingsPercentageData entry = new HoldingsPercentageData();
+                ResearchEntities research = new ResearchEntities();
+                holdingData = research.tblHoldingsDatas.ToList();
+
+
+                switch (filterType)
+                {
+                    case "Region":
+                        var q = from p in holdingData
+                                where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
+                                group p by p.GICS_SECTOR_NAME into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarks = 0;
+                        Double sumforPortfolios = 0;
+                        foreach (var a in q)
+                        {
+                            sumForBenchmarks = sumForBenchmarks + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfolios = sumforPortfolios + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in q)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarks) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfolios) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Country":
+                        var l = from p in holdingData
+                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                group p by p.GICS_SECTOR_NAME into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+
+                        Double sumForBenchmarksCountry = 0;
+                        Double sumforPortfoliosCountry = 0;
+                        foreach (var a in l)
+                        {
+                            sumForBenchmarksCountry = sumForBenchmarksCountry + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosCountry = sumforPortfoliosCountry + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in l)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksCountry) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosCountry) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Industry":
+                        var m = from p in holdingData
+                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                group p by p.GICS_SECTOR_NAME into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarksIndustry = 0;
+                        Double sumforPortfoliosIndustry = 0;
+                        foreach (var a in m)
+                        {
+                            sumForBenchmarksIndustry = sumForBenchmarksIndustry + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosIndustry = sumforPortfoliosIndustry + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in m)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksIndustry) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosIndustry) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Sector":
+                        var n = from p in holdingData
+                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                group p by p.GICS_SUB_INDUSTRY_NAME into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarksSector = 0;
+                        Double sumforPortfoliosSector = 0;
+                        foreach (var a in n)
+                        {
+                            sumForBenchmarksSector = sumForBenchmarksSector + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosSector = sumforPortfoliosSector + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in n)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksSector) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosSector) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Holdings data for showing pie chart for region allocation
+        /// </summary>
+        /// <param name="fundSelectionData">Object of FundSelectionData Class containing Fund Selection Data</param>
+        /// <param name="effectiveDate">Effectice date as selected by the user</param>
+        /// <param name="filterType">The Filter type selected by the user</param>
+        /// <param name="filterValue">The Filter value selected by the user</param>
+        /// <returns></returns>
+        [OperationContract]
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        {
+            //public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, int classifier) 
+
+            try
+            {
+                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+                HoldingsPercentageData entry = new HoldingsPercentageData();
+                ResearchEntities research = new ResearchEntities();
+                holdingData = research.tblHoldingsDatas.ToList();
+
+                switch (filterType)
+                {
+                    case "Region":
+                        var q = from p in holdingData
+                                where (p.ASHEMM_PROPRIETARY_REGION_CODE.ToString()).Equals(filterValue)
+                                group p by p.ISO_COUNTRY_CODE into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarks = 0;
+                        Double sumforPortfolios = 0;
+                        foreach (var a in q)
+                        {
+                            sumForBenchmarks = sumForBenchmarks + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfolios = sumforPortfolios + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in q)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarks) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfolios) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Country":
+                        var l = from p in holdingData
+                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarksCountry = 0;
+                        Double sumforPortfoliosCountry = 0;
+                        foreach (var a in l)
+                        {
+                            sumForBenchmarksCountry = sumForBenchmarksCountry + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosCountry = sumforPortfoliosCountry + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in l)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksCountry) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosCountry) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Industry":
+                        var m = from p in holdingData
+                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarksIndustry = 0;
+                        Double sumforPortfoliosIndustry = 0;
+                        foreach (var a in m)
+                        {
+                            sumForBenchmarksIndustry = sumForBenchmarksIndustry + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosIndustry = sumforPortfoliosIndustry + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in m)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksIndustry) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosIndustry) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    case "Sector":
+                        var n = from p in holdingData
+                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                group p by p.ASHEMM_PROPRIETARY_REGION_CODE into g
+                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT), PortfolioSum = g.Sum(a => a.PORTFOLIO_WEIGHT) };
+                        Double sumForBenchmarksSector = 0;
+                        Double sumforPortfoliosSector = 0;
+                        foreach (var a in n)
+                        {
+                            sumForBenchmarksSector = sumForBenchmarksSector + Convert.ToDouble(a.BenchmarkSum);
+                            sumforPortfoliosSector = sumforPortfoliosSector + Convert.ToDouble(a.PortfolioSum);
+                        }
+                        foreach (var a in n)
+                        {
+                            entry = new HoldingsPercentageData();
+                            entry.SegmentName = a.SectorName;
+                            entry.BenchmarkWeight = (Convert.ToDouble(a.BenchmarkSum) / sumForBenchmarksSector) * 100;
+                            entry.PortfolioWeight = (Convert.ToDouble(a.PortfolioSum) / sumforPortfoliosSector) * 100;
+                            result.Add(entry);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region Benchmark
+
+        /// <summary>
+        /// Retrieves Top Benchmark Securities data 
+        /// </summary>
+        /// <param name="benchmarkSelectionData">Object of BenchmarkSelectionData containing Benchmark selection Data </param>
+        /// <param name="effectiveDate">Effective Date selected by user</param>
+        /// <returns>returns list of Top Ten Benchmarks </returns>
+        [OperationContract]
+        public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        {
+            List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
+            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
+            List<tblHoldingsData> top10HoldingData = new List<tblHoldingsData>();
+            TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
+            ResearchEntities research = new ResearchEntities();
+            holdingData = research.tblHoldingsDatas.ToList();
+            top10HoldingData = (from p in holdingData orderby p.BENCHMARK_WEIGHT descending select p).Take(10).ToList();
+
+            foreach (tblHoldingsData item in top10HoldingData)
+            {
+                entry = new TopBenchmarkSecuritiesData();
+                entry.Weight = Convert.ToDouble(item.BENCHMARK_WEIGHT);
+                entry.IssuerName = item.ISSUE_NAME;
+                result.Add(entry);
+            }
+            return result;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Retrieves Portfolio Risk Return Data
+        /// </summary>
+        /// <param name="fundSelectionData">Object of FundSelectionData containing Fund selection Data  </param>
+        /// <param name="benchmarkSelectionData">Object of BenchmarkSelectionData containing Benchmark selection Data</param>
+        /// <param name="effectiveDate">Effective Date selected by user</param>
+        /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
+        [OperationContract]
+        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        {            
+            try
+            {
+                List<PortfolioRiskReturnData> portfolioRiskReturnValues = new List<PortfolioRiskReturnData>();
+
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Expected Return",
+                    PortfolioValue = 18.1.ToString(),
+                    BenchMarkValue = 15.3.ToString()
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Alpha",
+                    PortfolioValue = 1.8.ToString(),
+                    BenchMarkValue = "N/A"
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Beta",
+                    PortfolioValue = 0.95.ToString(),
+                    BenchMarkValue = "N/A"
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Standard Deviation",
+                    PortfolioValue = 15.1.ToString(),
+                    BenchMarkValue = 15.7.ToString()
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Sharpe Ratio",
+                    PortfolioValue = 0.18.ToString(),
+                    BenchMarkValue = 0.13.ToString()
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Information Ratio",
+                    PortfolioValue = 1.81.ToString()
+                });
+                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
+                {
+                    DataPointName = "Turnover Ratio",
+                    PortfolioValue = 11.14.ToString()
+                });
+                return portfolioRiskReturnValues;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+
+            
+        }       
     }
 }

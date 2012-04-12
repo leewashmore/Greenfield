@@ -39,7 +39,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelRelativePerformance(DashBoardGadgetParam param)
+        public ViewModelRelativePerformance(DashboardGadgetParam param)
         {
             //MEF Singleton Initialization
             _eventAggregator = param.EventAggregator;
@@ -47,18 +47,17 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
 
             //Selection Data Initialization
-            _fundSelectionData = param.DashboardGadgetPayLoad.FundSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayLoad.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayLoad.EffectiveDate;
+            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             //Service Call to Retrieve Sector Data relating Fund Selection Data/ Benchmark Selection Data and Effective Date
-            if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
-            {
-                _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
-            }
-            //_dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+            //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+            //{
+            //    _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+            //}
+            _dbInteractivity.RetrieveRelativePerformanceSectorData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
 
-            //_dbInteractivity.RetrieveRelativePerformanceData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
@@ -87,7 +86,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Events
-        public event RelativePerformanceGridBuild RelativePerformanceGridBuildEvent;
+        public event RelativePerformanceGridBuildEventHandler RelativePerformanceGridBuildEvent;
         #endregion
 
         #region Event Handlers
