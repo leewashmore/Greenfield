@@ -28,13 +28,13 @@ namespace GreenField.Web.DataContracts
         public string SubIndustry { get; set; }
 
         [DataMember]
-        public double Weight { get; set; }
+        public double? Weight { get; set; }
 
         [DataMember]
-        public double WeightCountry { get; set; }
+        public double? WeightCountry { get; set; }
 
         [DataMember]
-        public double WeightIndustry { get; set; }
+        public double? WeightIndustry { get; set; }
 
         [DataMember]
         public double DailyReturnUSD { get; set; }

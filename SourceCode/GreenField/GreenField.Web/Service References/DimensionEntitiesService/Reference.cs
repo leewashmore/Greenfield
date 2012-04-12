@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 09-03-2012 11:39:35
+// Generation date: 4/12/2012 2:59:43 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -58,6 +58,40 @@ namespace GreenField.Web.DimensionEntitiesService
             }
             return null;
         }
+        /// <summary>
+        /// There are no comments for GF_PORTFOLIO_HOLDINGS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PORTFOLIO_HOLDINGS> GF_PORTFOLIO_HOLDINGS
+        {
+            get
+            {
+                if ((this._GF_PORTFOLIO_HOLDINGS == null))
+                {
+                    this._GF_PORTFOLIO_HOLDINGS = base.CreateQuery<GF_PORTFOLIO_HOLDINGS>("GF_PORTFOLIO_HOLDINGS");
+                }
+                return this._GF_PORTFOLIO_HOLDINGS;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PORTFOLIO_HOLDINGS> _GF_PORTFOLIO_HOLDINGS;
+        /// <summary>
+        /// There are no comments for GF_PORTFOLIO_SELECTION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PORTFOLIO_SELECTION> GF_PORTFOLIO_SELECTION
+        {
+            get
+            {
+                if ((this._GF_PORTFOLIO_SELECTION == null))
+                {
+                    this._GF_PORTFOLIO_SELECTION = base.CreateQuery<GF_PORTFOLIO_SELECTION>("GF_PORTFOLIO_SELECTION");
+                }
+                return this._GF_PORTFOLIO_SELECTION;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PORTFOLIO_SELECTION> _GF_PORTFOLIO_SELECTION;
         /// <summary>
         /// There are no comments for GF_PRICING_BASEVIEW in the schema.
         /// </summary>
@@ -110,6 +144,22 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_SELECTION_BASEVIEW> _GF_SELECTION_BASEVIEW;
         /// <summary>
+        /// There are no comments for GF_PORTFOLIO_HOLDINGS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PORTFOLIO_HOLDINGS(GF_PORTFOLIO_HOLDINGS gF_PORTFOLIO_HOLDINGS)
+        {
+            base.AddObject("GF_PORTFOLIO_HOLDINGS", gF_PORTFOLIO_HOLDINGS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PORTFOLIO_SELECTION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PORTFOLIO_SELECTION(GF_PORTFOLIO_SELECTION gF_PORTFOLIO_SELECTION)
+        {
+            base.AddObject("GF_PORTFOLIO_SELECTION", gF_PORTFOLIO_SELECTION);
+        }
+        /// <summary>
         /// There are no comments for GF_PRICING_BASEVIEW in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -133,6 +183,915 @@ namespace GreenField.Web.DimensionEntitiesService
         {
             base.AddObject("GF_SELECTION_BASEVIEW", gF_SELECTION_BASEVIEW);
         }
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PORTFOLIO_HOLDINGS in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// PORTFOLIO_DATE
+    /// PORTFOLIO_ID
+    /// ASEC_SEC_SHORT_NAME
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_DATE", "PORTFOLIO_ID", "ASEC_SEC_SHORT_NAME")]
+    public partial class GF_PORTFOLIO_HOLDINGS
+    {
+        /// <summary>
+        /// Create a new GF_PORTFOLIO_HOLDINGS object.
+        /// </summary>
+        /// <param name="pORTFOLIO_DATE">Initial value of PORTFOLIO_DATE.</param>
+        /// <param name="pORTFOLIO_ID">Initial value of PORTFOLIO_ID.</param>
+        /// <param name="aSEC_SEC_SHORT_NAME">Initial value of ASEC_SEC_SHORT_NAME.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PORTFOLIO_HOLDINGS CreateGF_PORTFOLIO_HOLDINGS(global::System.DateTime pORTFOLIO_DATE, string pORTFOLIO_ID, string aSEC_SEC_SHORT_NAME)
+        {
+            GF_PORTFOLIO_HOLDINGS gF_PORTFOLIO_HOLDINGS = new GF_PORTFOLIO_HOLDINGS();
+            gF_PORTFOLIO_HOLDINGS.PORTFOLIO_DATE = pORTFOLIO_DATE;
+            gF_PORTFOLIO_HOLDINGS.PORTFOLIO_ID = pORTFOLIO_ID;
+            gF_PORTFOLIO_HOLDINGS.ASEC_SEC_SHORT_NAME = aSEC_SEC_SHORT_NAME;
+            return gF_PORTFOLIO_HOLDINGS;
+        }
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.DateTime PORTFOLIO_DATE
+        {
+            get
+            {
+                return this._PORTFOLIO_DATE;
+            }
+            set
+            {
+                this.OnPORTFOLIO_DATEChanging(value);
+                this._PORTFOLIO_DATE = value;
+                this.OnPORTFOLIO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.DateTime _PORTFOLIO_DATE;
+        partial void OnPORTFOLIO_DATEChanging(global::System.DateTime value);
+        partial void OnPORTFOLIO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_ID
+        {
+            get
+            {
+                return this._PORTFOLIO_ID;
+            }
+            set
+            {
+                this.OnPORTFOLIO_IDChanging(value);
+                this._PORTFOLIO_ID = value;
+                this.OnPORTFOLIO_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(string value);
+        partial void OnPORTFOLIO_IDChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_THEME_SUBGROUP_CODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_THEME_SUBGROUP_CODE
+        {
+            get
+            {
+                return this._PORTFOLIO_THEME_SUBGROUP_CODE;
+            }
+            set
+            {
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(value);
+                this._PORTFOLIO_THEME_SUBGROUP_CODE = value;
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_THEME_SUBGROUP_CODE;
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(string value);
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_CURRENCY
+        {
+            get
+            {
+                return this._PORTFOLIO_CURRENCY;
+            }
+            set
+            {
+                this.OnPORTFOLIO_CURRENCYChanging(value);
+                this._PORTFOLIO_CURRENCY = value;
+                this.OnPORTFOLIO_CURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_CURRENCY;
+        partial void OnPORTFOLIO_CURRENCYChanging(string value);
+        partial void OnPORTFOLIO_CURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property BENCHMARK_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BENCHMARK_ID
+        {
+            get
+            {
+                return this._BENCHMARK_ID;
+            }
+            set
+            {
+                this.OnBENCHMARK_IDChanging(value);
+                this._BENCHMARK_ID = value;
+                this.OnBENCHMARK_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BENCHMARK_ID;
+        partial void OnBENCHMARK_IDChanging(string value);
+        partial void OnBENCHMARK_IDChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUER_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUER_ID
+        {
+            get
+            {
+                return this._ISSUER_ID;
+            }
+            set
+            {
+                this.OnISSUER_IDChanging(value);
+                this._ISSUER_ID = value;
+                this.OnISSUER_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUER_ID;
+        partial void OnISSUER_IDChanging(string value);
+        partial void OnISSUER_IDChanged();
+        /// <summary>
+        /// There are no comments for Property ASEC_SEC_SHORT_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ASEC_SEC_SHORT_NAME
+        {
+            get
+            {
+                return this._ASEC_SEC_SHORT_NAME;
+            }
+            set
+            {
+                this.OnASEC_SEC_SHORT_NAMEChanging(value);
+                this._ASEC_SEC_SHORT_NAME = value;
+                this.OnASEC_SEC_SHORT_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ASEC_SEC_SHORT_NAME;
+        partial void OnASEC_SEC_SHORT_NAMEChanging(string value);
+        partial void OnASEC_SEC_SHORT_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUE_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUE_NAME
+        {
+            get
+            {
+                return this._ISSUE_NAME;
+            }
+            set
+            {
+                this.OnISSUE_NAMEChanging(value);
+                this._ISSUE_NAME = value;
+                this.OnISSUE_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUE_NAME;
+        partial void OnISSUE_NAMEChanging(string value);
+        partial void OnISSUE_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property TICKER in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TICKER
+        {
+            get
+            {
+                return this._TICKER;
+            }
+            set
+            {
+                this.OnTICKERChanging(value);
+                this._TICKER = value;
+                this.OnTICKERChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TICKER;
+        partial void OnTICKERChanging(string value);
+        partial void OnTICKERChanged();
+        /// <summary>
+        /// There are no comments for Property SECURITYTHEMECODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SECURITYTHEMECODE
+        {
+            get
+            {
+                return this._SECURITYTHEMECODE;
+            }
+            set
+            {
+                this.OnSECURITYTHEMECODEChanging(value);
+                this._SECURITYTHEMECODE = value;
+                this.OnSECURITYTHEMECODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SECURITYTHEMECODE;
+        partial void OnSECURITYTHEMECODEChanging(string value);
+        partial void OnSECURITYTHEMECODEChanged();
+        /// <summary>
+        /// There are no comments for Property A_SEC_INSTR_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string A_SEC_INSTR_TYPE
+        {
+            get
+            {
+                return this._A_SEC_INSTR_TYPE;
+            }
+            set
+            {
+                this.OnA_SEC_INSTR_TYPEChanging(value);
+                this._A_SEC_INSTR_TYPE = value;
+                this.OnA_SEC_INSTR_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _A_SEC_INSTR_TYPE;
+        partial void OnA_SEC_INSTR_TYPEChanging(string value);
+        partial void OnA_SEC_INSTR_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property SECURITY_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SECURITY_TYPE
+        {
+            get
+            {
+                return this._SECURITY_TYPE;
+            }
+            set
+            {
+                this.OnSECURITY_TYPEChanging(value);
+                this._SECURITY_TYPE = value;
+                this.OnSECURITY_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SECURITY_TYPE;
+        partial void OnSECURITY_TYPEChanging(string value);
+        partial void OnSECURITY_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property BALANCE_NOMINAL in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BALANCE_NOMINAL
+        {
+            get
+            {
+                return this._BALANCE_NOMINAL;
+            }
+            set
+            {
+                this.OnBALANCE_NOMINALChanging(value);
+                this._BALANCE_NOMINAL = value;
+                this.OnBALANCE_NOMINALChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BALANCE_NOMINAL;
+        partial void OnBALANCE_NOMINALChanging(global::System.Nullable<decimal> value);
+        partial void OnBALANCE_NOMINALChanged();
+        /// <summary>
+        /// There are no comments for Property DIRTY_PRICE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DIRTY_PRICE
+        {
+            get
+            {
+                return this._DIRTY_PRICE;
+            }
+            set
+            {
+                this.OnDIRTY_PRICEChanging(value);
+                this._DIRTY_PRICE = value;
+                this.OnDIRTY_PRICEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DIRTY_PRICE;
+        partial void OnDIRTY_PRICEChanging(global::System.Nullable<decimal> value);
+        partial void OnDIRTY_PRICEChanged();
+        /// <summary>
+        /// There are no comments for Property TRADING_CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TRADING_CURRENCY
+        {
+            get
+            {
+                return this._TRADING_CURRENCY;
+            }
+            set
+            {
+                this.OnTRADING_CURRENCYChanging(value);
+                this._TRADING_CURRENCY = value;
+                this.OnTRADING_CURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TRADING_CURRENCY;
+        partial void OnTRADING_CURRENCYChanging(string value);
+        partial void OnTRADING_CURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property DIRTY_VALUE_PC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> DIRTY_VALUE_PC
+        {
+            get
+            {
+                return this._DIRTY_VALUE_PC;
+            }
+            set
+            {
+                this.OnDIRTY_VALUE_PCChanging(value);
+                this._DIRTY_VALUE_PC = value;
+                this.OnDIRTY_VALUE_PCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _DIRTY_VALUE_PC;
+        partial void OnDIRTY_VALUE_PCChanging(global::System.Nullable<decimal> value);
+        partial void OnDIRTY_VALUE_PCChanged();
+        /// <summary>
+        /// There are no comments for Property ASH_EMM_MODEL_WEIGHT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ASH_EMM_MODEL_WEIGHT
+        {
+            get
+            {
+                return this._ASH_EMM_MODEL_WEIGHT;
+            }
+            set
+            {
+                this.OnASH_EMM_MODEL_WEIGHTChanging(value);
+                this._ASH_EMM_MODEL_WEIGHT = value;
+                this.OnASH_EMM_MODEL_WEIGHTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ASH_EMM_MODEL_WEIGHT;
+        partial void OnASH_EMM_MODEL_WEIGHTChanging(global::System.Nullable<decimal> value);
+        partial void OnASH_EMM_MODEL_WEIGHTChanged();
+        /// <summary>
+        /// There are no comments for Property MARKET_CAP_IN_USD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> MARKET_CAP_IN_USD
+        {
+            get
+            {
+                return this._MARKET_CAP_IN_USD;
+            }
+            set
+            {
+                this.OnMARKET_CAP_IN_USDChanging(value);
+                this._MARKET_CAP_IN_USD = value;
+                this.OnMARKET_CAP_IN_USDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _MARKET_CAP_IN_USD;
+        partial void OnMARKET_CAP_IN_USDChanging(global::System.Nullable<decimal> value);
+        partial void OnMARKET_CAP_IN_USDChanged();
+        /// <summary>
+        /// There are no comments for Property ASHEMM_PROP_REGION_CODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ASHEMM_PROP_REGION_CODE
+        {
+            get
+            {
+                return this._ASHEMM_PROP_REGION_CODE;
+            }
+            set
+            {
+                this.OnASHEMM_PROP_REGION_CODEChanging(value);
+                this._ASHEMM_PROP_REGION_CODE = value;
+                this.OnASHEMM_PROP_REGION_CODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ASHEMM_PROP_REGION_CODE;
+        partial void OnASHEMM_PROP_REGION_CODEChanging(string value);
+        partial void OnASHEMM_PROP_REGION_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property ASHEMM_PROP_REGION_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ASHEMM_PROP_REGION_NAME
+        {
+            get
+            {
+                return this._ASHEMM_PROP_REGION_NAME;
+            }
+            set
+            {
+                this.OnASHEMM_PROP_REGION_NAMEChanging(value);
+                this._ASHEMM_PROP_REGION_NAME = value;
+                this.OnASHEMM_PROP_REGION_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ASHEMM_PROP_REGION_NAME;
+        partial void OnASHEMM_PROP_REGION_NAMEChanging(string value);
+        partial void OnASHEMM_PROP_REGION_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property ISO_COUNTRY_CODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISO_COUNTRY_CODE
+        {
+            get
+            {
+                return this._ISO_COUNTRY_CODE;
+            }
+            set
+            {
+                this.OnISO_COUNTRY_CODEChanging(value);
+                this._ISO_COUNTRY_CODE = value;
+                this.OnISO_COUNTRY_CODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISO_COUNTRY_CODE;
+        partial void OnISO_COUNTRY_CODEChanging(string value);
+        partial void OnISO_COUNTRY_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property COUNTRYNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string COUNTRYNAME
+        {
+            get
+            {
+                return this._COUNTRYNAME;
+            }
+            set
+            {
+                this.OnCOUNTRYNAMEChanging(value);
+                this._COUNTRYNAME = value;
+                this.OnCOUNTRYNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _COUNTRYNAME;
+        partial void OnCOUNTRYNAMEChanging(string value);
+        partial void OnCOUNTRYNAMEChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_SECTOR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_SECTOR
+        {
+            get
+            {
+                return this._GICS_SECTOR;
+            }
+            set
+            {
+                this.OnGICS_SECTORChanging(value);
+                this._GICS_SECTOR = value;
+                this.OnGICS_SECTORChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_SECTOR;
+        partial void OnGICS_SECTORChanging(string value);
+        partial void OnGICS_SECTORChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_SECTOR_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_SECTOR_NAME
+        {
+            get
+            {
+                return this._GICS_SECTOR_NAME;
+            }
+            set
+            {
+                this.OnGICS_SECTOR_NAMEChanging(value);
+                this._GICS_SECTOR_NAME = value;
+                this.OnGICS_SECTOR_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_SECTOR_NAME;
+        partial void OnGICS_SECTOR_NAMEChanging(string value);
+        partial void OnGICS_SECTOR_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_INDUSTRY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_INDUSTRY
+        {
+            get
+            {
+                return this._GICS_INDUSTRY;
+            }
+            set
+            {
+                this.OnGICS_INDUSTRYChanging(value);
+                this._GICS_INDUSTRY = value;
+                this.OnGICS_INDUSTRYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_INDUSTRY;
+        partial void OnGICS_INDUSTRYChanging(string value);
+        partial void OnGICS_INDUSTRYChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_INDUSTRY_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_INDUSTRY_NAME
+        {
+            get
+            {
+                return this._GICS_INDUSTRY_NAME;
+            }
+            set
+            {
+                this.OnGICS_INDUSTRY_NAMEChanging(value);
+                this._GICS_INDUSTRY_NAME = value;
+                this.OnGICS_INDUSTRY_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_INDUSTRY_NAME;
+        partial void OnGICS_INDUSTRY_NAMEChanging(string value);
+        partial void OnGICS_INDUSTRY_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_SUB_INDUSTRY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_SUB_INDUSTRY
+        {
+            get
+            {
+                return this._GICS_SUB_INDUSTRY;
+            }
+            set
+            {
+                this.OnGICS_SUB_INDUSTRYChanging(value);
+                this._GICS_SUB_INDUSTRY = value;
+                this.OnGICS_SUB_INDUSTRYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_SUB_INDUSTRY;
+        partial void OnGICS_SUB_INDUSTRYChanging(string value);
+        partial void OnGICS_SUB_INDUSTRYChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_SUB_INDUSTRY_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_SUB_INDUSTRY_NAME
+        {
+            get
+            {
+                return this._GICS_SUB_INDUSTRY_NAME;
+            }
+            set
+            {
+                this.OnGICS_SUB_INDUSTRY_NAMEChanging(value);
+                this._GICS_SUB_INDUSTRY_NAME = value;
+                this.OnGICS_SUB_INDUSTRY_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_SUB_INDUSTRY_NAME;
+        partial void OnGICS_SUB_INDUSTRY_NAMEChanging(string value);
+        partial void OnGICS_SUB_INDUSTRY_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property LOOK_THRU_FUND in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string LOOK_THRU_FUND
+        {
+            get
+            {
+                return this._LOOK_THRU_FUND;
+            }
+            set
+            {
+                this.OnLOOK_THRU_FUNDChanging(value);
+                this._LOOK_THRU_FUND = value;
+                this.OnLOOK_THRU_FUNDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _LOOK_THRU_FUND;
+        partial void OnLOOK_THRU_FUNDChanging(string value);
+        partial void OnLOOK_THRU_FUNDChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_MOMENTUM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_MOMENTUM
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_MOMENTUM;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_MOMENTUMChanging(value);
+                this._BARRA_RISK_FACTOR_MOMENTUM = value;
+                this.OnBARRA_RISK_FACTOR_MOMENTUMChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_MOMENTUM;
+        partial void OnBARRA_RISK_FACTOR_MOMENTUMChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_MOMENTUMChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_VOLATILITY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_VOLATILITY
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_VOLATILITY;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_VOLATILITYChanging(value);
+                this._BARRA_RISK_FACTOR_VOLATILITY = value;
+                this.OnBARRA_RISK_FACTOR_VOLATILITYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_VOLATILITY;
+        partial void OnBARRA_RISK_FACTOR_VOLATILITYChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_VOLATILITYChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_VALUE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_VALUE
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_VALUE;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_VALUEChanging(value);
+                this._BARRA_RISK_FACTOR_VALUE = value;
+                this.OnBARRA_RISK_FACTOR_VALUEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_VALUE;
+        partial void OnBARRA_RISK_FACTOR_VALUEChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_VALUEChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_SIZE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_SIZE
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_SIZE;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_SIZEChanging(value);
+                this._BARRA_RISK_FACTOR_SIZE = value;
+                this.OnBARRA_RISK_FACTOR_SIZEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_SIZE;
+        partial void OnBARRA_RISK_FACTOR_SIZEChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_SIZEChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_SIZE_NONLIN in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_SIZE_NONLIN
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_SIZE_NONLIN;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_SIZE_NONLINChanging(value);
+                this._BARRA_RISK_FACTOR_SIZE_NONLIN = value;
+                this.OnBARRA_RISK_FACTOR_SIZE_NONLINChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_SIZE_NONLIN;
+        partial void OnBARRA_RISK_FACTOR_SIZE_NONLINChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_SIZE_NONLINChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_GROWTH in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_GROWTH
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_GROWTH;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_GROWTHChanging(value);
+                this._BARRA_RISK_FACTOR_GROWTH = value;
+                this.OnBARRA_RISK_FACTOR_GROWTHChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_GROWTH;
+        partial void OnBARRA_RISK_FACTOR_GROWTHChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_GROWTHChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_LIQUIDITY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_LIQUIDITY
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_LIQUIDITY;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_LIQUIDITYChanging(value);
+                this._BARRA_RISK_FACTOR_LIQUIDITY = value;
+                this.OnBARRA_RISK_FACTOR_LIQUIDITYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_LIQUIDITY;
+        partial void OnBARRA_RISK_FACTOR_LIQUIDITYChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_LIQUIDITYChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_LEVERAGE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_LEVERAGE
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_LEVERAGE;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_LEVERAGEChanging(value);
+                this._BARRA_RISK_FACTOR_LEVERAGE = value;
+                this.OnBARRA_RISK_FACTOR_LEVERAGEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_LEVERAGE;
+        partial void OnBARRA_RISK_FACTOR_LEVERAGEChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_LEVERAGEChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_RISK_FACTOR_PBETEWLD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_RISK_FACTOR_PBETEWLD
+        {
+            get
+            {
+                return this._BARRA_RISK_FACTOR_PBETEWLD;
+            }
+            set
+            {
+                this.OnBARRA_RISK_FACTOR_PBETEWLDChanging(value);
+                this._BARRA_RISK_FACTOR_PBETEWLD = value;
+                this.OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_PBETEWLD;
+        partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PORTFOLIO_SELECTION in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// PORTFOLIO_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_ID")]
+    public partial class GF_PORTFOLIO_SELECTION
+    {
+        /// <summary>
+        /// Create a new GF_PORTFOLIO_SELECTION object.
+        /// </summary>
+        /// <param name="pORTFOLIO_ID">Initial value of PORTFOLIO_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PORTFOLIO_SELECTION CreateGF_PORTFOLIO_SELECTION(string pORTFOLIO_ID)
+        {
+            GF_PORTFOLIO_SELECTION gF_PORTFOLIO_SELECTION = new GF_PORTFOLIO_SELECTION();
+            gF_PORTFOLIO_SELECTION.PORTFOLIO_ID = pORTFOLIO_ID;
+            return gF_PORTFOLIO_SELECTION;
+        }
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_ID
+        {
+            get
+            {
+                return this._PORTFOLIO_ID;
+            }
+            set
+            {
+                this.OnPORTFOLIO_IDChanging(value);
+                this._PORTFOLIO_ID = value;
+                this.OnPORTFOLIO_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(string value);
+        partial void OnPORTFOLIO_IDChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_THEME_SUBGROUP_CODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_THEME_SUBGROUP_CODE
+        {
+            get
+            {
+                return this._PORTFOLIO_THEME_SUBGROUP_CODE;
+            }
+            set
+            {
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(value);
+                this._PORTFOLIO_THEME_SUBGROUP_CODE = value;
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_THEME_SUBGROUP_CODE;
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(string value);
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_THEME_SUBGROUP_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_THEME_SUBGROUP_NAME
+        {
+            get
+            {
+                return this._PORTFOLIO_THEME_SUBGROUP_NAME;
+            }
+            set
+            {
+                this.OnPORTFOLIO_THEME_SUBGROUP_NAMEChanging(value);
+                this._PORTFOLIO_THEME_SUBGROUP_NAME = value;
+                this.OnPORTFOLIO_THEME_SUBGROUP_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_THEME_SUBGROUP_NAME;
+        partial void OnPORTFOLIO_THEME_SUBGROUP_NAMEChanging(string value);
+        partial void OnPORTFOLIO_THEME_SUBGROUP_NAMEChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PRICING_BASEVIEW in the schema.
@@ -163,6 +1122,27 @@ namespace GreenField.Web.DimensionEntitiesService
             gF_PRICING_BASEVIEW.FROMDATE = fROMDATE;
             return gF_PRICING_BASEVIEW;
         }
+        /// <summary>
+        /// There are no comments for Property INSTRUMENT_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string INSTRUMENT_ID
+        {
+            get
+            {
+                return this._INSTRUMENT_ID;
+            }
+            set
+            {
+                this.OnINSTRUMENT_IDChanging(value);
+                this._INSTRUMENT_ID = value;
+                this.OnINSTRUMENT_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _INSTRUMENT_ID;
+        partial void OnINSTRUMENT_IDChanging(string value);
+        partial void OnINSTRUMENT_IDChanged();
         /// <summary>
         /// There are no comments for Property TYPE in the schema.
         /// </summary>
@@ -352,27 +1332,6 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _DAILY_SPOT_FX;
         partial void OnDAILY_SPOT_FXChanging(global::System.Nullable<decimal> value);
         partial void OnDAILY_SPOT_FXChanged();
-        /// <summary>
-        /// There are no comments for Property INSTRUMENT_ID in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string INSTRUMENT_ID
-        {
-            get
-            {
-                return this._INSTRUMENT_ID;
-            }
-            set
-            {
-                this.OnINSTRUMENT_IDChanging(value);
-                this._INSTRUMENT_ID = value;
-                this.OnINSTRUMENT_IDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _INSTRUMENT_ID;
-        partial void OnINSTRUMENT_IDChanging(string value);
-        partial void OnINSTRUMENT_IDChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_SECURITY_BASEVIEW in the schema.
@@ -500,6 +1459,27 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnSEDOLChanging(string value);
         partial void OnSEDOLChanged();
         /// <summary>
+        /// There are no comments for Property SECS_INSTYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SECS_INSTYPE
+        {
+            get
+            {
+                return this._SECS_INSTYPE;
+            }
+            set
+            {
+                this.OnSECS_INSTYPEChanging(value);
+                this._SECS_INSTYPE = value;
+                this.OnSECS_INSTYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SECS_INSTYPE;
+        partial void OnSECS_INSTYPEChanging(string value);
+        partial void OnSECS_INSTYPEChanged();
+        /// <summary>
         /// There are no comments for Property ASEC_INSTR_TYPE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -562,6 +1542,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<int> _ASEC_FC_SEC_REF;
         partial void OnASEC_FC_SEC_REFChanging(global::System.Nullable<int> value);
         partial void OnASEC_FC_SEC_REFChanged();
+        /// <summary>
+        /// There are no comments for Property LOOK_THRU_FUND in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string LOOK_THRU_FUND
+        {
+            get
+            {
+                return this._LOOK_THRU_FUND;
+            }
+            set
+            {
+                this.OnLOOK_THRU_FUNDChanging(value);
+                this._LOOK_THRU_FUND = value;
+                this.OnLOOK_THRU_FUNDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _LOOK_THRU_FUND;
+        partial void OnLOOK_THRU_FUNDChanging(string value);
+        partial void OnLOOK_THRU_FUNDChanged();
         /// <summary>
         /// There are no comments for Property FIFTYTWO_WEEK_LOW in the schema.
         /// </summary>
@@ -941,6 +1942,27 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnISO_COUNTRY_CODEChanging(string value);
         partial void OnISO_COUNTRY_CODEChanged();
         /// <summary>
+        /// There are no comments for Property ASEC_SEC_COUNTRY_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ASEC_SEC_COUNTRY_NAME
+        {
+            get
+            {
+                return this._ASEC_SEC_COUNTRY_NAME;
+            }
+            set
+            {
+                this.OnASEC_SEC_COUNTRY_NAMEChanging(value);
+                this._ASEC_SEC_COUNTRY_NAME = value;
+                this.OnASEC_SEC_COUNTRY_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ASEC_SEC_COUNTRY_NAME;
+        partial void OnASEC_SEC_COUNTRY_NAMEChanging(string value);
+        partial void OnASEC_SEC_COUNTRY_NAMEChanged();
+        /// <summary>
         /// There are no comments for Property ASHEMM_PROPRIETARY_REGION_CODE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -961,6 +1983,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _ASHEMM_PROPRIETARY_REGION_CODE;
         partial void OnASHEMM_PROPRIETARY_REGION_CODEChanging(string value);
         partial void OnASHEMM_PROPRIETARY_REGION_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property ASEC_SEC_COUNTRY_ZONE_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ASEC_SEC_COUNTRY_ZONE_NAME
+        {
+            get
+            {
+                return this._ASEC_SEC_COUNTRY_ZONE_NAME;
+            }
+            set
+            {
+                this.OnASEC_SEC_COUNTRY_ZONE_NAMEChanging(value);
+                this._ASEC_SEC_COUNTRY_ZONE_NAME = value;
+                this.OnASEC_SEC_COUNTRY_ZONE_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ASEC_SEC_COUNTRY_ZONE_NAME;
+        partial void OnASEC_SEC_COUNTRY_ZONE_NAMEChanging(string value);
+        partial void OnASEC_SEC_COUNTRY_ZONE_NAMEChanged();
         /// <summary>
         /// There are no comments for Property ISSUER_NAME in the schema.
         /// </summary>
@@ -1407,22 +2450,22 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_SELECTION_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// INSTRUMENT_ID
+    /// SHORT_NAME
     /// TYPE
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("INSTRUMENT_ID", "TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("SHORT_NAME", "TYPE")]
     public partial class GF_SELECTION_BASEVIEW
     {
         /// <summary>
         /// Create a new GF_SELECTION_BASEVIEW object.
         /// </summary>
-        /// <param name="iNSTRUMENT_ID">Initial value of INSTRUMENT_ID.</param>
+        /// <param name="sHORT_NAME">Initial value of SHORT_NAME.</param>
         /// <param name="tYPE">Initial value of TYPE.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(string iNSTRUMENT_ID, string tYPE)
+        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(string sHORT_NAME, string tYPE)
         {
             GF_SELECTION_BASEVIEW gF_SELECTION_BASEVIEW = new GF_SELECTION_BASEVIEW();
-            gF_SELECTION_BASEVIEW.INSTRUMENT_ID = iNSTRUMENT_ID;
+            gF_SELECTION_BASEVIEW.SHORT_NAME = sHORT_NAME;
             gF_SELECTION_BASEVIEW.TYPE = tYPE;
             return gF_SELECTION_BASEVIEW;
         }

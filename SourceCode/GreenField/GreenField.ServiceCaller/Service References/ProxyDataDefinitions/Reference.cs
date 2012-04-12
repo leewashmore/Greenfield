@@ -860,18 +860,18 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="AssetAllocationData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class AssetAllocationData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double BenchmarkShareField;
+        private System.Nullable<double> BenchmarkShareField;
         
-        private double BetShareField;
+        private System.Nullable<double> BetShareField;
         
         private string CountryField;
         
-        private double ModelShareField;
+        private System.Nullable<double> ModelShareField;
         
-        private double PortfolioShareField;
+        private System.Nullable<double> PortfolioShareField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkShare {
+        public System.Nullable<double> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -884,7 +884,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BetShare {
+        public System.Nullable<double> BetShare {
             get {
                 return this.BetShareField;
             }
@@ -910,7 +910,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ModelShare {
+        public System.Nullable<double> ModelShare {
             get {
                 return this.ModelShareField;
             }
@@ -923,7 +923,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioShare {
+        public System.Nullable<double> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
@@ -1160,20 +1160,20 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="TopHoldingsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class TopHoldingsData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double BenchmarkShareField;
+        private System.Nullable<double> BenchmarkShareField;
         
-        private double BetShareField;
+        private System.Nullable<double> BetShareField;
         
         private string HoldingField;
         
-        private long MarketValueField;
+        private System.Nullable<float> MarketValueField;
         
-        private double PortfolioShareField;
+        private System.Nullable<double> PortfolioShareField;
         
         private string TickerField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkShare {
+        public System.Nullable<double> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -1186,7 +1186,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BetShare {
+        public System.Nullable<double> BetShare {
             get {
                 return this.BetShareField;
             }
@@ -1212,7 +1212,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long MarketValue {
+        public System.Nullable<float> MarketValue {
             get {
                 return this.MarketValueField;
             }
@@ -1225,7 +1225,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioShare {
+        public System.Nullable<double> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
@@ -1279,11 +1279,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private string SubIndustryField;
         
-        private double WeightField;
+        private System.Nullable<double> WeightField;
         
-        private double WeightCountryField;
+        private System.Nullable<double> WeightCountryField;
         
-        private double WeightIndustryField;
+        private System.Nullable<double> WeightIndustryField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string ConstituentName {
@@ -1377,7 +1377,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double Weight {
+        public System.Nullable<double> Weight {
             get {
                 return this.WeightField;
             }
@@ -1390,7 +1390,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double WeightCountry {
+        public System.Nullable<double> WeightCountry {
             get {
                 return this.WeightCountryField;
             }
@@ -1403,7 +1403,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double WeightIndustry {
+        public System.Nullable<double> WeightIndustry {
             get {
                 return this.WeightIndustryField;
             }

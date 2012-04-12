@@ -13,15 +13,15 @@ namespace GreenField.Web.DataContracts
         public string Country { get; set; }
 
         [DataMember]
-        public double PortfolioShare { get; set; }
+        public double? PortfolioShare { get; set; }
 
         [DataMember]
-        public double ModelShare { get; set; }
+        public double? ModelShare { get; set; }
 
         [DataMember]
-        public double BenchmarkShare { get; set; }
+        public double? BenchmarkShare { get; set; }
 
         [DataMember]
-        public double BetShare { get; set; }
+        public double? BetShare { get; set; }
     }
 }

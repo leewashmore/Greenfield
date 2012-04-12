@@ -61,21 +61,93 @@
         <Grid Grid.Row="0" HorizontalAlignment="Stretch">
             <telerik:RadRibbonView HorizontalAlignment="Stretch" Name="radRibbonView" VerticalAlignment="Top" ApplicationName="Greenfield" 
                                    ApplicationButtonVisibility="Collapsed" MinimizeButtonVisibility="Visible" IsMinimized="True">
-                <telerik:RadRibbonTab Header="Company">
+                <telerik:RadRibbonTab Header="Markets">
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonDropDownButton Text="Snapshot" LargeImage="Images/snapshot.png" Size="Large">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/EMsummary.png" Size="Large" Command="{Binding GadgetSecurityOverviewCommand}" />
+                                    <telerik:RadRibbonButton Text="Market Performance"  LargeImage="Images/finance.png" Size="Large" IsEnabled="False" Command="{Binding DailyMorningSnapshotCommand}" />
+                                    <telerik:RadRibbonButton Text="Internal vs. Model Valuation"  LargeImage="Images/models.png" Size="Large" IsEnabled="False"/>
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="MacroEconomic" LargeImage="Images/Dollars.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/EMsummary.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Country Summary"  LargeImage="Images/country.png" Size="Large"/>
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Commodities" LargeImage="Images/com.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/EMsummary.png" Size="Large" />
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
+                <telerik:RadRibbonTab Header="Portfolio" >
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/snapshot.png" Text="Snapshot" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/HoldEm.png" Text="Holdings" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Performance" LargeImage="Images/finance.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/EMsummary.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Attribution"  LargeImage="Images/finance.png" Size="Large"  Command="{Binding AttributionCommand}"/>
+                                    <telerik:RadRibbonButton Text="Relative Performance"  LargeImage="Images/value.png" Size="Large" Command="{Binding GadgetRelativePerformanceCommand}"/>
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Benchmark" LargeImage="Images/Pic-Balance.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/EMsummary.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Composition"  LargeImage="Images/finance.png" Size="Large"/>
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Models" LargeImage="Images/models.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
+                                <telerik:RadRibbonGroup Header="" >
+                                    <telerik:RadRibbonButton Text="Asset Allocation" LargeImage="Images/Dollars.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Stock Selection"  LargeImage="Images/finance.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Bottom Up" LargeImage="Images/Dollars.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Direct Overlay"  LargeImage="Images/finance.png" Size="Large"/>
+                                </telerik:RadRibbonGroup>
+                            </telerik:RadRibbonDropDownButton.DropDownContent>
+                        </telerik:RadRibbonDropDownButton>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
+                <telerik:RadRibbonTab Header="Company">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Snapshot" LargeImage="Images/snapshot.png" Size="Large">
+                            <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup>
-                                    <telerik:RadRibbonButton Text="Summary" telerik:ScreenTip.Description="Showing summary"
-                                         telerik:ScreenTip.Title="Summary" LargeImage="Images/sum.png" Size="Large"/>
-                                    <telerik:RadRibbonButton Text="Company Profile" LargeImage="Images/company.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Company Profile" LargeImage="Images/company.png" Size="Large"/>
                                     <telerik:RadRibbonButton Text="Tearsheet" LargeImage="Images/tearsheet.png" Size="Large" />
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Financials">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Financials" LargeImage="Images/report.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
                                     <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large"/>
@@ -83,13 +155,13 @@
                                     <telerik:RadRibbonButton Text="Balance Sheet"  LargeImage="Images/Pic-Balance.png" Size="Large"  />
                                     <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" />
                                     <telerik:RadRibbonButton Text="Finstat" LargeImage="Images/report.png" Size="Large"/>
-                                    <telerik:RadRibbonButton Text="Investment Context" LargeImage="Images/investment.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Peer Comparison" LargeImage="Images/com.png" Size="Large"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Estimates">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Estimates" LargeImage="Images/notes.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
                                     <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large"/>
@@ -99,8 +171,8 @@
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Valuation">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Valuation" LargeImage="Images/mobilenotes.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
                                     <telerik:RadRibbonButton Text="DCF" LargeImage="Images/notes.png" Size="Large"/>
@@ -109,67 +181,77 @@
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/Notepad.png" Text="Documents" Size="Large"/>
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Documents">
+                        <telerik:RadRibbonDropDownButton Text="Charting" LargeImage="Images/graph.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
-                                    <telerik:RadRibbonButton Text="Investment Committee"  LargeImage="Images/commitee.png" Size="Large" />
-                                    <telerik:RadRibbonButton Text="Models" LargeImage="Images/models.png" Size="Large" />
-                                    <telerik:RadRibbonButton Text="Meeting Notes" LargeImage="Images/meeting_notes.png" Size="Large"  />
-                                    <telerik:RadRibbonButton Text="Research" LargeImage="Images/research.png" Size="Large"   />
-                                    <telerik:RadRibbonButton Text="Blogs" LargeImage="Images/blogs.png" Size="Large" />
-                                    <telerik:RadRibbonButton Text="Notes" LargeImage="Images/Notepad.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" Command="{Binding GadgetPricingCommand}"/>
+                                    <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}" />
+                                    <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" IsEnabled="False"/>
+                                    <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Charting">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Corporate Governance" LargeImage="Images/blogs.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
-                                    <telerik:RadRibbonButton Text="Price/Comp Graph" LargeImage="Images/graph.png" Size="Large"/>
-                                    <telerik:RadRibbonButton Text="Volume" LargeImage="Images/volume.png" Size="Large"/>
-                                    <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" />
-                                    <telerik:RadRibbonButton Text="Financial Ratios"  LargeImage="Images/finance.png" Size="Large"/>
-                                    <telerik:RadRibbonButton Text="Valuation Ratios"  LargeImage="Images/value.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Questionnaire" LargeImage="Images/research.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Report"  LargeImage="Images/blogs.png" Size="Large"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
-                <telerik:RadRibbonTab Header="Portfolio">
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/snapshot.png" Text="Snapshot" Size="Large"/>
+                <telerik:RadRibbonTab Header="Screening">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Stock" Size="Large"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/HoldEm.png" Text="Holdings" Size="Large"/>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Quarterly Comparison" Size="Large"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
-                <telerik:RadRibbonTab Header="Markets">
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/snapshot.png" Text="Snapshot" Size="Large"/>
+                <telerik:RadRibbonTab Header="Investment Committee">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Create/Edit" Size="Large"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/context.png" Text="FX" Size="Large" />
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Vote" Size="Large"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonDropDownButton Content="Economics">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Pre-Meeting Report" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/meeting_notes.png" Text="Meeting Minutes" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/EMsummary.png" Text="Summary Report" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Metrics Report" Size="Large"/>
+                    </telerik:RadRibbonGroup>
+                </telerik:RadRibbonTab>
+                <telerik:RadRibbonTab Header="Admin">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonDropDownButton Text="Investment Comittee" LargeImage="Images/commitee.png" Size="Large">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
-                                <telerik:RadRibbonGroup Header="" >
-                                    <telerik:RadRibbonButton Text="EM Summary" LargeImage="Images/EMsummary.png" Size="Large" />
-                                    <telerik:RadRibbonButton Text="Country Summary"  LargeImage="Images/country.png" Size="Large"/>
+                                <telerik:RadRibbonGroup>
+                                    <telerik:RadRibbonButton Text="View Agenda" LargeImage="Images/role.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Edit Date" LargeImage="Images/company.png" Size="Large" />
+                                    <telerik:RadRibbonButton Text="Meeting Details" LargeImage="Images/notes.png" Size="Large" />
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/roller.png" Text="Commodities" Size="Large" />
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="Images/morningSnapshot.png" Text="Daily Morning Snapshot" Size="Large" Command="{Binding DailyMorningSnapshotCommand}" />
+                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                        <telerik:RadRibbonButton LargeImage="Images/research.png" Text="Broker Research" Size="Large"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
-                <telerik:RadRibbonTab Header="Gadgets">
+                <telerik:RadRibbonTab Header="Gadgets" >
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsImage.png" Text="Holdings" Size="Large" Command="{Binding GadgetHoldingsCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -197,12 +279,12 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/IndexConstituentsImage.png" Text="Index Constituents" Size="Large" Command="{Binding GadgetIndexConstituentsCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
+                    <!--<telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/MarketCapitalizationImage.png" Text="Market Capitalization" Size="Large" Command="{Binding GadgetMarketCapitalizationCommand}"/>
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/AssetAllocationImage.png" Text="Asset Allocation" Size="Large" Command="{Binding GadgetAssetAllocationCommand}"/>
-                    </telerik:RadRibbonGroup>                   
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/PortfolioRiskReturnsImage.png" Text="Portfolio Risk Returns" Size="Large" Command="{Binding GadgetPortfolioRiskReturnsCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -213,9 +295,6 @@
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/RelativePerformanceImage.png" Text="Relative Performance" Size="Large" Command="{Binding GadgetRelativePerformanceCommand}"/>
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/CountryActivePositionImage.png" Text="Country Active Position" Size="Large" Command="{Binding GadgetCountryActivePositionCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
@@ -224,12 +303,12 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/SecurityActivePositionImage.png" Text="Security Active Position" Size="Large" Command="{Binding GadgetSecurityActivePositionCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
+                    <!--<telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/TopContributorImage.png" Text="Top 5 Contributors" Size="Large" Command="{Binding GadgetTopContributorCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/TopDetractorImage.png" Text="Top 5 Detractors" Size="Large" Command="{Binding GadgetTopDetractorCommand}"/>
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/ContributorDetractorImage.png" Text="All Contributors/Detractors" Size="Large" Command="{Binding GadgetContributorDetractorCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -240,7 +319,7 @@
                         <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Performance Grid" Size="Large" Command="{Binding PerformanceGridCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Attribution" Size="Large" Command="{Binding AttributionCommand}"/>
+                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Heat Map" Size="Large" Command="{Binding HeatMapCommand}"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"/>
@@ -257,9 +336,9 @@
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">                
-                    <telerik:RadRibbonButton LargeImage="Images/Dashcode.png" Size="Large" Text="Dashboard" Command="{Binding MyDashboardCommand}" />
-                    </telerik:RadRibbonGroup>                              
+                    <telerik:RadRibbonGroup Header="">
+                        <telerik:RadRibbonButton LargeImage="Images/Dashcode.png" Size="Large" Text="Dashboard" Command="{Binding MyDashboardCommand}" />
+                    </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
             </telerik:RadRibbonView>
         </Grid>
@@ -291,6 +370,8 @@
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
+                                    <!--<TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="580,0,0,0" Width="100"/>
+                                    <telerik:RadComboBox Margin="680,0,0,0" IsEditable="True" Width="200"/>-->
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
@@ -309,16 +390,19 @@
                         </Border>
                     </telerik:RadExpander.Content>
                 </telerik:RadExpander>
-                  </Grid>
-              </Border>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
+            </Grid>
+        </Border>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                  Name="tbUserName"/>
-                    <HyperlinkButton Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+            <HyperlinkButton Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"
                                  Name="hypbtnLogout" Foreground="DarkBlue" Command="{Binding LogOutCommand}" />
-            </StackPanel>           
+        </StackPanel>
         <ContentControl
             Grid.Row="2" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
             prism:RegionManager.RegionName="MainRegion"/>
     </Grid>
 </UserControl>
+
+
+

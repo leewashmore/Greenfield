@@ -378,8 +378,7 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
-
-
+        
         [OperationContract]
         public List<FundSelectionData> RetrieveFundSelectionData()
         {
@@ -464,14 +463,33 @@ namespace GreenField.Web.Services
         {
             try
             {
+                //List<AssetAllocationData> result = new List<AssetAllocationData>();
+                //result.Add(new AssetAllocationData() { Country = "Mideast Regional", PortfolioShare = 4.4, ModelShare = 4.5, BenchmarkShare = 0, BetShare = 4.5 });
+                //result.Add(new AssetAllocationData() { Country = "Ex-South Africa", PortfolioShare = 1.9, ModelShare = 2.0, BenchmarkShare = 0.6, BetShare = 1.4 });
+                //result.Add(new AssetAllocationData() { Country = "Cash", PortfolioShare = 0.7, ModelShare = 0.7, BenchmarkShare = 0, BetShare = 0.7 });
+                //result.Add(new AssetAllocationData() { Country = "Russia", PortfolioShare = 6.6, ModelShare = 6.6, BenchmarkShare = 6.1, BetShare = 0.5 });
+                //result.Add(new AssetAllocationData() { Country = "Mexico", PortfolioShare = 4.5, ModelShare = 4.4, BenchmarkShare = 4.1, BetShare = 0.3 });
+                //result.Add(new AssetAllocationData() { Country = "Korea", PortfolioShare = 15.6, ModelShare = 15.3, BenchmarkShare = 15.1, BetShare = 0.2 });
+                //return result;
                 List<AssetAllocationData> result = new List<AssetAllocationData>();
-                result.Add(new AssetAllocationData() { Country = "Mideast Regional", PortfolioShare = 4.4, ModelShare = 4.5, BenchmarkShare = 0, BetShare = 4.5 });
-                result.Add(new AssetAllocationData() { Country = "Ex-South Africa", PortfolioShare = 1.9, ModelShare = 2.0, BenchmarkShare = 0.6, BetShare = 1.4 });
-                result.Add(new AssetAllocationData() { Country = "Cash", PortfolioShare = 0.7, ModelShare = 0.7, BenchmarkShare = 0, BetShare = 0.7 });
-                result.Add(new AssetAllocationData() { Country = "Russia", PortfolioShare = 6.6, ModelShare = 6.6, BenchmarkShare = 6.1, BetShare = 0.5 });
-                result.Add(new AssetAllocationData() { Country = "Mexico", PortfolioShare = 4.5, ModelShare = 4.4, BenchmarkShare = 4.1, BetShare = 0.3 });
-                result.Add(new AssetAllocationData() { Country = "Korea", PortfolioShare = 15.6, ModelShare = 15.3, BenchmarkShare = 15.1, BetShare = 0.2 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new AssetAllocationData()
+                    {
+                        Country = row.Field<string>("ISO_COUNTRY_CODE"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        ModelShare = row.Field<Single?>("ASH_EMM_MODEL_WEIGHT"),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                        BetShare = (row.Field<Single?>("ASH_EMM_MODEL_WEIGHT")) - (row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?))
+                    });
+                }
+
                 return result;
+
             }
             catch (Exception)
             {
@@ -547,18 +565,23 @@ namespace GreenField.Web.Services
             try
             {
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
-                result.Add(new TopHoldingsData() { Ticker = "Ticker1", Holding = "Holding1", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker2", Holding = "Holding2", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker3", Holding = "Holding3", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker4", Holding = "Holding4", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker5", Holding = "Holding5", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker6", Holding = "Holding6", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker7", Holding = "Holding7", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker8", Holding = "Holding8", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker9", Holding = "Holding9", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
-                result.Add(new TopHoldingsData() { Ticker = "Ticker10", Holding = "Holding10", MarketValue = 23321000, PortfolioShare = 8.6, BenchmarkShare = 6.2, BetShare = 2.4 });
+                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
 
-                return result;
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    result.Add(new TopHoldingsData()
+                    {
+                        Ticker = row.Field<string>("TICKER"),
+                        Holding = row.Field<string>("ISSUE_NAME"),
+                        MarketValue = row.Field<Single?>("DIRTY_VALUE_PC"),
+                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                    });
+                }
+                return result.OrderByDescending( t => t.MarketValue).ToList().Take(10).ToList();
             }
             catch (Exception)
             {
@@ -582,6 +605,7 @@ namespace GreenField.Web.Services
 
                     string industry = row.Field<string>("GICS_INDUSTRY_NAME");
                     object sumMarketValueIndustry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "GICS_INDUSTRY_NAME = '" + industry + "'");
+
                     result.Add(new IndexConstituentsData()
                     {
                         ConstituentName = row.Field<string>("ISSUE_NAME"),
@@ -590,13 +614,12 @@ namespace GreenField.Web.Services
                         Sector = row.Field<string>("GICS_SECTOR_NAME"),
                         Industry = industry,
                         SubIndustry = row.Field<string>("GICS_SUB_INDUSTRY_NAME"),
-                        Weight = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValue,
-                        WeightCountry = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValueCountry,
-                        WeightIndustry = (double)row.Field<Single>("DIRTY_VALUE_PC") / (double)sumMarketValueIndustry,
-                        DailyReturnUSD = row.Field<double>("ISSUE_NAME")
+                        Weight = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValue as Single?),
+                        WeightCountry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueCountry as Single?),
+                        WeightIndustry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueIndustry as Single?),
+                        //DailyReturnUSD = row.Field<string>("ISSUE_NAME")
                     });
                 }
-
                 return result;
             }
             catch (Exception)
@@ -604,10 +627,7 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
-       
 
-        
-        
         [OperationContract]
         public List<String> RetrieveValuesForFilters(String filterType)
         {
@@ -1340,8 +1360,7 @@ namespace GreenField.Web.Services
             }
             return order == 1 ? result.OrderBy(e => e.SecurityAlpha).ToList() : result.OrderByDescending(e => e.SecurityAlpha).ToList();
         }
-
-
+        
         [OperationContract]
         public List<RelativePerformanceData> RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
@@ -1438,6 +1457,7 @@ namespace GreenField.Web.Services
 
             return result;
         }
+      
         /// <summary>
         /// Retrieves Performance graph data for a particular composite/fund.
         /// Filtering data based on the fund name.
@@ -1469,6 +1489,7 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+      
         /// <summary>
         /// Retrieves Performance grid data for a particular composite/fund.
         /// Filtering data based on the fund name.
@@ -1849,6 +1870,8 @@ namespace GreenField.Web.Services
             return result;
         }
 
+        #endregion
+
         /// <summary>
         /// Retrieves Portfolio Risk Return Data
         /// </summary>
@@ -1908,9 +1931,6 @@ namespace GreenField.Web.Services
             }
 
             return portfolioRiskReturnValues;
-        }
-        #endregion
-
-
+        }       
     }
 }

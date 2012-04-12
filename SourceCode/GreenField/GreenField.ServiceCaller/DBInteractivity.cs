@@ -14,14 +14,25 @@ namespace GreenField.ServiceCaller
     [Export(typeof(IDBInteractivity))]
     public class DBInteractivity : IDBInteractivity
     {
+        /// <summary>
+        /// service call method for security overview gadget
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
             client.RetrieveSecurityReferenceDataAsync();
             client.RetrieveSecurityReferenceDataCompleted += (se, e) =>
                 {
-                    if (callback != null)
-                        callback(e.Result.ToList());
+                     if (callback != null)
+                    {
+                        if (e.Result != null)
+                            callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
                 };
         }
 
@@ -32,7 +43,14 @@ namespace GreenField.ServiceCaller
             client.RetrieveSecurityReferenceDataByTickerCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
@@ -42,10 +60,10 @@ namespace GreenField.ServiceCaller
             client.RetrieveEntitySelectionDataAsync();
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
-                if (e.Result != null)
+                if (callback != null)
                 {
-                    if (callback != null)
-                        callback(e.Result.ToList());
+                    if (e.Result != null)
+                        callback(e.Result);
                 }
                 else
                 {
@@ -61,7 +79,14 @@ namespace GreenField.ServiceCaller
             client.RetrieveFundSelectionDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
@@ -102,9 +127,9 @@ namespace GreenField.ServiceCaller
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
 
-                if (e.Result != null)
+                if (callback != null)
                 {
-                    if (callback != null)
+                    if (e.Result != null)
                         callback(e.Result.ToList());
                 }
                 else
@@ -121,7 +146,14 @@ namespace GreenField.ServiceCaller
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
@@ -132,10 +164,24 @@ namespace GreenField.ServiceCaller
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method for sector breakdown gadget
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="callback"></param>
         public void RetrieveSectorBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -143,10 +189,24 @@ namespace GreenField.ServiceCaller
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method for region breakdown gadget
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="callback"></param>
         public void RetrieveRegionBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -154,10 +214,24 @@ namespace GreenField.ServiceCaller
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method for top holdings gadget
+        /// </summary>
+        /// <param name="fundSelectionData"></param>
+        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="callback"></param>
         public void RetrieveTopHoldingsData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -165,10 +239,23 @@ namespace GreenField.ServiceCaller
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method for index constituent gadget
+        /// </summary>
+        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="callback"></param>
         public void RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -176,10 +263,22 @@ namespace GreenField.ServiceCaller
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
-        }       
+        }
 
+        /// <summary>
+        /// service call method for retrieving user preference of benchmarks in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="callback"></param>
         public void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -187,10 +286,22 @@ namespace GreenField.ServiceCaller
             client.RetrieveUserPreferenceBenchmarkDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method for “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="callback"></param>
         public void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -198,10 +309,23 @@ namespace GreenField.ServiceCaller
             client.RetrieveMorningSnapshotDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
 
+        /// <summary>
+        /// service call method to add user preferred group in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="callback"></param>
         public void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -209,10 +333,23 @@ namespace GreenField.ServiceCaller
             client.AddUserPreferenceBenchmarkGroupCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(false);
+                }
             };
         }
 
+        /// <summary>
+        ///  service call method to remove user preferred group from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
+        /// <param name="callback"></param>
         public void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -220,10 +357,23 @@ namespace GreenField.ServiceCaller
             client.RemoveUserPreferenceBenchmarkGroupCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(false);
+                }
             };
         }
 
+        /// <summary>
+        ///  service call method to add user preferred benchmark in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="callback"></param>
         public void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -231,10 +381,23 @@ namespace GreenField.ServiceCaller
             client.AddUserPreferenceBenchmarkCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(false);
+                }
             };
         }
 
+        /// <summary>
+        ///  service call method to remove user preferred benchmark from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="callback"></param>
         public void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -242,7 +405,14 @@ namespace GreenField.ServiceCaller
             client.RemoveUserPreferenceBenchmarkCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(false);
+                }
             };
         }
        
@@ -253,7 +423,14 @@ namespace GreenField.ServiceCaller
             client.RetrieveValuesForFiltersCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result);
+                {
+                    if (e.Result != null)
+                        callback(e.Result);
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
         
@@ -379,11 +556,17 @@ namespace GreenField.ServiceCaller
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
-        
-        
+                
         /// <summary>
         /// Method that calls the  RetrieveHoldingsPercentageData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
@@ -399,7 +582,14 @@ namespace GreenField.ServiceCaller
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
                 if (callback != null)
-                    callback(e.Result.ToList());
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
             };
         }
      #endregion
