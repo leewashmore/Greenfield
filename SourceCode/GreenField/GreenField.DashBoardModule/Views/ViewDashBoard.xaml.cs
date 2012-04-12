@@ -128,7 +128,11 @@ namespace GreenField.DashboardModule.Views
                 if (SessionManager.SESSION != null)
                 {
                     this.busyIndicator.IsBusy = true;
-
+                    if (_dashboardGadgetPayLoad != null)
+                    {
+                        this.busyIndicator.IsBusy = false;
+                        return;
+                    }
                     _dashboardGadgetPayLoad = payLoad;
                     _manageDashboard.GetDashboardPreferenceByUserName(SessionManager.SESSION.UserName, (dashboardPreference) =>
                             {

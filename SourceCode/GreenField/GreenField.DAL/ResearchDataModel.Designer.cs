@@ -773,44 +773,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="userID">No Metadata Documentation available.</param>
-        public ObjectResult<UserDashboardPreferance> GetDashboardData(global::System.String userID)
-        {
-            ObjectParameter userIDParameter;
-            if (userID != null)
-            {
-                userIDParameter = new ObjectParameter("UserID", userID);
-            }
-            else
-            {
-                userIDParameter = new ObjectParameter("UserID", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<UserDashboardPreferance>("GetDashboardData", userIDParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="userID">No Metadata Documentation available.</param>
-        public ObjectResult<UserDashboardPreferance> GetDashboardData(global::System.String userID, MergeOption mergeOption)
-        {
-            ObjectParameter userIDParameter;
-            if (userID != null)
-            {
-                userIDParameter = new ObjectParameter("UserID", userID);
-            }
-            else
-            {
-                userIDParameter = new ObjectParameter("UserID", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<UserDashboardPreferance>("GetDashboardData", mergeOption, userIDParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userId">No Metadata Documentation available.</param>
         /// <param name="storedValue">No Metadata Documentation available.</param>
         public int StoreDashboardInfo(global::System.String userId, global::System.String storedValue)
@@ -836,129 +798,6 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction("StoreDashboardInfo", userIdParameter, storedValueParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userName">No Metadata Documentation available.</param>
-        /// <param name="gadgetViewClassName">No Metadata Documentation available.</param>
-        /// <param name="gadgetViewModelClassName">No Metadata Documentation available.</param>
-        /// <param name="gadgetName">No Metadata Documentation available.</param>
-        /// <param name="gadgetState">No Metadata Documentation available.</param>
-        /// <param name="preferenceGroupID">No Metadata Documentation available.</param>
-        /// <param name="gadgetPosition">No Metadata Documentation available.</param>
-        public int SetDashboardPreference(global::System.String userName, global::System.String gadgetViewClassName, global::System.String gadgetViewModelClassName, global::System.String gadgetName, global::System.String gadgetState, global::System.String preferenceGroupID, Nullable<global::System.Int32> gadgetPosition)
-        {
-            ObjectParameter userNameParameter;
-            if (userName != null)
-            {
-                userNameParameter = new ObjectParameter("UserName", userName);
-            }
-            else
-            {
-                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
-            }
-    
-            ObjectParameter gadgetViewClassNameParameter;
-            if (gadgetViewClassName != null)
-            {
-                gadgetViewClassNameParameter = new ObjectParameter("GadgetViewClassName", gadgetViewClassName);
-            }
-            else
-            {
-                gadgetViewClassNameParameter = new ObjectParameter("GadgetViewClassName", typeof(global::System.String));
-            }
-    
-            ObjectParameter gadgetViewModelClassNameParameter;
-            if (gadgetViewModelClassName != null)
-            {
-                gadgetViewModelClassNameParameter = new ObjectParameter("GadgetViewModelClassName", gadgetViewModelClassName);
-            }
-            else
-            {
-                gadgetViewModelClassNameParameter = new ObjectParameter("GadgetViewModelClassName", typeof(global::System.String));
-            }
-    
-            ObjectParameter gadgetNameParameter;
-            if (gadgetName != null)
-            {
-                gadgetNameParameter = new ObjectParameter("GadgetName", gadgetName);
-            }
-            else
-            {
-                gadgetNameParameter = new ObjectParameter("GadgetName", typeof(global::System.String));
-            }
-    
-            ObjectParameter gadgetStateParameter;
-            if (gadgetState != null)
-            {
-                gadgetStateParameter = new ObjectParameter("GadgetState", gadgetState);
-            }
-            else
-            {
-                gadgetStateParameter = new ObjectParameter("GadgetState", typeof(global::System.String));
-            }
-    
-            ObjectParameter preferenceGroupIDParameter;
-            if (preferenceGroupID != null)
-            {
-                preferenceGroupIDParameter = new ObjectParameter("PreferenceGroupID", preferenceGroupID);
-            }
-            else
-            {
-                preferenceGroupIDParameter = new ObjectParameter("PreferenceGroupID", typeof(global::System.String));
-            }
-    
-            ObjectParameter gadgetPositionParameter;
-            if (gadgetPosition.HasValue)
-            {
-                gadgetPositionParameter = new ObjectParameter("GadgetPosition", gadgetPosition);
-            }
-            else
-            {
-                gadgetPositionParameter = new ObjectParameter("GadgetPosition", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction("SetDashboardPreference", userNameParameter, gadgetViewClassNameParameter, gadgetViewModelClassNameParameter, gadgetNameParameter, gadgetStateParameter, preferenceGroupIDParameter, gadgetPositionParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userName">No Metadata Documentation available.</param>
-        public ObjectResult<tblDashboardPreference> GetDashboardPreferenceByUserName(global::System.String userName)
-        {
-            ObjectParameter userNameParameter;
-            if (userName != null)
-            {
-                userNameParameter = new ObjectParameter("UserName", userName);
-            }
-            else
-            {
-                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<tblDashboardPreference>("GetDashboardPreferenceByUserName", userNameParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="userName">No Metadata Documentation available.</param>
-        public ObjectResult<tblDashboardPreference> GetDashboardPreferenceByUserName(global::System.String userName, MergeOption mergeOption)
-        {
-            ObjectParameter userNameParameter;
-            if (userName != null)
-            {
-                userNameParameter = new ObjectParameter("UserName", userName);
-            }
-            else
-            {
-                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<tblDashboardPreference>("GetDashboardPreferenceByUserName", mergeOption, userNameParameter);
         }
     
         /// <summary>
@@ -1131,6 +970,129 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction("DeleteUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarknameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        public ObjectResult<tblDashboardPreference> GetDashBoardPreferenceByUserName(global::System.String userName)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<tblDashboardPreference>("GetDashBoardPreferenceByUserName", userNameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        public ObjectResult<tblDashboardPreference> GetDashBoardPreferenceByUserName(global::System.String userName, MergeOption mergeOption)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<tblDashboardPreference>("GetDashBoardPreferenceByUserName", mergeOption, userNameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="gadgetViewClassName">No Metadata Documentation available.</param>
+        /// <param name="gadgetViewModelClassName">No Metadata Documentation available.</param>
+        /// <param name="gadgetName">No Metadata Documentation available.</param>
+        /// <param name="gadgetState">No Metadata Documentation available.</param>
+        /// <param name="preferenceGroupID">No Metadata Documentation available.</param>
+        /// <param name="gadgetPosition">No Metadata Documentation available.</param>
+        public int SetDashBoardPreference(global::System.String userName, global::System.String gadgetViewClassName, global::System.String gadgetViewModelClassName, global::System.String gadgetName, global::System.String gadgetState, global::System.String preferenceGroupID, Nullable<global::System.Int32> gadgetPosition)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            ObjectParameter gadgetViewClassNameParameter;
+            if (gadgetViewClassName != null)
+            {
+                gadgetViewClassNameParameter = new ObjectParameter("GadgetViewClassName", gadgetViewClassName);
+            }
+            else
+            {
+                gadgetViewClassNameParameter = new ObjectParameter("GadgetViewClassName", typeof(global::System.String));
+            }
+    
+            ObjectParameter gadgetViewModelClassNameParameter;
+            if (gadgetViewModelClassName != null)
+            {
+                gadgetViewModelClassNameParameter = new ObjectParameter("GadgetViewModelClassName", gadgetViewModelClassName);
+            }
+            else
+            {
+                gadgetViewModelClassNameParameter = new ObjectParameter("GadgetViewModelClassName", typeof(global::System.String));
+            }
+    
+            ObjectParameter gadgetNameParameter;
+            if (gadgetName != null)
+            {
+                gadgetNameParameter = new ObjectParameter("GadgetName", gadgetName);
+            }
+            else
+            {
+                gadgetNameParameter = new ObjectParameter("GadgetName", typeof(global::System.String));
+            }
+    
+            ObjectParameter gadgetStateParameter;
+            if (gadgetState != null)
+            {
+                gadgetStateParameter = new ObjectParameter("GadgetState", gadgetState);
+            }
+            else
+            {
+                gadgetStateParameter = new ObjectParameter("GadgetState", typeof(global::System.String));
+            }
+    
+            ObjectParameter preferenceGroupIDParameter;
+            if (preferenceGroupID != null)
+            {
+                preferenceGroupIDParameter = new ObjectParameter("PreferenceGroupID", preferenceGroupID);
+            }
+            else
+            {
+                preferenceGroupIDParameter = new ObjectParameter("PreferenceGroupID", typeof(global::System.String));
+            }
+    
+            ObjectParameter gadgetPositionParameter;
+            if (gadgetPosition.HasValue)
+            {
+                gadgetPositionParameter = new ObjectParameter("GadgetPosition", gadgetPosition);
+            }
+            else
+            {
+                gadgetPositionParameter = new ObjectParameter("GadgetPosition", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction("SetDashBoardPreference", userNameParameter, gadgetViewClassNameParameter, gadgetViewModelClassNameParameter, gadgetNameParameter, gadgetStateParameter, preferenceGroupIDParameter, gadgetPositionParameter);
         }
 
         #endregion

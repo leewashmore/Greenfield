@@ -9,6 +9,8 @@ using System.ServiceModel.Activation;
 using GreenField.Web.Services;
 using System.Collections.ObjectModel;
 using GreenField.Web.DataContracts;
+using GreenField.Web.Helpers;
+using System.Data.Objects;
 
 namespace GreenField.Web
 {
@@ -17,14 +19,7 @@ namespace GreenField.Web
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class DashboardOperations
     {
-        #region Fields
 
-        /// <summary>
-        /// Logging Service Instance
-        /// </summary>
-        private LoggingOperations loggingOperations = new LoggingOperations();
-
-        #endregion
 
         /// <summary>
         /// Retrieve User Dashboard Information
@@ -34,19 +29,25 @@ namespace GreenField.Web
         [OperationContract]
         public List<tblDashboardPreference> GetDashboardPreferenceByUserName(String userName)
         {
-            List<tblDashboardPreference> result = new List<tblDashboardPreference>();
             try
             {
+                
                 ResearchEntities entity = new ResearchEntities();
-                result = entity.GetDashboardPreferenceByUserName(userName).ToList();
+
+                ObjectResult<tblDashboardPreference> resultSet = entity.GetDashBoardPreferenceByUserName(userName);
+                if (resultSet != null)
+                {
+                    return resultSet.ToList();
+                }
+                return null;
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
+                ExceptionTrace.LogException(ex);
+                return null;
             }
-            return result;
-        }
 
+        }
 
         /// <summary>
         /// Store User Dashboard Preference
@@ -54,29 +55,33 @@ namespace GreenField.Web
         /// <param name="objUserID"></param>
         /// <param name="objPersistData"></param>
         [OperationContract]
-        public bool SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName)
+        public bool SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, string userName)
         {
-            ResearchEntities entity = new ResearchEntities();
+
             try
             {
+                ResearchEntities entity = new ResearchEntities();
                 if (dashBoardPreference.Count > 0)
                 {
                     foreach (tblDashboardPreference item in dashBoardPreference)
                     {
-                        entity.SetDashboardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition);
+                        entity.SetDashBoardPreference(item.UserName, item.GadgetViewClassName, item.GadgetViewModelClassName, item.GadgetName, item.GadgetState, item.PreferenceGroupID, item.GadgetPosition);
                     }
                 }
                 else
                 {
-                    entity.SetDashboardPreference(userName, "null", "null", "null", "null","null",0);
+                    entity.SetDashBoardPreference(userName, "null", "null", "null", "null", "null", 0);
                 }
                 return true;
             }
             catch (Exception ex)
             {
-                loggingOperations.LogToFile("User : " + (System.Web.HttpContext.Current.Session["Session"] as Session).UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", "Medium");
+                ExceptionTrace.LogException(ex);
                 return false;
             }
         }
+
+
+
     }
 }

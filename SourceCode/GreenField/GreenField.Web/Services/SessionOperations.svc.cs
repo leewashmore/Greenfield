@@ -7,6 +7,7 @@ using System.Text;
 using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
 using System.Web;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Web.Services
 {
@@ -29,8 +30,9 @@ namespace GreenField.Web.Services
             {
                 return System.Web.HttpContext.Current.Session["Session"] as Session;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -54,13 +56,14 @@ namespace GreenField.Web.Services
                 {
                     return null;
                 }
-                
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-        } 
+        }
         #endregion
     }
 }

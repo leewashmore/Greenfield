@@ -30,7 +30,10 @@ namespace GreenField.DashboardModule
 
         public void Initialize()
         {
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboard));            
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboard));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanySnapshotSummary));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyChartingClosingPrice));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyChartingUnrealizedGainLoss));
         }
     }
 }

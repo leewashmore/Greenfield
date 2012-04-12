@@ -7,6 +7,7 @@ using System.Text;
 using System.Web.Security;
 using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Web.Services
 {
@@ -32,8 +33,9 @@ namespace GreenField.Web.Services
             {
                 return Membership.ValidateUser(username, password);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -88,8 +90,9 @@ namespace GreenField.Web.Services
 
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -108,8 +111,9 @@ namespace GreenField.Web.Services
             {
                 return Membership.Provider.ChangePassword(username, oldPassword, newPassword);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -127,8 +131,9 @@ namespace GreenField.Web.Services
             {
                 return Membership.Provider.ResetPassword(username, answer);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -155,11 +160,12 @@ namespace GreenField.Web.Services
                     return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-            
+
         }
 
         /// <summary>
@@ -189,8 +195,9 @@ namespace GreenField.Web.Services
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -207,8 +214,9 @@ namespace GreenField.Web.Services
             {
                 return Membership.DeleteUser(username);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -230,8 +238,9 @@ namespace GreenField.Web.Services
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -250,8 +259,9 @@ namespace GreenField.Web.Services
                 MembershipUser user = Membership.GetUser(username, userIsOnline);
                 return user != null ? ConvertMembershipUser(user) : null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -273,11 +283,12 @@ namespace GreenField.Web.Services
                     membershipUserInfo.Add(ConvertMembershipUser(user));
                 return membershipUserInfo;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-            
+
         }
 
         /// <summary>
@@ -292,8 +303,9 @@ namespace GreenField.Web.Services
             {
                 return Membership.Provider.UnlockUser(userName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -312,8 +324,9 @@ namespace GreenField.Web.Services
                     Membership.Provider.UnlockUser(userName);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -331,10 +344,11 @@ namespace GreenField.Web.Services
             {
                 return Roles.GetAllRoles();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
-            }            
+            }
         }
 
         /// <summary>
@@ -350,8 +364,9 @@ namespace GreenField.Web.Services
                 Roles.CreateRole(roleName);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -368,10 +383,11 @@ namespace GreenField.Web.Services
             {
                 return Roles.GetRolesForUser(username);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
-            }             
+            }
         }
 
         /// <summary>
@@ -388,8 +404,9 @@ namespace GreenField.Web.Services
                 Roles.RemoveUsersFromRoles(usernames, roleNames);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -408,8 +425,9 @@ namespace GreenField.Web.Services
                 Roles.AddUsersToRoles(usernames, roleNames);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -440,8 +458,9 @@ namespace GreenField.Web.Services
 
                 return addRolesValidation && deleteRolesValidation;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -459,12 +478,13 @@ namespace GreenField.Web.Services
             {
                 return Roles.DeleteRole(username, throwOnPopulatedRole);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
-        #endregion 
+        #endregion
         #endregion
 
         #region Helper
@@ -480,33 +500,34 @@ namespace GreenField.Web.Services
                 if (user != null)
                 {
                     return new MembershipUserInfo
-                        {
-                            UserName = user.UserName,
-                            Email = user.Email,
-                            IsApproved = user.IsApproved,
-                            IsLockedOut = user.IsLockedOut,
-                            IsOnline = user.IsOnline,
-                            Comment = user.Comment,
-                            CreateDate = user.CreationDate,
-                            LastActivityDate = user.LastActivityDate,
-                            LastLockOutDate = user.LastLockoutDate,
-                            LastLogInDate = user.LastLoginDate,
-                            ProviderUserKey = user.ProviderUserKey.ToString(),
-                            ProviderName = user.ProviderName,
-                            PasswordQuestion = user.PasswordQuestion,
-                            LastPassWordChangedDate = user.LastPasswordChangedDate
-                        };
+                    {
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        IsApproved = user.IsApproved,
+                        IsLockedOut = user.IsLockedOut,
+                        IsOnline = user.IsOnline,
+                        Comment = user.Comment,
+                        CreateDate = user.CreationDate,
+                        LastActivityDate = user.LastActivityDate,
+                        LastLockOutDate = user.LastLockoutDate,
+                        LastLogInDate = user.LastLoginDate,
+                        ProviderUserKey = user.ProviderUserKey.ToString(),
+                        ProviderName = user.ProviderName,
+                        PasswordQuestion = user.PasswordQuestion,
+                        LastPassWordChangedDate = user.LastPasswordChangedDate
+                    };
                 }
                 else
                 {
                     return null;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
                 return null;
             }
-        } 
+        }
         #endregion
     }
 }

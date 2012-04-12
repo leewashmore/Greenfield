@@ -125,7 +125,7 @@
                         <telerik:RadRibbonDropDownButton Text="Models" LargeImage="Images/models.png" Size="Large">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
-                                    <telerik:RadRibbonButton Text="Asset Allocation" LargeImage="Images/Dollars.png" Size="Large" />
+<telerik:RadRibbonButton Text="Asset Allocation" LargeImage="Images/Dollars.png" Size="Large" />
                                     <telerik:RadRibbonButton Text="Stock Selection"  LargeImage="Images/finance.png" Size="Large"/>
                                     <telerik:RadRibbonButton Text="Bottom Up" LargeImage="Images/Dollars.png" Size="Large" />
                                     <telerik:RadRibbonButton Text="Direct Overlay"  LargeImage="Images/finance.png" Size="Large"/>
@@ -135,11 +135,11 @@
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
                 <telerik:RadRibbonTab Header="Company">
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False">
+                    <telerik:RadRibbonGroup Header="" IsEnabled="True">
                         <telerik:RadRibbonDropDownButton Text="Snapshot" LargeImage="Images/snapshot.png" Size="Large">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup>
-                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large"/>
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Command="{Binding DashboardCompanySnapshotSummaryCommand}"/>
                                     <telerik:RadRibbonButton Text="Company Profile" LargeImage="Images/company.png" Size="Large"/>
                                     <telerik:RadRibbonButton Text="Tearsheet" LargeImage="Images/tearsheet.png" Size="Large" />
                                 </telerik:RadRibbonGroup>
@@ -188,8 +188,8 @@
                         <telerik:RadRibbonDropDownButton Text="Charting" LargeImage="Images/graph.png" Size="Large" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" >
-                                    <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" Command="{Binding GadgetPricingCommand}"/>
-                                    <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}" />
+                                    <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" Command="{Binding DashboardCompanyChartingClosingPriceCommand}"/>
+                                    <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" />
                                     <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" IsEnabled="False"/>
                                     <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False"/>
                                 </telerik:RadRibbonGroup>
@@ -303,12 +303,6 @@
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/SecurityActivePositionImage.png" Text="Security Active Position" Size="Large" Command="{Binding GadgetSecurityActivePositionCommand}"/>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopContributorImage.png" Text="Top 5 Contributors" Size="Large" Command="{Binding GadgetTopContributorCommand}"/>
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopDetractorImage.png" Text="Top 5 Detractors" Size="Large" Command="{Binding GadgetTopDetractorCommand}"/>
-                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="">
                         <telerik:RadRibbonButton LargeImage="../Images/ContributorDetractorImage.png" Text="All Contributors/Detractors" Size="Large" Command="{Binding GadgetContributorDetractorCommand}"/>
                     </telerik:RadRibbonGroup>
@@ -370,8 +364,8 @@
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
-                                    <!--<TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="580,0,0,0" Width="100"/>
-                                    <telerik:RadComboBox Margin="680,0,0,0" IsEditable="True" Width="200"/>-->
+                                    <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="580,0,0,0" Width="100"/>
+                                    <telerik:RadComboBox Margin="680,0,0,0" IsEditable="True" Width="200"/>
                                 </Grid>
                                 <Grid Grid.Row="1">
                                     <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
@@ -387,11 +381,12 @@
                                     <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>
                                 </Grid>
                             </Grid>
-                        </Border>
+                       </Border>
                     </telerik:RadExpander.Content>
                 </telerik:RadExpander>
             </Grid>
         </Border>
+            
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
             <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                  Name="tbUserName"/>

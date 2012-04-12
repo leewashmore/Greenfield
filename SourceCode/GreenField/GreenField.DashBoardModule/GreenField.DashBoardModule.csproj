@@ -120,10 +120,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DashboardModule.cs" />
+    <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingClosingPrice.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingClosingPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanySnapshotSummary.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotSummary.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -141,9 +151,20 @@
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ViewDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingClosingPrice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingUnrealizedGain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanySnapshotSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -220,7 +220,7 @@ namespace GreenField.Gadgets.Views
                         ElementName = "Relative Performace Data",
                         ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
                     } 
-                }, "Export Options: " + GadgetNames.RELATIVE_PERFORMANCE);
+                }, "Export Options: " + GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE);
             childExportOptions.Show();
         }
 

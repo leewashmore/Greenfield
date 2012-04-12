@@ -60,8 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
-    <Content Include="ClientBin\GreenField.App.xap" />
-    <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
@@ -118,6 +116,7 @@
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
+    <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,6 +148,10 @@
       <Project>{602A785A-F8AC-47D5-9AA9-6DE52A97C74A}</Project>
       <Name>GreenField.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GreenField.Logging\GreenField.Logging.csproj">
+      <Project>{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}</Project>
+      <Name>GreenField.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -161,7 +164,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ClientBin\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

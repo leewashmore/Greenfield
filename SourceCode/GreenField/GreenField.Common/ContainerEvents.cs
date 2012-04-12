@@ -19,6 +19,8 @@ namespace GreenField.Common
 {
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
+    public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
+
     public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
     public class FundReferenceSetEvent : CompositePresentationEvent<FundSelectionData> { }
@@ -48,8 +50,7 @@ namespace GreenField.Common
         public IDBInteractivity DBInteractivity { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
-    }
-
+    }    
 
 }
 

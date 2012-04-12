@@ -130,7 +130,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _securityReference = value;
-                RaisePropertyChanged(() => this.SecurityReference);
+                RaisePropertyChanged(() => this.SecurityReference);                
             }
         }
 
@@ -287,7 +287,10 @@ namespace GreenField.App.ViewModel
                     _dashboardGadgetPayload = new DashboardGadgetPayload();
                 return _dashboardGadgetPayload; 
             }
-            set { _dashboardGadgetPayload = value; }
+            set 
+            {
+                _dashboardGadgetPayload = value;                
+            }
         }        
 
         #endregion
@@ -296,6 +299,21 @@ namespace GreenField.App.ViewModel
         public ICommand LogOutCommand
         {
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
+        }
+
+        public ICommand DashboardCompanySnapshotSummaryCommand 
+        {
+            get { return new DelegateCommand<object>(DashboardCompanySnapshotSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingClosingPriceCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingClosingPriceCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingUnrealizedGainCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingUnrealizedGainCommandMethod); }
         }
 
         public ICommand DetailedEstimateCommand
@@ -571,6 +589,57 @@ namespace GreenField.App.ViewModel
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+        }
+
+        private void DashboardCompanySnapshotSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanyChartingClosingPriceCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingClosingPrice", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanyChartingUnrealizedGainCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyChartingUnrealizedGainLoss", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         private void DetailedEstimateCommandMethod(object param)
@@ -1011,7 +1080,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.RELATIVE_PERFORMANCE,
+                            DashboardTileHeader = GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE,
                             DashboardTileObject = new ViewRelativePerformance(new ViewModelRelativePerformance(GetDashboardGadgetParam()))
                         });
             }
@@ -1202,7 +1271,9 @@ namespace GreenField.App.ViewModel
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
         }
 
-       
+
+        
+
 
         private void PerformanceGraphCommandMethod(object param)
         {

@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Gadgets", "Green
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Benchmark", "GreenField.Benchmark\GreenField.Benchmark.csproj", "{5251F297-C5DB-40E5-B629-18CAA846E892}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreenField.Logging", "GreenField.Logging\GreenField.Logging.csproj", "{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{5251F297-C5DB-40E5-B629-18CAA846E892}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5251F297-C5DB-40E5-B629-18CAA846E892}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5251F297-C5DB-40E5-B629-18CAA846E892}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9052AA7D-8CC7-49C3-AB84-ECB114E6BCA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

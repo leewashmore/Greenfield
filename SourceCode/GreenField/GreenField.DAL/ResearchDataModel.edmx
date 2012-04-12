@@ -636,11 +636,20 @@
           <Parameter Name="Country" Type="varchar" Mode="In" />
           <Parameter Name="Currency" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="GetDashboardData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+        <Function Name="GetDashBoardPreferenceByUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetUserBenchmarkPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetDashBoardPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="GadgetViewClassName" Type="varchar" Mode="In" />
+          <Parameter Name="GadgetViewModelClassName" Type="varchar" Mode="In" />
+          <Parameter Name="GadgetName" Type="varchar" Mode="In" />
+          <Parameter Name="GadgetState" Type="varchar" Mode="In" />
+          <Parameter Name="PreferenceGroupID" Type="varchar" Mode="In" />
+          <Parameter Name="GadgetPosition" Type="int" Mode="In" />
         </Function>
         <Function Name="SetUserBenchmarkPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="varchar" Mode="In" />
@@ -651,10 +660,6 @@
         <Function Name="SetUserGroupPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="varchar" Mode="In" />
           <Parameter Name="groupname" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="StoreDashboardInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserId" Type="varchar" Mode="In" />
-          <Parameter Name="StoredValue" Type="varchar(max)" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -698,26 +703,11 @@
           <Parameter Name="SEC_SECSHORT_List" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="UserDashboardPreferances" EntityType="ResearchModel.UserDashboardPreferance" />
-          <FunctionImport Name="GetDashboardData" EntitySet="UserDashboardPreferances" ReturnType="Collection(ResearchModel.UserDashboardPreferance)">
-          <Parameter Name="UserID" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="StoreDashboardInfo">
             <Parameter Name="UserId" Mode="In" Type="String" />
             <Parameter Name="StoredValue" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblDashboardPreferences" EntityType="ResearchModel.tblDashboardPreference" />
-          <FunctionImport Name="SetDashboardPreference">
-            <Parameter Name="UserName" Mode="In" Type="String" />
-            <Parameter Name="GadgetViewClassName" Mode="In" Type="String" />
-            <Parameter Name="GadgetViewModelClassName" Mode="In" Type="String" />
-            <Parameter Name="GadgetName" Mode="In" Type="String" />
-            <Parameter Name="GadgetState" Mode="In" Type="String" />
-            <Parameter Name="PreferenceGroupID" Mode="In" Type="String" />
-            <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetDashboardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
-          <Parameter Name="UserName" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="tblHoldingsDatas" EntityType="ResearchModel.tblHoldingsData" />
           <EntitySet Name="tblUserBenchmarkPreferences" EntityType="ResearchModel.tblUserBenchmarkPreference" />
           <EntitySet Name="tblUserGroupPreferences" EntityType="ResearchModel.tblUserGroupPreference" />
@@ -736,7 +726,7 @@
             <Parameter Name="benchmarkReturnType" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetUserBenchmarkPreference" ReturnType="Collection(ResearchModel.UserBenchmarkPreference)">
-            <Parameter Name="userid" Mode="In" Type="String" />
+          <Parameter Name="userid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteUserGroupPreference">
             <Parameter Name="userId" Mode="In" Type="String" />
@@ -746,6 +736,18 @@
             <Parameter Name="userId" Mode="In" Type="String" />
             <Parameter Name="groupname" Mode="In" Type="String" />
             <Parameter Name="benchmarkname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDashBoardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetDashBoardPreference">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="GadgetViewClassName" Mode="In" Type="String" />
+            <Parameter Name="GadgetViewModelClassName" Mode="In" Type="String" />
+            <Parameter Name="GadgetName" Mode="In" Type="String" />
+            <Parameter Name="GadgetState" Mode="In" Type="String" />
+            <Parameter Name="PreferenceGroupID" Mode="In" Type="String" />
+            <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblActual">
@@ -1743,8 +1745,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDashboardData" FunctionName="ResearchModel.Store.GetDashboardData" />
-          <FunctionImportMapping FunctionImportName="StoreDashboardInfo" FunctionName="ResearchModel.Store.StoreDashboardInfo" />
           <EntitySetMapping Name="tblDashboardPreferences">
             <EntityTypeMapping TypeName="ResearchModel.tblDashboardPreference">
               <MappingFragment StoreEntitySet="tblDashboardPreference">
@@ -1840,6 +1840,8 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DeleteUserGroupPreference" FunctionName="ResearchModel.Store.DeleteUserGroupPreference" />
           <FunctionImportMapping FunctionImportName="DeleteUserBenchmarkPreference" FunctionName="ResearchModel.Store.DeleteUserBenchmarkPreference" />
+          <FunctionImportMapping FunctionImportName="GetDashBoardPreferenceByUserName" FunctionName="ResearchModel.Store.GetDashBoardPreferenceByUserName" />
+          <FunctionImportMapping FunctionImportName="SetDashBoardPreference" FunctionName="ResearchModel.Store.SetDashBoardPreference" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
