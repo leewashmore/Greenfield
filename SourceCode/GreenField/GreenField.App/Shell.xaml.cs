@@ -16,6 +16,7 @@ using System.ComponentModel.Composition;
 using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.App.ViewModel;
+using Telerik.Windows.Controls;
 
 
 
@@ -26,7 +27,7 @@ namespace GreenField.App
     {
         public Shell()
         {
-            InitializeComponent();
+            InitializeComponent();           
         }
 
         [Import]
