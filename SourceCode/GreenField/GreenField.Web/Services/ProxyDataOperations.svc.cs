@@ -12,6 +12,7 @@ using System.ServiceModel.Activation;
 using GreenField.Web.Helpers;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
+using System.Drawing;
 
 namespace GreenField.Web.Services
 {
@@ -125,10 +126,6 @@ namespace GreenField.Web.Services
                 decimal curPrice = 0;
                 decimal curReturn = 0;
                 decimal calculatedPrice = 0;
-                decimal previousPrice = 0;
-                decimal previousFXAdjust = 0;
-                decimal calculatedFXPrice = 0;
-                decimal fxAdjusted = 0;
                 string entityType = "";
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
@@ -642,6 +639,8 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+
+
 
         [OperationContract]
         public List<String> RetrieveValuesForFilters(String filterType)
@@ -1288,7 +1287,7 @@ namespace GreenField.Web.Services
                         {
                             MarketValue = MarketValue + (double)(row.Field<Single?>("MARKET_CAP_IN_USD") == null ? 0 : row.Field<Single?>("MARKET_CAP_IN_USD"));
                             FundWeight = FundWeight + (double)(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100);
-                            BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);
+                        BenchmarkWeight = BenchmarkWeight + (double)(row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100);                        
                         }
 
                         record.MarketValue = MarketValue;
@@ -1371,7 +1370,7 @@ namespace GreenField.Web.Services
                         FundWeight = fundWeight,
                         BenchmarkWeight = benchmarkWeight,
                         ActivePosition = activePosition
-                    });
+                });               
                 }
 
                 return result.OrderByDescending(t => t.ActivePosition).ToList();
@@ -1532,7 +1531,7 @@ namespace GreenField.Web.Services
 
                         aggcsAlpha = aggcsAlpha + aggAlpha;
                         aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
-                        aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
+                    aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;                    
                     }
 
                     if (sectorSpecificData.Count > 0)
@@ -1624,7 +1623,7 @@ namespace GreenField.Web.Services
                 ExceptionTrace.LogException(ex);
                 return null;
             }
-        
+
         }
 
         /// <summary>

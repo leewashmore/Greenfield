@@ -62,6 +62,7 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
             this.chVolume.DataBound += dataContextSource.ChartDataBound;
             ApplyChartStyles();
+            this.chPricing.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -80,7 +81,6 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
-
         }
 
         /// <summary>

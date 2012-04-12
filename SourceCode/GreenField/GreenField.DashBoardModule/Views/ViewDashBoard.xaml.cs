@@ -28,7 +28,6 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
 
-
 namespace GreenField.DashboardModule.Views
 {
     [Export]
@@ -72,7 +71,6 @@ namespace GreenField.DashboardModule.Views
                             (rtvDashboard.Items[index] as RadTileViewItem).TileState == TileViewItemState.Minimized ? 0.5 : 1;
                     }
                 };
-
         }
         #endregion
 
@@ -104,12 +102,18 @@ namespace GreenField.DashboardModule.Views
                 if (rtvDashboard.Items.Count == 1)
                     rtvDashboard.RowHeight = new GridLength(400);
 
-                this.rtvDashboard.Items.Add(new RadTileViewItem
-                    {
-                        RestoredHeight = 400,
-                        Header = param.DashboardTileHeader,
-                        Content = param.DashboardTileObject,
-                    });
+                RadTileViewItem item = new RadTileViewItem();
+                item.RestoredHeight = 400;
+                item.Header = param.DashboardTileHeader;
+                item.Content = param.DashboardTileObject;
+                //this.SetHeaderColor(item, Colors.White);
+                this.rtvDashboard.Items.Add(item);
+                //this.rtvDashboard.Items.Add(new RadTileViewItem
+                //    {
+                //        RestoredHeight = 400,
+                //        Header = param.DashboardTileHeader,
+                //        Content = param.DashboardTileObject,
+                //    });
             }
             catch (InvalidOperationException)
             {
@@ -212,7 +216,7 @@ namespace GreenField.DashboardModule.Views
                         dashboardPreference.Add(entry);
                     }
                 }
-                _manageDashboard.SetDashboardPreference(dashboardPreference,SessionManager.SESSION.UserName, (result) =>
+                _manageDashboard.SetDashboardPreference(dashboardPreference, SessionManager.SESSION.UserName, (result) =>
                     {
                         if (result)
                             MessageBox.Show("User Preference saved");
@@ -288,6 +292,17 @@ namespace GreenField.DashboardModule.Views
 
         }
 
+        //private void SetHeaderColor(RadTileViewItem item, Color color)
+        //{
+        //    this.Dispatcher.BeginInvoke(() =>
+        //    {
+        //        StackPanel headerBackground = item.ChildrenOfType<StackPanel>().Where(child => child.Name == "HeaderStack").FirstOrDefault();
+        //        if (headerBackground != null)
+        //        {
+        //            headerBackground.back = new SolidColorBrush(color);
+        //        }
+        //    });
+        //}
 
     }
 }

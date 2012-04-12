@@ -10,13 +10,13 @@
     mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
-        <ResourceDictionary>
 
+        <ResourceDictionary>
             <!-- Primary Color Brushes -->
             <SolidColorBrush x:Key="TileView_Background" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="TileView_OuterBorder" Color="#FF848484" />
             <SolidColorBrush x:Key="TileView_InneBorder" Color="#FFFFFFFF" />
-            <SolidColorBrush x:Key="TileView_HeaderBorder" Color="#FFFFFFFF" />
+            <SolidColorBrush x:Key="TileView_HeaderBorder" Color="#9F1D21" />
             <SolidColorBrush x:Key="TileView_ButtonOuterBorder" Color="#FFFFFFFF" />
             <SolidColorBrush x:Key="TileView_HeaderBorder_HorizontalSplitterBackground" Color="#FFBFBFBF" />
             <SolidColorBrush x:Key="DisabledBrush" Color="#99FFFFFF" />
@@ -24,12 +24,12 @@
 
             <!-- Primary Linear Gradient Brush -->
             <LinearGradientBrush x:Key="TileView_HeaderBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Color="#FFF6F6F6" />
-                <GradientStop Offset="1" Color="#FFD2D2D2" />
+                <GradientStop Color="#9F1D21" />
+                <GradientStop Offset="1" Color="#9F1D21" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="TileView_ButtonBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Color="#FF282828" />
-                <GradientStop Offset="1" Color="#FF7C7C7C" />
+                <GradientStop Color="Black" />
+                <GradientStop Offset="1" Color="#9F1D21" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="TileView_ButtonBackground_MouseOver" StartPoint="0.5,0" EndPoint="0.5,1">
                 <GradientStop Offset="0" Color="#FFFEEDB7" />
@@ -57,6 +57,9 @@
             <CornerRadius x:Key="TileView_InneBorder_CornerRadius">1</CornerRadius>
             <CornerRadius x:Key="TileView_OuterBorder_CornerRadius">2</CornerRadius>
 
+            <Style x:Key="HeaderTextForeGround" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
 
             <!-- ******STYLES******* -->
             <!-- ******************* -->
@@ -185,7 +188,7 @@
             <!--  CloseButtonStyle Style-->
             <Style x:Key="CloseButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent" />
-                <Setter Property="Foreground" Value="#FF000000" />
+                <Setter Property="Foreground" Value="White" />
                 <Setter Property="Padding" Value="3" />
                 <Setter Property="BorderThickness" Value="11" />
                 <Setter Property="BorderBrush" Value="Transparent" />
@@ -358,7 +361,9 @@
                                                                           Margin="0,0,10,0"
                                                                           HorizontalAlignment="Left"
                                                                           VerticalAlignment="Center"
-                                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" />
+                                                                          ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                                                              />
+                                                            
                                                         </Border>
                                                         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center"
                                                            Orientation="Horizontal">
@@ -367,7 +372,8 @@
                                                                 Style="{StaticResource maximizeToggleStyle}" />
                                                             <Button Width="17" Height="17" HorizontalAlignment="Right"
                                                                 Click="DashboardTileViewItemRemoved"
-                                                                Style="{StaticResource CloseButtonStyle}" />
+                                                                Style="{StaticResource CloseButtonStyle}"
+                                                                    />
                                                         </StackPanel>
                                                     </Grid>
                                                 </Border>
@@ -411,7 +417,6 @@
         <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
 
-
     <Grid x:Name="LayoutRoot" Background="White">
         <TextBlock x:Name="txtNoGadgetMessage" Text="Add Gadgets" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Foreground="Gray" Opacity="0.5"/>
         <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
@@ -433,6 +438,7 @@
                                  HorizontalAlignment="Left"
                                  VerticalAlignment="Top"                                 
                                  ColumnWidth="*">
+                    
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>
