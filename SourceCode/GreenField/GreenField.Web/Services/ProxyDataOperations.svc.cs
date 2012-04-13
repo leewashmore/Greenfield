@@ -977,6 +977,11 @@ namespace GreenField.Web.Services
                         else
                         {
                             i++;
+                            if (i > 30)
+                            {
+                                dateObjectFound = false;
+                                continue;
+                            }
                         }
                     }
                 }
@@ -1030,6 +1035,11 @@ namespace GreenField.Web.Services
                         else
                         {
                             i++;
+                            if (i > 30)
+                            {
+                                dateObjectFound = false;
+                                continue;
+                            }
                         }
                     }
                 }

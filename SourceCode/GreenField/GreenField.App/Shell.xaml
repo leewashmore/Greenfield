@@ -1030,6 +1030,9 @@
     		</Setter>
     	</Style>        
     </UserControl.Resources>
+    
+    
+    
     <Grid x:Name="LayoutRoot">      
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

@@ -1352,7 +1352,8 @@ namespace GreenField.App.ViewModel
                 try
                 {
                     SecurityReference = new CollectionViewSource();
-                    SecurityReferenceData = new ObservableCollection<EntitySelectionData>(result.Where(e => e.Type == EntityTypes.SECURITY));
+                    SecurityReferenceData = new ObservableCollection<EntitySelectionData>(result.Where(e => e.Type == EntityTypes.SECURITY).OrderBy(t=> t.LongName));
+                    List<EntitySelectionData> a = SecurityReferenceData.ToList();
                     SecurityReferenceSource = new ObservableCollection<GroupSelectionData>();
 
                     foreach (EntitySelectionData item in SecurityReferenceData)
@@ -1378,10 +1379,11 @@ namespace GreenField.App.ViewModel
                     SecurityReference.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
                     SecurityReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
                     {
-                        PropertyName = "Category",
+                        PropertyName = "Header",
                         Direction = System.ComponentModel.ListSortDirection.Ascending
                     });
                     SecurityReference.Source = SecurityReferenceSource;
+                    
                 }
                 catch (Exception ex)
                 {

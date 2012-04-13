@@ -434,7 +434,8 @@
                                 <telerik:ChartDefaultView >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea  SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString="No Data Available" >
+                                                            EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
+                                                            ItemOverlapPercent="0" ItemWidthPercent="100" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
@@ -444,14 +445,14 @@
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                             </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX AutoRange="True" IsDateTime="True" 
-                                                               LayoutMode="Between"  
+                                                <telerik:AxisX AutoRange="True"  IsDateTime="True" 
+                                                               LayoutMode="Normal" IsZeroBased="False" 
                                                                Step="5"
                                                                LabelStep="2" DefaultLabelFormat="d"/>
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True"/>
+                                                               AutoRange="True" IsZeroBased="False" />
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
                                     </telerik:ChartDefaultView.ChartArea>
@@ -504,7 +505,7 @@
                                             </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
                                                 <telerik:AxisX AutoRange="True" IsDateTime="True" DefaultLabelFormat="d" 
-                                                           LayoutMode="Between" LabelStep="2" />
+                                                           LayoutMode="Normal" LabelStep="2" />
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
