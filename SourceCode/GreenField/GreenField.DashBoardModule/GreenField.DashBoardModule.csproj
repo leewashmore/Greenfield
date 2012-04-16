@@ -123,6 +123,45 @@
     <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\ViewDashboardCompanyDocuments.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyDocuments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyCorporateGovernanceReport.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyCorporateGovernanceReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingValuation.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingValuation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyChartingContext.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingContext.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyValuationDiscountedCashFlow.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyValuationDiscountedCashFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyValuationFairValue.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyValuationFairValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsPeerComparison.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsPeerComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsFinStat.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsFinStat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsCashFlow.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsCashFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsBalanceSheet.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsBalanceSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsIncomeStatement.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsIncomeStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyFinancialsSummary.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsSummary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
     </Compile>
@@ -132,8 +171,23 @@
     <Compile Include="Views\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewDashboardCompanyEstimatesComparison.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesConsensus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesDetailed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanySnapshotCompanyProfile.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotCompanyProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewDashboardCompanySnapshotSummary.xaml.cs">
       <DependentUpon>ViewDashboardCompanySnapshotSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashboardCompanySnapshotTearSheet.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotTearSheet.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +206,62 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Assets\DashboardStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyDocuments.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyCorporateGovernanceReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingValuation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyChartingContext.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyValuationDiscountedCashFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyValuationFairValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsPeerComparison.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsFinStat.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsCashFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsBalanceSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsIncomeStatement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyFinancialsSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ViewDashBoard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -164,7 +274,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ViewDashboardCompanyEstimatesComparison.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyEstimatesConsensus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanyEstimatesDetailed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanySnapshotCompanyProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewDashboardCompanySnapshotSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashboardCompanySnapshotTearSheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

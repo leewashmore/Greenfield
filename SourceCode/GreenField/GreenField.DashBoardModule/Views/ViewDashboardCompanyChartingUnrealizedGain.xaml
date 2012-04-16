@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Unrealized Gain/Loss" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>
-        <ContentControl x:Name="cctrUnrealizedGainLoss" Grid.Row="1"/>
+        <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>
+        <ContentControl x:Name="cctrDashboardContent" Grid.Row="1"/>
     </Grid>
 </UserControl>

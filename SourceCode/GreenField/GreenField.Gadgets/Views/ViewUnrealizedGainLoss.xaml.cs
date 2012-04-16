@@ -99,7 +99,7 @@ namespace GreenField.Gadgets.Views
                     new RadExportOptions() { ElementName = ExportTypes.UNREALIZED_GAINLOSS_CHART, Element = this.chUnrealizedGainLoss, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.UNREALIZED_GAINLOSS);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS);
                 childExportOptions.Show();
             }
             catch (Exception ex)

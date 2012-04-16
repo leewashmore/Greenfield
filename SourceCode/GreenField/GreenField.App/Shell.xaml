@@ -1255,49 +1255,49 @@
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Style="{StaticResource RadRibbonGroupCustomStyle}">
                                     <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Command="{Binding DashboardCompanySnapshotSummaryCommand}" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Company Profile" LargeImage="Images/company.png" Size="Large" IsEnabled="False" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Tearsheet" LargeImage="Images/tearsheet.png" Size="Large" IsEnabled="False" Background="#C4CAD9" />
+                                    <telerik:RadRibbonButton Text="Company Profile" LargeImage="Images/company.png" Size="Large" IsEnabled="False" Command="{Binding DashboardCompanySnapshotCompanyProfileCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Tearsheet" LargeImage="Images/tearsheet.png" Size="Large" IsEnabled="False" Command="{Binding DashboardCompanySnapshotTearSheetCommand}" Background="#C4CAD9" />
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonDropDownButton Text="Financials" LargeImage="Images/report.png" Size="Large" Background="#C4CAD9">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Income Statement" LargeImage="Images/earning-statements.png" Size="Large" Background="#C4CAD9" />
-                                    <telerik:RadRibbonButton Text="Balance Sheet"  LargeImage="Images/Pic-Balance.png" Size="Large" Background="#C4CAD9" />
-                                    <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Finstat" LargeImage="Images/report.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Peer Comparison" LargeImage="Images/com.png" Size="Large" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Command="{Binding DashboardCompanyFinancialsSummaryCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Income Statement" LargeImage="Images/earning-statements.png" Size="Large" Command="{Binding DashboardCompanyFinancialsIncomeStatementCommand}" Background="#C4CAD9" />
+                                    <telerik:RadRibbonButton Text="Balance Sheet"  LargeImage="Images/Pic-Balance.png" Size="Large" Command="{Binding DashboardCompanyFinancialsBalanceSheetCommand}" Background="#C4CAD9" />
+                                    <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" Command="{Binding DashboardCompanyFinancialsCashFlowCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Finstat" LargeImage="Images/report.png" Size="Large" Command="{Binding DashboardCompanyFinancialsFinStatCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Peer Comparison" LargeImage="Images/com.png" Size="Large" Command="{Binding DashboardCompanyFinancialsPeerComparisonCommand}" Background="#C4CAD9"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonDropDownButton Text="Estimates" LargeImage="Images/notes.png" Size="Large" Background="#C4CAD9" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                                    <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Detailed Estimates"  LargeImage="Images/mobilenotes.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Comparison" LargeImage="Images/com.png" Size="Large" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large" Command="{Binding DashboardCompanyEstimatesConsensusCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Detailed Estimates"  LargeImage="Images/mobilenotes.png" Size="Large" Command="{Binding DashboardCompanyEstimatesDetailedCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Comparison" LargeImage="Images/com.png" Size="Large" Command="{Binding DashboardCompanyEstimatesComparisonCommand}" Background="#C4CAD9"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonDropDownButton Text="Valuation" LargeImage="Images/mobilenotes.png" Size="Large" Background="#C4CAD9">
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
-                                    <telerik:RadRibbonButton Text="DCF" LargeImage="Images/notes.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Fair Value Composition " LargeImage="Images/mobilenotes.png" Size="Large" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Fair Value Composition " LargeImage="Images/mobilenotes.png" Size="Large" Command="{Binding DashboardCompanyValuationFairValueCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="DCF" LargeImage="Images/notes.png" Size="Large" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}" Background="#C4CAD9"/>                                    
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="Images/Notepad.png" Text="Documents" Size="Large" Background="#C4CAD9"/>
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="Images/Notepad.png" Text="Documents" Size="Large" Command="{Binding DashboardCompanyDocumentsCommand}" Background="#C4CAD9"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonDropDownButton Text="Charting" LargeImage="Images/graph.png" Size="Large" Background="#C4CAD9" >
@@ -1305,18 +1305,18 @@
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
                                     <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" Command="{Binding DashboardCompanyChartingClosingPriceCommand}" Background="#C4CAD9"/>
                                     <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" IsEnabled="False" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" Command="{Binding DashboardCompanyChartingContextCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" Command="{Binding DashboardCompanyChartingValuationCommand}"   Background="#C4CAD9"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonDropDownButton Text="Corporate Governance" LargeImage="Images/blogs.png" Size="Large" Background="#C4CAD9" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                                    <telerik:RadRibbonButton Text="Questionnaire" LargeImage="Images/research.png" Size="Large" Background="#C4CAD9"/>
-                                    <telerik:RadRibbonButton Text="Report"  LargeImage="Images/blogs.png" Size="Large" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Questionnaire" LargeImage="Images/research.png" Size="Large" Command="{Binding DashboardCompanyCorporateGovernanceQuestionnaireCommand}" Background="#C4CAD9"/>
+                                    <telerik:RadRibbonButton Text="Report"  LargeImage="Images/blogs.png" Size="Large" Command="{Binding DashboardCompanyCorporateGovernanceReportCommand}" Background="#C4CAD9"/>
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
                         </telerik:RadRibbonDropDownButton>

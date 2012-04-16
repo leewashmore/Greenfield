@@ -43,8 +43,7 @@ namespace GreenField.DashboardModule.Views
             _logger = logger;    
             _dBInteractivity = dbInteractivity;
 
-            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);            
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -133,7 +132,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 400,
-                Header = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION,
+                Header = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY,
                 Content = null
             });
 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GreenField.DashboardModule.Views.ViewDashboardCompanySnapshotSummary"
+﻿<UserControl x:Class="GreenField.DashboardModule.Views.ViewDashboardCompanyEstimatesConsensus"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
@@ -16,28 +16,28 @@
         </ResourceDictionary>
         <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    
+
     <Grid x:Name="LayoutRoot" Background="White">
         <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderThickness="0.25" BorderBrush="Gray">
                 <telerik:RadTileView x:Name="rtvDashboard"
-                                 Background="White"
-                                 ColumnsCount="2"  
+                                     Background="White"
+                                     ColumnsCount="1"  
                                      RowHeight="400"
-                                 MinimizedItemsPosition="Right" 
-                                 IsDockingEnabled="False"
-                                 IsVirtualizing="True"
-                                 IsItemDraggingEnabled="True"
-                                 ScrollBarVisibility="Visible" 
-                                 MinimizedRowHeight="200"
-                                 MinimizedColumnWidth="200"
-                                 IsItemsAnimationEnabled="True"
-                                 ReorderingDuration="0:0:0.5"
-                                 PreservePositionWhenMaximized="True"
-                                 IsAutoScrollingEnabled="True" 
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"                                 
-                                 ColumnWidth="*">
+                                     MinimizedItemsPosition="Right" 
+                                     IsDockingEnabled="False"
+                                     IsVirtualizing="True"
+                                     IsItemDraggingEnabled="True"
+                                     ScrollBarVisibility="Visible" 
+                                     MinimizedRowHeight="200"
+                                     MinimizedColumnWidth="200"
+                                     IsItemsAnimationEnabled="True"
+                                     ReorderingDuration="0:0:0.5"
+                                     PreservePositionWhenMaximized="True"
+                                     IsAutoScrollingEnabled="True" 
+                                     HorizontalAlignment="Left"
+                                     VerticalAlignment="Top"                                 
+                                     ColumnWidth="*">
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>

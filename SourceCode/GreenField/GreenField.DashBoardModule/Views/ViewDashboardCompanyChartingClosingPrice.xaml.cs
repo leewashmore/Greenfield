@@ -41,7 +41,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            
+            this.tbHeader.Text = GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -54,7 +54,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrClosingPrice.Content = new ViewClosingPriceChart(new ViewModelClosingPriceChart(param));
+            this.cctrDashboardContent.Content = new ViewClosingPriceChart(new ViewModelClosingPriceChart(param));
         }
     }
 }

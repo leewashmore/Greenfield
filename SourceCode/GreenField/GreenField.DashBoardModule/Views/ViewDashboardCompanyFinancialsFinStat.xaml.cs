@@ -21,7 +21,7 @@ using GreenField.Common.Helper;
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardCompanyChartingUnrealizedGainLoss : UserControl
+    public partial class ViewDashboardCompanyFinancialsFinStat : UserControl
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -30,17 +30,19 @@ namespace GreenField.DashboardModule.Views
         #endregion
 
         [ImportingConstructor]
-        public ViewDashboardCompanyChartingUnrealizedGainLoss(ILoggerFacade logger, IEventAggregator eventAggregator,
+        public ViewDashboardCompanyFinancialsFinStat(ILoggerFacade logger, IEventAggregator eventAggregator,
             IDBInteractivity dbInteractivity)
         {
             InitializeComponent();
+
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.SECURITY_REFERENCE_UNREALIZED_GAIN_LOSS;
+            this.tbHeader.Text = GadgetNames.INTERNAL_RESEARCH_FINSTAT_REPORT;
+            
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -53,7 +55,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = new ViewUnrealizedGainLoss(new ViewModelUnrealizedGainLoss(param));
+            this.cctrDashboardContent.Content = null;
         }
     }
 }
