@@ -103,8 +103,8 @@ namespace GreenField.DashboardModule.Views
                     rtvDashboard.RowHeight = new GridLength(400);
 
                 RadTileViewItem item = new RadTileViewItem();
-                item.RestoredHeight = 400;
-                item.Header = param.DashboardTileHeader;
+                item.RestoredHeight = 400;                
+                item.Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = param.DashboardTileHeader, Foreground = new SolidColorBrush(Colors.White) };
                 item.Content = param.DashboardTileObject;
                 //this.SetHeaderColor(item, Colors.White);
                 this.rtvDashboard.Items.Add(item);
@@ -152,7 +152,7 @@ namespace GreenField.DashboardModule.Views
                                         {
                                             RadTileViewItem radTileViewItem = new RadTileViewItem
                                             {
-                                                Header = item.GadgetName,
+                                                Header =  new Telerik.Windows.Controls.HeaderedContentControl{ Content = item.GadgetName, Foreground = new SolidColorBrush(Colors.White)},
                                                 RestoredHeight = 400,
                                                 Content = GetDashboardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
                                                 TileState = GetTileState(item.GadgetState),
@@ -168,7 +168,8 @@ namespace GreenField.DashboardModule.Views
                                         {
                                             RadTileViewItem radTileViewItem = new RadTileViewItem
                                             {
-                                                Header = item.GadgetName,
+                                                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = item.GadgetName, Foreground = new SolidColorBrush(Colors.White) },
+                                                Foreground = new SolidColorBrush(Colors.White),
                                                 RestoredHeight = 400,
                                                 Content = GetDashboardTileContent(item.GadgetViewClassName, item.GadgetViewModelClassName),
                                                 TileState = GetTileState("Restored"),
