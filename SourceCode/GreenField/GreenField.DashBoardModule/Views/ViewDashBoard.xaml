@@ -24,8 +24,8 @@
 
             <!-- Primary Linear Gradient Brush -->
             <LinearGradientBrush x:Key="TileView_HeaderBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Color="#9F1D21" />
-                <GradientStop Offset="1" Color="#9F1D21" />
+                <GradientStop Color="#9F1D21" Offset="0" />
+                <GradientStop Offset="1" Color="#BE715C" />
             </LinearGradientBrush>
             <LinearGradientBrush x:Key="TileView_ButtonBackground" StartPoint="0.5,0" EndPoint="0.5,1">
                 <GradientStop Color="Black" />

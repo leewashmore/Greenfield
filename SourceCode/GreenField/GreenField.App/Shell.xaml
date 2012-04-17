@@ -1374,7 +1374,7 @@
                         <telerik:RadRibbonButton LargeImage="Images/research.png" Text="Broker Research" Size="Large" Background="#C4CAD9"/>
                     </telerik:RadRibbonGroup>
                 </telerik:RadRibbonTab>
-                <telerik:RadRibbonTab Visibility="Collapsed" Style="{StaticResource RadRibbonTabStyle1}">
+                <telerik:RadRibbonTab Visibility="Visible" Style="{StaticResource RadRibbonTabStyle1}">
                     <telerik:RadRibbonTab.Header>
                         <TextBlock Text="Gadgets" Foreground="White" />
                     </telerik:RadRibbonTab.Header>

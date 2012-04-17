@@ -387,22 +387,23 @@
                                     CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
                                     CanUserSortColumns="True" ScrollMode="Deferred" 
                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                    UseLayoutRounding="True" telerik:StyleManager.Theme="Metro">
+                                    UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"/>
+                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" />
                             <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"/>
                             <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"/>
                             <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
-                                                    DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}"/>
                             <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
-                                                    DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}"/>
                             <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}" />
                             <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
-                                                    DataFormatString="{}{0:n2}"/>
-                            <telerik:GridViewDataColumn Header="Dollar Adjusted Price" DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}" />
+                                                        DataFormatString="{}{0:n2}"/>
+                            <telerik:GridViewDataColumn Header="Dollar Adjusted Price" 
+                                                        DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}" />
                             <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
-                                                    DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}"/>
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>
@@ -418,7 +419,7 @@
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
                         <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
-                                      ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
+                                          ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
                             <telerik:RadChart.PaletteBrushes>
 
                                 <SolidColorBrush Color="#213671"/>
@@ -452,7 +453,7 @@
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True" IsZeroBased="False" />
+                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" />
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
                                     </telerik:ChartDefaultView.ChartArea>
@@ -508,7 +509,8 @@
                                                            LayoutMode="Normal" LabelStep="2" />
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
-                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed" />
+                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Collapsed"
+                                                               ExtendDirection="None"/>
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
                                     </telerik:ChartDefaultView.ChartArea>

@@ -349,6 +349,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Chart/Grid Entities
+
         private string newEntity;
         public string NewEntity
         {

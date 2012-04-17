@@ -966,6 +966,7 @@ namespace GreenField.Web.Services
 
                     while (dateObjectFound)
                     {
+                        //Checking Data for 1-Day before
                         bool objDataFoundDec = objPricingData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
                         if (objDataFoundDec)
                         {
@@ -975,6 +976,7 @@ namespace GreenField.Web.Services
                         else
                         {
                             i++;
+                            //If data for 30 days before doesn't exist, then move to next Date.
                             if (i > 30)
                             {
                                 dateObjectFound = false;

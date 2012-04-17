@@ -104,7 +104,7 @@ namespace GreenField.DashboardModule.Views
 
                 RadTileViewItem item = new RadTileViewItem();
                 item.RestoredHeight = 400;                
-                item.Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = param.DashboardTileHeader, Foreground = new SolidColorBrush(Colors.White) };
+                item.Header = new Telerik.Windows.Controls.HeaderedContentControl {Content = param.DashboardTileHeader, Foreground = new SolidColorBrush(Colors.White),FontSize=8,FontFamily= new FontFamily("Arial") };
                 item.Content = param.DashboardTileObject;
                 //this.SetHeaderColor(item, Colors.White);
                 this.rtvDashboard.Items.Add(item);
@@ -209,7 +209,7 @@ namespace GreenField.DashboardModule.Views
                             PreferenceGroupID = uniqueKey,
                             GadgetViewClassName = TypeResolution.GetTypeFullName((rtvDashboard.Items[index] as RadTileViewItem).Content),
                             GadgetViewModelClassName = TypeResolution.GetTypeDataContextFullName((rtvDashboard.Items[index] as RadTileViewItem).Content),
-                            GadgetName = (rtvDashboard.Items[index] as RadTileViewItem).Header.ToString(),
+                            GadgetName = ((rtvDashboard.Items[index] as RadTileViewItem).Header as Telerik.Windows.Controls.HeaderedContentControl).Content.ToString(),
                             GadgetState = (rtvDashboard.Items[index] as RadTileViewItem).TileState.ToString(),
                             GadgetPosition = (rtvDashboard.Items[index] as RadTileViewItem).Position
                         };
