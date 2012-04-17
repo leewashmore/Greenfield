@@ -94,7 +94,7 @@
         <Property Name="ASEC_FC_SEC_REF" Type="Edm.Int32" Nullable="true" />
         <Property Name="LOOK_THRU_FUND" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="FIFTYTWO_WEEK_LOW" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
-        <Property Name="FIFTYTWO_WEEK_HIGH" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="FIFTYTWO_WEEK_HIGH" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="SECURITY_VOLUME_AVG_90D" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
         <Property Name="SECURITY_VOLUME_AVG_6M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="SECURITY_VOLUME_AVG_30D" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
@@ -107,13 +107,14 @@
         <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="SHARES_OUTSTANDING" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="BETA" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA_BETA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="MSCI" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="BARRA" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="ASEC_SEC_COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="Edm.String" Nullable="true" MaxLength="150" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="ISSUER_NAME" Type="Edm.String" Nullable="true" MaxLength="160" Unicode="false" FixedLength="false" />
         <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="240" Unicode="false" FixedLength="false" />
         <Property Name="BLOOMBERG_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
@@ -131,9 +132,9 @@
         <Property Name="SHARES_PER_ADR" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="ADR_UNDERLYING_TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
-        <Property Name="MARKET_CAP_IN_USD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="LAST_CLOSE_DATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
       </EntityType>
       <EntityType Name="GF_SELECTION_BASEVIEW">

@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 4/5/2012 3:26:47 PM
+// Generation date: 17-Apr-12 3:19:55 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -1588,7 +1588,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property FIFTYTWO_WEEK_HIGH in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string FIFTYTWO_WEEK_HIGH
+        public global::System.Nullable<decimal> FIFTYTWO_WEEK_HIGH
         {
             get
             {
@@ -1602,8 +1602,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _FIFTYTWO_WEEK_HIGH;
-        partial void OnFIFTYTWO_WEEK_HIGHChanging(string value);
+        private global::System.Nullable<decimal> _FIFTYTWO_WEEK_HIGH;
+        partial void OnFIFTYTWO_WEEK_HIGHChanging(global::System.Nullable<decimal> value);
         partial void OnFIFTYTWO_WEEK_HIGHChanged();
         /// <summary>
         /// There are no comments for Property SECURITY_VOLUME_AVG_90D in the schema.
@@ -1857,6 +1857,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _BETA;
         partial void OnBETAChanging(string value);
         partial void OnBETAChanged();
+        /// <summary>
+        /// There are no comments for Property BARRA_BETA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BARRA_BETA
+        {
+            get
+            {
+                return this._BARRA_BETA;
+            }
+            set
+            {
+                this.OnBARRA_BETAChanging(value);
+                this._BARRA_BETA = value;
+                this.OnBARRA_BETAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BARRA_BETA;
+        partial void OnBARRA_BETAChanging(global::System.Nullable<decimal> value);
+        partial void OnBARRA_BETAChanged();
         /// <summary>
         /// There are no comments for Property TICKER in the schema.
         /// </summary>
@@ -2362,27 +2383,6 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnMARKET_CAP_IN_TRADING_CURRENCYChanging(global::System.Nullable<decimal> value);
         partial void OnMARKET_CAP_IN_TRADING_CURRENCYChanged();
         /// <summary>
-        /// There are no comments for Property MARKET_CAP_IN_USD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> MARKET_CAP_IN_USD
-        {
-            get
-            {
-                return this._MARKET_CAP_IN_USD;
-            }
-            set
-            {
-                this.OnMARKET_CAP_IN_USDChanging(value);
-                this._MARKET_CAP_IN_USD = value;
-                this.OnMARKET_CAP_IN_USDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _MARKET_CAP_IN_USD;
-        partial void OnMARKET_CAP_IN_USDChanging(global::System.Nullable<decimal> value);
-        partial void OnMARKET_CAP_IN_USDChanged();
-        /// <summary>
         /// There are no comments for Property CLOSING_PRICE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -2424,6 +2424,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _LAST_CLOSE_FX_QUO_CURR_TO_USD;
         partial void OnLAST_CLOSE_FX_QUO_CURR_TO_USDChanging(global::System.Nullable<decimal> value);
         partial void OnLAST_CLOSE_FX_QUO_CURR_TO_USDChanged();
+        /// <summary>
+        /// There are no comments for Property LAST_CLOSE_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> LAST_CLOSE_DATE
+        {
+            get
+            {
+                return this._LAST_CLOSE_DATE;
+            }
+            set
+            {
+                this.OnLAST_CLOSE_DATEChanging(value);
+                this._LAST_CLOSE_DATE = value;
+                this.OnLAST_CLOSE_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _LAST_CLOSE_DATE;
+        partial void OnLAST_CLOSE_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnLAST_CLOSE_DATEChanged();
         /// <summary>
         /// There are no comments for Property TOT_CURR_SHRS_OUTST_ALL_CLASS in the schema.
         /// </summary>

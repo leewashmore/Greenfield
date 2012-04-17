@@ -53,8 +53,8 @@ namespace GreenField.Gadgets.Views
         private void ApplyChartStyles()
         {
             this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style; 
-           
+            this.chUnrealizedGainLoss.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            //this.dgUnrealizedGainLoss. = this.Resources["GridViewHeaderRow"] as Style;
         }
 
         /// <summary>

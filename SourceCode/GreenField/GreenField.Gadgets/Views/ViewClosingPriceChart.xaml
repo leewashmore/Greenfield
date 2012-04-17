@@ -111,6 +111,17 @@
             </Setter>
         </Style>
 
+        <!--Grid Styles-->
+
+        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
+            <Setter Property="Background" Value="#9F1D21" />
+            <Setter Property="Foreground" Value="White"/>
+
+        </Style>
+
+        <!--Grid Styles End-->
+
+
         <!--Chart Legend Scrollbar-->
 
         <telerik:TextToVisibilityConverter x:Key="textToVisibilityConverter" />
@@ -389,21 +400,28 @@
                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                     UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" />
-                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"/>
-                            <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"/>
-                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"/>
+                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                            <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
-                                                        DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                             <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
-                                                        DataFormatString="{}{0:n2}"/>
-                            <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}" />
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                            <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                             <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
-                                                        DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                             <telerik:GridViewDataColumn Header="Dollar Adjusted Price" 
-                                                        DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}" />
+                                                        DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                             <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
-                                                        DataFormatString="{}{0:n2}"/>
+                                                        DataFormatString="{}{0:n2}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>
