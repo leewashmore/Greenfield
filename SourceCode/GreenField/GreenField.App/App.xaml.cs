@@ -28,7 +28,8 @@ namespace GreenField.App
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             Bootstrapper bootStrapper = new Bootstrapper();
-            bootStrapper.Run();
+            bootStrapper.Run();            
+
         }
 
         private void Application_Exit(object sender, EventArgs e)
