@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Data;
+using System.ComponentModel;
 
 namespace GreenField.Gadgets.Views
 {

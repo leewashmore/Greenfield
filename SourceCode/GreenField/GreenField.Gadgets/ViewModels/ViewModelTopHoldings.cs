@@ -19,20 +19,32 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View model for ViewTopHoldings class
+    /// </summary>
     public class ViewModelTopHoldings : NotificationObject
     {
         #region Fields
-        //MEF Singletons
+        /// <summary>
+        /// MEF Singletons
+        /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
+        /// <summary>
+        /// DashboardGadgetPayLoad fields
+        /// </summary>
         private FundSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashBoardGadgetParam</param>
         public ViewModelTopHoldings(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -59,6 +71,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+        /// <summary>
+        /// contains data to be displayed in this gadget
+        /// </summary>
         private ObservableCollection<TopHoldingsData> _topHoldingsInfo;
         public ObservableCollection<TopHoldingsData> TopHoldingsInfo
         {
@@ -76,6 +91,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// Event Handler to subscribed event 'FundReferenceSetEvent'
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData</param>
         public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -105,6 +124,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'EffectiveDateSet'
+        /// </summary>
+        /// <param name="effectiveDate">DateTime</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -133,6 +156,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
         public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -163,6 +190,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// callback method for RetrieveTopHoldingsData service call
+        /// </summary>
+        /// <param name="topHoldingsData">TopHoldingsData collection</param>
         private void RetrieveTopHoldingsDataCallbackMethod(List<TopHoldingsData> topHoldingsData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

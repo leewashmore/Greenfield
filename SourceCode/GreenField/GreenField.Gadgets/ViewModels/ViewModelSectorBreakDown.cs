@@ -21,20 +21,33 @@ using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// view model for ViewSectorBreakDown
+    /// </summary>
     public class ViewModelSectorBreakDown : NotificationObject
     {
         #region Fields
-        //MEF Singletons
+
+        /// <summary>
+        /// MEF Singletons
+        /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
+        /// <summary>
+        /// DashboardGadgetPayLoad fields
+        /// </summary>
         private FundSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashBoardGadgetParam</param>
         public ViewModelSectorBreakDown(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -61,6 +74,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+
+        /// <summary>
+        /// contains data for the grid in the gadget
+        /// </summary>
         private ObservableCollection<SectorBreakdownData> _sectorBreakdownInfo;
         public ObservableCollection<SectorBreakdownData> SectorBreakdownInfo
         {
@@ -75,6 +92,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// contains data for the chart in the gadget
+        /// </summary>
         private ObservableCollection<SectorSpecificData> _sectorSpecificInfo;
         public ObservableCollection<SectorSpecificData> SectorSpecificInfo
         {
@@ -88,10 +108,15 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
         #endregion
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// Event Handler to subscribed event 'FundReferenceSetEvent'
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData</param>
         public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -121,6 +146,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'EffectiveDateSet'
+        /// </summary>
+        /// <param name="effectiveDate">DateTime</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -149,6 +178,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
         public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -179,6 +212,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// Callback method for RetrieveSectorBreakdownData service call
+        /// </summary>
+        /// <param name="sectorBreakdownData">SectorBreakdownData collection</param>
         private void RetrieveSectorBreakdownDataCallbackMethod(List<SectorBreakdownData> sectorBreakdownData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

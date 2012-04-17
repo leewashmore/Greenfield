@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <HyperlinkButton Grid.Row="0" Content="Details" HorizontalAlignment="Right"/>
+        <!--grid containing data for the gadget-->
         <telerik:RadGridView Grid.Row="1" Name="dgTopHoldings" AutoGenerateColumns="False" ItemsSource="{Binding TopHoldingsInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ShowGroupFooters="True"
@@ -44,7 +45,3 @@
     </Grid>
 </UserControl>
 
-<!--<telerik:GridViewDataColumn.AggregateFunctions>
-    <telerik:SumFunction ResultFormatString="{}{0:n0}" SourceField="MarketValue"/>
-</telerik:GridViewDataColumn.AggregateFunctions>
-</telerik:GridViewDataColumn>-->

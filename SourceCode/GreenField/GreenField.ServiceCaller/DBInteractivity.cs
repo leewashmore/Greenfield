@@ -18,6 +18,10 @@ namespace GreenField.ServiceCaller
         /// service call method for security overview gadget
         /// </summary>
         /// <param name="callback"></param>
+        /// <summary>
+        /// service call method for security overview gadget
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
@@ -271,6 +275,10 @@ namespace GreenField.ServiceCaller
                 {
                     callback(null);
                 }
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }               
             };
         }
 
@@ -648,9 +656,8 @@ namespace GreenField.ServiceCaller
             };
         }
         #endregion
-
+        
         #region Interaction Methods for Benchmark
-
         /// <summary>
         /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
@@ -674,7 +681,7 @@ namespace GreenField.ServiceCaller
                     }
             };
         }
-
+        
         /// <summary>
         /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
@@ -699,7 +706,6 @@ namespace GreenField.ServiceCaller
                     }
             };
         }
-
         public void RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();

@@ -243,6 +243,12 @@
     <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations61.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ProxyDataDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

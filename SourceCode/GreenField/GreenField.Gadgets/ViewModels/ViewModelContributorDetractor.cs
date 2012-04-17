@@ -43,9 +43,6 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="eventAggregator">Event Aggregation from Shell</param>
-        /// <param name="dbInteractivity">Instance of Service Caller</param>
-        /// <param name="logger">Instance of Logger</param>
         /// <param name="param">DashboardGadgetparam</param>
         public ViewModelContributorDetractor(DashboardGadgetParam param)
         {

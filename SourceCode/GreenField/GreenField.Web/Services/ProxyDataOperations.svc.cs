@@ -32,6 +32,10 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving the security data for security overview
+        /// </summary>
+        /// <returns>list of security overview data</returns>
         [OperationContract]
         public List<SecurityOverviewData> RetrieveSecurityReferenceData()
         {
@@ -68,6 +72,10 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving the security data on ticker filter
+        /// </summary>
+        /// <returns>list of security overview data</returns>
         [OperationContract]
         public SecurityOverviewData RetrieveSecurityReferenceDataByTicker(string ticker)
         {
@@ -352,6 +360,10 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieve list of securities for security selector
+        /// </summary>
+        /// <returns>list of entity selection data</returns>
         [OperationContract]
         public List<EntitySelectionData> RetrieveEntitySelectionData()
         {
@@ -505,6 +517,13 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving data for sector breakdown gadget
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <returns>list of sector breakdown data</returns>
         [OperationContract]
         public List<SectorBreakdownData> RetrieveSectorBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
@@ -537,6 +556,13 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving data for region breakdown gadget
+        /// </summary>
+        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <returns>list of region breakdown data</returns>
         [OperationContract]
         public List<RegionBreakdownData> RetrieveRegionBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
@@ -569,11 +595,39 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving  data for index constituent gadget
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <returns>list of top holdings data</returns>
         [OperationContract]
         public List<TopHoldingsData> RetrieveTopHoldingsData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
+                //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS.ToList();
+                //List<TopHoldingsData> result = new List<TopHoldingsData>();
+
+                //if (data != null)
+                //{
+                //    decimal? sumMarketValuePortfolio = data.Sum(t => t.DIRTY_VALUE_PC);
+                //    decimal? sumMarketValueBenchmark = data.Sum(t => t.DIRTY_VALUE_PC);
+                //    foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
+                //    {
+                //        result.Add(new TopHoldingsData()
+                //        {
+                //            Ticker = record.TICKER,
+                //            //Holding = record
+                //            MarketValue = record.DIRTY_VALUE_PC,
+                //            //PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
+                //            //BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
+                //            //BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
+                //        });
+                //    }
+                //}
+                //return result;
+
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
                 DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
                 object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
@@ -600,6 +654,12 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving  data for index constituent gadget
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <returns>list of index constituents data</returns>
         [OperationContract]
         public List<IndexConstituentsData> RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
@@ -798,6 +858,11 @@ namespace GreenField.Web.Services
 
         #region Morning Snapshot Operation Contracts
 
+        /// <summary>
+        /// retrieving user preference for morning snapshot gadget
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns>list of user benchmark preference</returns>
         [OperationContract]
         public List<UserBenchmarkPreference> RetrieveUserPreferenceBenchmarkData(string userName)
         {
@@ -821,6 +886,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// retrieving benchmark data for morning snapshot gadget based on user preference
+        /// </summary>
+        /// <param name="userBenchmarkPreference"></param>
+        /// <returns>list of benchmark data for morning snapshot</returns>
         [OperationContract]
         public List<MorningSnapshotData> RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference)
         {
@@ -863,6 +933,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// adding user preferred groups in morning snapshot gadget
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
         [OperationContract]
         public bool AddUserPreferenceBenchmarkGroup(string userName, string groupName)
         {
@@ -880,6 +955,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// removing user preferred groups from morning snapshot gadget
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
         [OperationContract]
         public bool RemoveUserPreferenceBenchmarkGroup(string userName, string groupname)
         {
@@ -897,6 +977,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// adding user preferred benchmarks in groups in morning snapshot gadget
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
         [OperationContract]
         public bool AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
         {
@@ -914,6 +999,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// removing user preferred benchmarks from groups in morning snapshot gadget
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="groupName"></param>
         [OperationContract]
         public bool RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
         {
@@ -930,6 +1020,7 @@ namespace GreenField.Web.Services
                 return false;
             }
         }
+        
         #endregion
 
         #region Pricing Chart Helper Methods

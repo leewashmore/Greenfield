@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
+            <!--button to flip the gadget-->
             <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
                                Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                 <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -22,20 +23,32 @@
         </Grid>
 
         <Grid Grid.Row="1">
+            <!--doughnutchart-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
                     <telerik:RadChart.DefaultView>
-                        <telerik:ChartDefaultView ChartLegendPosition="Bottom"/>
+                        <telerikCharting:ChartDefaultView>
+                            <telerik:ChartDefaultView.ChartLegend>
+                                <telerik:ChartLegend x:Name="crtSectorBreakdownLegend" Visibility="Collapsed"/>
+                            </telerik:ChartDefaultView.ChartLegend>
+                            <telerikCharting:ChartDefaultView.ChartArea>
+                                <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
+                            </telerikCharting:ChartDefaultView.ChartArea>
+                        </telerikCharting:ChartDefaultView>
                     </telerik:RadChart.DefaultView>
                     <telerik:RadChart.SeriesMappings>
                         <telerik:SeriesMapping>
                             <telerik:SeriesMapping.SeriesDefinition>
-                                <telerik:PieSeriesDefinition ShowItemLabels="False" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="DataPointLabel">
-                                    <telerik:PieSeriesDefinition.InteractivitySettings>
+                                <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
+                                    <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                         <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
-                                    </telerik:PieSeriesDefinition.InteractivitySettings>
-                                </telerik:PieSeriesDefinition>
+                                    </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                    <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                        <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
+                                                     ShowConnectors="True" />
+                                    </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                </telerik:DoughnutSeriesDefinition>
                             </telerik:SeriesMapping.SeriesDefinition>
                             <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue" />
                             <telerik:ItemMapping FieldName="Sector" DataPointMember="LegendLabel" />
@@ -43,6 +56,7 @@
                     </telerik:RadChart.SeriesMappings>
                 </telerik:RadChart>
             </Border>
+            <!--grid containing data-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Name="dgSectorBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding SectorBreakdownInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"

@@ -307,6 +307,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private decimal AdjustedDollarPriceField;
         
+        private GreenField.ServiceCaller.ProxyDataDefinitions.Brush ChartColorField;
+        
         private decimal DailyClosingPriceField;
         
         private decimal DailyGrossReturnField;
@@ -338,6 +340,19 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 if ((this.AdjustedDollarPriceField.Equals(value) != true)) {
                     this.AdjustedDollarPriceField = value;
                     this.RaisePropertyChanged("AdjustedDollarPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.ProxyDataDefinitions.Brush ChartColor {
+            get {
+                return this.ChartColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChartColorField, value) != true)) {
+                    this.ChartColorField = value;
+                    this.RaisePropertyChanged("ChartColor");
                 }
             }
         }
@@ -491,6 +506,179 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Brush", Namespace="http://schemas.datacontract.org/2004/07/System.Drawing")]
+    public partial class Brush : GreenField.ServiceCaller.ProxyDataDefinitions.MarshalByRefObject {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarshalByRefObject", Namespace="http://schemas.datacontract.org/2004/07/System")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.Brush))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PricingReferenceData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.PricingReferenceData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketCapitalizationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.AssetAllocationData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.AssetAllocationData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RegionBreakdownData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RegionBreakdownData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.TopHoldingsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.TopHoldingsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.IndexConstituentsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.IndexConstituentsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceActivePositionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceActivePositionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceCountrySpecificData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceCountrySpecificData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceGraphData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceGraphData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceGridData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceGridData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.AttributionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.AttributionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HoldingsPercentageData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.HoldingsPercentageData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.TopBenchmarkSecuritiesData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.TopBenchmarkSecuritiesData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.StructuralObject))]
+    public partial class MarshalByRefObject : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private object @__identityField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true)]
+        public object @__identity {
+            get {
+                return this.@__identityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.@__identityField, value) != true)) {
+                    this.@__identityField = value;
+                    this.RaisePropertyChanged("__identity");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserBenchmarkPreference", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class UserBenchmarkPreference : GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject {
+        
+        private string BenchmarkNameField;
+        
+        private System.Nullable<int> BenchmarkOrderField;
+        
+        private string BenchmarkReturnTypeField;
+        
+        private string GroupNameField;
+        
+        private int GroupOrderField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BenchmarkName {
+            get {
+                return this.BenchmarkNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkNameField, value) != true)) {
+                    this.BenchmarkNameField = value;
+                    this.RaisePropertyChanged("BenchmarkName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> BenchmarkOrder {
+            get {
+                return this.BenchmarkOrderField;
+            }
+            set {
+                if ((this.BenchmarkOrderField.Equals(value) != true)) {
+                    this.BenchmarkOrderField = value;
+                    this.RaisePropertyChanged("BenchmarkOrder");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BenchmarkReturnType {
+            get {
+                return this.BenchmarkReturnTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BenchmarkReturnTypeField, value) != true)) {
+                    this.BenchmarkReturnTypeField = value;
+                    this.RaisePropertyChanged("BenchmarkReturnType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GroupName {
+            get {
+                return this.GroupNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GroupNameField, value) != true)) {
+                    this.GroupNameField = value;
+                    this.RaisePropertyChanged("GroupName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int GroupOrder {
+            get {
+                return this.GroupOrderField;
+            }
+            set {
+                if ((this.GroupOrderField.Equals(value) != true)) {
+                    this.GroupOrderField = value;
+                    this.RaisePropertyChanged("GroupOrder");
+                }
             }
         }
     }
@@ -1423,111 +1611,6 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserBenchmarkPreference", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class UserBenchmarkPreference : GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject {
-        
-        private string BenchmarkNameField;
-        
-        private System.Nullable<int> BenchmarkOrderField;
-        
-        private string BenchmarkReturnTypeField;
-        
-        private string GroupNameField;
-        
-        private int GroupOrderField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BenchmarkName {
-            get {
-                return this.BenchmarkNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkNameField, value) != true)) {
-                    this.BenchmarkNameField = value;
-                    this.RaisePropertyChanged("BenchmarkName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> BenchmarkOrder {
-            get {
-                return this.BenchmarkOrderField;
-            }
-            set {
-                if ((this.BenchmarkOrderField.Equals(value) != true)) {
-                    this.BenchmarkOrderField = value;
-                    this.RaisePropertyChanged("BenchmarkOrder");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BenchmarkReturnType {
-            get {
-                return this.BenchmarkReturnTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchmarkReturnTypeField, value) != true)) {
-                    this.BenchmarkReturnTypeField = value;
-                    this.RaisePropertyChanged("BenchmarkReturnType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GroupName {
-            get {
-                return this.GroupNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.GroupNameField, value) != true)) {
-                    this.GroupNameField = value;
-                    this.RaisePropertyChanged("GroupName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int GroupOrder {
-            get {
-                return this.GroupOrderField;
-            }
-            set {
-                if ((this.GroupOrderField.Equals(value) != true)) {
-                    this.GroupOrderField = value;
-                    this.RaisePropertyChanged("GroupOrder");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
-    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
-    public partial class ComplexObject : GreenField.ServiceCaller.ProxyDataDefinitions.StructuralObject {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -3195,6 +3278,30 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         OVER_PERFORMING = 3,
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    public partial class ComplexObject : GreenField.ServiceCaller.ProxyDataDefinitions.StructuralObject {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

@@ -24,13 +24,15 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ProxyDataOperations.wsdl" MetadataType="Wsdl" ID="718b1093-edb1-4320-a9b1-292a5bae53f4" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?wsdl" />
-    <MetadataFile FileName="ProxyDataOperations1.xsd" MetadataType="Schema" ID="f1ba0ae0-fb8e-4b99-a649-48446513c91f" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="ProxyDataOperations.disco" MetadataType="Disco" ID="9f3da08d-2ee0-45ce-9bb5-3f1336b81dc1" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?disco" />
     <MetadataFile FileName="ProxyDataOperations.xsd" MetadataType="Schema" ID="eafbcaef-83b5-4eb8-8b75-246c068f1264" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="ProxyDataOperations5.xsd" MetadataType="Schema" ID="1adef5de-25c6-4daa-8ba0-13330d36f747" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ProxyDataOperations.disco" MetadataType="Disco" ID="9f3da08d-2ee0-45ce-9bb5-3f1336b81dc1" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?disco" />
+    <MetadataFile FileName="ProxyDataOperations6.xsd" MetadataType="Schema" ID="e931a6c2-2284-4610-9cb3-0c474bd1dc67" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd6" />
     <MetadataFile FileName="ProxyDataOperations4.xsd" MetadataType="Schema" ID="673f0577-c588-40f5-bc7a-4305bf6fb574" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="ProxyDataOperations2.xsd" MetadataType="Schema" ID="363c45de-0649-4a2c-8934-7037002b8655" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="ProxyDataOperations61.xsd" MetadataType="Schema" ID="66c6c0b1-960b-4c36-b192-51c1614bb703" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd7" />
     <MetadataFile FileName="ProxyDataOperations3.xsd" MetadataType="Schema" ID="9cd02667-91df-4e04-a371-232e98da4791" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="ProxyDataOperations5.xsd" MetadataType="Schema" ID="1adef5de-25c6-4daa-8ba0-13330d36f747" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ProxyDataOperations1.xsd" MetadataType="Schema" ID="f1ba0ae0-fb8e-4b99-a649-48446513c91f" SourceId="1" SourceUrl="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

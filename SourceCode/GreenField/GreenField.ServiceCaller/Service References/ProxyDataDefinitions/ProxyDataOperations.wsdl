@@ -5,9 +5,11 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
-      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
-      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Drawing" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ProxyDataOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ProxyDataOperations_RetrieveSecurityReferenceData_InputMessage">

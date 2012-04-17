@@ -25,16 +25,25 @@ namespace GreenField.Gadgets.ViewModels
     public class ViewModelIndexConstituents : NotificationObject
     {
         #region Fields
-        //MEF Singletons
+        /// <summary>
+        /// MEF Singletons
+        /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
+        /// <summary>
+        /// DashboardGadgetPayLoad fields
+        /// </summary>
         private BenchmarkSelectionData _benchmarkSelectionData;
         #endregion
 
         #region Constructor
-        public ViewModelIndexConstituents(DashboardGadgetParam param)
+         /// <summary>
+         /// Constructor
+         /// </summary>
+         /// <param name="param">DashboardGadgetparam</param>
+         public ViewModelIndexConstituents(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
@@ -58,6 +67,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+
+        /// <summary>
+        /// contains all data to be displayed in the gadget
+        /// </summary>
         private ObservableCollection<IndexConstituentsData> _indexConstituentsInfo;
         public ObservableCollection<IndexConstituentsData> IndexConstituentsInfo
         {
@@ -72,6 +85,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// effective date selected
+        /// </summary>
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
@@ -84,11 +100,17 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.EffectiveDate);
                 }
             }
-        }        
+        }      
+  
         #endregion
         #endregion
 
         #region Event Handlers
+
+        /// <summary>
+        /// Event Handler to subscribed event 'EffectiveDateSet'
+        /// </summary>
+        /// <param name="effectiveDate">DateTime</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -117,6 +139,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
+        /// </summary>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
         public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -147,6 +173,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+
+        /// <summary>
+        /// Callback method for RetrieveIndexConstituentsData service call
+        /// </summary>
+        /// <param name="indexConstituentsData">IndexConstituentsData collection</param>
         private void RetrieveIndexConstituentsDataCallbackMethod(List<IndexConstituentsData> indexConstituentsData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

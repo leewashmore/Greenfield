@@ -13,11 +13,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <!--header for the gadget-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="MSCI Standard (" FontWeight="Bold"/>
                 <TextBlock Text="{Binding EffectiveDate, StringFormat='MMMM dd, yyyy'}" FontWeight="Bold"/>
                 <TextBlock Text=") Constituents" FontWeight="Bold"/>
             </StackPanel>
+            <!--button to export the grid to excel-->
             <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
                     Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
                 <Button.Content>
@@ -26,6 +28,7 @@
             </Button>
         </Grid>
         <Grid Grid.Row="1">
+            <!--grid containing data to be displayed in the gadget-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Name="dgIndexConstituents" AutoGenerateColumns="False" ItemsSource="{Binding IndexConstituentsInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"

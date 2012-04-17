@@ -69,6 +69,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+
         private List<AssetAllocationData> _assetAllocationInfo;
         public List<AssetAllocationData> AssetAllocationInfo
         {
