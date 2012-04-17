@@ -15,8 +15,8 @@
 
     <!-- Primary Linear Gradient Brush -->
     <LinearGradientBrush x:Key="TileView_HeaderBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-        <GradientStop Color="#9F1D21" />
-        <GradientStop Offset="1" Color="#9F1D21" />
+        <GradientStop Color="#9F1D21" Offset="0" />
+        <GradientStop Offset="1" Color="#BE715C" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="TileView_ButtonBackground" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Color="Black" />
@@ -51,11 +51,6 @@
     
     <!-- ******STYLES******* -->
     <!-- ******************* -->
-    <!--HeaderTextForeGround Style-->
-    <Style x:Key="HeaderTextForeGround" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="White"/>
-    </Style>
-
     <!--RadToggleButton Style-->
     <Style x:Key="maximizeToggleStyle" TargetType="telerik:RadToggleButton">
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -360,9 +355,13 @@
                                                 </Border>
                                                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center"
                                                            Orientation="Horizontal">
-                                                    <telerik:RadToggleButton x:Name="MaximizeToggleButton"
+                                                    <telerik:RadToggleButton x:Name="MaximizeToggleButton" 
                                                                              Command="tileView:TileViewCommands.ToggleTileState"
-                                                                             Style="{StaticResource maximizeToggleStyle}"/>
+                                                                Style="{StaticResource maximizeToggleStyle}" />
+                                                    <!--<Button Width="17" Height="17" HorizontalAlignment="Right"
+                                                                Click="DashboardTileViewItemRemoved"
+                                                                Style="{StaticResource CloseButtonStyle}"
+                                                                    />-->
                                                 </StackPanel>
                                             </Grid>
                                         </Border>

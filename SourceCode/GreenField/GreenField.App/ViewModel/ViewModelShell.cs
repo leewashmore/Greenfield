@@ -114,16 +114,62 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        private CollectionViewSource _securityReference;
-        public CollectionViewSource SecurityReference
+        #region ToolBox
+        #region Security Selector
+        private List<EntitySelectionData> _entitySelectionInfo;
+        public List<EntitySelectionData> EntitySelectionInfo
         {
-            get { return _securityReference; }
+            get { return _entitySelectionInfo; }
             set
             {
-                _securityReference = value;
-                RaisePropertyChanged(() => this.SecurityReference);                
+                _entitySelectionInfo = value;
+                RaisePropertyChanged(() => this.EntitySelectionInfo);
+                BindedEntitySelectionInfo = value;
             }
         }
+
+        private List<EntitySelectionData> _bindedEntitySelectionInfo;
+        public List<EntitySelectionData> BindedEntitySelectionInfo
+        {
+            get { return _bindedEntitySelectionInfo; }
+            set
+            {
+                _bindedEntitySelectionInfo = value;
+                RaisePropertyChanged(() => this.BindedEntitySelectionInfo);
+            }
+        }
+
+        private EntitySelectionData _selectedEntity;
+        public EntitySelectionData SelectedEntity
+        {
+            get { return _selectedEntity; }
+            set
+            {
+                _selectedEntity = value;
+                RaisePropertyChanged(() => this.SelectedEntity);
+            }
+        }
+
+        private string _entityEnteredText;
+        public string EntityEnteredText
+        {
+            get { return _entityEnteredText; }
+            set
+            {
+                _entityEnteredText = value;
+                RaisePropertyChanged(() => this.EntityEnteredText);
+                if (value != String.Empty && EntitySelectionInfo != null)
+                    BindedEntitySelectionInfo = EntitySelectionInfo
+                                .Where(record => record.LongName.ToLower().Contains(value.ToLower())
+                                    || record.ShortName.ToLower().Contains(value.ToLower())
+                                    || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                .ToList();
+                else
+                    BindedEntitySelectionInfo = EntitySelectionInfo;
+            }
+        }
+        #endregion 
+        #endregion
 
         private CollectionViewSource _fundReference;
         public CollectionViewSource FundReference
@@ -147,31 +193,12 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        public ObservableCollection<EntitySelectionData> SecurityReferenceData { get; set; }
         public ObservableCollection<FundSelectionData> FundReferenceData { get; set; }
-        public ObservableCollection<BenchmarkSelectionData> BenchmarkReferenceData { get; set; }
+        public ObservableCollection<BenchmarkSelectionData> BenchmarkReferenceData { get; set; }        
 
-        
-
-        public ObservableCollection<GroupSelectionData> SecurityReferenceSource { get; set; }
         public ObservableCollection<GroupSelectionData> FundReferenceSource { get; set; }
         public ObservableCollection<GroupSelectionData> BenchmarkReferenceSource { get; set; }
         
-        private string _securityEnteredText;
-        public string SecurityEnteredText
-        {
-            get { return _securityEnteredText; }
-            set
-            {
-                _securityEnteredText = value;
-                RaisePropertyChanged(() => this.SecurityEnteredText);
-                if (value != String.Empty)
-                    SecurityReference.Source = SecurityReferenceSource.Where(o => o.Header.ToLower().Contains(value.ToLower()));
-                else
-                    SecurityReference.Source = SecurityReferenceSource;
-            }
-        }
-
         private string _fundEnteredText;
         public string FundEnteredText
         {
@@ -199,22 +226,6 @@ namespace GreenField.App.ViewModel
                     BenchmarkReference.Source = BenchmarkReferenceSource.Where(o => o.Header.ToLower().Contains(value.ToLower()));
                 else
                     BenchmarkReference.Source = BenchmarkReferenceSource;
-            }
-        }
-
-        private GroupSelectionData _selectedSecurityReference;
-        public GroupSelectionData SelectedSecurityReference
-        {
-            get { return _selectedSecurityReference; }
-            set
-            {
-                _selectedSecurityReference = value;
-                RaisePropertyChanged(()=> this.SelectedSecurityReference);
-                if (value != null)
-                {
-                    DashboardGadgetPayload.EntitySelectionData = SecurityReferenceData.Where(entity => entity.ShortName == ((value.Category == "Ticker") ? value.Header : value.Detail)).First();
-                    _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(DashboardGadgetPayload.EntitySelectionData);
-                }
             }
         }
 
@@ -1773,39 +1784,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                 try
                 {
-                    SecurityReference = new CollectionViewSource();
-                    SecurityReferenceData = new ObservableCollection<EntitySelectionData>(result.Where(e => e.Type == EntityTypes.SECURITY).OrderBy(t=> t.LongName));
-                    List<EntitySelectionData> a = SecurityReferenceData.ToList();
-                    SecurityReferenceSource = new ObservableCollection<GroupSelectionData>();
-
-                    foreach (EntitySelectionData item in SecurityReferenceData)
-                    {
-                        GroupSelectionData TickerHeaderSecuritySelectionData = new GroupSelectionData()
-                        {
-                            Category = "Ticker",
-                            Header = item.ShortName,
-                            Detail = item.LongName
-                        };
-
-                        GroupSelectionData IssueNameHeaderSecuritySelectionData = new GroupSelectionData()
-                        {
-                            Category = "Issuer Name",
-                            Header = item.LongName,
-                            Detail = item.ShortName
-                        };
-
-                        SecurityReferenceSource.Add(TickerHeaderSecuritySelectionData);
-                        SecurityReferenceSource.Add(IssueNameHeaderSecuritySelectionData);
-                    }
-
-                    SecurityReference.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-                    SecurityReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "Header",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    SecurityReference.Source = SecurityReferenceSource;
-                    
+                    EntitySelectionInfo = result.Where(e => e.Type == EntityTypes.SECURITY).OrderBy(t => t.LongName).ToList();                    
                 }
                 catch (Exception ex)
                 {

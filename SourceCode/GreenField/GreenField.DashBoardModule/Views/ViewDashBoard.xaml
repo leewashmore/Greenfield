@@ -10,7 +10,6 @@
     mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600">
 
     <UserControl.Resources>
-
         <ResourceDictionary>
             <!-- Primary Color Brushes -->
             <SolidColorBrush x:Key="TileView_Background" Color="#FFFFFFFF" />

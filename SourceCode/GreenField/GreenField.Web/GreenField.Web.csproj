@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\Lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
@@ -59,12 +62,9 @@
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
-    <Content Include="CodeAnalysis\CodeAnalysisConfiguration.xml" />
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
-    <None Include="DataSources\Geospatial\world.dbf" />
-    <None Include="DataSources\Geospatial\world.shp" />
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <Content Include="Login.aspx" />
