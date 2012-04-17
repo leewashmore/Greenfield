@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using log4net;
 using System.ServiceModel.Activation;
 
 namespace GreenField.Web.Services
