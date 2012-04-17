@@ -13,10 +13,11 @@ using Telerik.Windows.Controls;
 using System.IO;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Data;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewIndexConstituents : UserControl
+    public partial class ViewIndexConstituents : ViewBaseUserControl
     {
         public ViewIndexConstituents(ViewModelIndexConstituents dataContextSource)
         {
@@ -112,6 +113,11 @@ namespace GreenField.Gadgets.Views
             }
 
             return String.Join(",", aggregates.ToArray());
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

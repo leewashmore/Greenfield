@@ -14,12 +14,17 @@ using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewAssetAllocation
+    public partial class ViewAssetAllocation:ViewBaseUserControl
     {
         public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }        
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

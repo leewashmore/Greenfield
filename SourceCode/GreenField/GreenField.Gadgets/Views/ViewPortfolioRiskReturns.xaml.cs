@@ -11,13 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
     /// View Class for Portfolio Risk Returns Gadget that has ViewModelPortfolioRiskReturns as its data source
     /// </summary>
-    public partial class ViewPortfolioRiskReturns : UserControl
+    public partial class ViewPortfolioRiskReturns : ViewBaseUserControl
     {
         /// <summary>
         /// Constructor for the class having ViewModelPortfolioRiskReturns as its data context
@@ -49,5 +50,10 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

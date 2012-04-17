@@ -10,15 +10,21 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewContributorDetractor : UserControl
+    public partial class ViewContributorDetractor : ViewBaseUserControl
     {
         public ViewContributorDetractor(ViewModelContributorDetractor DataContextSource)
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

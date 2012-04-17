@@ -80,6 +80,8 @@ namespace GreenField.DashboardModule.Views
             {
                 RadTileViewItem tileViewItem = (sender as Button).ParentOfType<RadTileViewItem>();
                 this.rtvDashboard.Items.Remove(tileViewItem);
+                (tileViewItem.Content as ViewBaseUserControl).Dispose();
+                tileViewItem.Content = null;
                 this.rtvDashboard.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Collapsed : Visibility.Visible;
                 this.txtNoGadgetMessage.Visibility = this.rtvDashboard.Items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
 

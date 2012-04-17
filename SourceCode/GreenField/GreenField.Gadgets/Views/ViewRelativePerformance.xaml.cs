@@ -24,7 +24,7 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewRelativePerformance : UserControl
+    public partial class ViewRelativePerformance : ViewBaseUserControl
     {
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
         private FundSelectionData _fundSelectionData;
@@ -259,6 +259,11 @@ namespace GreenField.Gadgets.Views
             });
         }
 
-        
+
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace GreenField.Gadgets.Views
     /// <summary>
     /// View Class for Performance Gadget that has ViewPerformanceGadget as its data source
     /// </summary>
-    public partial class ViewPerformanceGadget : UserControl
+    public partial class ViewPerformanceGadget : ViewBaseUserControl
     {
         #region StaticClass
         /// <summary>
@@ -106,5 +106,10 @@ namespace GreenField.Gadgets.Views
             }
         }
         #endregion
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

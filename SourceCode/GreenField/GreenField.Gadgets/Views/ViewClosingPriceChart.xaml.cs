@@ -19,7 +19,7 @@ using Telerik.Windows.Controls.Primitives;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewClosingPriceChart : UserControl
+    public partial class ViewClosingPriceChart : ViewBaseUserControl
     {
         #region Variables
 
@@ -296,5 +296,9 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

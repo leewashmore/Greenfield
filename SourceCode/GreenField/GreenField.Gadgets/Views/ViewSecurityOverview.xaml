@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewSecurityOverview"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewSecurityOverview"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <Grid x:Name="LayoutRoot">
@@ -79,5 +80,5 @@
                        HorizontalAlignment="Left" VerticalAlignment="Top"/>                      
         </Grid>
     </Grid>
-</UserControl>
+</helpers:ViewBaseUserControl>
 

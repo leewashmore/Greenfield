@@ -14,7 +14,7 @@ using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewSectorBreakdown : UserControl
+    public partial class ViewSectorBreakdown : ViewBaseUserControl
     {
         public ViewSectorBreakdown(ViewModelSectorBreakDown dataContextSource)
         {
@@ -38,6 +38,11 @@ namespace GreenField.Gadgets.Views
             {
                 Flipper.FlipItem(this.dgSectorBreakdown, this.crtSectorBreakdown);
             }
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

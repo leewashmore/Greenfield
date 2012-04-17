@@ -13,10 +13,11 @@ using Telerik.Windows.Controls.Map;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewHeatMap : UserControl
+    public partial class ViewHeatMap : ViewBaseUserControl
     {
         private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
         private const string COUNTRY_YTD_FIELD = "CountryYTD";
@@ -85,6 +86,11 @@ namespace GreenField.Gadgets.Views
         private void MapShapeReader_ReadCompleted(object sender, ReadShapesCompletedEventArgs eventArgs)
         {
 
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

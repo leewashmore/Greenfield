@@ -11,15 +11,21 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewSecurityOverview : UserControl
+    public partial class ViewSecurityOverview : ViewBaseUserControl
     {
         public ViewSecurityOverview( ViewModelSecurityOverview dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }      
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

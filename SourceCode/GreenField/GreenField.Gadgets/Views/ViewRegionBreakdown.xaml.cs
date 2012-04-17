@@ -16,7 +16,7 @@ using System.ComponentModel;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewRegionBreakdown : UserControl
+    public partial class ViewRegionBreakdown : ViewBaseUserControl
     {
         public ViewRegionBreakdown(ViewModelRegionBreakDown dataContextSource)
         {
@@ -40,6 +40,11 @@ namespace GreenField.Gadgets.Views
             {
                 Flipper.FlipItem(this.dgRegionBreakdown, this.crtRegionBreakdown);
             }
+        }
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

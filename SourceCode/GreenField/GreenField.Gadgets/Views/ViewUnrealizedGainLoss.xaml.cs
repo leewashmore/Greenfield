@@ -19,7 +19,7 @@ namespace GreenField.Gadgets.Views
     /// <summary>
     /// View Class that interacts that has ViewModelUnrealizedGainLoss as its Data Context
     /// </summary>
-    public partial class ViewUnrealizedGainLoss : UserControl
+    public partial class ViewUnrealizedGainLoss : ViewBaseUserControl
     {
         /// <summary>
         /// Export Types to be passed to the ExportOptions class
@@ -175,6 +175,11 @@ namespace GreenField.Gadgets.Views
         private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
+        }
+
+        public override void Dispose()
+        {
+            
         }
     }
 }

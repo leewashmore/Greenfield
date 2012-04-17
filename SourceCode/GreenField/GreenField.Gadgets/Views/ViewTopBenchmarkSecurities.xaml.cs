@@ -11,13 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
     /// View Class for Top Ten Benchmark Securities Gadget that has ViewModelTopBenchmarkSecurities as its data source
     /// </summary>
-    public partial class ViewTopBenchmarkSecurities : UserControl
+    public partial class ViewTopBenchmarkSecurities : ViewBaseUserControl
     {
         #region Constructor
         /// <summary>
@@ -50,5 +51,10 @@ namespace GreenField.Gadgets.Views
             }
         }
         #endregion       
+    
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

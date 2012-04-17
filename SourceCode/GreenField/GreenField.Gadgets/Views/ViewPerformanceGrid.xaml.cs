@@ -11,13 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
     /// View Class for Performance Grid that has ViewModelPerformanceGrid as its data source
     /// </summary>
-    public partial class ViewPerformanceGrid : UserControl
+    public partial class ViewPerformanceGrid : ViewBaseUserControl
     {
         #region Constructor
         /// <summary>
@@ -50,5 +51,10 @@ namespace GreenField.Gadgets.Views
             }
         }
         #endregion
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

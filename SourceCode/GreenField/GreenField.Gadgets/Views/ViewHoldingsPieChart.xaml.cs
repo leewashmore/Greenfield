@@ -11,13 +11,14 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Controls.Charting;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
     /// <summary>
     /// View Class of Holdings Pie Chart
     /// </summary>
-    public partial class ViewHoldingsPieChart : UserControl
+    public partial class ViewHoldingsPieChart : ViewBaseUserControl
     {
         #region Constructor
         /// <summary>
@@ -30,5 +31,10 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
         }
         #endregion
+
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
