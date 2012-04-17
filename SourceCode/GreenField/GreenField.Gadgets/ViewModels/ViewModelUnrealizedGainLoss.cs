@@ -91,6 +91,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Property that is binded to the security selected by the user
+        /// </summary>
         private string _selectedSecurityName = "";
         public string PlottedSecurityName
         {
@@ -171,9 +174,11 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
-        }       
+        }
 
-        /// Defines the Chart area Unrealized gain loss chart
+        /// <summary>
+        /// Collection that defines the chart area
+        /// </summary>
         private ChartArea _chartArea;
         public ChartArea ChartArea
         {
@@ -235,6 +240,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
+
         /// <summary>
         ///Method that calculates the Start Date and End Date time  
         /// </summary>
@@ -289,6 +295,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region ICommand
+
+        /// <summary>
+        /// ICommand property for Zoom in button
+        /// </summary>
         ICommand _zoomInCommand;
         public ICommand ZoomInCommand
         {
@@ -302,6 +312,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// ICommand property for Zoom out button
+        /// </summary>
         ICommand _zoomOutCommand;
         public ICommand ZoomOutCommand
         {
@@ -326,6 +339,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region ICommand Methods
+
+        /// <summary>
+        /// ICommand Method for Zoom In button
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ZoomIn(object parameter)
         {
             this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
@@ -341,6 +359,11 @@ namespace GreenField.Gadgets.ViewModels
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
+        /// <summary>
+        /// Validation Method for Zoom In button
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>boolean value</returns>
         public bool CanZoomIn(object parameter)
         {
             if (this.ChartArea == null)
@@ -349,6 +372,10 @@ namespace GreenField.Gadgets.ViewModels
             return this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
         }
 
+        /// <summary>
+        /// ICommand Method for Zoom Out button
+        /// </summary>
+        /// <param name="parameter"></param>
         public void ZoomOut(object parameter)
         {
             this.ChartArea.ZoomScrollSettingsX.SuspendNotifications();
@@ -370,6 +397,11 @@ namespace GreenField.Gadgets.ViewModels
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
+        /// <summary>
+        /// Validation Method for Zoom Out button
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>boolean value</returns>
         public bool CanZoomOut(object parameter)
         {
             if (this.ChartArea == null)

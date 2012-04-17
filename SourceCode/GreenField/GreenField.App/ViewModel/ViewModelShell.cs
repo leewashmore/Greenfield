@@ -661,6 +661,13 @@ namespace GreenField.App.ViewModel
             }        
         }
 
+        public ICommand HeatMapCommand
+        {
+            get {
+                  return new DelegateCommand<object>(HeatMapCommandMethod);
+                }
+        }
+
         #endregion
         #endregion
 
@@ -1718,6 +1725,28 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        private void HeatMapCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.HEAT_MAP,
+                            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
 
 
         private void AttributionCommandMethod(object param) 

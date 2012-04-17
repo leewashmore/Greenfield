@@ -16,8 +16,14 @@ using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// View Class that interacts that has ViewModelUnrealizedGainLoss as its Data Context
+    /// </summary>
     public partial class ViewUnrealizedGainLoss : UserControl
     {
+        /// <summary>
+        /// Export Types to be passed to the ExportOptions class
+        /// </summary>
         private static class ExportTypes
         {
             public const string UNREALIZED_GAINLOSS_CHART = "Unrealized Gain/Loss Chart";
@@ -108,6 +114,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Method to be called when the selection is changed in Frequency Comco box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbFrequencyInterval_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             switch (cmbFrequencyInterval.SelectedValue.ToString())
@@ -159,6 +170,7 @@ namespace GreenField.Gadgets.Views
                     }
             }
         }
+
 
         private void dgUnrealizedGainLoss_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {

@@ -99,7 +99,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Collection for setting the zoom in and zoom out buttons
+        /// Collection that defines the chart area
         /// </summary>
         private ChartArea _chartArea;
         public ChartArea ChartArea

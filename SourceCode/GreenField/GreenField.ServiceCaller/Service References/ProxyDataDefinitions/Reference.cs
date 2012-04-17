@@ -3120,6 +3120,83 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="HeatMapData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class HeatMapData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string CountryIDField;
+        
+        private GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceType CountryPerformanceField;
+        
+        private System.Nullable<double> CountryYTDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryID {
+            get {
+                return this.CountryIDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryIDField, value) != true)) {
+                    this.CountryIDField = value;
+                    this.RaisePropertyChanged("CountryID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceType CountryPerformance {
+            get {
+                return this.CountryPerformanceField;
+            }
+            set {
+                if ((this.CountryPerformanceField.Equals(value) != true)) {
+                    this.CountryPerformanceField = value;
+                    this.RaisePropertyChanged("CountryPerformance");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> CountryYTD {
+            get {
+                return this.CountryYTDField;
+            }
+            set {
+                if ((this.CountryYTDField.Equals(value) != true)) {
+                    this.CountryYTDField = value;
+                    this.RaisePropertyChanged("CountryYTD");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PerformanceType", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public enum PerformanceType : int {
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        NO_RELATION = 0,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        UNDER_PERFORMING = 1,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        FLAT_PERFORMING = 2,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        OVER_PERFORMING = 3,
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ProxyDataDefinitions.ProxyDataOperations")]
     public interface ProxyDataOperations {
@@ -3301,6 +3378,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData fundSelectionData, GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveHeatMapData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveHeatMapDataResponse")]
+        System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -3936,6 +4018,25 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveHeatMapDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveHeatMapDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ProxyDataOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations>, GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations {
         
         private BeginOperationDelegate onBeginRetrieveSecurityReferenceDataDelegate;
@@ -4136,6 +4237,12 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrievePortfolioRiskReturnDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveHeatMapDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveHeatMapDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveHeatMapDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -4254,6 +4361,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         public event System.EventHandler<RetrieveTopBenchmarkSecuritiesDataCompletedEventArgs> RetrieveTopBenchmarkSecuritiesDataCompleted;
         
         public event System.EventHandler<RetrievePortfolioRiskReturnDataCompletedEventArgs> RetrievePortfolioRiskReturnDataCompleted;
+        
+        public event System.EventHandler<RetrieveHeatMapDataCompletedEventArgs> RetrieveHeatMapDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -5875,6 +5984,50 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                         effectiveDate}, this.onEndRetrievePortfolioRiskReturnDataDelegate, this.onRetrievePortfolioRiskReturnDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHeatMapData(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveHeatMapData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveHeatMapData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveHeatMapData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveHeatMapData(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveHeatMapData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveHeatMapData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveHeatMapDataCompleted(object state) {
+            if ((this.RetrieveHeatMapDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveHeatMapDataCompleted(this, new RetrieveHeatMapDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveHeatMapDataAsync() {
+            this.RetrieveHeatMapDataAsync(null);
+        }
+        
+        public void RetrieveHeatMapDataAsync(object userState) {
+            if ((this.onBeginRetrieveHeatMapDataDelegate == null)) {
+                this.onBeginRetrieveHeatMapDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHeatMapData);
+            }
+            if ((this.onEndRetrieveHeatMapDataDelegate == null)) {
+                this.onEndRetrieveHeatMapDataDelegate = new EndOperationDelegate(this.OnEndRetrieveHeatMapData);
+            }
+            if ((this.onRetrieveHeatMapDataCompletedDelegate == null)) {
+                this.onRetrieveHeatMapDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveHeatMapDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveHeatMapDataDelegate, null, this.onEndRetrieveHeatMapDataDelegate, this.onRetrieveHeatMapDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -6426,6 +6579,18 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData>)(base.EndInvoke("RetrievePortfolioRiskReturnData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveHeatMapData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.HeatMapData>)(base.EndInvoke("RetrieveHeatMapData", _args, result)));
                 return _result;
             }
         }

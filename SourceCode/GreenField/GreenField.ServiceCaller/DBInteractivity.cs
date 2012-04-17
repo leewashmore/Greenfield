@@ -755,5 +755,26 @@ namespace GreenField.ServiceCaller
         }
 
         #endregion
+
+        #region Interaction Method for Heat Map
+
+        public void RetrieveHeatMapData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        {
+            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            client.RetrieveHeatMapDataAsync();
+            client.RetrieveHeatMapDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+            };
+        }
+        #endregion
     }
 }

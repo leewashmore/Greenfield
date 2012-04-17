@@ -64,7 +64,7 @@ namespace GreenField.Common
         public static string PERFORMANCE_GRAPH = "Performance Graph";       
         public static string ATTRIBUTION = "Attribution";
         public static string PERFORMANCE_GRID = "Performance Grid";
-
+        public static string HEAT_MAP = "Heat Map";
         public static string EXTERNAL_RESEARCH_PRICING = "Pricing Information External Research 4.1.3.1 / 4.4.3";
         public static string INTERNAL_RESEARCH_PRICING_DETAILED = "Pricing Detailed Internal Research 5.1.1.1";
         public static string EXTERNAL_RESEARCH_VALUATIONS = "Valuation Information External Research 4.1.3.8 / 4.4.3";
@@ -130,7 +130,6 @@ namespace GreenField.Common
     }
 
     public delegate void DataRetrievalProgressIndicatorEventHandler(DataRetrievalProgressIndicatorEventArgs e);
-
     public class DataRetrievalProgressIndicatorEventArgs : EventArgs
     {
         public bool ShowBusy { get; set; }
@@ -141,6 +140,12 @@ namespace GreenField.Common
     {
         public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
+    }
+
+    public delegate void RetrieveHeatMapDataCompleteEventHandler(RetrieveHeatMapDataCompleteEventArgs e);
+    public class RetrieveHeatMapDataCompleteEventArgs : EventArgs
+    {
+        public List<HeatMapData> HeatMapInfo { get; set; }
     }
 
     public class RelativePerformanceGridCellData

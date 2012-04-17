@@ -510,4 +510,16 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveHeatMapData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveHeatMapDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q62="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveHeatMapDataResult" nillable="true" type="q62:ArrayOfHeatMapData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

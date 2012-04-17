@@ -39,7 +39,10 @@ namespace GreenField.Web.Helpers
             //Calculations for the rest of the records
             for (int i = 1; i < noOfRows; i++)
             {
+                
                 entry = new UnrealizedGainLossData();
+                if (previousPriceReturn == -100)
+                    continue;
                 entry.AdjustedPrice = previousAdjustedPrice / (1 + (previousPriceReturn / 100));
                 previousAdjustedPrice = entry.AdjustedPrice;
                 previousPriceReturn = Convert.ToDouble(arrangedByDescRecord[i].DAILY_PRICE_RETURN);

@@ -435,4 +435,27 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
+  <xs:complexType name="ArrayOfHeatMapData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HeatMapData" nillable="true" type="tns:HeatMapData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHeatMapData" nillable="true" type="tns:ArrayOfHeatMapData" />
+  <xs:complexType name="HeatMapData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountryID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryPerformance" type="tns:PerformanceType" />
+      <xs:element minOccurs="0" name="CountryYTD" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HeatMapData" nillable="true" type="tns:HeatMapData" />
+  <xs:simpleType name="PerformanceType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NO_RELATION" />
+      <xs:enumeration value="UNDER_PERFORMING" />
+      <xs:enumeration value="FLAT_PERFORMING" />
+      <xs:enumeration value="OVER_PERFORMING" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PerformanceType" nillable="true" type="tns:PerformanceType" />
 </xs:schema>
