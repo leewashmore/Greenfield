@@ -18,7 +18,8 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblUserGroupPreference), "tblUserBenchmarkPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblUserBenchmarkPreference), true)]
+[assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), "tblMarketSnapshotEntityPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotEntityPreference), true)]
+[assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotPreference), "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), true)]
 
 #endregion
 
@@ -409,34 +410,50 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<tblUserBenchmarkPreference> tblUserBenchmarkPreferences
+        public ObjectSet<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreferences
         {
             get
             {
-                if ((_tblUserBenchmarkPreferences == null))
+                if ((_tblMarketSnapshotEntityPreferences == null))
                 {
-                    _tblUserBenchmarkPreferences = base.CreateObjectSet<tblUserBenchmarkPreference>("tblUserBenchmarkPreferences");
+                    _tblMarketSnapshotEntityPreferences = base.CreateObjectSet<tblMarketSnapshotEntityPreference>("tblMarketSnapshotEntityPreferences");
                 }
-                return _tblUserBenchmarkPreferences;
+                return _tblMarketSnapshotEntityPreferences;
             }
         }
-        private ObjectSet<tblUserBenchmarkPreference> _tblUserBenchmarkPreferences;
+        private ObjectSet<tblMarketSnapshotEntityPreference> _tblMarketSnapshotEntityPreferences;
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<tblUserGroupPreference> tblUserGroupPreferences
+        public ObjectSet<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferences
         {
             get
             {
-                if ((_tblUserGroupPreferences == null))
+                if ((_tblMarketSnapshotGroupPreferences == null))
                 {
-                    _tblUserGroupPreferences = base.CreateObjectSet<tblUserGroupPreference>("tblUserGroupPreferences");
+                    _tblMarketSnapshotGroupPreferences = base.CreateObjectSet<tblMarketSnapshotGroupPreference>("tblMarketSnapshotGroupPreferences");
                 }
-                return _tblUserGroupPreferences;
+                return _tblMarketSnapshotGroupPreferences;
             }
         }
-        private ObjectSet<tblUserGroupPreference> _tblUserGroupPreferences;
+        private ObjectSet<tblMarketSnapshotGroupPreference> _tblMarketSnapshotGroupPreferences;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<tblMarketSnapshotPreference> tblMarketSnapshotPreferences
+        {
+            get
+            {
+                if ((_tblMarketSnapshotPreferences == null))
+                {
+                    _tblMarketSnapshotPreferences = base.CreateObjectSet<tblMarketSnapshotPreference>("tblMarketSnapshotPreferences");
+                }
+                return _tblMarketSnapshotPreferences;
+            }
+        }
+        private ObjectSet<tblMarketSnapshotPreference> _tblMarketSnapshotPreferences;
 
         #endregion
         #region AddTo Methods
@@ -610,19 +627,27 @@ namespace GreenField.DAL
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the tblUserBenchmarkPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the tblMarketSnapshotEntityPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddTotblUserBenchmarkPreferences(tblUserBenchmarkPreference tblUserBenchmarkPreference)
+        public void AddTotblMarketSnapshotEntityPreferences(tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference)
         {
-            base.AddObject("tblUserBenchmarkPreferences", tblUserBenchmarkPreference);
+            base.AddObject("tblMarketSnapshotEntityPreferences", tblMarketSnapshotEntityPreference);
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the tblUserGroupPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the tblMarketSnapshotGroupPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddTotblUserGroupPreferences(tblUserGroupPreference tblUserGroupPreference)
+        public void AddTotblMarketSnapshotGroupPreferences(tblMarketSnapshotGroupPreference tblMarketSnapshotGroupPreference)
         {
-            base.AddObject("tblUserGroupPreferences", tblUserGroupPreference);
+            base.AddObject("tblMarketSnapshotGroupPreferences", tblMarketSnapshotGroupPreference);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the tblMarketSnapshotPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTotblMarketSnapshotPreferences(tblMarketSnapshotPreference tblMarketSnapshotPreference)
+        {
+            base.AddObject("tblMarketSnapshotPreferences", tblMarketSnapshotPreference);
         }
 
         #endregion
@@ -803,178 +828,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        public int SetUserGroupPreference(global::System.String userId, global::System.String groupname)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("SetUserGroupPreference", userIdParameter, groupnameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        /// <param name="benchmarkName">No Metadata Documentation available.</param>
-        /// <param name="benchmarkReturnType">No Metadata Documentation available.</param>
-        public int SetUserBenchmarkPreference(global::System.String userId, global::System.String groupname, global::System.String benchmarkName, global::System.String benchmarkReturnType)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            ObjectParameter benchmarkNameParameter;
-            if (benchmarkName != null)
-            {
-                benchmarkNameParameter = new ObjectParameter("benchmarkName", benchmarkName);
-            }
-            else
-            {
-                benchmarkNameParameter = new ObjectParameter("benchmarkName", typeof(global::System.String));
-            }
-    
-            ObjectParameter benchmarkReturnTypeParameter;
-            if (benchmarkReturnType != null)
-            {
-                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", benchmarkReturnType);
-            }
-            else
-            {
-                benchmarkReturnTypeParameter = new ObjectParameter("benchmarkReturnType", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("SetUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarkNameParameter, benchmarkReturnTypeParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userid">No Metadata Documentation available.</param>
-        public ObjectResult<UserBenchmarkPreference> GetUserBenchmarkPreference(global::System.String userid)
-        {
-            ObjectParameter useridParameter;
-            if (userid != null)
-            {
-                useridParameter = new ObjectParameter("userid", userid);
-            }
-            else
-            {
-                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<UserBenchmarkPreference>("GetUserBenchmarkPreference", useridParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        public int DeleteUserGroupPreference(global::System.String userId, global::System.String groupname)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("DeleteUserGroupPreference", userIdParameter, groupnameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="groupname">No Metadata Documentation available.</param>
-        /// <param name="benchmarkname">No Metadata Documentation available.</param>
-        public int DeleteUserBenchmarkPreference(global::System.String userId, global::System.String groupname, global::System.String benchmarkname)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter groupnameParameter;
-            if (groupname != null)
-            {
-                groupnameParameter = new ObjectParameter("groupname", groupname);
-            }
-            else
-            {
-                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
-            }
-    
-            ObjectParameter benchmarknameParameter;
-            if (benchmarkname != null)
-            {
-                benchmarknameParameter = new ObjectParameter("benchmarkname", benchmarkname);
-            }
-            else
-            {
-                benchmarknameParameter = new ObjectParameter("benchmarkname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction("DeleteUserBenchmarkPreference", userIdParameter, groupnameParameter, benchmarknameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         public ObjectResult<tblDashboardPreference> GetDashBoardPreferenceByUserName(global::System.String userName)
         {
@@ -1093,6 +946,317 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction("SetDashBoardPreference", userNameParameter, gadgetViewClassNameParameter, gadgetViewModelClassNameParameter, gadgetNameParameter, gadgetStateParameter, preferenceGroupIDParameter, gadgetPositionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        public ObjectResult<MarketSnapshotSelectionData> GetMarketSnapshotSelectionData(global::System.String userId)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MarketSnapshotSelectionData>("GetMarketSnapshotSelectionData", userIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userid">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(global::System.String userid, global::System.String snapshotname)
+        {
+            ObjectParameter useridParameter;
+            if (userid != null)
+            {
+                useridParameter = new ObjectParameter("userid", userid);
+            }
+            else
+            {
+                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", useridParameter, snapshotnameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> SetMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("SetMarketSnapshotPreference", userIdParameter, snapshotnameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="snapshotpreferenceId">No Metadata Documentation available.</param>
+        /// <param name="groupname">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> SetMarketSnapshotGroupPreference(Nullable<global::System.Int32> snapshotpreferenceId, global::System.String groupname)
+        {
+            ObjectParameter snapshotpreferenceIdParameter;
+            if (snapshotpreferenceId.HasValue)
+            {
+                snapshotpreferenceIdParameter = new ObjectParameter("snapshotpreferenceId", snapshotpreferenceId);
+            }
+            else
+            {
+                snapshotpreferenceIdParameter = new ObjectParameter("snapshotpreferenceId", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter groupnameParameter;
+            if (groupname != null)
+            {
+                groupnameParameter = new ObjectParameter("groupname", groupname);
+            }
+            else
+            {
+                groupnameParameter = new ObjectParameter("groupname", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("SetMarketSnapshotGroupPreference", snapshotpreferenceIdParameter, groupnameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
+        /// <param name="entityName">No Metadata Documentation available.</param>
+        /// <param name="entityReturnType">No Metadata Documentation available.</param>
+        /// <param name="entityOrder">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> SetMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, global::System.String entityName, global::System.String entityReturnType, Nullable<global::System.Int32> entityOrder)
+        {
+            ObjectParameter grouppreferenceidParameter;
+            if (grouppreferenceid.HasValue)
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
+            }
+            else
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter entityNameParameter;
+            if (entityName != null)
+            {
+                entityNameParameter = new ObjectParameter("entityName", entityName);
+            }
+            else
+            {
+                entityNameParameter = new ObjectParameter("entityName", typeof(global::System.String));
+            }
+    
+            ObjectParameter entityReturnTypeParameter;
+            if (entityReturnType != null)
+            {
+                entityReturnTypeParameter = new ObjectParameter("entityReturnType", entityReturnType);
+            }
+            else
+            {
+                entityReturnTypeParameter = new ObjectParameter("entityReturnType", typeof(global::System.String));
+            }
+    
+            ObjectParameter entityOrderParameter;
+            if (entityOrder.HasValue)
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", entityOrder);
+            }
+            else
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("SetMarketSnapshotEntityPreference", grouppreferenceidParameter, entityNameParameter, entityReturnTypeParameter, entityOrderParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
+        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
+        /// <param name="entityOrder">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, Nullable<global::System.Int32> entitypreferenceid, Nullable<global::System.Int32> entityOrder)
+        {
+            ObjectParameter grouppreferenceidParameter;
+            if (grouppreferenceid.HasValue)
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
+            }
+            else
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter entitypreferenceidParameter;
+            if (entitypreferenceid.HasValue)
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
+            }
+            else
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter entityOrderParameter;
+            if (entityOrder.HasValue)
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", entityOrder);
+            }
+            else
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotEntityPreference", grouppreferenceidParameter, entitypreferenceidParameter, entityOrderParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname, Nullable<global::System.Int32> snapshotpreferenceid)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotpreferenceidParameter;
+            if (snapshotpreferenceid.HasValue)
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", snapshotpreferenceid);
+            }
+            else
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotPreference", userIdParameter, snapshotnameParameter, snapshotpreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotEntityPreference(Nullable<global::System.Int32> entitypreferenceid)
+        {
+            ObjectParameter entitypreferenceidParameter;
+            if (entitypreferenceid.HasValue)
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
+            }
+            else
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotEntityPreference", entitypreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotGroupPreference(Nullable<global::System.Int32> grouppreferenceid)
+        {
+            ObjectParameter grouppreferenceidParameter;
+            if (grouppreferenceid.HasValue)
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
+            }
+            else
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotGroupPreference", grouppreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotPreference", userIdParameter, snapshotnameParameter);
         }
 
         #endregion
@@ -6616,6 +6780,506 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblMarketSnapshotEntityPreference")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tblMarketSnapshotEntityPreference : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tblMarketSnapshotEntityPreference object.
+        /// </summary>
+        /// <param name="entityPreferenceId">Initial value of the EntityPreferenceId property.</param>
+        /// <param name="groupPreferenceId">Initial value of the GroupPreferenceId property.</param>
+        /// <param name="entityName">Initial value of the EntityName property.</param>
+        /// <param name="entityOrder">Initial value of the EntityOrder property.</param>
+        public static tblMarketSnapshotEntityPreference CreatetblMarketSnapshotEntityPreference(global::System.Int32 entityPreferenceId, global::System.Int32 groupPreferenceId, global::System.String entityName, global::System.Int32 entityOrder)
+        {
+            tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference = new tblMarketSnapshotEntityPreference();
+            tblMarketSnapshotEntityPreference.EntityPreferenceId = entityPreferenceId;
+            tblMarketSnapshotEntityPreference.GroupPreferenceId = groupPreferenceId;
+            tblMarketSnapshotEntityPreference.EntityName = entityName;
+            tblMarketSnapshotEntityPreference.EntityOrder = entityOrder;
+            return tblMarketSnapshotEntityPreference;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityPreferenceId
+        {
+            get
+            {
+                return _EntityPreferenceId;
+            }
+            set
+            {
+                if (_EntityPreferenceId != value)
+                {
+                    OnEntityPreferenceIdChanging(value);
+                    ReportPropertyChanging("EntityPreferenceId");
+                    _EntityPreferenceId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("EntityPreferenceId");
+                    OnEntityPreferenceIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _EntityPreferenceId;
+        partial void OnEntityPreferenceIdChanging(global::System.Int32 value);
+        partial void OnEntityPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GroupPreferenceId
+        {
+            get
+            {
+                return _GroupPreferenceId;
+            }
+            set
+            {
+                OnGroupPreferenceIdChanging(value);
+                ReportPropertyChanging("GroupPreferenceId");
+                _GroupPreferenceId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GroupPreferenceId");
+                OnGroupPreferenceIdChanged();
+            }
+        }
+        private global::System.Int32 _GroupPreferenceId;
+        partial void OnGroupPreferenceIdChanging(global::System.Int32 value);
+        partial void OnGroupPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String EntityName
+        {
+            get
+            {
+                return _EntityName;
+            }
+            set
+            {
+                OnEntityNameChanging(value);
+                ReportPropertyChanging("EntityName");
+                _EntityName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("EntityName");
+                OnEntityNameChanged();
+            }
+        }
+        private global::System.String _EntityName;
+        partial void OnEntityNameChanging(global::System.String value);
+        partial void OnEntityNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityReturnType
+        {
+            get
+            {
+                return _EntityReturnType;
+            }
+            set
+            {
+                OnEntityReturnTypeChanging(value);
+                ReportPropertyChanging("EntityReturnType");
+                _EntityReturnType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityReturnType");
+                OnEntityReturnTypeChanged();
+            }
+        }
+        private global::System.String _EntityReturnType;
+        partial void OnEntityReturnTypeChanging(global::System.String value);
+        partial void OnEntityReturnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 EntityOrder
+        {
+            get
+            {
+                return _EntityOrder;
+            }
+            set
+            {
+                OnEntityOrderChanging(value);
+                ReportPropertyChanging("EntityOrder");
+                _EntityOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityOrder");
+                OnEntityOrderChanged();
+            }
+        }
+        private global::System.Int32 _EntityOrder;
+        partial void OnEntityOrderChanging(global::System.Int32 value);
+        partial void OnEntityOrderChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference")]
+        public tblMarketSnapshotGroupPreference tblMarketSnapshotGroupPreference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferenceReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblMarketSnapshotGroupPreference")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tblMarketSnapshotGroupPreference : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tblMarketSnapshotGroupPreference object.
+        /// </summary>
+        /// <param name="groupPreferenceId">Initial value of the GroupPreferenceId property.</param>
+        /// <param name="snapshotPreferenceId">Initial value of the SnapshotPreferenceId property.</param>
+        /// <param name="groupName">Initial value of the GroupName property.</param>
+        public static tblMarketSnapshotGroupPreference CreatetblMarketSnapshotGroupPreference(global::System.Int32 groupPreferenceId, global::System.Int32 snapshotPreferenceId, global::System.String groupName)
+        {
+            tblMarketSnapshotGroupPreference tblMarketSnapshotGroupPreference = new tblMarketSnapshotGroupPreference();
+            tblMarketSnapshotGroupPreference.GroupPreferenceId = groupPreferenceId;
+            tblMarketSnapshotGroupPreference.SnapshotPreferenceId = snapshotPreferenceId;
+            tblMarketSnapshotGroupPreference.GroupName = groupName;
+            return tblMarketSnapshotGroupPreference;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 GroupPreferenceId
+        {
+            get
+            {
+                return _GroupPreferenceId;
+            }
+            set
+            {
+                if (_GroupPreferenceId != value)
+                {
+                    OnGroupPreferenceIdChanging(value);
+                    ReportPropertyChanging("GroupPreferenceId");
+                    _GroupPreferenceId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GroupPreferenceId");
+                    OnGroupPreferenceIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _GroupPreferenceId;
+        partial void OnGroupPreferenceIdChanging(global::System.Int32 value);
+        partial void OnGroupPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SnapshotPreferenceId
+        {
+            get
+            {
+                return _SnapshotPreferenceId;
+            }
+            set
+            {
+                OnSnapshotPreferenceIdChanging(value);
+                ReportPropertyChanging("SnapshotPreferenceId");
+                _SnapshotPreferenceId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SnapshotPreferenceId");
+                OnSnapshotPreferenceIdChanged();
+            }
+        }
+        private global::System.Int32 _SnapshotPreferenceId;
+        partial void OnSnapshotPreferenceIdChanging(global::System.Int32 value);
+        partial void OnSnapshotPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String GroupName
+        {
+            get
+            {
+                return _GroupName;
+            }
+            set
+            {
+                OnGroupNameChanging(value);
+                ReportPropertyChanging("GroupName");
+                _GroupName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("GroupName");
+                OnGroupNameChanged();
+            }
+        }
+        private global::System.String _GroupName;
+        partial void OnGroupNameChanging(global::System.String value);
+        partial void OnGroupNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference")]
+        public EntityCollection<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreferences
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference")]
+        public tblMarketSnapshotPreference tblMarketSnapshotPreference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<tblMarketSnapshotPreference> tblMarketSnapshotPreferenceReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblMarketSnapshotPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblMarketSnapshotPreference")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class tblMarketSnapshotPreference : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new tblMarketSnapshotPreference object.
+        /// </summary>
+        /// <param name="snapshotPreferenceId">Initial value of the SnapshotPreferenceId property.</param>
+        /// <param name="snapshotName">Initial value of the SnapshotName property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        public static tblMarketSnapshotPreference CreatetblMarketSnapshotPreference(global::System.Int32 snapshotPreferenceId, global::System.String snapshotName, global::System.String userId)
+        {
+            tblMarketSnapshotPreference tblMarketSnapshotPreference = new tblMarketSnapshotPreference();
+            tblMarketSnapshotPreference.SnapshotPreferenceId = snapshotPreferenceId;
+            tblMarketSnapshotPreference.SnapshotName = snapshotName;
+            tblMarketSnapshotPreference.UserId = userId;
+            return tblMarketSnapshotPreference;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SnapshotPreferenceId
+        {
+            get
+            {
+                return _SnapshotPreferenceId;
+            }
+            set
+            {
+                if (_SnapshotPreferenceId != value)
+                {
+                    OnSnapshotPreferenceIdChanging(value);
+                    ReportPropertyChanging("SnapshotPreferenceId");
+                    _SnapshotPreferenceId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SnapshotPreferenceId");
+                    OnSnapshotPreferenceIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SnapshotPreferenceId;
+        partial void OnSnapshotPreferenceIdChanging(global::System.Int32 value);
+        partial void OnSnapshotPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SnapshotName
+        {
+            get
+            {
+                return _SnapshotName;
+            }
+            set
+            {
+                OnSnapshotNameChanging(value);
+                ReportPropertyChanging("SnapshotName");
+                _SnapshotName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SnapshotName");
+                OnSnapshotNameChanged();
+            }
+        }
+        private global::System.String _SnapshotName;
+        partial void OnSnapshotNameChanging(global::System.String value);
+        partial void OnSnapshotNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.String _UserId;
+        partial void OnUserIdChanging(global::System.String value);
+        partial void OnUserIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotGroupPreference")]
+        public EntityCollection<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferences
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotGroupPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotGroupPreference", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblStatementRef")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -10230,362 +10894,6 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblUserBenchmarkPreference")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class tblUserBenchmarkPreference : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new tblUserBenchmarkPreference object.
-        /// </summary>
-        /// <param name="benchmarkPreferenceId">Initial value of the BenchmarkPreferenceId property.</param>
-        /// <param name="groupPreferenceID">Initial value of the GroupPreferenceID property.</param>
-        /// <param name="benchmarkName">Initial value of the BenchmarkName property.</param>
-        /// <param name="benchmarkOrder">Initial value of the BenchmarkOrder property.</param>
-        public static tblUserBenchmarkPreference CreatetblUserBenchmarkPreference(global::System.Int32 benchmarkPreferenceId, global::System.Int32 groupPreferenceID, global::System.String benchmarkName, global::System.Int32 benchmarkOrder)
-        {
-            tblUserBenchmarkPreference tblUserBenchmarkPreference = new tblUserBenchmarkPreference();
-            tblUserBenchmarkPreference.BenchmarkPreferenceId = benchmarkPreferenceId;
-            tblUserBenchmarkPreference.GroupPreferenceID = groupPreferenceID;
-            tblUserBenchmarkPreference.BenchmarkName = benchmarkName;
-            tblUserBenchmarkPreference.BenchmarkOrder = benchmarkOrder;
-            return tblUserBenchmarkPreference;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 BenchmarkPreferenceId
-        {
-            get
-            {
-                return _BenchmarkPreferenceId;
-            }
-            set
-            {
-                if (_BenchmarkPreferenceId != value)
-                {
-                    OnBenchmarkPreferenceIdChanging(value);
-                    ReportPropertyChanging("BenchmarkPreferenceId");
-                    _BenchmarkPreferenceId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("BenchmarkPreferenceId");
-                    OnBenchmarkPreferenceIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _BenchmarkPreferenceId;
-        partial void OnBenchmarkPreferenceIdChanging(global::System.Int32 value);
-        partial void OnBenchmarkPreferenceIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 GroupPreferenceID
-        {
-            get
-            {
-                return _GroupPreferenceID;
-            }
-            set
-            {
-                OnGroupPreferenceIDChanging(value);
-                ReportPropertyChanging("GroupPreferenceID");
-                _GroupPreferenceID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("GroupPreferenceID");
-                OnGroupPreferenceIDChanged();
-            }
-        }
-        private global::System.Int32 _GroupPreferenceID;
-        partial void OnGroupPreferenceIDChanging(global::System.Int32 value);
-        partial void OnGroupPreferenceIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String BenchmarkName
-        {
-            get
-            {
-                return _BenchmarkName;
-            }
-            set
-            {
-                OnBenchmarkNameChanging(value);
-                ReportPropertyChanging("BenchmarkName");
-                _BenchmarkName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("BenchmarkName");
-                OnBenchmarkNameChanged();
-            }
-        }
-        private global::System.String _BenchmarkName;
-        partial void OnBenchmarkNameChanging(global::System.String value);
-        partial void OnBenchmarkNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String BenchmarkReturnType
-        {
-            get
-            {
-                return _BenchmarkReturnType;
-            }
-            set
-            {
-                OnBenchmarkReturnTypeChanging(value);
-                ReportPropertyChanging("BenchmarkReturnType");
-                _BenchmarkReturnType = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("BenchmarkReturnType");
-                OnBenchmarkReturnTypeChanged();
-            }
-        }
-        private global::System.String _BenchmarkReturnType;
-        partial void OnBenchmarkReturnTypeChanging(global::System.String value);
-        partial void OnBenchmarkReturnTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 BenchmarkOrder
-        {
-            get
-            {
-                return _BenchmarkOrder;
-            }
-            set
-            {
-                OnBenchmarkOrderChanging(value);
-                ReportPropertyChanging("BenchmarkOrder");
-                _BenchmarkOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("BenchmarkOrder");
-                OnBenchmarkOrderChanged();
-            }
-        }
-        private global::System.Int32 _BenchmarkOrder;
-        partial void OnBenchmarkOrderChanging(global::System.Int32 value);
-        partial void OnBenchmarkOrderChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference")]
-        public tblUserGroupPreference tblUserGroupPreference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblUserGroupPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblUserGroupPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<tblUserGroupPreference> tblUserGroupPreferenceReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblUserGroupPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblUserGroupPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserGroupPreference", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="tblUserGroupPreference")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class tblUserGroupPreference : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new tblUserGroupPreference object.
-        /// </summary>
-        /// <param name="groupPreferenceID">Initial value of the GroupPreferenceID property.</param>
-        /// <param name="userId">Initial value of the UserId property.</param>
-        /// <param name="groupName">Initial value of the GroupName property.</param>
-        /// <param name="groupOrder">Initial value of the GroupOrder property.</param>
-        public static tblUserGroupPreference CreatetblUserGroupPreference(global::System.Int32 groupPreferenceID, global::System.String userId, global::System.String groupName, global::System.Int32 groupOrder)
-        {
-            tblUserGroupPreference tblUserGroupPreference = new tblUserGroupPreference();
-            tblUserGroupPreference.GroupPreferenceID = groupPreferenceID;
-            tblUserGroupPreference.UserId = userId;
-            tblUserGroupPreference.GroupName = groupName;
-            tblUserGroupPreference.GroupOrder = groupOrder;
-            return tblUserGroupPreference;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 GroupPreferenceID
-        {
-            get
-            {
-                return _GroupPreferenceID;
-            }
-            set
-            {
-                if (_GroupPreferenceID != value)
-                {
-                    OnGroupPreferenceIDChanging(value);
-                    ReportPropertyChanging("GroupPreferenceID");
-                    _GroupPreferenceID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("GroupPreferenceID");
-                    OnGroupPreferenceIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _GroupPreferenceID;
-        partial void OnGroupPreferenceIDChanging(global::System.Int32 value);
-        partial void OnGroupPreferenceIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String UserId
-        {
-            get
-            {
-                return _UserId;
-            }
-            set
-            {
-                OnUserIdChanging(value);
-                ReportPropertyChanging("UserId");
-                _UserId = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("UserId");
-                OnUserIdChanged();
-            }
-        }
-        private global::System.String _UserId;
-        partial void OnUserIdChanging(global::System.String value);
-        partial void OnUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String GroupName
-        {
-            get
-            {
-                return _GroupName;
-            }
-            set
-            {
-                OnGroupNameChanging(value);
-                ReportPropertyChanging("GroupName");
-                _GroupName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("GroupName");
-                OnGroupNameChanged();
-            }
-        }
-        private global::System.String _GroupName;
-        partial void OnGroupNameChanging(global::System.String value);
-        partial void OnGroupNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 GroupOrder
-        {
-            get
-            {
-                return _GroupOrder;
-            }
-            set
-            {
-                OnGroupOrderChanging(value);
-                ReportPropertyChanging("GroupOrder");
-                _GroupOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("GroupOrder");
-                OnGroupOrderChanged();
-            }
-        }
-        private global::System.Int32 _GroupOrder;
-        partial void OnGroupOrderChanging(global::System.Int32 value);
-        partial void OnGroupOrderChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserBenchmarkPreference")]
-        public EntityCollection<tblUserBenchmarkPreference> tblUserBenchmarkPreferences
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<tblUserBenchmarkPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserBenchmarkPreference");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<tblUserBenchmarkPreference>("ResearchModel.FK_tblUserBenchmarkPreference_tblUserGroupPreference", "tblUserBenchmarkPreference", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="UserDashboardPreferance")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -11783,24 +12091,24 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="UserBenchmarkPreference")]
+    [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="MarketSnapshotPreference")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
-    public partial class UserBenchmarkPreference : ComplexObject
+    public partial class MarketSnapshotPreference : ComplexObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new UserBenchmarkPreference object.
+        /// Create a new MarketSnapshotPreference object.
         /// </summary>
         /// <param name="groupName">Initial value of the GroupName property.</param>
-        /// <param name="groupOrder">Initial value of the GroupOrder property.</param>
-        public static UserBenchmarkPreference CreateUserBenchmarkPreference(global::System.String groupName, global::System.Int32 groupOrder)
+        /// <param name="groupPreferenceID">Initial value of the GroupPreferenceID property.</param>
+        public static MarketSnapshotPreference CreateMarketSnapshotPreference(global::System.String groupName, global::System.Int32 groupPreferenceID)
         {
-            UserBenchmarkPreference userBenchmarkPreference = new UserBenchmarkPreference();
-            userBenchmarkPreference.GroupName = groupName;
-            userBenchmarkPreference.GroupOrder = groupOrder;
-            return userBenchmarkPreference;
+            MarketSnapshotPreference marketSnapshotPreference = new MarketSnapshotPreference();
+            marketSnapshotPreference.GroupName = groupName;
+            marketSnapshotPreference.GroupPreferenceID = groupPreferenceID;
+            return marketSnapshotPreference;
         }
 
         #endregion
@@ -11835,96 +12143,197 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 GroupOrder
+        public global::System.Int32 GroupPreferenceID
         {
             get
             {
-                return _GroupOrder;
+                return _GroupPreferenceID;
             }
             set
             {
-                OnGroupOrderChanging(value);
-                ReportPropertyChanging("GroupOrder");
-                _GroupOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("GroupOrder");
-                OnGroupOrderChanged();
+                OnGroupPreferenceIDChanging(value);
+                ReportPropertyChanging("GroupPreferenceID");
+                _GroupPreferenceID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("GroupPreferenceID");
+                OnGroupPreferenceIDChanged();
             }
         }
-        private global::System.Int32 _GroupOrder;
-        partial void OnGroupOrderChanging(global::System.Int32 value);
-        partial void OnGroupOrderChanged();
+        private global::System.Int32 _GroupPreferenceID;
+        partial void OnGroupPreferenceIDChanging(global::System.Int32 value);
+        partial void OnGroupPreferenceIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String BenchmarkName
+        public Nullable<global::System.Int32> EntityPreferenceId
         {
             get
             {
-                return _BenchmarkName;
+                return _EntityPreferenceId;
             }
             set
             {
-                OnBenchmarkNameChanging(value);
-                ReportPropertyChanging("BenchmarkName");
-                _BenchmarkName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("BenchmarkName");
-                OnBenchmarkNameChanged();
+                OnEntityPreferenceIdChanging(value);
+                ReportPropertyChanging("EntityPreferenceId");
+                _EntityPreferenceId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityPreferenceId");
+                OnEntityPreferenceIdChanged();
             }
         }
-        private global::System.String _BenchmarkName;
-        partial void OnBenchmarkNameChanging(global::System.String value);
-        partial void OnBenchmarkNameChanged();
+        private Nullable<global::System.Int32> _EntityPreferenceId;
+        partial void OnEntityPreferenceIdChanging(Nullable<global::System.Int32> value);
+        partial void OnEntityPreferenceIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String BenchmarkReturnType
+        public global::System.String EntityName
         {
             get
             {
-                return _BenchmarkReturnType;
+                return _EntityName;
             }
             set
             {
-                OnBenchmarkReturnTypeChanging(value);
-                ReportPropertyChanging("BenchmarkReturnType");
-                _BenchmarkReturnType = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("BenchmarkReturnType");
-                OnBenchmarkReturnTypeChanged();
+                OnEntityNameChanging(value);
+                ReportPropertyChanging("EntityName");
+                _EntityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityName");
+                OnEntityNameChanged();
             }
         }
-        private global::System.String _BenchmarkReturnType;
-        partial void OnBenchmarkReturnTypeChanging(global::System.String value);
-        partial void OnBenchmarkReturnTypeChanged();
+        private global::System.String _EntityName;
+        partial void OnEntityNameChanging(global::System.String value);
+        partial void OnEntityNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> BenchmarkOrder
+        public Nullable<global::System.Int32> EntityOrder
         {
             get
             {
-                return _BenchmarkOrder;
+                return _EntityOrder;
             }
             set
             {
-                OnBenchmarkOrderChanging(value);
-                ReportPropertyChanging("BenchmarkOrder");
-                _BenchmarkOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("BenchmarkOrder");
-                OnBenchmarkOrderChanged();
+                OnEntityOrderChanging(value);
+                ReportPropertyChanging("EntityOrder");
+                _EntityOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EntityOrder");
+                OnEntityOrderChanged();
             }
         }
-        private Nullable<global::System.Int32> _BenchmarkOrder;
-        partial void OnBenchmarkOrderChanging(Nullable<global::System.Int32> value);
-        partial void OnBenchmarkOrderChanged();
+        private Nullable<global::System.Int32> _EntityOrder;
+        partial void OnEntityOrderChanging(Nullable<global::System.Int32> value);
+        partial void OnEntityOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityReturnType
+        {
+            get
+            {
+                return _EntityReturnType;
+            }
+            set
+            {
+                OnEntityReturnTypeChanging(value);
+                ReportPropertyChanging("EntityReturnType");
+                _EntityReturnType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityReturnType");
+                OnEntityReturnTypeChanged();
+            }
+        }
+        private global::System.String _EntityReturnType;
+        partial void OnEntityReturnTypeChanging(global::System.String value);
+        partial void OnEntityReturnTypeChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="MarketSnapshotSelectionData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class MarketSnapshotSelectionData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new MarketSnapshotSelectionData object.
+        /// </summary>
+        /// <param name="snapshotPreferenceId">Initial value of the SnapshotPreferenceId property.</param>
+        /// <param name="snapshotName">Initial value of the SnapshotName property.</param>
+        public static MarketSnapshotSelectionData CreateMarketSnapshotSelectionData(global::System.Int32 snapshotPreferenceId, global::System.String snapshotName)
+        {
+            MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData();
+            marketSnapshotSelectionData.SnapshotPreferenceId = snapshotPreferenceId;
+            marketSnapshotSelectionData.SnapshotName = snapshotName;
+            return marketSnapshotSelectionData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SnapshotPreferenceId
+        {
+            get
+            {
+                return _SnapshotPreferenceId;
+            }
+            set
+            {
+                OnSnapshotPreferenceIdChanging(value);
+                ReportPropertyChanging("SnapshotPreferenceId");
+                _SnapshotPreferenceId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SnapshotPreferenceId");
+                OnSnapshotPreferenceIdChanged();
+            }
+        }
+        private global::System.Int32 _SnapshotPreferenceId;
+        partial void OnSnapshotPreferenceIdChanging(global::System.Int32 value);
+        partial void OnSnapshotPreferenceIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SnapshotName
+        {
+            get
+            {
+                return _SnapshotName;
+            }
+            set
+            {
+                OnSnapshotNameChanging(value);
+                ReportPropertyChanging("SnapshotName");
+                _SnapshotName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SnapshotName");
+                OnSnapshotNameChanged();
+            }
+        }
+        private global::System.String _SnapshotName;
+        partial void OnSnapshotNameChanging(global::System.String value);
+        partial void OnSnapshotNameChanged();
 
         #endregion
     }
