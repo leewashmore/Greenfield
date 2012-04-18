@@ -866,22 +866,22 @@ namespace GreenField.Web.Services
 
         #endregion
 
-        #region Morning Snapshot Operation Contracts
+        #region Market Performance Snapshot Operation Contracts
 
         /// <summary>
-        /// retrieving user preference for morning snapshot gadget
+        /// retrieving list of market performance snapshots for particular user
         /// </summary>
         /// <param name="userName"></param>
-        /// <returns>list of user benchmark preference</returns>
+        /// <returns>returns list of market performance snapshots</returns>
         [OperationContract]
-        public List<UserBenchmarkPreference> RetrieveUserPreferenceBenchmarkData(string userName)
+        public List<MarketSnapshotSelectionData> RetrieveMarketSnapshotSelectionData(string userName)
         {
             try
             {
                 if (userName != null)
                 {
                     ResearchEntities entity = new ResearchEntities();
-                    List<UserBenchmarkPreference> userPreference = (entity.GetUserBenchmarkPreference(userName)).ToList<UserBenchmarkPreference>();
+                    List<MarketSnapshotSelectionData> userPreference = (entity.GetMarketSnapshotSelectionData(userName)).ToList<MarketSnapshotSelectionData>();
                     return userPreference;
                 }
                 else
@@ -897,22 +897,51 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// retrieving benchmark data for morning snapshot gadget based on user preference
+        /// retrieving user preference for market performance snapshot gadget
         /// </summary>
-        /// <param name="userBenchmarkPreference"></param>
-        /// <returns>list of benchmark data for morning snapshot</returns>
+        /// <param name="userName"></param>
+        /// <param name="snapshotName"></param>
+        /// <returns>list of user preference of entities in market performance snapshot</returns>
         [OperationContract]
-        public List<MorningSnapshotData> RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference)
+        public List<MarketSnapshotPreference> RetrieveMarketSnapshotPreference(string userName,string snapshotName)
+        {
+            try
+            {
+                if (userName != null)
+                {
+                    ResearchEntities entity = new ResearchEntities();
+                    List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName, snapshotName)).ToList<MarketSnapshotPreference>();
+                    return userPreference;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// retrieving entity data for market performance snapshot gadget based on user preference
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <returns>list of entity data for market performance snapshot</returns>
+        [OperationContract]
+        public List<MarketPerformanceSnapshotData> RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference)
         {
 
             try
             {
-                List<MorningSnapshotData> result = new List<MorningSnapshotData>();
-                foreach (UserBenchmarkPreference preference in userBenchmarkPreference)
+                List<MarketPerformanceSnapshotData> result = new List<MarketPerformanceSnapshotData>();
+                foreach (MarketSnapshotPreference preference in marketSnapshotPreference)
                 {
-                    if (preference.BenchmarkName != null)
+                    if (preference.EntityName != null)
                     {
-                        result.Add(new MorningSnapshotData()
+                        result.Add(new MarketPerformanceSnapshotData()
                         {
                             MorningSnapshotPreferenceInfo = preference,
                             DTD = -0.1,
@@ -927,7 +956,7 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
-                        result.Add(new MorningSnapshotData()
+                        result.Add(new MarketPerformanceSnapshotData()
                         {
                             MorningSnapshotPreferenceInfo = preference
                         });
@@ -944,39 +973,60 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// adding user preferred groups in morning snapshot gadget
+        /// adding new market performance snapshot created by user
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="groupName"></param>
+        /// <param name="userId"></param>
+        /// <param name="snapshotName"></param>
         [OperationContract]
-        public bool AddUserPreferenceBenchmarkGroup(string userName, string groupName)
-        {
-            ResearchEntities entity = new ResearchEntities();
-            try
-            {
-                entity.SetUserGroupPreference(userName, groupName);
-                return true;
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// removing user preferred groups from morning snapshot gadget
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="groupName"></param>
-        [OperationContract]
-        public bool RemoveUserPreferenceBenchmarkGroup(string userName, string groupname)
+        public bool AddMarketSnapshotPerformance(string userId, string snapshotName)
         {
             try
             {
                 ResearchEntities entity = new ResearchEntities();
-                entity.DeleteUserGroupPreference(userName, groupname);
+                entity.SetMarketSnapshotPreference(userId, snapshotName);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// updating the market performance snapshot name for a particular user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="snapshotName"></param>
+        /// <param name="snapshotPreferenceId"></param>
+        [OperationContract]
+        public bool UpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId)
+        {
+            try
+            {
+                ResearchEntities entity = new ResearchEntities();
+                entity.UpdateMarketSnapshotPreference(userId, snapshotName, snapshotPreferenceId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// adding user preferred groups in market performance snapshot gadget
+        /// </summary>
+        /// <param name="snapshotPreferenceId"></param>
+        /// <param name="groupName"></param>
+        [OperationContract]
+        public bool AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.SetMarketSnapshotGroupPreference(snapshotPreferenceId, groupName);
                 return true;
             }
 
@@ -988,17 +1038,16 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// adding user preferred benchmarks in groups in morning snapshot gadget
+        /// removing user preferred groups from market performance snapshot gadget
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="groupName"></param>
+        /// <param name="grouppreferenceId"></param>
         [OperationContract]
-        public bool AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        public bool RemoveMarketSnapshotGroupPreference(int groupPreferenceId)
         {
-            ResearchEntities entity = new ResearchEntities();
             try
             {
-                entity.SetUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName, userBenchmarkPreference.BenchmarkReturnType);
+                ResearchEntities entity = new ResearchEntities();
+                entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
                 return true;
             }
 
@@ -1009,18 +1058,41 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
-        /// removing user preferred benchmarks from groups in morning snapshot gadget
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="groupName"></param>
+       /// <summary>
+        /// adding user preferred entities in groups in market performance snapshot gadget
+       /// </summary>
+       /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
-        public bool RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference)
+        public bool AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                entity.DeleteUserBenchmarkPreference(userName, userBenchmarkPreference.GroupName, userBenchmarkPreference.BenchmarkName);
+                entity.SetMarketSnapshotEntityPreference(marketSnapshotPreference.GroupPreferenceID, 
+                                                            marketSnapshotPreference.EntityName, 
+                                                                marketSnapshotPreference.EntityReturnType,
+                                                                    marketSnapshotPreference.EntityOrder);
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
+        }
+
+       /// <summary>
+       ///  removing user preferred entities from groups in market performance snapshot gadget
+       /// </summary>
+       /// <param name="marketSnapshotPreference"></param>
+        [OperationContract]
+        public bool RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId);
                 return true;
             }
 
