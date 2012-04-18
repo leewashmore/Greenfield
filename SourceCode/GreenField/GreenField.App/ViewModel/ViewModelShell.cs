@@ -19,6 +19,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.App.Models;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;
+using GreenField.App.Helpers;
 
 namespace GreenField.App.ViewModel
 {
@@ -147,6 +148,11 @@ namespace GreenField.App.ViewModel
             {
                 _selectedEntity = value;
                 RaisePropertyChanged(() => this.SelectedEntity);
+                if (value != null)
+                {
+                    DashboardGadgetPayload.EntitySelectionData = value;
+                    _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Publish(DashboardGadgetPayload.EntitySelectionData);
+                }
             }
         }
 
@@ -168,7 +174,95 @@ namespace GreenField.App.ViewModel
                     BindedEntitySelectionInfo = EntitySelectionInfo;
             }
         }
+
+        private Visibility _securitySelectorVisibility;
+        public Visibility SecuritySelectorVisibility
+        {
+            get { return _securitySelectorVisibility; }
+            set
+            {
+                _securitySelectorVisibility = value;
+                RaisePropertyChanged(() => this.SecuritySelectorVisibility);
+            }
+        }        
         #endregion 
+
+        private Visibility _portfolioSelectorVisibility;
+        public Visibility PortfolioSelectorVisibility
+        {
+            get { return _portfolioSelectorVisibility; }
+            set
+            {
+                _portfolioSelectorVisibility = value;
+                RaisePropertyChanged(() => this.PortfolioSelectorVisibility);
+            }
+        }
+
+        private Visibility _effectiveDateSelectorVisibility;
+        public Visibility EffectiveDateSelectorVisibility
+        {
+            get { return _effectiveDateSelectorVisibility; }
+            set
+            {
+                _effectiveDateSelectorVisibility = value;
+                RaisePropertyChanged(() => this.EffectiveDateSelectorVisibility);
+            }
+        }
+
+        private Visibility _countrySelectorVisibility;
+        public Visibility CountrySelectorVisibility
+        {
+            get { return _countrySelectorVisibility; }
+            set
+            {
+                _countrySelectorVisibility = value;
+                RaisePropertyChanged(() => this.CountrySelectorVisibility);
+            }
+        }
+
+        private Visibility _sectorSelectorVisibility;
+        public Visibility SectorSelectorVisibility
+        {
+            get { return _sectorSelectorVisibility; }
+            set
+            {
+                _sectorSelectorVisibility = value;
+                RaisePropertyChanged(() => this.SectorSelectorVisibility);
+            }
+        }
+
+        private Visibility _industrySelectorVisibility;
+        public Visibility IndustrySelectorVisibility
+        {
+            get { return _industrySelectorVisibility; }
+            set
+            {
+                _industrySelectorVisibility = value;
+                RaisePropertyChanged(() => this.IndustrySelectorVisibility);
+            }
+        }
+
+        private Visibility _regionSelectorVisibility;
+        public Visibility RegionSelectorVisibility
+        {
+            get { return _regionSelectorVisibility; }
+            set
+            {
+                _regionSelectorVisibility = value;
+                RaisePropertyChanged(() => this.RegionSelectorVisibility);
+            }
+        }
+
+        private Visibility _periodSelectorVisibility;
+        public Visibility PeriodSelectorVisibility
+        {
+            get { return _periodSelectorVisibility; }
+            set
+            {
+                _periodSelectorVisibility = value;
+                RaisePropertyChanged(() => this.PeriodSelectorVisibility);
+            }
+        }        
         #endregion
 
         private CollectionViewSource _fundReference;
@@ -699,6 +793,8 @@ namespace GreenField.App.ViewModel
             try
             {
                 _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategory.DashboardCategoryTypes.COMPANY_SNAPSHOT_SUMMARY);
+                UpdateToolBoxSelectorVisibility();
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
             }
             catch (Exception ex)
@@ -1927,6 +2023,18 @@ namespace GreenField.App.ViewModel
 
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             return param;
+        }
+
+        private void UpdateToolBoxSelectorVisibility()
+        {
+            SecuritySelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY;
+            PortfolioSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
+            EffectiveDateSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
+            CountrySelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
+            SectorSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
+            IndustrySelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
+            RegionSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
+            PeriodSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
         }
         #endregion
 

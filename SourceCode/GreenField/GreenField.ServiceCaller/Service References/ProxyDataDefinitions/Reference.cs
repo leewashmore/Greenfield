@@ -2653,11 +2653,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="UnrealizedGainLossData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class UnrealizedGainLossData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double AdjustedPriceField;
+        private System.Nullable<decimal> AdjustedPriceField;
         
-        private decimal CostField;
+        private System.Nullable<decimal> CostField;
         
-        private decimal DailyClosingPriceField;
+        private System.Nullable<decimal> DailyClosingPriceField;
         
         private decimal DailyGrossReturnField;
         
@@ -2671,22 +2671,22 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private string IssueNameField;
         
-        private double MovingAverageField;
+        private System.Nullable<decimal> MovingAverageField;
         
-        private double NinetyDayWtAvgField;
+        private System.Nullable<decimal> NinetyDayWtAvgField;
         
         private string TickerField;
         
         private string TypeField;
         
-        private double UnrealizedGainLossField;
+        private System.Nullable<decimal> UnrealizedGainLossField;
         
-        private decimal VolumeField;
+        private System.Nullable<decimal> VolumeField;
         
-        private double WtAvgCostField;
+        private System.Nullable<decimal> WtAvgCostField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double AdjustedPrice {
+        public System.Nullable<decimal> AdjustedPrice {
             get {
                 return this.AdjustedPriceField;
             }
@@ -2699,7 +2699,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Cost {
+        public System.Nullable<decimal> Cost {
             get {
                 return this.CostField;
             }
@@ -2712,7 +2712,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal DailyClosingPrice {
+        public System.Nullable<decimal> DailyClosingPrice {
             get {
                 return this.DailyClosingPriceField;
             }
@@ -2803,7 +2803,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double MovingAverage {
+        public System.Nullable<decimal> MovingAverage {
             get {
                 return this.MovingAverageField;
             }
@@ -2816,7 +2816,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double NinetyDayWtAvg {
+        public System.Nullable<decimal> NinetyDayWtAvg {
             get {
                 return this.NinetyDayWtAvgField;
             }
@@ -2855,7 +2855,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double UnrealizedGainLoss {
+        public System.Nullable<decimal> UnrealizedGainLoss {
             get {
                 return this.UnrealizedGainLossField;
             }
@@ -2868,7 +2868,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Volume {
+        public System.Nullable<decimal> Volume {
             get {
                 return this.VolumeField;
             }
@@ -2881,7 +2881,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double WtAvgCost {
+        public System.Nullable<decimal> WtAvgCost {
             get {
                 return this.WtAvgCostField;
             }
@@ -3460,7 +3460,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.AttributionData> EndRetrieveAttributionData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUnrealizedGainLossDataResponse")]
-        System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveUnrealizedGainLossData(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);
         
@@ -5838,7 +5838,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUnrealizedGainLossData(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, frequencyInterval, callback, asyncState);
         }
         
@@ -5848,7 +5848,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveUnrealizedGainLossData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string entityIdentifier = ((string)(inValues[0]));
+            GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier = ((GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData)(inValues[0]));
             System.DateTime startDateTime = ((System.DateTime)(inValues[1]));
             System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
             string frequencyInterval = ((string)(inValues[3]));
@@ -5868,11 +5868,11 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
             }
         }
         
-        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval) {
+        public void RetrieveUnrealizedGainLossDataAsync(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval) {
             this.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval, null);
         }
         
-        public void RetrieveUnrealizedGainLossDataAsync(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, object userState) {
+        public void RetrieveUnrealizedGainLossDataAsync(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, object userState) {
             if ((this.onBeginRetrieveUnrealizedGainLossDataDelegate == null)) {
                 this.onBeginRetrieveUnrealizedGainLossDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveUnrealizedGainLossData);
             }
@@ -6612,7 +6612,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveUnrealizedGainLossData(string entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveUnrealizedGainLossData(GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[4];
                 _args[0] = entityIdentifier;
                 _args[1] = startDateTime;

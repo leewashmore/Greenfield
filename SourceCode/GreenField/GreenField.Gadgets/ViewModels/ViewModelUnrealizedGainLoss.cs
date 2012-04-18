@@ -62,7 +62,9 @@ namespace GreenField.Gadgets.ViewModels
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
-                HandleSecurityReferenceSet(_entitySelectionData);
+            {
+                RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
+            }
         }
         #endregion
 
@@ -149,7 +151,7 @@ namespace GreenField.Gadgets.ViewModels
                     _selectedTimeRange = value;
 
                     if (_entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                        RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
                     RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
@@ -170,7 +172,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_entitySelectionData != null)
 
-                        RetrieveUnrealizedGainLossData(_entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                        RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
@@ -203,15 +205,15 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="Ticker">Unique Identifier for a security</param>
         /// <param name="callback">Callback for this method</param>
-        private void RetrieveUnrealizedGainLossData(String Ticker, Action<List<UnrealizedGainLossData>> callback)
+        private void RetrieveUnrealizedGainLossData(EntitySelectionData entitySelectionData, Action<List<UnrealizedGainLossData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (Ticker != null)
+                if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, Ticker, 1);
+                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     if (callback != null)
                     {
                         Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
@@ -220,7 +222,7 @@ namespace GreenField.Gadgets.ViewModels
                         GetPeriod(out periodStartDate, out periodEndDate);
                         if (null != unrealizedGainLossDataLoadedEvent)
                             unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveUnrealizedGainLossData(Ticker, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
+                        _dbInteractivity.RetrieveUnrealizedGainLossData(entitySelectionData, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
                     }
                     else
                     {
@@ -429,7 +431,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _entitySelectionData = entitySelectionData;
-                    RetrieveUnrealizedGainLossData(entitySelectionData.ShortName, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    RetrieveUnrealizedGainLossData(entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
                 }
                 else
                 {

@@ -43,7 +43,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback);        
         
-        void RetrieveUnrealizedGainLossData(String entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval ,Action<List<UnrealizedGainLossData>> callback);
+        void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval ,Action<List<UnrealizedGainLossData>> callback);
         
         void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback);
 

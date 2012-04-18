@@ -3,166 +3,306 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GreenField.Web.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
 using GreenField.DAL;
 
-namespace GreenField.Web.Helpers
+/// <summary>
+/// Class contains methods that calculate the Unrealized Gain Loss of a security. 
+/// </summary>
+public static class UnrealizedGainLossCalculations
 {
     /// <summary>
-    /// Class contains methods that calculate the Unrealized Gain Loss of a security. 
+    /// Method that calculates the adjusted price for a selected security
     /// </summary>
-    public static class UnrealizedGainLossCalculations
-    { 
-        /// <summary>
-        /// Method that calculates the adjusted price for a selected security
-        /// </summary>
-        /// <param name="arrangedByDescRecord">The input list sorted in descending order of fromdate</param>
-        /// <param name="noOfRows">No. of records in the arrangedByDescRecord list</param>
-        /// <returns>adjustedPriceResult</returns>
-        public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<DimensionEntitiesService.GF_PRICING_BASEVIEW> arrangedByDescRecord, int noOfRows)
+    /// <param name="resultSetArrangedByDescRecord">The input list sorted in descending order of fromdate</param>
+    /// <param name="noOfRows">No. of records in the arrangedByDescRecord list</param>
+    /// <returns>adjustedPriceResult</returns>
+    public static List<UnrealizedGainLossData> CalculateAdjustedPrice(List<GF_PRICING_BASEVIEW> resultSetArrangedByDescRecord)
+    {
+        if (resultSetArrangedByDescRecord == null)
+            throw new ArgumentNullException("UnrealizedGainLossCalulcations:CalculateAdjustedPrice");
+
+        if (resultSetArrangedByDescRecord.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+
+        List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
+
+        decimal? previousAdjustedPrice;
+        decimal? previousPriceReturn;
+
+        UnrealizedGainLossData entry = new UnrealizedGainLossData();
+
+        //Calculations for the first record
+
+        entry.AdjustedPrice = resultSetArrangedByDescRecord[0].DAILY_CLOSING_PRICE;
+        entry.DailyClosingPrice = resultSetArrangedByDescRecord[0].DAILY_CLOSING_PRICE;
+        entry.FromDate = resultSetArrangedByDescRecord[0].FROMDATE;
+        entry.Volume = resultSetArrangedByDescRecord[0].VOLUME;
+        entry.Ticker = resultSetArrangedByDescRecord[0].TICKER;
+        entry.IssueName = resultSetArrangedByDescRecord[0].ISSUE_NAME;
+        entry.Type = resultSetArrangedByDescRecord[0].TYPE;
+
+        previousAdjustedPrice = entry.AdjustedPrice;
+        previousPriceReturn = resultSetArrangedByDescRecord[0].DAILY_PRICE_RETURN;
+
+        //Return Empty Set if previousAdjustedPrice or previousPriceReturn null results
+        if (previousAdjustedPrice == null || previousPriceReturn == null)
+            return adjustedPriceResult;
+
+        adjustedPriceResult.Add(entry);
+
+        //Calculations for the rest of the records
+        for (int i = 1; i < resultSetArrangedByDescRecord.Count; i++)
         {
-            List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
-            double previousAdjustedPrice;
-            double previousPriceReturn;
-            UnrealizedGainLossData entry = new UnrealizedGainLossData();
-            //Calculations for the first record
-            entry.AdjustedPrice = Convert.ToDouble(arrangedByDescRecord[0].DAILY_CLOSING_PRICE);
-            previousAdjustedPrice = entry.AdjustedPrice;
-            previousPriceReturn = Convert.ToDouble(arrangedByDescRecord[0].DAILY_PRICE_RETURN);
-            entry.DailyClosingPrice = Convert.ToDecimal(arrangedByDescRecord[0].DAILY_CLOSING_PRICE);
-            entry.FromDate = (DateTime)arrangedByDescRecord[0].FROMDATE;
-            entry.Volume = Convert.ToDecimal(arrangedByDescRecord[0].VOLUME);
-            entry.Ticker = arrangedByDescRecord[0].TICKER;
-            entry.IssueName = arrangedByDescRecord[0].ISSUE_NAME;
-            entry.Type = arrangedByDescRecord[0].TYPE;
+            entry = new UnrealizedGainLossData();
+
+            decimal? adjustedPriceDenominator = 1 + (previousPriceReturn / 100);
+            if (adjustedPriceDenominator.Equals(0))
+                throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
+
+            entry.AdjustedPrice = previousAdjustedPrice / adjustedPriceDenominator;
+            previousPriceReturn = resultSetArrangedByDescRecord[i].DAILY_PRICE_RETURN;
+            entry.DailyClosingPrice = resultSetArrangedByDescRecord[i].DAILY_CLOSING_PRICE;
+            entry.FromDate = resultSetArrangedByDescRecord[i].FROMDATE;
+            entry.Volume = resultSetArrangedByDescRecord[i].VOLUME;
+            entry.Ticker = resultSetArrangedByDescRecord[i].TICKER;
+            entry.IssueName = resultSetArrangedByDescRecord[i].ISSUE_NAME;
+            entry.Type = resultSetArrangedByDescRecord[i].TYPE;
+
             adjustedPriceResult.Add(entry);
 
-            //Calculations for the rest of the records
-            for (int i = 1; i < noOfRows; i++)
-            {
-                
-                entry = new UnrealizedGainLossData();
-                if (previousPriceReturn == -100)
-                    continue;
-                entry.AdjustedPrice = previousAdjustedPrice / (1 + (previousPriceReturn / 100));
-                previousAdjustedPrice = entry.AdjustedPrice;
-                previousPriceReturn = Convert.ToDouble(arrangedByDescRecord[i].DAILY_PRICE_RETURN);
-                entry.DailyClosingPrice = Convert.ToDecimal(arrangedByDescRecord[i].DAILY_CLOSING_PRICE);
-                entry.FromDate = (DateTime)arrangedByDescRecord[i].FROMDATE;
-                entry.Volume = Convert.ToDecimal(arrangedByDescRecord[i].VOLUME);
-                entry.Ticker = arrangedByDescRecord[i].TICKER;
-                entry.IssueName = arrangedByDescRecord[i].ISSUE_NAME;
-                entry.Type = arrangedByDescRecord[i].TYPE;
-                adjustedPriceResult.Add(entry);
-            }
-            return adjustedPriceResult;
+            previousAdjustedPrice = entry.AdjustedPrice;
         }
 
-        /// <summary>
-        /// Method that calculates the Moving Average of a selected security
-        /// </summary>
-        /// <param name="adjustedPriceResult">Contains the calculated Adjusted price of the security</param>
-        /// <param name="noOfRows">No. of records</param>
-        /// <returns>resultAscOrder</returns>
-        public static List<UnrealizedGainLossData> CalculateMovingAverage(List<UnrealizedGainLossData> adjustedPriceResult, int noOfRows)
+        return adjustedPriceResult;
+    }
+
+    /// <summary>
+    /// Method that calculates the Moving Average of a selected security
+    /// </summary>
+    /// <param name="adjustedPriceResult">Contains the calculated Adjusted price of the security</param>
+    /// <param name="noOfRows">No. of records</param>
+    /// <returns>resultAscOrder</returns>
+    public static List<UnrealizedGainLossData> CalculateMovingAverage(List<UnrealizedGainLossData> adjustedPriceResult)
+    {
+        if (adjustedPriceResult == null)
+            throw new ArgumentNullException();
+
+        if (adjustedPriceResult.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+
+        List<UnrealizedGainLossData> resultAscOrder
+            = adjustedPriceResult
+            .OrderBy(res => res.FromDate)
+            .ToList();
+
+        decimal? totalPrice = resultAscOrder[0].AdjustedPrice;
+
+        //Calculations for the first record
+        resultAscOrder[0].MovingAverage = resultAscOrder[0].AdjustedPrice;
+
+        //Calculations for the rest of the records
+        for (int i = 0; i < adjustedPriceResult.Count - 1; i++)
         {
-
-            int rowCount = 1;
-            List<UnrealizedGainLossData> resultAscOrder = adjustedPriceResult.OrderBy(res => res.FromDate).ToList();
-            double totalPrice = resultAscOrder[0].AdjustedPrice;
-
-            //Calculations for the first record
-            resultAscOrder[0].MovingAverage = resultAscOrder[0].AdjustedPrice;
-
-            //Calculations for the rest of the records
-            for (int i = 0; i < noOfRows - 1; i++)
-            {
-                totalPrice = totalPrice + resultAscOrder[i + 1].AdjustedPrice;
-                rowCount = rowCount + 1;
-                resultAscOrder[i + 1].MovingAverage = totalPrice / rowCount;
-            }
-            return resultAscOrder;
+            totalPrice = totalPrice + resultAscOrder[i + 1].AdjustedPrice;
+            resultAscOrder[i + 1].MovingAverage = totalPrice / (i + 2);
         }
 
-        /// <summary>
-        /// Method that calculates the Ninety Day Weight Average for a selected security
-        /// </summary>
-        /// <param name="movingAverageResult">Contains the Calculated Moving Average of the security</param>
-        /// <param name="noOfRows">No. of records</param>
-        /// <returns>movingAverageResult</returns>
-        public static List<UnrealizedGainLossData> CalculateNinetyDayWtAvg(List<UnrealizedGainLossData> movingAverageResult, int noOfRows)
+        return resultAscOrder;
+    }
+
+    /// <summary>
+    /// Method that calculates the Ninety Day Weight Average for a selected security
+    /// </summary>
+    /// <param name="movingAverageResult">Contains the Calculated Moving Average of the security</param>
+    /// <param name="noOfRows">No. of records</param>
+    /// <returns>movingAverageResult</returns>
+    public static List<UnrealizedGainLossData> CalculateNinetyDayWtAvg(List<UnrealizedGainLossData> movingAverageResult)
+    {
+        if (movingAverageResult == null)
+            throw new ArgumentNullException();
+
+        if (movingAverageResult.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+        decimal? nintyDayVolumeSummation = 0;
+
+        if (movingAverageResult.Count < 90)
+            throw new InvalidOperationException("Service returned incomplete data. Operation could not be completed");
+
+        for (int i = 0; i < 90; i++)
         {
-            decimal currentSum = 0;
-            for (int i = 0; i < 90; i++)
-            {
-                currentSum = currentSum + movingAverageResult[i].Volume;
-            }
-
-            movingAverageResult[89].NinetyDayWtAvg = Convert.ToDouble(currentSum);
-
-            for (int i = 90; i < noOfRows; i++)
-            {
-                currentSum = currentSum + movingAverageResult[i].Volume - movingAverageResult[i - 90].Volume;
-                movingAverageResult[i].NinetyDayWtAvg = Convert.ToDouble(currentSum);
-            }
-
-            return movingAverageResult;
+            movingAverageResult[i].NinetyDayWtAvg = 0;
+            nintyDayVolumeSummation = nintyDayVolumeSummation + movingAverageResult[i].Volume;
         }
 
-        /// <summary>
-        /// Method that calculates the Cost for a selected security
-        /// </summary>
-        /// <param name="ninetyDayWtResult">Contains the Calculated Ninety Day Average Weight of the security</param>
-        /// <param name="noOfRows">No. of records</param>
-        /// <returns>ninetyDayWtResult</returns>
-        public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWtResult, int noOfRows)
+        movingAverageResult[89].NinetyDayWtAvg = nintyDayVolumeSummation;
+
+        for (int i = 90; i < movingAverageResult.Count; i++)
         {
-            for (int i = 0; i < 90; i++)
-            {
-                ninetyDayWtResult[i].Cost = (Convert.ToDecimal(ninetyDayWtResult[i].AdjustedPrice) * (ninetyDayWtResult[i].Volume)) / Convert.ToDecimal(ninetyDayWtResult[89].NinetyDayWtAvg);
-            }
-            for (int i = 90; i < noOfRows; i++)
-            {
-                ninetyDayWtResult[i].Cost = (Convert.ToDecimal(ninetyDayWtResult[i].AdjustedPrice) * (ninetyDayWtResult[i].Volume)) / Convert.ToDecimal(ninetyDayWtResult[i].NinetyDayWtAvg);
-            }
-
-            return ninetyDayWtResult;
+            nintyDayVolumeSummation = nintyDayVolumeSummation + movingAverageResult[i].Volume - movingAverageResult[i - 90].Volume;
+            movingAverageResult[i].NinetyDayWtAvg = nintyDayVolumeSummation;
         }
 
-        /// <summary>
-        /// Method that calculates the Weight Avg Cost for a selected security
-        /// </summary>
-        /// <param name="costResult">Contains the Calculated Cost of the security</param>
-        /// <param name="noOfRows">No. of records</param>
-        /// <returns>costResult</returns>
-        public static List<UnrealizedGainLossData> CalculateWtAvgCost(List<UnrealizedGainLossData> costResult, int noOfRows)
+        return movingAverageResult;
+    }
+
+    /// <summary>
+    /// Method that calculates the Cost for a selected security
+    /// </summary>
+    /// <param name="ninetyDayWtResult">Contains the Calculated Ninety Day Average Weight of the security</param>
+    /// <param name="noOfRows">No. of records</param>
+    /// <returns>ninetyDayWtResult</returns>
+    public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWtResult)
+    {
+        if (ninetyDayWtResult == null)
+            throw new ArgumentNullException();
+
+        if (ninetyDayWtResult.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+        if (ninetyDayWtResult.Count < 90)
+            throw new InvalidOperationException("Service returned incomplete data. Operation could not be completed");
+
+        decimal? lastRecordNinetyDayWtAvg = ninetyDayWtResult[89].NinetyDayWtAvg;
+
+        if (lastRecordNinetyDayWtAvg == null || lastRecordNinetyDayWtAvg == 0)
+            throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
+
+        for (int i = 0; i < 90; i++)
         {
-            decimal sumCost = 0;
-            for (int i = 0; i < 90; i++)
-            {
-                sumCost = sumCost + costResult[i].Cost;
-            }
-            costResult[89].WtAvgCost = Convert.ToDouble(sumCost);
-            for (int i = 90; i < noOfRows; i++)
-            {
-                sumCost = sumCost + costResult[i].Cost - costResult[i - 90].Cost;
-                costResult[i].WtAvgCost = Convert.ToDouble(sumCost);
-            }
-            return costResult;
+            ninetyDayWtResult[i].Cost = (ninetyDayWtResult[i].AdjustedPrice * ninetyDayWtResult[i].Volume) / ninetyDayWtResult[89].NinetyDayWtAvg;
         }
 
-        /// <summary>
-        /// Method that calculates the Unrealized Gain Loss for a selected security
-        /// </summary>
-        /// <param name="wtAvgCostResult">Contains the Unrealized Gain Loss of the security</param>
-        /// <param name="noOfRows">No. of records</param>
-        /// <returns>wtAvgCostResult</returns>
-        public static List<UnrealizedGainLossData> CalculateUnrealizedGainLoss(List<UnrealizedGainLossData> wtAvgCostResult, int noOfRows)
+        for (int i = 90; i < ninetyDayWtResult.Count; i++)
         {
-            for (int i = 89; i < noOfRows; i++)
-            {
-                wtAvgCostResult[i].UnrealizedGainLoss = (wtAvgCostResult[i].AdjustedPrice / wtAvgCostResult[i].WtAvgCost) - 1;
-            }
-            return wtAvgCostResult;
+            decimal? recordNinetyDayWtAvg = ninetyDayWtResult[i].NinetyDayWtAvg;
+
+            if (recordNinetyDayWtAvg == null || recordNinetyDayWtAvg == 0)
+                throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
+
+            ninetyDayWtResult[i].Cost = (ninetyDayWtResult[i].AdjustedPrice * ninetyDayWtResult[i].Volume) / ninetyDayWtResult[i].NinetyDayWtAvg;
         }
+
+        return ninetyDayWtResult;
+    }
+
+    /// <summary>
+    /// Method that calculates the Weight Avg Cost for a selected security
+    /// </summary>
+    /// <param name="costResult">Contains the Calculated Cost of the security</param>
+    /// <param name="noOfRows">No. of records</param>
+    /// <returns>costResult</returns>
+    public static List<UnrealizedGainLossData> CalculateWtAvgCost(List<UnrealizedGainLossData> costResult)
+    {
+        if (costResult == null)
+            throw new ArgumentNullException();
+
+        if (costResult.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+        if (costResult.Count < 90)
+            throw new InvalidOperationException("Service returned incomplete data. Operation could not be completed");
+
+        decimal? sumCost = 0;
+
+        for (int i = 0; i < 90; i++)
+        {
+            costResult[i].WtAvgCost = 0;
+            sumCost = sumCost + costResult[i].Cost;
+        }
+
+        costResult[89].WtAvgCost = sumCost;
+
+        for (int i = 90; i < costResult.Count; i++)
+        {
+            sumCost = sumCost + costResult[i].Cost - costResult[i - 90].Cost;
+            costResult[i].WtAvgCost = sumCost;
+        }
+
+        return costResult;
+    }
+
+    /// <summary>
+    /// Method that calculates the Unrealized Gain Loss for a selected security
+    /// </summary>
+    /// <param name="wtAvgCostResult">Contains the Unrealized Gain Loss of the security</param>
+    /// <param name="noOfRows">No. of records</param>
+    /// <returns>wtAvgCostResult</returns>
+    public static List<UnrealizedGainLossData> CalculateUnrealizedGainLoss(List<UnrealizedGainLossData> wtAvgCostResult)
+    {
+        if (wtAvgCostResult == null)
+            throw new ArgumentNullException();
+
+        if (wtAvgCostResult.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+        if (wtAvgCostResult.Count < 90)
+            throw new InvalidOperationException("Service returned incomplete data. Operation could not be completed");
+
+        for (int i = 89; i < wtAvgCostResult.Count; i++)
+        {
+            decimal? recordWtAvgCost = wtAvgCostResult[i].WtAvgCost;
+
+            if (recordWtAvgCost == null || recordWtAvgCost == 0)
+                throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
+
+            wtAvgCostResult[i].UnrealizedGainLoss = (wtAvgCostResult[i].AdjustedPrice / wtAvgCostResult[i].WtAvgCost) - 1;
+        }
+        return wtAvgCostResult;
+    }
+
+    /// <summary>
+    /// Method to Retrieve Data Filtered according to Frequency.
+    /// If for a particular day , data is not present then the data for 1-day before is considered.
+    /// </summary>
+    /// <param name="objUnrealizedGainLossData"></param>
+    /// <param name="endDates"></param>
+    /// <returns></returns>
+    public static List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(List<UnrealizedGainLossData> objUnrealizedGainLossData, List<DateTime> endDates)
+    {
+        if (objUnrealizedGainLossData == null || endDates == null)
+            throw new ArgumentNullException();
+
+        if (objUnrealizedGainLossData.Count.Equals(0) || endDates.Count.Equals(0))
+            return new List<UnrealizedGainLossData>();
+
+
+        List<UnrealizedGainLossData> resultFrequency = new List<UnrealizedGainLossData>();
+
+        List<DateTime> EndDates = endDates;
+        foreach (DateTime item in EndDates)
+        {
+            int i = 1;
+            bool dateObjectFound = true;
+
+            if (objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.Date))
+            {
+                resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.Date).First());
+                dateObjectFound = false;
+                continue;
+            }
+            else
+            {
+                dateObjectFound = true;
+            }
+
+            while (dateObjectFound)
+            {
+                bool objDataFoundDec = objUnrealizedGainLossData.Any(r => r.FromDate.Date == item.AddDays(-i).Date);
+                if (objDataFoundDec)
+                {
+                    resultFrequency.Add(objUnrealizedGainLossData.Where(r => r.FromDate.Date == item.AddDays(-i).Date).First());
+                    dateObjectFound = false;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+        }
+        return resultFrequency.Distinct().ToList();
     }
 }
