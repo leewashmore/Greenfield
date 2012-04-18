@@ -22,8 +22,8 @@ public static class UnrealizedGainLossCalculations
         if (resultSetArrangedByDescRecord == null)
             throw new ArgumentNullException("UnrealizedGainLossCalulcations:CalculateAdjustedPrice");
 
-        if (resultSetArrangedByDescRecord.Count.Equals(0))
-            return new List<UnrealizedGainLossData>();
+        if (resultSetArrangedByDescRecord.Count < 90)
+            throw new ArgumentNullException("Insufficient Data");
 
 
         List<UnrealizedGainLossData> adjustedPriceResult = new List<UnrealizedGainLossData>();
@@ -89,8 +89,8 @@ public static class UnrealizedGainLossCalculations
         if (adjustedPriceResult == null)
             throw new ArgumentNullException();
 
-        if (adjustedPriceResult.Count.Equals(0))
-            return new List<UnrealizedGainLossData>();
+        if (adjustedPriceResult.Count < 90)
+            throw new ArgumentNullException("Insufficient Data");
 
 
         List<UnrealizedGainLossData> resultAscOrder
@@ -124,7 +124,7 @@ public static class UnrealizedGainLossCalculations
         if (movingAverageResult == null)
             throw new ArgumentNullException();
 
-        if (movingAverageResult.Count.Equals(0))
+        if (movingAverageResult.Count < 90)
             return new List<UnrealizedGainLossData>();
 
         decimal? nintyDayVolumeSummation = 0;
@@ -138,13 +138,25 @@ public static class UnrealizedGainLossCalculations
             nintyDayVolumeSummation = nintyDayVolumeSummation + movingAverageResult[i].Volume;
         }
 
-        movingAverageResult[89].NinetyDayWtAvg = nintyDayVolumeSummation;
-
-        for (int i = 90; i < movingAverageResult.Count; i++)
+        if (nintyDayVolumeSummation == 0)
         {
-            nintyDayVolumeSummation = nintyDayVolumeSummation + movingAverageResult[i].Volume - movingAverageResult[i - 90].Volume;
-            movingAverageResult[i].NinetyDayWtAvg = nintyDayVolumeSummation;
-        }
+            for (int j = 90; j < movingAverageResult.Count; j++)
+            {
+                if (movingAverageResult[j].Volume != 0)
+                {
+                    nintyDayVolumeSummation = movingAverageResult[j].Volume;
+                    movingAverageResult.RemoveRange(0, j - 90);               
+                } 
+             break;           
+            }                
+         }            
+           movingAverageResult[89].NinetyDayWtAvg = nintyDayVolumeSummation;
+
+            for (int i = 90; i < movingAverageResult.Count; i++)
+            {
+                nintyDayVolumeSummation = nintyDayVolumeSummation + movingAverageResult[i].Volume - movingAverageResult[i - 90].Volume;
+                movingAverageResult[i].NinetyDayWtAvg = nintyDayVolumeSummation;
+            }   
 
         return movingAverageResult;
     }

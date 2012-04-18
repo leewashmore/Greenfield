@@ -1805,7 +1805,7 @@ namespace GreenField.Web.Services
 
                 int noOfRows = resultSet.Count();
 
-                if (noOfRows.Equals(0))
+                if (noOfRows < 90)
                     return result;
 
                 //Calculating the Adjusted price for a security and storing it in the list.
