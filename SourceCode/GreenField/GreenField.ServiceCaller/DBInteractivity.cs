@@ -282,16 +282,18 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Market Performance Gadget
         /// <summary>
-        /// service call method for retrieving user preference of benchmarks in “Market Performance Snapshot”
+        /// service call method for retrieving user preference of entities in “Market Performance Snapshot”
         /// </summary>
         /// <param name="userName"></param>
+        /// <param name="snapshotName"></param>
         /// <param name="callback"></param>
-        public void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback)
+        public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveUserPreferenceBenchmarkDataAsync(userName);
-            client.RetrieveUserPreferenceBenchmarkDataCompleted += (se, e) =>
+            client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
+            client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -308,13 +310,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method for “Market Performance Snapshot”
         /// </summary>
-        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback)
+        public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveMorningSnapshotDataAsync(userBenchmarkPreference);
-            client.RetrieveMorningSnapshotDataCompleted += (se, e) =>
+            client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
+            client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -331,14 +333,14 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method to add user preferred group in “Market Performance Snapshot”
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="snapshotPreferenceId"></param>
         /// <param name="groupName"></param>
         /// <param name="callback"></param>
-        public void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.AddUserPreferenceBenchmarkGroupAsync(userName, groupName);
-            client.AddUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
+            client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -355,14 +357,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         ///  service call method to remove user preferred group from “Market Performance Snapshot”
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="groupName"></param>
+        /// <param name="groupPreferenceId"></param>
         /// <param name="callback"></param>
-        public void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback)
+        public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RemoveUserPreferenceBenchmarkGroupAsync(userName, groupName);
-            client.RemoveUserPreferenceBenchmarkGroupCompleted += (se, e) =>
+            client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
+            client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -377,16 +378,15 @@ namespace GreenField.ServiceCaller
         }
 
         /// <summary>
-        ///  service call method to add user preferred benchmark in “Market Performance Snapshot”
+        /// service call method to add user preferred entity in “Market Performance Snapshot”
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.AddUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
-            client.AddUserPreferenceBenchmarkCompleted += (se, e) =>
+            client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+            client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -401,16 +401,15 @@ namespace GreenField.ServiceCaller
         }
 
         /// <summary>
-        ///  service call method to remove user preferred benchmark from “Market Performance Snapshot”
+        ///  service call method to remove user preferred entity from “Market Performance Snapshot”
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="userBenchmarkPreference"></param>
+        /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback)
+        public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
             ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RemoveUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference);
-            client.RemoveUserPreferenceBenchmarkCompleted += (se, e) =>
+            client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+            client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
@@ -422,7 +421,8 @@ namespace GreenField.ServiceCaller
                     callback(false);
                 }
             };
-        }
+        } 
+        #endregion
        
         public void RetriveValuesForFilters(String filterType, Action<List<String>> callback)
         {

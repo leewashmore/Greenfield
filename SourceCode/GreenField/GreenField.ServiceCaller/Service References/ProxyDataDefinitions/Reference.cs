@@ -521,8 +521,10 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="MarshalByRefObject", Namespace="http://schemas.datacontract.org/2004/07/System")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.Brush))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData>))]
@@ -544,8 +546,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.TopHoldingsData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.IndexConstituentsData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.IndexConstituentsData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceActivePositionData>))]
@@ -604,54 +606,105 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserBenchmarkPreference", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class UserBenchmarkPreference : GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject {
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarketSnapshotSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class MarketSnapshotSelectionData : GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject {
         
-        private string BenchmarkNameField;
+        private string SnapshotNameField;
         
-        private System.Nullable<int> BenchmarkOrderField;
+        private int SnapshotPreferenceIdField;
         
-        private string BenchmarkReturnTypeField;
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SnapshotName {
+            get {
+                return this.SnapshotNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SnapshotNameField, value) != true)) {
+                    this.SnapshotNameField = value;
+                    this.RaisePropertyChanged("SnapshotName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SnapshotPreferenceId {
+            get {
+                return this.SnapshotPreferenceIdField;
+            }
+            set {
+                if ((this.SnapshotPreferenceIdField.Equals(value) != true)) {
+                    this.SnapshotPreferenceIdField = value;
+                    this.RaisePropertyChanged("SnapshotPreferenceId");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarketSnapshotPreference", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class MarketSnapshotPreference : GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject {
+        
+        private string EntityNameField;
+        
+        private System.Nullable<int> EntityOrderField;
+        
+        private System.Nullable<int> EntityPreferenceIdField;
+        
+        private string EntityReturnTypeField;
         
         private string GroupNameField;
         
-        private int GroupOrderField;
+        private int GroupPreferenceIDField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BenchmarkName {
+        public string EntityName {
             get {
-                return this.BenchmarkNameField;
+                return this.EntityNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.BenchmarkNameField, value) != true)) {
-                    this.BenchmarkNameField = value;
-                    this.RaisePropertyChanged("BenchmarkName");
+                if ((object.ReferenceEquals(this.EntityNameField, value) != true)) {
+                    this.EntityNameField = value;
+                    this.RaisePropertyChanged("EntityName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> BenchmarkOrder {
+        public System.Nullable<int> EntityOrder {
             get {
-                return this.BenchmarkOrderField;
+                return this.EntityOrderField;
             }
             set {
-                if ((this.BenchmarkOrderField.Equals(value) != true)) {
-                    this.BenchmarkOrderField = value;
-                    this.RaisePropertyChanged("BenchmarkOrder");
+                if ((this.EntityOrderField.Equals(value) != true)) {
+                    this.EntityOrderField = value;
+                    this.RaisePropertyChanged("EntityOrder");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BenchmarkReturnType {
+        public System.Nullable<int> EntityPreferenceId {
             get {
-                return this.BenchmarkReturnTypeField;
+                return this.EntityPreferenceIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.BenchmarkReturnTypeField, value) != true)) {
-                    this.BenchmarkReturnTypeField = value;
-                    this.RaisePropertyChanged("BenchmarkReturnType");
+                if ((this.EntityPreferenceIdField.Equals(value) != true)) {
+                    this.EntityPreferenceIdField = value;
+                    this.RaisePropertyChanged("EntityPreferenceId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntityReturnType {
+            get {
+                return this.EntityReturnTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityReturnTypeField, value) != true)) {
+                    this.EntityReturnTypeField = value;
+                    this.RaisePropertyChanged("EntityReturnType");
                 }
             }
         }
@@ -670,14 +723,14 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int GroupOrder {
+        public int GroupPreferenceID {
             get {
-                return this.GroupOrderField;
+                return this.GroupPreferenceIDField;
             }
             set {
-                if ((this.GroupOrderField.Equals(value) != true)) {
-                    this.GroupOrderField = value;
-                    this.RaisePropertyChanged("GroupOrder");
+                if ((this.GroupPreferenceIDField.Equals(value) != true)) {
+                    this.GroupPreferenceIDField = value;
+                    this.RaisePropertyChanged("GroupPreferenceID");
                 }
             }
         }
@@ -1615,8 +1668,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MorningSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class MorningSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarketPerformanceSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class MarketPerformanceSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.Nullable<double> DTDField;
         
@@ -1626,7 +1679,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Nullable<double> MTDField;
         
-        private GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference MorningSnapshotPreferenceInfoField;
+        private GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MorningSnapshotPreferenceInfoField;
         
         private System.Nullable<double> PreviousYearPriceField;
         
@@ -1689,7 +1742,7 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference MorningSnapshotPreferenceInfo {
+        public GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MorningSnapshotPreferenceInfo {
             get {
                 return this.MorningSnapshotPreferenceInfoField;
             }
@@ -3283,7 +3336,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData))]
     public partial class ComplexObject : GreenField.ServiceCaller.ProxyDataDefinitions.StructuralObject {
     }
     
@@ -3291,7 +3345,8 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.ComplexObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData))]
     public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
@@ -3374,37 +3429,54 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         System.Collections.Generic.List<string> EndRetrieveValuesForFilters(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkDataRespons" +
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotSelectionData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotSelectionDataRespons" +
             "e")]
-        System.IAsyncResult BeginRetrieveUserPreferenceBenchmarkData(string userName, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveMarketSnapshotSelectionData(string userName, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> EndRetrieveUserPreferenceBenchmarkData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> EndRetrieveMarketSnapshotSelectionData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotDataResponse")]
-        System.IAsyncResult BeginRetrieveMorningSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotPreference", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotPreferenceResponse")]
+        System.IAsyncResult BeginRetrieveMarketSnapshotPreference(string userName, string snapshotName, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> EndRetrieveMorningSnapshotData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> EndRetrieveMarketSnapshotPreference(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroup", ReplyAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroupResponse")]
-        System.IAsyncResult BeginAddUserPreferenceBenchmarkGroup(string userName, string groupName, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketPerformanceSnapshotData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketPerformanceSnapshotDataRespo" +
+            "nse")]
+        System.IAsyncResult BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
-        bool EndAddUserPreferenceBenchmarkGroup(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroup", ReplyAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroupResponse" +
-            "")]
-        System.IAsyncResult BeginRemoveUserPreferenceBenchmarkGroup(string userName, string groupname, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotPerformance", ReplyAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotPerformanceResponse")]
+        System.IAsyncResult BeginAddMarketSnapshotPerformance(string userId, string snapshotName, System.AsyncCallback callback, object asyncState);
         
-        bool EndRemoveUserPreferenceBenchmarkGroup(System.IAsyncResult result);
+        bool EndAddMarketSnapshotPerformance(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmark", ReplyAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkResponse")]
-        System.IAsyncResult BeginAddUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/UpdateMarketSnapshotPerformance", ReplyAction="http://tempuri.org/ProxyDataOperations/UpdateMarketSnapshotPerformanceResponse")]
+        System.IAsyncResult BeginUpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId, System.AsyncCallback callback, object asyncState);
         
-        bool EndAddUserPreferenceBenchmark(System.IAsyncResult result);
+        bool EndUpdateMarketSnapshotPerformance(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmark", ReplyAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkResponse")]
-        System.IAsyncResult BeginRemoveUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotGroupPreference", ReplyAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotGroupPreferenceResponse")]
+        System.IAsyncResult BeginAddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, System.AsyncCallback callback, object asyncState);
         
-        bool EndRemoveUserPreferenceBenchmark(System.IAsyncResult result);
+        bool EndAddMarketSnapshotGroupPreference(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotGroupPreference", ReplyAction="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotGroupPreferenceRespons" +
+            "e")]
+        System.IAsyncResult BeginRemoveMarketSnapshotGroupPreference(int groupPreferenceId, System.AsyncCallback callback, object asyncState);
+        
+        bool EndRemoveMarketSnapshotGroupPreference(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotEntityPreference", ReplyAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotEntityPreferenceResponse")]
+        System.IAsyncResult BeginAddMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
+        
+        bool EndAddMarketSnapshotEntityPreference(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotEntityPreference", ReplyAction="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotEntityPreferenceRespon" +
+            "se")]
+        System.IAsyncResult BeginRemoveMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
+        
+        bool EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorData", ReplyAction="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorDataRespo" +
             "nse")]
@@ -3745,87 +3817,68 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveUserPreferenceBenchmarkDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveMarketSnapshotSelectionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveUserPreferenceBenchmarkDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveMarketSnapshotSelectionDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData>)(this.results[0]));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveMorningSnapshotDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveMarketSnapshotPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveMorningSnapshotDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveMarketSnapshotPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference>)(this.results[0]));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AddUserPreferenceBenchmarkGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveMarketPerformanceSnapshotDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public AddUserPreferenceBenchmarkGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveMarketPerformanceSnapshotDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData>)(this.results[0]));
             }
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RemoveUserPreferenceBenchmarkGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class AddMarketSnapshotPerformanceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RemoveUserPreferenceBenchmarkGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public bool Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AddUserPreferenceBenchmarkCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public AddUserPreferenceBenchmarkCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public AddMarketSnapshotPerformanceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -3840,11 +3893,87 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RemoveUserPreferenceBenchmarkCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class UpdateMarketSnapshotPerformanceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RemoveUserPreferenceBenchmarkCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public UpdateMarketSnapshotPerformanceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AddMarketSnapshotGroupPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AddMarketSnapshotGroupPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RemoveMarketSnapshotGroupPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RemoveMarketSnapshotGroupPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AddMarketSnapshotEntityPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AddMarketSnapshotEntityPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RemoveMarketSnapshotEntityPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RemoveMarketSnapshotEntityPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -4224,41 +4353,59 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveValuesForFiltersCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveUserPreferenceBenchmarkDataDelegate;
+        private BeginOperationDelegate onBeginRetrieveMarketSnapshotSelectionDataDelegate;
         
-        private EndOperationDelegate onEndRetrieveUserPreferenceBenchmarkDataDelegate;
+        private EndOperationDelegate onEndRetrieveMarketSnapshotSelectionDataDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveUserPreferenceBenchmarkDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveMarketSnapshotSelectionDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveMorningSnapshotDataDelegate;
+        private BeginOperationDelegate onBeginRetrieveMarketSnapshotPreferenceDelegate;
         
-        private EndOperationDelegate onEndRetrieveMorningSnapshotDataDelegate;
+        private EndOperationDelegate onEndRetrieveMarketSnapshotPreferenceDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveMorningSnapshotDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveMarketSnapshotPreferenceCompletedDelegate;
         
-        private BeginOperationDelegate onBeginAddUserPreferenceBenchmarkGroupDelegate;
+        private BeginOperationDelegate onBeginRetrieveMarketPerformanceSnapshotDataDelegate;
         
-        private EndOperationDelegate onEndAddUserPreferenceBenchmarkGroupDelegate;
+        private EndOperationDelegate onEndRetrieveMarketPerformanceSnapshotDataDelegate;
         
-        private System.Threading.SendOrPostCallback onAddUserPreferenceBenchmarkGroupCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveMarketPerformanceSnapshotDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRemoveUserPreferenceBenchmarkGroupDelegate;
+        private BeginOperationDelegate onBeginAddMarketSnapshotPerformanceDelegate;
         
-        private EndOperationDelegate onEndRemoveUserPreferenceBenchmarkGroupDelegate;
+        private EndOperationDelegate onEndAddMarketSnapshotPerformanceDelegate;
         
-        private System.Threading.SendOrPostCallback onRemoveUserPreferenceBenchmarkGroupCompletedDelegate;
+        private System.Threading.SendOrPostCallback onAddMarketSnapshotPerformanceCompletedDelegate;
         
-        private BeginOperationDelegate onBeginAddUserPreferenceBenchmarkDelegate;
+        private BeginOperationDelegate onBeginUpdateMarketSnapshotPerformanceDelegate;
         
-        private EndOperationDelegate onEndAddUserPreferenceBenchmarkDelegate;
+        private EndOperationDelegate onEndUpdateMarketSnapshotPerformanceDelegate;
         
-        private System.Threading.SendOrPostCallback onAddUserPreferenceBenchmarkCompletedDelegate;
+        private System.Threading.SendOrPostCallback onUpdateMarketSnapshotPerformanceCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRemoveUserPreferenceBenchmarkDelegate;
+        private BeginOperationDelegate onBeginAddMarketSnapshotGroupPreferenceDelegate;
         
-        private EndOperationDelegate onEndRemoveUserPreferenceBenchmarkDelegate;
+        private EndOperationDelegate onEndAddMarketSnapshotGroupPreferenceDelegate;
         
-        private System.Threading.SendOrPostCallback onRemoveUserPreferenceBenchmarkCompletedDelegate;
+        private System.Threading.SendOrPostCallback onAddMarketSnapshotGroupPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRemoveMarketSnapshotGroupPreferenceDelegate;
+        
+        private EndOperationDelegate onEndRemoveMarketSnapshotGroupPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onRemoveMarketSnapshotGroupPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAddMarketSnapshotEntityPreferenceDelegate;
+        
+        private EndOperationDelegate onEndAddMarketSnapshotEntityPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddMarketSnapshotEntityPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRemoveMarketSnapshotEntityPreferenceDelegate;
+        
+        private EndOperationDelegate onEndRemoveMarketSnapshotEntityPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onRemoveMarketSnapshotEntityPreferenceCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveRelativePerformanceSectorDataDelegate;
         
@@ -4429,17 +4576,23 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         
         public event System.EventHandler<RetrieveValuesForFiltersCompletedEventArgs> RetrieveValuesForFiltersCompleted;
         
-        public event System.EventHandler<RetrieveUserPreferenceBenchmarkDataCompletedEventArgs> RetrieveUserPreferenceBenchmarkDataCompleted;
+        public event System.EventHandler<RetrieveMarketSnapshotSelectionDataCompletedEventArgs> RetrieveMarketSnapshotSelectionDataCompleted;
         
-        public event System.EventHandler<RetrieveMorningSnapshotDataCompletedEventArgs> RetrieveMorningSnapshotDataCompleted;
+        public event System.EventHandler<RetrieveMarketSnapshotPreferenceCompletedEventArgs> RetrieveMarketSnapshotPreferenceCompleted;
         
-        public event System.EventHandler<AddUserPreferenceBenchmarkGroupCompletedEventArgs> AddUserPreferenceBenchmarkGroupCompleted;
+        public event System.EventHandler<RetrieveMarketPerformanceSnapshotDataCompletedEventArgs> RetrieveMarketPerformanceSnapshotDataCompleted;
         
-        public event System.EventHandler<RemoveUserPreferenceBenchmarkGroupCompletedEventArgs> RemoveUserPreferenceBenchmarkGroupCompleted;
+        public event System.EventHandler<AddMarketSnapshotPerformanceCompletedEventArgs> AddMarketSnapshotPerformanceCompleted;
         
-        public event System.EventHandler<AddUserPreferenceBenchmarkCompletedEventArgs> AddUserPreferenceBenchmarkCompleted;
+        public event System.EventHandler<UpdateMarketSnapshotPerformanceCompletedEventArgs> UpdateMarketSnapshotPerformanceCompleted;
         
-        public event System.EventHandler<RemoveUserPreferenceBenchmarkCompletedEventArgs> RemoveUserPreferenceBenchmarkCompleted;
+        public event System.EventHandler<AddMarketSnapshotGroupPreferenceCompletedEventArgs> AddMarketSnapshotGroupPreferenceCompleted;
+        
+        public event System.EventHandler<RemoveMarketSnapshotGroupPreferenceCompletedEventArgs> RemoveMarketSnapshotGroupPreferenceCompleted;
+        
+        public event System.EventHandler<AddMarketSnapshotEntityPreferenceCompletedEventArgs> AddMarketSnapshotEntityPreferenceCompleted;
+        
+        public event System.EventHandler<RemoveMarketSnapshotEntityPreferenceCompletedEventArgs> RemoveMarketSnapshotEntityPreferenceCompleted;
         
         public event System.EventHandler<RetrieveRelativePerformanceSectorDataCompletedEventArgs> RetrieveRelativePerformanceSectorDataCompleted;
         
@@ -5096,287 +5249,427 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveUserPreferenceBenchmarkData(string userName, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveUserPreferenceBenchmarkData(userName, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveMarketSnapshotSelectionData(string userName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketSnapshotSelectionData(userName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveUserPreferenceBenchmarkData(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveUserPreferenceBenchmarkData(result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveMarketSnapshotSelectionData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveMarketSnapshotSelectionData(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveUserPreferenceBenchmarkData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginRetrieveMarketSnapshotSelectionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string userName = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveUserPreferenceBenchmarkData(userName, callback, asyncState);
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveMarketSnapshotSelectionData(userName, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveUserPreferenceBenchmarkData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveUserPreferenceBenchmarkData(result);
+        private object[] OnEndRetrieveMarketSnapshotSelectionData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveMarketSnapshotSelectionData(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveUserPreferenceBenchmarkDataCompleted(object state) {
-            if ((this.RetrieveUserPreferenceBenchmarkDataCompleted != null)) {
+        private void OnRetrieveMarketSnapshotSelectionDataCompleted(object state) {
+            if ((this.RetrieveMarketSnapshotSelectionDataCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveUserPreferenceBenchmarkDataCompleted(this, new RetrieveUserPreferenceBenchmarkDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveMarketSnapshotSelectionDataCompleted(this, new RetrieveMarketSnapshotSelectionDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveUserPreferenceBenchmarkDataAsync(string userName) {
-            this.RetrieveUserPreferenceBenchmarkDataAsync(userName, null);
+        public void RetrieveMarketSnapshotSelectionDataAsync(string userName) {
+            this.RetrieveMarketSnapshotSelectionDataAsync(userName, null);
         }
         
-        public void RetrieveUserPreferenceBenchmarkDataAsync(string userName, object userState) {
-            if ((this.onBeginRetrieveUserPreferenceBenchmarkDataDelegate == null)) {
-                this.onBeginRetrieveUserPreferenceBenchmarkDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveUserPreferenceBenchmarkData);
+        public void RetrieveMarketSnapshotSelectionDataAsync(string userName, object userState) {
+            if ((this.onBeginRetrieveMarketSnapshotSelectionDataDelegate == null)) {
+                this.onBeginRetrieveMarketSnapshotSelectionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketSnapshotSelectionData);
             }
-            if ((this.onEndRetrieveUserPreferenceBenchmarkDataDelegate == null)) {
-                this.onEndRetrieveUserPreferenceBenchmarkDataDelegate = new EndOperationDelegate(this.OnEndRetrieveUserPreferenceBenchmarkData);
+            if ((this.onEndRetrieveMarketSnapshotSelectionDataDelegate == null)) {
+                this.onEndRetrieveMarketSnapshotSelectionDataDelegate = new EndOperationDelegate(this.OnEndRetrieveMarketSnapshotSelectionData);
             }
-            if ((this.onRetrieveUserPreferenceBenchmarkDataCompletedDelegate == null)) {
-                this.onRetrieveUserPreferenceBenchmarkDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveUserPreferenceBenchmarkDataCompleted);
+            if ((this.onRetrieveMarketSnapshotSelectionDataCompletedDelegate == null)) {
+                this.onRetrieveMarketSnapshotSelectionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketSnapshotSelectionDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveUserPreferenceBenchmarkDataDelegate, new object[] {
-                        userName}, this.onEndRetrieveUserPreferenceBenchmarkDataDelegate, this.onRetrieveUserPreferenceBenchmarkDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveMarketSnapshotSelectionDataDelegate, new object[] {
+                        userName}, this.onEndRetrieveMarketSnapshotSelectionDataDelegate, this.onRetrieveMarketSnapshotSelectionDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveMorningSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveMorningSnapshotData(userBenchmarkPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveMarketSnapshotPreference(string userName, string snapshotName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketSnapshotPreference(userName, snapshotName, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveMorningSnapshotData(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveMorningSnapshotData(result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveMarketSnapshotPreference(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveMarketSnapshotPreference(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveMorningSnapshotData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference>)(inValues[0]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveMorningSnapshotData(userBenchmarkPreference, callback, asyncState);
+        private System.IAsyncResult OnBeginRetrieveMarketSnapshotPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            string snapshotName = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveMarketSnapshotPreference(userName, snapshotName, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveMorningSnapshotData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveMorningSnapshotData(result);
+        private object[] OnEndRetrieveMarketSnapshotPreference(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveMarketSnapshotPreference(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveMorningSnapshotDataCompleted(object state) {
-            if ((this.RetrieveMorningSnapshotDataCompleted != null)) {
+        private void OnRetrieveMarketSnapshotPreferenceCompleted(object state) {
+            if ((this.RetrieveMarketSnapshotPreferenceCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveMorningSnapshotDataCompleted(this, new RetrieveMorningSnapshotDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveMarketSnapshotPreferenceCompleted(this, new RetrieveMarketSnapshotPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveMorningSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference) {
-            this.RetrieveMorningSnapshotDataAsync(userBenchmarkPreference, null);
+        public void RetrieveMarketSnapshotPreferenceAsync(string userName, string snapshotName) {
+            this.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName, null);
         }
         
-        public void RetrieveMorningSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference, object userState) {
-            if ((this.onBeginRetrieveMorningSnapshotDataDelegate == null)) {
-                this.onBeginRetrieveMorningSnapshotDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMorningSnapshotData);
+        public void RetrieveMarketSnapshotPreferenceAsync(string userName, string snapshotName, object userState) {
+            if ((this.onBeginRetrieveMarketSnapshotPreferenceDelegate == null)) {
+                this.onBeginRetrieveMarketSnapshotPreferenceDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketSnapshotPreference);
             }
-            if ((this.onEndRetrieveMorningSnapshotDataDelegate == null)) {
-                this.onEndRetrieveMorningSnapshotDataDelegate = new EndOperationDelegate(this.OnEndRetrieveMorningSnapshotData);
+            if ((this.onEndRetrieveMarketSnapshotPreferenceDelegate == null)) {
+                this.onEndRetrieveMarketSnapshotPreferenceDelegate = new EndOperationDelegate(this.OnEndRetrieveMarketSnapshotPreference);
             }
-            if ((this.onRetrieveMorningSnapshotDataCompletedDelegate == null)) {
-                this.onRetrieveMorningSnapshotDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMorningSnapshotDataCompleted);
+            if ((this.onRetrieveMarketSnapshotPreferenceCompletedDelegate == null)) {
+                this.onRetrieveMarketSnapshotPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketSnapshotPreferenceCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveMorningSnapshotDataDelegate, new object[] {
-                        userBenchmarkPreference}, this.onEndRetrieveMorningSnapshotDataDelegate, this.onRetrieveMorningSnapshotDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveMarketSnapshotPreferenceDelegate, new object[] {
+                        userName,
+                        snapshotName}, this.onEndRetrieveMarketSnapshotPreferenceDelegate, this.onRetrieveMarketSnapshotPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginAddUserPreferenceBenchmarkGroup(string userName, string groupName, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddUserPreferenceBenchmarkGroup(userName, groupName, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketPerformanceSnapshotData(marketSnapshotPreference, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndAddUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
-            return base.Channel.EndAddUserPreferenceBenchmarkGroup(result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveMarketPerformanceSnapshotData(result);
         }
         
-        private System.IAsyncResult OnBeginAddUserPreferenceBenchmarkGroup(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string userName = ((string)(inValues[0]));
+        private System.IAsyncResult OnBeginRetrieveMarketPerformanceSnapshotData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference>)(inValues[0]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRetrieveMarketPerformanceSnapshotData(marketSnapshotPreference, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRetrieveMarketPerformanceSnapshotData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveMarketPerformanceSnapshotDataCompleted(object state) {
+            if ((this.RetrieveMarketPerformanceSnapshotDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveMarketPerformanceSnapshotDataCompleted(this, new RetrieveMarketPerformanceSnapshotDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveMarketPerformanceSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference) {
+            this.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference, null);
+        }
+        
+        public void RetrieveMarketPerformanceSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference, object userState) {
+            if ((this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate == null)) {
+                this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketPerformanceSnapshotData);
+            }
+            if ((this.onEndRetrieveMarketPerformanceSnapshotDataDelegate == null)) {
+                this.onEndRetrieveMarketPerformanceSnapshotDataDelegate = new EndOperationDelegate(this.OnEndRetrieveMarketPerformanceSnapshotData);
+            }
+            if ((this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate == null)) {
+                this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketPerformanceSnapshotDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate, new object[] {
+                        marketSnapshotPreference}, this.onEndRetrieveMarketPerformanceSnapshotDataDelegate, this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginAddMarketSnapshotPerformance(string userId, string snapshotName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddMarketSnapshotPerformance(userId, snapshotName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndAddMarketSnapshotPerformance(System.IAsyncResult result) {
+            return base.Channel.EndAddMarketSnapshotPerformance(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddMarketSnapshotPerformance(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userId = ((string)(inValues[0]));
+            string snapshotName = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginAddMarketSnapshotPerformance(userId, snapshotName, callback, asyncState);
+        }
+        
+        private object[] OnEndAddMarketSnapshotPerformance(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndAddMarketSnapshotPerformance(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnAddMarketSnapshotPerformanceCompleted(object state) {
+            if ((this.AddMarketSnapshotPerformanceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddMarketSnapshotPerformanceCompleted(this, new AddMarketSnapshotPerformanceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddMarketSnapshotPerformanceAsync(string userId, string snapshotName) {
+            this.AddMarketSnapshotPerformanceAsync(userId, snapshotName, null);
+        }
+        
+        public void AddMarketSnapshotPerformanceAsync(string userId, string snapshotName, object userState) {
+            if ((this.onBeginAddMarketSnapshotPerformanceDelegate == null)) {
+                this.onBeginAddMarketSnapshotPerformanceDelegate = new BeginOperationDelegate(this.OnBeginAddMarketSnapshotPerformance);
+            }
+            if ((this.onEndAddMarketSnapshotPerformanceDelegate == null)) {
+                this.onEndAddMarketSnapshotPerformanceDelegate = new EndOperationDelegate(this.OnEndAddMarketSnapshotPerformance);
+            }
+            if ((this.onAddMarketSnapshotPerformanceCompletedDelegate == null)) {
+                this.onAddMarketSnapshotPerformanceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddMarketSnapshotPerformanceCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddMarketSnapshotPerformanceDelegate, new object[] {
+                        userId,
+                        snapshotName}, this.onEndAddMarketSnapshotPerformanceDelegate, this.onAddMarketSnapshotPerformanceCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginUpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateMarketSnapshotPerformance(userId, snapshotName, snapshotPreferenceId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndUpdateMarketSnapshotPerformance(System.IAsyncResult result) {
+            return base.Channel.EndUpdateMarketSnapshotPerformance(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateMarketSnapshotPerformance(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userId = ((string)(inValues[0]));
+            string snapshotName = ((string)(inValues[1]));
+            int snapshotPreferenceId = ((int)(inValues[2]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginUpdateMarketSnapshotPerformance(userId, snapshotName, snapshotPreferenceId, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateMarketSnapshotPerformance(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndUpdateMarketSnapshotPerformance(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdateMarketSnapshotPerformanceCompleted(object state) {
+            if ((this.UpdateMarketSnapshotPerformanceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateMarketSnapshotPerformanceCompleted(this, new UpdateMarketSnapshotPerformanceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateMarketSnapshotPerformanceAsync(string userId, string snapshotName, int snapshotPreferenceId) {
+            this.UpdateMarketSnapshotPerformanceAsync(userId, snapshotName, snapshotPreferenceId, null);
+        }
+        
+        public void UpdateMarketSnapshotPerformanceAsync(string userId, string snapshotName, int snapshotPreferenceId, object userState) {
+            if ((this.onBeginUpdateMarketSnapshotPerformanceDelegate == null)) {
+                this.onBeginUpdateMarketSnapshotPerformanceDelegate = new BeginOperationDelegate(this.OnBeginUpdateMarketSnapshotPerformance);
+            }
+            if ((this.onEndUpdateMarketSnapshotPerformanceDelegate == null)) {
+                this.onEndUpdateMarketSnapshotPerformanceDelegate = new EndOperationDelegate(this.OnEndUpdateMarketSnapshotPerformance);
+            }
+            if ((this.onUpdateMarketSnapshotPerformanceCompletedDelegate == null)) {
+                this.onUpdateMarketSnapshotPerformanceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateMarketSnapshotPerformanceCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateMarketSnapshotPerformanceDelegate, new object[] {
+                        userId,
+                        snapshotName,
+                        snapshotPreferenceId}, this.onEndUpdateMarketSnapshotPerformanceDelegate, this.onUpdateMarketSnapshotPerformanceCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginAddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddMarketSnapshotGroupPreference(snapshotPreferenceId, groupName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndAddMarketSnapshotGroupPreference(System.IAsyncResult result) {
+            return base.Channel.EndAddMarketSnapshotGroupPreference(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddMarketSnapshotGroupPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int snapshotPreferenceId = ((int)(inValues[0]));
             string groupName = ((string)(inValues[1]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginAddUserPreferenceBenchmarkGroup(userName, groupName, callback, asyncState);
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginAddMarketSnapshotGroupPreference(snapshotPreferenceId, groupName, callback, asyncState);
         }
         
-        private object[] OnEndAddUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndAddUserPreferenceBenchmarkGroup(result);
+        private object[] OnEndAddMarketSnapshotGroupPreference(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndAddMarketSnapshotGroupPreference(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnAddUserPreferenceBenchmarkGroupCompleted(object state) {
-            if ((this.AddUserPreferenceBenchmarkGroupCompleted != null)) {
+        private void OnAddMarketSnapshotGroupPreferenceCompleted(object state) {
+            if ((this.AddMarketSnapshotGroupPreferenceCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.AddUserPreferenceBenchmarkGroupCompleted(this, new AddUserPreferenceBenchmarkGroupCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.AddMarketSnapshotGroupPreferenceCompleted(this, new AddMarketSnapshotGroupPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void AddUserPreferenceBenchmarkGroupAsync(string userName, string groupName) {
-            this.AddUserPreferenceBenchmarkGroupAsync(userName, groupName, null);
+        public void AddMarketSnapshotGroupPreferenceAsync(int snapshotPreferenceId, string groupName) {
+            this.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName, null);
         }
         
-        public void AddUserPreferenceBenchmarkGroupAsync(string userName, string groupName, object userState) {
-            if ((this.onBeginAddUserPreferenceBenchmarkGroupDelegate == null)) {
-                this.onBeginAddUserPreferenceBenchmarkGroupDelegate = new BeginOperationDelegate(this.OnBeginAddUserPreferenceBenchmarkGroup);
+        public void AddMarketSnapshotGroupPreferenceAsync(int snapshotPreferenceId, string groupName, object userState) {
+            if ((this.onBeginAddMarketSnapshotGroupPreferenceDelegate == null)) {
+                this.onBeginAddMarketSnapshotGroupPreferenceDelegate = new BeginOperationDelegate(this.OnBeginAddMarketSnapshotGroupPreference);
             }
-            if ((this.onEndAddUserPreferenceBenchmarkGroupDelegate == null)) {
-                this.onEndAddUserPreferenceBenchmarkGroupDelegate = new EndOperationDelegate(this.OnEndAddUserPreferenceBenchmarkGroup);
+            if ((this.onEndAddMarketSnapshotGroupPreferenceDelegate == null)) {
+                this.onEndAddMarketSnapshotGroupPreferenceDelegate = new EndOperationDelegate(this.OnEndAddMarketSnapshotGroupPreference);
             }
-            if ((this.onAddUserPreferenceBenchmarkGroupCompletedDelegate == null)) {
-                this.onAddUserPreferenceBenchmarkGroupCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddUserPreferenceBenchmarkGroupCompleted);
+            if ((this.onAddMarketSnapshotGroupPreferenceCompletedDelegate == null)) {
+                this.onAddMarketSnapshotGroupPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddMarketSnapshotGroupPreferenceCompleted);
             }
-            base.InvokeAsync(this.onBeginAddUserPreferenceBenchmarkGroupDelegate, new object[] {
-                        userName,
-                        groupName}, this.onEndAddUserPreferenceBenchmarkGroupDelegate, this.onAddUserPreferenceBenchmarkGroupCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginAddMarketSnapshotGroupPreferenceDelegate, new object[] {
+                        snapshotPreferenceId,
+                        groupName}, this.onEndAddMarketSnapshotGroupPreferenceDelegate, this.onAddMarketSnapshotGroupPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRemoveUserPreferenceBenchmarkGroup(string userName, string groupname, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveUserPreferenceBenchmarkGroup(userName, groupname, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRemoveMarketSnapshotGroupPreference(int groupPreferenceId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRemoveMarketSnapshotGroupPreference(groupPreferenceId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRemoveUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
-            return base.Channel.EndRemoveUserPreferenceBenchmarkGroup(result);
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRemoveMarketSnapshotGroupPreference(System.IAsyncResult result) {
+            return base.Channel.EndRemoveMarketSnapshotGroupPreference(result);
         }
         
-        private System.IAsyncResult OnBeginRemoveUserPreferenceBenchmarkGroup(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string userName = ((string)(inValues[0]));
-            string groupname = ((string)(inValues[1]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRemoveUserPreferenceBenchmarkGroup(userName, groupname, callback, asyncState);
+        private System.IAsyncResult OnBeginRemoveMarketSnapshotGroupPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            int groupPreferenceId = ((int)(inValues[0]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRemoveMarketSnapshotGroupPreference(groupPreferenceId, callback, asyncState);
         }
         
-        private object[] OnEndRemoveUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRemoveUserPreferenceBenchmarkGroup(result);
+        private object[] OnEndRemoveMarketSnapshotGroupPreference(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRemoveMarketSnapshotGroupPreference(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRemoveUserPreferenceBenchmarkGroupCompleted(object state) {
-            if ((this.RemoveUserPreferenceBenchmarkGroupCompleted != null)) {
+        private void OnRemoveMarketSnapshotGroupPreferenceCompleted(object state) {
+            if ((this.RemoveMarketSnapshotGroupPreferenceCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveUserPreferenceBenchmarkGroupCompleted(this, new RemoveUserPreferenceBenchmarkGroupCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RemoveMarketSnapshotGroupPreferenceCompleted(this, new RemoveMarketSnapshotGroupPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RemoveUserPreferenceBenchmarkGroupAsync(string userName, string groupname) {
-            this.RemoveUserPreferenceBenchmarkGroupAsync(userName, groupname, null);
+        public void RemoveMarketSnapshotGroupPreferenceAsync(int groupPreferenceId) {
+            this.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId, null);
         }
         
-        public void RemoveUserPreferenceBenchmarkGroupAsync(string userName, string groupname, object userState) {
-            if ((this.onBeginRemoveUserPreferenceBenchmarkGroupDelegate == null)) {
-                this.onBeginRemoveUserPreferenceBenchmarkGroupDelegate = new BeginOperationDelegate(this.OnBeginRemoveUserPreferenceBenchmarkGroup);
+        public void RemoveMarketSnapshotGroupPreferenceAsync(int groupPreferenceId, object userState) {
+            if ((this.onBeginRemoveMarketSnapshotGroupPreferenceDelegate == null)) {
+                this.onBeginRemoveMarketSnapshotGroupPreferenceDelegate = new BeginOperationDelegate(this.OnBeginRemoveMarketSnapshotGroupPreference);
             }
-            if ((this.onEndRemoveUserPreferenceBenchmarkGroupDelegate == null)) {
-                this.onEndRemoveUserPreferenceBenchmarkGroupDelegate = new EndOperationDelegate(this.OnEndRemoveUserPreferenceBenchmarkGroup);
+            if ((this.onEndRemoveMarketSnapshotGroupPreferenceDelegate == null)) {
+                this.onEndRemoveMarketSnapshotGroupPreferenceDelegate = new EndOperationDelegate(this.OnEndRemoveMarketSnapshotGroupPreference);
             }
-            if ((this.onRemoveUserPreferenceBenchmarkGroupCompletedDelegate == null)) {
-                this.onRemoveUserPreferenceBenchmarkGroupCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveUserPreferenceBenchmarkGroupCompleted);
+            if ((this.onRemoveMarketSnapshotGroupPreferenceCompletedDelegate == null)) {
+                this.onRemoveMarketSnapshotGroupPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveMarketSnapshotGroupPreferenceCompleted);
             }
-            base.InvokeAsync(this.onBeginRemoveUserPreferenceBenchmarkGroupDelegate, new object[] {
-                        userName,
-                        groupname}, this.onEndRemoveUserPreferenceBenchmarkGroupDelegate, this.onRemoveUserPreferenceBenchmarkGroupCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRemoveMarketSnapshotGroupPreferenceDelegate, new object[] {
+                        groupPreferenceId}, this.onEndRemoveMarketSnapshotGroupPreferenceDelegate, this.onRemoveMarketSnapshotGroupPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginAddUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginAddUserPreferenceBenchmark(userName, userBenchmarkPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginAddMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddMarketSnapshotEntityPreference(marketSnapshotPreference, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndAddUserPreferenceBenchmark(System.IAsyncResult result) {
-            return base.Channel.EndAddUserPreferenceBenchmark(result);
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndAddMarketSnapshotEntityPreference(System.IAsyncResult result) {
+            return base.Channel.EndAddMarketSnapshotEntityPreference(result);
         }
         
-        private System.IAsyncResult OnBeginAddUserPreferenceBenchmark(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string userName = ((string)(inValues[0]));
-            GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference = ((GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference)(inValues[1]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginAddUserPreferenceBenchmark(userName, userBenchmarkPreference, callback, asyncState);
+        private System.IAsyncResult OnBeginAddMarketSnapshotEntityPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference = ((GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference)(inValues[0]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginAddMarketSnapshotEntityPreference(marketSnapshotPreference, callback, asyncState);
         }
         
-        private object[] OnEndAddUserPreferenceBenchmark(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndAddUserPreferenceBenchmark(result);
+        private object[] OnEndAddMarketSnapshotEntityPreference(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndAddMarketSnapshotEntityPreference(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnAddUserPreferenceBenchmarkCompleted(object state) {
-            if ((this.AddUserPreferenceBenchmarkCompleted != null)) {
+        private void OnAddMarketSnapshotEntityPreferenceCompleted(object state) {
+            if ((this.AddMarketSnapshotEntityPreferenceCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.AddUserPreferenceBenchmarkCompleted(this, new AddUserPreferenceBenchmarkCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.AddMarketSnapshotEntityPreferenceCompleted(this, new AddMarketSnapshotEntityPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void AddUserPreferenceBenchmarkAsync(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference) {
-            this.AddUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference, null);
+        public void AddMarketSnapshotEntityPreferenceAsync(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference) {
+            this.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference, null);
         }
         
-        public void AddUserPreferenceBenchmarkAsync(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, object userState) {
-            if ((this.onBeginAddUserPreferenceBenchmarkDelegate == null)) {
-                this.onBeginAddUserPreferenceBenchmarkDelegate = new BeginOperationDelegate(this.OnBeginAddUserPreferenceBenchmark);
+        public void AddMarketSnapshotEntityPreferenceAsync(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, object userState) {
+            if ((this.onBeginAddMarketSnapshotEntityPreferenceDelegate == null)) {
+                this.onBeginAddMarketSnapshotEntityPreferenceDelegate = new BeginOperationDelegate(this.OnBeginAddMarketSnapshotEntityPreference);
             }
-            if ((this.onEndAddUserPreferenceBenchmarkDelegate == null)) {
-                this.onEndAddUserPreferenceBenchmarkDelegate = new EndOperationDelegate(this.OnEndAddUserPreferenceBenchmark);
+            if ((this.onEndAddMarketSnapshotEntityPreferenceDelegate == null)) {
+                this.onEndAddMarketSnapshotEntityPreferenceDelegate = new EndOperationDelegate(this.OnEndAddMarketSnapshotEntityPreference);
             }
-            if ((this.onAddUserPreferenceBenchmarkCompletedDelegate == null)) {
-                this.onAddUserPreferenceBenchmarkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddUserPreferenceBenchmarkCompleted);
+            if ((this.onAddMarketSnapshotEntityPreferenceCompletedDelegate == null)) {
+                this.onAddMarketSnapshotEntityPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddMarketSnapshotEntityPreferenceCompleted);
             }
-            base.InvokeAsync(this.onBeginAddUserPreferenceBenchmarkDelegate, new object[] {
-                        userName,
-                        userBenchmarkPreference}, this.onEndAddUserPreferenceBenchmarkDelegate, this.onAddUserPreferenceBenchmarkCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginAddMarketSnapshotEntityPreferenceDelegate, new object[] {
+                        marketSnapshotPreference}, this.onEndAddMarketSnapshotEntityPreferenceDelegate, this.onAddMarketSnapshotEntityPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRemoveUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveUserPreferenceBenchmark(userName, userBenchmarkPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.BeginRemoveMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRemoveMarketSnapshotEntityPreference(marketSnapshotPreference, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRemoveUserPreferenceBenchmark(System.IAsyncResult result) {
-            return base.Channel.EndRemoveUserPreferenceBenchmark(result);
+        bool GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations.EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result) {
+            return base.Channel.EndRemoveMarketSnapshotEntityPreference(result);
         }
         
-        private System.IAsyncResult OnBeginRemoveUserPreferenceBenchmark(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string userName = ((string)(inValues[0]));
-            GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference = ((GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference)(inValues[1]));
-            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRemoveUserPreferenceBenchmark(userName, userBenchmarkPreference, callback, asyncState);
+        private System.IAsyncResult OnBeginRemoveMarketSnapshotEntityPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference = ((GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference)(inValues[0]));
+            return ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).BeginRemoveMarketSnapshotEntityPreference(marketSnapshotPreference, callback, asyncState);
         }
         
-        private object[] OnEndRemoveUserPreferenceBenchmark(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRemoveUserPreferenceBenchmark(result);
+        private object[] OnEndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.ProxyDataDefinitions.ProxyDataOperations)(this)).EndRemoveMarketSnapshotEntityPreference(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRemoveUserPreferenceBenchmarkCompleted(object state) {
-            if ((this.RemoveUserPreferenceBenchmarkCompleted != null)) {
+        private void OnRemoveMarketSnapshotEntityPreferenceCompleted(object state) {
+            if ((this.RemoveMarketSnapshotEntityPreferenceCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveUserPreferenceBenchmarkCompleted(this, new RemoveUserPreferenceBenchmarkCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RemoveMarketSnapshotEntityPreferenceCompleted(this, new RemoveMarketSnapshotEntityPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RemoveUserPreferenceBenchmarkAsync(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference) {
-            this.RemoveUserPreferenceBenchmarkAsync(userName, userBenchmarkPreference, null);
+        public void RemoveMarketSnapshotEntityPreferenceAsync(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference) {
+            this.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference, null);
         }
         
-        public void RemoveUserPreferenceBenchmarkAsync(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, object userState) {
-            if ((this.onBeginRemoveUserPreferenceBenchmarkDelegate == null)) {
-                this.onBeginRemoveUserPreferenceBenchmarkDelegate = new BeginOperationDelegate(this.OnBeginRemoveUserPreferenceBenchmark);
+        public void RemoveMarketSnapshotEntityPreferenceAsync(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, object userState) {
+            if ((this.onBeginRemoveMarketSnapshotEntityPreferenceDelegate == null)) {
+                this.onBeginRemoveMarketSnapshotEntityPreferenceDelegate = new BeginOperationDelegate(this.OnBeginRemoveMarketSnapshotEntityPreference);
             }
-            if ((this.onEndRemoveUserPreferenceBenchmarkDelegate == null)) {
-                this.onEndRemoveUserPreferenceBenchmarkDelegate = new EndOperationDelegate(this.OnEndRemoveUserPreferenceBenchmark);
+            if ((this.onEndRemoveMarketSnapshotEntityPreferenceDelegate == null)) {
+                this.onEndRemoveMarketSnapshotEntityPreferenceDelegate = new EndOperationDelegate(this.OnEndRemoveMarketSnapshotEntityPreference);
             }
-            if ((this.onRemoveUserPreferenceBenchmarkCompletedDelegate == null)) {
-                this.onRemoveUserPreferenceBenchmarkCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveUserPreferenceBenchmarkCompleted);
+            if ((this.onRemoveMarketSnapshotEntityPreferenceCompletedDelegate == null)) {
+                this.onRemoveMarketSnapshotEntityPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveMarketSnapshotEntityPreferenceCompleted);
             }
-            base.InvokeAsync(this.onBeginRemoveUserPreferenceBenchmarkDelegate, new object[] {
-                        userName,
-                        userBenchmarkPreference}, this.onEndRemoveUserPreferenceBenchmarkDelegate, this.onRemoveUserPreferenceBenchmarkCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRemoveMarketSnapshotEntityPreferenceDelegate, new object[] {
+                        marketSnapshotPreference}, this.onEndRemoveMarketSnapshotEntityPreferenceDelegate, this.onRemoveMarketSnapshotEntityPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6391,85 +6684,125 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveUserPreferenceBenchmarkData(string userName, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveMarketSnapshotSelectionData(string userName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = userName;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveUserPreferenceBenchmarkData", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketSnapshotSelectionData", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> EndRetrieveUserPreferenceBenchmarkData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> EndRetrieveMarketSnapshotSelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference>)(base.EndInvoke("RetrieveUserPreferenceBenchmarkData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotSelectionData>)(base.EndInvoke("RetrieveMarketSnapshotSelectionData", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveMorningSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference> userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = userBenchmarkPreference;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveMorningSnapshotData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> EndRetrieveMorningSnapshotData(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData>)(base.EndInvoke("RetrieveMorningSnapshotData", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginAddUserPreferenceBenchmarkGroup(string userName, string groupName, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveMarketSnapshotPreference(string userName, string snapshotName, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = userName;
+                _args[1] = snapshotName;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketSnapshotPreference", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> EndRetrieveMarketSnapshotPreference(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference>)(base.EndInvoke("RetrieveMarketSnapshotPreference", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = marketSnapshotPreference;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketPerformanceSnapshotData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ProxyDataDefinitions.MarketPerformanceSnapshotData>)(base.EndInvoke("RetrieveMarketPerformanceSnapshotData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAddMarketSnapshotPerformance(string userId, string snapshotName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = userId;
+                _args[1] = snapshotName;
+                System.IAsyncResult _result = base.BeginInvoke("AddMarketSnapshotPerformance", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndAddMarketSnapshotPerformance(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("AddMarketSnapshotPerformance", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = userId;
+                _args[1] = snapshotName;
+                _args[2] = snapshotPreferenceId;
+                System.IAsyncResult _result = base.BeginInvoke("UpdateMarketSnapshotPerformance", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndUpdateMarketSnapshotPerformance(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("UpdateMarketSnapshotPerformance", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginAddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = snapshotPreferenceId;
                 _args[1] = groupName;
-                System.IAsyncResult _result = base.BeginInvoke("AddUserPreferenceBenchmarkGroup", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("AddMarketSnapshotGroupPreference", _args, callback, asyncState);
                 return _result;
             }
             
-            public bool EndAddUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
+            public bool EndAddMarketSnapshotGroupPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("AddUserPreferenceBenchmarkGroup", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("AddMarketSnapshotGroupPreference", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginRemoveUserPreferenceBenchmarkGroup(string userName, string groupname, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = userName;
-                _args[1] = groupname;
-                System.IAsyncResult _result = base.BeginInvoke("RemoveUserPreferenceBenchmarkGroup", _args, callback, asyncState);
+            public System.IAsyncResult BeginRemoveMarketSnapshotGroupPreference(int groupPreferenceId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = groupPreferenceId;
+                System.IAsyncResult _result = base.BeginInvoke("RemoveMarketSnapshotGroupPreference", _args, callback, asyncState);
                 return _result;
             }
             
-            public bool EndRemoveUserPreferenceBenchmarkGroup(System.IAsyncResult result) {
+            public bool EndRemoveMarketSnapshotGroupPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("RemoveUserPreferenceBenchmarkGroup", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("RemoveMarketSnapshotGroupPreference", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginAddUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = userName;
-                _args[1] = userBenchmarkPreference;
-                System.IAsyncResult _result = base.BeginInvoke("AddUserPreferenceBenchmark", _args, callback, asyncState);
+            public System.IAsyncResult BeginAddMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = marketSnapshotPreference;
+                System.IAsyncResult _result = base.BeginInvoke("AddMarketSnapshotEntityPreference", _args, callback, asyncState);
                 return _result;
             }
             
-            public bool EndAddUserPreferenceBenchmark(System.IAsyncResult result) {
+            public bool EndAddMarketSnapshotEntityPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("AddUserPreferenceBenchmark", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("AddMarketSnapshotEntityPreference", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginRemoveUserPreferenceBenchmark(string userName, GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference userBenchmarkPreference, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = userName;
-                _args[1] = userBenchmarkPreference;
-                System.IAsyncResult _result = base.BeginInvoke("RemoveUserPreferenceBenchmark", _args, callback, asyncState);
+            public System.IAsyncResult BeginRemoveMarketSnapshotEntityPreference(GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = marketSnapshotPreference;
+                System.IAsyncResult _result = base.BeginInvoke("RemoveMarketSnapshotEntityPreference", _args, callback, asyncState);
                 return _result;
             }
             
-            public bool EndRemoveUserPreferenceBenchmark(System.IAsyncResult result) {
+            public bool EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("RemoveUserPreferenceBenchmark", _args, result)));
+                bool _result = ((bool)(base.EndInvoke("RemoveMarketSnapshotEntityPreference", _args, result)));
                 return _result;
             }
             

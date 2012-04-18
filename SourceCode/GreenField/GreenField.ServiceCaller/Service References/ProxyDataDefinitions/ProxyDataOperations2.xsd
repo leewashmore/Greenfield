@@ -201,26 +201,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IndexConstituentsData" nillable="true" type="tns:IndexConstituentsData" />
-  <xs:complexType name="ArrayOfMorningSnapshotData">
+  <xs:complexType name="ArrayOfMarketPerformanceSnapshotData">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MorningSnapshotData" nillable="true" type="tns:MorningSnapshotData" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfMorningSnapshotData" nillable="true" type="tns:ArrayOfMorningSnapshotData" />
-  <xs:complexType name="MorningSnapshotData">
+  <xs:element name="ArrayOfMarketPerformanceSnapshotData" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
+  <xs:complexType name="MarketPerformanceSnapshotData">
     <xs:sequence>
       <xs:element minOccurs="0" name="DTD" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="IIIPreviousYearPrice" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="IIPreviousYearPrice" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:double" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MorningSnapshotPreferenceInfo" nillable="true" type="q2:UserBenchmarkPreference" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MorningSnapshotPreferenceInfo" nillable="true" type="q2:MarketSnapshotPreference" />
       <xs:element minOccurs="0" name="PreviousYearPrice" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="WTD" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="MorningSnapshotData" nillable="true" type="tns:MorningSnapshotData" />
+  <xs:element name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
   <xs:complexType name="ArrayOfRelativePerformanceSectorData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceSectorData" nillable="true" type="tns:RelativePerformanceSectorData" />

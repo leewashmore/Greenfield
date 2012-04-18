@@ -90,41 +90,59 @@
   <wsdl:message name="ProxyDataOperations_RetrieveValuesForFilters_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveValuesForFiltersResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkData" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketSnapshotSelectionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionData" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveUserPreferenceBenchmarkDataResponse" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketSnapshotSelectionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionDataResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveMorningSnapshotData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveMorningSnapshotData" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketSnapshotPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreference" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RetrieveMorningSnapshotData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveMorningSnapshotDataResponse" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketSnapshotPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreferenceResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmarkGroup_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkGroup" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketPerformanceSnapshotData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotData" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmarkGroup_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkGroupResponse" />
+  <wsdl:message name="ProxyDataOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotDataResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkGroup" />
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotPerformance_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformance" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkGroupResponse" />
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotPerformance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformanceResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmark_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmark" />
+  <wsdl:message name="ProxyDataOperations_UpdateMarketSnapshotPerformance_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformance" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_AddUserPreferenceBenchmark_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddUserPreferenceBenchmarkResponse" />
+  <wsdl:message name="ProxyDataOperations_UpdateMarketSnapshotPerformance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformanceResponse" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmark_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmark" />
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotGroupPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreference" />
   </wsdl:message>
-  <wsdl:message name="ProxyDataOperations_RemoveUserPreferenceBenchmark_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveUserPreferenceBenchmarkResponse" />
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotGroupPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveMarketSnapshotGroupPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreference" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveMarketSnapshotGroupPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotEntityPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreference" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_AddMarketSnapshotEntityPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveMarketSnapshotEntityPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreference" />
+  </wsdl:message>
+  <wsdl:message name="ProxyDataOperations_RemoveMarketSnapshotEntityPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="ProxyDataOperations_RetrieveRelativePerformanceSectorData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorData" />
@@ -269,29 +287,41 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFilters" message="tns:ProxyDataOperations_RetrieveValuesForFilters_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveValuesForFiltersResponse" message="tns:ProxyDataOperations_RetrieveValuesForFilters_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkDataResponse" message="tns:ProxyDataOperations_RetrieveUserPreferenceBenchmarkData_OutputMessage" />
+    <wsdl:operation name="RetrieveMarketSnapshotSelectionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotSelectionData" message="tns:ProxyDataOperations_RetrieveMarketSnapshotSelectionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotSelectionDataResponse" message="tns:ProxyDataOperations_RetrieveMarketSnapshotSelectionData_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveMorningSnapshotData">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotData" message="tns:ProxyDataOperations_RetrieveMorningSnapshotData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotDataResponse" message="tns:ProxyDataOperations_RetrieveMorningSnapshotData_OutputMessage" />
+    <wsdl:operation name="RetrieveMarketSnapshotPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotPreference" message="tns:ProxyDataOperations_RetrieveMarketSnapshotPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotPreferenceResponse" message="tns:ProxyDataOperations_RetrieveMarketSnapshotPreference_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddUserPreferenceBenchmarkGroup">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroup" message="tns:ProxyDataOperations_AddUserPreferenceBenchmarkGroup_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroupResponse" message="tns:ProxyDataOperations_AddUserPreferenceBenchmarkGroup_OutputMessage" />
+    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketPerformanceSnapshotData" message="tns:ProxyDataOperations_RetrieveMarketPerformanceSnapshotData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveMarketPerformanceSnapshotDataResponse" message="tns:ProxyDataOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveUserPreferenceBenchmarkGroup">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroup" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroupResponse" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmarkGroup_OutputMessage" />
+    <wsdl:operation name="AddMarketSnapshotPerformance">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotPerformance" message="tns:ProxyDataOperations_AddMarketSnapshotPerformance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotPerformanceResponse" message="tns:ProxyDataOperations_AddMarketSnapshotPerformance_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="AddUserPreferenceBenchmark">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmark" message="tns:ProxyDataOperations_AddUserPreferenceBenchmark_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkResponse" message="tns:ProxyDataOperations_AddUserPreferenceBenchmark_OutputMessage" />
+    <wsdl:operation name="UpdateMarketSnapshotPerformance">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/UpdateMarketSnapshotPerformance" message="tns:ProxyDataOperations_UpdateMarketSnapshotPerformance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/UpdateMarketSnapshotPerformanceResponse" message="tns:ProxyDataOperations_UpdateMarketSnapshotPerformance_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveUserPreferenceBenchmark">
-      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmark" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmark_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkResponse" message="tns:ProxyDataOperations_RemoveUserPreferenceBenchmark_OutputMessage" />
+    <wsdl:operation name="AddMarketSnapshotGroupPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotGroupPreference" message="tns:ProxyDataOperations_AddMarketSnapshotGroupPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotGroupPreferenceResponse" message="tns:ProxyDataOperations_AddMarketSnapshotGroupPreference_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotGroupPreference" message="tns:ProxyDataOperations_RemoveMarketSnapshotGroupPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotGroupPreferenceResponse" message="tns:ProxyDataOperations_RemoveMarketSnapshotGroupPreference_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotEntityPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotEntityPreference" message="tns:ProxyDataOperations_AddMarketSnapshotEntityPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotEntityPreferenceResponse" message="tns:ProxyDataOperations_AddMarketSnapshotEntityPreference_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotEntityPreference" message="tns:ProxyDataOperations_RemoveMarketSnapshotEntityPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotEntityPreferenceResponse" message="tns:ProxyDataOperations_RemoveMarketSnapshotEntityPreference_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveRelativePerformanceSectorData">
       <wsdl:input wsaw:Action="http://tempuri.org/ProxyDataOperations/RetrieveRelativePerformanceSectorData" message="tns:ProxyDataOperations_RetrieveRelativePerformanceSectorData_InputMessage" />
@@ -473,8 +503,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveUserPreferenceBenchmarkData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveUserPreferenceBenchmarkData" style="document" />
+    <wsdl:operation name="RetrieveMarketSnapshotSelectionData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotSelectionData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -482,8 +512,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveMorningSnapshotData">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveMorningSnapshotData" style="document" />
+    <wsdl:operation name="RetrieveMarketSnapshotPreference">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketSnapshotPreference" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -491,8 +521,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddUserPreferenceBenchmarkGroup">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmarkGroup" style="document" />
+    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RetrieveMarketPerformanceSnapshotData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -500,8 +530,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveUserPreferenceBenchmarkGroup">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmarkGroup" style="document" />
+    <wsdl:operation name="AddMarketSnapshotPerformance">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotPerformance" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -509,8 +539,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddUserPreferenceBenchmark">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddUserPreferenceBenchmark" style="document" />
+    <wsdl:operation name="UpdateMarketSnapshotPerformance">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/UpdateMarketSnapshotPerformance" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -518,8 +548,35 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveUserPreferenceBenchmark">
-      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveUserPreferenceBenchmark" style="document" />
+    <wsdl:operation name="AddMarketSnapshotGroupPreference">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotGroupPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotGroupPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotEntityPreference">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/AddMarketSnapshotEntityPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
+      <soap:operation soapAction="http://tempuri.org/ProxyDataOperations/RemoveMarketSnapshotEntityPreference" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

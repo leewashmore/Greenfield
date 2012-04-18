@@ -41,19 +41,19 @@ namespace GreenField.ServiceCaller
         
         void RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
-        void RetrieveUserPreferenceBenchmarkData(string userName, Action<List<UserBenchmarkPreference>> callback);        
+        void RetrieveMarketSnapshotPreference(string userName,string snapshotName, Action<List<MarketSnapshotPreference>> callback);        
         
         void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval ,Action<List<UnrealizedGainLossData>> callback);
-        
-        void RetrieveMorningSnapshotData(List<UserBenchmarkPreference> userBenchmarkPreference, Action<List<MorningSnapshotData>> callback);
 
-        void AddUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback);
+        void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback);
 
-        void RemoveUserPreferenceBenchmarkGroup(string userName, string groupName, Action<bool> callback);
+        void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
 
-        void AddUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
+        void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback);
 
-        void RemoveUserPreferenceBenchmark(string userName, UserBenchmarkPreference userBenchmarkPreference, Action<bool> callback);
+        void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
+
+        void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
         void RetriveValuesForFilters(String filterType, Action<List<String>> callback);
 
