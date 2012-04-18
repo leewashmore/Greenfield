@@ -397,113 +397,6 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(LogOutCommandMethod); }
         }
 
-        public ICommand DashboardCompanySnapshotSummaryCommand 
-        {
-            get { return new DelegateCommand<object>(DashboardCompanySnapshotSummaryCommandMethod); }
-        }
-
-        public ICommand DashboardCompanySnapshotCompanyProfileCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanySnapshotCompanyProfileCommandMethod); }
-        }
-
-        public ICommand DashboardCompanySnapshotTearSheetCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanySnapshotTearSheetCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsSummaryCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsSummaryCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsIncomeStatementCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsIncomeStatementCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsBalanceSheetCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsBalanceSheetCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsCashFlowCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsCashFlowCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsFinStatCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsFinStatCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyFinancialsPeerComparisonCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyFinancialsPeerComparisonCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyEstimatesConsensusCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyEstimatesConsensusCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyEstimatesDetailedCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyEstimatesDetailedCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyEstimatesComparisonCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyEstimatesComparisonCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyValuationFairValueCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyValuationFairValueCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyValuationDiscountedCashFlowCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyValuationDiscountedCashFlowCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyDocumentsCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyDocumentsCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyChartingClosingPriceCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyChartingClosingPriceCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyChartingUnrealizedGainCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyChartingUnrealizedGainCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyChartingContextCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyChartingContextCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyChartingValuationCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyChartingValuationCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyCorporateGovernanceQuestionnaireCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceQuestionnaireCommandMethod); }
-        }
-
-        public ICommand DashboardCompanyCorporateGovernanceReportCommand
-        {
-            get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceReportCommandMethod); }
-        }
-
-        
-
         public ICommand DetailedEstimateCommand
         {
             get { return new DelegateCommand<object>(DetailedEstimateCommandMethod); }
@@ -764,6 +657,212 @@ namespace GreenField.App.ViewModel
                 }
         }
 
+        #region Dashboard
+        #region Company
+        #region Snapshot
+        public ICommand DashboardCompanySnapshotSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanySnapshotSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardCompanySnapshotCompanyProfileCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanySnapshotCompanyProfileCommandMethod); }
+        }
+
+        public ICommand DashboardCompanySnapshotTearSheetCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanySnapshotTearSheetCommandMethod); }
+        }
+        #endregion
+
+        #region Financials
+        public ICommand DashboardCompanyFinancialsSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyFinancialsIncomeStatementCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsIncomeStatementCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyFinancialsBalanceSheetCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsBalanceSheetCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyFinancialsCashFlowCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsCashFlowCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyFinancialsFinStatCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsFinStatCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyFinancialsPeerComparisonCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinancialsPeerComparisonCommandMethod); }
+        }
+        #endregion
+
+        #region Estimates
+        public ICommand DashboardCompanyEstimatesConsensusCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyEstimatesConsensusCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyEstimatesDetailedCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyEstimatesDetailedCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyEstimatesComparisonCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyEstimatesComparisonCommandMethod); }
+        }
+        #endregion
+
+        #region Valuation
+        public ICommand DashboardCompanyValuationFairValueCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyValuationFairValueCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyValuationDiscountedCashFlowCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyValuationDiscountedCashFlowCommandMethod); }
+        }
+        #endregion
+
+        #region Documents
+        public ICommand DashboardCompanyDocumentsCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyDocumentsCommandMethod); }
+        }
+        #endregion
+
+        #region Charting
+        public ICommand DashboardCompanyChartingClosingPriceCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingClosingPriceCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingUnrealizedGainCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingUnrealizedGainCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingContextCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingContextCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyChartingValuationCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyChartingValuationCommandMethod); }
+        }
+        #endregion
+
+        #region Corporate Governance
+        public ICommand DashboardCompanyCorporateGovernanceQuestionnaireCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceQuestionnaireCommandMethod); }
+        }
+
+        public ICommand DashboardCompanyCorporateGovernanceReportCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyCorporateGovernanceReportCommandMethod); }
+        }
+        #endregion
+        #endregion
+
+        #region Markets
+        #region Snapshot
+        public ICommand DashboardMarketsSnapshotSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsSnapshotSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardMarketsSnapshotMarketPerformanceCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsSnapshotMarketPerformanceCommandMethod); }
+        }
+
+        public ICommand DashboardMarketsSnapshotInternalModelValuationCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsSnapshotInternalModelValuationCommandMethod); }
+        }
+        #endregion
+
+        #region MacroEconomic
+        public ICommand DashboardMarketsMacroEconomicsEMSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsMacroEconomicsEMSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardMarketsMacroEconomicsCountrySummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsMacroEconomicsCountrySummaryCommandMethod); }
+        }
+        #endregion
+
+        #region Commodities
+        public ICommand DashboardMarketsCommoditiesSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardMarketsCommoditiesSummaryCommandMethod); }
+        }
+        #endregion
+        #endregion
+
+        #region Portfolio
+        #region Snapshot
+        public ICommand DashboardPortfolioSnapshotCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioSnapshotCommandMethod); }
+        }
+        #endregion
+
+        #region Holdings
+        public ICommand DashboardPortfolioHoldingsCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioHoldingsCommandMethod); }
+        }
+        #endregion
+
+        #region Performance
+        public ICommand DashboardPortfolioPerformanceSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioPerformanceSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardPortfolioPerformanceAttributionCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioPerformanceAttributionCommandMethod); }
+        }
+
+        public ICommand DashboardPortfolioPerformanceRelativePerformanceCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioPerformanceRelativePerformanceCommandMethod); }
+        }
+
+        #endregion
+
+        #region Benchmark
+        public ICommand DashboardPortfolioBenchmarkSummaryCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioBenchmarkSummaryCommandMethod); }
+        }
+
+        public ICommand DashboardPortfolioBenchmarkComponentsCommand
+        {
+            get { return new DelegateCommand<object>(DashboardPortfolioBenchmarkComponentsCommandMethod); }
+        }
+        #endregion
+        #endregion
+        #endregion
         #endregion
         #endregion
 
@@ -785,7 +884,10 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
         }
-        
+
+        #region Dashboard
+        #region Company
+        #region Snapshot
         private void DashboardCompanySnapshotSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -838,7 +940,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Financials
         private void DashboardCompanyFinancialsSummaryCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -940,7 +1044,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Estimates
         private void DashboardCompanyEstimatesConsensusCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -991,7 +1097,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Valuation
         private void DashboardCompanyValuationFairValueCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1025,7 +1133,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Documents
         private void DashboardCompanyDocumentsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1042,7 +1152,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Charting
         private void DashboardCompanyChartingClosingPriceCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1110,7 +1222,9 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Corporate Governance
         private void DashboardCompanyCorporateGovernanceQuestionnaireCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1144,10 +1258,252 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
+        #endregion 
+
+        #region Markets
+        #region Snapshot
+        private void DashboardMarketsSnapshotSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardMarketsSnapshotMarketPerformanceCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotMarketPerformance", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardMarketsSnapshotInternalModelValuationCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotInternalModelValuation", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
+
+        #region MacroEconomic
+        private void DashboardMarketsMacroEconomicsEMSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsEMSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardMarketsMacroEconomicsCountrySummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsMacroEconomicsCountrySummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        #endregion
+
+        #region Commodities
+        private void DashboardMarketsCommoditiesSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsCommoditiesSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        #endregion
+        #endregion
+
+        #region Portfolio
+        #region Snapshot
+        private void DashboardPortfolioSnapshotCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioSnapshot", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        #endregion
+
+        #region Holdings
+        private void DashboardPortfolioHoldingsCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        #endregion
+
+        #region Performance
+        private void DashboardPortfolioPerformanceSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardPortfolioPerformanceAttributionCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceAttribution", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardPortfolioPerformanceRelativePerformanceCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioPerformanceRelativePerformance", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
+
+        #region Benchmark
+        private void DashboardPortfolioBenchmarkSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardPortfolioBenchmarkComponentsCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(DashboardGadgetPayload);
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioBenchmarkComponents", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        #endregion
+        #endregion
+        #endregion
 
 
 
-        
+
 
         private void DetailedEstimateCommandMethod(object param)
         {
@@ -1366,8 +1722,8 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.REGION_BREAKDOWN,
-                            DashboardTileObject = new ViewRegionBreakdown(new ViewModelRegionBreakDown(GetDashboardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.HOLDINGS_REGION_BREAKDOWN,
+                            DashboardTileObject = new ViewRegionBreakdown(new ViewModelRegionBreakdown(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1390,8 +1746,8 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.SECTOR_BREAKDOWN,
-                            DashboardTileObject = new ViewSectorBreakdown(new ViewModelSectorBreakDown(GetDashboardGadgetParam()))
+                            DashboardTileHeader = GadgetNames.HOLDINGS_SECTOR_BREAKDOWN,
+                            DashboardTileObject = new ViewSectorBreakdown(new ViewModelSectorBreakdown(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)
@@ -1414,7 +1770,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.INDEX_CONSTITUENTS,
+                            DashboardTileHeader = GadgetNames.BENCHMARK_INDEX_CONSTITUENTS,
                             DashboardTileObject = new ViewIndexConstituents(new ViewModelIndexConstituents(GetDashboardGadgetParam()))
                         });
             }
@@ -1438,7 +1794,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.MARKET_CAPITALIZATION,
+                            DashboardTileHeader = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION,
                             DashboardTileObject = new ViewMarketCapitalization(new ViewModelMarketCapitalization(GetDashboardGadgetParam()))
                         });
             }
@@ -1462,7 +1818,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.TOP_HOLDINGS,
+                            DashboardTileHeader = GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS,
                             DashboardTileObject = new ViewTopHoldings(new ViewModelTopHoldings(GetDashboardGadgetParam()))
                         });
             }
@@ -1487,7 +1843,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.ASSET_ALLOCATION,
+                            DashboardTileHeader = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
                             DashboardTileObject = new ViewAssetAllocation(new ViewModelAssetAllocation(GetDashboardGadgetParam()))
                         });
             }
@@ -1512,7 +1868,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.HOLDINGS_PIECHART,
+                            DashboardTileHeader = GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART,
                             DashboardTileObject = new ViewHoldingsPieChart(new ViewModelHoldingsPieChart(GetDashboardGadgetParam()))
                         });
             }
@@ -1537,7 +1893,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.PORTFOLIO_RISK_RETURNS,
+                            DashboardTileHeader = GadgetNames.HOLDINGS_RISK_RETURN,
                             DashboardTileObject = new ViewPortfolioRiskReturns(new ViewModelPortfolioRiskReturns(GetDashboardGadgetParam()))
                         });
             }
@@ -1562,7 +1918,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.TOP_BENCHMARK_SECURITIES,
+                            DashboardTileHeader = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS,
                             DashboardTileObject = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(GetDashboardGadgetParam()))
                         });
             }
@@ -1587,7 +1943,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_RELATIVE_PERFORMANCE,
                             DashboardTileObject = new ViewRelativePerformance(new ViewModelRelativePerformance(GetDashboardGadgetParam()))
                         });
             }
@@ -1612,7 +1968,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.COUNTRY_ACTIVE_POSITION,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_COUNTRY_ACTIVE_POSITION,
                             DashboardTileObject = new ViewRelativePerformanceCountryActivePosition(new ViewModelRelativePerformanceCountryActivePosition(GetDashboardGadgetParam()))
                         });
             }
@@ -1637,7 +1993,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.SECTOR_ACTIVE_POSITION,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION,
                             DashboardTileObject = new ViewRelativePerformanceSectorActivePosition(new ViewModelRelativePerformanceSectorActivePosition(GetDashboardGadgetParam()))
                         });
             }
@@ -1662,7 +2018,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.SECTOR_ACTIVE_POSITION,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION,
                             DashboardTileObject = new ViewRelativePerformanceSecurityActivePosition(new ViewModelRelativePerformanceSecurityActivePosition(GetDashboardGadgetParam()))
                         });
             }
@@ -1687,7 +2043,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.TOP_CONTRIBUTOR,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_TOP_CONTRIBUTOR,
                             DashboardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashboardGadgetParam()))
                         });
             }
@@ -1712,7 +2068,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.TOP_DETRACTOR,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_TOP_DETRACTOR,
                             DashboardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashboardGadgetParam()))
                         });
             }
@@ -1737,7 +2093,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.CONTRIBUTOR_DETRACTOR,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_CONTRIBUTOR_DETRACTOR,
                             DashboardTileObject = new ViewContributorDetractor(new ViewModelContributorDetractor(GetDashboardGadgetParam()))
                         });
             }
@@ -1833,7 +2189,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.HEAT_MAP,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
                             DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
                         });
             }
@@ -1856,7 +2212,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
                         (new DashboardTileViewItemInfo
                         {
-                            DashboardTileHeader = GadgetNames.ATTRIBUTION,
+                            DashboardTileHeader = GadgetNames.PERFORMANCE_ATTRIBUTION,
                             DashboardTileObject = new ViewAttribution(new ViewModelAttribution(GetDashboardGadgetParam()))
                         });
             }

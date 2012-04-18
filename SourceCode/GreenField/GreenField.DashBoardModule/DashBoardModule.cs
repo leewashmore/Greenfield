@@ -75,6 +75,44 @@ namespace GreenField.DashboardModule
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCompanyValuationFairValue));
             #endregion 
             #endregion
+
+            #region Markets
+            #region Commodities
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsCommoditiesSummary));
+            #endregion
+
+            #region MacroEconomics
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsMacroEconomicsCountrySummary));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsMacroEconomicsEMSummary));            
+            #endregion
+
+            #region Snapshot
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsSnapshotInternalModelValuation));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsSnapshotMarketPerformance));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardMarketsSnapshotSummary));            
+            #endregion           
+            #endregion
+
+            #region Portfolio
+            #region Benchmark
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioBenchmarkComponents));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioBenchmarkSummary));
+            #endregion
+
+            #region Holdings
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioHoldings));
+            #endregion
+
+            #region Performance
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioPerformanceAttribution));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioPerformanceRelativePerformance));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioPerformanceSummary));
+            #endregion
+
+            #region Snapshot
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioSnapshot));
+            #endregion            
+            #endregion
             
             
         }

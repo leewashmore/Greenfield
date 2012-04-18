@@ -123,89 +123,110 @@
     <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Markets\ViewDashboardMarketsCommoditiesSummary.xaml.cs">
+    <Compile Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkComponents.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioBenchmarkComponents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkSummary.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioBenchmarkSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceRelativePerformance.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceRelativePerformance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceAttribution.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceAttribution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceSummary.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\Commodities\ViewDashboardMarketsCommoditiesSummary.xaml.cs">
       <DependentUpon>ViewDashboardMarketsCommoditiesSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Markets\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml.cs">
+    <Compile Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml.cs">
       <DependentUpon>ViewDashboardMarketsMacroEconomicsCountrySummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Markets\ViewDashboardMarketsMacroEconomicsEMSummary.xaml.cs">
+    <Compile Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsEMSummary.xaml.cs">
       <DependentUpon>ViewDashboardMarketsMacroEconomicsEMSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Markets\ViewDashboardMarketsSnapshotInternalModelValuation.xaml.cs">
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotInternalModelValuation.xaml.cs">
       <DependentUpon>ViewDashboardMarketsSnapshotInternalModelValuation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Markets\ViewDashboardMarketsSnapshotMarketPerformance.xaml.cs">
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotMarketPerformance.xaml.cs">
       <DependentUpon>ViewDashboardMarketsSnapshotMarketPerformance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Markets\ViewDashboardMarketsSnapshotSummary.xaml.cs">
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotSummary.xaml.cs">
       <DependentUpon>ViewDashboardMarketsSnapshotSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyDocuments.xaml.cs">
+    <Compile Include="Views\Company\Documents\ViewDashboardCompanyDocuments.xaml.cs">
       <DependentUpon>ViewDashboardCompanyDocuments.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml.cs">
+    <Compile Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml.cs">
       <DependentUpon>ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyCorporateGovernanceReport.xaml.cs">
+    <Compile Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceReport.xaml.cs">
       <DependentUpon>ViewDashboardCompanyCorporateGovernanceReport.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyChartingValuation.xaml.cs">
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingValuation.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingValuation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyChartingContext.xaml.cs">
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingContext.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingContext.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyValuationDiscountedCashFlow.xaml.cs">
+    <Compile Include="Views\Company\Valuation\ViewDashboardCompanyValuationDiscountedCashFlow.xaml.cs">
       <DependentUpon>ViewDashboardCompanyValuationDiscountedCashFlow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyValuationFairValue.xaml.cs">
+    <Compile Include="Views\Company\Valuation\ViewDashboardCompanyValuationFairValue.xaml.cs">
       <DependentUpon>ViewDashboardCompanyValuationFairValue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsPeerComparison.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsPeerComparison.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsPeerComparison.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsFinStat.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsFinStat.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsFinStat.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsCashFlow.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsCashFlow.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsCashFlow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsBalanceSheet.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsBalanceSheet.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsBalanceSheet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsIncomeStatement.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsIncomeStatement.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsIncomeStatement.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyFinancialsSummary.xaml.cs">
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewDashBoard.xaml.cs">
       <DependentUpon>ViewDashBoard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyChartingClosingPrice.xaml.cs">
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingClosingPrice.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingClosingPrice.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
       <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyEstimatesComparison.xaml.cs">
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesComparison.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesConsensus.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
       <DependentUpon>ViewDashboardCompanyEstimatesDetailed.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanySnapshotCompanyProfile.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotCompanyProfile.xaml.cs">
       <DependentUpon>ViewDashboardCompanySnapshotCompanyProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanySnapshotSummary.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotSummary.xaml.cs">
       <DependentUpon>ViewDashboardCompanySnapshotSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\ViewDashboardCompanySnapshotTearSheet.xaml.cs">
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotTearSheet.xaml.cs">
       <DependentUpon>ViewDashboardCompanySnapshotTearSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Holdings\ViewDashboardPortfolioHoldings.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioHoldings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Snapshot\ViewDashboardPortfolioSnapshot.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioSnapshot.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -228,79 +249,99 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsCommoditiesSummary.xaml">
+    <Page Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkComponents.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml">
+    <Page Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsMacroEconomicsEMSummary.xaml">
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceRelativePerformance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsSnapshotInternalModelValuation.xaml">
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceAttribution.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsSnapshotMarketPerformance.xaml">
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Markets\ViewDashboardMarketsSnapshotSummary.xaml">
+    <Page Include="Views\Markets\Commodities\ViewDashboardMarketsCommoditiesSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyDocuments.xaml">
+    <Page Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml">
+    <Page Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsEMSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyCorporateGovernanceReport.xaml">
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotInternalModelValuation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyChartingValuation.xaml">
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotMarketPerformance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyChartingContext.xaml">
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyValuationDiscountedCashFlow.xaml">
+    <Page Include="Views\Company\Documents\ViewDashboardCompanyDocuments.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyValuationFairValue.xaml">
+    <Page Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsPeerComparison.xaml">
+    <Page Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsFinStat.xaml">
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingValuation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsCashFlow.xaml">
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingContext.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsBalanceSheet.xaml">
+    <Page Include="Views\Company\Valuation\ViewDashboardCompanyValuationDiscountedCashFlow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsIncomeStatement.xaml">
+    <Page Include="Views\Company\Valuation\ViewDashboardCompanyValuationFairValue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyFinancialsSummary.xaml">
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsPeerComparison.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsFinStat.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsCashFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsBalanceSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsIncomeStatement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -308,37 +349,45 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyChartingClosingPrice.xaml">
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingClosingPrice.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyChartingUnrealizedGain.xaml">
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingUnrealizedGain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyEstimatesComparison.xaml">
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyEstimatesConsensus.xaml">
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanyEstimatesDetailed.xaml">
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanySnapshotCompanyProfile.xaml">
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotCompanyProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanySnapshotSummary.xaml">
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\ViewDashboardCompanySnapshotTearSheet.xaml">
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotTearSheet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Portfolio\Holdings\ViewDashboardPortfolioHoldings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Snapshot\ViewDashboardPortfolioSnapshot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup />

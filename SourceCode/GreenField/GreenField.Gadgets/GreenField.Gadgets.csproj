@@ -136,12 +136,12 @@
     <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
-    <Compile Include="ViewModels\ViewModelRegionBreakDown.cs" />
+    <Compile Include="ViewModels\ViewModelRegionBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceCountryActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
-    <Compile Include="ViewModels\ViewModelSectorBreakDown.cs" />
+    <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
     <Compile Include="ViewModels\ViewModelTopContributor.cs" />
     <Compile Include="ViewModels\ViewModelTopDetractor.cs" />

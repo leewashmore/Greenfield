@@ -24,7 +24,7 @@ namespace GreenField.Gadgets.ViewModels
     /// <summary>
     /// view model for ViewSectorBreakDown
     /// </summary>
-    public class ViewModelSectorBreakDown : NotificationObject
+    public class ViewModelSectorBreakdown : NotificationObject
     {
         #region Fields
 
@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor
         /// </summary>
         /// <param name="param">DashBoardGadgetParam</param>
-        public ViewModelSectorBreakDown(DashboardGadgetParam param)
+        public ViewModelSectorBreakdown(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
