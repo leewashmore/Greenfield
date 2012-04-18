@@ -995,8 +995,7 @@
     <SolidColorBrush x:Key="TabMouseOverOuterBorder" Color="#FF848484"/>
     <SolidColorBrush x:Key="TabMouseOverInnerBorder" Color="#FFFFFFFF"/>
     <LinearGradientBrush x:Key="TabMouseOverBackground" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#FFFFFBA3" Offset="0"/>
-        <GradientStop Color="#FFFFFBDA" Offset="1"/>
+        <GradientStop Color="#213671" Offset="0"/>        
     </LinearGradientBrush>
     <SolidColorBrush x:Key="TabSelectedOuterBorder" Color="#FF848484"/>
     <SolidColorBrush x:Key="TabSelectedInnerBorder" Color="#FFFFFFFF"/>
