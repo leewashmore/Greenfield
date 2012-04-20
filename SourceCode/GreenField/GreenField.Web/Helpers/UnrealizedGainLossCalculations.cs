@@ -145,9 +145,10 @@ public static class UnrealizedGainLossCalculations
                 if (movingAverageResult[j].Volume != 0)
                 {
                     nintyDayVolumeSummation = movingAverageResult[j].Volume;
-                    movingAverageResult.RemoveRange(0, j - 90);               
+                    movingAverageResult.RemoveRange(0, j - 90);
+                    break;
                 } 
-             break;           
+                    
             }                
          }            
            movingAverageResult[89].NinetyDayWtAvg = nintyDayVolumeSummation;
@@ -224,6 +225,19 @@ public static class UnrealizedGainLossCalculations
         {
             costResult[i].WtAvgCost = 0;
             sumCost = sumCost + costResult[i].Cost;
+        }
+
+        if (sumCost == null || sumCost == 0)
+        {
+            for (int j = 90; j < costResult.Count; j++)
+            {
+                if (costResult[j].Cost != 0)
+                {
+                    sumCost = costResult[j].Cost;
+                    costResult.RemoveRange(0, j - 90);
+                    break;
+                }
+            }
         }
 
         costResult[89].WtAvgCost = sumCost;

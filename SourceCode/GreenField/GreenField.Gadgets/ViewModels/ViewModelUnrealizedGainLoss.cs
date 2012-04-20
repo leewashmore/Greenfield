@@ -44,7 +44,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the EntitySelectionData class for storing Entity Selection Data
         /// </summary>
-        private EntitySelectionData _entitySelectionData;
+        private EntitySelectionData _entitySelectionData;        
 
         #endregion
 
@@ -495,6 +495,15 @@ namespace GreenField.Gadgets.ViewModels
             ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
+        #endregion
+
+        #region EventUnSubscribe
+
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+        }
+
         #endregion
     }
 }

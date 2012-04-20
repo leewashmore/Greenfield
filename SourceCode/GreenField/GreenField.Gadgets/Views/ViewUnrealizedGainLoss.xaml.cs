@@ -30,6 +30,14 @@ namespace GreenField.Gadgets.Views
             public const string UNREALIZED_GAINLOSS_DATA = "Unrealized Gain/Loss Data";
         }
 
+        private ViewModelUnrealizedGainLoss _dataContextUnrealizedGainLossChart;
+
+        public ViewModelUnrealizedGainLoss DataContextUnrealizedGainLossChart
+        {
+            get { return _dataContextUnrealizedGainLossChart; }
+            set { _dataContextUnrealizedGainLossChart = value; }
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -38,6 +46,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextUnrealizedGainLossChart = dataContextSource;
             dataContextSource.unrealizedGainLossDataLoadedEvent +=
                 new DataRetrievalProgressIndicatorEventHandler(dataContextSource_unrealizedGainLossDataLoadedEvent);
             dataContextSource.ChartArea = this.chUnrealizedGainLoss.DefaultView.ChartArea;
@@ -177,9 +186,16 @@ namespace GreenField.Gadgets.Views
             RadGridView_ElementExport.ElementExporting(e);
         }
 
+        #region RemoveEvents
+
         public override void Dispose()
         {
-            
+            this.DataContextUnrealizedGainLossChart.unrealizedGainLossDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_unrealizedGainLossDataLoadedEvent);
+            this.DataContextUnrealizedGainLossChart.Dispose();
+            this.DataContextUnrealizedGainLossChart = null;
+            this.DataContext = null;
         }
+
+        #endregion
     }
 }

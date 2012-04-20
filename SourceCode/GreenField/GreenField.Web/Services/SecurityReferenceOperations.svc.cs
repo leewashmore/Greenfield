@@ -596,12 +596,12 @@ namespace GreenField.Web.Services
                     return result;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-
                 List<DimensionEntitiesService.GF_PRICING_BASEVIEW> resultSet
                     = entity.GF_PRICING_BASEVIEW
                         .Where(record => (record.TICKER == entityIdentifier.ShortName))
                         .OrderByDescending(record => record.FROMDATE)
-                        .ToList();
+                        .ToList();                
+                     
 
                 int noOfRows = resultSet.Count();
 
@@ -653,6 +653,9 @@ namespace GreenField.Web.Services
         }
         #endregion
 
+               
+
+                                        
     }
 }
 

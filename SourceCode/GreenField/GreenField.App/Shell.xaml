@@ -315,12 +315,6 @@
                         <telerik:RadRibbonButton LargeImage="../Images/PortfolioRiskReturnsImage.png" Text="Portfolio Risk Returns" Size="Large" Command="{Binding GadgetPortfolioRiskReturnsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
-                    </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/CountryActivePositionImage.png" Text="Country Active Position" Size="Large" Command="{Binding GadgetCountryActivePositionCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
@@ -341,6 +335,12 @@
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Heat Map" Size="Large" Command="{Binding HeatMapCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>-->
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
@@ -384,14 +384,7 @@
                                          CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True" HorizontalAlignment="Left"
                                          OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
                                          Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />
-                                    <TextBlock Text="Composite/Fund" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,0,0,0" Width="100"/>
-                                    <telerik:RadComboBox ItemsSource="{Binding FundReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                         Margin="365,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
-                                         CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                         Text="{Binding FundEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedFundReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />                                    
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />                                                                        
                                     <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="580,0,0,0" Width="100"/>
                                     <telerik:RadComboBox Margin="680,0,0,0" IsEditable="True" Width="200"/>
                                 </Grid>
