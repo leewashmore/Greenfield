@@ -17,11 +17,14 @@ using Microsoft.Win32;
 #else
 using System.Windows.Controls;
 using System.Windows.Printing;
+using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls.GridView;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 #endif
 
 namespace GreenField.Benchmark.Views
 {
-    [Export(typeof(ViewPortfolioDetails))]
     public partial class ViewPortfolioDetails : UserControl
     {
         #region Private Variables
@@ -31,6 +34,23 @@ namespace GreenField.Benchmark.Views
         Canvas canvas;
         RadGridView grid;
 
+
+        /// <summary>
+        /// View Model
+        /// </summary>
+        private ViewModelPortfolioDetails _dataContextPortfolioDetails;
+        public ViewModelPortfolioDetails DataContextPortfolioDetails
+        {
+            get
+            {
+                return _dataContextPortfolioDetails;
+            }
+            set
+            {
+                _dataContextPortfolioDetails = value;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -38,29 +58,16 @@ namespace GreenField.Benchmark.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewPortfolioDetails()
+        public ViewPortfolioDetails(ViewModelPortfolioDetails dataContextSource)
         {
             InitializeComponent();
+            this.DataContext = dataContextSource;
+            this.DataContextPortfolioDetails = dataContextSource;
         }
 
         #endregion
 
-        #region SettingDataContext
-        /// <summary>
-        /// Setting the DataContext to the ViewModel
-        /// </summary>
-        [Import]
-        public ViewModelPortfolioDetails DataContextSource
-        {
-            set
-            {
-                this.DataContext = value;
-            }
-        }
-
-        #endregion
-
-        #region ExportToExcel
+        #region ExportToExcel/PDF/Print
 
         /// <summary>
         /// Event handler when user wants to Export the Grid to ExcelSheet
@@ -90,8 +97,6 @@ namespace GreenField.Benchmark.Views
                 }
             }
         }
-
-        #endregion
 
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
@@ -264,6 +269,8 @@ namespace GreenField.Benchmark.Views
             return level;
         }
 
+        #endregion
+
         //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
         //{
         //    RadRichTextBox radTxtDoc = new RadRichTextBox();
@@ -277,55 +284,55 @@ namespace GreenField.Benchmark.Views
 
         #region Printing the DataGrid
 
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            offsetY = 0d;
-            totalHeight = 0d;
+        //private void btnPrint_Click(object sender, RoutedEventArgs e)
+        //{
+        //    offsetY = 0d;
+        //    totalHeight = 0d;
 
-            grid = new RadGridView();
-            grid.DataContext = dgPortfolioDetails.DataContext;
-            grid.ItemsSource = dgPortfolioDetails.ItemsSource;
-            grid.RowIndicatorVisibility = Visibility.Collapsed;
-            grid.ShowGroupPanel = false;
-            grid.CanUserFreezeColumns = false;
-            grid.IsFilteringAllowed = false;
-            grid.AutoExpandGroups = true;
-            grid.AutoGenerateColumns = false;
+        //    grid = new RadGridView();
+        //    grid.DataContext = dgPortfolioDetails.DataContext;
+        //    grid.ItemsSource = dgPortfolioDetails.ItemsSource;
+        //    grid.RowIndicatorVisibility = Visibility.Collapsed;
+        //    grid.ShowGroupPanel = false;
+        //    grid.CanUserFreezeColumns = false;
+        //    grid.IsFilteringAllowed = false;
+        //    grid.AutoExpandGroups = true;
+        //    grid.AutoGenerateColumns = false;
 
-            foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
-            {
-                GridViewDataColumn newColumn = new GridViewDataColumn();
-                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-                grid.Columns.Add(newColumn);
-            }
+        //    foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
+        //    {
+        //        GridViewDataColumn newColumn = new GridViewDataColumn();
+        //        newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
+        //        grid.Columns.Add(newColumn);
+        //    }
 
-            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-            {
-                GridViewDataColumn currentColumn = column;
-                GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
-                                                     where c.UniqueName == currentColumn.UniqueName
-                                                     select c).FirstOrDefault();
-                if (originalColumn != null)
-                {
-                    column.Width = originalColumn.ActualWidth;
-                    column.DisplayIndex = originalColumn.DisplayIndex;
-                }
-            }
+        //    foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
+        //    {
+        //        GridViewDataColumn currentColumn = column;
+        //        GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
+        //                                             where c.UniqueName == currentColumn.UniqueName
+        //                                             select c).FirstOrDefault();
+        //        if (originalColumn != null)
+        //        {
+        //            column.Width = originalColumn.ActualWidth;
+        //            column.DisplayIndex = originalColumn.DisplayIndex;
+        //        }
+        //    }
 
-            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
+        //    StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
 
-            grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
-            grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
-            grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
+        //    grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
+        //    grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
+        //    grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
 
-            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            PrintDocument doc = new PrintDocument();
-            canvas = new Canvas();
-            canvas.Children.Add(grid);
-            doc.PrintPage += this.doc_PrintPage;
-            doc.Print("RadGridView print");
-        }
+        //    ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+        //    ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+        //    PrintDocument doc = new PrintDocument();
+        //    canvas = new Canvas();
+        //    canvas.Children.Add(grid);
+        //    doc.PrintPage += this.doc_PrintPage;
+        //    doc.Print("RadGridView print");
+        //}
 
         void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -341,5 +348,89 @@ namespace GreenField.Benchmark.Views
         }
 
         #endregion
+
+        #region RadDocument
+
+        private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Telerik.Windows.Documents.UI.PrintSettings s = new Telerik.Windows.Documents.UI.PrintSettings();
+            s.DocumentName = "MyDocument";
+            s.PrintMode = Telerik.Windows.Documents.UI.PrintMode.Native;
+            s.PrintScaling = Telerik.Windows.Documents.UI.PrintScaling.ShrinkToPageSize;
+            RadRichTextBox RadRichTextBox1 = new RadRichTextBox();
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                RadRichTextBox1.Document = new RadDocument();
+                RadRichTextBox1.Document = CreateDocument(dgPortfolioDetails);
+                RadRichTextBox1.Print(s);
+            }));
+        }
+
+        #endregion
+
+        private void dgPortfolioDetails_Grouping(object sender, GridViewGroupingEventArgs e)
+        {
+            if (e.Action.ToString() != "Remove")
+            {
+                if (this.dgPortfolioDetails.GroupDescriptors.Count > 0)
+                {
+                    e.Cancel = true;
+                    this.dgPortfolioDetails.GroupDescriptors.Clear();
+                    dgPortfolioDetails.GroupDescriptors.Add(e.GroupDescriptor);
+                }
+                Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
+                DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
+            }
+            else
+            {
+                DataContextPortfolioDetails.GroupingColumn = "No Grouping";
+            }
+            SetGroupedData();
+        }
+
+        private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
+        {
+            Telerik.Windows.Controls.GridView.ColumnFilterDescriptor fd = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
+            string a = Convert.ToString(fd.Column.UniqueName);
+
+        }
+
+        private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
+        {
+            SetGroupedData();
+        }
+
+        private void SetGroupedData()
+        {
+            RangeObservableCollection<PortfolioDetailsData> collection = new RangeObservableCollection<PortfolioDetailsData>();
+            foreach (PortfolioDetailsData item in dgPortfolioDetails.Items)
+            {
+                PortfolioDetailsData data = new PortfolioDetailsData();
+                data.ActivePosition = item.ActivePosition;
+                data.AsecSecShortName = item.AsecSecShortName;
+                data.AshEmmModelWeight = item.AshEmmModelWeight;
+                data.BalanceNominal = item.BalanceNominal;
+                data.BenchmarkWeight = item.BenchmarkWeight;
+                data.DirtyValuePC = item.DirtyValuePC;
+                data.IndustryName = item.IndustryName;
+                data.IsoCountryCode = item.IsoCountryCode;
+                data.IssueName = item.IssueName;
+                data.MarketCapUSD = item.MarketCapUSD;
+                data.PortfolioDirtyValuePC = item.PortfolioDirtyValuePC;
+                data.PortfolioWeight = item.PortfolioWeight;
+                data.ProprietaryRegionCode = item.ProprietaryRegionCode;
+                data.ReAshEmmModelWeight = item.ReAshEmmModelWeight;
+                data.ReBenchmarkWeight = item.ReBenchmarkWeight;
+                data.RePortfolioWeight = item.RePortfolioWeight;
+                data.SectorName = item.SectorName;
+                data.SecurityType = item.SecurityType;
+                data.SubIndustryName = item.SubIndustryName;
+                data.Ticker = item.Ticker;
+                collection.Add(data);
+            }
+
+            DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
+        }
+
     }
 }

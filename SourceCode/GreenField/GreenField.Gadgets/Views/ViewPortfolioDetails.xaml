@@ -1,10 +1,13 @@
 ﻿<UserControl x:Class="GreenField.Benchmark.Views.ViewPortfolioDetails"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="400" d:DesignWidth="600" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600" 
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:local="clr-namespace:GreenField.Gadgets.Helpers"
+             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
     <Grid x:Name="LayoutRoot">
         <!--<Grid.RowDefinitions>
@@ -158,7 +161,7 @@
                     <Image Source="../Images/PDF.png" />
                 </Button>
                 <Button Height="23" Width="24"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
                     <Image Source="../Images/Print.png" />
@@ -171,56 +174,54 @@
                                      ItemsSource="{Binding SelectedPortfolioDetailsData, Mode=TwoWay}" CanUserFreezeColumns="False" 
                                      CanUserDeleteRows="False" CanUserInsertRows="False" CanUserReorderColumns="False" 
                                      CanUserSortColumns="True" FrozenColumnCount="4" telerik:StyleManager.Theme="Metro"
-                                     AreRowDetailsFrozen="True" >
+                                     AreRowDetailsFrozen="True" Grouping="dgPortfolioDetails_Grouping" 
+                                     Filtering="dgPortfolioDetails_Filtering" Filtered="dgPortfolioDetails_Filtered" >
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding EntityTicker}" />
-                        <telerik:GridViewDataColumn Header="Name" DataMemberBinding="{Binding EntityName}"/>
-                        <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding Type}"/>
-                        <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Country}"/>
-                        <telerik:GridViewDataColumn Header="Shares" DataMemberBinding="{Binding Shares}"
-                                                    DataFormatString="{}# {0:n0}"/>
-                        <telerik:GridViewDataColumn Header="Price" DataMemberBinding="{Binding Price, StringFormat=c}"/>
-                        <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding EntityTicker}"/>
-                        <telerik:GridViewDataColumn Header="Currency" DataMemberBinding="{Binding Currency}"/>
-                        <telerik:GridViewDataColumn Header="Value" DataMemberBinding="{Binding Value}"/>
-                        <telerik:GridViewDataColumn Header="Target %" DataMemberBinding="{Binding TargetPerc}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding PortfolioPerc}" 
-                                                    DataFormatString="{}{0:n2}%"/>
-                        <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding BenchmarkPerc}" 
-                                                    DataFormatString="{}{0:n2}%"/>
-                        <telerik:GridViewDataColumn Header="Bet %" DataMemberBinding="{Binding BetPerc}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Upside" DataMemberBinding="{Binding Upside}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="YTD Return" DataMemberBinding="{Binding YTDReturn}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Market Cap" 
-                                                    DataMemberBinding="{Binding MarketCap, StringFormat=c}"/>
-                        <telerik:GridViewDataColumn Header="P/E(FWD)" DataMemberBinding="{Binding PE_FWD}"/>
-                        <telerik:GridViewDataColumn Header="P/E(Fair)" DataMemberBinding="{Binding PE_Fair}"/>
-                        <telerik:GridViewDataColumn Header="P/BV(FWD)" DataMemberBinding="{Binding PBV_FWD}"/>
-                        <telerik:GridViewDataColumn Header="P/BV(Fair)" DataMemberBinding="{Binding PBV_Fair}"/>
-                        <telerik:GridViewDataColumn Header="EV/EBITDA(FWD)" DataMemberBinding="{Binding EVEBITDA_FWD}"/>
-                        <telerik:GridViewDataColumn Header="EV/EBITDA(Fair)" DataMemberBinding="{Binding EVEBITDA_Fair}"/>
-                        <telerik:GridViewDataColumn Header="Sales Growth 2011" 
-                                                    DataMemberBinding="{Binding SalesGrowthCurrentYear}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Sales Growth 2012 " 
-                                                    DataMemberBinding="{Binding SalesGrowthNextYear}" 
-                                                    DataFormatString="{}{0:n2}%"/>
-                        <telerik:GridViewDataColumn Header="Net Income Growth 2011"
-                                                    DataMemberBinding="{Binding NetIncomeGrowthCurrentYear}" 
-                                                    DataFormatString="{}{0:n2}%"/>
-                        <telerik:GridViewDataColumn Header="Net Income Growth 2012" DataMemberBinding="{Binding NetIncomeGrowthNextYear}"/>
-                        <telerik:GridViewDataColumn Header="ROE 2011" DataMemberBinding="{Binding ROECurrentYear}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Net Debt/Equity 2011" 
-                                                    DataMemberBinding="{Binding NetDebtEquityCurrentYear}" 
-                                                    DataFormatString="{}{0:n2}%" />
-                        <telerik:GridViewDataColumn Header="Free Cash Flow Margin 2011" 
-                                                    DataMemberBinding="{Binding FreeFlowCashMarginCurrentYear}" 
-                                                    DataFormatString="{}{0:n2}%" />
+                        <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Header="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding SecurityType}" IsGroupable="False"
+                                                    IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
+                                                    IsFilterable="True">
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
+                                                               ResultFormatString="{}{0:n2}" />
+                                <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
+                                                               ResultFormatString="{}{0:n2}" />
+                                <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
+                                                               ResultFormatString="{}{0:n2}" />
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn Header="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
+                                                    DataFormatString="{}# {0:n0}" IsGroupable="True" IsFilterable="True" />
+                        <telerik:GridViewDataColumn Header="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
+                                                    DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
+                                                    DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}" 
+                                                    DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Header="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
+                                                    DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Sector Name" DataMemberBinding="{Binding SectorName}" 
+                                                    DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True" />
+                        <telerik:GridViewDataColumn Header="Industry Name" DataMemberBinding="{Binding IndustryName}" 
+                                                    DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True" />
+                        <telerik:GridViewDataColumn Header="Sub-Industry Name" 
+                                                    DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" 
+                                                    IsFilterable="True" />
+                        <telerik:GridViewDataColumn Header="Security Type" DataMemberBinding="{Binding SecurityType}" 
+                                                    IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Balance Nominal" DataMemberBinding="{Binding BalanceNominal}" 
+                                                    IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Dirty-Value PC" DataMemberBinding="{Binding DirtyValuePC}" 
+                                                    IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Portfolio Dirty Value PC" DataMemberBinding="{Binding PortfolioDirtyValuePC}" 
+                                                    IsGroupable="False" IsFilterable="False" />
+                        <telerik:GridViewDataColumn Header="Market Cap" DataMemberBinding="{Binding MarketCapUSD,StringFormat=c}" 
+                                                    IsGroupable="False" IsFilterable="False" />
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>

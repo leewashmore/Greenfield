@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {

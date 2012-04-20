@@ -30,7 +30,7 @@
       <wsdl:output wsaw:Action="http://tempuri.org/SessionOperations/SetSessionResponse" message="tns:SessionOperations_SetSession_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_SessionOperations" type="tns:SessionOperations">
+  <wsdl:binding name="SessionOperations" type="tns:SessionOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="GetSession">
       <soap:operation soapAction="http://tempuri.org/SessionOperations/GetSession" style="document" />
@@ -52,7 +52,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="SessionOperations">
-    <wsdl:port name="BasicHttpBinding_SessionOperations" binding="tns:BasicHttpBinding_SessionOperations">
+    <wsdl:port name="SessionOperations" binding="tns:SessionOperations">
       <soap:address location="http://localhost:59430/Services/SessionOperations.svc" />
     </wsdl:port>
   </wsdl:service>

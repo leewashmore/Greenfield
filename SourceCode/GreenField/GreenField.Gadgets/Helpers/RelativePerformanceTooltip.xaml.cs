@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.ServiceCaller;
 using System.Collections.ObjectModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {

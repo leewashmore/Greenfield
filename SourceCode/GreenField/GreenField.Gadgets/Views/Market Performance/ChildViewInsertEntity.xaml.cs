@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {

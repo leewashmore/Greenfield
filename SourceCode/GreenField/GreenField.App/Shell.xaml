@@ -19,7 +19,7 @@
                 <ResourceDictionary Source="/GreenField.App;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
+
         <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
         <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
             <helpers:ItemStyleSelector.GroupStyle>
@@ -53,7 +53,7 @@
                     </Setter>
                 </Style>
             </helpers:ItemStyleSelector.ItemStyle>
-        </helpers:ItemStyleSelector>    	
+        </helpers:ItemStyleSelector>
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot">
@@ -70,7 +70,7 @@
                     <telerik:RadRibbonTab.Header>
                         <TextBlock Text="Markets" Foreground="White" FontSize="12" FontFamily="Arial" FontWeight="Bold"/>
                     </telerik:RadRibbonTab.Header>
-                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}"  >                        
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}"  >
                         <telerik:RadRibbonDropDownButton Text="Snapshot"  LargeImage="Images/snapshot.png" Size="Large" Background="#9DA6C0" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
@@ -79,7 +79,7 @@
                                     <telerik:RadRibbonButton Text="Internal vs. Model Valuation"  LargeImage="Images/models.png" Size="Large" Command="{Binding DashboardMarketsSnapshotInternalModelValuationCommand}" Background="#9DA6C0" />
                                 </telerik:RadRibbonGroup>
                             </telerik:RadRibbonDropDownButton.DropDownContent>
-                        </telerik:RadRibbonDropDownButton>                        
+                        </telerik:RadRibbonDropDownButton>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
                         <telerik:RadRibbonDropDownButton Text="MacroEconomic" LargeImage="Images/Dollars.png" Size="Large" Background="#9DA6C0">
@@ -411,7 +411,7 @@
                             </Grid>
                        </Border>
                 </telerik:RadExpander>-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">                    
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Foreground="White" FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
                     <!--<telerik:RadComboBox ItemsSource="{Binding SecurityReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                          Margin="50,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
@@ -445,6 +445,20 @@
                             </DataTemplate>
                         </telerik:RadComboBox.ItemTemplate>
                     </telerik:RadComboBox>
+
+
+                    <telerik:RadComboBox ItemsSource="{Binding FundSelectionData}"
+                                         SelectedItem="{Binding SelectedFund, Mode=TwoWay}"
+                                         EmptyText="Search Fund..."
+                                         DisplayMemberPath="PortfolioID"
+                                         telerik:TextSearch.TextPath="PortfolioID"
+                                         Width="300" Margin="5,0,0,0" IsEditable="True"
+                                         CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False" HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="True">
+                    </telerik:RadComboBox>
+
+
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"

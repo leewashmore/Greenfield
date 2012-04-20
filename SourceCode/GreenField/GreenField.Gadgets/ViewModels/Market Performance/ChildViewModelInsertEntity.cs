@@ -16,6 +16,7 @@ using GreenField.Common;
 using System.Linq;
 using System.Windows.Data;
 using System.ComponentModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {

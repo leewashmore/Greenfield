@@ -14,17 +14,38 @@ using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewAssetAllocation:ViewBaseUserControl
+    public partial class ViewAssetAllocation : ViewBaseUserControl
     {
+        #region PropertyDeclaration
+
+        private ViewModelAssetAllocation _dataContextAssetAllocation;
+        public ViewModelAssetAllocation DataContextAssetAllocation
+        {
+            get
+            {
+                return _dataContextAssetAllocation;
+            }
+            set
+            {
+                _dataContextAssetAllocation = value;
+            }
+        }
+
+
+        #endregion
+
         public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextAssetAllocation = dataContextSource;
         }
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextAssetAllocation.Dispose();
+            this.DataContextAssetAllocation = null;
+            this.DataContext = null;
         }
     }
 }

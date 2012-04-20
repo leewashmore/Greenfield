@@ -105,6 +105,8 @@
     <Reference Include="Telerik.Windows.Data, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <HintPath>..\Lib\Telerik.Windows.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Telerik.Windows.Documents, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
+    <Reference Include="Telerik.Windows.Documents.FormatProviders.Pdf, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Themes.Metro, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <HintPath>..\Lib\Telerik.Windows.Themes.Metro.dll</HintPath>
     </Reference>
@@ -126,6 +128,8 @@
     <Compile Include="Helpers\Grid Row Reordering Behavior\RowReorderBehavior.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
+    <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
+    <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Helpers\RelativePerformanceTooltip.xaml.cs">
       <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
     </Compile>
@@ -143,8 +147,10 @@
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
+    <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
+    <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
     <Compile Include="ViewModels\ViewModelRegionBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
@@ -169,6 +175,12 @@
     </Compile>
     <Compile Include="Views\ViewHeatMap.xaml.cs">
       <DependentUpon>ViewHeatMap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
+      <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
+      <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml.cs">
       <DependentUpon>ViewRelativePerformanceSecurityActivePosition.xaml</DependentUpon>
@@ -264,6 +276,14 @@
     <Page Include="Views\ViewHeatMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMultiLineBenchmark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewPortfolioDetails.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewRelativePerformanceSecurityActivePosition.xaml">
       <Generator>MSBuild:Compile</Generator>

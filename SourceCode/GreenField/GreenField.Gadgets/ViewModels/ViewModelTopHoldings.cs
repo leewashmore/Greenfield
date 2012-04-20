@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -55,11 +56,11 @@ namespace GreenField.Gadgets.ViewModels
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
-            //{
-            //    _dbInteractivity.RetrieveTopHoldingsData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrieveTopHoldingsData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+            if ((_fundSelectionData != null) && (_benchmarkSelectionData != null) && (_effectiveDate != null))
+            {
+                _dbInteractivity.RetrieveTopHoldingsData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+            }
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
@@ -86,7 +87,7 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.TopHoldingsInfo);
                 }
             }
-        }        
+        }
         #endregion
         #endregion
 
@@ -220,5 +221,5 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 
-    
+
 }

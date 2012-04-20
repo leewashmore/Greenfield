@@ -38,11 +38,11 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -113,7 +113,7 @@ namespace GreenField.DashboardModule.Views
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewMarketCapitalization(new ViewModelMarketCapitalization(param))
             });
-            
+
         }
     }
 }

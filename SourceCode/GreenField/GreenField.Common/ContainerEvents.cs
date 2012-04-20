@@ -14,6 +14,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common.Helper;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Common
 {

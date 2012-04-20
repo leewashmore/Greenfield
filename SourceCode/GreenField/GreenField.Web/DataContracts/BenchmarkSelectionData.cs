@@ -11,5 +11,14 @@ namespace GreenField.Web.DataContracts
     {
         [DataMember]
         public string Name { get; set; }
+
+        [DataMember]
+        public string InstrumentID { get; set; }
+
+        [DataMember]
+        public string Ticker { get; set; }
+
+        [DataMember]
+        public string Type { get; set; }
     }
 }

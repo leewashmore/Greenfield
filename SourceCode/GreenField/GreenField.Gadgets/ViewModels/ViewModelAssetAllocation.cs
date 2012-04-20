@@ -15,6 +15,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -186,6 +187,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         } 
         #endregion         
+
+        #region EventUnsubscribe
+
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<FundReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Unsubscribe(HandleBenchmarkReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateSet>().Unsubscribe(HandleEffectiveDateSet);
+        }
+
+        #endregion
 
     }
 }

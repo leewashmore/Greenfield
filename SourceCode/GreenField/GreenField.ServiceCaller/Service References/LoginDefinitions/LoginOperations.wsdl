@@ -200,7 +200,7 @@
       <wsdl:output wsaw:Action="http://tempuri.org/LoginOperations/DeleteRoleResponse" message="tns:LoginOperations_DeleteRole_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_LoginOperations" type="tns:LoginOperations">
+  <wsdl:binding name="LoginOperations" type="tns:LoginOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="ValidateUser">
       <soap:operation soapAction="http://tempuri.org/LoginOperations/ValidateUser" style="document" />
@@ -375,7 +375,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="LoginOperations">
-    <wsdl:port name="BasicHttpBinding_LoginOperations" binding="tns:BasicHttpBinding_LoginOperations">
+    <wsdl:port name="LoginOperations" binding="tns:LoginOperations">
       <soap:address location="http://localhost:59430/Services/LoginOperations.svc" />
     </wsdl:port>
   </wsdl:service>

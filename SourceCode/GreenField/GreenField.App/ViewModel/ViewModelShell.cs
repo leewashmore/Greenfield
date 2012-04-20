@@ -20,6 +20,7 @@ using GreenField.App.Models;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;
 using GreenField.App.Helpers;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.App.ViewModel
 {
@@ -184,8 +185,8 @@ namespace GreenField.App.ViewModel
                 _securitySelectorVisibility = value;
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
             }
-        }        
-        #endregion 
+        }
+        #endregion
 
         private Visibility _portfolioSelectorVisibility;
         public Visibility PortfolioSelectorVisibility
@@ -262,7 +263,7 @@ namespace GreenField.App.ViewModel
                 _periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
             }
-        }        
+        }
         #endregion
 
         private CollectionViewSource _fundReference;
@@ -288,11 +289,11 @@ namespace GreenField.App.ViewModel
         }
 
         public ObservableCollection<FundSelectionData> FundReferenceData { get; set; }
-        public ObservableCollection<BenchmarkSelectionData> BenchmarkReferenceData { get; set; }        
+        public ObservableCollection<BenchmarkSelectionData> BenchmarkReferenceData { get; set; }
 
         public ObservableCollection<GroupSelectionData> FundReferenceSource { get; set; }
         public ObservableCollection<GroupSelectionData> BenchmarkReferenceSource { get; set; }
-        
+
         private string _fundEnteredText;
         public string FundEnteredText
         {
@@ -358,11 +359,11 @@ namespace GreenField.App.ViewModel
         private DateTime _selectedEffectiveDateReference = DateTime.Today;
         public DateTime SelectedEffectiveDateReference
         {
-            get 
+            get
             {
-                return _selectedEffectiveDateReference; 
+                return _selectedEffectiveDateReference;
             }
-            set 
+            set
             {
                 if (_selectedEffectiveDateReference != value)
                 {
@@ -381,13 +382,47 @@ namespace GreenField.App.ViewModel
             {
                 if (_dashboardGadgetPayload == null)
                     _dashboardGadgetPayload = new DashboardGadgetPayload();
-                return _dashboardGadgetPayload; 
+                return _dashboardGadgetPayload;
             }
-            set 
+            set
             {
-                _dashboardGadgetPayload = value;                
+                _dashboardGadgetPayload = value;
             }
-        }        
+        }
+
+        private List<FundSelectionData> _fundSelectionData;
+        public List<FundSelectionData> FundSelectionData
+        {
+            get
+            {
+                return _fundSelectionData;
+            }
+            set
+            {
+                _fundSelectionData = value;
+                this.RaisePropertyChanged(() => this.FundSelectionData);
+            }
+        }
+
+        private FundSelectionData _selectedFund;
+        public FundSelectionData SelectedFund
+        {
+            get
+            {
+                return _selectedFund;
+            }
+            set
+            {
+                _selectedFund = value;
+                this.RaisePropertyChanged(() => this.SelectedFund);
+                if (value != null)
+                {
+                    DashboardGadgetPayload.FundSelectionData = value;
+                    _eventAggregator.GetEvent<FundReferenceSetEvent>().Publish(DashboardGadgetPayload.FundSelectionData);
+                }
+            }
+        }
+
 
         #endregion
 
@@ -628,10 +663,10 @@ namespace GreenField.App.ViewModel
 
         public ICommand PerformanceGraphCommand
         {
-            get 
+            get
             {
                 return new DelegateCommand<object>(PerformanceGraphCommandMethod);
-            }       
+            }
         }
 
         public ICommand PerformanceGridCommand
@@ -644,17 +679,18 @@ namespace GreenField.App.ViewModel
 
         public ICommand AttributionCommand
         {
-            get 
+            get
             {
                 return new DelegateCommand<object>(AttributionCommandMethod);
-            }        
+            }
         }
 
         public ICommand HeatMapCommand
         {
-            get {
-                  return new DelegateCommand<object>(HeatMapCommandMethod);
-                }
+            get
+            {
+                return new DelegateCommand<object>(HeatMapCommandMethod);
+            }
         }
 
         #region Dashboard
@@ -1259,7 +1295,7 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
-        #endregion 
+        #endregion
 
         #region Markets
         #region Snapshot
@@ -1348,7 +1384,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
 
         #region Commodities
@@ -1367,7 +1403,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
         #endregion
 
@@ -1388,7 +1424,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
 
         #region Holdings
@@ -1407,7 +1443,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
 
         #region Performance
@@ -1496,14 +1532,10 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
         #endregion
         #endregion
-
-
-
-
 
         private void DetailedEstimateCommandMethod(object param)
         {
@@ -2135,7 +2167,7 @@ namespace GreenField.App.ViewModel
         }
 
 
-        
+
 
 
         private void PerformanceGraphCommandMethod(object param)
@@ -2203,7 +2235,7 @@ namespace GreenField.App.ViewModel
 
 
 
-        private void AttributionCommandMethod(object param) 
+        private void AttributionCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -2236,7 +2268,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                 try
                 {
-                    EntitySelectionInfo = result.Where(e => e.Type == EntityType.SECURITY).OrderBy(t => t.LongName).ToList();                    
+                    EntitySelectionInfo = result.Where(e => e.Type == EntityType.SECURITY).OrderBy(t => t.LongName).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -2264,27 +2296,28 @@ namespace GreenField.App.ViewModel
                 Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                 try
                 {
-                    FundReference = new CollectionViewSource();
-                    FundReferenceData = new ObservableCollection<FundSelectionData>(result);
-                    FundReferenceSource = new ObservableCollection<GroupSelectionData>();
+                    //FundReference = new CollectionViewSource();
+                    //FundReferenceData = new ObservableCollection<FundSelectionData>(result);
+                    //FundReferenceSource = new ObservableCollection<GroupSelectionData>();
 
-                    foreach (FundSelectionData item in FundReferenceData)
-                    {
-                        FundReferenceSource.Add(new GroupSelectionData()
-                        {
-                            Category = item.Category,
-                            Header = item.Name,
-                            Detail = item.Name
-                        });
-                    }
+                    //foreach (FundSelectionData item in FundReferenceData)
+                    //{
+                    //    FundReferenceSource.Add(new GroupSelectionData()
+                    //    {
+                    //        Category = item.Category,
+                    //        Header = item.Name,
+                    //        Detail = item.Name
+                    //    });
+                    //}
+                    //FundReference.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+                    //FundReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
+                    //{
+                    //    PropertyName = "Category",
+                    //    Direction = System.ComponentModel.ListSortDirection.Ascending
+                    //});
+                    //FundReference.Source = FundReferenceSource;
 
-                    FundReference.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-                    FundReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "Category",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    FundReference.Source = FundReferenceSource;
+                    FundSelectionData = result.OrderBy(o => o.PortfolioID).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -2392,8 +2425,8 @@ namespace GreenField.App.ViewModel
             RegionSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxSelecter.ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
         }
-        #endregion
 
+        #endregion
 
     }
 }

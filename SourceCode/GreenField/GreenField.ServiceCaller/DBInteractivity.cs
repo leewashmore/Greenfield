@@ -7,6 +7,8 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.ObjectModel;
 using System.Windows;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+
 
 
 namespace GreenField.ServiceCaller
@@ -28,7 +30,7 @@ namespace GreenField.ServiceCaller
             client.RetrieveSecurityReferenceDataAsync();
             client.RetrieveSecurityReferenceDataCompleted += (se, e) =>
                 {
-                     if (callback != null)
+                    if (callback != null)
                     {
                         if (e.Result != null)
                             callback(e.Result.ToList());
@@ -76,9 +78,39 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
+
+        /// <summary>
+        /// Method that calls the Unrealized Gain Loss service method and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="entityIdentifier">Unique Identifier for each security</param>
+        /// <param name="startDateTime">Start Date time of the time period selected</param>
+        /// <param name="endDateTime">End Date time of the time period selected</param>
+        /// <param name="frequencyInterval">frequency Interval selected</param>
+        /// <param name="callback"></param>
+        public void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval, Action<List<UnrealizedGainLossData>> callback)
+        {
+
+            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
+            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+            };
+        }
+        #endregion
+
         public void RetrieveFundSelectionData(Action<List<FundSelectionData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveFundSelectionDataAsync();
             client.RetrieveFundSelectionDataCompleted += (se, e) =>
             {
@@ -96,7 +128,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();            
             client.RetrieveBenchmarkSelectionDataAsync();
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
@@ -130,7 +162,6 @@ namespace GreenField.ServiceCaller
             client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
-
                 if (callback != null)
                 {
                     if (e.Result != null)
@@ -145,7 +176,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveMarketCapitalizationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
@@ -163,7 +194,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveAssetAllocationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveAssetAllocationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
@@ -188,7 +219,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveSectorBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveSectorBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
@@ -213,7 +244,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveRegionBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRegionBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
@@ -238,7 +269,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveTopHoldingsData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveTopHoldingsDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
@@ -262,7 +293,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveIndexConstituentsDataAsync(benchmarkSelectionData, effectiveDate);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
@@ -278,11 +309,35 @@ namespace GreenField.ServiceCaller
                 {
                     if (e.Result != null)
                         callback(e.Result.ToList());
-                }               
+                }
             };
         }
 
         #region Market Performance Gadget
+        /// <summary>
+        /// service call method for retrieving list of market performance snapshots for a user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="callback"></param>
+        public void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback)
+        {
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            client.RetrieveMarketSnapshotSelectionDataAsync(userName);
+            client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
+            };
+
+        }
+
         /// <summary>
         /// service call method for retrieving user preference of entities in “Market Performance Snapshot”
         /// </summary>
@@ -291,7 +346,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -314,7 +369,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
             client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
             {
@@ -338,7 +393,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
             client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -361,7 +416,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
             client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -384,7 +439,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -407,7 +462,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -421,19 +476,20 @@ namespace GreenField.ServiceCaller
                     callback(false);
                 }
             };
-        } 
+        }
         #endregion
-       
+
+
         public void RetriveValuesForFilters(String filterType, Action<List<String>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveValuesForFiltersAsync(filterType);
             client.RetrieveValuesForFiltersCompleted += (se, e) =>
             {
                 if (callback != null)
                 {
                     if (e.Result != null)
-                        callback(e.Result);
+                        callback(e.Result.ToList());
                 }
                 else
                 {
@@ -441,10 +497,11 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-        
+
         public void RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+
             client.RetrieveRelativePerformanceDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
             {
@@ -462,7 +519,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveRelativePerformanceSectorData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
             {
@@ -480,7 +537,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRelativePerformanceSecurityDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID, order, maxRecords);
             client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
             {
@@ -496,6 +553,80 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Build2
+
+        /// <summary>
+        /// Service caller method to retrieve PortfolioDetails Data
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
+        /// <param name="objSelectedDate">Date for which data is required</param>
+        /// <param name="callback">collection of Portfolio Details Data</param>
+        public void RetrievePortfolioDetailsData(string objPortfolioIdentifier, DateTime objSelectedDate, Action<List<PortfolioDetailsData>> callback)
+        {
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate);
+            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
+            {
+                if (e.Result != null)
+                {
+                    if (callback != null)
+                        callback(e.Result.ToList());
+                }
+                else
+                {
+                    callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for multiLine Benchmark Chart
+        /// </summary>
+        /// <param name="objBenchmarkIdentifier">Benchmark Identifier</param>
+        /// <param name="objEffectiveDate">Effective Date for which Data is Required</param>
+        /// <param name="callback">Collection of Benchmark Return Data</param>
+        public void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback)
+        {
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            client.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
+            client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
+            {
+                if (e.Result != null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else
+                {
+                    callback(null);
+                }
+            };
+        }
+
+        public void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback)
+        {
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            client.RetrieveBenchmarkGridReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
+            client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
+            {
+                if (e.Result != null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else
+                {
+                    callback(null);
+                }
+            };
+        }
+
+        #endregion
+
         #region Interaction Method for Performance Graph Gadget
         /// <summary>
         /// Method that calls the RetrievePerformanceGraphData method of the service and provides interation between the Viewmodel and Service.
@@ -504,9 +635,9 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrievePerformanceGraphDataAsync(name);
-            client.RetrievePerformanceGraphDataCompleted+= (se, e) =>
+            client.RetrievePerformanceGraphDataCompleted += (se, e) =>
             {
                 if (callback != null)
                     if (e.Result != null)
@@ -520,7 +651,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-       #endregion
+        #endregion
 
         #region Interaction Method for Attribution Gadget
         /// <summary>
@@ -530,7 +661,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveAttributionData(String name, Action<List<AttributionData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveAttributionDataAsync(name);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
@@ -559,7 +690,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>   
         public void RetrieveHoldingsPercentageDataForRegion(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
@@ -574,7 +705,7 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-                
+
         /// <summary>
         /// Method that calls the  RetrieveHoldingsPercentageData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
@@ -585,7 +716,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>  
         public void RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
@@ -600,7 +731,7 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-     #endregion
+        #endregion
 
         #region Interaction Method for Performance Grid Gadget
         /// <summary>
@@ -610,7 +741,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrievePerformanceGridData(string name, Action<List<PerformanceGridData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrievePerformanceGridDataAsync(name);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
@@ -627,36 +758,8 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-        #region Interaction Method for Theoretical Unrealized Gain Loss Gadget
-
-        /// <summary>
-        /// Method that calls the Unrealized Gain Loss service method and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="entityIdentifier">Unique Identifier for each security</param>
-        /// <param name="startDateTime">Start Date time of the time period selected</param>
-        /// <param name="endDateTime">End Date time of the time period selected</param>
-        /// <param name="frequencyInterval">frequency Interval selected</param>
-        /// <param name="callback"></param>
-        public void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval, Action<List<UnrealizedGainLossData>> callback)
-        {
-
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
-            client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
-            {
-                if (callback != null)
-                    if (e.Result != null)
-                    {
-                        callback(e.Result.ToList());
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
-            };
-        }
-        #endregion
         
+
         #region Interaction Methods for Benchmark
         /// <summary>
         /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
@@ -666,7 +769,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">callback</param>
         public void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();          
             client.RetrieveTopBenchmarkSecuritiesDataAsync(benchmarkSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
@@ -681,7 +784,7 @@ namespace GreenField.ServiceCaller
                     }
             };
         }
-        
+
         /// <summary>
         /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
@@ -691,7 +794,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">callback</param>
         public void RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrievePortfolioRiskReturnDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
             {
@@ -708,7 +811,7 @@ namespace GreenField.ServiceCaller
         }
         public void RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRelativePerformanceCountryActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
             {
@@ -726,7 +829,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveRelativePerformanceSectorActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRelativePerformanceSectorActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
             {
@@ -744,7 +847,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveRelativePerformanceSecurityActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
             {
@@ -766,7 +869,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveHeatMapData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveHeatMapDataAsync();
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {

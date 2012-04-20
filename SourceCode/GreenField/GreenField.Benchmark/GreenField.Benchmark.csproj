@@ -105,15 +105,12 @@
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\DragStartedEventArgs.cs" />
     <Compile Include="Helpers\GridViewDataControlExtensions.cs" />
-    <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\ReorderedEventArgs.cs" />
     <Compile Include="Helpers\ReorderingEventArgs.cs" />
     <Compile Include="Helpers\RowReorderBehavior.cs" />
-    <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelChildAddBenchmarks.cs" />
     <Compile Include="ViewModels\ViewModelMorningSnapshot.cs" />
-    <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
     <Compile Include="Views\ChildAddBenchmarks.xaml.cs">
       <DependentUpon>ChildAddBenchmarks.xaml</DependentUpon>
@@ -123,9 +120,6 @@
     </Compile>
     <Compile Include="Views\ViewMorningSnapshot.xaml.cs">
       <DependentUpon>ViewMorningSnapshot.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
-      <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewRelativePerformance.xaml.cs">
       <DependentUpon>ViewRelativePerformance.xaml</DependentUpon>
@@ -151,10 +145,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewMorningSnapshot.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ViewPortfolioDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

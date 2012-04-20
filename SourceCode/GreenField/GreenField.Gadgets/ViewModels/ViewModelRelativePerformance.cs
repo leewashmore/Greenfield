@@ -15,6 +15,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Common;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {

@@ -14,6 +14,8 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common.Helper;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -36,7 +38,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            
+
             _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;

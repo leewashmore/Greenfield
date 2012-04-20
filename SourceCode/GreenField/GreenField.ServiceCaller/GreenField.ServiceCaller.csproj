@@ -79,6 +79,11 @@
     <Compile Include="ManageLogins.cs" />
     <Compile Include="ManageSessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\BenchmarkHoldingsPerformanceDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\DashboardDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -109,6 +114,25 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations.wsdl" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
     <None Include="Service References\DashboardDefinitions\DashboardOperations.xsd">
       <SubType>Designer</SubType>
@@ -240,15 +264,6 @@
     <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations61.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ProxyDataDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -284,6 +299,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations.disco" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -305,6 +327,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BenchmarkHoldingsPerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />

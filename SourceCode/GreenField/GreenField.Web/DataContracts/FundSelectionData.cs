@@ -15,6 +15,15 @@ namespace GreenField.Web.DataContracts
         [DataMember]
         public string Category { get; set; }
 
+
+        [DataMember]
+        public string PortfolioID { get; set; }
+
+        [DataMember]
+        public string PortfolioThemeSubGroupName { get; set; }
+
+        [DataMember]
+        public string PortfolioThemeSubGroupID { get; set; }
         
     }
 }

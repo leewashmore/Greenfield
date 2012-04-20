@@ -109,7 +109,6 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of Time Range Options
         /// </summary>
-        private ObservableCollection<String> _timeRange;
         public ObservableCollection<String> TimeRange
         {
             get
@@ -586,20 +585,7 @@ namespace GreenField.Gadgets.ViewModels
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
 
-                    //Checking the types of entity in the Chart
-                    foreach (EntitySelectionData item in SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList())
-                    {
-                        List<EntitySelectionData> a = SeriesReferenceSource.Where(r => r.Type != "SECURITY").ToList();
-                        //If it contains type Commodity/Index/Currency, ChartEntityTypes=true else false
-                        if (ChartEntityList.Contains(item))
-                        {
-                            ChartEntityTypes = false;
-                        }
-                    }
-
-
-
-
+                    
                     _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
                     {
                         PlottedSeries.Clear();
@@ -972,6 +958,15 @@ namespace GreenField.Gadgets.ViewModels
             chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+        #endregion
+
+        #region EventUnSubscribe
+
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
 
         #endregion

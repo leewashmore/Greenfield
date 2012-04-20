@@ -296,9 +296,16 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        #region RemoveEvents
+
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextClosingPriceChart.ClosingPriceDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
+            this.DataContextClosingPriceChart.Dispose();
+            this.DataContextClosingPriceChart = null;
+            this.DataContext = null;
         }
+
+        #endregion
     }
 }

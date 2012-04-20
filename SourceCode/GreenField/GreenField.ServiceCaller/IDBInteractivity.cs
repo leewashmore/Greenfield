@@ -4,22 +4,32 @@ using System.Linq;
 using System.Text;
 using GreenField.ServiceCaller.ProxyDataDefinitions;
 using System.Collections.ObjectModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+
 
 namespace GreenField.ServiceCaller
 {
     public interface IDBInteractivity
     {
+        #region Build1
         void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
         void RetrieveSecurityReferenceDataByTicker(String ticker, Action<SecurityOverviewData> callback);
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
 
+        void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval, Action<List<UnrealizedGainLossData>> callback);
+
+        void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback);
+        
+        #endregion
+
+
         void RetrieveFundSelectionData(Action<List<FundSelectionData>> callback);
 
         void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback);
 
-        void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback);
+       
 
         void RetrieveMarketCapitalizationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback);
 
@@ -41,9 +51,10 @@ namespace GreenField.ServiceCaller
         
         void RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
-        void RetrieveMarketSnapshotPreference(string userName,string snapshotName, Action<List<MarketSnapshotPreference>> callback);        
+        void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback);
+
+        void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback);                    
         
-        void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval ,Action<List<UnrealizedGainLossData>> callback);
 
         void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback);
 
@@ -54,6 +65,7 @@ namespace GreenField.ServiceCaller
         void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
         void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
+
 
         void RetriveValuesForFilters(String filterType, Action<List<String>> callback);
 
@@ -76,6 +88,15 @@ namespace GreenField.ServiceCaller
         void RetrieveAttributionData(String name, Action<List<AttributionData>> callback);
 
         void RetrieveHeatMapData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback);
+
+        #region Build2
+
+        void RetrievePortfolioDetailsData(string objPortfolioIdentifier, DateTime objSelectedDate, Action<List<PortfolioDetailsData>> callback);
+
+        void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback);
+
+        void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback);
+        #endregion
 
     }
 }

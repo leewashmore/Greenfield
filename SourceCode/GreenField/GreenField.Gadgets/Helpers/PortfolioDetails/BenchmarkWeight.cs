@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Telerik.Windows.Data;
 
-namespace GreenField.Benchmark.Helpers
+namespace GreenField.Gadgets.Helpers
 {
     public class BenchmarkWeightFunction : EnumerableSelectorAggregateFunction
     {
@@ -18,7 +18,7 @@ namespace GreenField.Benchmark.Helpers
         {
             get
             {
-                return "StdDev";
+                return "GroupPortfolioWeight";
             }
         }
 

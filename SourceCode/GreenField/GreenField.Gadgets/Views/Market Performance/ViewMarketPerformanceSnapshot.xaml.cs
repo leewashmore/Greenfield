@@ -17,6 +17,7 @@ using GreenField.ServiceCaller.ProxyDataDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.Collections.ObjectModel;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
