@@ -1,0 +1,259 @@
+﻿<UserControl x:Class="GreenField.App.Helpers.ToolBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:helpers="clr-namespace:GreenField.App.Helpers" 
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Security Selector-->
+        <Grid Visibility="{Binding SecuritySelectorVisibility}" Margin="5,0,0,0" Grid.Column="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbsecuritySelector"
+                                         ItemsSource="{Binding SecuritySelectorInfo}"
+                                         SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}"
+                                         Text="{Binding SecuritySearchText, Mode=TwoWay}"
+                                         EmptyText="Search Security..." 
+                                         telerik:TextSearch.TextPath="LongName"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding LongName}"/>
+                                <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}"/>
+                                <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}"/>
+                                <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Portfolio Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbPortfolioSelector"
+                                         ItemsSource="{Binding PortfolioSelectorInfo}"
+                                         SelectedItem="{Binding SelectedPortfolio, Mode=TwoWay}"
+                                         Text="{Binding PortfolioSearchText, Mode=TwoWay}"
+                                         DisplayMemberPath="PortfolioId"
+                                         EmptyText="Search Portfolio..."
+                                         telerik:TextSearch.TextPath="LongName"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False"
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Effective Date Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding EffectiveDateSelectorVisibility}" Grid.Column="2">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadDatePicker x:Name="dpEffectiveDateSelector"
+                                           SelectedValue="{Binding SelectedEffectiveDateInfo, Mode=TwoWay}"
+                                           Width="100"                                           
+                                           Margin="5,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!--Period Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Start Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadDatePicker x:Name="dpStartDateSelector"
+                                           SelectedValue="{Binding SelectedPeriodStartDateInfo, Mode=TwoWay}"
+                                           Width="100"
+                                           Margin="5,0,0,0"/>
+                <TextBlock Text="End Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold" Margin="5,0,0,0"/>
+                <telerik:RadDatePicker x:Name="dpEndDateSelector"
+                                           SelectedValue="{Binding SelectedPeriodEndDateInfo, Mode=TwoWay}"
+                                           Width="100"
+                                           Margin="5,0,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!--Country Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="4">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbCountrySelector"
+                                         EmptyText="Search Country..." 
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Sector Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding SectorSelectorVisibility}" Grid.Column="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Sector" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbSectorSelector"
+                                         EmptyText="Search Sector..." 
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Industry Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding IndustrySelectorVisibility}" Grid.Column="6">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Industry" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbIndustrySelector"
+                                         EmptyText="Search Industry..." 
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Region Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding RegionSelectorVisibility}" Grid.Column="7">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbRegionSelector"
+                                         EmptyText="Search Region..." 
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Snapshot Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="8">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
+                                     SelectedItem="{Binding SelectedMarketSnapshotSelectionInfo, Mode=TwoWay}"
+                                     Text="{Binding MarketPerformanceSnapshotSearchText, Mode=TwoWay}"
+                                     DisplayMemberPath="SnapshotName"
+                                     telerik:TextSearch.TextPath="SnapshotName"  
+                                     TextOptions.TextHintingMode="Fixed" 
+                                     CanAutocompleteSelectItems="True"
+                                     EmptyText="Search Snapshot..."
+                                     Width="150"
+                                     Margin="5,0,0,0"
+                                     CanKeyboardNavigationSelectItems="False"
+                                     HorizontalAlignment="Center"
+                                     OpenDropDownOnFocus="True"
+                                     StaysOpenOnEdit="True"
+                                     IsTextSearchEnabled="true"
+                                     IsEditable="True" 
+                                     IsFilteringEnabled="True"/>
+                <telerik:RadButton Name="btnSaveMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="5,0,0,0" ToolTipService.ToolTip="Save" Command="{Binding MarketSnapshotSaveCommand}">
+                    <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                </telerik:RadButton>
+                <Button Name="btnSaveAsMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="5,0,0,0" ToolTipService.ToolTip="Save As" Command="{Binding MarketSnapshotSaveAsCommandMethod}">
+                    <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                </Button>
+                <telerik:RadButton Name="btnAddNewMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="5,0,0,0" ToolTipService.ToolTip="Add New" Command="{Binding MarketSnapshotAddCommandMethod}">
+                    <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                </telerik:RadButton>
+                <Button Name="btnDeleteMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="5,0,0,0" ToolTipService.ToolTip="Delete" Command="{Binding MarketSnapshotRemoveCommandMethod}">
+                    <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

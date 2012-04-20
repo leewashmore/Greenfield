@@ -72,7 +72,7 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
             if (_effectiveDate != null && _benchmarkSelectionData != null)

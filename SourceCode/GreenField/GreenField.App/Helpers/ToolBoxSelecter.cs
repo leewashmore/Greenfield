@@ -12,213 +12,216 @@ using GreenField.Common;
 
 namespace GreenField.App.Helpers
 {
+    public enum ToolBoxItems
+    {
+        SECURITY_SELECTOR,
+        SNAPSHOT_SELECTOR,
+        PORTFOLIO_SELECTOR,
+        EFFECTIVE_DATE_SELECTOR,
+        PERIOD_SELECTOR,
+        COUNTRY_SELECTOR,
+        SECTOR_SELECTOR,
+        INDUSTRY_SELECTOR,
+        REGION_SELECTOR
+    }
+
+    public static class ToolBoxItemVisibility
+    {
+        public static Visibility SECURITY_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility SNAPSHOT_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility PORTFOLIO_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility EFFECTIVE_DATE_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility PERIOD_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility COUNTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility SECTOR_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility INDUSTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility REGION_SELECTOR_VISIBILITY = Visibility.Collapsed;
+    }
+
     public static class ToolBoxSelecter
     {
-        public enum ToolBoxItems
-        {
-            SECURITY_SELECTOR,
-            PORTFOLIO_SELECTOR,
-            EFFECTIVE_DATE_SELECTOR,
-            COUNTRY_SELECTOR,
-            SECTOR_SELECTOR,
-            INDUSTRY_SELECTOR,
-            REGION_SELECTOR,
-            PERIOD_SELECTOR
-        }
-
-        
-        public static class ToolBoxItemVisibility
-        {
-            public static Visibility SECURITY_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility PORTFOLIO_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility EFFECTIVE_DATE_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility COUNTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility SECTOR_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility INDUSTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility REGION_SELECTOR_VISIBILITY = Visibility.Collapsed;
-            public static Visibility PERIOD_SELECTOR_VISIBILITY = Visibility.Collapsed;
-        }
-
         private static void UpdateToolBoxItemVisibility
             (
                 Visibility securitySelectorVisibility = Visibility.Collapsed,
+                Visibility snapshotSelectorVisibility = Visibility.Collapsed,
                 Visibility portfolioSelectorVisibility = Visibility.Collapsed, 
                 Visibility effectiveDateSelectorVisibility = Visibility.Collapsed,
+                Visibility periodSelectorVisibility = Visibility.Collapsed,
                 Visibility countrySelectorVisibility = Visibility.Collapsed,
                 Visibility sectorSelectorVisibility = Visibility.Collapsed,
                 Visibility industrySelectorVisibility = Visibility.Collapsed,
-                Visibility regionSelectorVisibility = Visibility.Collapsed,
-                Visibility periodSelectorVisibility = Visibility.Collapsed
+                Visibility regionSelectorVisibility = Visibility.Collapsed                
             )
         {
             ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY = securitySelectorVisibility;
+            ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY = snapshotSelectorVisibility;
             ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY = portfolioSelectorVisibility;
             ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY = effectiveDateSelectorVisibility;
+            ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY = periodSelectorVisibility;
             ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY = countrySelectorVisibility;
             ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY = sectorSelectorVisibility;
             ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY = industrySelectorVisibility;
-            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = regionSelectorVisibility;
-            ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY = periodSelectorVisibility;
+            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = regionSelectorVisibility;            
         }
 
-        public static void SetToolBoxItemVisibility(DashboardCategory.DashboardCategoryTypes dashboardType)
+        public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
         {
             switch (dashboardType)
             {
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_SNAPSHOT_SUMMARY:
+                case DashboardCategoryType.MARKETS_SNAPSHOT_SUMMARY:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_SNAPSHOT_MARKET_PERFORMANCE:
+                case DashboardCategoryType.MARKETS_SNAPSHOT_MARKET_PERFORMANCE:
+                    UpdateToolBoxItemVisibility(snapshotSelectorVisibility: Visibility.Visible);
+                    break;
+                case DashboardCategoryType.MARKETS_SNAPSHOT_INTERNAL_MODEL_VALUATION:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_SNAPSHOT_INTERNAL_MODEL_VALUATION:
+                case DashboardCategoryType.MARKETS_MACROECONOMIC_EM_SUMMARY:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_MACROECONOMIC_EM_SUMMARY:
-                    UpdateToolBoxItemVisibility();
-                    break;
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
+                case DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.MARKETS_COMMODITIES_SUMMARY:
+                case DashboardCategoryType.MARKETS_COMMODITIES_SUMMARY:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_SNAPSHOT:
+                case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
                         , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
                         , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_HOLDINGS:
+                case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
                         , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
                         , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_PERFORMANCE_SUMMARY:
+                case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_PERFORMANCE_ATTRIBUTION:
+                case DashboardCategoryType.PORTFOLIO_PERFORMANCE_ATTRIBUTION:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_PERFORMANCE_RELATIVE_PERFORMANCE:
+                case DashboardCategoryType.PORTFOLIO_PERFORMANCE_RELATIVE_PERFORMANCE:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_BENCHMARK_SUMMARY:
+                case DashboardCategoryType.PORTFOLIO_BENCHMARK_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
                         , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
                         , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_BENCHMARK_COMPOSITION:
+                case DashboardCategoryType.PORTFOLIO_BENCHMARK_COMPOSITION:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_MODELS_ASSET_ALLOCATION:
+                case DashboardCategoryType.PORTFOLIO_MODELS_ASSET_ALLOCATION:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_MODELS_STOCK_SELECTION:
+                case DashboardCategoryType.PORTFOLIO_MODELS_STOCK_SELECTION:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_MODELS_BOTTOM_UP:
+                case DashboardCategoryType.PORTFOLIO_MODELS_BOTTOM_UP:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.PORTFOLIO_MODELS_DIRECT_OVERLAY:
+                case DashboardCategoryType.PORTFOLIO_MODELS_DIRECT_OVERLAY:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_SNAPSHOT_SUMMARY:
+                case DashboardCategoryType.COMPANY_SNAPSHOT_SUMMARY:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_SNAPSHOT_COMPANY_PROFILE:
+                case DashboardCategoryType.COMPANY_SNAPSHOT_COMPANY_PROFILE:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_SNAPSHOT_TEAR_SHEET:
+                case DashboardCategoryType.COMPANY_SNAPSHOT_TEAR_SHEET:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, portfolioSelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_SUMMARY:
+                case DashboardCategoryType.COMPANY_FINANCIALS_SUMMARY:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_INCOME_STATEMENT:
+                case DashboardCategoryType.COMPANY_FINANCIALS_INCOME_STATEMENT:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_BALANCE_SHEET:
+                case DashboardCategoryType.COMPANY_FINANCIALS_BALANCE_SHEET:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_CASH_FLOW:
+                case DashboardCategoryType.COMPANY_FINANCIALS_CASH_FLOW:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_FINSTAT:
+                case DashboardCategoryType.COMPANY_FINANCIALS_FINSTAT:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_FINANCIALS_PEER_COMPARISON:
+                case DashboardCategoryType.COMPANY_FINANCIALS_PEER_COMPARISON:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_ESTIMATES_CONSENSUS:
+                case DashboardCategoryType.COMPANY_ESTIMATES_CONSENSUS:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_ESTIMATES_DETAILED:
+                case DashboardCategoryType.COMPANY_ESTIMATES_DETAILED:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_ESTIMATES_COMPARISON:
+                case DashboardCategoryType.COMPANY_ESTIMATES_COMPARISON:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_VALUATION_FAIR_VALUE:
+                case DashboardCategoryType.COMPANY_VALUATION_FAIR_VALUE:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_VALUATION_DCF:
+                case DashboardCategoryType.COMPANY_VALUATION_DCF:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_DOCUMENTS:
+                case DashboardCategoryType.COMPANY_DOCUMENTS:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CHARTING_PRICE_COMPARISON:
+                case DashboardCategoryType.COMPANY_CHARTING_PRICE_COMPARISON:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CHARTING_UNREALIZED_GAIN_LOSS:
+                case DashboardCategoryType.COMPANY_CHARTING_UNREALIZED_GAIN_LOSS:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CHARTING_CONTEXT:
+                case DashboardCategoryType.COMPANY_CHARTING_CONTEXT:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CHARTING_VALUATION:
+                case DashboardCategoryType.COMPANY_CHARTING_VALUATION:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CORPORATE_GOVERNANCE_QUESTIONNAIRE:
+                case DashboardCategoryType.COMPANY_CORPORATE_GOVERNANCE_QUESTIONNAIRE:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.COMPANY_CORPORATE_GOVERNANCE_REPORT:
+                case DashboardCategoryType.COMPANY_CORPORATE_GOVERNANCE_REPORT:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
-                case DashboardCategory.DashboardCategoryTypes.SCREENING_STOCK:
+                case DashboardCategoryType.SCREENING_STOCK:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.SCREENING_QUARTERLY_COMPARISON:
+                case DashboardCategoryType.SCREENING_QUARTERLY_COMPARISON:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_CREATE_EDIT:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_CREATE_EDIT:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_VOTE:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_PRE_MEETING_REPORT:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_PRE_MEETING_REPORT:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_MEETING_MINUTES:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_MEETING_MINUTES:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_SUMMARY_REPORT:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_SUMMARY_REPORT:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.INVESTMENT_COMMITTEE_METRICS_REPORT:
+                case DashboardCategoryType.INVESTMENT_COMMITTEE_METRICS_REPORT:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.ADMIN_INVESTMENT_COMMITTEE_VIEW_AGENDA:
+                case DashboardCategoryType.ADMIN_INVESTMENT_COMMITTEE_VIEW_AGENDA:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.ADMIN_INVESTMENT_COMMITTEE_EDIT_DATE:
+                case DashboardCategoryType.ADMIN_INVESTMENT_COMMITTEE_EDIT_DATE:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.ADMIN_INVESTMENT_COMMITTEE_MEETING_DETAILS:
+                case DashboardCategoryType.ADMIN_INVESTMENT_COMMITTEE_MEETING_DETAILS:
                     UpdateToolBoxItemVisibility();
                     break;
-                case DashboardCategory.DashboardCategoryTypes.ADMIN_BROKER_RESEARCH:
+                case DashboardCategoryType.ADMIN_BROKER_RESEARCH:
                     UpdateToolBoxItemVisibility();
                     break;
                 default:

@@ -22,7 +22,7 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.App
 {
-     [Export]
+    [Export]
     public partial class Shell : UserControl
     {
         public Shell()

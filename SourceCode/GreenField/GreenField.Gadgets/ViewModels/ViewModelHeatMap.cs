@@ -41,9 +41,9 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         /// <summary>
-        /// private member object of the FundSelectionData class for storing Fund Selection Data
+        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
 
@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 

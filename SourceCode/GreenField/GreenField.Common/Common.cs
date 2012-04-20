@@ -32,6 +32,14 @@ namespace GreenField.Common
         public static string USER_REJECTED = "UserRejected";
     }
 
+    public enum MarketPerformanceSnapshotActionType
+    {
+        SNAPSHOT_SAVE,
+        SNAPSHOT_SAVE_AS,
+        SNAPSHOT_ADD,
+        SNAPSHOT_REMOVE
+    }
+
     public static class Application
     {
         public static string APPLICATION_NAME = "GreenField";

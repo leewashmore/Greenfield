@@ -18,7 +18,7 @@ namespace GreenField.Gadgets.Helpers
 {
     public partial class RelativePerformanceTooltip : UserControl
     {
-        public RelativePerformanceTooltip(IDBInteractivity dbInteractivity, FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID, int? sectorID)
+        public RelativePerformanceTooltip(IDBInteractivity dbInteractivity, PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID, int? sectorID)
         {
             InitializeComponent();
             dbInteractivity.RetrieveRelativePerformanceSecurityData(fundSelectionData, benchmarkSelectionData, effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, countryID, sectorID);                        

@@ -1,4 +1,4 @@
-﻿<UserControl
+﻿<UserControl x:Class="GreenField.App.Shell"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
     xmlns:helpers="clr-namespace:GreenField.App.Helpers"         
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,8 +9,7 @@
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:Telerik_Windows_Controls_RibbonView_Primitives="clr-namespace:Telerik.Windows.Controls.RibbonView.Primitives;assembly=Telerik.Windows.Controls.RibbonView" 
-    xmlns:Telerik_Windows_Controls_Primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Navigation" 
-    x:Class="GreenField.App.Shell"
+    xmlns:Telerik_Windows_Controls_Primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Navigation"     
     mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <UserControl.Resources>
@@ -19,7 +18,6 @@
                 <ResourceDictionary Source="/GreenField.App;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
         <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
         <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
             <helpers:ItemStyleSelector.GroupStyle>
@@ -368,97 +366,18 @@
 
         <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0">
             <Grid telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Background="{Binding Background, ElementName=radRibbonView}">
-                <!--<telerik:RadExpander x:Name="radExpanderContainers" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="True"
-                                     VerticalContentAlignment="Stretch" HorizontalAlignment="Left" ExpandDirection="Down" Header="Application level controls">
-                        <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="0,1,0,0">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                    <RowDefinition Height="25"/>
-                                </Grid.RowDefinitions>
-                                <Grid Grid.Row="0">
-                                    <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50"/>
-                                    <telerik:RadComboBox ItemsSource="{Binding SecurityReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                         Margin="50,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
-                                         CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True" HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                         Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False" />                                                                        
-                                    <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="580,0,0,0" Width="100"/>
-                                    <telerik:RadComboBox Margin="680,0,0,0" IsEditable="True" Width="200"/>
-                                </Grid>
-                                <Grid Grid.Row="1">
-                                    <TextBlock Text="Benchmark" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
-                                    <telerik:RadComboBox ItemsSource="{Binding BenchmarkReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                         Margin="365,2,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
-                                         CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                         Text="{Binding BenchmarkEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedBenchmarkReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" />
-                                </Grid>
-                                <Grid Grid.Row="2">
-                                    <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="265,2,0,0" Width="100"/>
-                                    <telerik:RadDatePicker Margin="365,2,0,0" Width="200" SelectedValue="{Binding SelectedEffectiveDateReference, Mode=TwoWay}"/>
-                                </Grid>
-                            </Grid>
-                       </Border>
-                </telerik:RadExpander>-->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                    <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center" Width="50" Foreground="White" FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
-                    <!--<telerik:RadComboBox ItemsSource="{Binding SecurityReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                         Margin="50,0,0,0" IsEditable="True" telerik:TextSearch.TextPath="Header" Width="200"
-                                         CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True" HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                         Text="{Binding SecurityEnteredText, Mode=TwoWay}" SelectedItem="{Binding SelectedSecurityReference, Mode=TwoWay}"
-                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" IsTextSearchEnabled="False"
-                                         FontSize="7"/>-->
-                    <telerik:RadComboBox ItemsSource="{Binding BindedEntitySelectionInfo}"
-                                         SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                                         EmptyText="Search Security..." 
-                                         telerik:TextSearch.TextPath="LongName"
-                                         Text="{Binding EntityEnteredText, Mode=TwoWay}"
-                                         Width="300" Margin="5,0,0,0" IsEditable="True"
-                                         CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False" HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False">
-                        <telerik:RadComboBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel />
-                            </ItemsPanelTemplate>
-                        </telerik:RadComboBox.ItemsPanel>
-                        <telerik:RadComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding LongName}"/>
-                                    <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}"/>
-                                    <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}"/>
-                                    <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </telerik:RadComboBox.ItemTemplate>
-                    </telerik:RadComboBox>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-
-                    <telerik:RadComboBox ItemsSource="{Binding FundSelectionData}"
-                                         SelectedItem="{Binding SelectedFund, Mode=TwoWay}"
-                                         EmptyText="Search Fund..."
-                                         DisplayMemberPath="PortfolioID"
-                                         telerik:TextSearch.TextPath="PortfolioID"
-                                         Width="300" Margin="5,0,0,0" IsEditable="True"
-                                         CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False" HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="True">
-                    </telerik:RadComboBox>
-
-
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                    <TextBlock Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                <helpers:ToolBox Grid.Column="0" x:Name="ctrToolBox" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                  x:Name="tbUserName" Foreground="White"  FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
-                    <HyperlinkButton Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"
+                <HyperlinkButton Grid.Column="2" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
                                  x:Name="hypbtnLogout" Foreground="White" Command="{Binding LogOutCommand}" FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
-                </StackPanel>
+
             </Grid>
         </Border>
         <ContentControl

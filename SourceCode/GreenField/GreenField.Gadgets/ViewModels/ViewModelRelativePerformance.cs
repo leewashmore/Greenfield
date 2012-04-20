@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.ViewModels
         public ILoggerFacade _logger;
 
         //Selection Data
-        public FundSelectionData _fundSelectionData;
+        public PortfolioSelectionData _fundSelectionData;
         public BenchmarkSelectionData _benchmarkSelectionData;
         public DateTime _effectiveDate;
 
@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
 
             //Selection Data Initialization
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
@@ -61,9 +61,9 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         } 
         #endregion
@@ -92,7 +92,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

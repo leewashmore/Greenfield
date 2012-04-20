@@ -17,11 +17,13 @@ namespace GreenField.Common.Helper
     {
         public EntitySelectionData EntitySelectionData { get; set; }
 
-        public FundSelectionData FundSelectionData { get; set; }
+        public PortfolioSelectionData PortfolioSelectionData { get; set; }
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
         public DateTime EffectiveDate { get; set; }
+
+        public PeriodSelectionData PeriodSelectionData{ get; set; }        
 
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
     }

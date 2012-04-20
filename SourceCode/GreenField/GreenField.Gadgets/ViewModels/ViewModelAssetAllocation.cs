@@ -27,7 +27,7 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         #endregion
@@ -39,7 +39,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
@@ -50,9 +50,9 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity.RetrieveAssetAllocationData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         } 
         #endregion
@@ -76,7 +76,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -192,9 +192,9 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Dispose()
         {
-            _eventAggregator.GetEvent<FundReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
             _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Unsubscribe(HandleBenchmarkReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateSet>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
 
         #endregion

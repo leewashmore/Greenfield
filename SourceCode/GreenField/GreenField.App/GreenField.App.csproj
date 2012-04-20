@@ -146,6 +146,9 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ToolBox.xaml.cs">
+      <DependentUpon>ToolBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\ViewModelShell.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +161,10 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\RemoveSnapshot.png" />
+    <Resource Include="Images\AddSnapshot.png" />
+    <Resource Include="Images\SaveAsSnapshot.png" />
+    <Resource Include="Images\SaveSnapshot.png" />
     <Resource Include="Images\balancesheet.png" />
     <Resource Include="Images\saveButtonImage.png" />
     <Resource Include="Images\HoldingsImage.png" />
@@ -200,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ToolBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

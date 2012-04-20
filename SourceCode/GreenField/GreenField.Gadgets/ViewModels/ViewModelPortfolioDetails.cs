@@ -31,9 +31,9 @@ namespace GreenField.Benchmark.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
 
-        private FundSelectionData _dummyfundSelectionData = new FundSelectionData();
+        private PortfolioSelectionData _dummyfundSelectionData = new PortfolioSelectionData();
 
         #endregion
 
@@ -50,7 +50,7 @@ namespace GreenField.Benchmark.ViewModels
             this._dbInteractivity = dbInteractivity;
             this._eventAggregator = eventAggregator;
             this._logger = logger;
-            _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet, true);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, true);
 
             HandleFundReferenceSet(_dummyfundSelectionData);
 
@@ -421,7 +421,7 @@ namespace GreenField.Benchmark.ViewModels
         /// Event handler for FundSelection changed Event
         /// </summary>
         /// <param name="fundSelectionData"></param>
-        private void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        private void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
             try
             {

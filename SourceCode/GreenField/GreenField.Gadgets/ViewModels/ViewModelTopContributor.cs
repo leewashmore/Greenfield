@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         #endregion
@@ -56,7 +56,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
@@ -67,9 +67,9 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickevent);
             }           
         } 
@@ -106,8 +106,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event Handler to subscribed event 'FundReferenceSetEvent'
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData</param>
-        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        /// <param name="fundSelectionData">PortfolioSelectionData</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

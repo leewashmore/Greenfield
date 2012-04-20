@@ -43,9 +43,9 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         /// <summary>
-        /// private member object of the FundSelectionData class for storing Fund Selection Data
+        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
 
         /// <summary>
         ///  private member object of the BenchmarkSelectionData class for storing Benchmark Selection Data
@@ -70,15 +70,15 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
             if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
@@ -116,8 +116,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="fundSelectionData">Object of FundSelectionData Class containing Fund data</param>
-        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        /// <param name="fundSelectionData">Object of PortfolioSelectionData Class containing Fund data</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

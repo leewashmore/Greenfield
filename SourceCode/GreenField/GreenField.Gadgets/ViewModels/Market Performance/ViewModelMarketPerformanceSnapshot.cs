@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
             _selectedMarketSnapshotPreference = param.DashboardGadgetPayload.MarketSnapshotSelectionData;
 
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
-            _eventAggregator.GetEvent<MarketPerformanceSnapshotNameReferenceSetEvent>().Subscribe(HandleMarketPerformanceSnapshotNameReferenceSetEvent);
+            _eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Subscribe(HandleMarketPerformanceSnapshotNameReferenceSetEvent);
 
             //RetrieveEntitySelectionData Service Call
             if (_dbInteractivity != null)

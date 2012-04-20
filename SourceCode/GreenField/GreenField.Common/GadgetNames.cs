@@ -133,7 +133,7 @@ namespace GreenField.Common
         #endregion
 
         #region Snapshot Market Performance
-        public static string BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT = "Morning Snapshot Data Benchmarks 4.1.1.1"; 
+        public static string BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT = "Market Performance Snapshot"; 
         #endregion
 
         #region Snapshot Internal Vs. Model Valuation

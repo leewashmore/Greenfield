@@ -32,11 +32,16 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<FundSelectionData> RetrieveFundSelectionData()
+        public void Temp(PeriodSelectionData data)
+        {            
+        }
+
+        [OperationContract]
+        public List<PortfolioSelectionData> RetrievePortfolioSelectionData()
         {
             try
             {
-                List<FundSelectionData> result = new List<FundSelectionData>();
+                List<PortfolioSelectionData> result = new List<PortfolioSelectionData>();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
@@ -44,9 +49,9 @@ namespace GreenField.Web.Services
 
                 foreach (GF_PORTFOLIO_SELECTION item in dimensionFundList)
                 {
-                    FundSelectionData data = new FundSelectionData();
-                    data.PortfolioID = item.PORTFOLIO_ID;
-                    data.PortfolioThemeSubGroupID = item.PORTFOLIO_THEME_SUBGROUP_CODE;
+                    PortfolioSelectionData data = new PortfolioSelectionData();
+                    data.PortfolioId = item.PORTFOLIO_ID;
+                    data.PortfolioThemeSubGroupId = item.PORTFOLIO_THEME_SUBGROUP_CODE;
                     data.PortfolioThemeSubGroupName = item.PORTFOLIO_THEME_SUBGROUP_NAME;
                     result.Add(data);
                 }
@@ -85,12 +90,12 @@ namespace GreenField.Web.Services
         /// <summary>
         /// retrieving data for sector breakdown gadget
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of sector breakdown data</returns>
         [OperationContract]
-        public List<SectorBreakdownData> RetrieveSectorBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -124,12 +129,12 @@ namespace GreenField.Web.Services
         /// <summary>
         /// retrieving data for region breakdown gadget
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of region breakdown data</returns>
         [OperationContract]
-        public List<RegionBreakdownData> RetrieveRegionBreakdownData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -167,7 +172,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of top holdings data</returns>
         [OperationContract]
-        public List<TopHoldingsData> RetrieveTopHoldingsData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<TopHoldingsData> RetrieveTopHoldingsData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -500,7 +505,7 @@ namespace GreenField.Web.Services
         /// <param name="filterValue">The Filter value selected by the user</param>
         /// <returns>List of HoldingsPercentageData </returns>
         [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
         {
 
             try
@@ -605,7 +610,7 @@ namespace GreenField.Web.Services
         /// <param name="filterValue">The Filter value selected by the user</param>
         /// <returns>List of HoldingsPercentageData </returns>
         [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(FundSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
         {
             try
             {
@@ -764,7 +769,7 @@ namespace GreenField.Web.Services
         #region Performance
 
         [OperationContract]
-        public MarketCapitalizationData RetrieveMarketCapitalizationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public MarketCapitalizationData RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -799,7 +804,7 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<AssetAllocationData> RetrieveAssetAllocationData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1088,7 +1093,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective Date selected by user</param>
         /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
         [OperationContract]
-        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1160,7 +1165,7 @@ namespace GreenField.Web.Services
 
         #region Relative Performance
         [OperationContract]
-        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1188,14 +1193,14 @@ namespace GreenField.Web.Services
         /// Retrieves Country Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1285,14 +1290,14 @@ namespace GreenField.Web.Services
         /// Retrieves Sector Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1386,14 +1391,14 @@ namespace GreenField.Web.Services
         /// Retrieves Security Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1460,7 +1465,7 @@ namespace GreenField.Web.Services
         /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="fundSelectionData">FundSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
@@ -1469,7 +1474,7 @@ namespace GreenField.Web.Services
         /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
         /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
+        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
 
 
@@ -1529,7 +1534,7 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<RelativePerformanceData> RetrieveRelativePerformanceData(FundSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {

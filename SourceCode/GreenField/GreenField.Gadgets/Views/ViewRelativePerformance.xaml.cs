@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.Views
     public partial class ViewRelativePerformance : ViewBaseUserControl
     {
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         private IEventAggregator _eventAggregator;

@@ -133,6 +133,81 @@
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AssetAllocationData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkChartReturnData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkGridReturnData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HeatMapData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsPercentageData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.IndexConstituentsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGraphData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGridData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioDetailsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RegionBreakdownData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceActivePositionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceSectorData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceSecurityData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.SectorBreakdownData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.TopBenchmarkSecuritiesData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.TopHoldingsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
     <None Include="Service References\DashboardDefinitions\DashboardOperations.xsd">
       <SubType>Designer</SubType>
@@ -191,6 +266,18 @@
     <None Include="Service References\DashboardDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">

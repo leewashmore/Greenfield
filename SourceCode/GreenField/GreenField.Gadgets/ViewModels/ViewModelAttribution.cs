@@ -42,9 +42,9 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         /// <summary>
-        /// private member object of the FundSelectionData class for storing Fund Selection Data
+        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private FundSelectionData _fundSelectionData;
+        private PortfolioSelectionData _fundSelectionData;
 
        
 
@@ -61,10 +61,10 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _fundSelectionData = param.DashboardGadgetPayload.FundSelectionData;
+            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
-            //_dbInteractivity.RetrieveFundSelectionData(RetrieveFundSelectionDataCallBackMethod);
-            _eventAggregator.GetEvent<FundReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
+            //_dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallBackMethod);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
             if (_fundSelectionData != null)
                 HandleFundReferenceSet(_fundSelectionData);
         }
@@ -154,8 +154,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="fundSelectionData">Object of FundSelectionData class containg the Fund Selection Data </param>
-        public void HandleFundReferenceSet(FundSelectionData fundSelectionData)
+        /// <param name="fundSelectionData">Object of PortfolioSelectionData class containg the Fund Selection Data </param>
+        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

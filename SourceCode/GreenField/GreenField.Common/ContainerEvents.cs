@@ -18,19 +18,24 @@ using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Common
 {
+
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
 
     public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
-    public class FundReferenceSetEvent : CompositePresentationEvent<FundSelectionData> { }
+    public class PortfolioReferenceSetEvent : CompositePresentationEvent<PortfolioSelectionData> { }
+
+    public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
+
+    public class PeriodReferenceSetEvent : CompositePresentationEvent<PeriodSelectionData> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 
-    public class MarketPerformanceSnapshotNameReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
+    public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
 
-    public class EffectiveDateSet : CompositePresentationEvent<DateTime> { }
+    public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionType> { }    
 
     public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
 

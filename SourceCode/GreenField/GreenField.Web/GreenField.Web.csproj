@@ -100,7 +100,6 @@
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
     <Compile Include="DataContracts\EntitySelectionData.cs" />
     <Compile Include="DataContracts\Enumerations.cs" />
-    <Compile Include="DataContracts\FundSelectionData.cs" />
     <Compile Include="DataContracts\HeatMapData.cs" />
     <Compile Include="DataContracts\HoldingsData.cs" />
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
@@ -111,8 +110,10 @@
     <Compile Include="DataContracts\PerformanceData.cs" />
     <Compile Include="DataContracts\PerformanceGraphData.cs" />
     <Compile Include="DataContracts\PerformanceGridData.cs" />
+    <Compile Include="DataContracts\PeriodSelectionData.cs" />
     <Compile Include="DataContracts\PortfolioDetailsData.cs" />
     <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
+    <Compile Include="DataContracts\PortfolioSelectionData.cs" />
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
     <Compile Include="DataContracts\RegionBreakdownData.cs" />

@@ -43,7 +43,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet, false);
-            _eventAggregator.GetEvent<EffectiveDateSet>().Subscribe(HandleBenchmarkReferenceSet_EffectiveDate, false);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet_EffectiveDate, false);
             _effectiveDateSet = param.DashboardGadgetPayload.EffectiveDate;
             if ((_benchmarkSelectionData != null) && (_effectiveDateSet != null))
                 HandleBenchmarkReferenceSet(_benchmarkSelectionData);

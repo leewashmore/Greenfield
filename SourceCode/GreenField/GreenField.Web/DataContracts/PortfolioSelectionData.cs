@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace GreenField.Web.DataContracts
 {
     [DataContract]
-    public class FundSelectionData
+    public class PortfolioSelectionData
     {
         [DataMember]
         public string Name { get; set; }
@@ -15,15 +15,14 @@ namespace GreenField.Web.DataContracts
         [DataMember]
         public string Category { get; set; }
 
-
         [DataMember]
-        public string PortfolioID { get; set; }
+        public string PortfolioId { get; set; }
 
         [DataMember]
         public string PortfolioThemeSubGroupName { get; set; }
 
         [DataMember]
-        public string PortfolioThemeSubGroupID { get; set; }
+        public string PortfolioThemeSubGroupId { get; set; }
         
     }
 }
