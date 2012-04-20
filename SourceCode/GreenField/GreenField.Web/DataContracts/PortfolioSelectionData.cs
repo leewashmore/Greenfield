@@ -23,6 +23,6 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public string PortfolioThemeSubGroupId { get; set; }
-        
+
     }
 }

@@ -166,7 +166,7 @@ namespace GreenField.Common
         #endregion
 
         #region Holdings
-        public static string HOLDINGS_PORTFOLIO_DETAILS_UI = "Portfolio Details User Interface Fund Holdings and Discounted Cash Flows 4.3"; 
+        public static string HOLDINGS_PORTFOLIO_DETAILS_UI = "Portfolio Details User Interface"; 
         #endregion
 
         #region Performance Summary

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.ComponentModel.Composition;
-using GreenField.Benchmark.ViewModels;
 using Telerik.Windows.Controls;
 using System.IO;
 using Telerik.Windows.Documents.Model;
@@ -21,11 +20,12 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.Gadgets.ViewModels;
 #endif
 
-namespace GreenField.Benchmark.Views
+namespace GreenField.Gadgets.Views
 {
-    public partial class ViewPortfolioDetails : UserControl
+    public partial class ViewPortfolioDetails : ViewBaseUserControl
     {
         #region Private Variables
 
@@ -432,5 +432,9 @@ namespace GreenField.Benchmark.Views
             DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
         }
 
+        public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

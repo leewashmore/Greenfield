@@ -65,11 +65,12 @@
                 <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbPortfolioSelector"
                                          ItemsSource="{Binding PortfolioSelectorInfo}"
-                                         SelectedItem="{Binding SelectedPortfolio, Mode=TwoWay}"
+                                         SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
                                          Text="{Binding PortfolioSearchText, Mode=TwoWay}"
                                          DisplayMemberPath="PortfolioId"
                                          EmptyText="Search Portfolio..."
-                                         telerik:TextSearch.TextPath="LongName"
+                                     
+                                     telerik:TextSearch.TextPath="PortfolioId"
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"

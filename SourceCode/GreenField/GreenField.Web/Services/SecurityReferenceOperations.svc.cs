@@ -574,8 +574,6 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-        
-
         #region Unrealized Gain Loss Operation contract
         /// <summary>
         /// Retrieves the Theoretical Unrealized Gain Loss Data for selected Entity.

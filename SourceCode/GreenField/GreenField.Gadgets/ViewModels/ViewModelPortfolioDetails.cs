@@ -22,7 +22,7 @@ using GreenField.Common;
 using System.Linq;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
-namespace GreenField.Benchmark.ViewModels
+namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelPortfolioDetails : NotificationObject
     {
@@ -31,9 +31,7 @@ namespace GreenField.Benchmark.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private PortfolioSelectionData _fundSelectionData;
-
-        private PortfolioSelectionData _dummyfundSelectionData = new PortfolioSelectionData();
+        private PortfolioSelectionData _portfolioSelectionData;
 
         #endregion
 
@@ -45,17 +43,21 @@ namespace GreenField.Benchmark.ViewModels
         /// <param name="dbInteractivity">Instance of service caller class</param>
         /// <param name="eventAggregator"></param>
         /// <param name="logger">Instance of LoggerFacade</param>
-        public ViewModelPortfolioDetails(IDBInteractivity dbInteractivity, IEventAggregator eventAggregator, ILoggerFacade logger)
+        public ViewModelPortfolioDetails(DashboardGadgetParam param)
         {
-            this._dbInteractivity = dbInteractivity;
-            this._eventAggregator = eventAggregator;
-            this._logger = logger;
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, true);
+            this._dbInteractivity = param.DBInteractivity;
+            this._eventAggregator = param.EventAggregator;
+            this._logger = param.LoggerFacade;
+            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
-            HandleFundReferenceSet(_dummyfundSelectionData);
 
-            if (_fundSelectionData != null)
-                HandleFundReferenceSet(_fundSelectionData);
+
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
+            }
+            if (_portfolioSelectionData != null)
+                HandlePortfolioReferenceSet(_portfolioSelectionData);
         }
 
         #endregion
@@ -65,16 +67,16 @@ namespace GreenField.Benchmark.ViewModels
         /// <summary>
         /// The Portfolio selected from the top menu Portfolio Selector Control
         /// </summary>
-        private string _selectedPortfolioName;
-        public string SelectedPortfolioName
+        private PortfolioSelectionData _selectedPortfolioId;
+        public PortfolioSelectionData SelectedPortfolioId
         {
             get
             {
-                return _selectedPortfolioName;
+                return _selectedPortfolioId;
             }
             set
             {
-                _selectedPortfolioName = value;
+                _selectedPortfolioId = value;
                 this.RaisePropertyChanged(() => this.SelectedPortfolioDetailsData);
             }
         }
@@ -152,6 +154,19 @@ namespace GreenField.Benchmark.ViewModels
             }
         }
 
+        private bool _getBenchmarkData;
+        public bool GetBenchmarkData
+        {
+            get
+            {
+                return _getBenchmarkData;
+            }
+            set
+            {
+                _getBenchmarkData = value;
+                this.RaisePropertyChanged(() => this.GetBenchmarkData);
+            }
+        }
 
         /// <summary>
         /// Collection of all Benchmark Names
@@ -190,7 +205,7 @@ namespace GreenField.Benchmark.ViewModels
         /// <summary>
         /// Selected date from the application toolbar.
         /// </summary>
-        private DateTime _selectedDate;
+        private DateTime _selectedDate = DateTime.Today;
         public DateTime SelectedDate
         {
             get
@@ -247,10 +262,10 @@ namespace GreenField.Benchmark.ViewModels
         /// <summary>
         /// Service call to Retrieve the Details for a Portfolio
         /// </summary>
-        /// <param name="objPortfolioName">PortfolioName</param>
-        private void RetrievePortfolioDetailsData(string objPortfolioName, DateTime objSelectedDate, Action<List<PortfolioDetailsData>> callback)
+        /// <param name="objPortfolioId">PortfolioName</param>
+        private void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioId, DateTime objSelectedDate, bool objgetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
-            _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioName, objSelectedDate, callback);
+            _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, GetBenchmarkData, callback);
         }
 
         private void GroupedData()
@@ -420,15 +435,16 @@ namespace GreenField.Benchmark.ViewModels
         /// <summary>
         /// Event handler for FundSelection changed Event
         /// </summary>
-        /// <param name="fundSelectionData"></param>
-        private void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
+        /// <param name="PortfolioSelectionData"></param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             try
             {
                 //Arguement Null Exception
-                if (fundSelectionData != null)
+                if (PortfolioSelectionData != null)
                 {
-                    RetrievePortfolioDetailsData(SelectedPortfolioName, SelectedDate, RetrievePortfolioDetailsDataCallbackMethod);
+                    SelectedPortfolioId = PortfolioSelectionData;
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, SelectedDate, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
             catch (Exception ex)

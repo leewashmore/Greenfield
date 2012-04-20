@@ -45,7 +45,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _fundSelectionData;
+        private PortfolioSelectionData _PortfolioSelectionData;
 
         /// <summary>
         ///  private member object of the BenchmarkSelectionData class for storing Benchmark Selection Data
@@ -70,7 +70,7 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
@@ -81,11 +81,11 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
-            if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             {
-                _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
             }
-           // _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+           // _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
         }
         #endregion
 
@@ -116,21 +116,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="fundSelectionData">Object of PortfolioSelectionData Class containing Fund data</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
+        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class containing Fund data</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (fundSelectionData != null)
+                if (PortfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, fundSelectionData, 1);
-                    _fundSelectionData = fundSelectionData;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
+                    _PortfolioSelectionData = PortfolioSelectionData;
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -160,9 +160,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -192,9 +192,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
                     _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else

@@ -299,17 +299,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations.disco" />
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.disco" />
     <None Include="Service References\SecurityReferenceDefinitions\configuration91.svcinfo" />
     <None Include="Service References\SecurityReferenceDefinitions\configuration.svcinfo" />
     <None Include="Service References\SecurityReferenceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations.disco" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.Views
     public partial class ViewRelativePerformance : ViewBaseUserControl
     {
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
-        private PortfolioSelectionData _fundSelectionData;
+        private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         private IEventAggregator _eventAggregator;
@@ -111,7 +111,7 @@ namespace GreenField.Gadgets.Views
 
             RelativePerformanceInfo = e.RelativePerformanceInfo;
 
-            _fundSelectionData = (this.DataContext as ViewModelRelativePerformance)._fundSelectionData;
+            _PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
             _benchmarkSelectionData = (this.DataContext as ViewModelRelativePerformance)._benchmarkSelectionData;
             _effectiveDate = (this.DataContext as ViewModelRelativePerformance)._effectiveDate;
             _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
@@ -147,7 +147,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = new RelativePerformanceTooltip(_dbInteractivity, _fundSelectionData, _benchmarkSelectionData, _effectiveDate, cellCountryID, cellSectorID)
+                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, cellCountryID, cellSectorID)
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);

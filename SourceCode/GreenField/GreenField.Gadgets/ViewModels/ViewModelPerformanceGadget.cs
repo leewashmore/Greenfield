@@ -49,7 +49,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _fundSelectionData;
+        private PortfolioSelectionData _PortfolioSelectionData;
 
         #endregion
 
@@ -64,12 +64,12 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             //_dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallBackMethod);
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
-            if (_fundSelectionData != null)
-                HandleFundReferenceSet(_fundSelectionData);
+            if (_PortfolioSelectionData != null)
+                HandleFundReferenceSet(_PortfolioSelectionData);
         }
 
         #endregion
@@ -209,19 +209,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="fundSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
+        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (fundSelectionData != null)
+                if (PortfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, fundSelectionData, 1);
-                    _fundSelectionData = fundSelectionData;
-                    RetrievePerformanceGraphData(fundSelectionData.Name.ToString(), RetrievePerformanceGraphDataCallBackMethod);
+                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
+                    _PortfolioSelectionData = PortfolioSelectionData;
+                    RetrievePerformanceGraphData(PortfolioSelectionData.Name.ToString(), RetrievePerformanceGraphDataCallBackMethod);
                 }
                 else
                 {

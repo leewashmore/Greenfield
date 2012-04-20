@@ -45,7 +45,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _fundSelectionData;  
+        private PortfolioSelectionData _PortfolioSelectionData;  
       
         #endregion
 
@@ -59,7 +59,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;           
-            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
        
             if (_eventAggregator != null)
@@ -68,8 +68,8 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
-            if (_fundSelectionData != null)
-                HandleFundReferenceSet(_fundSelectionData);
+            if (_PortfolioSelectionData != null)
+                HandleFundReferenceSet(_PortfolioSelectionData);
 
             //if (_benchmarkSelectionData != null && EffectiveDate != null)
             //{
@@ -200,10 +200,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _valueTypesSelection = value;
 
-                    if (_fundSelectionData != null)
+                    if (_PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
 
                     }
                     RaisePropertyChanged(() => this.ValueTypesSelection);
@@ -230,7 +230,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _fundSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
                       //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
@@ -251,20 +251,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
-        /// <param name="fundSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
+        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (fundSelectionData != null)
+                if (PortfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, fundSelectionData, 1);
-                    _fundSelectionData = fundSelectionData;
-                    _dbInteractivity.RetrieveHoldingsPercentageData(fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
-                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(fundSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
+                    _PortfolioSelectionData = PortfolioSelectionData;
+                    _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                 }
                 else
                 {

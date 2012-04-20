@@ -43,7 +43,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _fundSelectionData;
+        private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
 
@@ -58,15 +58,15 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            //if (_fundSelectionData != null && _effectiveDate != null)
+            //if (_PortfolioSelectionData != null && _effectiveDate != null)
             //{
-            //    _dbInteractivity.RetrieveHeatMapData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
+            //    _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveHeatMapData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
+            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
         }
 
         

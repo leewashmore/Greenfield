@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
-        private PortfolioSelectionData _fundSelectionData;
+        private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime _effectiveDate;
         #endregion
@@ -40,15 +40,15 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _fundSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+            //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             //{
-            //    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+            //    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+            _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
             
             if (_eventAggregator != null)
             {
@@ -79,20 +79,20 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-        public void HandleFundReferenceSet(PortfolioSelectionData fundSelectionData)
+        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (fundSelectionData != null)
+                if (PortfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, fundSelectionData, 1);
-                    _fundSelectionData = fundSelectionData;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
+                    _PortfolioSelectionData = PortfolioSelectionData;
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -118,9 +118,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -146,9 +146,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
                     _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -173,11 +173,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (filter != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                    //if (_effectiveDate != null && _fundSelectionData != null && _benchmarkSelectionData != null)
+                    //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     //{
-                    //    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod, filter.SectorID, filter.SectorID);
+                    //    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod, filter.SectorID, filter.SectorID);
                     //}
-                    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_fundSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                    _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                 }
                 else
                 {

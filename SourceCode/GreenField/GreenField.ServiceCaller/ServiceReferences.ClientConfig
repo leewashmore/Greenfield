@@ -22,11 +22,6 @@
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
 				<binding name="BasicHttpBinding_SecurityReferenceOperations"
 				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
@@ -43,6 +38,15 @@
 				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
+				<binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations1"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
 			</basicHttpBinding>
 		</bindings>
 		<client>
@@ -52,10 +56,6 @@
 			<endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_DashboardOperations"
 			 contract="DashboardDefinitions.DashboardOperations" name="BasicHttpBinding_DashboardOperations" />
-			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
-			 contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
-			 name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" />
 			<endpoint address="http://localhost:59430/Services/LoginOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoginOperations"
 			 contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
@@ -66,6 +66,10 @@
 			<endpoint address="http://localhost:59430/Services/SessionOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_SessionOperations"
 			 contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
+			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
+			 contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
+			 name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" />
 		</client>
 
 	</system.serviceModel>
