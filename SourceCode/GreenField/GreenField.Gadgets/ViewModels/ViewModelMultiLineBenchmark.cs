@@ -6,7 +6,7 @@ using System.Linq;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Collections.ObjectModel;

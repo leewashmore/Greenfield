@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.Composition;
 using GreenField.ServiceCaller;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
@@ -16,6 +16,8 @@ namespace GreenField.ServiceCaller
     [Export(typeof(IDBInteractivity))]
     public class DBInteractivity : IDBInteractivity
     {
+        #region Build1
+
         /// <summary>
         /// service call method for security overview gadget
         /// </summary>
@@ -26,7 +28,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveSecurityReferenceDataAsync();
             client.RetrieveSecurityReferenceDataCompleted += (se, e) =>
                 {
@@ -44,7 +46,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityOverviewData> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveSecurityReferenceDataByTickerAsync(ticker);
             client.RetrieveSecurityReferenceDataByTickerCompleted += (se, e) =>
             {
@@ -62,7 +64,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback)
         {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveEntitySelectionDataAsync();
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
@@ -70,6 +72,34 @@ namespace GreenField.ServiceCaller
                 {
                     if (e.Result != null)
                         callback(e.Result);
+                }
+                else
+                {
+                    callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service Caller Method for Closing Price Chart
+        /// </summary>
+        /// <param name="entityIdentifiers"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <param name="totalReturnCheck"></param>
+        /// <param name="frequencyInterval"></param>
+        /// <param name="chartEntityTypes"></param>
+        /// <param name="callback"></param>
+        public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
+        {
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
+            client.RetrievePricingReferenceDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                {
+                    if (e.Result != null)
+                        callback(e.Result.ToList());
                 }
                 else
                 {
@@ -91,7 +121,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval, Action<List<UnrealizedGainLossData>> callback)
         {
 
-            ProxyDataOperationsClient client = new ProxyDataOperationsClient();
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
             {
@@ -107,6 +137,10 @@ namespace GreenField.ServiceCaller
             };
         }
         #endregion
+
+        #endregion
+
+        #region Build2 Interaction Methods
 
         public void RetrieveFundSelectionData(Action<List<FundSelectionData>> callback)
         {
@@ -128,7 +162,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();            
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveBenchmarkSelectionDataAsync();
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
@@ -142,34 +176,6 @@ namespace GreenField.ServiceCaller
                     {
                         callback(null);
                     }
-                }
-            };
-        }
-
-        /// <summary>
-        /// Service Caller Method for Closing Price Chart
-        /// </summary>
-        /// <param name="entityIdentifiers"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>
-        /// <param name="totalReturnCheck"></param>
-        /// <param name="frequencyInterval"></param>
-        /// <param name="chartEntityTypes"></param>
-        /// <param name="callback"></param>
-        public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
-        {
-            ProxyDataDefinitions.ProxyDataOperationsClient client = new ProxyDataDefinitions.ProxyDataOperationsClient();
-            client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
-            client.RetrievePricingReferenceDataCompleted += (se, e) =>
-            {
-                if (callback != null)
-                {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
-                }
-                else
-                {
-                    callback(null);
                 }
             };
         }
@@ -479,7 +485,6 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-
         public void RetriveValuesForFilters(String filterType, Action<List<String>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
@@ -758,8 +763,6 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-        
-
         #region Interaction Methods for Benchmark
         /// <summary>
         /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
@@ -769,7 +772,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">callback</param>
         public void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();          
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveTopBenchmarkSecuritiesDataAsync(benchmarkSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
@@ -884,6 +887,9 @@ namespace GreenField.ServiceCaller
                     }
             };
         }
+
+        #endregion 
+
         #endregion
     }
 }

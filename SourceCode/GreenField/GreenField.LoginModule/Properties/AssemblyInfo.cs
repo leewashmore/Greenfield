@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("GreenField.LoginModule")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NDSCCM01")]
+[assembly: AssemblyCompany("AshmoreEMM")]
 [assembly: AssemblyProduct("GreenField.LoginModule")]
-[assembly: AssemblyCopyright("Copyright © NDSCCM01 2012")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

@@ -8,7 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;

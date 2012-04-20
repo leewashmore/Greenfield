@@ -15,7 +15,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.Gadgets.Views;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.App.Models;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;

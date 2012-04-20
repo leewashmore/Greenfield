@@ -74,7 +74,7 @@
     <Content Include="Services\DashboardOperations.svc" />
     <Content Include="Services\LoggingOperations.svc" />
     <Content Include="Services\LoginOperations.svc" />
-    <Content Include="Services\ProxyDataOperations.svc" />
+    <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config">
@@ -89,42 +89,10 @@
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\AggregatedData.cs" />
-    <Compile Include="DataContracts\AssetAllocationData.cs" />
-    <Compile Include="DataContracts\AttributionData.cs" />
-    <Compile Include="DataContracts\BenchmarkReturnData.cs" />
-    <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
-    <Compile Include="DataContracts\Enumerations.cs" />
-    <Compile Include="DataContracts\HeatMapData.cs" />
-    <Compile Include="DataContracts\HoldingsPercentageData.cs" />
-    <Compile Include="DataContracts\IndexConstituentsData.cs" />
-    <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
-    <Compile Include="DataContracts\PerformanceGraphData.cs" />
-    <Compile Include="DataContracts\PerformanceGridData.cs" />
-    <Compile Include="DataContracts\PortfolioDetailsData.cs" />
-    <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
-    <Compile Include="DataContracts\RegionBreakdownData.cs" />
-    <Compile Include="DataContracts\FundSelectionData.cs" />
-    <Compile Include="DataContracts\EntitySelectionData.cs" />
-    <Compile Include="DataContracts\HoldingsData.cs" />
-    <Compile Include="DataContracts\MarketCapitalizationData.cs" />
-    <Compile Include="DataContracts\MembershipUserInfo.cs" />
-    <Compile Include="DataContracts\PerformanceData.cs" />
-    <Compile Include="DataContracts\PricingReferenceData.cs" />
-    <Compile Include="DataContracts\ReferenceData.cs" />
-    <Compile Include="DataContracts\RelativePerformanceActivePositionData.cs" />
-    <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
-    <Compile Include="DataContracts\SectorBreakdownData.cs" />
-    <Compile Include="DataContracts\SecurityOverviewData.cs" />
-    <Compile Include="DataContracts\Session.cs" />
-    <Compile Include="DataContracts\TopHoldingsData.cs" />
-    <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
-    <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataContracts\RelativePerformanceData.cs" />
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -143,8 +111,8 @@
     <Compile Include="Services\LoginOperations.svc.cs">
       <DependentUpon>LoginOperations.svc</DependentUpon>
     </Compile>
-    <Compile Include="Services\ProxyDataOperations.svc.cs">
-      <DependentUpon>ProxyDataOperations.svc</DependentUpon>
+    <Compile Include="Services\SecurityReferenceOperations.svc.cs">
+      <DependentUpon>SecurityReferenceOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\SessionOperations.svc.cs">
       <DependentUpon>SessionOperations.svc</DependentUpon>

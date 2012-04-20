@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SecurityReferenceOperations" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceData" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataByTicker" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataByTickerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrievePricingReferenceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePricingReferenceData" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrievePricingReferenceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePricingReferenceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionData" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossData" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SecurityReferenceOperations">
+    <wsdl:operation name="RetrieveSecurityReferenceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceData" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataResponse" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityReferenceDataByTicker">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTicker" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTickerResponse" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePricingReferenceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData" message="tns:SecurityReferenceOperations_RetrievePricingReferenceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataResponse" message="tns:SecurityReferenceOperations_RetrievePricingReferenceData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEntitySelectionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataResponse" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUnrealizedGainLossData">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataResponse" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SecurityReferenceOperations" type="tns:SecurityReferenceOperations">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RetrieveSecurityReferenceData">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityReferenceDataByTicker">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTicker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePricingReferenceData">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEntitySelectionData">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveUnrealizedGainLossData">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SecurityReferenceOperations">
+    <wsdl:port name="SecurityReferenceOperations" binding="tns:SecurityReferenceOperations">
+      <soap:address location="http://localhost:59430/Services/SecurityReferenceOperations.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

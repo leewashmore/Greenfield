@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using Telerik.Windows.Controls.Map;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 

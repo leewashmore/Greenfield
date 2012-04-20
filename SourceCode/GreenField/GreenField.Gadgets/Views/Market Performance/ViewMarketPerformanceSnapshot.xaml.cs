@@ -13,7 +13,7 @@ using System.ComponentModel.Composition;
 using Telerik.Windows;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.GridView;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.Collections.ObjectModel;

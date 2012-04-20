@@ -1,60 +1,72 @@
 ﻿<configuration>
-    <system.serviceModel>
-        <bindings>
-            <basicHttpBinding>
-                <binding name="BasicHttpBinding_LoggingOperations" closeTimeout="00:10:00"
-                    openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-                <binding name="SessionOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-                    receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-                <binding name="ProxyDataOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-                    receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-                <binding name="LoginOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-                    receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-                    maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-                <binding name="BasicHttpBinding_DashboardOperations" closeTimeout="00:10:00"
-                    openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-                <binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
-						 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-                    maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-                    <security mode="None" />
-                </binding>
-            </basicHttpBinding>
-        </bindings>
-       <client>
-          <endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoggingOperations"
-             contract="LoggingDefinitions.LoggingOperations" name="BasicHttpBinding_LoggingOperations" />
-          <endpoint address="http://localhost:59430/Services/SessionOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="SessionOperations"
-             contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
-          <endpoint address="http://localhost:59430/Services/ProxyDataOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="ProxyDataOperations"
-             contract="ProxyDataDefinitions.ProxyDataOperations" name="ProxyDataOperations" />
-          <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="LoginOperations"
-             contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
-          <endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_DashboardOperations"
-             contract="DashboardDefinitions.DashboardOperations" name="BasicHttpBinding_DashboardOperations" />
-          <endpoint address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc"
-             binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
-             contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
-             name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" />
-       </client>
+	<system.serviceModel>
+		<bindings>
+			<basicHttpBinding>
+				<binding name="BasicHttpBinding_LoggingOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_SessionOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_LoginOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_DashboardOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="BasicHttpBinding_SecurityReferenceOperations"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="LoginOperations" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="SecurityReferenceOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="SessionOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+			</basicHttpBinding>
+		</bindings>
+		<client>
+			<endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoggingOperations"
+			 contract="LoggingDefinitions.LoggingOperations" name="BasicHttpBinding_LoggingOperations" />
+			<endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_DashboardOperations"
+			 contract="DashboardDefinitions.DashboardOperations" name="BasicHttpBinding_DashboardOperations" />
+			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations"
+			 contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
+			 name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" />
+			<endpoint address="http://localhost:59430/Services/LoginOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_LoginOperations"
+			 contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+			<endpoint address="http://localhost:59430/Services/SecurityReferenceOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_SecurityReferenceOperations"
+			 contract="SecurityReferenceDefinitions.SecurityReferenceOperations"
+			 name="SecurityReferenceOperations" />
+			<endpoint address="http://localhost:59430/Services/SessionOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_SessionOperations"
+			 contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
+		</client>
 
-    </system.serviceModel>
+	</system.serviceModel>
 </configuration>

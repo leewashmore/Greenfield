@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Linq;
 using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;

@@ -24,7 +24,7 @@ using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
 using System.Reflection;
 using GreenField.DashboardModule.Helpers;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
 

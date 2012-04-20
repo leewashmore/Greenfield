@@ -99,7 +99,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ProxyDataDefinitions\Reference.cs">
+    <Compile Include="Service References\SecurityReferenceDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -171,103 +171,6 @@
     <None Include="Service References\LoginDefinitions\LoginOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.AggregatedData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.AssetAllocationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.BenchmarkSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.ConsensusEstimates_Result.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.DetailedEstimates_Result.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.EntitySelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.FundSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.GetCompanies_Result.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.HoldingsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.HoldingsPercentageData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.IndexConstituentsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.MarketCapitalizationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.MorningSnapshotData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.PerformanceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioDetailsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.PortfolioRiskReturnData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.PricingReferenceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.ReferenceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RegionBreakdownData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSectorData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.RelativePerformanceSecurityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SectorBreakdownData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.SecurityOverviewData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.TopBenchmarkSecuritiesData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.TopHoldingsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.UnrealizedGainLossData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\GreenField.ServiceCaller.ProxyDataDefinitions.UserBenchmarkPreference1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations.disco" />
-    <None Include="Service References\ProxyDataDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\ProxyDataDefinitions\configuration.svcinfo" />
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ProxyDataDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
     <None Include="Service References\LoggingDefinitions\configuration.svcinfo" />
     <None Include="Service References\LoggingDefinitions\Reference.svcmap">
@@ -289,6 +192,16 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SessionDefinitions\GreenField.ServiceCaller.SessionDefinitions.Session.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -306,12 +219,16 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.disco" />
+    <None Include="Service References\SecurityReferenceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\SecurityReferenceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\SecurityReferenceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations1.xsd" />
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations2.xsd" />
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations3.xsd" />
     <None Include="Service References\SessionDefinitions\SessionOperations.wsdl" />
     <None Include="Service References\SessionDefinitions\SessionOperations.xsd">
       <SubType>Designer</SubType>
@@ -331,12 +248,8 @@
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
-    <WCFMetadataStorage Include="Service References\ProxyDataDefinitions\" />
+    <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations.wsdl" />
-    <None Include="Service References\ProxyDataDefinitions\ProxyDataOperations.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

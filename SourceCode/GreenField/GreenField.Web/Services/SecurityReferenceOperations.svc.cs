@@ -18,7 +18,7 @@ namespace GreenField.Web.Services
 {
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class ProxyDataOperations
+    public class SecurityReferenceOperations
     {
         private Entities dimensionEntity;
         public Entities DimensionEntity

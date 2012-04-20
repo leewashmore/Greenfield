@@ -17,7 +17,7 @@ using Microsoft.Win32;
 #else
 using System.Windows.Controls;
 using System.Windows.Printing;
-using GreenField.ServiceCaller.ProxyDataDefinitions;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
