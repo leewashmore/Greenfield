@@ -27,6 +27,8 @@ namespace GreenField.Common
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 
+    public class MarketPerformanceSnapshotNameReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
+
     public class EffectiveDateSet : CompositePresentationEvent<DateTime> { }
 
     public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
@@ -48,6 +50,7 @@ namespace GreenField.Common
     {
         public IEventAggregator EventAggregator { get; set; }
         public IDBInteractivity DBInteractivity { get; set; }
+        public IManageSessions ManageSessions { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
     }    

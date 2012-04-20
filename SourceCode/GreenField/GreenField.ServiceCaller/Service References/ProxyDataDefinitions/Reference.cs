@@ -1671,137 +1671,137 @@ namespace GreenField.ServiceCaller.ProxyDataDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="MarketPerformanceSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MarketPerformanceSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Nullable<double> DTDField;
+        private System.Nullable<double> DateToDateReturnField;
         
-        private System.Nullable<double> IIIPreviousYearPriceField;
+        private System.Nullable<double> LastYearReturnField;
         
-        private System.Nullable<double> IIPreviousYearPriceField;
+        private GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MarketSnapshotPreferenceInfoField;
         
-        private System.Nullable<double> MTDField;
+        private System.Nullable<double> MonthToDateReturnField;
         
-        private GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MorningSnapshotPreferenceInfoField;
+        private System.Nullable<double> QuarterToDateReturnField;
         
-        private System.Nullable<double> PreviousYearPriceField;
+        private System.Nullable<double> SecondLastYearReturnField;
         
-        private System.Nullable<double> QTDField;
+        private System.Nullable<double> ThirdLastYearReturnField;
         
-        private System.Nullable<double> WTDField;
+        private System.Nullable<double> WeekToDateReturnField;
         
-        private System.Nullable<double> YTDField;
+        private System.Nullable<double> YearToDateReturnField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> DTD {
+        public System.Nullable<double> DateToDateReturn {
             get {
-                return this.DTDField;
+                return this.DateToDateReturnField;
             }
             set {
-                if ((this.DTDField.Equals(value) != true)) {
-                    this.DTDField = value;
-                    this.RaisePropertyChanged("DTD");
+                if ((this.DateToDateReturnField.Equals(value) != true)) {
+                    this.DateToDateReturnField = value;
+                    this.RaisePropertyChanged("DateToDateReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> IIIPreviousYearPrice {
+        public System.Nullable<double> LastYearReturn {
             get {
-                return this.IIIPreviousYearPriceField;
+                return this.LastYearReturnField;
             }
             set {
-                if ((this.IIIPreviousYearPriceField.Equals(value) != true)) {
-                    this.IIIPreviousYearPriceField = value;
-                    this.RaisePropertyChanged("IIIPreviousYearPrice");
+                if ((this.LastYearReturnField.Equals(value) != true)) {
+                    this.LastYearReturnField = value;
+                    this.RaisePropertyChanged("LastYearReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> IIPreviousYearPrice {
+        public GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MarketSnapshotPreferenceInfo {
             get {
-                return this.IIPreviousYearPriceField;
+                return this.MarketSnapshotPreferenceInfoField;
             }
             set {
-                if ((this.IIPreviousYearPriceField.Equals(value) != true)) {
-                    this.IIPreviousYearPriceField = value;
-                    this.RaisePropertyChanged("IIPreviousYearPrice");
+                if ((object.ReferenceEquals(this.MarketSnapshotPreferenceInfoField, value) != true)) {
+                    this.MarketSnapshotPreferenceInfoField = value;
+                    this.RaisePropertyChanged("MarketSnapshotPreferenceInfo");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> MTD {
+        public System.Nullable<double> MonthToDateReturn {
             get {
-                return this.MTDField;
+                return this.MonthToDateReturnField;
             }
             set {
-                if ((this.MTDField.Equals(value) != true)) {
-                    this.MTDField = value;
-                    this.RaisePropertyChanged("MTD");
+                if ((this.MonthToDateReturnField.Equals(value) != true)) {
+                    this.MonthToDateReturnField = value;
+                    this.RaisePropertyChanged("MonthToDateReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.ProxyDataDefinitions.MarketSnapshotPreference MorningSnapshotPreferenceInfo {
+        public System.Nullable<double> QuarterToDateReturn {
             get {
-                return this.MorningSnapshotPreferenceInfoField;
+                return this.QuarterToDateReturnField;
             }
             set {
-                if ((object.ReferenceEquals(this.MorningSnapshotPreferenceInfoField, value) != true)) {
-                    this.MorningSnapshotPreferenceInfoField = value;
-                    this.RaisePropertyChanged("MorningSnapshotPreferenceInfo");
+                if ((this.QuarterToDateReturnField.Equals(value) != true)) {
+                    this.QuarterToDateReturnField = value;
+                    this.RaisePropertyChanged("QuarterToDateReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> PreviousYearPrice {
+        public System.Nullable<double> SecondLastYearReturn {
             get {
-                return this.PreviousYearPriceField;
+                return this.SecondLastYearReturnField;
             }
             set {
-                if ((this.PreviousYearPriceField.Equals(value) != true)) {
-                    this.PreviousYearPriceField = value;
-                    this.RaisePropertyChanged("PreviousYearPrice");
+                if ((this.SecondLastYearReturnField.Equals(value) != true)) {
+                    this.SecondLastYearReturnField = value;
+                    this.RaisePropertyChanged("SecondLastYearReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> QTD {
+        public System.Nullable<double> ThirdLastYearReturn {
             get {
-                return this.QTDField;
+                return this.ThirdLastYearReturnField;
             }
             set {
-                if ((this.QTDField.Equals(value) != true)) {
-                    this.QTDField = value;
-                    this.RaisePropertyChanged("QTD");
+                if ((this.ThirdLastYearReturnField.Equals(value) != true)) {
+                    this.ThirdLastYearReturnField = value;
+                    this.RaisePropertyChanged("ThirdLastYearReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> WTD {
+        public System.Nullable<double> WeekToDateReturn {
             get {
-                return this.WTDField;
+                return this.WeekToDateReturnField;
             }
             set {
-                if ((this.WTDField.Equals(value) != true)) {
-                    this.WTDField = value;
-                    this.RaisePropertyChanged("WTD");
+                if ((this.WeekToDateReturnField.Equals(value) != true)) {
+                    this.WeekToDateReturnField = value;
+                    this.RaisePropertyChanged("WeekToDateReturn");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> YTD {
+        public System.Nullable<double> YearToDateReturn {
             get {
-                return this.YTDField;
+                return this.YearToDateReturnField;
             }
             set {
-                if ((this.YTDField.Equals(value) != true)) {
-                    this.YTDField = value;
-                    this.RaisePropertyChanged("YTD");
+                if ((this.YearToDateReturnField.Equals(value) != true)) {
+                    this.YearToDateReturnField = value;
+                    this.RaisePropertyChanged("YearToDateReturn");
                 }
             }
         }

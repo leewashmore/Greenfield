@@ -943,22 +943,22 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new MarketPerformanceSnapshotData()
                         {
-                            MorningSnapshotPreferenceInfo = preference,
-                            DTD = -0.1,
-                            WTD = -0.1,
-                            MTD = 4.4,
-                            QTD = 4.4,
-                            YTD = 7.4,
-                            PreviousYearPrice = 4.6,
-                            IIPreviousYearPrice = 52.3,
-                            IIIPreviousYearPrice = -50.8
+                            MarketSnapshotPreferenceInfo = preference,
+                            DateToDateReturn = -0.1,
+                            WeekToDateReturn = -0.1,
+                            MonthToDateReturn = 4.4,
+                            QuarterToDateReturn = 4.4,
+                            YearToDateReturn = 7.4,
+                            LastYearReturn = 4.6,
+                            SecondLastYearReturn = 52.3,
+                            ThirdLastYearReturn = -50.8
                         });
                     }
                     else
                     {
                         result.Add(new MarketPerformanceSnapshotData()
                         {
-                            MorningSnapshotPreferenceInfo = preference
+                            MarketSnapshotPreferenceInfo = preference
                         });
                     }
                 }

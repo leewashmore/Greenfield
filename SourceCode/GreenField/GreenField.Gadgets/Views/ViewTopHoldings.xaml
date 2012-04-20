@@ -22,7 +22,7 @@
                 <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left">
                     <telerik:GridViewDataColumn.Footer>
                         <TextBlock Text="Top 10"/>
-                    </telerik:GridViewDataColumn.Footer>
+                    </telerik:GridViewDataColumn.Footer>  
                 </telerik:GridViewDataColumn>
                 <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left"/>
                 <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" SortingState="Descending"  DataMemberBinding="{Binding MarketValue}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n0}"/>
@@ -31,7 +31,7 @@
                         <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="PortfolioShare"/>
                     </telerik:GridViewDataColumn.AggregateFunctions>
                 </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
+                <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat='/{0:n2/}%'}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right">
                     <telerik:GridViewDataColumn.AggregateFunctions>
                         <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BenchmarkShare"/>
                     </telerik:GridViewDataColumn.AggregateFunctions>

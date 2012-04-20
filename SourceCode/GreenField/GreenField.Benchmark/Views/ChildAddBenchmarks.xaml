@@ -2,37 +2,36 @@
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
-           Title="ChildAddBenchmarks" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+           Title="" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+           Width="400">
 
     <Grid x:Name="LayoutRoot" Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Name="txtblkBenchmarkName" 
-                           VerticalAlignment="Center"
-                           Foreground="Black"
-                           Text="Select Benchmark:"/>
-                <telerik:RadComboBox Grid.RowSpan="2" HorizontalAlignment="Left" Margin="10,10,0,0" x:Name="radSelectBenchmark" 
-                                     VerticalAlignment="Top" Width="250" 
+            <TextBlock Text="Select an entity to be inserted in the specified group"
+                       TextWrapping="Wrap"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,5,0,0">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <telerik:RadComboBox x:Name="radSelectBenchmark" Width="378"
+                                     VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="0"
                                      ItemsSource="{Binding UngroupedBenchmarkSelectionInfo}" DisplayMemberPath="Name"
                                      SelectedItem="{Binding SelectedBenchmarkSelectionInfo, Mode=TwoWay}"/>
-
-                <Border Name="borderRadiobutton" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Visibility="{Binding BenchmarkTypeSelectionVisibility}">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,10,0,0">
-                        <RadioButton Margin="5,0,0,0" Name="rbtnTotal" IsChecked="{Binding TotalReturnTypeChecked, Mode=TwoWay}" Content="{Binding TotalReturnType}"/>
-                        <RadioButton Margin="5,0,0,0" Name="rbtnNet" IsChecked="{Binding NetReturnTypeChecked, Mode=TwoWay}" Content="{Binding NetReturnType}"/>
-                        <RadioButton Margin="5,0,0,0" Name="rbtnPrice" IsChecked="{Binding PriceReturnTypeChecked, Mode=TwoWay}" Content="{Binding PriceReturnType}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5,0,0">
+                        <RadioButton x:Name="rbtnTotal" Content="Total Return" IsChecked="{Binding TotalReturnTypeChecked, Mode=TwoWay}"/>
+                        <RadioButton Margin="5,0,0,0" x:Name="rbtnNet" Content="Price Return" IsChecked="{Binding NetReturnTypeChecked, Mode=TwoWay}"/>                        
                     </StackPanel>
-                </Border>
             </StackPanel>
         </Grid>
-
-        <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="1" />
-        <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="1" />
-
+        
+        <Grid Grid.Row="2">
+            <Button x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,5,79,0"/>
+            <Button x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,5,0,0"/>
+        </Grid>
     </Grid>
 </controls:ChildWindow>

@@ -21,5 +21,7 @@ namespace GreenField.Common.Helper
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
         public DateTime EffectiveDate { get; set; }
+
+        public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
     }
 }

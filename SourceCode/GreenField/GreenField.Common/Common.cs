@@ -41,13 +41,6 @@ namespace GreenField.Common
         public static string MAIN_REGION = "MainRegion";
     }
 
-    
-
-    public static class EntityTypes
-    {
-        public static string SECURITY = "SECURITY";
-    }
-
     public static class LogLevel
     {
         public static Int32 DEBUG_LEVEL = 5;
@@ -82,13 +75,21 @@ namespace GreenField.Common
         public int? SectorID { get; set; }        
     }
 
-      public static class BenchmarkReturnTypes
+      public static class EntityReturnType
     {
         public static string TotalReturnType = "Total(Gross)";
-        public static string NetReturnType = "( Net Return )";
-        public static string PriceReturnType = "( Price Return )";
+        public static string NetReturnType = "Net";
+        public static string PriceReturnType = "Price";
     }
 
+      public static class EntityType
+      {
+          public const string SECURITY = "SECURITY";
+          public const string BENCHMARK = "BENCHMARK";
+          public const string INDEX = "INDEX";
+          public const string COMMODITY = "COMMODITY";
+          public const string CURRENCY = "CURRENCY";
+      }
     
       public static class HoldingsPercentageSegmentClassifier
       {

@@ -209,15 +209,15 @@
   <xs:element name="ArrayOfMarketPerformanceSnapshotData" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
   <xs:complexType name="MarketPerformanceSnapshotData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="DTD" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="IIIPreviousYearPrice" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="IIPreviousYearPrice" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:double" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MorningSnapshotPreferenceInfo" nillable="true" type="q2:MarketSnapshotPreference" />
-      <xs:element minOccurs="0" name="PreviousYearPrice" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="WTD" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="DateToDateReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="LastYearReturn" nillable="true" type="xs:double" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MarketSnapshotPreferenceInfo" nillable="true" type="q2:MarketSnapshotPreference" />
+      <xs:element minOccurs="0" name="MonthToDateReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="QuarterToDateReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="SecondLastYearReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ThirdLastYearReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="WeekToDateReturn" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="YearToDateReturn" nillable="true" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />

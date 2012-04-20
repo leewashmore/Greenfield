@@ -132,7 +132,7 @@ namespace GreenField.Benchmark.ViewModels
                     RaisePropertyChanged(() => this.NetReturnTypeChecked);
                     if (value == true)
                     {
-                        SelectedUserBenchmarkPreference.BenchmarkReturnType = BenchmarkReturnTypes.NetReturnType;
+                        SelectedUserBenchmarkPreference.BenchmarkReturnType = EntityReturnType.NetReturnType;
                     }
                 }
             }
@@ -163,7 +163,7 @@ namespace GreenField.Benchmark.ViewModels
                     _priceReturnTypeChecked = value;
                     if (value == true)
                     {
-                        SelectedUserBenchmarkPreference.BenchmarkReturnType = BenchmarkReturnTypes.PriceReturnType;
+                        SelectedUserBenchmarkPreference.BenchmarkReturnType = EntityReturnType.PriceReturnType;
                     }
                 }
             }

@@ -2236,7 +2236,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                 try
                 {
-                    EntitySelectionInfo = result.Where(e => e.Type == EntityTypes.SECURITY).OrderBy(t => t.LongName).ToList();                    
+                    EntitySelectionInfo = result.Where(e => e.Type == EntityType.SECURITY).OrderBy(t => t.LongName).ToList();                    
                 }
                 catch (Exception ex)
                 {
