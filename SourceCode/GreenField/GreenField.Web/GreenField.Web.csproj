@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
+    <Content Include="ClientBin\GreenField.App.xap" />
+    <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
@@ -89,6 +91,38 @@
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\AggregatedData.cs" />
+    <Compile Include="DataContracts\AssetAllocationData.cs" />
+    <Compile Include="DataContracts\AttributionData.cs" />
+    <Compile Include="DataContracts\BenchmarkReturnData.cs" />
+    <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
+    <Compile Include="DataContracts\EntitySelectionData.cs" />
+    <Compile Include="DataContracts\Enumerations.cs" />
+    <Compile Include="DataContracts\FundSelectionData.cs" />
+    <Compile Include="DataContracts\HeatMapData.cs" />
+    <Compile Include="DataContracts\HoldingsData.cs" />
+    <Compile Include="DataContracts\HoldingsPercentageData.cs" />
+    <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\MarketCapitalizationData.cs" />
+    <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
+    <Compile Include="DataContracts\MembershipUserInfo.cs" />
+    <Compile Include="DataContracts\PerformanceData.cs" />
+    <Compile Include="DataContracts\PerformanceGraphData.cs" />
+    <Compile Include="DataContracts\PerformanceGridData.cs" />
+    <Compile Include="DataContracts\PortfolioDetailsData.cs" />
+    <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
+    <Compile Include="DataContracts\PricingReferenceData.cs" />
+    <Compile Include="DataContracts\ReferenceData.cs" />
+    <Compile Include="DataContracts\RegionBreakdownData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceActivePositionData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
+    <Compile Include="DataContracts\SectorBreakdownData.cs" />
+    <Compile Include="DataContracts\SecurityOverviewData.cs" />
+    <Compile Include="DataContracts\Session.cs" />
+    <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
+    <Compile Include="DataContracts\TopHoldingsData.cs" />
+    <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
@@ -139,9 +173,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClientBin\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>
