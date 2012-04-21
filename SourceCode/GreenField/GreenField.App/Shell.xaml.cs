@@ -18,8 +18,6 @@ using GreenField.ServiceCaller;
 using GreenField.App.ViewModel;
 using Telerik.Windows.Controls;
 
-
-
 namespace GreenField.App
 {
     [Export]

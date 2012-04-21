@@ -23,7 +23,7 @@ namespace GreenField.Gadgets.Helpers
                 if (!_disableNotifications)
                     base.OnCollectionChanged(e);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

@@ -447,7 +447,7 @@ namespace GreenField.Gadgets.ViewModels
                     RetrievePortfolioDetailsData(SelectedPortfolioId, SelectedDate, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

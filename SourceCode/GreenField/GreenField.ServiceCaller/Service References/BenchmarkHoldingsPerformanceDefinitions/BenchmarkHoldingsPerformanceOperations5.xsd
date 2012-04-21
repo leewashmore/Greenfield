@@ -81,11 +81,11 @@
   <xs:element name="ArrayOfTopHoldingsData" nillable="true" type="tns:ArrayOfTopHoldingsData" />
   <xs:complexType name="TopHoldingsData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="BetShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BetShare" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Holding" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:float" />
-      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -100,14 +100,13 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ConstituentName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DailyReturnUSD" type="xs:double" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SubIndustry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="WeightCountry" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="WeightIndustry" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeightCountry" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeightIndustry" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IndexConstituentsData" nillable="true" type="tns:IndexConstituentsData" />

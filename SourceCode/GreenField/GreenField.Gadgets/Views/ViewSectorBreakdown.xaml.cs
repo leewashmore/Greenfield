@@ -16,11 +16,25 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewSectorBreakdown : ViewBaseUserControl
     {
+        #region Properties
+
+        private ViewModelSectorBreakdown _dataContextSectorBreakdown;
+        public ViewModelSectorBreakdown DataContextSectorBreakdown
+        {
+            get { return _dataContextSectorBreakdown; }
+            set { _dataContextSectorBreakdown = value; }
+        }
+        
+
+        #endregion
+
+        #region Constructor
         public ViewSectorBreakdown(ViewModelSectorBreakdown dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }
+        } 
+        #endregion
 
         /// <summary>
         /// Flipping between Grid & PieChart
@@ -42,7 +56,9 @@ namespace GreenField.Gadgets.Views
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextSectorBreakdown.Dispose();
+            this.DataContextSectorBreakdown = null;
+            this.DataContext = null;
         }
     }
 }

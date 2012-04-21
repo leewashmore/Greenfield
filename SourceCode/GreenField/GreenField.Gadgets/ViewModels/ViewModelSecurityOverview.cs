@@ -19,7 +19,6 @@ using GreenField.Common;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {

@@ -76,6 +76,74 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
         /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELMONTH in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELMONTH> GF_PERF_TOPLEVELMONTH
+        {
+            get
+            {
+                if ((this._GF_PERF_TOPLEVELMONTH == null))
+                {
+                    this._GF_PERF_TOPLEVELMONTH = base.CreateQuery<GF_PERF_TOPLEVELMONTH>("GF_PERF_TOPLEVELMONTH");
+                }
+                return this._GF_PERF_TOPLEVELMONTH;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELMONTH> _GF_PERF_TOPLEVELMONTH;
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELPERIOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELPERIOD> GF_PERF_TOPLEVELPERIOD
+        {
+            get
+            {
+                if ((this._GF_PERF_TOPLEVELPERIOD == null))
+                {
+                    this._GF_PERF_TOPLEVELPERIOD = base.CreateQuery<GF_PERF_TOPLEVELPERIOD>("GF_PERF_TOPLEVELPERIOD");
+                }
+                return this._GF_PERF_TOPLEVELPERIOD;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELPERIOD> _GF_PERF_TOPLEVELPERIOD;
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELSTATS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELSTATS> GF_PERF_TOPLEVELSTATS
+        {
+            get
+            {
+                if ((this._GF_PERF_TOPLEVELSTATS == null))
+                {
+                    this._GF_PERF_TOPLEVELSTATS = base.CreateQuery<GF_PERF_TOPLEVELSTATS>("GF_PERF_TOPLEVELSTATS");
+                }
+                return this._GF_PERF_TOPLEVELSTATS;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELSTATS> _GF_PERF_TOPLEVELSTATS;
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELYEAR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELYEAR> GF_PERF_TOPLEVELYEAR
+        {
+            get
+            {
+                if ((this._GF_PERF_TOPLEVELYEAR == null))
+                {
+                    this._GF_PERF_TOPLEVELYEAR = base.CreateQuery<GF_PERF_TOPLEVELYEAR>("GF_PERF_TOPLEVELYEAR");
+                }
+                return this._GF_PERF_TOPLEVELYEAR;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_TOPLEVELYEAR> _GF_PERF_TOPLEVELYEAR;
+        /// <summary>
         /// There are no comments for GF_PORTFOLIO_HOLDINGS in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -184,6 +252,38 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
         {
             base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELMONTH in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_TOPLEVELMONTH(GF_PERF_TOPLEVELMONTH gF_PERF_TOPLEVELMONTH)
+        {
+            base.AddObject("GF_PERF_TOPLEVELMONTH", gF_PERF_TOPLEVELMONTH);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELPERIOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_TOPLEVELPERIOD(GF_PERF_TOPLEVELPERIOD gF_PERF_TOPLEVELPERIOD)
+        {
+            base.AddObject("GF_PERF_TOPLEVELPERIOD", gF_PERF_TOPLEVELPERIOD);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELSTATS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_TOPLEVELSTATS(GF_PERF_TOPLEVELSTATS gF_PERF_TOPLEVELSTATS)
+        {
+            base.AddObject("GF_PERF_TOPLEVELSTATS", gF_PERF_TOPLEVELSTATS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_TOPLEVELYEAR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_TOPLEVELYEAR(GF_PERF_TOPLEVELYEAR gF_PERF_TOPLEVELYEAR)
+        {
+            base.AddObject("GF_PERF_TOPLEVELYEAR", gF_PERF_TOPLEVELYEAR);
         }
         /// <summary>
         /// There are no comments for GF_PORTFOLIO_HOLDINGS in the schema.
@@ -1016,6 +1116,1917 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _BARRA_RISK_FACTOR_PBETEWLD;
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanging(global::System.Nullable<decimal> value);
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PERF_TOPLEVELMONTH in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// TO_DATE
+    /// PORTFOLIOGROUP
+    /// PORTFOLIOCODE
+    /// RETURN_TYPE
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    public partial class GF_PERF_TOPLEVELMONTH
+    {
+        /// <summary>
+        /// Create a new GF_PERF_TOPLEVELMONTH object.
+        /// </summary>
+        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
+        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
+        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
+        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_TOPLEVELMONTH CreateGF_PERF_TOPLEVELMONTH(string tO_DATE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        {
+            GF_PERF_TOPLEVELMONTH gF_PERF_TOPLEVELMONTH = new GF_PERF_TOPLEVELMONTH();
+            gF_PERF_TOPLEVELMONTH.TO_DATE = tO_DATE;
+            gF_PERF_TOPLEVELMONTH.PORTFOLIOGROUP = pORTFOLIOGROUP;
+            gF_PERF_TOPLEVELMONTH.PORTFOLIOCODE = pORTFOLIOCODE;
+            gF_PERF_TOPLEVELMONTH.RETURN_TYPE = rETURN_TYPE;
+            return gF_PERF_TOPLEVELMONTH;
+        }
+        /// <summary>
+        /// There are no comments for Property INDE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INDE
+        {
+            get
+            {
+                return this._INDE;
+            }
+            set
+            {
+                this.OnINDEChanging(value);
+                this._INDE = value;
+                this.OnINDEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INDE;
+        partial void OnINDEChanging(global::System.Nullable<decimal> value);
+        partial void OnINDEChanged();
+        /// <summary>
+        /// There are no comments for Property TO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TO_DATE
+        {
+            get
+            {
+                return this._TO_DATE;
+            }
+            set
+            {
+                this.OnTO_DATEChanging(value);
+                this._TO_DATE = value;
+                this.OnTO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TO_DATE;
+        partial void OnTO_DATEChanging(string value);
+        partial void OnTO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOGROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOGROUP
+        {
+            get
+            {
+                return this._PORTFOLIOGROUP;
+            }
+            set
+            {
+                this.OnPORTFOLIOGROUPChanging(value);
+                this._PORTFOLIOGROUP = value;
+                this.OnPORTFOLIOGROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOGROUP;
+        partial void OnPORTFOLIOGROUPChanging(string value);
+        partial void OnPORTFOLIOGROUPChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO
+        {
+            get
+            {
+                return this._PORTFOLIO;
+            }
+            set
+            {
+                this.OnPORTFOLIOChanging(value);
+                this._PORTFOLIO = value;
+                this.OnPORTFOLIOChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(string value);
+        partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOCODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOCODE
+        {
+            get
+            {
+                return this._PORTFOLIOCODE;
+            }
+            set
+            {
+                this.OnPORTFOLIOCODEChanging(value);
+                this._PORTFOLIOCODE = value;
+                this.OnPORTFOLIOCODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOCODE;
+        partial void OnPORTFOLIOCODEChanging(string value);
+        partial void OnPORTFOLIOCODEChanged();
+        /// <summary>
+        /// There are no comments for Property CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CURRENCY
+        {
+            get
+            {
+                return this._CURRENCY;
+            }
+            set
+            {
+                this.OnCURRENCYChanging(value);
+                this._CURRENCY = value;
+                this.OnCURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CURRENCY;
+        partial void OnCURRENCYChanging(string value);
+        partial void OnCURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property RETURN_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RETURN_TYPE
+        {
+            get
+            {
+                return this._RETURN_TYPE;
+            }
+            set
+            {
+                this.OnRETURN_TYPEChanging(value);
+                this._RETURN_TYPE = value;
+                this.OnRETURN_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RETURN_TYPE;
+        partial void OnRETURN_TYPEChanging(string value);
+        partial void OnRETURN_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property POR_INCEPTION_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string POR_INCEPTION_DATE
+        {
+            get
+            {
+                return this._POR_INCEPTION_DATE;
+            }
+            set
+            {
+                this.OnPOR_INCEPTION_DATEChanging(value);
+                this._POR_INCEPTION_DATE = value;
+                this.OnPOR_INCEPTION_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _POR_INCEPTION_DATE;
+        partial void OnPOR_INCEPTION_DATEChanging(string value);
+        partial void OnPOR_INCEPTION_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_1M
+        {
+            get
+            {
+                return this._RC_TWR_1M;
+            }
+            set
+            {
+                this.OnRC_TWR_1MChanging(value);
+                this._RC_TWR_1M = value;
+                this.OnRC_TWR_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_1M;
+        partial void OnRC_TWR_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_1MChanged();
+        /// <summary>
+        /// There are no comments for Property BM1ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM1ID
+        {
+            get
+            {
+                return this._BM1ID;
+            }
+            set
+            {
+                this.OnBM1IDChanging(value);
+                this._BM1ID = value;
+                this.OnBM1IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM1ID;
+        partial void OnBM1IDChanging(string value);
+        partial void OnBM1IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM1NAME
+        {
+            get
+            {
+                return this._BM1NAME;
+            }
+            set
+            {
+                this.OnBM1NAMEChanging(value);
+                this._BM1NAME = value;
+                this.OnBM1NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM1NAME;
+        partial void OnBM1NAMEChanging(string value);
+        partial void OnBM1NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_1M
+        {
+            get
+            {
+                return this._BM1_RC_TWR_1M;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_1MChanging(value);
+                this._BM1_RC_TWR_1M = value;
+                this.OnBM1_RC_TWR_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_1M;
+        partial void OnBM1_RC_TWR_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_1MChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN1
+        {
+            get
+            {
+                return this._EXCESSRETURN1;
+            }
+            set
+            {
+                this.OnEXCESSRETURN1Changing(value);
+                this._EXCESSRETURN1 = value;
+                this.OnEXCESSRETURN1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN1;
+        partial void OnEXCESSRETURN1Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN1Changed();
+        /// <summary>
+        /// There are no comments for Property BM2ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM2ID
+        {
+            get
+            {
+                return this._BM2ID;
+            }
+            set
+            {
+                this.OnBM2IDChanging(value);
+                this._BM2ID = value;
+                this.OnBM2IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM2ID;
+        partial void OnBM2IDChanging(string value);
+        partial void OnBM2IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM2NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM2NAME
+        {
+            get
+            {
+                return this._BM2NAME;
+            }
+            set
+            {
+                this.OnBM2NAMEChanging(value);
+                this._BM2NAME = value;
+                this.OnBM2NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM2NAME;
+        partial void OnBM2NAMEChanging(string value);
+        partial void OnBM2NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM2_RC_TWR_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM2_RC_TWR_1M
+        {
+            get
+            {
+                return this._BM2_RC_TWR_1M;
+            }
+            set
+            {
+                this.OnBM2_RC_TWR_1MChanging(value);
+                this._BM2_RC_TWR_1M = value;
+                this.OnBM2_RC_TWR_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM2_RC_TWR_1M;
+        partial void OnBM2_RC_TWR_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnBM2_RC_TWR_1MChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN2 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN2
+        {
+            get
+            {
+                return this._EXCESSRETURN2;
+            }
+            set
+            {
+                this.OnEXCESSRETURN2Changing(value);
+                this._EXCESSRETURN2 = value;
+                this.OnEXCESSRETURN2Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN2;
+        partial void OnEXCESSRETURN2Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN2Changed();
+        /// <summary>
+        /// There are no comments for Property BM3ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM3ID
+        {
+            get
+            {
+                return this._BM3ID;
+            }
+            set
+            {
+                this.OnBM3IDChanging(value);
+                this._BM3ID = value;
+                this.OnBM3IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM3ID;
+        partial void OnBM3IDChanging(string value);
+        partial void OnBM3IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM3NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM3NAME
+        {
+            get
+            {
+                return this._BM3NAME;
+            }
+            set
+            {
+                this.OnBM3NAMEChanging(value);
+                this._BM3NAME = value;
+                this.OnBM3NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM3NAME;
+        partial void OnBM3NAMEChanging(string value);
+        partial void OnBM3NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM3_RC_TWR_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM3_RC_TWR_1M
+        {
+            get
+            {
+                return this._BM3_RC_TWR_1M;
+            }
+            set
+            {
+                this.OnBM3_RC_TWR_1MChanging(value);
+                this._BM3_RC_TWR_1M = value;
+                this.OnBM3_RC_TWR_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM3_RC_TWR_1M;
+        partial void OnBM3_RC_TWR_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnBM3_RC_TWR_1MChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN3 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN3
+        {
+            get
+            {
+                return this._EXCESSRETURN3;
+            }
+            set
+            {
+                this.OnEXCESSRETURN3Changing(value);
+                this._EXCESSRETURN3 = value;
+                this.OnEXCESSRETURN3Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN3;
+        partial void OnEXCESSRETURN3Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN3Changed();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PERF_TOPLEVELPERIOD in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// TO_DATE
+    /// PORTYPE
+    /// PORTFOLIOGROUP
+    /// PORTFOLIOCODE
+    /// RETURN_TYPE
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTYPE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    public partial class GF_PERF_TOPLEVELPERIOD
+    {
+        /// <summary>
+        /// Create a new GF_PERF_TOPLEVELPERIOD object.
+        /// </summary>
+        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
+        /// <param name="pORTYPE">Initial value of PORTYPE.</param>
+        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
+        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
+        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_TOPLEVELPERIOD CreateGF_PERF_TOPLEVELPERIOD(global::System.DateTime tO_DATE, string pORTYPE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        {
+            GF_PERF_TOPLEVELPERIOD gF_PERF_TOPLEVELPERIOD = new GF_PERF_TOPLEVELPERIOD();
+            gF_PERF_TOPLEVELPERIOD.TO_DATE = tO_DATE;
+            gF_PERF_TOPLEVELPERIOD.PORTYPE = pORTYPE;
+            gF_PERF_TOPLEVELPERIOD.PORTFOLIOGROUP = pORTFOLIOGROUP;
+            gF_PERF_TOPLEVELPERIOD.PORTFOLIOCODE = pORTFOLIOCODE;
+            gF_PERF_TOPLEVELPERIOD.RETURN_TYPE = rETURN_TYPE;
+            return gF_PERF_TOPLEVELPERIOD;
+        }
+        /// <summary>
+        /// There are no comments for Property INDE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INDE
+        {
+            get
+            {
+                return this._INDE;
+            }
+            set
+            {
+                this.OnINDEChanging(value);
+                this._INDE = value;
+                this.OnINDEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INDE;
+        partial void OnINDEChanging(global::System.Nullable<decimal> value);
+        partial void OnINDEChanged();
+        /// <summary>
+        /// There are no comments for Property TO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.DateTime TO_DATE
+        {
+            get
+            {
+                return this._TO_DATE;
+            }
+            set
+            {
+                this.OnTO_DATEChanging(value);
+                this._TO_DATE = value;
+                this.OnTO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.DateTime _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.DateTime value);
+        partial void OnTO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTYPE
+        {
+            get
+            {
+                return this._PORTYPE;
+            }
+            set
+            {
+                this.OnPORTYPEChanging(value);
+                this._PORTYPE = value;
+                this.OnPORTYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTYPE;
+        partial void OnPORTYPEChanging(string value);
+        partial void OnPORTYPEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOGROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOGROUP
+        {
+            get
+            {
+                return this._PORTFOLIOGROUP;
+            }
+            set
+            {
+                this.OnPORTFOLIOGROUPChanging(value);
+                this._PORTFOLIOGROUP = value;
+                this.OnPORTFOLIOGROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOGROUP;
+        partial void OnPORTFOLIOGROUPChanging(string value);
+        partial void OnPORTFOLIOGROUPChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO
+        {
+            get
+            {
+                return this._PORTFOLIO;
+            }
+            set
+            {
+                this.OnPORTFOLIOChanging(value);
+                this._PORTFOLIO = value;
+                this.OnPORTFOLIOChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(string value);
+        partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOCODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOCODE
+        {
+            get
+            {
+                return this._PORTFOLIOCODE;
+            }
+            set
+            {
+                this.OnPORTFOLIOCODEChanging(value);
+                this._PORTFOLIOCODE = value;
+                this.OnPORTFOLIOCODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOCODE;
+        partial void OnPORTFOLIOCODEChanging(string value);
+        partial void OnPORTFOLIOCODEChanged();
+        /// <summary>
+        /// There are no comments for Property RETURN_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RETURN_TYPE
+        {
+            get
+            {
+                return this._RETURN_TYPE;
+            }
+            set
+            {
+                this.OnRETURN_TYPEChanging(value);
+                this._RETURN_TYPE = value;
+                this.OnRETURN_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RETURN_TYPE;
+        partial void OnRETURN_TYPEChanging(string value);
+        partial void OnRETURN_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CURRENCY
+        {
+            get
+            {
+                return this._CURRENCY;
+            }
+            set
+            {
+                this.OnCURRENCYChanging(value);
+                this._CURRENCY = value;
+                this.OnCURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CURRENCY;
+        partial void OnCURRENCYChanging(string value);
+        partial void OnCURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property BMID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMID
+        {
+            get
+            {
+                return this._BMID;
+            }
+            set
+            {
+                this.OnBMIDChanging(value);
+                this._BMID = value;
+                this.OnBMIDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMID;
+        partial void OnBMIDChanging(string value);
+        partial void OnBMIDChanged();
+        /// <summary>
+        /// There are no comments for Property BMNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMNAME
+        {
+            get
+            {
+                return this._BMNAME;
+            }
+            set
+            {
+                this.OnBMNAMEChanging(value);
+                this._BMNAME = value;
+                this.OnBMNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMNAME;
+        partial void OnBMNAMEChanging(string value);
+        partial void OnBMNAMEChanged();
+        /// <summary>
+        /// There are no comments for Property POR_INCEPTION_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string POR_INCEPTION_DATE
+        {
+            get
+            {
+                return this._POR_INCEPTION_DATE;
+            }
+            set
+            {
+                this.OnPOR_INCEPTION_DATEChanging(value);
+                this._POR_INCEPTION_DATE = value;
+                this.OnPOR_INCEPTION_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _POR_INCEPTION_DATE;
+        partial void OnPOR_INCEPTION_DATEChanging(string value);
+        partial void OnPOR_INCEPTION_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_1M
+        {
+            get
+            {
+                return this._RC_TWR_1M;
+            }
+            set
+            {
+                this.OnRC_TWR_1MChanging(value);
+                this._RC_TWR_1M = value;
+                this.OnRC_TWR_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_1M;
+        partial void OnRC_TWR_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_1MChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_3M
+        {
+            get
+            {
+                return this._RC_TWR_3M;
+            }
+            set
+            {
+                this.OnRC_TWR_3MChanging(value);
+                this._RC_TWR_3M = value;
+                this.OnRC_TWR_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_3M;
+        partial void OnRC_TWR_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_3MChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_6M
+        {
+            get
+            {
+                return this._RC_TWR_6M;
+            }
+            set
+            {
+                this.OnRC_TWR_6MChanging(value);
+                this._RC_TWR_6M = value;
+                this.OnRC_TWR_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_6M;
+        partial void OnRC_TWR_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_6MChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_YTD
+        {
+            get
+            {
+                return this._RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnRC_TWR_YTDChanging(value);
+                this._RC_TWR_YTD = value;
+                this.OnRC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_YTD;
+        partial void OnRC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_1Y
+        {
+            get
+            {
+                return this._RC_TWR_1Y;
+            }
+            set
+            {
+                this.OnRC_TWR_1YChanging(value);
+                this._RC_TWR_1Y = value;
+                this.OnRC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_1Y;
+        partial void OnRC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_3YA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_3YA
+        {
+            get
+            {
+                return this._RC_TWR_3YA;
+            }
+            set
+            {
+                this.OnRC_TWR_3YAChanging(value);
+                this._RC_TWR_3YA = value;
+                this.OnRC_TWR_3YAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_3YA;
+        partial void OnRC_TWR_3YAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_3YAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_5YA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_5YA
+        {
+            get
+            {
+                return this._RC_TWR_5YA;
+            }
+            set
+            {
+                this.OnRC_TWR_5YAChanging(value);
+                this._RC_TWR_5YA = value;
+                this.OnRC_TWR_5YAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_5YA;
+        partial void OnRC_TWR_5YAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_5YAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_10YA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_10YA
+        {
+            get
+            {
+                return this._RC_TWR_10YA;
+            }
+            set
+            {
+                this.OnRC_TWR_10YAChanging(value);
+                this._RC_TWR_10YA = value;
+                this.OnRC_TWR_10YAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_10YA;
+        partial void OnRC_TWR_10YAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_10YAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_SIA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_SIA
+        {
+            get
+            {
+                return this._RC_TWR_SIA;
+            }
+            set
+            {
+                this.OnRC_TWR_SIAChanging(value);
+                this._RC_TWR_SIA = value;
+                this.OnRC_TWR_SIAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_SIA;
+        partial void OnRC_TWR_SIAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_SIAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_3YC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_3YC
+        {
+            get
+            {
+                return this._RC_TWR_3YC;
+            }
+            set
+            {
+                this.OnRC_TWR_3YCChanging(value);
+                this._RC_TWR_3YC = value;
+                this.OnRC_TWR_3YCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_3YC;
+        partial void OnRC_TWR_3YCChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_3YCChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_5YC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_5YC
+        {
+            get
+            {
+                return this._RC_TWR_5YC;
+            }
+            set
+            {
+                this.OnRC_TWR_5YCChanging(value);
+                this._RC_TWR_5YC = value;
+                this.OnRC_TWR_5YCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_5YC;
+        partial void OnRC_TWR_5YCChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_5YCChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_10YC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_10YC
+        {
+            get
+            {
+                return this._RC_TWR_10YC;
+            }
+            set
+            {
+                this.OnRC_TWR_10YCChanging(value);
+                this._RC_TWR_10YC = value;
+                this.OnRC_TWR_10YCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_10YC;
+        partial void OnRC_TWR_10YCChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_10YCChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_SIYC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_SIYC
+        {
+            get
+            {
+                return this._RC_TWR_SIYC;
+            }
+            set
+            {
+                this.OnRC_TWR_SIYCChanging(value);
+                this._RC_TWR_SIYC = value;
+                this.OnRC_TWR_SIYCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_SIYC;
+        partial void OnRC_TWR_SIYCChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_SIYCChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PERF_TOPLEVELSTATS in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// TO_DATE
+    /// PORTYPE
+    /// PORTFOLIOGROUP
+    /// PORTFOLIOCODE
+    /// RETURN_TYPE
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTYPE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    public partial class GF_PERF_TOPLEVELSTATS
+    {
+        /// <summary>
+        /// Create a new GF_PERF_TOPLEVELSTATS object.
+        /// </summary>
+        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
+        /// <param name="pORTYPE">Initial value of PORTYPE.</param>
+        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
+        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
+        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_TOPLEVELSTATS CreateGF_PERF_TOPLEVELSTATS(global::System.DateTime tO_DATE, string pORTYPE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        {
+            GF_PERF_TOPLEVELSTATS gF_PERF_TOPLEVELSTATS = new GF_PERF_TOPLEVELSTATS();
+            gF_PERF_TOPLEVELSTATS.TO_DATE = tO_DATE;
+            gF_PERF_TOPLEVELSTATS.PORTYPE = pORTYPE;
+            gF_PERF_TOPLEVELSTATS.PORTFOLIOGROUP = pORTFOLIOGROUP;
+            gF_PERF_TOPLEVELSTATS.PORTFOLIOCODE = pORTFOLIOCODE;
+            gF_PERF_TOPLEVELSTATS.RETURN_TYPE = rETURN_TYPE;
+            return gF_PERF_TOPLEVELSTATS;
+        }
+        /// <summary>
+        /// There are no comments for Property INDE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INDE
+        {
+            get
+            {
+                return this._INDE;
+            }
+            set
+            {
+                this.OnINDEChanging(value);
+                this._INDE = value;
+                this.OnINDEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INDE;
+        partial void OnINDEChanging(global::System.Nullable<decimal> value);
+        partial void OnINDEChanged();
+        /// <summary>
+        /// There are no comments for Property TO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.DateTime TO_DATE
+        {
+            get
+            {
+                return this._TO_DATE;
+            }
+            set
+            {
+                this.OnTO_DATEChanging(value);
+                this._TO_DATE = value;
+                this.OnTO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.DateTime _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.DateTime value);
+        partial void OnTO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTYPE
+        {
+            get
+            {
+                return this._PORTYPE;
+            }
+            set
+            {
+                this.OnPORTYPEChanging(value);
+                this._PORTYPE = value;
+                this.OnPORTYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTYPE;
+        partial void OnPORTYPEChanging(string value);
+        partial void OnPORTYPEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOGROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOGROUP
+        {
+            get
+            {
+                return this._PORTFOLIOGROUP;
+            }
+            set
+            {
+                this.OnPORTFOLIOGROUPChanging(value);
+                this._PORTFOLIOGROUP = value;
+                this.OnPORTFOLIOGROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOGROUP;
+        partial void OnPORTFOLIOGROUPChanging(string value);
+        partial void OnPORTFOLIOGROUPChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO
+        {
+            get
+            {
+                return this._PORTFOLIO;
+            }
+            set
+            {
+                this.OnPORTFOLIOChanging(value);
+                this._PORTFOLIO = value;
+                this.OnPORTFOLIOChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(string value);
+        partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOCODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOCODE
+        {
+            get
+            {
+                return this._PORTFOLIOCODE;
+            }
+            set
+            {
+                this.OnPORTFOLIOCODEChanging(value);
+                this._PORTFOLIOCODE = value;
+                this.OnPORTFOLIOCODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOCODE;
+        partial void OnPORTFOLIOCODEChanging(string value);
+        partial void OnPORTFOLIOCODEChanged();
+        /// <summary>
+        /// There are no comments for Property RETURN_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RETURN_TYPE
+        {
+            get
+            {
+                return this._RETURN_TYPE;
+            }
+            set
+            {
+                this.OnRETURN_TYPEChanging(value);
+                this._RETURN_TYPE = value;
+                this.OnRETURN_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RETURN_TYPE;
+        partial void OnRETURN_TYPEChanging(string value);
+        partial void OnRETURN_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CURRENCY
+        {
+            get
+            {
+                return this._CURRENCY;
+            }
+            set
+            {
+                this.OnCURRENCYChanging(value);
+                this._CURRENCY = value;
+                this.OnCURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CURRENCY;
+        partial void OnCURRENCYChanging(string value);
+        partial void OnCURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property YEAR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string YEAR
+        {
+            get
+            {
+                return this._YEAR;
+            }
+            set
+            {
+                this.OnYEARChanging(value);
+                this._YEAR = value;
+                this.OnYEARChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _YEAR;
+        partial void OnYEARChanging(string value);
+        partial void OnYEARChanged();
+        /// <summary>
+        /// There are no comments for Property BMID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMID
+        {
+            get
+            {
+                return this._BMID;
+            }
+            set
+            {
+                this.OnBMIDChanging(value);
+                this._BMID = value;
+                this.OnBMIDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMID;
+        partial void OnBMIDChanging(string value);
+        partial void OnBMIDChanged();
+        /// <summary>
+        /// There are no comments for Property BMNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMNAME
+        {
+            get
+            {
+                return this._BMNAME;
+            }
+            set
+            {
+                this.OnBMNAMEChanging(value);
+                this._BMNAME = value;
+                this.OnBMNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMNAME;
+        partial void OnBMNAMEChanging(string value);
+        partial void OnBMNAMEChanged();
+        /// <summary>
+        /// There are no comments for Property POR_INCEPTION_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string POR_INCEPTION_DATE
+        {
+            get
+            {
+                return this._POR_INCEPTION_DATE;
+            }
+            set
+            {
+                this.OnPOR_INCEPTION_DATEChanging(value);
+                this._POR_INCEPTION_DATE = value;
+                this.OnPOR_INCEPTION_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _POR_INCEPTION_DATE;
+        partial void OnPOR_INCEPTION_DATEChanging(string value);
+        partial void OnPOR_INCEPTION_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RC_VOL in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_VOL
+        {
+            get
+            {
+                return this._RC_VOL;
+            }
+            set
+            {
+                this.OnRC_VOLChanging(value);
+                this._RC_VOL = value;
+                this.OnRC_VOLChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_VOL;
+        partial void OnRC_VOLChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_VOLChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TRACKERROR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TRACKERROR
+        {
+            get
+            {
+                return this._RC_TRACKERROR;
+            }
+            set
+            {
+                this.OnRC_TRACKERRORChanging(value);
+                this._RC_TRACKERROR = value;
+                this.OnRC_TRACKERRORChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TRACKERROR;
+        partial void OnRC_TRACKERRORChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TRACKERRORChanged();
+        /// <summary>
+        /// There are no comments for Property RC_INFORMATION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_INFORMATION
+        {
+            get
+            {
+                return this._RC_INFORMATION;
+            }
+            set
+            {
+                this.OnRC_INFORMATIONChanging(value);
+                this._RC_INFORMATION = value;
+                this.OnRC_INFORMATIONChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_INFORMATION;
+        partial void OnRC_INFORMATIONChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_INFORMATIONChanged();
+        /// <summary>
+        /// There are no comments for Property RC_ALPHA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_ALPHA
+        {
+            get
+            {
+                return this._RC_ALPHA;
+            }
+            set
+            {
+                this.OnRC_ALPHAChanging(value);
+                this._RC_ALPHA = value;
+                this.OnRC_ALPHAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_ALPHA;
+        partial void OnRC_ALPHAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_ALPHAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_BETA in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_BETA
+        {
+            get
+            {
+                return this._RC_BETA;
+            }
+            set
+            {
+                this.OnRC_BETAChanging(value);
+                this._RC_BETA = value;
+                this.OnRC_BETAChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_BETA;
+        partial void OnRC_BETAChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_BETAChanged();
+        /// <summary>
+        /// There are no comments for Property RC_R2 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_R2
+        {
+            get
+            {
+                return this._RC_R2;
+            }
+            set
+            {
+                this.OnRC_R2Changing(value);
+                this._RC_R2 = value;
+                this.OnRC_R2Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_R2;
+        partial void OnRC_R2Changing(global::System.Nullable<decimal> value);
+        partial void OnRC_R2Changed();
+        /// <summary>
+        /// There are no comments for Property RC_CORRELATION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_CORRELATION
+        {
+            get
+            {
+                return this._RC_CORRELATION;
+            }
+            set
+            {
+                this.OnRC_CORRELATIONChanging(value);
+                this._RC_CORRELATION = value;
+                this.OnRC_CORRELATIONChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_CORRELATION;
+        partial void OnRC_CORRELATIONChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_CORRELATIONChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PERF_TOPLEVELYEAR in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// TO_DATE
+    /// PORTFOLIOGROUP
+    /// PORTFOLIOCODE
+    /// RETURN_TYPE
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    public partial class GF_PERF_TOPLEVELYEAR
+    {
+        /// <summary>
+        /// Create a new GF_PERF_TOPLEVELYEAR object.
+        /// </summary>
+        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
+        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
+        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
+        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_TOPLEVELYEAR CreateGF_PERF_TOPLEVELYEAR(string tO_DATE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        {
+            GF_PERF_TOPLEVELYEAR gF_PERF_TOPLEVELYEAR = new GF_PERF_TOPLEVELYEAR();
+            gF_PERF_TOPLEVELYEAR.TO_DATE = tO_DATE;
+            gF_PERF_TOPLEVELYEAR.PORTFOLIOGROUP = pORTFOLIOGROUP;
+            gF_PERF_TOPLEVELYEAR.PORTFOLIOCODE = pORTFOLIOCODE;
+            gF_PERF_TOPLEVELYEAR.RETURN_TYPE = rETURN_TYPE;
+            return gF_PERF_TOPLEVELYEAR;
+        }
+        /// <summary>
+        /// There are no comments for Property INDE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INDE
+        {
+            get
+            {
+                return this._INDE;
+            }
+            set
+            {
+                this.OnINDEChanging(value);
+                this._INDE = value;
+                this.OnINDEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INDE;
+        partial void OnINDEChanging(global::System.Nullable<decimal> value);
+        partial void OnINDEChanged();
+        /// <summary>
+        /// There are no comments for Property TO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string TO_DATE
+        {
+            get
+            {
+                return this._TO_DATE;
+            }
+            set
+            {
+                this.OnTO_DATEChanging(value);
+                this._TO_DATE = value;
+                this.OnTO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _TO_DATE;
+        partial void OnTO_DATEChanging(string value);
+        partial void OnTO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOGROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOGROUP
+        {
+            get
+            {
+                return this._PORTFOLIOGROUP;
+            }
+            set
+            {
+                this.OnPORTFOLIOGROUPChanging(value);
+                this._PORTFOLIOGROUP = value;
+                this.OnPORTFOLIOGROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOGROUP;
+        partial void OnPORTFOLIOGROUPChanging(string value);
+        partial void OnPORTFOLIOGROUPChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO
+        {
+            get
+            {
+                return this._PORTFOLIO;
+            }
+            set
+            {
+                this.OnPORTFOLIOChanging(value);
+                this._PORTFOLIO = value;
+                this.OnPORTFOLIOChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(string value);
+        partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIOCODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIOCODE
+        {
+            get
+            {
+                return this._PORTFOLIOCODE;
+            }
+            set
+            {
+                this.OnPORTFOLIOCODEChanging(value);
+                this._PORTFOLIOCODE = value;
+                this.OnPORTFOLIOCODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIOCODE;
+        partial void OnPORTFOLIOCODEChanging(string value);
+        partial void OnPORTFOLIOCODEChanged();
+        /// <summary>
+        /// There are no comments for Property CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CURRENCY
+        {
+            get
+            {
+                return this._CURRENCY;
+            }
+            set
+            {
+                this.OnCURRENCYChanging(value);
+                this._CURRENCY = value;
+                this.OnCURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CURRENCY;
+        partial void OnCURRENCYChanging(string value);
+        partial void OnCURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property RETURN_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RETURN_TYPE
+        {
+            get
+            {
+                return this._RETURN_TYPE;
+            }
+            set
+            {
+                this.OnRETURN_TYPEChanging(value);
+                this._RETURN_TYPE = value;
+                this.OnRETURN_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RETURN_TYPE;
+        partial void OnRETURN_TYPEChanging(string value);
+        partial void OnRETURN_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property POR_INCEPTION_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string POR_INCEPTION_DATE
+        {
+            get
+            {
+                return this._POR_INCEPTION_DATE;
+            }
+            set
+            {
+                this.OnPOR_INCEPTION_DATEChanging(value);
+                this._POR_INCEPTION_DATE = value;
+                this.OnPOR_INCEPTION_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _POR_INCEPTION_DATE;
+        partial void OnPOR_INCEPTION_DATEChanging(string value);
+        partial void OnPOR_INCEPTION_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> RC_TWR_YTD
+        {
+            get
+            {
+                return this._RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnRC_TWR_YTDChanging(value);
+                this._RC_TWR_YTD = value;
+                this.OnRC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _RC_TWR_YTD;
+        partial void OnRC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnRC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM1ID
+        {
+            get
+            {
+                return this._BM1ID;
+            }
+            set
+            {
+                this.OnBM1IDChanging(value);
+                this._BM1ID = value;
+                this.OnBM1IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM1ID;
+        partial void OnBM1IDChanging(string value);
+        partial void OnBM1IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM1NAME
+        {
+            get
+            {
+                return this._BM1NAME;
+            }
+            set
+            {
+                this.OnBM1NAMEChanging(value);
+                this._BM1NAME = value;
+                this.OnBM1NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM1NAME;
+        partial void OnBM1NAMEChanging(string value);
+        partial void OnBM1NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_YTD
+        {
+            get
+            {
+                return this._BM1_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_YTDChanging(value);
+                this._BM1_RC_TWR_YTD = value;
+                this.OnBM1_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_YTD;
+        partial void OnBM1_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN1
+        {
+            get
+            {
+                return this._EXCESSRETURN1;
+            }
+            set
+            {
+                this.OnEXCESSRETURN1Changing(value);
+                this._EXCESSRETURN1 = value;
+                this.OnEXCESSRETURN1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN1;
+        partial void OnEXCESSRETURN1Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN1Changed();
+        /// <summary>
+        /// There are no comments for Property BM2ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM2ID
+        {
+            get
+            {
+                return this._BM2ID;
+            }
+            set
+            {
+                this.OnBM2IDChanging(value);
+                this._BM2ID = value;
+                this.OnBM2IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM2ID;
+        partial void OnBM2IDChanging(string value);
+        partial void OnBM2IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM2NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM2NAME
+        {
+            get
+            {
+                return this._BM2NAME;
+            }
+            set
+            {
+                this.OnBM2NAMEChanging(value);
+                this._BM2NAME = value;
+                this.OnBM2NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM2NAME;
+        partial void OnBM2NAMEChanging(string value);
+        partial void OnBM2NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM2_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM2_RC_TWR_YTD
+        {
+            get
+            {
+                return this._BM2_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM2_RC_TWR_YTDChanging(value);
+                this._BM2_RC_TWR_YTD = value;
+                this.OnBM2_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM2_RC_TWR_YTD;
+        partial void OnBM2_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM2_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN2 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN2
+        {
+            get
+            {
+                return this._EXCESSRETURN2;
+            }
+            set
+            {
+                this.OnEXCESSRETURN2Changing(value);
+                this._EXCESSRETURN2 = value;
+                this.OnEXCESSRETURN2Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN2;
+        partial void OnEXCESSRETURN2Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN2Changed();
+        /// <summary>
+        /// There are no comments for Property BM3ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM3ID
+        {
+            get
+            {
+                return this._BM3ID;
+            }
+            set
+            {
+                this.OnBM3IDChanging(value);
+                this._BM3ID = value;
+                this.OnBM3IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM3ID;
+        partial void OnBM3IDChanging(string value);
+        partial void OnBM3IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM3NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM3NAME
+        {
+            get
+            {
+                return this._BM3NAME;
+            }
+            set
+            {
+                this.OnBM3NAMEChanging(value);
+                this._BM3NAME = value;
+                this.OnBM3NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM3NAME;
+        partial void OnBM3NAMEChanging(string value);
+        partial void OnBM3NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property BM3_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM3_RC_TWR_YTD
+        {
+            get
+            {
+                return this._BM3_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM3_RC_TWR_YTDChanging(value);
+                this._BM3_RC_TWR_YTD = value;
+                this.OnBM3_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM3_RC_TWR_YTD;
+        partial void OnBM3_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM3_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property EXCESSRETURN3 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EXCESSRETURN3
+        {
+            get
+            {
+                return this._EXCESSRETURN3;
+            }
+            set
+            {
+                this.OnEXCESSRETURN3Changing(value);
+                this._EXCESSRETURN3 = value;
+                this.OnEXCESSRETURN3Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EXCESSRETURN3;
+        partial void OnEXCESSRETURN3Changing(global::System.Nullable<decimal> value);
+        partial void OnEXCESSRETURN3Changed();
     }
     /// <summary>
     /// There are no comments for Model.GF_PORTFOLIO_HOLDINGS in the schema.

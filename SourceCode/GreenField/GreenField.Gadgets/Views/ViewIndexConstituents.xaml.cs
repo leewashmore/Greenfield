@@ -19,11 +19,24 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewIndexConstituents : ViewBaseUserControl
     {
+        #region Properties
+
+        private ViewModelIndexConstituents _dataContextIndexConstituents;
+        public ViewModelIndexConstituents DataContextIndexConstituents
+        {
+            get { return _dataContextIndexConstituents; }
+            set { _dataContextIndexConstituents = value; }
+        }    
+        #endregion     
+
+        #region Constructor
         public ViewIndexConstituents(ViewModelIndexConstituents dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }
+            this.DataContextIndexConstituents = dataContextSource;
+        } 
+        #endregion
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
@@ -115,9 +128,13 @@ namespace GreenField.Gadgets.Views
             return String.Join(",", aggregates.ToArray());
         }
 
+        #region Dispose Method
         public override void Dispose()
         {
-            throw new NotImplementedException();
-        }
+            this.DataContextIndexConstituents.Dispose();
+            this.DataContextIndexConstituents = null;
+            this.DataContext = null;
+        } 
+        #endregion
     }
 }

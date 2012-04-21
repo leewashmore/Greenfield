@@ -3,6 +3,10 @@
     <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
       <EntityContainer Name="Entities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
         <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="Model.GF_BENCHMARK_HOLDINGS" />
+        <EntitySet Name="GF_PERF_TOPLEVELMONTH" EntityType="Model.GF_PERF_TOPLEVELMONTH" />
+        <EntitySet Name="GF_PERF_TOPLEVELPERIOD" EntityType="Model.GF_PERF_TOPLEVELPERIOD" />
+        <EntitySet Name="GF_PERF_TOPLEVELSTATS" EntityType="Model.GF_PERF_TOPLEVELSTATS" />
+        <EntitySet Name="GF_PERF_TOPLEVELYEAR" EntityType="Model.GF_PERF_TOPLEVELYEAR" />
         <EntitySet Name="GF_PORTFOLIO_HOLDINGS" EntityType="Model.GF_PORTFOLIO_HOLDINGS" />
         <EntitySet Name="GF_PORTFOLIO_SELECTION" EntityType="Model.GF_PORTFOLIO_SELECTION" />
         <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="Model.GF_PRICING_BASEVIEW" />
@@ -53,6 +57,125 @@
         <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
       </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELMONTH">
+        <Key>
+          <PropertyRef Name="TO_DATE" />
+          <PropertyRef Name="PORTFOLIOGROUP" />
+          <PropertyRef Name="PORTFOLIOCODE" />
+          <PropertyRef Name="RETURN_TYPE" />
+        </Key>
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM1NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM1_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN1" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM2ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM2NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM2_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN2" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM3ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM3NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM3_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN3" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELPERIOD">
+        <Key>
+          <PropertyRef Name="TO_DATE" />
+          <PropertyRef Name="PORTYPE" />
+          <PropertyRef Name="PORTFOLIOGROUP" />
+          <PropertyRef Name="PORTFOLIOCODE" />
+          <PropertyRef Name="RETURN_TYPE" />
+        </Key>
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_3M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_6M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_3YA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_5YA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_10YA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_SIA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_3YC" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_5YC" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_10YC" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TWR_SIYC" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELSTATS">
+        <Key>
+          <PropertyRef Name="TO_DATE" />
+          <PropertyRef Name="PORTYPE" />
+          <PropertyRef Name="PORTFOLIOGROUP" />
+          <PropertyRef Name="PORTFOLIOCODE" />
+          <PropertyRef Name="RETURN_TYPE" />
+        </Key>
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="YEAR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_VOL" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_TRACKERROR" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_INFORMATION" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_ALPHA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_BETA" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_R2" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="RC_CORRELATION" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELYEAR">
+        <Key>
+          <PropertyRef Name="TO_DATE" />
+          <PropertyRef Name="PORTFOLIOGROUP" />
+          <PropertyRef Name="PORTFOLIOCODE" />
+          <PropertyRef Name="RETURN_TYPE" />
+        </Key>
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM1NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM1_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN1" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM2ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM2NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM2_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN2" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BM3ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM3NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM3_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="EXCESSRETURN3" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
       <EntityType Name="GF_PORTFOLIO_HOLDINGS">
         <Key>
           <PropertyRef Name="PORTFOLIO_DATE" />
@@ -60,10 +183,10 @@
           <PropertyRef Name="ASEC_SEC_SHORT_NAME" />
         </Key>
         <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="false" />
-        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="1" Unicode="false" FixedLength="true" />
-        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="false" FixedLength="true" />
+        <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />

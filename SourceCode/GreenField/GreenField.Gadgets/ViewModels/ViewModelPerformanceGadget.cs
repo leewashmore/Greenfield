@@ -67,9 +67,9 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             //_dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallBackMethod);
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
             if (_PortfolioSelectionData != null)
-                HandleFundReferenceSet(_PortfolioSelectionData);
+                HandlePortfolioReferenceSet(_PortfolioSelectionData);
         }
 
         #endregion
@@ -210,7 +210,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
         /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

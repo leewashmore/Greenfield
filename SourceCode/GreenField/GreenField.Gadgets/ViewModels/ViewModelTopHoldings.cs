@@ -36,8 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
+        private PortfolioSelectionData _portfolioSelectionData;
         private DateTime _effectiveDate;
         #endregion
 
@@ -52,19 +51,18 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            if ((_PortfolioSelectionData != null) && (_benchmarkSelectionData != null) && (_effectiveDate != null))
+            if ((_portfolioSelectionData != null) && (_effectiveDate != null))
             {
-                _dbInteractivity.RetrieveTopHoldingsData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
             }
+                      
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         }
@@ -93,23 +91,23 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Event Handlers
         /// <summary>
-        /// Event Handler to subscribed event 'FundReferenceSetEvent'
+        /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _portfolioSelectionData = portfolioSelectionData;
+                    if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveTopHoldingsData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
                     }
                 }
                 else
@@ -139,9 +137,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveTopHoldingsData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
                     }
                 }
                 else
@@ -156,38 +154,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-
-        /// <summary>
-        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
-        /// </summary>
-        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (benchmarkSelectionData != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-                    {
-                        _dbInteractivity.RetrieveTopHoldingsData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
+       
         #endregion
 
         #region Callback Methods
@@ -219,6 +186,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
+
+        #region Dispose Method
+
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+        }
+
+        #endregion
+
     }
 
 

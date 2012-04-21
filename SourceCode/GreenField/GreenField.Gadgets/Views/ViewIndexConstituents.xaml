@@ -37,16 +37,15 @@
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ElementExporting="dgIndexConstituents_ElementExporting"
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcConstituentName" Header="Constituent Name" DataMemberBinding="{Binding ConstituentName}" Width="Auto" HeaderTextAlignment="Left" TextAlignment="Left"/>
-                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" DataMemberBinding="{Binding Country}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcRegion" Header="Region" DataMemberBinding="{Binding Region}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" DataMemberBinding="{Binding Sector}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcIndustry" Header="Industry" DataMemberBinding="{Binding Industry}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcSubIndustry" Header="Sub-Industry" DataMemberBinding="{Binding SubIndustry}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcWeight" Header="Weight" DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcWeightCountry" Header="Weight (Country)" DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcWeightIndustry" Header="Weight (Industry)" DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcDailyReturnUSD" Header="Daily Return in USD (Price, Gross, Net)" DataMemberBinding="{Binding DailyReturnUSD}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcConstituentName" Header="Constituent Name" DataMemberBinding="{Binding ConstituentName}" Width="*" HeaderTextAlignment="Left" TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcRegion" Header="Region" DataMemberBinding="{Binding Region}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" DataMemberBinding="{Binding Sector}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcIndustry" Header="Industry" DataMemberBinding="{Binding Industry}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcSubIndustry" Header="Sub-Industry" DataMemberBinding="{Binding SubIndustry}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeight" Header="Weight" DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeightCountry" Header="Weight (Country)" DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn x:Name="dgcWeightIndustry" Header="Weight (Industry)" DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Border>

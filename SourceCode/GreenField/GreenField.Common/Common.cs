@@ -48,7 +48,7 @@ namespace GreenField.Common
     public static class RegionNames
     {
         public static string MAIN_REGION = "MainRegion";
-    }
+    }    
 
     public static class LogLevel
     {
@@ -106,8 +106,12 @@ namespace GreenField.Common
           public static int REGIOM = 1;
       }
 
-      
-
-
+      public enum MarketPerformanceSnapshotActionTypes
+      {
+          ADDNEW,
+          SAVE,
+          SAVEAS,
+          DELETE   
+      }
 
 }

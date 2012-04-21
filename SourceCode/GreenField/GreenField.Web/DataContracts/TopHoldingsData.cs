@@ -16,15 +16,15 @@ namespace GreenField.Web.DataContracts
         public string Holding { get; set; }
 
         [DataMember]
-        public Single? MarketValue { get; set; }
+        public decimal? MarketValue { get; set; }
 
         [DataMember]
-        public double? PortfolioShare { get; set; }
+        public decimal? PortfolioShare { get; set; }
 
         [DataMember]
-        public double? BenchmarkShare { get; set; }
+        public decimal? BenchmarkShare { get; set; }
 
         [DataMember]
-        public double? BetShare { get; set; }
+        public decimal? BetShare { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System.Data;
 using GreenField.Web.Helpers;
 using GreenField.DAL;
 using System.ServiceModel.Activation;
+using System.Linq;
 
 namespace GreenField.Web.Services
 {
@@ -33,7 +34,7 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         public void Temp(PeriodSelectionData data)
-        {            
+        {
         }
 
         [OperationContract]
@@ -90,12 +91,12 @@ namespace GreenField.Web.Services
         /// <summary>
         /// retrieving data for sector breakdown gadget
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of sector breakdown data</returns>
         [OperationContract]
-        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -129,12 +130,12 @@ namespace GreenField.Web.Services
         /// <summary>
         /// retrieving data for region breakdown gadget
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of region breakdown data</returns>
         [OperationContract]
-        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -172,49 +173,51 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of top holdings data</returns>
         [OperationContract]
-        public List<TopHoldingsData> RetrieveTopHoldingsData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<TopHoldingsData> RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             try
             {
-                //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS.ToList();
-                //List<TopHoldingsData> result = new List<TopHoldingsData>();
-
-                //if (data != null)
-                //{
-                //    decimal? sumMarketValuePortfolio = data.Sum(t => t.DIRTY_VALUE_PC);
-                //    decimal? sumMarketValueBenchmark = data.Sum(t => t.DIRTY_VALUE_PC);
-                //    foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
-                //    {
-                //        result.Add(new TopHoldingsData()
-                //        {
-                //            Ticker = record.TICKER,
-                //            //Holding = record
-                //            MarketValue = record.DIRTY_VALUE_PC,
-                //            //PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
-                //            //BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
-                //            //BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
-                //        });
-                //    }
-                //}
-                //return result;
-
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                                                                                            .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
-                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
-                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
-
-                foreach (DataRow row in dataTable.Rows)
+                if (data != null)
                 {
-                    result.Add(new TopHoldingsData()
-                    {
-                        Ticker = row.Field<string>("TICKER"),
-                        Holding = row.Field<string>("ISSUE_NAME"),
-                        MarketValue = row.Field<Single?>("DIRTY_VALUE_PC"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
-                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
-                    });
+                    decimal? sumMarketValuePortfolio = data.Sum(t => t.DIRTY_VALUE_PC);
+                    decimal? sumMarketValueBenchmark = data.Sum(t => t.DIRTY_VALUE_PC);
+                    if (sumMarketValuePortfolio != 0 && sumMarketValueBenchmark != 0)
+	                {
+		                foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
+                        {
+                             result.Add(new TopHoldingsData()
+                             {
+                                 Ticker = record.TICKER,
+                                 Holding = record.PORTFOLIO_ID,
+                                 MarketValue = record.DIRTY_VALUE_PC,
+                                 PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
+                                 BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
+                                 BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
+                             });
+                         } 
+	                }
                 }
+
+                //List<TopHoldingsData> result = new List<TopHoldingsData>();
+                //DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                //object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                //object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+
+                //foreach (DataRow row in dataTable.Rows)
+                //{
+                //    result.Add(new TopHoldingsData()
+                //    {
+                //        Ticker = row.Field<string>("TICKER"),
+                //        Holding = row.Field<string>("ISSUE_NAME"),
+                //        MarketValue = row.Field<Single?>("DIRTY_VALUE_PC"),
+                //        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                //        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                //        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                //    });
+                //}
                 return result.OrderByDescending(t => t.MarketValue).ToList().Take(10).ToList();
             }
             catch (Exception ex)
@@ -231,35 +234,73 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of index constituents data</returns>
         [OperationContract]
-        public List<IndexConstituentsData> RetrieveIndexConstituentsData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<IndexConstituentsData> RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             try
             {
+                //List<IndexConstituentsData> result = new List<IndexConstituentsData>();
+                //DataTable dataTable = GetDataTable("Select * from tblBenchmarkData");
+                //object sumMarketValue = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "");
+
+                //foreach (DataRow row in dataTable.Rows)
+                //{
+                //    string country = row.Field<string>("ISO_COUNTRY_CODE");
+                //    object sumMarketValueCountry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "ISO_COUNTRY_CODE = '" + country + "'");
+
+                //    string industry = row.Field<string>("GICS_INDUSTRY_NAME");
+                //    object sumMarketValueIndustry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "GICS_INDUSTRY_NAME = '" + industry + "'");
+
+                //    result.Add(new IndexConstituentsData()
+                //    {
+                //        ConstituentName = row.Field<string>("ISSUE_NAME"),
+                //        Country = country,
+                //        Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
+                //        Sector = row.Field<string>("GICS_SECTOR_NAME"),
+                //        Industry = industry,
+                //        SubIndustry = row.Field<string>("GICS_SUB_INDUSTRY_NAME"),
+                //        Weight = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValue as Single?),
+                //        WeightCountry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueCountry as Single?),
+                //        WeightIndustry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueIndustry as Single?),
+                //    });
+                //}
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();
-                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-                object sumMarketValue = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "");
 
-                foreach (DataRow row in dataTable.Rows)
+                string benchmarkId = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).FirstOrDefault().BENCHMARK_ID.ToString();
+                if (benchmarkId != null)
                 {
-                    string country = row.Field<string>("ISO_COUNTRY_CODE");
-                    object sumMarketValueCountry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "ISO_COUNTRY_CODE = '" + country + "'");
-
-                    string industry = row.Field<string>("GICS_INDUSTRY_NAME");
-                    object sumMarketValueIndustry = dataTable.Compute("Sum(DIRTY_VALUE_PC)", "GICS_INDUSTRY_NAME = '" + industry + "'");
-
-                    result.Add(new IndexConstituentsData()
+                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId).ToList();
+                    if (data != null)
                     {
-                        ConstituentName = row.Field<string>("ISSUE_NAME"),
-                        Country = country,
-                        Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
-                        Sector = row.Field<string>("GICS_SECTOR_NAME"),
-                        Industry = industry,
-                        SubIndustry = row.Field<string>("GICS_SUB_INDUSTRY_NAME"),
-                        Weight = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValue as Single?),
-                        WeightCountry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueCountry as Single?),
-                        WeightIndustry = row.Field<Single?>("DIRTY_VALUE_PC") / (sumMarketValueIndustry as Single?),
-                        //DailyReturnUSD = row.Field<string>("ISSUE_NAME")
-                    });
+                        object sumMarketValue = data.Sum(t => t.DIRTY_VALUE_PC);
+                        if (sumMarketValue != null)
+                        {
+                            foreach (DimensionEntitiesService.GF_BENCHMARK_HOLDINGS record in data)
+                            {
+                                string country = record.ISO_COUNTRY_CODE;
+                                object sumMarketValueCountry = data.Where(t => t.ISO_COUNTRY_CODE == country).Sum(t => t.DIRTY_VALUE_PC);
+
+                                string industry = record.GICS_INDUSTRY_NAME;
+                                object sumMarketValueIndustry = data.Where(t => t.GICS_INDUSTRY_NAME == industry).Sum(t => t.DIRTY_VALUE_PC);
+                                if (sumMarketValueCountry != null || sumMarketValueIndustry == null || (decimal?)sumMarketValueCountry == 0 || (decimal?)sumMarketValueIndustry == 0)
+                                {
+                                    continue;
+                                }
+                                result.Add(new IndexConstituentsData()
+                                {
+                                    ConstituentName = record.ISSUE_NAME,
+                                    Country = country,
+                                    Region = record.ASHEMM_PROP_REGION_CODE,
+                                    Sector = record.GICS_SECTOR_NAME,
+                                    Industry = industry,
+                                    SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
+                                    Weight = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValue,
+                                    WeightCountry = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValueCountry,
+                                    WeightIndustry = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValueIndustry
+                                });
+
+                            }
+                        }
+                    }
                 }
                 return result;
             }
@@ -313,6 +354,50 @@ namespace GreenField.Web.Services
         /// <param name="objPortfolioIdentifier"></param>
         /// <param name="objSelectedDate"></param>
         /// <returns>List of PortfolioDetailsData</returns>
+        //[OperationContract]
+        //public List<PortfolioDetailsData> RetrievePortfolioDetailsData(string objPortfolioIdentifier, DateTime objSelectedDate)
+        //{
+        //    DimensionEntitiesService.Entities entity = DimensionEntity;
+        //    List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData =
+        //        entity.GF_PORTFOLIO_HOLDINGS.Take(100).ToList();
+
+        //    List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+        //    try
+        //    {
+        //        foreach (GF_PORTFOLIO_HOLDINGS item in dimensionServicePortfolioData)
+        //        {
+        //            PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
+        //            portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+        //            portfolioResult.IssueName = item.ISSUE_NAME;
+        //            portfolioResult.Ticker = item.TICKER;
+        //            portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+        //            portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+        //            portfolioResult.SectorName = item.GICS_SECTOR_NAME;
+        //            portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
+        //            portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+        //            portfolioResult.SecurityType = item.SECURITY_TYPE;
+        //            portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
+        //            portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+        //            portfolioResult.PortfolioDirtyValuePC = 0;
+        //            portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+        //            portfolioResult.PortfolioWeight = 0;
+        //            portfolioResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
+        //            portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+        //            portfolioResult.ReAshEmmModelWeight = portfolioResult.AshEmmModelWeight;
+        //            portfolioResult.RePortfolioWeight = portfolioResult.PortfolioWeight;
+        //            portfolioResult.ReBenchmarkWeight = portfolioResult.BenchmarkWeight;
+        //            portfolioResult.ActivePosition = portfolioResult.PortfolioWeight - portfolioResult.BenchmarkWeight;
+        //            result.Add(portfolioResult);
+        //        }
+
+        //        return result;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return null;
+        //    }
+        //}
+
         [OperationContract]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark = false)
         {
@@ -354,7 +439,7 @@ namespace GreenField.Web.Services
                     portfolioResult.ReBenchmarkWeight = portfolioResult.BenchmarkWeight;
                     portfolioResult.ActivePosition = portfolioResult.PortfolioWeight - portfolioResult.BenchmarkWeight;
                     result.Add(portfolioResult);
-                } 
+                }
                 #endregion
 
                 #region DataTableSQL
@@ -385,6 +470,8 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+
+
 
         /// <summary>
         /// Method to retrieve data in Benchmark Chart
@@ -427,9 +514,8 @@ namespace GreenField.Web.Services
                 return result;
             }
 
-            catch (Exception ex)
+            catch
             {
-                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -477,9 +563,8 @@ namespace GreenField.Web.Services
                 }
                 return result;
             }
-            catch (Exception ex)
+            catch
             {
-                ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -530,13 +615,13 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrieves Holdings data for showing pie chart for sector allocation
         /// </summary>
-        /// <param name="PortfolioSelectionData">Contains Selected Fund Data</param>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
         /// <param name="effectiveDate">Effectice date as selected by the user</param>
         /// <param name="filterType">The Filter type selected by the user</param>
         /// <param name="filterValue">The Filter value selected by the user</param>
         /// <returns>List of HoldingsPercentageData </returns>
         [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
         {
 
             try
@@ -635,13 +720,13 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrieves Holdings data for showing pie chart for region allocation
         /// </summary>
-        /// <param name="PortfolioSelectionData">Contains Selected Fund Data</param>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
         /// <param name="effectiveDate">Effectice date as selected by the user</param>
         /// <param name="filterType">The Filter type selected by the user</param>
         /// <param name="filterValue">The Filter value selected by the user</param>
         /// <returns>List of HoldingsPercentageData </returns>
         [OperationContract]
-        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue)
+        public List<HoldingsPercentageData> RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue)
         {
             try
             {
@@ -800,7 +885,7 @@ namespace GreenField.Web.Services
         #region Performance
 
         [OperationContract]
-        public MarketCapitalizationData RetrieveMarketCapitalizationData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public MarketCapitalizationData RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -835,7 +920,7 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1119,12 +1204,12 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrieves Portfolio Risk Return Data
         /// </summary>
-        /// <param name="PortfolioSelectionData">Contains Selected Fund Data</param>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
         /// <param name="benchmarkSelectionData">Contains Selected Benchmark Data </param>
         /// <param name="effectiveDate">Effective Date selected by user</param>
         /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
         [OperationContract]
-        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1196,7 +1281,7 @@ namespace GreenField.Web.Services
 
         #region Relative Performance
         [OperationContract]
-        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1224,14 +1309,14 @@ namespace GreenField.Web.Services
         /// Retrieves Country Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1321,14 +1406,14 @@ namespace GreenField.Web.Services
         /// Retrieves Sector Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1422,14 +1507,14 @@ namespace GreenField.Web.Services
         /// Retrieves Security Level Active Position Data for a particular composite/fund, benchmark and effective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
         /// <returns>List of RelativePerformanceActivePositionData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null)
         {
             try
             {
@@ -1496,7 +1581,7 @@ namespace GreenField.Web.Services
         /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
@@ -1505,7 +1590,7 @@ namespace GreenField.Web.Services
         /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
         /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
-        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
+        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
 
 
@@ -1565,7 +1650,7 @@ namespace GreenField.Web.Services
         }
 
         [OperationContract]
-        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData PortfolioSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
         {
             try
             {

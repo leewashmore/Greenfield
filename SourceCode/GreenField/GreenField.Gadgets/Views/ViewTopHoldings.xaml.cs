@@ -16,15 +16,31 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewTopHoldings : ViewBaseUserControl
     {
+        #region Properties
+
+        private ViewModelTopHoldings _dataContextViewModelTopHoldings;
+        public ViewModelTopHoldings DataContextViewModelTopHoldings
+        {
+            get { return _dataContextViewModelTopHoldings; }
+            set { _dataContextViewModelTopHoldings = value; }
+        }        
+
+        #endregion
+
+        #region Constructor
         public ViewTopHoldings(ViewModelTopHoldings dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }
+            this.DataContextViewModelTopHoldings = dataContextSource;
+        } 
+        #endregion
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextViewModelTopHoldings.Dispose();
+            this.DataContextViewModelTopHoldings = null;
+            this.DataContext = null;
         }
     }
 }

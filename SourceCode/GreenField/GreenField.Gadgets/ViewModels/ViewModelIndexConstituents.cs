@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
-        private BenchmarkSelectionData _benchmarkSelectionData;
+        private PortfolioSelectionData _portfolioSelectionData;
         #endregion
 
         #region Constructor
@@ -50,17 +50,17 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            //if (EffectiveDate != null && _benchmarkSelectionData != null)
-            //{
-            //    _dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+            if (EffectiveDate != null && _portfolioSelectionData != null)
+            {
+                _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+            }
+            //_dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         } 
@@ -122,9 +122,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _benchmarkSelectionData != null)
+                    if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
                     }
                 }
                 else
@@ -144,19 +144,19 @@ namespace GreenField.Gadgets.ViewModels
         /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
         /// </summary>
         /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (benchmarkSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (EffectiveDate != null && _benchmarkSelectionData != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _portfolioSelectionData = portfolioSelectionData;
+                    if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
                     }
                 }
                 else
@@ -203,6 +203,16 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         } 
         #endregion         
+
+        #region Dispose Method
+
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+        }
+        
+        #endregion
     }
 
    
