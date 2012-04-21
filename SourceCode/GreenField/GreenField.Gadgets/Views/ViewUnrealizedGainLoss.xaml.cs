@@ -195,7 +195,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextUnrealizedGainLossChart = null;
             this.DataContext = null;
         }
-
         #endregion
     }
 }

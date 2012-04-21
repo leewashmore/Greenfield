@@ -9,10 +9,53 @@
     d:DesignHeight="300" d:DesignWidth="400">
     
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>          
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
+                             telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
+            <telerik:RadExpander.Header>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                </Grid>
+            </telerik:RadExpander.Header>
+            <telerik:RadExpander.Content>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Margin="0,0,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <telerik:RadComboBox x:Name="cmbFilterTypes" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
+                                             HorizontalAlignment="Stretch" ItemsSource="{Binding FilterTypes}" 
+                                             SelectedValue="{Binding FilterTypesSelection, Mode=TwoWay}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Margin="0,2,2,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Values" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <telerik:RadComboBox  Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" ItemsSource="{Binding ValueTypes}" SelectedValue="{Binding ValueTypesSelection,Mode=TwoWay}">
+                        </telerik:RadComboBox>
+                    </Grid>
+                </Grid>
+            </telerik:RadExpander.Content>
+        </telerik:RadExpander>        
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Top 10 Benchmark Securities" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Height="40"/>
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadGridView Grid.Row="1" Name="dgTopTenSecurities"  AutoGenerateColumns="False" ShowColumnFooters="True"
@@ -48,5 +91,6 @@
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>
+        </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
