@@ -20,6 +20,18 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewTopBenchmarkSecurities : ViewBaseUserControl
     {
+
+        /// <summary>
+        /// Property of type ViewModelTopBenchmarkSecurities
+        /// </summary>
+        private ViewModelTopBenchmarkSecurities _dataContextTopBenchmarkSecurities;
+
+        public ViewModelTopBenchmarkSecurities DataContextTopBenchmarkSecurities
+        {
+            get { return _dataContextTopBenchmarkSecurities; }
+            set { _dataContextTopBenchmarkSecurities = value; }
+        }
+
         #region Constructor
         /// <summary>
         /// Constructor for the class having ViewModelTopBenchmarkSecurities as its data context
@@ -29,6 +41,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextTopBenchmarkSecurities = dataContextSource;
             dataContextSource.topTenBenchmarkSecuritiesDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_topTenBenchmarkSecuritiesDataLoadedEvent);
         }
@@ -52,9 +65,16 @@ namespace GreenField.Gadgets.Views
         }
         #endregion       
     
+        #region RemoveEvents
+
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextTopBenchmarkSecurities.topTenBenchmarkSecuritiesDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_topTenBenchmarkSecuritiesDataLoadedEvent);
+            this.DataContextTopBenchmarkSecurities.Dispose();
+            this.DataContextTopBenchmarkSecurities = null;
+            this.DataContext = null;
         }
+
+        #endregion
     }
 }

@@ -770,10 +770,10 @@ namespace GreenField.ServiceCaller
         /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
         /// <param name="effectiveDate">Effective Date selected by the user</param>
         /// <param name="callback">callback</param>
-        public void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
+        public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveTopBenchmarkSecuritiesDataAsync(benchmarkSelectionData, effectiveDate);
+            client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
                 if (callback != null)

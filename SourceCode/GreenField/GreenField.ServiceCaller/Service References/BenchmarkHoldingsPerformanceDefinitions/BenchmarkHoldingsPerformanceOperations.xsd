@@ -198,7 +198,7 @@
   <xs:element name="RetrieveTopBenchmarkSecuritiesData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q25:BenchmarkSelectionData" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q25:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>

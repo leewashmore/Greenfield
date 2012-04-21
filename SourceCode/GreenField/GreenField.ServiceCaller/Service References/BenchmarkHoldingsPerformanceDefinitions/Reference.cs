@@ -3376,7 +3376,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopBenchmarkSec" +
             "uritiesData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopBenchmarkSec" +
             "uritiesDataResponse")]
-        System.IAsyncResult BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.TopBenchmarkSecuritiesData> EndRetrieveTopBenchmarkSecuritiesData(System.IAsyncResult result);
         
@@ -5178,8 +5178,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveTopBenchmarkSecuritiesData(benchmarkSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5188,9 +5188,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveTopBenchmarkSecuritiesData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData)(inValues[0]));
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveTopBenchmarkSecuritiesData(benchmarkSelectionData, effectiveDate, callback, asyncState);
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveTopBenchmarkSecuritiesData(System.IAsyncResult result) {
@@ -5206,11 +5206,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveTopBenchmarkSecuritiesDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveTopBenchmarkSecuritiesDataAsync(benchmarkSelectionData, effectiveDate, null);
+        public void RetrieveTopBenchmarkSecuritiesDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveTopBenchmarkSecuritiesDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveTopBenchmarkSecuritiesDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveTopBenchmarkSecuritiesDataDelegate == null)) {
                 this.onBeginRetrieveTopBenchmarkSecuritiesDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveTopBenchmarkSecuritiesData);
             }
@@ -5221,7 +5221,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveTopBenchmarkSecuritiesDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveTopBenchmarkSecuritiesDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveTopBenchmarkSecuritiesDataDelegate, new object[] {
-                        benchmarkSelectionData,
+                        portfolioSelectionData,
                         effectiveDate}, this.onEndRetrieveTopBenchmarkSecuritiesDataDelegate, this.onRetrieveTopBenchmarkSecuritiesDataCompletedDelegate, userState);
         }
         
@@ -6559,9 +6559,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
-                _args[0] = benchmarkSelectionData;
+                _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveTopBenchmarkSecuritiesData", _args, callback, asyncState);
                 return _result;

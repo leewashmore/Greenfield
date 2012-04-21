@@ -24,12 +24,9 @@ namespace GreenField.ServiceCaller
         
         #endregion
 
-
         void RetrievePortfolioSelectionData(Action<List<PortfolioSelectionData>> callback);
 
         void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback);
-
-
 
         void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback);
 
@@ -47,15 +44,14 @@ namespace GreenField.ServiceCaller
 
         void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback);
 
-        void RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback);
+        void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback);
 
         void RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
         void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback);
 
         void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback);                    
-        
-
+     
         void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback);
 
         void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
@@ -65,7 +61,6 @@ namespace GreenField.ServiceCaller
         void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
         void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
-
 
         void RetriveValuesForFilters(String filterType, Action<List<String>> callback);
 

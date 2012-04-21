@@ -862,7 +862,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective Date selected by user</param>
         /// <returns>returns list of Top Ten Benchmarks </returns>
         [OperationContract]
-        public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
             List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
