@@ -121,7 +121,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData.Name.ToString(), RetrievePerformanceGridDataCallbackMethod);
+                    _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData.PortfolioId.ToString(), RetrievePerformanceGridDataCallbackMethod);
                 }
                 else
                 {
