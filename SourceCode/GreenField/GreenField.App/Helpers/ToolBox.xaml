@@ -68,9 +68,8 @@
                                          SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
                                          Text="{Binding PortfolioSearchText, Mode=TwoWay}"
                                          DisplayMemberPath="PortfolioId"
-                                         EmptyText="Search Portfolio..."
-                                     
-                                     telerik:TextSearch.TextPath="PortfolioId"
+                                         EmptyText="Search Portfolio..."                                     
+                                         telerik:TextSearch.TextPath="PortfolioId"
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"

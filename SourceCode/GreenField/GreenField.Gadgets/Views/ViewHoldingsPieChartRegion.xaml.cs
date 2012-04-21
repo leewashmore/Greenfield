@@ -10,7 +10,6 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
-using Telerik.Windows.Controls.Charting;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 
@@ -19,36 +18,36 @@ namespace GreenField.Gadgets.Views
     /// <summary>
     /// View Class of Holdings Pie Chart
     /// </summary>
-    public partial class ViewHoldingsPieChart : ViewBaseUserControl
+    public partial class ViewHoldingsPieChartRegion : ViewBaseUserControl
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="dataContextSource">ViewModelHoldingsPieChart as the data context</param>
-        public ViewHoldingsPieChart(ViewModelHoldingsPieChart dataContextSource)
+        public ViewHoldingsPieChartRegion(ViewModelHoldingsPieChartRegion dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            this.DataContextHoldingsPieChart = dataContextSource;
-            dataContextSource.holdingsPieChartDataLoadedEvent +=
-                new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
-            
+            this.DataContextHoldingsPieChartRegion = dataContextSource;
+            dataContextSource.holdingsPieChartForRegionDataLoadedEvent +=
+                new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartRegionDataLoadedEvent);
+
         }
         #endregion
 
-        private ViewModelHoldingsPieChart _dataContextHoldingsPieChart;
-        public ViewModelHoldingsPieChart DataContextHoldingsPieChart
+        private ViewModelHoldingsPieChartRegion _dataContextHoldingsPieChartRegion;
+        public ViewModelHoldingsPieChartRegion DataContextHoldingsPieChartRegion
         {
-            get { return _dataContextHoldingsPieChart; }
-            set { _dataContextHoldingsPieChart = value; }
+            get { return _dataContextHoldingsPieChartRegion; }
+            set { _dataContextHoldingsPieChartRegion = value; }
         }
 
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
         /// <param name="e"></param>
-        void dataContextSource_holdingsPieChartDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        void dataContextSource_holdingsPieChartRegionDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
             {
@@ -66,9 +65,9 @@ namespace GreenField.Gadgets.Views
 
         public override void Dispose()
         {
-            this.DataContextHoldingsPieChart.holdingsPieChartDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
-            this.DataContextHoldingsPieChart.Dispose();
-            this.DataContextHoldingsPieChart = null;
+            this.DataContextHoldingsPieChartRegion.holdingsPieChartForRegionDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartRegionDataLoadedEvent);
+            this.DataContextHoldingsPieChartRegion.Dispose();
+            this.DataContextHoldingsPieChartRegion = null;
             this.DataContext = null;
         }
         #endregion

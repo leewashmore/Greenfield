@@ -137,9 +137,7 @@ namespace GreenField.ServiceCaller
             };
         }
         #endregion
-
-        
-
+       
         #endregion
 
         #region Build2 Interaction Methods
@@ -160,6 +158,7 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
+
 
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {

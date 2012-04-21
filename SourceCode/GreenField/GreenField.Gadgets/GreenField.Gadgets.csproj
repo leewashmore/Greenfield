@@ -145,6 +145,7 @@
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
+    <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
     <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
@@ -175,6 +176,9 @@
     </Compile>
     <Compile Include="Views\ViewHeatMap.xaml.cs">
       <DependentUpon>ViewHeatMap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewHoldingsPieChartRegion.xaml.cs">
+      <DependentUpon>ViewHoldingsPieChartRegion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
@@ -274,6 +278,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewHeatMap.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewHoldingsPieChartRegion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

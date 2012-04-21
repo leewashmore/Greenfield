@@ -35,7 +35,7 @@ namespace GreenField.Web.Helpers
             if (ex == null)
                 throw new ArgumentNullException();
 
-            string userName = (System.Web.HttpContext.Current.Session["Session"] as Session).UserName;
+           string userName = (System.Web.HttpContext.Current.Session["Session"] as Session).UserName;
 
             if (userName == null)
                 throw new InvalidOperationException();

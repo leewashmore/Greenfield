@@ -8,25 +8,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Events;
-using System.Collections.Generic;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.Common;
-using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.Common;
+using Microsoft.Practices.Prism.ViewModel;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
     /// <summary>
     /// Class that provides the interaction of the view model with the Service caller and the View.
-    /// </summary>
-    public class ViewModelHoldingsPieChart : NotificationObject
+    /// </summary>    
+    public class ViewModelHoldingsPieChartRegion : NotificationObject
     {
-       #region PrivateMembers
-
+        #region PrivateMembers
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
@@ -45,23 +43,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;  
-      
+        private PortfolioSelectionData _PortfolioSelectionData;
         #endregion
 
-       #region Constructor
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="param">MEF Eventaggrigator instance</param>
-        public ViewModelHoldingsPieChart(DashboardGadgetParam param)
+        public ViewModelHoldingsPieChartRegion(DashboardGadgetParam param)
         {
+
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;           
+            _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-       
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
@@ -70,32 +68,27 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_PortfolioSelectionData != null)
                 HandleFundReferenceSet(_PortfolioSelectionData);
-
-            //if (_benchmarkSelectionData != null && EffectiveDate != null)
-            //{
-            //    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
-            //}
-         //   _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
         }
         #endregion
 
-       #region Properties
+        #region Properties
         #region UI Fields
 
+      
+
         /// <summary>
-        /// Collection that contains the holdings data to be binded to the sector chart
+        /// Collection that contains the holdings data to be binded to the region chart
         /// </summary>
-        private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfo;
-        public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfo
+        private ObservableCollection<HoldingsPercentageData> _holdingsPercentageInfoForRegion;
+        public ObservableCollection<HoldingsPercentageData> HoldingsPercentageInfoForRegion
         {
-            get { return _holdingsPercentageInfo; }
+            get { return _holdingsPercentageInfoForRegion; }
             set
             {
-                _holdingsPercentageInfo = value;
-                RaisePropertyChanged(()=> this.HoldingsPercentageInfo);
+                _holdingsPercentageInfoForRegion = value;
+                RaisePropertyChanged(() => this.HoldingsPercentageInfoForRegion);
             }
         }
-
         /// <summary>
         /// Effective date appended by as of
         /// </summary>
@@ -113,10 +106,10 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
-            get 
+            get
             {
                 _effectiveDate = System.DateTime.Now.AddDays(-1);
-                return _effectiveDate; 
+                return _effectiveDate;
             }
             set
             {
@@ -127,9 +120,9 @@ namespace GreenField.Gadgets.ViewModels
 
 
 
-       /// <summary>
-       /// Collection that contains the filter types to be displayed in the combo box
-       /// </summary>
+        /// <summary>
+        /// Collection that contains the filter types to be displayed in the combo box
+        /// </summary>
         public ObservableCollection<String> FilterTypes
         {
             get
@@ -144,16 +137,16 @@ namespace GreenField.Gadgets.ViewModels
         private String _filterTypesSelection;
         public String FilterTypesSelection
         {
-            get 
-            { 
+            get
+            {
                 return _filterTypesSelection;
             }
             set
             {
-               
-                    _filterTypesSelection = value;
-                    _dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod); 
-                     RaisePropertyChanged(() => this.FilterTypesSelection);
+
+                _filterTypesSelection = value;
+                _dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod);
+                RaisePropertyChanged(() => this.FilterTypesSelection);
             }
         }
         /// <summary>
@@ -171,7 +164,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     RaisePropertyChanged(() => this.ValueTypes);
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -189,26 +182,25 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);                      
-
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                     RaisePropertyChanged(() => this.ValueTypesSelection);
-                }  
-                
+                }
+
             }
         }
 
         #endregion
         #endregion
 
-       #region Events
+        #region Events
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler holdingsPieChartDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler holdingsPieChartForRegionDataLoadedEvent;
         #endregion
 
-       #region Event Handlers
+        #region Event Handlers
         /// <summary>
         /// Assigns UI Field Properties based on Selected Effective Date
         /// </summary>
@@ -225,7 +217,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                      //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+                        //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -256,9 +248,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (null != holdingsPieChartDataLoadedEvent)
-                        holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);                   
+                    if (null != holdingsPieChartForRegionDataLoadedEvent)
+                        holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });                  
+                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                 }
                 else
                 {
@@ -271,32 +263,32 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
         #endregion
 
-       #region Callback Methods
+        #region Callback Methods
 
+       
         /// <summary>
-        /// Callback method that assigns value to the HoldingsPercentageInfo property
+        /// Callback method that assigns value to the HoldingsPercentageInfoForRegion property
         /// </summary>
-        /// <param name="result">contains the holdings data for the sector pie chart</param>
-        public void RetrieveHoldingsPercentageDataCallbackMethod(List<HoldingsPercentageData> result)
+        /// <param name="result">contains the holdings data for the region  pie chart</param>
+        public void RetrieveHoldingsPercentageDataForRegionCallbackMethod(List<HoldingsPercentageData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
-            try 
+            try
             {
                 if (result != null)
                 {
-
-                    HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);
-                    if (null != holdingsPieChartDataLoadedEvent)
-                        holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>(result);
+                    if (null != holdingsPieChartForRegionDataLoadedEvent)
+                        holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -305,7 +297,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }       
+        }
 
         /// <summary>
         /// Callback method that assigns value to ValueTypes
@@ -313,12 +305,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">Contains the list of value types for a selected region</param>
         public void RetrieveValuesForFiltersCallbackMethod(List<String> result)
         {
-            ValueTypes = result;        
+            ValueTypes = result;
         }
 
         #endregion
 
-       #region EventUnSubscribe
+        #region EventUnSubscribe
 
         public void Dispose()
         {
@@ -326,5 +318,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
+
     }
 }

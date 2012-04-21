@@ -1,4 +1,4 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewHoldingsPieChart"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewHoldingsPieChartRegion"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -24,7 +24,7 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>                  
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
                              telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
@@ -71,55 +71,55 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>-->
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>               
-            </Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>              
+            </Grid.RowDefinitions>           
             <Grid Grid.Row="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
-                    <TextBlock Text="MSCI Standard Sector Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <TextBlock Text="MSCI Standard Region Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
                     <TextBlock Text="{Binding EffectiveDateString}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
-               <Grid Grid.Row="1">
+                <Grid Grid.Row="1">
                     <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-                    <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                        <telerik:RadChart x:Name="crtHoldingsPercentageSector"  Visibility="Visible" ItemsSource="{Binding HoldingsPercentageInfo}" telerik:StyleManager.Theme="Metro">
-                            <telerik:RadChart.DefaultView>
-                                <telerikCharting:ChartDefaultView>
-                                    <telerik:ChartDefaultView.ChartLegend>
-                                        <telerik:ChartLegend x:Name="crtHoldingsPercentageSectorLegend" Visibility="Collapsed"/>
-                                    </telerik:ChartDefaultView.ChartLegend>
-                                    <telerikCharting:ChartDefaultView.ChartArea>
-                                        <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
-                                    </telerikCharting:ChartDefaultView.ChartArea>
-                                </telerikCharting:ChartDefaultView>
-                            </telerik:RadChart.DefaultView>
-                            <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping>
-                                    <telerik:SeriesMapping.SeriesDefinition>
-                                        <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
+                        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                            <telerik:RadChart x:Name="crtHoldingsPercentageRegion"  Visibility="Visible" ItemsSource="{Binding HoldingsPercentageInfoForRegion}" telerik:StyleManager.Theme="Metro">
+                                <telerik:RadChart.DefaultView>
+                                    <telerik:ChartDefaultView>
+                                        <telerik:ChartDefaultView.ChartLegend>
+                                            <telerik:ChartLegend x:Name="crtHoldingsPercentageRegionLegend" Visibility="Collapsed"/>
+                                        </telerik:ChartDefaultView.ChartLegend>
+                                        <telerikCharting:ChartDefaultView.ChartArea>
+                                            <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
+                                        </telerikCharting:ChartDefaultView.ChartArea>
+                                    </telerik:ChartDefaultView>
+                                </telerik:RadChart.DefaultView>
+                                <telerik:RadChart.SeriesMappings>
+                                    <telerik:SeriesMapping>
+                                        <telerik:SeriesMapping.SeriesDefinition>
+                                            <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                              LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})" >
-                                            <telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                                <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"  />
-                                            </telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                            <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                                <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
+                                                <telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                                    <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single"/>
+                                                </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                                <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                                    <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
                                                      ShowConnectors="True" />
-                                            </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                        </telerik:DoughnutSeriesDefinition>
-                                    </telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:ItemMapping FieldName="BenchmarkWeight" DataPointMember="YValue" />
-                                    <telerik:ItemMapping FieldName="SegmentName" DataPointMember="XCategory" />
-                                    <telerik:ItemMapping FieldName="PortfolioWeight" DataPointMember="XValue" />
-                                </telerik:SeriesMapping>
-                            </telerik:RadChart.SeriesMappings>
-                        </telerik:RadChart>
-                    </Border>
+                                                </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                            </telerik:DoughnutSeriesDefinition>
+                                        </telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:ItemMapping FieldName="BenchmarkWeight" DataPointMember="YValue" />
+                                        <telerik:ItemMapping FieldName="SegmentName" DataPointMember="XCategory" />
+                                        <telerik:ItemMapping FieldName="PortfolioWeight" DataPointMember="XValue" />
+                                    </telerik:SeriesMapping>
+                                </telerik:RadChart.SeriesMappings>
+                            </telerik:RadChart>
+                        </Border>
                     </telerik:RadBusyIndicator>
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-                            <telerik:RadGridView Name="dgHoldingsPercentageSector" AutoGenerateColumns="True" Visibility="Collapsed"
+                        <telerik:RadGridView Name="dgHoldingsPercentageRegion" AutoGenerateColumns="True" Visibility="Collapsed"
                                      ItemsSource="{Binding HoldingsPercentageInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
@@ -128,7 +128,7 @@
                                      UseLayoutRounding="True"/>
                     </telerik:RadBusyIndicator>
                 </Grid>
-            </Grid>        
+            </Grid>
         </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
