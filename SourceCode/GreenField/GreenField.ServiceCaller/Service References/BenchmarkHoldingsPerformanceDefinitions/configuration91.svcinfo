@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="tQ/aFL9rkdpCuYnvTs+L8lpi5kk=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="GNcgLtBDfo7BSKX486PYyhZx0Kw=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations1">
+    <bindingConfiguration bindingType="basicHttpBinding" name="BenchmarkHoldingsPerformanceOperations1">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_BenchmarkHoldingsPerformanceOperations1</serializedValue>
+          <serializedValue>BenchmarkHoldingsPerformanceOperations1</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations" bindingType="basicHttpBinding" address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc" bindingConfiguration="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations1">
+    <endpoint name="BenchmarkHoldingsPerformanceOperations" contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations" bindingType="basicHttpBinding" address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc" bindingConfiguration="BenchmarkHoldingsPerformanceOperations1">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc</serializedValue>
@@ -124,7 +124,7 @@
           <serializedValue>basicHttpBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_BenchmarkHoldingsPerformanceOperations1</serializedValue>
+          <serializedValue>BenchmarkHoldingsPerformanceOperations1</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations</serializedValue>
@@ -187,7 +187,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>BasicHttpBinding_BenchmarkHoldingsPerformanceOperations</serializedValue>
+          <serializedValue>BenchmarkHoldingsPerformanceOperations</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

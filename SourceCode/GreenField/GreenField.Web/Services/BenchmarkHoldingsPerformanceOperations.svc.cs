@@ -16,10 +16,16 @@ using System.Linq;
 
 namespace GreenField.Web.Services
 {
+    /// <summary>
+    /// Service Class for Holdings, Benchmark & Performance
+    /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class BenchmarkHoldingsPerformanceOperations
     {
+        /// <summary>
+        /// Entity object for Dimension Web Service
+        /// </summary>
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
@@ -37,6 +43,10 @@ namespace GreenField.Web.Services
         {
         }
 
+        /// <summary>
+        /// Method to retrieve Portfolio Selection Data from GF_PPORTFOLIO_SELECTION
+        /// </summary>
+        /// <returns>List of PortfolioSelectionData</returns>
         [OperationContract]
         public List<PortfolioSelectionData> RetrievePortfolioSelectionData()
         {
@@ -185,20 +195,20 @@ namespace GreenField.Web.Services
                     decimal? sumMarketValuePortfolio = data.Sum(t => t.DIRTY_VALUE_PC);
                     decimal? sumMarketValueBenchmark = data.Sum(t => t.DIRTY_VALUE_PC);
                     if (sumMarketValuePortfolio != 0 && sumMarketValueBenchmark != 0)
-	                {
-		                foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
+                    {
+                        foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
                         {
-                             result.Add(new TopHoldingsData()
-                             {
-                                 Ticker = record.TICKER,
-                                 Holding = record.PORTFOLIO_ID,
-                                 MarketValue = record.DIRTY_VALUE_PC,
-                                 PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
-                                 BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
-                                 BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
-                             });
-                         } 
-	                }
+                            result.Add(new TopHoldingsData()
+                            {
+                                Ticker = record.TICKER,
+                                Holding = record.PORTFOLIO_ID,
+                                MarketValue = record.DIRTY_VALUE_PC,
+                                PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
+                                BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
+                                BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
+                            });
+                        }
+                    }
                 }
 
                 //List<TopHoldingsData> result = new List<TopHoldingsData>();
@@ -351,53 +361,9 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Returns Portfolio Details Data
         /// </summary>
-        /// <param name="objPortfolioIdentifier"></param>
-        /// <param name="objSelectedDate"></param>
+        /// <param name="objPortfolioIdentifier">Details of Selected Portfolio</param>
+        /// <param name="objSelectedDate">Selected Date</param>
         /// <returns>List of PortfolioDetailsData</returns>
-        //[OperationContract]
-        //public List<PortfolioDetailsData> RetrievePortfolioDetailsData(string objPortfolioIdentifier, DateTime objSelectedDate)
-        //{
-        //    DimensionEntitiesService.Entities entity = DimensionEntity;
-        //    List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData =
-        //        entity.GF_PORTFOLIO_HOLDINGS.Take(100).ToList();
-
-        //    List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
-        //    try
-        //    {
-        //        foreach (GF_PORTFOLIO_HOLDINGS item in dimensionServicePortfolioData)
-        //        {
-        //            PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
-        //            portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
-        //            portfolioResult.IssueName = item.ISSUE_NAME;
-        //            portfolioResult.Ticker = item.TICKER;
-        //            portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
-        //            portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
-        //            portfolioResult.SectorName = item.GICS_SECTOR_NAME;
-        //            portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
-        //            portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
-        //            portfolioResult.SecurityType = item.SECURITY_TYPE;
-        //            portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
-        //            portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-        //            portfolioResult.PortfolioDirtyValuePC = 0;
-        //            portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
-        //            portfolioResult.PortfolioWeight = 0;
-        //            portfolioResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
-        //            portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
-        //            portfolioResult.ReAshEmmModelWeight = portfolioResult.AshEmmModelWeight;
-        //            portfolioResult.RePortfolioWeight = portfolioResult.PortfolioWeight;
-        //            portfolioResult.ReBenchmarkWeight = portfolioResult.BenchmarkWeight;
-        //            portfolioResult.ActivePosition = portfolioResult.PortfolioWeight - portfolioResult.BenchmarkWeight;
-        //            result.Add(portfolioResult);
-        //        }
-
-        //        return result;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return null;
-        //    }
-        //}
-
         [OperationContract]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark = false)
         {
@@ -409,11 +375,15 @@ namespace GreenField.Web.Services
                 if ((objPortfolioIdentifier == null) || (objSelectedDate == null))
                     return result;
 
-                #region webserviceCode
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData =
-                    entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())).Take(100).ToList();
+                    entity.GF_PORTFOLIO_HOLDINGS.
+                    Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == objSelectedDate.Date)).ToList();
+
+                //If Service returned empty set
+                if (dimensionServicePortfolioData.Count == 0)
+                    return result;
 
                 foreach (GF_PORTFOLIO_HOLDINGS item in dimensionServicePortfolioData)
                 {
@@ -440,27 +410,6 @@ namespace GreenField.Web.Services
                     portfolioResult.ActivePosition = portfolioResult.PortfolioWeight - portfolioResult.BenchmarkWeight;
                     result.Add(portfolioResult);
                 }
-                #endregion
-
-                #region DataTableSQL
-
-                //string query = "Select * from tblHoldingsData";
-                //string queryWhere = " where portfolio_id= " + objPortfolioIdentifier.PortfolioId.ToString();
-                //query = query + queryWhere;
-
-                //DataTable dataTable = new DataTable();
-                //dataTable = GetDataTable(query);
-
-                //foreach (DataRow item in dataTable.Rows)
-                //{
-                //    PortfolioDetailsData data = new PortfolioDetailsData();
-                //    data.A_Sec_Instr_Type = item.Field<string>("ASEC_INSTR_TYPE");
-                //    data.AsecSecShortName = item.Field<string>("ASEC_SEC_SHORT_NAME");
-                //    data.AshEmmModelWeight = item.Field<decimal>("ASH_EMM_MODEL_WEIGHT");
-                //    result.Add(data);
-                //}
-
-                #endregion
 
                 return result;
             }
@@ -470,8 +419,6 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
-
-
 
         /// <summary>
         /// Method to retrieve data in Benchmark Chart
@@ -928,38 +875,32 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Method to Retreive Asset Allocation Data
+        /// </summary>
+        /// <param name="portfolioSelectionData">Details of Selected Portfolio</param>
+        /// <param name="effectiveDate">The Selected Date</param>
+        /// <returns>List of AssetAllocationData</returns>
         [OperationContract]
-        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             try
             {
-                //List<AssetAllocationData> result = new List<AssetAllocationData>();
-                //result.Add(new AssetAllocationData() { Country = "Mideast Regional", PortfolioShare = 4.4, ModelShare = 4.5, BenchmarkShare = 0, BetShare = 4.5 });
-                //result.Add(new AssetAllocationData() { Country = "Ex-South Africa", PortfolioShare = 1.9, ModelShare = 2.0, BenchmarkShare = 0.6, BetShare = 1.4 });
-                //result.Add(new AssetAllocationData() { Country = "Cash", PortfolioShare = 0.7, ModelShare = 0.7, BenchmarkShare = 0, BetShare = 0.7 });
-                //result.Add(new AssetAllocationData() { Country = "Russia", PortfolioShare = 6.6, ModelShare = 6.6, BenchmarkShare = 6.1, BetShare = 0.5 });
-                //result.Add(new AssetAllocationData() { Country = "Mexico", PortfolioShare = 4.5, ModelShare = 4.4, BenchmarkShare = 4.1, BetShare = 0.3 });
-                //result.Add(new AssetAllocationData() { Country = "Korea", PortfolioShare = 15.6, ModelShare = 15.3, BenchmarkShare = 15.1, BetShare = 0.2 });
-                //return result;
                 List<AssetAllocationData> result = new List<AssetAllocationData>();
-                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
-                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
 
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    result.Add(new AssetAllocationData()
-                    {
-                        Country = row.Field<string>("ISO_COUNTRY_CODE"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
-                        ModelShare = row.Field<Single?>("ASH_EMM_MODEL_WEIGHT"),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
-                        BetShare = (row.Field<Single?>("ASH_EMM_MODEL_WEIGHT")) - (row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?))
-                    });
-                }
+                //Arguement Null Exception
+                if ((portfolioSelectionData == null) || (effectiveDate == null))
+                    return result;
 
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                //Arguement Null Exception
+                if (entity == null)
+                    return result;
+
+                List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                result = AssetAllocationCalculations.CalculateAssetAllocationValues(dimensionPortfolioHoldingsData, portfolioSelectionData);
                 return result;
-
             }
             catch (Exception ex)
             {
@@ -967,8 +908,6 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
-
-
 
         #endregion
 

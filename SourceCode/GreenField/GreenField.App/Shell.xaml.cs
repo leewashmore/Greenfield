@@ -25,11 +25,11 @@ namespace GreenField.App
     {
         public Shell()
         {
-            InitializeComponent();           
+            InitializeComponent();
         }
 
         [Import]
-        public ViewModelShell DataContextSource 
+        public ViewModelShell DataContextSource
         {
             set
             {

@@ -372,7 +372,7 @@
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" type="tns:BenchmarkHoldingsPerformanceOperations">
+  <wsdl:binding name="BenchmarkHoldingsPerformanceOperations" type="tns:BenchmarkHoldingsPerformanceOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Temp">
       <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/Temp" style="document" />
@@ -700,7 +700,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="BenchmarkHoldingsPerformanceOperations">
-    <wsdl:port name="BasicHttpBinding_BenchmarkHoldingsPerformanceOperations" binding="tns:BasicHttpBinding_BenchmarkHoldingsPerformanceOperations">
+    <wsdl:port name="BenchmarkHoldingsPerformanceOperations" binding="tns:BenchmarkHoldingsPerformanceOperations">
       <soap:address location="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc" />
     </wsdl:port>
   </wsdl:service>

@@ -16,8 +16,7 @@
   <xs:element name="ArrayOfPortfolioSelectionData" nillable="true" type="tns:ArrayOfPortfolioSelectionData" />
   <xs:complexType name="PortfolioSelectionData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioThemeSubGroupName" nillable="true" type="xs:string" />
@@ -250,11 +249,12 @@
   <xs:element name="ArrayOfAssetAllocationData" nillable="true" type="tns:ArrayOfAssetAllocationData" />
   <xs:complexType name="AssetAllocationData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="BetShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ModelShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ModelWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AssetAllocationData" nillable="true" type="tns:AssetAllocationData" />

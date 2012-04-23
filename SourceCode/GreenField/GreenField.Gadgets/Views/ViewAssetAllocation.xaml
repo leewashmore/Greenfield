@@ -7,19 +7,30 @@
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
-    
+
     <Grid x:Name="LayoutRoot" Background="White">
         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-            <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationInfo}" 
-                             CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True">
+            <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
+                                 CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
+                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                                 RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
+                                 FontFamily="Arial" FontSize="7">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="dgcCountry" Header="" DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left"/>
-                    <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcModelShare" Header="Model %" DataMemberBinding="{Binding ModelShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Bet (Model)" DataMemberBinding="{Binding BetShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right" SortingState="Descending"/>                    
+                    <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" 
+                                                DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left"/>
+                    <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" 
+                                                Header="Portfolio %" 
+                                                DataMemberBinding="{Binding PortfolioWeight, StringFormat=\{0:n2\}%}" 
+                                                Width="Auto" HeaderTextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" 
+                                                DataMemberBinding="{Binding ModelWeight, StringFormat=\{0:n2\}%}" 
+                                                Width="Auto" HeaderTextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" 
+                                                DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n2\}%}" 
+                                                Width="Auto" HeaderTextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" 
+                                                DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
+                                                Width="Auto" HeaderTextAlignment="Right" SortingState="Descending"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Border>

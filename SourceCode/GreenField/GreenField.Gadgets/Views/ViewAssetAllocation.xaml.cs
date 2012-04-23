@@ -34,6 +34,8 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Constructor
+
         public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
@@ -41,11 +43,17 @@ namespace GreenField.Gadgets.Views
             this.DataContextAssetAllocation = dataContextSource;
         }
 
+        #endregion
+
+        #region EventUnsubscribe
+
         public override void Dispose()
         {
             this.DataContextAssetAllocation.Dispose();
             this.DataContextAssetAllocation = null;
             this.DataContext = null;
         }
+
+        #endregion
     }
 }

@@ -137,7 +137,7 @@ namespace GreenField.ServiceCaller
             };
         }
         #endregion
-       
+
         #endregion
 
         #region Build2 Interaction Methods
@@ -198,10 +198,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback)
+        public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveAssetAllocationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
                 if (callback != null)
@@ -888,7 +888,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        #endregion 
+        #endregion
 
         #endregion
     }

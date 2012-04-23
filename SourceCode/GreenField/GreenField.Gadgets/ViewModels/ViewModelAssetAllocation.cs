@@ -19,63 +19,96 @@ using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View Model for Asset Allocation Gadget
+    /// </summary>
     public class ViewModelAssetAllocation : NotificationObject
     {
-        #region Fields
         //MEF Singletons
+        #region Fields
+
+        /// <summary>
+        /// Event Aggregator
+        /// </summary>
         private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// Instance of Service Caller Class
+        /// </summary>
         private IDBInteractivity _dbInteractivity;
+        
+        /// <summary>
+        /// Instance of LoggerFacade
+        /// </summary>
         private ILoggerFacade _logger;
 
-        private PortfolioSelectionData _PortfolioSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
+        /// <summary>
+        /// Details of Selected Portfolio
+        /// </summary>
+        private PortfolioSelectionData _portfolioSelectionData;
+        
+        /// <summary>
+        /// Selected Date
+        /// </summary>
         private DateTime _effectiveDate;
+
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor of the View Model
+        /// </summary>
+        /// <param name="param"></param>
         public ViewModelAssetAllocation(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-            //{
-            //    _dbInteractivity.RetrieveAssetAllocationData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrieveAssetAllocationData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+            if ((_portfolioSelectionData != null) && (_effectiveDate != null))
+                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
-        } 
+        }
         #endregion
 
-        #region Properties
+        #region PropertiesDeclaration
+
         #region UI Fields
-        private List<AssetAllocationData> _assetAllocationInfo;
-        public List<AssetAllocationData> AssetAllocationInfo
+
+        /// <summary>
+        /// Collection of AssetAllocationData bound to the DataGrid
+        /// </summary>
+        private List<AssetAllocationData> _assetAllocationData;
+        public List<AssetAllocationData> AssetAllocationData
         {
-            get { return _assetAllocationInfo; }
+            get { return _assetAllocationData; }
             set
             {
-                if (_assetAllocationInfo != value)
+                if (_assetAllocationData != value)
                 {
-                    _assetAllocationInfo = value;
-                    RaisePropertyChanged(() => this.AssetAllocationInfo);
+                    _assetAllocationData = value;
+                    RaisePropertyChanged(() => this.AssetAllocationData);
                 }
             }
-        } 
+        }
+
         #endregion
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// Handle Fund Change Event
+        /// </summary>
+        /// <param name="PortfolioSelectionData">Details of Selected Portfolio</param>
         public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -86,10 +119,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    _portfolioSelectionData = PortfolioSelectionData;
+                    if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -105,6 +138,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Handle Date Change Event
+        /// </summary>
+        /// <param name="effectiveDate">Effective Date</param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -115,9 +152,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -133,36 +170,14 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (benchmarkSelectionData != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-                    {
-                        _dbInteractivity.RetrieveAssetAllocationData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// Callback Method for AssetAllocationData
+        /// </summary>
+        /// <param name="assetAllocationData">Returns Collection of AssetAllocationData</param>
         private void RetrieveAssetAllocationDataCallbackMethod(List<AssetAllocationData> assetAllocationData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -172,7 +187,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (assetAllocationData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, assetAllocationData, 1);
-                    AssetAllocationInfo = assetAllocationData;
+                    AssetAllocationData = assetAllocationData;
                 }
                 else
                 {
@@ -185,15 +200,17 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
-        #endregion         
+        }
+        #endregion
 
         #region EventUnsubscribe
 
+        /// <summary>
+        /// Method to Kill Events & Event Subscribers
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
-            _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Unsubscribe(HandleBenchmarkReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
 

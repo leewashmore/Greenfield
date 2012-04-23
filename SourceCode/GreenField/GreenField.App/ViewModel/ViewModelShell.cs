@@ -295,14 +295,17 @@ namespace GreenField.App.ViewModel
             get { return _portfolioSearchText; }
             set
             {
-                _portfolioSearchText = value;
-                RaisePropertyChanged(() => this.PortfolioSearchText);
-                if (value != String.Empty && PortfolioSelectionInfo != null)
-                    PortfolioSelectorInfo = PortfolioSelectionInfo
-                                .Where(record => record.PortfolioId.ToLower().Contains(value.ToLower()))
-                                .ToList();
-                else
-                    PortfolioSelectorInfo = PortfolioSelectionInfo;
+                if (value != null)
+                {
+                    _portfolioSearchText = value;
+                    RaisePropertyChanged(() => this.PortfolioSearchText);
+                    if (value != String.Empty && PortfolioSelectionInfo != null)
+                        PortfolioSelectorInfo = PortfolioSelectionInfo
+                                    .Where(record => record.PortfolioId.ToLower().Contains(value.ToLower()))
+                                    .ToList();
+                    else
+                        PortfolioSelectorInfo = PortfolioSelectionInfo;
+                }
             }
         }
 
@@ -329,10 +332,13 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected effective date - Publishes EffectiveDateReferenceSetEvent on set event
         /// </summary>
-        private DateTime? _selectedEffectiveDateInfo;
+        private DateTime? _selectedEffectiveDateInfo = DateTime.Now;
         public DateTime? SelectedEffectiveDateInfo
         {
-            get { return _selectedEffectiveDateInfo; }
+            get
+            {
+                return _selectedEffectiveDateInfo;
+            }
             set
             {
                 _selectedEffectiveDateInfo = value;
@@ -1807,7 +1813,7 @@ namespace GreenField.App.ViewModel
         private bool MarketSnapshotSaveCommandValidationMethod(object param)
         {
             return SelectedMarketSnapshotSelectionInfo != null;
-        }            
+        }
 
         /// <summary>
         /// MarketSnapshotSaveCommand execution method - saves changes in existing market performance snapshot
