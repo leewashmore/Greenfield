@@ -128,6 +128,8 @@
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
+    <Compile Include="Helpers\ServiceFault.cs" />
+    <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">

@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="GreenField.Web.DashboardOperations" CodeBehind="DashboardOperations.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GreenField.Web.Services.DashboardOperations" CodeBehind="DashboardOperations.svc.cs" %>
