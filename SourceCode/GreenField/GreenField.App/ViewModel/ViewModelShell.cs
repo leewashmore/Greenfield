@@ -437,69 +437,69 @@ namespace GreenField.App.ViewModel
         }
         #endregion
 
-        #region Country Selector
-        /// <summary>
-        /// Stores visibility property of the country selector
-        /// </summary>
-        private Visibility _countrySelectorVisibility = Visibility.Collapsed;
-        public Visibility CountrySelectorVisibility
-        {
-            get { return _countrySelectorVisibility; }
-            set
-            {
-                _countrySelectorVisibility = value;
-                RaisePropertyChanged(() => this.CountrySelectorVisibility);
-            }
-        }
-        #endregion
+        //#region Country Selector
+        ///// <summary>
+        ///// Stores visibility property of the country selector
+        ///// </summary>
+        //private Visibility _countrySelectorVisibility = Visibility.Collapsed;
+        //public Visibility CountrySelectorVisibility
+        //{
+        //    get { return _countrySelectorVisibility; }
+        //    set
+        //    {
+        //        _countrySelectorVisibility = value;
+        //        RaisePropertyChanged(() => this.CountrySelectorVisibility);
+        //    }
+        //}
+        //#endregion
 
-        #region Sector Selector
-        /// <summary>
-        /// Stores visibility property of the sector selector
-        /// </summary>
-        private Visibility _sectorSelectorVisibility = Visibility.Collapsed;
-        public Visibility SectorSelectorVisibility
-        {
-            get { return _sectorSelectorVisibility; }
-            set
-            {
-                _sectorSelectorVisibility = value;
-                RaisePropertyChanged(() => this.SectorSelectorVisibility);
-            }
-        }
-        #endregion
+        //#region Sector Selector
+        ///// <summary>
+        ///// Stores visibility property of the sector selector
+        ///// </summary>
+        //private Visibility _sectorSelectorVisibility = Visibility.Collapsed;
+        //public Visibility SectorSelectorVisibility
+        //{
+        //    get { return _sectorSelectorVisibility; }
+        //    set
+        //    {
+        //        _sectorSelectorVisibility = value;
+        //        RaisePropertyChanged(() => this.SectorSelectorVisibility);
+        //    }
+        //}
+        //#endregion
 
-        #region Industry Selector
-        /// <summary>
-        /// Stores visibility property of the industry selector
-        /// </summary>
-        private Visibility _industrySelectorVisibility = Visibility.Collapsed;
-        public Visibility IndustrySelectorVisibility
-        {
-            get { return _industrySelectorVisibility; }
-            set
-            {
-                _industrySelectorVisibility = value;
-                RaisePropertyChanged(() => this.IndustrySelectorVisibility);
-            }
-        }
-        #endregion
+        //#region Industry Selector
+        ///// <summary>
+        ///// Stores visibility property of the industry selector
+        ///// </summary>
+        //private Visibility _industrySelectorVisibility = Visibility.Collapsed;
+        //public Visibility IndustrySelectorVisibility
+        //{
+        //    get { return _industrySelectorVisibility; }
+        //    set
+        //    {
+        //        _industrySelectorVisibility = value;
+        //        RaisePropertyChanged(() => this.IndustrySelectorVisibility);
+        //    }
+        //}
+        //#endregion
 
-        #region Region Selector
-        /// <summary>
-        /// Stores visibility property of the region selector
-        /// </summary>
-        private Visibility _regionSelectorVisibility = Visibility.Collapsed;
-        public Visibility RegionSelectorVisibility
-        {
-            get { return _regionSelectorVisibility; }
-            set
-            {
-                _regionSelectorVisibility = value;
-                RaisePropertyChanged(() => this.RegionSelectorVisibility);
-            }
-        }
-        #endregion
+        //#region Region Selector
+        ///// <summary>
+        ///// Stores visibility property of the region selector
+        ///// </summary>
+        //private Visibility _regionSelectorVisibility = Visibility.Collapsed;
+        //public Visibility RegionSelectorVisibility
+        //{
+        //    get { return _regionSelectorVisibility; }
+        //    set
+        //    {
+        //        _regionSelectorVisibility = value;
+        //        RaisePropertyChanged(() => this.RegionSelectorVisibility);
+        //    }
+        //}
+        //#endregion
 
         #region Snapshot Selector
         /// <summary>
@@ -2685,10 +2685,10 @@ namespace GreenField.App.ViewModel
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
-            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
-            SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
-            IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
-            RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
+            //CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
+            //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
+            //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
+            //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
         }
 

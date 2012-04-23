@@ -117,7 +117,7 @@
         </Grid>
 
         <!--Country Selector-->
-        <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="4">
+        <!--<Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbCountrySelector"
@@ -139,10 +139,10 @@
                     </telerik:RadComboBox.ItemsPanel>
                 </telerik:RadComboBox>
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
         <!--Sector Selector-->
-        <Grid Margin="5,0,0,0" Visibility="{Binding SectorSelectorVisibility}" Grid.Column="5">
+        <!--<Grid Margin="5,0,0,0" Visibility="{Binding SectorSelectorVisibility}" Grid.Column="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Sector" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbSectorSelector"
@@ -164,10 +164,10 @@
                     </telerik:RadComboBox.ItemsPanel>
                 </telerik:RadComboBox>
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
         <!--Industry Selector-->
-        <Grid Margin="5,0,0,0" Visibility="{Binding IndustrySelectorVisibility}" Grid.Column="6">
+        <!--<Grid Margin="5,0,0,0" Visibility="{Binding IndustrySelectorVisibility}" Grid.Column="6">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Industry" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbIndustrySelector"
@@ -189,10 +189,10 @@
                     </telerik:RadComboBox.ItemsPanel>
                 </telerik:RadComboBox>
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
         <!--Region Selector-->
-        <Grid Margin="5,0,0,0" Visibility="{Binding RegionSelectorVisibility}" Grid.Column="7">
+        <!--<Grid Margin="5,0,0,0" Visibility="{Binding RegionSelectorVisibility}" Grid.Column="7">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbRegionSelector"
@@ -214,7 +214,7 @@
                     </telerik:RadComboBox.ItemsPanel>
                 </telerik:RadComboBox>
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
         <!--Snapshot Selector-->
         <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="8">

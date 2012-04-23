@@ -22,9 +22,9 @@ namespace GreenField.Web.DataContracts
         public DateTime EffectiveDate { get; set; }
 
         [DataMember]
-        public double PortfolioWeight { get; set; }
+        public decimal? PortfolioWeight { get; set; }
 
         [DataMember]
-        public double BenchmarkWeight { get; set; }
+        public decimal? BenchmarkWeight { get; set; }
     }
 }

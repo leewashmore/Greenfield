@@ -192,10 +192,10 @@
   <xs:complexType name="HoldingsPercentageData">
     <xs:sequence>
       <xs:element minOccurs="0" name="BenchmarkName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="EffectiveDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FundName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioWeight" type="xs:double" />
+      <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SegmentName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

@@ -22,7 +22,8 @@ namespace GreenField.App.Helpers
         COUNTRY_SELECTOR,
         SECTOR_SELECTOR,
         INDUSTRY_SELECTOR,
-        REGION_SELECTOR
+        REGION_SELECTOR,
+        FILTER_SELECTOR
     }
 
     public static class ToolBoxItemVisibility
@@ -36,6 +37,7 @@ namespace GreenField.App.Helpers
         public static Visibility SECTOR_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility INDUSTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility REGION_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility FILTER_SELECTOR_VISIBILITY = Visibility.Collapsed;
     }
 
     public static class ToolBoxSelecter
@@ -50,7 +52,8 @@ namespace GreenField.App.Helpers
                 Visibility countrySelectorVisibility = Visibility.Collapsed,
                 Visibility sectorSelectorVisibility = Visibility.Collapsed,
                 Visibility industrySelectorVisibility = Visibility.Collapsed,
-                Visibility regionSelectorVisibility = Visibility.Collapsed                
+                Visibility regionSelectorVisibility = Visibility.Collapsed,
+                Visibility filterSelectorVisibility = Visibility.Collapsed
             )
         {
             ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY = securitySelectorVisibility;
@@ -61,7 +64,8 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY = countrySelectorVisibility;
             ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY = sectorSelectorVisibility;
             ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY = industrySelectorVisibility;
-            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = regionSelectorVisibility;            
+            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = regionSelectorVisibility;
+            ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY = filterSelectorVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -81,20 +85,18 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
-                    UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(filterSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_COMMODITIES_SUMMARY:
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
-                        , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
+                        , filterSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
-                        , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
+                        , filterSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
@@ -107,8 +109,7 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , countrySelectorVisibility: Visibility.Visible, sectorSelectorVisibility: Visibility.Visible
-                        , industrySelectorVisibility: Visibility.Visible, regionSelectorVisibility: Visibility.Visible);
+                        , filterSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_COMPOSITION:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);

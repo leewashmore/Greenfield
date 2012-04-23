@@ -60,14 +60,18 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
+            if (EffectiveDate != null && _PortfolioSelectionData != null)
+            {
+                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+            }
+
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
-            if (_PortfolioSelectionData != null)
-                HandleFundReferenceSet(_PortfolioSelectionData);
+           
         }
         #endregion
 
@@ -106,15 +110,21 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
-            get
-            {
-                _effectiveDate = System.DateTime.Now.AddDays(-1);
-                return _effectiveDate;
-            }
+            get { return _effectiveDate; }
             set
             {
-                _effectiveDate = value;
-                RaisePropertyChanged(() => this.EffectiveDate);
+                if (_effectiveDate != value)
+                {
+                    _effectiveDate = value;
+
+                    if (_PortfolioSelectionData != null && EffectiveDate != null)
+                    {
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+
+                    }
+
+                    RaisePropertyChanged(() => this.EffectiveDate);
+                }
             }
         }
 
@@ -180,7 +190,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _valueTypesSelection = value;
 
-                    if (_PortfolioSelectionData != null)
+                    if (_PortfolioSelectionData != null && EffectiveDate != null)
                     {
                         _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
@@ -217,7 +227,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 }
                 else
@@ -248,9 +258,12 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (null != holdingsPieChartForRegionDataLoadedEvent)
-                        holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });                  
-                    _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    {
+                        if (null != holdingsPieChartForRegionDataLoadedEvent)
+                            holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                    }
                 }
                 else
                 {

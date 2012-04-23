@@ -61,21 +61,28 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;           
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-       
-            if (_eventAggregator != null)
+
+            if (EffectiveDate != null && _PortfolioSelectionData != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
-            if (_PortfolioSelectionData != null)
-                HandleFundReferenceSet(_PortfolioSelectionData);
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+            }           
 
             //if (_benchmarkSelectionData != null && EffectiveDate != null)
             //{
             //    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
             //}
          //   _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+
+
+            
+            //_dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+           
         }
         #endregion
 
@@ -113,15 +120,21 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
-            get 
-            {
-                _effectiveDate = System.DateTime.Now.AddDays(-1);
-                return _effectiveDate; 
-            }
+            get { return _effectiveDate; }
             set
             {
-                _effectiveDate = value;
-                RaisePropertyChanged(() => this.EffectiveDate);
+                if (_effectiveDate != value)
+                {
+                    _effectiveDate = value;
+
+                    if (_PortfolioSelectionData != null && EffectiveDate != null)
+                    {
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+
+                    }
+
+                    RaisePropertyChanged(() => this.EffectiveDate);
+                }
             }
         }
 
@@ -187,7 +200,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _valueTypesSelection = value;
 
-                    if (_PortfolioSelectionData != null)
+                    if (_PortfolioSelectionData != null && EffectiveDate != null)
                     {
                         _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);                      
 
@@ -225,7 +238,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                      //  _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -256,9 +269,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (null != holdingsPieChartDataLoadedEvent)
-                        holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);                   
+
+                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
                 }
                 else
                 {

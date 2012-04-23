@@ -80,7 +80,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <TextBlock Text="MSCI Standard Region Allocation(%)" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding EffectiveDateString}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Text="{Binding EffectiveDate}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
                 <Grid Grid.Row="1">
                     <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">

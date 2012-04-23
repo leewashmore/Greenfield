@@ -32,7 +32,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextHoldingsPieChart = dataContextSource;
             dataContextSource.holdingsPieChartDataLoadedEvent +=
-                new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
+            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
             
         }
         #endregion
