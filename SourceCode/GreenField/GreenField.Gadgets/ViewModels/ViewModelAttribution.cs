@@ -166,7 +166,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    RetrieveAttributionData(Convert.ToString(PortfolioSelectionData.Name), RetrieveAttributionDataCallBackMethod);
+                    RetrieveAttributionData(Convert.ToString(PortfolioSelectionData.PortfolioId), RetrieveAttributionDataCallBackMethod);
                 }
                 else
                 {
