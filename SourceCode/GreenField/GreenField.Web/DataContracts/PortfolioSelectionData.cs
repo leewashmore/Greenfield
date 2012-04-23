@@ -10,12 +10,6 @@ namespace GreenField.Web.DataContracts
     public class PortfolioSelectionData
     {
         [DataMember]
-        public string Name { get; set; }
-
-        [DataMember]
-        public string Category { get; set; }
-
-        [DataMember]
         public string PortfolioId { get; set; }
 
         [DataMember]
@@ -23,6 +17,9 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public string PortfolioThemeSubGroupId { get; set; }
+
+        [DataMember]
+        public string BenchmarkId { get; set; }
 
     }
 }
