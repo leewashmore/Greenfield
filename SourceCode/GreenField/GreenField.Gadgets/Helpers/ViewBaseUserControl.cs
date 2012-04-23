@@ -11,8 +11,8 @@ using System.Windows.Shapes;
 
 namespace GreenField.Gadgets.Helpers
 {
-    public abstract partial class ViewBaseUserControl : UserControl, IDisposable
+    public partial class ViewBaseUserControl : UserControl, IDisposable
     {
-        public abstract void Dispose();
+        public virtual void Dispose(){}
     }
 }
