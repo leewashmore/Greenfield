@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -32,15 +33,31 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            dataContextSource.TopHoldingsDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceTopHoldingsLoadedevent);
             this.DataContextViewModelTopHoldings = dataContextSource;
         } 
         #endregion
 
+        void DataContextSourceTopHoldingsLoadedevent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.gridBusyIndicator.IsBusy = true;
+            }
+            else
+            {
+                this.gridBusyIndicator.IsBusy = false;
+            }
+        }
+
+        #region Dispose Method
         public override void Dispose()
         {
             this.DataContextViewModelTopHoldings.Dispose();
+            this.DataContextViewModelTopHoldings.TopHoldingsDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceTopHoldingsLoadedevent);
             this.DataContextViewModelTopHoldings = null;
             this.DataContext = null;
-        }
+        } 
+        #endregion
     }
 }

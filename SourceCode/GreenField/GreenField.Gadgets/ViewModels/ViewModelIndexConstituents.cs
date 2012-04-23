@@ -131,6 +131,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (IndexConstituentDataLoadEvent != null)
+                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
             }
             catch (Exception ex)
             {
@@ -163,6 +165,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (IndexConstituentDataLoadEvent != null)
+                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
             }
             catch (Exception ex)
             {
@@ -194,6 +198,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (IndexConstituentDataLoadEvent != null)
+                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -203,6 +209,12 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         } 
         #endregion         
+
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler IndexConstituentDataLoadEvent;
+
+        #endregion
 
         #region Dispose Method
 

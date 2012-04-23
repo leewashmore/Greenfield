@@ -37,7 +37,6 @@ namespace GreenField.Gadgets.ViewModels
         /// DashboardGadgetPayLoad fields
         /// </summary>
         private PortfolioSelectionData _portfolioSelectionData;
-        private DateTime _effectiveDate;
         #endregion
 
         #region Constructor
@@ -52,9 +51,9 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
 
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            if ((_portfolioSelectionData != null) && (_effectiveDate != null))
+            if ((_portfolioSelectionData != null) && (EffectiveDate != null))
             {
                 _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
             }
@@ -86,6 +85,22 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        private DateTime _effectiveDate;
+        public DateTime EffectiveDate
+        {
+            get { return _effectiveDate; }
+            set 
+            {
+                if (_effectiveDate != value)
+                {
+                    _effectiveDate = value;
+                    RaisePropertyChanged(() => EffectiveDate);
+                }
+            }
+        }
+        
+
         #endregion
         #endregion
 
@@ -105,15 +120,19 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _portfolioSelectionData = portfolioSelectionData;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        if (TopHoldingsDataLoadedEvent != null)
+                            TopHoldingsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+
+                    else
+                    {
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     }
                 }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
+                
             }
             catch (Exception ex)
             {
@@ -136,16 +155,19 @@ namespace GreenField.Gadgets.ViewModels
                 if (effectiveDate != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    EffectiveDate = effectiveDate;
+                    if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        if (TopHoldingsDataLoadedEvent != null)
+                            TopHoldingsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                
             }
             catch (Exception ex)
             {
@@ -177,6 +199,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (TopHoldingsDataLoadedEvent != null)
+                    TopHoldingsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -187,6 +211,12 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler TopHoldingsDataLoadedEvent;
+
+        #endregion
+
         #region Dispose Method
 
         public void Dispose()
@@ -194,7 +224,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
-
         #endregion
 
     }

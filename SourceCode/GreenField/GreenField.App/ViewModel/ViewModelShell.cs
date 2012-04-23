@@ -304,7 +304,7 @@ namespace GreenField.App.ViewModel
                                     .Where(record => record.PortfolioId.ToLower().Contains(value.ToLower()))
                                     .ToList();
                     else
-                        PortfolioSelectorInfo = PortfolioSelectionInfo;
+                        PortfolioSelectorInfo = PortfolioSelectionInfo; 
                 }
             }
         }

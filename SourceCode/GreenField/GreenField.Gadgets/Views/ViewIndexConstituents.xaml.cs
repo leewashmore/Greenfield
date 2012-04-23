@@ -14,6 +14,7 @@ using System.IO;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Data;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -34,9 +35,18 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            dataContextSource.IndexConstituentDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = dataContextSource;
         } 
         #endregion
+
+        void DataContextSourceIndexConstituentLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
@@ -132,6 +142,7 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextIndexConstituents.Dispose();
+            this.DataContextIndexConstituents.IndexConstituentDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = null;
             this.DataContext = null;
         } 

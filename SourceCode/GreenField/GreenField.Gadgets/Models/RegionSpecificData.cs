@@ -14,6 +14,6 @@ namespace GreenField.Gadgets.Models
     public class RegionSpecificData
     {
         public string Region { get; set; }
-        public double? PortfolioShare { get; set; }
+        public decimal? PortfolioShare { get; set; }
     }
 }

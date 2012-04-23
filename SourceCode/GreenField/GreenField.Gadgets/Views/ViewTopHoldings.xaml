@@ -6,43 +6,47 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
-    
+
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <HyperlinkButton Grid.Row="0" Content="Details" HorizontalAlignment="Right"/>
-        <!--grid containing data for the gadget-->
-        <telerik:RadGridView Grid.Row="1" Name="dgTopHoldings" AutoGenerateColumns="False" ItemsSource="{Binding TopHoldingsInfo}" 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <HyperlinkButton Grid.Row="0" Content="Details" HorizontalAlignment="Right"/>
+            <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                <!--grid containing data for the gadget-->
+                <telerik:RadGridView Grid.Row="1" Name="dgTopHoldings" AutoGenerateColumns="False" ItemsSource="{Binding TopHoldingsInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ShowGroupFooters="True"
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowColumnFooters="True">
-            <telerik:RadGridView.Columns>
-                <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left">
-                    <telerik:GridViewDataColumn.Footer>
-                        <TextBlock Text="Top 10"/>
-                    </telerik:GridViewDataColumn.Footer>  
-                </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left"/>
-                <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" SortingState="Descending"  DataMemberBinding="{Binding MarketValue}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n0}"/>
-                <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
-                    <telerik:GridViewDataColumn.AggregateFunctions>
-                        <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="PortfolioShare"/>
-                    </telerik:GridViewDataColumn.AggregateFunctions>
-                </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
-                    <telerik:GridViewDataColumn.AggregateFunctions>
-                        <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BenchmarkShare"/>
-                    </telerik:GridViewDataColumn.AggregateFunctions>
-                </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn x:Name="dgcBet" Header="Active Position" DataMemberBinding="{Binding BetShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
-                    <telerik:GridViewDataColumn.AggregateFunctions>
-                        <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BetShare"/>
-                    </telerik:GridViewDataColumn.AggregateFunctions>
-                </telerik:GridViewDataColumn>
-            </telerik:RadGridView.Columns>
-        </telerik:RadGridView>
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left">
+                            <telerik:GridViewDataColumn.Footer>
+                                <TextBlock Text="Top 10"/>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" SortingState="Descending"  DataMemberBinding="{Binding MarketValue}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n0}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="PortfolioShare"/>
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BenchmarkShare"/>
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                        </telerik:GridViewDataColumn>
+                        <telerik:GridViewDataColumn x:Name="dgcBet" Header="Active Position" DataMemberBinding="{Binding BetShare}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" DataFormatString="{}{0:n2}%">
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BetShare"/>
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </telerik:RadBusyIndicator>
+        </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
 

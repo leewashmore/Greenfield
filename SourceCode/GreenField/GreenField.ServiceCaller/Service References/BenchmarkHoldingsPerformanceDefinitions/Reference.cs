@@ -215,20 +215,33 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="SectorBreakdownData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class SectorBreakdownData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Nullable<double> BenchmarkShareField;
+        private System.Nullable<decimal> ActivePositionField;
         
-        private System.Nullable<double> BetShareField;
+        private System.Nullable<decimal> BenchmarkShareField;
         
         private string IndustryField;
         
-        private System.Nullable<double> PortfolioShareField;
+        private System.Nullable<decimal> PortfolioShareField;
         
         private string SectorField;
         
         private string SecurityField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> BenchmarkShare {
+        public System.Nullable<decimal> ActivePosition {
+            get {
+                return this.ActivePositionField;
+            }
+            set {
+                if ((this.ActivePositionField.Equals(value) != true)) {
+                    this.ActivePositionField = value;
+                    this.RaisePropertyChanged("ActivePosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -236,19 +249,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 if ((this.BenchmarkShareField.Equals(value) != true)) {
                     this.BenchmarkShareField = value;
                     this.RaisePropertyChanged("BenchmarkShare");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> BetShare {
-            get {
-                return this.BetShareField;
-            }
-            set {
-                if ((this.BetShareField.Equals(value) != true)) {
-                    this.BetShareField = value;
-                    this.RaisePropertyChanged("BetShare");
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> PortfolioShare {
+        public System.Nullable<decimal> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
@@ -320,20 +320,33 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="RegionBreakdownData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class RegionBreakdownData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Nullable<double> BenchmarkShareField;
+        private System.Nullable<decimal> ActivePositionField;
         
-        private System.Nullable<double> BetShareField;
+        private System.Nullable<decimal> BenchmarkShareField;
         
         private string CountryField;
         
-        private System.Nullable<double> PortfolioShareField;
+        private System.Nullable<decimal> PortfolioShareField;
         
         private string RegionField;
         
         private string SecurityField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> BenchmarkShare {
+        public System.Nullable<decimal> ActivePosition {
+            get {
+                return this.ActivePositionField;
+            }
+            set {
+                if ((this.ActivePositionField.Equals(value) != true)) {
+                    this.ActivePositionField = value;
+                    this.RaisePropertyChanged("ActivePosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
             }
@@ -341,19 +354,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 if ((this.BenchmarkShareField.Equals(value) != true)) {
                     this.BenchmarkShareField = value;
                     this.RaisePropertyChanged("BenchmarkShare");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> BetShare {
-            get {
-                return this.BetShareField;
-            }
-            set {
-                if ((this.BetShareField.Equals(value) != true)) {
-                    this.BetShareField = value;
-                    this.RaisePropertyChanged("BetShare");
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> PortfolioShare {
+        public System.Nullable<decimal> PortfolioShare {
             get {
                 return this.PortfolioShareField;
             }
@@ -425,9 +425,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="TopHoldingsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class TopHoldingsData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Nullable<decimal> BenchmarkShareField;
+        private System.Nullable<decimal> ActivePositionField;
         
-        private System.Nullable<decimal> BetShareField;
+        private System.Nullable<decimal> BenchmarkShareField;
         
         private string HoldingField;
         
@@ -438,6 +438,19 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         private string TickerField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> ActivePosition {
+            get {
+                return this.ActivePositionField;
+            }
+            set {
+                if ((this.ActivePositionField.Equals(value) != true)) {
+                    this.ActivePositionField = value;
+                    this.RaisePropertyChanged("ActivePosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<decimal> BenchmarkShare {
             get {
                 return this.BenchmarkShareField;
@@ -446,19 +459,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 if ((this.BenchmarkShareField.Equals(value) != true)) {
                     this.BenchmarkShareField = value;
                     this.RaisePropertyChanged("BenchmarkShare");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BetShare {
-            get {
-                return this.BetShareField;
-            }
-            set {
-                if ((this.BetShareField.Equals(value) != true)) {
-                    this.BetShareField = value;
-                    this.RaisePropertyChanged("BetShare");
                 }
             }
         }
@@ -3306,14 +3306,14 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveSectorBreakdown" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveSectorBreakdown" +
             "DataResponse")]
-        System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.SectorBreakdownData> EndRetrieveSectorBreakdownData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRegionBreakdown" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRegionBreakdown" +
             "DataResponse")]
-        System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RegionBreakdownData> EndRetrieveRegionBreakdownData(System.IAsyncResult result);
         
@@ -4686,8 +4686,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveSectorBreakdownData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4696,10 +4696,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveSectorBreakdownData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData)(inValues[1]));
-            System.DateTime effectiveDate = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveSectorBreakdownData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveSectorBreakdownData(System.IAsyncResult result) {
@@ -4715,11 +4714,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveSectorBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveSectorBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, null);
+        public void RetrieveSectorBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveSectorBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveSectorBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveSectorBreakdownDataDelegate == null)) {
                 this.onBeginRetrieveSectorBreakdownDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSectorBreakdownData);
             }
@@ -4730,14 +4729,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveSectorBreakdownDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSectorBreakdownDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveSectorBreakdownDataDelegate, new object[] {
-                        fundSelectionData,
-                        benchmarkSelectionData,
+                        portfolioSelectionData,
                         effectiveDate}, this.onEndRetrieveSectorBreakdownDataDelegate, this.onRetrieveSectorBreakdownDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveRegionBreakdownData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4746,10 +4744,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveRegionBreakdownData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData)(inValues[1]));
-            System.DateTime effectiveDate = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveRegionBreakdownData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveRegionBreakdownData(System.IAsyncResult result) {
@@ -4765,11 +4762,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveRegionBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveRegionBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, null);
+        public void RetrieveRegionBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveRegionBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveRegionBreakdownDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveRegionBreakdownDataDelegate == null)) {
                 this.onBeginRetrieveRegionBreakdownDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRegionBreakdownData);
             }
@@ -4780,8 +4777,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveRegionBreakdownDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveRegionBreakdownDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveRegionBreakdownDataDelegate, new object[] {
-                        fundSelectionData,
-                        benchmarkSelectionData,
+                        portfolioSelectionData,
                         effectiveDate}, this.onEndRetrieveRegionBreakdownDataDelegate, this.onRetrieveRegionBreakdownDataCompletedDelegate, userState);
         }
         
@@ -6411,11 +6407,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
-                _args[0] = fundSelectionData;
-                _args[1] = benchmarkSelectionData;
-                _args[2] = effectiveDate;
+            public System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveSectorBreakdownData", _args, callback, asyncState);
                 return _result;
             }
@@ -6426,11 +6421,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
-                _args[0] = fundSelectionData;
-                _args[1] = benchmarkSelectionData;
-                _args[2] = effectiveDate;
+            public System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveRegionBreakdownData", _args, callback, asyncState);
                 return _result;
             }

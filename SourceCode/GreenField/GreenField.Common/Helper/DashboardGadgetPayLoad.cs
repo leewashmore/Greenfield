@@ -22,7 +22,7 @@ namespace GreenField.Common.Helper
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
         private DateTime _effectiveDate = DateTime.Now;
-        public DateTime EffectiveDate 
+        public DateTime EffectiveDate
         {
             get
             {

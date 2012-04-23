@@ -223,10 +223,10 @@ namespace GreenField.ServiceCaller
         /// <param name="benchmarkSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
-        public void RetrieveSectorBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
+        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveSectorBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
                 if (callback != null)
@@ -248,10 +248,10 @@ namespace GreenField.ServiceCaller
         /// <param name="benchmarkSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
-        public void RetrieveRegionBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
+        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData,DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveRegionBreakdownDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
                 if (callback != null)

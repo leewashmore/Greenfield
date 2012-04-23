@@ -106,27 +106,59 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of sector breakdown data</returns>
         [OperationContract]
-        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             try
             {
-                List<SectorBreakdownData> result = new List<SectorBreakdownData>();
-                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
-                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+                //List<SectorBreakdownData> result = new List<SectorBreakdownData>();
+                //DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                //object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                //object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
 
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    result.Add(new SectorBreakdownData()
+                //foreach (DataRow row in dataTable.Rows)
+                //{
+                //    result.Add(new SectorBreakdownData()
+                //    {
+                //        Sector = row.Field<string>("GICS_SECTOR_NAME"),
+                //        Industry = row.Field<string>("GICS_INDUSTRY_NAME"),
+                //        Security = row.Field<string>("ISSUE_NAME"),
+                //        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                //        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                //        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                //    });
+                //}
+
+                    DimensionEntitiesService.Entities entity = DimensionEntity;
+                    List<SectorBreakdownData> result = new List<SectorBreakdownData>();
+
+                    List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
+                        .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                            && record.PORTFOLIO_DATE == effectiveDate)
+                            .ToList();
+
+                    if (data.Count.Equals(0))
+                        return result;
+
+                    Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.Sum(record => record.DIRTY_VALUE_PC).Value;
+
+                    if (netPortfolioValuation == 0 || netPortfolioValuation == null)
+                        throw new InvalidOperationException();
+
+                    foreach (GF_PORTFOLIO_HOLDINGS record in data)
                     {
-                        Sector = row.Field<string>("GICS_SECTOR_NAME"),
-                        Industry = row.Field<string>("GICS_INDUSTRY_NAME"),
-                        Security = row.Field<string>("ISSUE_NAME"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
-                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
-                    });
-                }
+                        if (record.DIRTY_VALUE_PC == null || record.BENCHMARK_WEIGHT == null)
+                            continue;
+
+                        result.Add(new SectorBreakdownData()
+                        {
+                            Sector = record.GICS_SECTOR_NAME,
+                            Industry = record.GICS_INDUSTRY_NAME,
+                            Security = record.ISSUE_NAME,
+                            PortfolioShare = record.DIRTY_VALUE_PC / netPortfolioValuation,
+                            BenchmarkShare = record.BENCHMARK_WEIGHT,
+                            ActivePosition = (record.DIRTY_VALUE_PC / netPortfolioValuation) - record.BENCHMARK_WEIGHT
+                        });
+                    }
 
                 return result;
             }
@@ -145,27 +177,60 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">Effective date</param>
         /// <returns>list of region breakdown data</returns>
         [OperationContract]
-        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             try
             {
-                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
-                DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
-                object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
-                object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
+                //List<RegionBreakdownData> result = new List<RegionBreakdownData>();
+                //DataTable dataTable = GetDataTable("Select * from tblHoldingsData");
+                //object sumPortfolioWeight = dataTable.Compute("Sum(PORTFOLIO_WEIGHT)", "");
+                //object sumBenchmarkWeight = dataTable.Compute("Sum(BENCHMARK_WEIGHT)", "");
 
-                foreach (DataRow row in dataTable.Rows)
+                //foreach (DataRow row in dataTable.Rows)
+                //{
+                //    result.Add(new RegionBreakdownData()
+                //    {
+                //        Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
+                //        Country = row.Field<string>("ISO_COUNTRY_CODE"),
+                //        Security = row.Field<string>("ISSUE_NAME"),
+                //        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
+                //        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
+                //        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                //    });
+                //}
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
+
+                List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
+                    .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                        && record.PORTFOLIO_DATE == effectiveDate)
+                        .ToList();
+
+                if (data.Count.Equals(0))
+                    return result;
+
+                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.Sum(record => record.DIRTY_VALUE_PC).Value;
+
+                if (netPortfolioValuation == 0 || netPortfolioValuation == null)
+                    throw new InvalidOperationException();
+
+                foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
+                    if (record.DIRTY_VALUE_PC == null || record.BENCHMARK_WEIGHT == null)
+                        continue;
+
                     result.Add(new RegionBreakdownData()
                     {
-                        Region = row.Field<string>("ASHEMM_PROPRIETARY_REGION_CODE"),
-                        Country = row.Field<string>("ISO_COUNTRY_CODE"),
-                        Security = row.Field<string>("ISSUE_NAME"),
-                        PortfolioShare = row.Field<Single?>("PORTFOLIO_WEIGHT") / (sumPortfolioWeight as Single?),
-                        BenchmarkShare = row.Field<Single?>("BENCHMARK_WEIGHT") / (sumBenchmarkWeight as Single?),
-                        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
+                        Region = record.ASHEMM_PROP_REGION_NAME,
+                        Country = record.COUNTRYNAME,
+                        Security = record.ISSUE_NAME,
+                        PortfolioShare = record.DIRTY_VALUE_PC / netPortfolioValuation,
+                        BenchmarkShare = record.BENCHMARK_WEIGHT,
+                        ActivePosition = (record.DIRTY_VALUE_PC / netPortfolioValuation) - record.BENCHMARK_WEIGHT
                     });
                 }
+
 
                 return result;
             }
@@ -187,14 +252,18 @@ namespace GreenField.Web.Services
         {
             try
             {
+                decimal? sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                    .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                        && t.PORTFOLIO_DATE == effectiveDate)
+                    .ToList()
+                    .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
-                                                                                            .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
+                                                                                            .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate)
+                                                                                            .OrderByDescending(t => t.DIRTY_VALUE_PC).Take(10).ToList();
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
                 if (data != null)
                 {
-                    decimal? sumMarketValuePortfolio = data.Sum(t => t.DIRTY_VALUE_PC);
-                    decimal? sumMarketValueBenchmark = data.Sum(t => t.DIRTY_VALUE_PC);
-                    if (sumMarketValuePortfolio != 0 && sumMarketValueBenchmark != 0)
+                    if (sumMarketValuePortfolio != 0)
                     {
                         foreach (DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS record in data)
                         {
@@ -204,8 +273,8 @@ namespace GreenField.Web.Services
                                 Holding = record.PORTFOLIO_ID,
                                 MarketValue = record.DIRTY_VALUE_PC,
                                 PortfolioShare = record.DIRTY_VALUE_PC / sumMarketValuePortfolio,
-                                BenchmarkShare = record.DIRTY_VALUE_PC / sumMarketValueBenchmark,
-                                BetShare = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) / (record.DIRTY_VALUE_PC / sumMarketValueBenchmark)
+                                 BenchmarkShare = record.BENCHMARK_WEIGHT,
+                                 ActivePosition = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) - (record.BENCHMARK_WEIGHT)
                             });
                         }
                     }
@@ -228,7 +297,7 @@ namespace GreenField.Web.Services
                 //        BetShare = row.Field<Single?>("PORTFOLIO_WEIGHT") - row.Field<Single?>("BENCHMARK_WEIGHT")
                 //    });
                 //}
-                return result.OrderByDescending(t => t.MarketValue).ToList().Take(10).ToList();
+                return result;
             }
             catch (Exception ex)
             {

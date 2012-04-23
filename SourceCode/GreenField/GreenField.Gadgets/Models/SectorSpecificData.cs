@@ -14,6 +14,6 @@ namespace GreenField.Gadgets.Models
     public class SectorSpecificData
     {
         public string Sector { get; set; }
-        public double? PortfolioShare { get; set; }
+        public decimal? PortfolioShare { get; set; }
     }
 }
