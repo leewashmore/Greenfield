@@ -8,6 +8,8 @@ using System.Web.Security;
 using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
 using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
+using System.Resources;
 
 namespace GreenField.Web.Services
 {
@@ -18,6 +20,14 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class LoginOperations
     {
+        public ResourceManager ServiceFaultResourceManager
+        {
+            get
+            {
+                return new ResourceManager(typeof(FaultDescriptions));
+            }
+        }
+
         #region Operation Contracts
         #region Membership
         /// <summary>
@@ -27,6 +37,7 @@ namespace GreenField.Web.Services
         /// <param name="password"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? ValidateUser(string username, string password)
         {
             try
@@ -36,7 +47,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -51,6 +63,7 @@ namespace GreenField.Web.Services
         /// <param name="isApproved"></param>
         /// <returns>MembershipCreateStatus</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public string CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved)
         {
             try
@@ -93,7 +106,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -105,6 +119,7 @@ namespace GreenField.Web.Services
         /// <param name="newPassword"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? ChangePassword(string username, string oldPassword, string newPassword)
         {
             try
@@ -114,7 +129,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -125,6 +141,7 @@ namespace GreenField.Web.Services
         /// <param name="answer"></param>
         /// <returns>New Password</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public string ResetPassword(string username, string answer)
         {
             try
@@ -134,7 +151,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -144,6 +162,7 @@ namespace GreenField.Web.Services
         /// <param name="membershipUserInfo">MembershipUserInfo</param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? UpdateApprovalForUser(MembershipUserInfo membershipUserInfo)
         {
             try
@@ -163,7 +182,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
 
         }
@@ -174,6 +194,7 @@ namespace GreenField.Web.Services
         /// <param name="users"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? UpdateApprovalForUsers(MembershipUserInfo[] users)
         {
             try
@@ -198,7 +219,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -208,6 +230,7 @@ namespace GreenField.Web.Services
         /// <param name="username"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? DeleteUser(string username)
         {
             try
@@ -217,7 +240,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -227,6 +251,7 @@ namespace GreenField.Web.Services
         /// <param name="username"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? DeleteUsers(string[] usernames)
         {
             try
@@ -241,7 +266,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -252,6 +278,7 @@ namespace GreenField.Web.Services
         /// <param name="userIsOnline"></param>
         /// <returns>MembershipUserInfo</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public MembershipUserInfo GetUser(string username, bool userIsOnline)
         {
             try
@@ -262,7 +289,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -271,6 +299,7 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <returns>List of MembershipUserInfo</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<MembershipUserInfo> GetAllUsers()
         {
             try
@@ -286,7 +315,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
 
         }
@@ -297,6 +327,7 @@ namespace GreenField.Web.Services
         /// <param name="userName"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? UnlockUser(string userName)
         {
             try
@@ -306,7 +337,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -316,6 +348,7 @@ namespace GreenField.Web.Services
         /// <param name="userNames"></param>
         /// <returns></returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? UnlockUsers(string[] userNames)
         {
             try
@@ -327,7 +360,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
         #endregion
@@ -338,6 +372,7 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <returns>Roles</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public string[] GetAllRoles()
         {
             try
@@ -347,7 +382,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -357,6 +393,7 @@ namespace GreenField.Web.Services
         /// <param name="roleName"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? CreateRole(string roleName)
         {
             try
@@ -367,7 +404,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -377,6 +415,7 @@ namespace GreenField.Web.Services
         /// <param name="username"></param>
         /// <returns>Roles</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public string[] GetRolesForUser(string username)
         {
             try
@@ -386,7 +425,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -397,6 +437,7 @@ namespace GreenField.Web.Services
         /// <param name="roleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? RemoveUsersFromRoles(string[] usernames, string[] roleNames)
         {
             try
@@ -407,7 +448,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -418,6 +460,7 @@ namespace GreenField.Web.Services
         /// <param name="roleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             try
@@ -428,7 +471,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -440,6 +484,7 @@ namespace GreenField.Web.Services
         /// <param name="deleteRoleNames"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? UpdateUserRoles(string userName, string[] addRoleNames, string[] deleteRoleNames)
         {
             try
@@ -461,7 +506,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -472,6 +518,7 @@ namespace GreenField.Web.Services
         /// <param name="throwOnPopulatedRole"></param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? DeleteRole(string username, bool throwOnPopulatedRole)
         {
             try
@@ -481,7 +528,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
         #endregion
@@ -495,38 +543,26 @@ namespace GreenField.Web.Services
         /// <returns>MembershipUserInfo</returns>
         private MembershipUserInfo ConvertMembershipUser(MembershipUser user)
         {
-            try
-            {
-                if (user != null)
-                {
-                    return new MembershipUserInfo
-                    {
-                        UserName = user.UserName,
-                        Email = user.Email,
-                        IsApproved = user.IsApproved,
-                        IsLockedOut = user.IsLockedOut,
-                        IsOnline = user.IsOnline,
-                        Comment = user.Comment,
-                        CreateDate = user.CreationDate,
-                        LastActivityDate = user.LastActivityDate,
-                        LastLockOutDate = user.LastLockoutDate,
-                        LastLogInDate = user.LastLoginDate,
-                        ProviderUserKey = user.ProviderUserKey.ToString(),
-                        ProviderName = user.ProviderName,
-                        PasswordQuestion = user.PasswordQuestion,
-                        LastPassWordChangedDate = user.LastPasswordChangedDate
-                    };
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
+            if (user == null)
                 return null;
-            }
+
+            return new MembershipUserInfo
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                IsApproved = user.IsApproved,
+                IsLockedOut = user.IsLockedOut,
+                IsOnline = user.IsOnline,
+                Comment = user.Comment,
+                CreateDate = user.CreationDate,
+                LastActivityDate = user.LastActivityDate,
+                LastLockOutDate = user.LastLockoutDate,
+                LastLogInDate = user.LastLoginDate,
+                ProviderUserKey = user.ProviderUserKey.ToString(),
+                ProviderName = user.ProviderName,
+                PasswordQuestion = user.PasswordQuestion,
+                LastPassWordChangedDate = user.LastPasswordChangedDate
+            };
         }
         #endregion
     }

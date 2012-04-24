@@ -133,6 +133,9 @@
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AssetAllocationData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -224,6 +227,9 @@
     <None Include="Service References\DashboardDefinitions\DashboardOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\DashboardDefinitions\GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -256,6 +262,9 @@
     <None Include="Service References\LoginDefinitions\LoginOperations.disco" />
     <None Include="Service References\LoginDefinitions\configuration91.svcinfo" />
     <None Include="Service References\LoginDefinitions\configuration.svcinfo" />
+    <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\LoginDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -280,6 +289,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -327,6 +339,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SessionDefinitions\SessionOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

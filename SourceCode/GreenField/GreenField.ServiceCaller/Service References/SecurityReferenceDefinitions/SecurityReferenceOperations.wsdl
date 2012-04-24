@@ -3,6 +3,7 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
     </xsd:schema>
@@ -13,11 +14,17 @@
   <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataResponse" />
   </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataByTicker" />
   </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceDataByTickerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrievePricingReferenceData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePricingReferenceData" />
@@ -25,11 +32,17 @@
   <wsdl:message name="SecurityReferenceOperations_RetrievePricingReferenceData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePricingReferenceDataResponse" />
   </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrievePricingReferenceData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionData" />
   </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossData" />
@@ -37,26 +50,34 @@
   <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
   </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="SecurityReferenceOperations">
     <wsdl:operation name="RetrieveSecurityReferenceData">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceData" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataResponse" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveSecurityReferenceDataByTicker">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTicker" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTickerResponse" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTickerServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveSecurityReferenceDataByTicker_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrievePricingReferenceData">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData" message="tns:SecurityReferenceOperations_RetrievePricingReferenceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataResponse" message="tns:SecurityReferenceOperations_RetrievePricingReferenceData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrievePricingReferenceData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveEntitySelectionData">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataResponse" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveUnrealizedGainLossData">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataResponse" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SecurityReferenceOperations" type="tns:SecurityReferenceOperations">
@@ -69,6 +90,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RetrieveSecurityReferenceDataByTicker">
       <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTicker" style="document" />
@@ -78,6 +102,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RetrievePricingReferenceData">
       <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData" style="document" />
@@ -87,6 +114,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RetrieveEntitySelectionData">
       <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" style="document" />
@@ -96,6 +126,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RetrieveUnrealizedGainLossData">
       <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData" style="document" />
@@ -105,6 +138,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="SecurityReferenceOperations">

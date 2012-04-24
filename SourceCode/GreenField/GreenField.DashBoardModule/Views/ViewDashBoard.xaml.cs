@@ -221,10 +221,17 @@ namespace GreenField.DashboardModule.Views
                 }
                 _manageDashboard.SetDashboardPreference(dashboardPreference, SessionManager.SESSION.UserName, (result) =>
                     {
-                        if (result)
-                            MessageBox.Show("User Preference saved");
+                        if (result != null)
+                        {
+                            if ((bool)result)
+                                MessageBox.Show("User Preference saved");
+                            else
+                                MessageBox.Show("User Preference save failed");
+                        }
                         else
+                        {
                             MessageBox.Show("User Preference save failed");
+                        }
                     });
             }
             catch (Exception ex)

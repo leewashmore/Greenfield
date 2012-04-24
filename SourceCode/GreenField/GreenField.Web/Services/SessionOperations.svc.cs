@@ -8,6 +8,8 @@ using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
 using System.Web;
 using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
+using System.Resources;
 
 namespace GreenField.Web.Services
 {
@@ -18,12 +20,22 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SessionOperations
     {
+
+        public ResourceManager ServiceFaultResourceManager
+        {
+            get
+            {
+                return new ResourceManager(typeof(FaultDescriptions));
+            }
+        }
+
         #region Operation Contracts
         /// <summary>
         /// Get static class "Session" from CurrentSession
         /// </summary>
         /// <returns>Session</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public Session GetSession()
         {
             try
@@ -33,7 +45,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -43,6 +56,7 @@ namespace GreenField.Web.Services
         /// <param name="sessionVariable">Session</param>
         /// <returns>True/False</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public bool? SetSession(Session sessionVariable)
         {
             try
@@ -61,7 +75,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
         #endregion

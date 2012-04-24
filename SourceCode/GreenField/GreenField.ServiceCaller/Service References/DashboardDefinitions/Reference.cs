@@ -245,6 +245,7 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="EntityKeyMember", Namespace="http://schemas.datacontract.org/2004/07/System.Data")]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.EntityObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.StructuralObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.ServiceFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.EntityKey))]
@@ -291,19 +292,52 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DashboardDefinitions.DashboardOperations")]
     public interface DashboardOperations {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserName", ReplyAction="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.ServiceFault), Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserNameServiceFau" +
+            "ltFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetDashboardPreferenceByUserName(string userName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> EndGetDashboardPreferenceByUserName(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DashboardOperations/SetDashboardPreference", ReplyAction="http://tempuri.org/DashboardOperations/SetDashboardPreferenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DashboardDefinitions.ServiceFault), Action="http://tempuri.org/DashboardOperations/SetDashboardPreferenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginSetDashboardPreference(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference> dashBoardPreference, string userName, System.AsyncCallback callback, object asyncState);
         
-        bool EndSetDashboardPreference(System.IAsyncResult result);
+        System.Nullable<bool> EndSetDashboardPreference(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -340,10 +374,10 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
             this.results = results;
         }
         
-        public bool Result {
+        public System.Nullable<bool> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((bool)(this.results[0]));
+                return ((System.Nullable<bool>)(this.results[0]));
             }
         }
     }
@@ -477,7 +511,7 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        bool GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations.EndSetDashboardPreference(System.IAsyncResult result) {
+        System.Nullable<bool> GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations.EndSetDashboardPreference(System.IAsyncResult result) {
             return base.Channel.EndSetDashboardPreference(result);
         }
         
@@ -488,7 +522,7 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
         }
         
         private object[] OnEndSetDashboardPreference(System.IAsyncResult result) {
-            bool retVal = ((GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations)(this)).EndSetDashboardPreference(result);
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.DashboardDefinitions.DashboardOperations)(this)).EndSetDashboardPreference(result);
             return new object[] {
                     retVal};
         }
@@ -616,9 +650,9 @@ namespace GreenField.ServiceCaller.DashboardDefinitions {
                 return _result;
             }
             
-            public bool EndSetDashboardPreference(System.IAsyncResult result) {
+            public System.Nullable<bool> EndSetDashboardPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                bool _result = ((bool)(base.EndInvoke("SetDashboardPreference", _args, result)));
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("SetDashboardPreference", _args, result)));
                 return _result;
             }
         }

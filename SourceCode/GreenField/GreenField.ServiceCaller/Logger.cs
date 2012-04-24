@@ -110,12 +110,12 @@ namespace GreenField.ServiceCaller
 
             #region Completion Event
             client.LogToFileCompleted += (se, e) =>
-                    {
-                        if (e.Error != null)
-                        {
-                            MessageBox.Show(e.Error.InnerException.Message);
-                        }
-                    };
+            {
+                if (e.Error != null)
+                {
+                    MessageBox.Show(e.Error.InnerException.Message);
+                }
+            };
             #endregion
         }
         #endregion

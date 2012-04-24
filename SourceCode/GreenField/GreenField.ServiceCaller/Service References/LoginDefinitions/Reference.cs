@@ -17,6 +17,36 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MembershipUserInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MembershipUserInfo : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -245,96 +275,115 @@ namespace GreenField.ServiceCaller.LoginDefinitions {
     public interface LoginOperations {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ValidateUser", ReplyAction="http://tempuri.org/LoginOperations/ValidateUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/ValidateUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginValidateUser(string username, string password, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndValidateUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/CreateUser", ReplyAction="http://tempuri.org/LoginOperations/CreateUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/CreateUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginCreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, System.AsyncCallback callback, object asyncState);
         
         string EndCreateUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ChangePassword", ReplyAction="http://tempuri.org/LoginOperations/ChangePasswordResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/ChangePasswordServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginChangePassword(string username, string oldPassword, string newPassword, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndChangePassword(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/ResetPassword", ReplyAction="http://tempuri.org/LoginOperations/ResetPasswordResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/ResetPasswordServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginResetPassword(string username, string answer, System.AsyncCallback callback, object asyncState);
         
         string EndResetPassword(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateApprovalForUser", ReplyAction="http://tempuri.org/LoginOperations/UpdateApprovalForUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/UpdateApprovalForUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUpdateApprovalForUser(GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo membershipUserInfo, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUpdateApprovalForUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateApprovalForUsers", ReplyAction="http://tempuri.org/LoginOperations/UpdateApprovalForUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/UpdateApprovalForUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUpdateApprovalForUsers(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo> users, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUpdateApprovalForUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteUser", ReplyAction="http://tempuri.org/LoginOperations/DeleteUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/DeleteUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginDeleteUser(string username, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndDeleteUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteUsers", ReplyAction="http://tempuri.org/LoginOperations/DeleteUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/DeleteUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginDeleteUsers(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndDeleteUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetUser", ReplyAction="http://tempuri.org/LoginOperations/GetUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/GetUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetUser(string username, bool userIsOnline, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo EndGetUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetAllUsers", ReplyAction="http://tempuri.org/LoginOperations/GetAllUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/GetAllUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetAllUsers(System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.LoginDefinitions.MembershipUserInfo> EndGetAllUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UnlockUser", ReplyAction="http://tempuri.org/LoginOperations/UnlockUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/UnlockUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUnlockUser(string userName, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUnlockUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UnlockUsers", ReplyAction="http://tempuri.org/LoginOperations/UnlockUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/UnlockUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUnlockUsers(System.Collections.ObjectModel.ObservableCollection<string> userNames, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUnlockUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetAllRoles", ReplyAction="http://tempuri.org/LoginOperations/GetAllRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/GetAllRolesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetAllRoles(System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<string> EndGetAllRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/CreateRole", ReplyAction="http://tempuri.org/LoginOperations/CreateRoleResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/CreateRoleServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginCreateRole(string roleName, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndCreateRole(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/GetRolesForUser", ReplyAction="http://tempuri.org/LoginOperations/GetRolesForUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/GetRolesForUserServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetRolesForUser(string username, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<string> EndGetRolesForUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/RemoveUsersFromRoles", ReplyAction="http://tempuri.org/LoginOperations/RemoveUsersFromRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/RemoveUsersFromRolesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRemoveUsersFromRoles(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.Collections.ObjectModel.ObservableCollection<string> roleNames, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndRemoveUsersFromRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/AddUsersToRoles", ReplyAction="http://tempuri.org/LoginOperations/AddUsersToRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/AddUsersToRolesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginAddUsersToRoles(System.Collections.ObjectModel.ObservableCollection<string> usernames, System.Collections.ObjectModel.ObservableCollection<string> roleNames, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndAddUsersToRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/UpdateUserRoles", ReplyAction="http://tempuri.org/LoginOperations/UpdateUserRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/UpdateUserRolesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUpdateUserRoles(string userName, System.Collections.ObjectModel.ObservableCollection<string> addRoleNames, System.Collections.ObjectModel.ObservableCollection<string> deleteRoleNames, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUpdateUserRoles(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/LoginOperations/DeleteRole", ReplyAction="http://tempuri.org/LoginOperations/DeleteRoleResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.LoginDefinitions.ServiceFault), Action="http://tempuri.org/LoginOperations/DeleteRoleServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginDeleteRole(string username, bool throwOnPopulatedRole, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndDeleteRole(System.IAsyncResult result);

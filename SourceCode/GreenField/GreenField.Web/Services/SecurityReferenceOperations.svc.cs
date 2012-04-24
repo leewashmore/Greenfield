@@ -13,6 +13,8 @@ using GreenField.Web.Helpers;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using System.Drawing;
+using System.Resources;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -32,11 +34,21 @@ namespace GreenField.Web.Services
             }
         }
 
+
+        public ResourceManager ServiceFaultResourceManager
+        {
+            get
+            {
+                return new ResourceManager(typeof(FaultDescriptions));
+            }
+        }
+
         /// <summary>
         /// retrieving the security data for security overview
         /// </summary>
         /// <returns>list of security overview data</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<SecurityOverviewData> RetrieveSecurityReferenceData()
         {
             try
@@ -48,19 +60,19 @@ namespace GreenField.Web.Services
                 foreach (DimensionEntitiesService.GF_SECURITY_BASEVIEW record in data)
                 {
                     result.Add(new SecurityOverviewData()
-                {
-                    IssueName = record.ISSUE_NAME,
-                    Ticker = record.TICKER,
-                    Country = record.ISO_COUNTRY_CODE,
-                    Sector = record.GICS_SECTOR_NAME,
-                    Industry = record.GICS_INDUSTRY_NAME,
-                    SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
-                    PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
-                    Currency = record.TRADING_CURRENCY,
-                    FiscalYearEnd = record.FISCAL_YEAR_END,
-                    Website = record.WEBSITE,
-                    Description = record.BLOOMBERG_DESCRIPTION
-                });
+                    {
+                        IssueName = record.ISSUE_NAME,
+                        Ticker = record.TICKER,
+                        Country = record.ISO_COUNTRY_CODE,
+                        Sector = record.GICS_SECTOR_NAME,
+                        Industry = record.GICS_INDUSTRY_NAME,
+                        SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
+                        PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
+                        Currency = record.TRADING_CURRENCY,
+                        FiscalYearEnd = record.FISCAL_YEAR_END,
+                        Website = record.WEBSITE,
+                        Description = record.BLOOMBERG_DESCRIPTION
+                    });
                 }
 
                 return result;
@@ -68,7 +80,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -77,6 +90,7 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <returns>list of security overview data</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public SecurityOverviewData RetrieveSecurityReferenceDataByTicker(string ticker)
         {
             try
@@ -107,7 +121,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -122,6 +137,7 @@ namespace GreenField.Web.Services
         /// <param name="chartEntityTypes"></param>
         /// <returns>List of PricingReferenceData</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<PricingReferenceData> RetrievePricingReferenceData(List<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
         {
             try
@@ -382,6 +398,7 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <returns>list of entity selection data</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<EntitySelectionData> RetrieveEntitySelectionData()
         {
             try
@@ -408,7 +425,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
@@ -584,6 +602,7 @@ namespace GreenField.Web.Services
         /// <param name="frequencyInterval">Frequency Duration selected</param>       
         /// <returns>List of UnrealozedGainLossData</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<UnrealizedGainLossData> RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, string frequencyInterval)
         {
             try
@@ -598,8 +617,8 @@ namespace GreenField.Web.Services
                     = entity.GF_PRICING_BASEVIEW
                         .Where(record => (record.TICKER == entityIdentifier.ShortName))
                         .OrderByDescending(record => record.FROMDATE)
-                        .ToList();                
-                     
+                        .ToList();
+
 
                 int noOfRows = resultSet.Count();
 
@@ -646,14 +665,15 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
         #endregion
 
-               
 
-                                        
+
+
     }
 }
 

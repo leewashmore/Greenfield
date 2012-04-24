@@ -26,7 +26,7 @@
   <xs:element name="SetDashboardPreferenceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="SetDashboardPreferenceResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="SetDashboardPreferenceResult" nillable="true" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

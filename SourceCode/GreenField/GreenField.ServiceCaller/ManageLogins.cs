@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.LoginDefinitions;
 using System.Reflection;
+using System.ServiceModel;
 
 namespace GreenField.ServiceCaller
 {
@@ -37,14 +38,17 @@ namespace GreenField.ServiceCaller
             client.ValidateUserAsync(username, password, callback);
             client.ValidateUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -65,14 +69,17 @@ namespace GreenField.ServiceCaller
             client.CreateUserAsync(username, password, email, passwordQuestion, passwordAnswer, isApproved, callback);
             client.CreateUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result.ToString());
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -90,14 +97,17 @@ namespace GreenField.ServiceCaller
             client.ChangePasswordAsync(username, oldPassword, newPassword, callback);
             client.ChangePasswordCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -114,14 +124,17 @@ namespace GreenField.ServiceCaller
             client.ResetPasswordAsync(username, answer, callback);
             client.ResetPasswordCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
-                        callback(e.Result.ToString());
+                        callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -137,14 +150,17 @@ namespace GreenField.ServiceCaller
             client.UpdateApprovalForUserAsync(user, callback);
             client.UpdateApprovalForUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
 
@@ -161,14 +177,17 @@ namespace GreenField.ServiceCaller
             client.UpdateApprovalForUsersAsync(users, callback);
             client.UpdateApprovalForUsersCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -184,14 +203,17 @@ namespace GreenField.ServiceCaller
             client.UnlockUserAsync(userName);
             client.UnlockUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -207,14 +229,17 @@ namespace GreenField.ServiceCaller
             client.UnlockUsersAsync(userNames);
             client.UnlockUsersCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -231,14 +256,17 @@ namespace GreenField.ServiceCaller
             client.GetUserAsync(username, userIsOnline);
             client.GetUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -253,14 +281,27 @@ namespace GreenField.ServiceCaller
             client.GetAllUsersAsync();
             client.GetAllUsersCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
-                        callback(e.Result.ToList());
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -276,14 +317,17 @@ namespace GreenField.ServiceCaller
             client.DeleteUserAsync(username);
             client.DeleteUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -299,14 +343,17 @@ namespace GreenField.ServiceCaller
             client.DeleteUsersAsync(usernames);
             client.DeleteUsersCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -324,14 +371,17 @@ namespace GreenField.ServiceCaller
             client.CreateRoleAsync(roleName, callback);
             client.CreateRoleCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -346,14 +396,26 @@ namespace GreenField.ServiceCaller
             client.GetAllRolesAsync();
             client.GetAllRolesCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
-                        callback(e.Result.ToList());
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -369,14 +431,26 @@ namespace GreenField.ServiceCaller
             client.GetRolesForUserAsync(userName);
             client.GetRolesForUserCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
-                        callback(e.Result.ToList());
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -393,14 +467,17 @@ namespace GreenField.ServiceCaller
             client.RemoveUsersFromRolesAsync(usernames, roleNames);
             client.RemoveUsersFromRolesCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -417,14 +494,17 @@ namespace GreenField.ServiceCaller
             client.AddUsersToRolesAsync(usernames, roleNames);
             client.AddUsersToRolesCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -441,14 +521,17 @@ namespace GreenField.ServiceCaller
             client.DeleteRoleAsync(username, throwOnPopulatedRole, callback);
             client.DeleteRoleCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -466,18 +549,21 @@ namespace GreenField.ServiceCaller
             client.UpdateUserRolesAsync(userName, addRoleNames, deleteRoleNames);
             client.UpdateUserRolesCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
-        #endregion 
-        #endregion        
+        #endregion
+        #endregion
     }
 }

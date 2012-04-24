@@ -11,6 +11,8 @@ using System.Collections.ObjectModel;
 using GreenField.Web.DataContracts;
 using GreenField.Web.Helpers;
 using System.Data.Objects;
+using GreenField.Web.Helpers.Service_Faults;
+using System.Resources;
 
 namespace GreenField.Web.Services
 {
@@ -19,7 +21,13 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class DashboardOperations
     {
-
+        public ResourceManager ServiceFaultResourceManager
+        {
+            get
+            {
+                return new ResourceManager(typeof(FaultDescriptions));
+            }
+        }
 
         /// <summary>
         /// Retrieve User Dashboard Information
@@ -27,11 +35,12 @@ namespace GreenField.Web.Services
         /// <param name="objUserID"></param>
         /// <returns> Dashboard Preferences</returns>
         [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public List<tblDashboardPreference> GetDashboardPreferenceByUserName(String userName)
         {
             try
             {
-                
+
                 ResearchEntities entity = new ResearchEntities();
 
                 ObjectResult<tblDashboardPreference> resultSet = entity.GetDashBoardPreferenceByUserName(userName);
@@ -44,7 +53,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
 
         }
@@ -55,7 +65,8 @@ namespace GreenField.Web.Services
         /// <param name="objUserID"></param>
         /// <param name="objPersistData"></param>
         [OperationContract]
-        public bool SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, string userName)
+        [FaultContract(typeof(ServiceFault))]
+        public bool? SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, string userName)
         {
 
             try
@@ -77,7 +88,8 @@ namespace GreenField.Web.Services
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 

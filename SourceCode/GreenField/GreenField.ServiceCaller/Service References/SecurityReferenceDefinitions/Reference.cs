@@ -197,6 +197,36 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntitySelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class EntitySelectionData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -756,6 +786,8 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataRespo" +
             "nse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataServi" +
+            "ceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityReferenceData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
@@ -763,24 +795,32 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
             "ker", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
             "kerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
+            "kerServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityReferenceDataByTicker(string ticker, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataRespon" +
             "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataServic" +
+            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataRespons" +
             "e")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataService" +
+            "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveEntitySelectionData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataResp" +
             "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataServ" +
+            "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveUnrealizedGainLossData(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);

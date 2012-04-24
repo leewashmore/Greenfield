@@ -3,6 +3,7 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
@@ -15,20 +16,28 @@
   <wsdl:message name="DashboardOperations_GetDashboardPreferenceByUserName_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDashboardPreferenceByUserNameResponse" />
   </wsdl:message>
+  <wsdl:message name="DashboardOperations_GetDashboardPreferenceByUserName_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DashboardOperations_SetDashboardPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:SetDashboardPreference" />
   </wsdl:message>
   <wsdl:message name="DashboardOperations_SetDashboardPreference_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetDashboardPreferenceResponse" />
   </wsdl:message>
+  <wsdl:message name="DashboardOperations_SetDashboardPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DashboardOperations">
     <wsdl:operation name="GetDashboardPreferenceByUserName">
       <wsdl:input wsaw:Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserName" message="tns:DashboardOperations_GetDashboardPreferenceByUserName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserNameResponse" message="tns:DashboardOperations_GetDashboardPreferenceByUserName_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DashboardOperations/GetDashboardPreferenceByUserNameServiceFaultFault" name="ServiceFaultFault" message="tns:DashboardOperations_GetDashboardPreferenceByUserName_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SetDashboardPreference">
       <wsdl:input wsaw:Action="http://tempuri.org/DashboardOperations/SetDashboardPreference" message="tns:DashboardOperations_SetDashboardPreference_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DashboardOperations/SetDashboardPreferenceResponse" message="tns:DashboardOperations_SetDashboardPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DashboardOperations/SetDashboardPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:DashboardOperations_SetDashboardPreference_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DashboardOperations" type="tns:DashboardOperations">
@@ -41,6 +50,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="SetDashboardPreference">
       <soap:operation soapAction="http://tempuri.org/DashboardOperations/SetDashboardPreference" style="document" />
@@ -50,6 +62,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="DashboardOperations">

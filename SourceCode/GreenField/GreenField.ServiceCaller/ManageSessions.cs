@@ -14,6 +14,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SessionDefinitions;
 using System.Reflection;
+using System.ServiceModel;
 
 namespace GreenField.ServiceCaller
 {
@@ -33,14 +34,17 @@ namespace GreenField.ServiceCaller
             client.GetSessionAsync();
             client.GetSessionCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch(TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -56,14 +60,17 @@ namespace GreenField.ServiceCaller
             client.SetSessionAsync(sessionVariable);
             client.SetSessionCompleted += (se, e) =>
             {
-                try
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
                 }
-                catch (TargetInvocationException ex)
+                else if (e.Error is FaultException<ServiceFault>)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }

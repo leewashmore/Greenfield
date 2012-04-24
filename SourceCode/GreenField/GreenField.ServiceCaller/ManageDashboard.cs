@@ -14,6 +14,8 @@ using System.Linq;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Logging;
 using System.Collections.ObjectModel;
+using System.ServiceModel;
+
 
 namespace GreenField.ServiceCaller
 {
@@ -44,30 +46,28 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"> DashboardPreferences</param>
         public void GetDashboardPreferenceByUserName(string userName, Action<List<tblDashboardPreference>> callback)
         {
-            try
+            DashboardOperationsClient client = new DashboardOperationsClient();
+            client.GetDashboardPreferenceByUserNameAsync(userName);
+            client.GetDashboardPreferenceByUserNameCompleted += (se, e) =>
             {
-                DashboardOperationsClient client = new DashboardOperationsClient();
-                client.GetDashboardPreferenceByUserNameAsync(userName);
-                client.GetDashboardPreferenceByUserNameCompleted += (se, e) =>
+                if (e.Error == null)
                 {
-                    try
+                    if (callback != null)
                     {
-                        if (callback != null)
+                        if (e.Result != null)
                             callback(e.Result.ToList());
+                        else
+                            callback(null);
                     }
-                    catch (Exception ex)
-                    {
-                        _logger.Log("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                        MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
-                    }
-                };
-
-            }
-            catch (Exception ex)
-            {
-                _logger.Log("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
-            }
+                }
+                else if (e.Error is FaultException<ServiceFault>)
+                {
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
         }
 
         /// <summary>
@@ -75,24 +75,25 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="dashBoardPreference">tblDashboardPreference collection</param>
         /// <param name="callback">True/False</param>
-        public void SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference,string userName, Action<bool> callback)
+        public void SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, string userName, Action<bool?> callback)
         {
-            try
+            DashboardOperationsClient client = new DashboardOperationsClient();
+            client.SetDashboardPreferenceAsync(dashBoardPreference, userName);
+            client.SetDashboardPreferenceCompleted += (se, e) =>
             {
-                DashboardOperationsClient client = new DashboardOperationsClient();
-                client.SetDashboardPreferenceAsync(dashBoardPreference,userName);
-                client.SetDashboardPreferenceCompleted += (se, e) =>
+                if (e.Error == null)
                 {
                     if (callback != null)
                         callback(e.Result);
-                };
-
-            }
-            catch (Exception ex)
-            {
-                _logger.Log("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
-            }
+                }
+                else if (e.Error is FaultException<ServiceFault>)
+                {
+                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
         }
     }
 }

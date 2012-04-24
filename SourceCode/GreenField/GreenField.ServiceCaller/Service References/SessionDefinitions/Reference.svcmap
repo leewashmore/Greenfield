@@ -21,6 +21,7 @@
     <MetadataSource Address="http://localhost:59430/Services/SessionOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="SessionOperations4.xsd" MetadataType="Schema" ID="e7941089-a3be-427f-bd05-039815688d5c" SourceId="1" SourceUrl="http://localhost:59430/Services/SessionOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="SessionOperations.disco" MetadataType="Disco" ID="6827d87b-2888-4b93-89af-000a006fbb11" SourceId="1" SourceUrl="http://localhost:59430/Services/SessionOperations.svc?disco" />
     <MetadataFile FileName="SessionOperations.xsd" MetadataType="Schema" ID="8cb4e006-a14b-4d19-a47f-5c5a414d67ac" SourceId="1" SourceUrl="http://localhost:59430/Services/SessionOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="SessionOperations1.xsd" MetadataType="Schema" ID="4442968d-a1bd-46ac-a327-df09a66ad4f8" SourceId="1" SourceUrl="http://localhost:59430/Services/SessionOperations.svc?xsd=xsd0" />

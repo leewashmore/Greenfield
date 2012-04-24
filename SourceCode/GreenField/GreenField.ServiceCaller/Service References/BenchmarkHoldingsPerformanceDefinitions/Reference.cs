@@ -137,6 +137,36 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BenchmarkSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class BenchmarkSelectionData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -3292,6 +3322,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioSelect" +
             "ionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioSelect" +
             "ionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioSelect" +
+            "ionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePortfolioSelectionData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData> EndRetrievePortfolioSelectionData(System.IAsyncResult result);
@@ -3299,6 +3331,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkSelect" +
             "ionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkSelect" +
             "ionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkSelect" +
+            "ionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveBenchmarkSelectionData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData> EndRetrieveBenchmarkSelectionData(System.IAsyncResult result);
@@ -3306,6 +3340,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveSectorBreakdown" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveSectorBreakdown" +
             "DataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveSectorBreakdown" +
+            "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.SectorBreakdownData> EndRetrieveSectorBreakdownData(System.IAsyncResult result);
@@ -3313,6 +3349,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRegionBreakdown" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRegionBreakdown" +
             "DataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRegionBreakdown" +
+            "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RegionBreakdownData> EndRetrieveRegionBreakdownData(System.IAsyncResult result);
@@ -3320,6 +3358,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopHoldingsData" +
             "", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopHoldingsData" +
             "Response")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopHoldingsData" +
+            "ServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveTopHoldingsData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.TopHoldingsData> EndRetrieveTopHoldingsData(System.IAsyncResult result);
@@ -3327,6 +3367,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveIndexConstituen" +
             "tsData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveIndexConstituen" +
             "tsDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveIndexConstituen" +
+            "tsDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveIndexConstituentsData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.IndexConstituentsData> EndRetrieveIndexConstituentsData(System.IAsyncResult result);
@@ -3334,6 +3376,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
             "s", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
             "sResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
+            "sServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveValuesForFilters(string filterType, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<string> EndRetrieveValuesForFilters(System.IAsyncResult result);
@@ -3341,6 +3385,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetail" +
             "sData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetail" +
             "sDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetail" +
+            "sDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePortfolioDetailsData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData objPortfolioIdentifier, System.DateTime objSelectedDate, bool objGetBenchmark, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioDetailsData> EndRetrievePortfolioDetailsData(System.IAsyncResult result);
@@ -3348,6 +3394,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkChartR" +
             "eturnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkChartR" +
             "eturnDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkChartR" +
+            "eturnDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkChartReturnData> EndRetrieveBenchmarkChartReturnData(System.IAsyncResult result);
@@ -3355,6 +3403,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkGridRe" +
             "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkGridRe" +
             "turnDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkGridRe" +
+            "turnDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveBenchmarkGridReturnData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkGridReturnData> EndRetrieveBenchmarkGridReturnData(System.IAsyncResult result);
@@ -3362,20 +3412,26 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
             "ageData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
             "ageDataResponse")]
-        System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
+            "ageDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsPercentageData> EndRetrieveHoldingsPercentageData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
             "ageDataForRegion", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
             "ageDataForRegionResponse")]
-        System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHoldingsPercent" +
+            "ageDataForRegionServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsPercentageData> EndRetrieveHoldingsPercentageDataForRegion(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopBenchmarkSec" +
             "uritiesData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopBenchmarkSec" +
             "uritiesDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveTopBenchmarkSec" +
+            "uritiesDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveTopBenchmarkSecuritiesData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.TopBenchmarkSecuritiesData> EndRetrieveTopBenchmarkSecuritiesData(System.IAsyncResult result);
@@ -3383,6 +3439,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitaliz" +
             "ationData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitaliz" +
             "ationDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitaliz" +
+            "ationDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
@@ -3390,13 +3448,17 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAssetAllocation" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAssetAllocation" +
             "DataResponse")]
-        System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAssetAllocation" +
+            "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AssetAllocationData> EndRetrieveAssetAllocationData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotS" +
             "electionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotS" +
             "electionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotS" +
+            "electionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveMarketSnapshotSelectionData(string userName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData> EndRetrieveMarketSnapshotSelectionData(System.IAsyncResult result);
@@ -3404,6 +3466,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotP" +
             "reference", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotP" +
             "referenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketSnapshotP" +
+            "referenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveMarketSnapshotPreference(string userName, string snapshotName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> EndRetrieveMarketSnapshotPreference(System.IAsyncResult result);
@@ -3411,6 +3475,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketPerforman" +
             "ceSnapshotData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketPerforman" +
             "ceSnapshotDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketPerforman" +
+            "ceSnapshotDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketPerformanceSnapshotData> EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result);
@@ -3418,6 +3484,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotPerfor" +
             "mance", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotPerfor" +
             "manceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotPerfor" +
+            "manceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginAddMarketSnapshotPerformance(string userId, string snapshotName, System.AsyncCallback callback, object asyncState);
         
         bool EndAddMarketSnapshotPerformance(System.IAsyncResult result);
@@ -3425,6 +3493,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/UpdateMarketSnapshotPer" +
             "formance", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/UpdateMarketSnapshotPer" +
             "formanceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/UpdateMarketSnapshotPer" +
+            "formanceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginUpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId, System.AsyncCallback callback, object asyncState);
         
         bool EndUpdateMarketSnapshotPerformance(System.IAsyncResult result);
@@ -3432,6 +3502,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotGroupP" +
             "reference", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotGroupP" +
             "referenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotGroupP" +
+            "referenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginAddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, System.AsyncCallback callback, object asyncState);
         
         bool EndAddMarketSnapshotGroupPreference(System.IAsyncResult result);
@@ -3439,6 +3511,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotGro" +
             "upPreference", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotGro" +
             "upPreferenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotGro" +
+            "upPreferenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRemoveMarketSnapshotGroupPreference(int groupPreferenceId, System.AsyncCallback callback, object asyncState);
         
         bool EndRemoveMarketSnapshotGroupPreference(System.IAsyncResult result);
@@ -3446,6 +3520,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotEntity" +
             "Preference", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotEntity" +
             "PreferenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/AddMarketSnapshotEntity" +
+            "PreferenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginAddMarketSnapshotEntityPreference(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
         bool EndAddMarketSnapshotEntityPreference(System.IAsyncResult result);
@@ -3453,6 +3529,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotEnt" +
             "ityPreference", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotEnt" +
             "ityPreferenceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RemoveMarketSnapshotEnt" +
+            "ityPreferenceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRemoveMarketSnapshotEntityPreference(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
         bool EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result);
@@ -3460,12 +3538,16 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
             "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
             "turnDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
+            "turnDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapDataResp" +
             "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapDataServ" +
+            "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result);
@@ -3473,6 +3555,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSectorData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSectorDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceSectorDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceSectorData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceSectorData> EndRetrieveRelativePerformanceSectorData(System.IAsyncResult result);
@@ -3480,6 +3564,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceCountryActivePositionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceCountryActivePositionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceCountryActivePositionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceCountryActivePositionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceActivePositionData> EndRetrieveRelativePerformanceCountryActivePositionData(System.IAsyncResult result);
@@ -3487,6 +3573,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSectorActivePositionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSectorActivePositionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceSectorActivePositionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceSectorActivePositionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceActivePositionData> EndRetrieveRelativePerformanceSectorActivePositionData(System.IAsyncResult result);
@@ -3494,6 +3582,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSecurityActivePositionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSecurityActivePositionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceSecurityActivePositionDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceSecurityActivePositionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceActivePositionData> EndRetrieveRelativePerformanceSecurityActivePositionData(System.IAsyncResult result);
@@ -3501,6 +3591,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSecurityData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceSecurityDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceSecurityDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceSecurityData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, string countryID, System.Nullable<int> sectorID, int order, System.Nullable<int> maxRecords, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceSecurityData> EndRetrieveRelativePerformanceSecurityData(System.IAsyncResult result);
@@ -3508,6 +3600,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
             "anceDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveRelativePerform" +
+            "anceDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRelativePerformanceData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.RelativePerformanceData> EndRetrieveRelativePerformanceData(System.IAsyncResult result);
@@ -3515,6 +3609,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrap" +
             "hData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrap" +
             "hDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrap" +
+            "hDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePerformanceGraphData(string nameOfFund, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result);
@@ -3522,6 +3618,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrid" +
             "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrid" +
             "DataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrid" +
+            "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePerformanceGridData(string nameOfFund, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGridData> EndRetrievePerformanceGridData(System.IAsyncResult result);
@@ -3529,6 +3627,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" +
             "", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" +
             "Response")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" +
+            "ServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveAttributionData(string nameOfFund, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData> EndRetrieveAttributionData(System.IAsyncResult result);
@@ -5070,8 +5170,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHoldingsPercentageData(fundSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5080,11 +5180,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveHoldingsPercentageData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
             string filterType = ((string)(inValues[2]));
             string filterValue = ((string)(inValues[3]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveHoldingsPercentageData(fundSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
         }
         
         private object[] OnEndRetrieveHoldingsPercentageData(System.IAsyncResult result) {
@@ -5100,11 +5200,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveHoldingsPercentageDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
-            this.RetrieveHoldingsPercentageDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, null);
+        public void RetrieveHoldingsPercentageDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
+            this.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, null);
         }
         
-        public void RetrieveHoldingsPercentageDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
+        public void RetrieveHoldingsPercentageDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
             if ((this.onBeginRetrieveHoldingsPercentageDataDelegate == null)) {
                 this.onBeginRetrieveHoldingsPercentageDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHoldingsPercentageData);
             }
@@ -5115,15 +5215,15 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveHoldingsPercentageDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveHoldingsPercentageDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveHoldingsPercentageDataDelegate, new object[] {
-                        portfolioSelectionData,
+                        fundSelectionData,
                         effectiveDate,
                         filterType,
                         filterValue}, this.onEndRetrieveHoldingsPercentageDataDelegate, this.onRetrieveHoldingsPercentageDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHoldingsPercentageDataForRegion(fundSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5132,11 +5232,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveHoldingsPercentageDataForRegion(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
             string filterType = ((string)(inValues[2]));
             string filterValue = ((string)(inValues[3]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveHoldingsPercentageDataForRegion(fundSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
         }
         
         private object[] OnEndRetrieveHoldingsPercentageDataForRegion(System.IAsyncResult result) {
@@ -5152,11 +5252,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
-            this.RetrieveHoldingsPercentageDataForRegionAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, null);
+        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
+            this.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue, null);
         }
         
-        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
+        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
             if ((this.onBeginRetrieveHoldingsPercentageDataForRegionDelegate == null)) {
                 this.onBeginRetrieveHoldingsPercentageDataForRegionDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHoldingsPercentageDataForRegion);
             }
@@ -5167,7 +5267,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveHoldingsPercentageDataForRegionCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveHoldingsPercentageDataForRegionCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveHoldingsPercentageDataForRegionDelegate, new object[] {
-                        portfolioSelectionData,
+                        fundSelectionData,
                         effectiveDate,
                         filterType,
                         filterValue}, this.onEndRetrieveHoldingsPercentageDataForRegionDelegate, this.onRetrieveHoldingsPercentageDataForRegionCompletedDelegate, userState);
@@ -5272,8 +5372,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveAssetAllocationData(fundSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5282,9 +5382,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveAssetAllocationData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, callback, asyncState);
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveAssetAllocationData(fundSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveAssetAllocationData(System.IAsyncResult result) {
@@ -5300,11 +5400,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveAssetAllocationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveAssetAllocationDataAsync(portfolioSelectionData, effectiveDate, null);
+        public void RetrieveAssetAllocationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveAssetAllocationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveAssetAllocationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveAssetAllocationDataDelegate == null)) {
                 this.onBeginRetrieveAssetAllocationDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveAssetAllocationData);
             }
@@ -5315,7 +5415,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveAssetAllocationDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveAssetAllocationDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveAssetAllocationDataDelegate, new object[] {
-                        portfolioSelectionData,
+                        fundSelectionData,
                         effectiveDate}, this.onEndRetrieveAssetAllocationDataDelegate, this.onRetrieveAssetAllocationDataCompletedDelegate, userState);
         }
         
@@ -6519,9 +6619,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[4];
-                _args[0] = portfolioSelectionData;
+                _args[0] = fundSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = filterType;
                 _args[3] = filterValue;
@@ -6535,9 +6635,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[4];
-                _args[0] = portfolioSelectionData;
+                _args[0] = fundSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = filterType;
                 _args[3] = filterValue;
@@ -6580,9 +6680,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
-                _args[0] = portfolioSelectionData;
+                _args[0] = fundSelectionData;
                 _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveAssetAllocationData", _args, callback, asyncState);
                 return _result;

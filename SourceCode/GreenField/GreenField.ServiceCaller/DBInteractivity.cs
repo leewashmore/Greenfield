@@ -8,8 +8,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
-
-
+using System.ServiceModel;
 
 namespace GreenField.ServiceCaller
 {
@@ -31,17 +30,30 @@ namespace GreenField.ServiceCaller
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveSecurityReferenceDataAsync();
             client.RetrieveSecurityReferenceDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
                 {
                     if (callback != null)
                     {
                         if (e.Result != null)
+                        {
                             callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
-                };
+                }
+            };
         }
 
         public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityOverviewData> callback)
@@ -50,14 +62,18 @@ namespace GreenField.ServiceCaller
             client.RetrieveSecurityReferenceDataByTickerAsync(ticker);
             client.RetrieveSecurityReferenceDataByTickerCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
                         callback(e.Result);
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -68,14 +84,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveEntitySelectionDataAsync();
             client.RetrieveEntitySelectionDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result);
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -96,14 +125,27 @@ namespace GreenField.ServiceCaller
             client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -125,15 +167,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveUnrealizedGainLossDataAsync(entityIdentifier, startDateTime, endDateTime, frequencyInterval);
             client.RetrieveUnrealizedGainLossDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
         #endregion
@@ -147,14 +202,27 @@ namespace GreenField.ServiceCaller
             client.RetrievePortfolioSelectionDataAsync();
             client.RetrievePortfolioSelectionDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -167,13 +235,27 @@ namespace GreenField.ServiceCaller
             {
                 if (callback != null)
                 {
-                    if (e.Result != null)
+                    if (e.Error == null)
                     {
-                        callback(e.Result.ToList());
+                        if (callback != null)
+                        {
+                            if (e.Result != null)
+                            {
+                                callback(e.Result.ToList());
+                            }
+                            else
+                            {
+                                callback(null);
+                            }
+                        }
                     }
-                    else
+                    else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                     {
-                        callback(null);
+                        FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                            = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                        MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                        if (callback != null)
+                            callback(null);
                     }
                 }
             };
@@ -185,14 +267,20 @@ namespace GreenField.ServiceCaller
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
+                    {
                         callback(e.Result);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -203,14 +291,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -227,14 +328,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -245,20 +359,33 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
-        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData,DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
+        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
             client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -275,14 +402,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -299,18 +439,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
-                }
-                {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -327,14 +476,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveMarketSnapshotSelectionDataAsync(userName);
             client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
 
@@ -352,14 +514,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -375,14 +550,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
             client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -399,14 +587,20 @@ namespace GreenField.ServiceCaller
             client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
             client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
+                    {
                         callback(e.Result);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(false);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(false);
                 }
             };
         }
@@ -422,14 +616,20 @@ namespace GreenField.ServiceCaller
             client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
             client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
+                    {
                         callback(e.Result);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(false);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(false);
                 }
             };
         }
@@ -445,14 +645,20 @@ namespace GreenField.ServiceCaller
             client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
+                    {
                         callback(e.Result);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(false);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(false);
                 }
             };
         }
@@ -468,14 +674,20 @@ namespace GreenField.ServiceCaller
             client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
+                    if (callback != null)
+                    {
                         callback(e.Result);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(false);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(false);
                 }
             };
         }
@@ -487,14 +699,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveValuesForFiltersAsync(filterType);
             client.RetrieveValuesForFiltersCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -506,15 +731,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -524,15 +762,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -542,15 +793,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceSecurityDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID, order, maxRecords);
             client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -568,14 +832,27 @@ namespace GreenField.ServiceCaller
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
-                if (e.Result != null)
+                if (e.Error == null)
                 {
                     if (callback != null)
-                        callback(e.Result.ToList());
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -592,16 +869,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
-                if (e.Result != null)
+                if (e.Error == null)
                 {
                     if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -612,16 +900,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveBenchmarkGridReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
             client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
             {
-                if (e.Result != null)
+                if (e.Error == null)
                 {
                     if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -640,15 +939,28 @@ namespace GreenField.ServiceCaller
             client.RetrievePerformanceGraphDataAsync(name);
             client.RetrievePerformanceGraphDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -666,15 +978,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveAttributionDataAsync(name);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
         #endregion
@@ -695,14 +1020,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -721,14 +1059,27 @@ namespace GreenField.ServiceCaller
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
-                    if (e.Result != null)
-                        callback(e.Result.ToList());
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -746,15 +1097,28 @@ namespace GreenField.ServiceCaller
             client.RetrievePerformanceGridDataAsync(name);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
         #endregion
@@ -772,15 +1136,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -797,15 +1174,28 @@ namespace GreenField.ServiceCaller
             client.RetrievePortfolioRiskReturnDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
             client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
         public void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
@@ -814,15 +1204,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceCountryActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -832,15 +1235,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceSectorActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -850,15 +1266,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
@@ -872,15 +1301,28 @@ namespace GreenField.ServiceCaller
             client.RetrieveHeatMapDataAsync();
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {
-                if (callback != null)
-                    if (e.Result != null)
+                if (e.Error == null)
+                {
+                    if (callback != null)
                     {
-                        callback(e.Result.ToList());
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
                     }
-                    else
-                    {
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
                         callback(null);
-                    }
+                }
             };
         }
 
