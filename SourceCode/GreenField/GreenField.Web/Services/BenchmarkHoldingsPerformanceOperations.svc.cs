@@ -342,43 +342,43 @@ namespace GreenField.Web.Services
                 //}
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
-                string benchmarkId = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).FirstOrDefault().BENCHMARK_ID.ToString();
-                if (benchmarkId != null)
-                {
-                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId).ToList();
-                    if (data != null)
+                    string benchmarkId = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                        .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                            && t.PORTFOLIO_DATE.Equals(effectiveDate.Date))
+                        .FirstOrDefault()
+                        .BENCHMARK_ID.ToString();
+                    if (benchmarkId != null)
                     {
-                        object sumMarketValue = data.Sum(t => t.DIRTY_VALUE_PC);
-                        if (sumMarketValue != null)
+                        List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId).Take(50).ToList();
+                        if (data != null)
                         {
                             foreach (DimensionEntitiesService.GF_BENCHMARK_HOLDINGS record in data)
                             {
+                                //calculte sum of BENCHMARK_WEIGHT for a country
                                 string country = record.ISO_COUNTRY_CODE;
-                                object sumMarketValueCountry = data.Where(t => t.ISO_COUNTRY_CODE == country).Sum(t => t.DIRTY_VALUE_PC);
+                                object sumBenchmarkWeightCountry = data.Where(t => t.ISO_COUNTRY_CODE == country).Sum(t => t.BENCHMARK_WEIGHT);
 
+                                //calculte sum of BENCHMARK_WEIGHT for a industry
                                 string industry = record.GICS_INDUSTRY_NAME;
-                                object sumMarketValueIndustry = data.Where(t => t.GICS_INDUSTRY_NAME == industry).Sum(t => t.DIRTY_VALUE_PC);
-                                if (sumMarketValueCountry != null || sumMarketValueIndustry == null || (decimal?)sumMarketValueCountry == 0 || (decimal?)sumMarketValueIndustry == 0)
+                                object sumBenchmarkWeightIndustry = data.Where(t => t.GICS_INDUSTRY_NAME == industry).Sum(t => t.BENCHMARK_WEIGHT);
+                                if (sumBenchmarkWeightCountry != null && sumBenchmarkWeightIndustry != null)
                                 {
-                                    continue;
+                                    result.Add(new IndexConstituentsData()
+                                    {
+                                        ConstituentName = record.ISSUE_NAME,
+                                        Country = country,
+                                        Region = record.ASHEMM_PROP_REGION_CODE,
+                                        Sector = record.GICS_SECTOR_NAME,
+                                        Industry = industry,
+                                        SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
+                                        Weight = record.BENCHMARK_WEIGHT,
+                                        WeightCountry = (record.BENCHMARK_WEIGHT) / (decimal?)sumBenchmarkWeightCountry,
+                                        WeightIndustry = (record.BENCHMARK_WEIGHT) / (decimal?)sumBenchmarkWeightIndustry
+                                    });
                                 }
-                                result.Add(new IndexConstituentsData()
-                                {
-                                    ConstituentName = record.ISSUE_NAME,
-                                    Country = country,
-                                    Region = record.ASHEMM_PROP_REGION_CODE,
-                                    Sector = record.GICS_SECTOR_NAME,
-                                    Industry = industry,
-                                    SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
-                                    Weight = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValue,
-                                    WeightCountry = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValueCountry,
-                                    WeightIndustry = (record.DIRTY_VALUE_PC) / (decimal?)sumMarketValueIndustry
-                                });
-
                             }
                         }
                     }
-                }
                 return result;
             }
             catch (Exception ex)

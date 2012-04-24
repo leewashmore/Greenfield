@@ -54,11 +54,13 @@
      textEncoding="utf-8" transferMode="Buffered">
      <security mode="None" />
     </binding>
-    <binding name="BasicHttpBinding_LoggingOperations" maxBufferSize="2147483647"
+    <binding name="BasicHttpBinding_LoggingOperations" maxBufferSize="2147483647" closeTimeout="00:10:00"
+     openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="BenchmarkHoldingsPerformanceOperations1" maxBufferSize="2147483647"
+    <binding name="BenchmarkHoldingsPerformanceOperations1" maxBufferSize="2147483647" closeTimeout="00:10:00"
+     openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
