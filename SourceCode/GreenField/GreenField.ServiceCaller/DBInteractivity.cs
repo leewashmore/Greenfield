@@ -159,7 +159,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
@@ -219,8 +218,7 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method for sector breakdown gadget
         /// </summary>
-        /// <param name="fundSelectionData"></param>
-        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
         public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
@@ -244,8 +242,7 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method for region breakdown gadget
         /// </summary>
-        /// <param name="fundSelectionData"></param>
-        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
         public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData,DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
@@ -269,8 +266,7 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method for top holdings gadget
         /// </summary>
-        /// <param name="fundSelectionData"></param>
-        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
         public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback)
@@ -294,7 +290,7 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// service call method for index constituent gadget
         /// </summary>
-        /// <param name="benchmarkSelectionData"></param>
+        /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="callback"></param>
         public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback)

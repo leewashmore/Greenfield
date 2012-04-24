@@ -31,29 +31,35 @@
                     </Button.Content>
                 </Button>
             </Grid>
-        <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        
+        
             <Grid Grid.Row="1">
                 <!--grid containing data to be displayed in the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                     <telerik:RadGridView Name="dgIndexConstituents" AutoGenerateColumns="False" ItemsSource="{Binding IndexConstituentsInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ElementExporting="dgIndexConstituents_ElementExporting"
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True">
+                        <telerik:RadGridView.GroupDescriptors>
+                            <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
+                        </telerik:RadGridView.GroupDescriptors>
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcConstituentName" Header="Constituent Name" DataMemberBinding="{Binding ConstituentName}" Width="*" HeaderTextAlignment="Left" TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcCountry" Header="" Width="auto" IsFilterable="False"/>
                             <telerik:GridViewDataColumn x:Name="dgcRegion" Header="Region" DataMemberBinding="{Binding Region}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" DataMemberBinding="{Binding Sector}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                            <telerik:GridViewDataColumn x:Name="dgcIndustry" Header="Industry" DataMemberBinding="{Binding Industry}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcIndustry" Header="" Width="auto" IsFilterable="False"/>
                             <telerik:GridViewDataColumn x:Name="dgcSubIndustry" Header="Sub-Industry" DataMemberBinding="{Binding SubIndustry}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeight" Header="Weight" DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightCountry" Header="Weight (Country)" DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightIndustry" Header="Weight (Industry)" DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}" Width="*" HeaderTextAlignment="Right" TextAlignment="Right"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
-                </Border>
+                </telerik:RadBusyIndicator>
+            </Border>
             </Grid>
-        </telerik:RadBusyIndicator>
     </Grid>
   
 </helpers:ViewBaseUserControl>

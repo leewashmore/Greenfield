@@ -106,6 +106,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// property to contain effective date value from EffectiveDate Datepicker
+        /// </summary>
         private DateTime _effectiveDate;
         public DateTime EffectiveDate
         {
@@ -126,9 +129,9 @@ namespace GreenField.Gadgets.ViewModels
         #region Event Handlers
 
         /// <summary>
-        /// Event Handler to subscribed event 'FundReferenceSetEvent'
+        /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData</param>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -143,6 +146,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, _effectiveDate, RetrieveRegionBreakdownDataCallbackMethod);
+                        if (RegionBreakdownDataLoadEvent != null)
+                            RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -175,6 +180,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData,_effectiveDate, RetrieveRegionBreakdownDataCallbackMethod);
+                        if (RegionBreakdownDataLoadEvent != null)
+                            RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -190,6 +197,14 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
       
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler RegionBreakdownDataLoadEvent;
+
         #endregion
 
         #region Callback Methods
@@ -229,6 +244,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (RegionBreakdownDataLoadEvent != null)
+                    RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -240,7 +257,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Dispose Method
-
+        /// <summary>
+        /// method to dispose all subscribed events
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);

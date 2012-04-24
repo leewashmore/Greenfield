@@ -11,13 +11,16 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewSectorBreakdown : ViewBaseUserControl
     {
         #region Properties
-
+        /// <summary>
+        /// property to set data context
+        /// </summary>
         private ViewModelSectorBreakdown _dataContextSectorBreakdown;
         public ViewModelSectorBreakdown DataContextSectorBreakdown
         {
@@ -29,11 +32,31 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewSectorBreakdown(ViewModelSectorBreakdown dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextSectorBreakdown = dataContextSource;
+            dataContextSource.SectorBreakdownDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSectorBreakdownLoadEvent);
         } 
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSourceSectorBreakdownLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
         #endregion
 
         /// <summary>
@@ -54,11 +77,18 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #region Dispose Method
+
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextSectorBreakdown.Dispose();
+            this.DataContextSectorBreakdown.SectorBreakdownDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSectorBreakdownLoadEvent);
             this.DataContextSectorBreakdown = null;
             this.DataContext = null;
-        }
+        } 
+        #endregion
     }
 }

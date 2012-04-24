@@ -18,7 +18,9 @@ namespace GreenField.Gadgets.Views
     public partial class ViewTopHoldings : ViewBaseUserControl
     {
         #region Properties
-
+        /// <summary>
+        /// property to set data context
+        /// </summary>
         private ViewModelTopHoldings _dataContextViewModelTopHoldings;
         public ViewModelTopHoldings DataContextViewModelTopHoldings
         {
@@ -29,6 +31,10 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewTopHoldings(ViewModelTopHoldings dataContextSource)
         {
             InitializeComponent();
@@ -38,6 +44,11 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
+        #region Event
+        /// <summary>
+        ///  event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
         void DataContextSourceTopHoldingsLoadedevent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
@@ -48,9 +59,13 @@ namespace GreenField.Gadgets.Views
             {
                 this.gridBusyIndicator.IsBusy = false;
             }
-        }
+        } 
+        #endregion
 
         #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextViewModelTopHoldings.Dispose();

@@ -21,16 +21,23 @@ namespace GreenField.Gadgets.Views
     public partial class ViewIndexConstituents : ViewBaseUserControl
     {
         #region Properties
-
+        /// <summary>
+        /// property to set data context
+        /// </summary>
         private ViewModelIndexConstituents _dataContextIndexConstituents;
         public ViewModelIndexConstituents DataContextIndexConstituents
         {
             get { return _dataContextIndexConstituents; }
             set { _dataContextIndexConstituents = value; }
         }    
+        
         #endregion     
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewIndexConstituents(ViewModelIndexConstituents dataContextSource)
         {
             InitializeComponent();
@@ -40,14 +47,21 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
         void DataContextSourceIndexConstituentLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             if (e.ShowBusy)
                 this.gridBusyIndicator.IsBusy = true;
             else
                 this.gridBusyIndicator.IsBusy = false;
-        }
+        } 
+        #endregion
 
+        #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog()
@@ -64,7 +78,7 @@ namespace GreenField.Gadgets.Views
                 {
                     GridViewExportOptions exportOptions = new GridViewExportOptions()
                     {
-                        Format = format, 
+                        Format = format,
                         ShowColumnFooters = true,
                         ShowColumnHeaders = true,
                         ShowGroupFooters = true
@@ -118,7 +132,8 @@ namespace GreenField.Gadgets.Views
                     e.Value = GetAggregates(qcvGroup, column);
                 }
             }
-        }
+        } 
+        #endregion
 
         private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
         {
@@ -137,8 +152,11 @@ namespace GreenField.Gadgets.Views
 
             return String.Join(",", aggregates.ToArray());
         }
-
+                
         #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextIndexConstituents.Dispose();

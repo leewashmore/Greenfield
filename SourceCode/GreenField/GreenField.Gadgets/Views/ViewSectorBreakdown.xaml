@@ -23,70 +23,72 @@
             </telerik:RadButton>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <!--doughnutchart-->
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
-                    <telerik:RadChart.DefaultView>
-                        <telerikCharting:ChartDefaultView>
-                            <telerik:ChartDefaultView.ChartLegend>
-                                <telerik:ChartLegend x:Name="crtSectorBreakdownLegend" Visibility="Collapsed"/>
-                            </telerik:ChartDefaultView.ChartLegend>
-                            <telerikCharting:ChartDefaultView.ChartArea>
-                                <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
-                            </telerikCharting:ChartDefaultView.ChartArea>
-                        </telerikCharting:ChartDefaultView>
-                    </telerik:RadChart.DefaultView>
-                    <telerik:RadChart.SeriesMappings>
-                        <telerik:SeriesMapping>
-                            <telerik:SeriesMapping.SeriesDefinition>
-                                <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
+            <Grid Grid.Row="1">
+                <!--doughnutchart-->
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                    <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
+                        <telerik:RadChart.DefaultView>
+                            <telerikCharting:ChartDefaultView>
+                                <telerik:ChartDefaultView.ChartLegend>
+                                    <telerik:ChartLegend x:Name="crtSectorBreakdownLegend" Visibility="Collapsed"/>
+                                </telerik:ChartDefaultView.ChartLegend>
+                                <telerikCharting:ChartDefaultView.ChartArea>
+                                    <telerikCharting:ChartArea SmartLabelsEnabled="True"></telerikCharting:ChartArea>
+                                </telerikCharting:ChartDefaultView.ChartArea>
+                            </telerikCharting:ChartDefaultView>
+                        </telerik:RadChart.DefaultView>
+                        <telerik:RadChart.SeriesMappings>
+                            <telerik:SeriesMapping>
+                                <telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                              LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
-                                    <telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                        <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
-                                    </telerik:DoughnutSeriesDefinition.InteractivitySettings>
-                                    <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                        <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
+                                        <telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                            <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
+                                        </telerik:DoughnutSeriesDefinition.InteractivitySettings>
+                                        <telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                            <telerikCharting:RadialLabelSettings SpiderModeEnabled="True"
                                                      ShowConnectors="True" />
-                                    </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
-                                </telerik:DoughnutSeriesDefinition>
-                            </telerik:SeriesMapping.SeriesDefinition>
-                            <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue" />
-                            <telerik:ItemMapping FieldName="Sector" DataPointMember="LegendLabel" />
-                        </telerik:SeriesMapping>
-                    </telerik:RadChart.SeriesMappings>
-                </telerik:RadChart>
+                                        </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
+                                    </telerik:DoughnutSeriesDefinition>
+                                </telerik:SeriesMapping.SeriesDefinition>
+                                <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue" />
+                                <telerik:ItemMapping FieldName="Sector" DataPointMember="LegendLabel" />
+                            </telerik:SeriesMapping>
+                        </telerik:RadChart.SeriesMappings>
+                    </telerik:RadChart>
             </Border>
-            <!--grid containing data-->
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadGridView Name="dgSectorBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding SectorBreakdownInfo}" 
+                <!--grid containing data-->
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                    <telerik:RadGridView Name="dgSectorBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding SectorBreakdownInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True">
-                    <telerik:RadGridView.GroupDescriptors>
-                        <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
-                            <telerik:GroupDescriptor.AggregateFunctions>
-                                <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%" />
-                                <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%" />
-                                <telerik:SumFunction SourceField="BetShare" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
-                            </telerik:GroupDescriptor.AggregateFunctions>
-                        </telerik:GroupDescriptor>
-                        <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending">
-                            <telerik:GroupDescriptor.AggregateFunctions>
-                                <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%"/>
-                                <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%"/>
-                                <telerik:SumFunction SourceField="BetShare" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
-                            </telerik:GroupDescriptor.AggregateFunctions>
-                        </telerik:GroupDescriptor>
-                    </telerik:RadGridView.GroupDescriptors>
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Active Position" DataMemberBinding="{Binding BetShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
-                    </telerik:RadGridView.Columns>
-                </telerik:RadGridView>
+                        <telerik:RadGridView.GroupDescriptors>
+                            <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
+                                <telerik:GroupDescriptor.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%" />
+                                    <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%" />
+                                    <telerik:SumFunction SourceField="ActivePosition" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
+                                </telerik:GroupDescriptor.AggregateFunctions>
+                            </telerik:GroupDescriptor>
+                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending">
+                                <telerik:GroupDescriptor.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%"/>
+                                    <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%"/>
+                                    <telerik:SumFunction SourceField="ActivePosition" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
+                                </telerik:GroupDescriptor.AggregateFunctions>
+                            </telerik:GroupDescriptor>
+                        </telerik:RadGridView.GroupDescriptors>
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Active Position" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" Width="Auto" HeaderTextAlignment="Right"/>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </telerik:RadBusyIndicator>
             </Border>
-        </Grid>
+            </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>

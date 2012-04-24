@@ -13,12 +13,16 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Data;
 using System.ComponentModel;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewRegionBreakdown : ViewBaseUserControl
     {
         #region Property
+        /// <summary>
+        /// property to set data context
+        /// </summary>
         private ViewModelRegionBreakdown _dataContextRegionBreakdown;
         public ViewModelRegionBreakdown DataContextRegionBreakdown
         {
@@ -28,12 +32,32 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewRegionBreakdown(ViewModelRegionBreakdown dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextRegionBreakdown = dataContextSource;
+            dataContextSource.RegionBreakdownDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRegionBreakdownLoadEvent);
         } 
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSourceRegionBreakdownLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
+
         #endregion
 
         /// <summary>
@@ -54,11 +78,17 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextRegionBreakdown.Dispose();
+            this.DataContextRegionBreakdown.RegionBreakdownDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRegionBreakdownLoadEvent);
             this.DataContextRegionBreakdown = null;
             this.DataContext = null;
-        }
+        } 
+        #endregion
     }
 }

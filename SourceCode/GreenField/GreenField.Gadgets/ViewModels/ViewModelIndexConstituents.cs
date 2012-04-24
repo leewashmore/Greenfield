@@ -57,7 +57,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
             }
-            //_dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
@@ -125,14 +124,15 @@ namespace GreenField.Gadgets.ViewModels
                     if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        if (IndexConstituentDataLoadEvent != null)
+                            IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (IndexConstituentDataLoadEvent != null)
-                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+               
             }
             catch (Exception ex)
             {
@@ -143,9 +143,9 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Event Handler to subscribed event 'BenchmarkReferenceSetEvent'
+        /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
         /// </summary>
-        /// <param name="benchmarkSelectionData">BenchmarkSelectionData</param>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -159,14 +159,15 @@ namespace GreenField.Gadgets.ViewModels
                     if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        if (IndexConstituentDataLoadEvent != null)
+                            IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (IndexConstituentDataLoadEvent != null)
-                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+               
             }
             catch (Exception ex)
             {
@@ -210,14 +211,18 @@ namespace GreenField.Gadgets.ViewModels
         } 
         #endregion         
 
-        #region Events
-
+        #region Event
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler IndexConstituentDataLoadEvent;
 
         #endregion
 
         #region Dispose Method
-
+        /// <summary>
+        /// method to dispose all subscribed events
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
