@@ -841,6 +841,14 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand AssetAllocationCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(AssetAllocationCommandMethod);
+            }
+        }
+
         #region Dashboard
         #region Company
         #region Snapshot
@@ -2453,9 +2461,26 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-
-
-
+        private void AssetAllocationCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.HOLDINGS_ASSET_ALLOCATION,
+                            DashboardTileObject = new ViewAssetAllocation(new ViewModelAssetAllocation(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
         private void PerformanceGraphCommandMethod(object param)
         {
@@ -2519,8 +2544,6 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-
-
 
         private void AttributionCommandMethod(object param)
         {

@@ -14,12 +14,11 @@
         <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
             <Setter Property="Background" Value="#9F1D21" />
             <Setter Property="Foreground" Value="White"/>
-
         </Style>
 
         <!--Grid Styles End-->
     </helpers:ViewBaseUserControl.Resources>
-    
+
     <Grid x:Name="LayoutRoot" Background="White">
         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
             <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 

@@ -291,6 +291,10 @@
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Asset Allocation" Size="Large" 
+                                                 Command="{Binding AssetAllocationCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
                     <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/TopHoldingsImage.png" Text="Top Holdings" Size="Large" Command="{Binding GadgetTopHoldingsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
