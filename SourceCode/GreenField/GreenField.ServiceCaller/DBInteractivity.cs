@@ -12,6 +12,9 @@ using System.ServiceModel;
 
 namespace GreenField.ServiceCaller
 {
+    /// <summary>
+    /// Service Caller class for Security Reference Data and Holdings, Benchmark & Performance Data.
+    /// </summary>
     [Export(typeof(IDBInteractivity))]
     public class DBInteractivity : IDBInteractivity
     {

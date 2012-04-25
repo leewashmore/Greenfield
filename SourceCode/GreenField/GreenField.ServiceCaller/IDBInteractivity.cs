@@ -9,6 +9,9 @@ using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.ServiceCaller
 {
+    /// <summary>
+    /// Service Caller Interface for Security Reference Data and Holdings, Benchmark & Performance Data.
+    /// </summary>
     public interface IDBInteractivity
     {
         #region Build1

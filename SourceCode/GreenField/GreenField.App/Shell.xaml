@@ -333,8 +333,15 @@
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Heat Map" Size="Large" Command="{Binding HeatMapCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>-->
+
+
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
+                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Portfolio Details" Size="Large" 
+                                                  Command="{Binding PortfolioDetailsCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" 
+                                                 Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>

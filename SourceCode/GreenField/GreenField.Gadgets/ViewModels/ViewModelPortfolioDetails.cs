@@ -32,6 +32,7 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private PortfolioSelectionData _portfolioSelectionData;
+        private DateTime _effectiveDate;
 
         #endregion
 
@@ -49,15 +50,18 @@ namespace GreenField.Gadgets.ViewModels
             this._eventAggregator = param.EventAggregator;
             this._logger = param.LoggerFacade;
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-
+            if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
+            {
+                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, _effectiveDate, false, RetrievePortfolioDetailsDataCallbackMethod);
+            }
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
-            if (_portfolioSelectionData != null)
-                HandlePortfolioReferenceSet(_portfolioSelectionData);
         }
 
         #endregion
@@ -275,156 +279,163 @@ namespace GreenField.Gadgets.ViewModels
 
         private void ReturnGroupedColumnData(string objGroupingColumnName)
         {
-            BasePortfolioData = GroupedFilteredPortfolioDetailsData;
-            switch (Convert.ToString(objGroupingColumnName).ToLower())
+            try
             {
-                case ("isocountrycode"):
-                    {
-                        List<string> groupedColumnData = BasePortfolioData.Select(s => s.IsoCountryCode).Distinct().ToList();
-                        foreach (string item in groupedColumnData)
+                BasePortfolioData = GroupedFilteredPortfolioDetailsData;
+                switch (Convert.ToString(objGroupingColumnName).ToLower())
+                {
+                    case ("isocountrycode"):
                         {
-                            decimal? sumPortfolioWeight = (from p in BasePortfolioData
-                                                           where p.IsoCountryCode == item
-                                                           select p.PortfolioWeight).ToList().Sum();
-                            decimal? sumBenchmarkWeight = (from p in BasePortfolioData
-                                                           where p.IsoCountryCode == item
-                                                           select p.BenchmarkWeight).ToList().Sum();
-                            decimal? sumDirtyValuePC = (from p in BasePortfolioData
-                                                        where p.IsoCountryCode == item
-                                                        select p.DirtyValuePC).ToList().Sum();
-                            decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
-                                                             where p.IsoCountryCode == item
-                                                             select p.AshEmmModelWeight).ToList().Sum();
-
-                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
+                            List<string> groupedColumnData = BasePortfolioData.Select(s => s.IsoCountryCode).Distinct().ToList();
+                            foreach (string item in groupedColumnData)
                             {
-                                data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
-                            }
-                        }
-                        break;
-                    }
-                case ("proprietaryregioncode"):
-                    {
-                        List<string> groupedColumnData = BasePortfolioData.Select(s => s.ProprietaryRegionCode).Distinct().ToList();
-                        foreach (string item in groupedColumnData)
-                        {
-                            decimal? sumPortfolioWeight = (from p in BasePortfolioData
-                                                           where p.ProprietaryRegionCode == item
-                                                           select p.PortfolioWeight).ToList().Sum();
-                            decimal? sumBenchmarkWeight = (from p in BasePortfolioData
-                                                           where p.ProprietaryRegionCode == item
-                                                           select p.BenchmarkWeight).ToList().Sum();
-                            decimal? sumDirtyValuePC = (from p in BasePortfolioData
-                                                        where p.ProprietaryRegionCode == item
-                                                        select p.DirtyValuePC).ToList().Sum();
-                            decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
-                                                             where p.ProprietaryRegionCode == item
-                                                             select p.AshEmmModelWeight).ToList().Sum();
+                                decimal? sumPortfolioWeight = (from p in BasePortfolioData
+                                                               where p.IsoCountryCode == item
+                                                               select p.PortfolioWeight).ToList().Sum();
+                                decimal? sumBenchmarkWeight = (from p in BasePortfolioData
+                                                               where p.IsoCountryCode == item
+                                                               select p.BenchmarkWeight).ToList().Sum();
+                                decimal? sumDirtyValuePC = (from p in BasePortfolioData
+                                                            where p.IsoCountryCode == item
+                                                            select p.DirtyValuePC).ToList().Sum();
+                                decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
+                                                                 where p.IsoCountryCode == item
+                                                                 select p.AshEmmModelWeight).ToList().Sum();
 
-                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
+                                foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
+                                {
+                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                }
+                            }
+                            break;
+                        }
+                    case ("proprietaryregioncode"):
+                        {
+                            List<string> groupedColumnData = BasePortfolioData.Select(s => s.ProprietaryRegionCode).Distinct().ToList();
+                            foreach (string item in groupedColumnData)
                             {
-                                data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
-                            }
-                        }
-                        break;
-                    }
-                case ("sectorname"):
-                    {
-                        List<string> groupedColumnData = BasePortfolioData.Select(s => s.SectorName).Distinct().ToList();
-                        foreach (string item in groupedColumnData)
-                        {
-                            decimal? sumPortfolioWeight = (from p in BasePortfolioData
-                                                           where p.SectorName == item
-                                                           select p.PortfolioWeight).ToList().Sum();
-                            decimal? sumBenchmarkWeight = (from p in BasePortfolioData
-                                                           where p.SectorName == item
-                                                           select p.BenchmarkWeight).ToList().Sum();
-                            decimal? sumDirtyValuePC = (from p in BasePortfolioData
-                                                        where p.SectorName == item
-                                                        select p.DirtyValuePC).ToList().Sum();
-                            decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
-                                                             where p.SectorName == item
-                                                             select p.AshEmmModelWeight).ToList().Sum();
+                                decimal? sumPortfolioWeight = (from p in BasePortfolioData
+                                                               where p.ProprietaryRegionCode == item
+                                                               select p.PortfolioWeight).ToList().Sum();
+                                decimal? sumBenchmarkWeight = (from p in BasePortfolioData
+                                                               where p.ProprietaryRegionCode == item
+                                                               select p.BenchmarkWeight).ToList().Sum();
+                                decimal? sumDirtyValuePC = (from p in BasePortfolioData
+                                                            where p.ProprietaryRegionCode == item
+                                                            select p.DirtyValuePC).ToList().Sum();
+                                decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
+                                                                 where p.ProprietaryRegionCode == item
+                                                                 select p.AshEmmModelWeight).ToList().Sum();
 
-                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
+                                foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
+                                {
+                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                }
+                            }
+                            break;
+                        }
+                    case ("sectorname"):
+                        {
+                            List<string> groupedColumnData = BasePortfolioData.Select(s => s.SectorName).Distinct().ToList();
+                            foreach (string item in groupedColumnData)
                             {
-                                data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
-                            }
-                        }
-                        break;
-                    }
-                case ("industryname"):
-                    {
-                        List<string> groupedColumnData = BasePortfolioData.Select(s => s.IndustryName).Distinct().ToList();
-                        foreach (string item in groupedColumnData)
-                        {
-                            decimal? sumPortfolioWeight = (from p in BasePortfolioData
-                                                           where p.IndustryName == item
-                                                           select p.PortfolioWeight).ToList().Sum();
-                            decimal? sumBenchmarkWeight = (from p in BasePortfolioData
-                                                           where p.IndustryName == item
-                                                           select p.BenchmarkWeight).ToList().Sum();
-                            decimal? sumDirtyValuePC = (from p in BasePortfolioData
-                                                        where p.IndustryName == item
-                                                        select p.DirtyValuePC).ToList().Sum();
-                            decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
-                                                             where p.IndustryName == item
-                                                             select p.AshEmmModelWeight).ToList().Sum();
+                                decimal? sumPortfolioWeight = (from p in BasePortfolioData
+                                                               where p.SectorName == item
+                                                               select p.PortfolioWeight).ToList().Sum();
+                                decimal? sumBenchmarkWeight = (from p in BasePortfolioData
+                                                               where p.SectorName == item
+                                                               select p.BenchmarkWeight).ToList().Sum();
+                                decimal? sumDirtyValuePC = (from p in BasePortfolioData
+                                                            where p.SectorName == item
+                                                            select p.DirtyValuePC).ToList().Sum();
+                                decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
+                                                                 where p.SectorName == item
+                                                                 select p.AshEmmModelWeight).ToList().Sum();
 
-                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
+                                foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
+                                {
+                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                }
+                            }
+                            break;
+                        }
+                    case ("industryname"):
+                        {
+                            List<string> groupedColumnData = BasePortfolioData.Select(s => s.IndustryName).Distinct().ToList();
+                            foreach (string item in groupedColumnData)
                             {
-                                data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
-                            }
-                        }
-                        break;
-                    }
-                case ("subindustryname"):
-                    {
-                        List<string> groupedColumnData = BasePortfolioData.Select(s => s.SubIndustryName).Distinct().ToList();
-                        foreach (string item in groupedColumnData)
-                        {
-                            decimal? sumPortfolioWeight = (from p in BasePortfolioData
-                                                           where p.SubIndustryName == item
-                                                           select p.PortfolioWeight).ToList().Sum();
-                            decimal? sumBenchmarkWeight = (from p in BasePortfolioData
-                                                           where p.SubIndustryName == item
-                                                           select p.BenchmarkWeight).ToList().Sum();
-                            decimal? sumDirtyValuePC = (from p in BasePortfolioData
-                                                        where p.SubIndustryName == item
-                                                        select p.DirtyValuePC).ToList().Sum();
-                            decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
-                                                             where p.SubIndustryName == item
-                                                             select p.AshEmmModelWeight).ToList().Sum();
+                                decimal? sumPortfolioWeight = (from p in BasePortfolioData
+                                                               where p.IndustryName == item
+                                                               select p.PortfolioWeight).ToList().Sum();
+                                decimal? sumBenchmarkWeight = (from p in BasePortfolioData
+                                                               where p.IndustryName == item
+                                                               select p.BenchmarkWeight).ToList().Sum();
+                                decimal? sumDirtyValuePC = (from p in BasePortfolioData
+                                                            where p.IndustryName == item
+                                                            select p.DirtyValuePC).ToList().Sum();
+                                decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
+                                                                 where p.IndustryName == item
+                                                                 select p.AshEmmModelWeight).ToList().Sum();
 
-                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
+                                foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
+                                {
+                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                }
+                            }
+                            break;
+                        }
+                    case ("subindustryname"):
+                        {
+                            List<string> groupedColumnData = BasePortfolioData.Select(s => s.SubIndustryName).Distinct().ToList();
+                            foreach (string item in groupedColumnData)
                             {
-                                data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                decimal? sumPortfolioWeight = (from p in BasePortfolioData
+                                                               where p.SubIndustryName == item
+                                                               select p.PortfolioWeight).ToList().Sum();
+                                decimal? sumBenchmarkWeight = (from p in BasePortfolioData
+                                                               where p.SubIndustryName == item
+                                                               select p.BenchmarkWeight).ToList().Sum();
+                                decimal? sumDirtyValuePC = (from p in BasePortfolioData
+                                                            where p.SubIndustryName == item
+                                                            select p.DirtyValuePC).ToList().Sum();
+                                decimal? sumAshEmmModelWeight = (from p in BasePortfolioData
+                                                                 where p.SubIndustryName == item
+                                                                 select p.AshEmmModelWeight).ToList().Sum();
+
+                                foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
+                                {
+                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                }
                             }
+                            break;
                         }
-                        break;
-                    }
-                default:
-                    {
-                        foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData)
+                    default:
                         {
-                            data.ReAshEmmModelWeight = data.AshEmmModelWeight;
-                            data.ReBenchmarkWeight = data.BenchmarkWeight;
-                            data.RePortfolioWeight = data.PortfolioWeight;
+                            foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData)
+                            {
+                                data.ReAshEmmModelWeight = data.AshEmmModelWeight;
+                                data.ReBenchmarkWeight = data.BenchmarkWeight;
+                                data.RePortfolioWeight = data.PortfolioWeight;
+                            }
+                            break;
                         }
-                        break;
-                    }
 
 
+                }
+            }
+            catch (Exception ex)
+            {
+                                
             }
         }
 
@@ -444,12 +455,58 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
-                    RetrievePortfolioDetailsData(SelectedPortfolioId, SelectedDate, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, _effectiveDate, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
             catch (Exception)
             {
 
+            }
+        }
+
+        /// <summary>
+        /// Handle Date Change Event
+        /// </summary>
+        /// <param name="effectiveDate">Effective Date</param>
+        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (effectiveDate != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    _effectiveDate = effectiveDate;
+                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    {
+                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, _effectiveDate, false, RetrievePortfolioDetailsDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+
+        #endregion
+
+        #region EventUnsubscribe
+
+        public void Dispose()
+        {
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             }
         }
 

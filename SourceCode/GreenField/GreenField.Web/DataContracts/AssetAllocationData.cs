@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace GreenField.Web.DataContracts
 {
+    /// <summary>
+    /// Data Contract class for Asset Allocation Gadget
+    /// </summary>
     [DataContract]
     public class AssetAllocationData
     {

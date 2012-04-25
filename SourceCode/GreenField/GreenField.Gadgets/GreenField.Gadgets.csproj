@@ -412,6 +412,11 @@
     <Resource Include="Images\RemoveEntity.png" />
     <Resource Include="Images\RemoveGroup.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Excel.png" />
+    <Resource Include="Images\PDF.png" />
+    <Resource Include="Images\Print.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

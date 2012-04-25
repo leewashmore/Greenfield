@@ -304,7 +304,7 @@ namespace GreenField.App.ViewModel
                                     .Where(record => record.PortfolioId.ToLower().Contains(value.ToLower()))
                                     .ToList();
                     else
-                        PortfolioSelectorInfo = PortfolioSelectionInfo; 
+                        PortfolioSelectorInfo = PortfolioSelectionInfo;
                 }
             }
         }
@@ -801,14 +801,6 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        public ICommand PortfolioDetailsCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(PortfolioDetailsCommandMethod);
-            }
-        }
-
         public ICommand PerformanceGraphCommand
         {
             get
@@ -838,6 +830,14 @@ namespace GreenField.App.ViewModel
             get
             {
                 return new DelegateCommand<object>(HeatMapCommandMethod);
+            }
+        }
+
+        public ICommand PortfolioDetailsCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(PortfolioDetailsCommandMethod);
             }
         }
 
@@ -2434,7 +2434,23 @@ namespace GreenField.App.ViewModel
 
         private void PortfolioDetailsCommandMethod(object param)
         {
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewPortfolioDetails", UriKind.Relative));
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.HOLDINGS_PORTFOLIO_DETAILS_UI,
+                            DashboardTileObject = new ViewPortfolioDetails(new ViewModelPortfolioDetails(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
 

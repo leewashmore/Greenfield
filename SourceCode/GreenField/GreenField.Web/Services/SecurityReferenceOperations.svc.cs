@@ -18,6 +18,9 @@ using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
+    /// <summary>
+    /// Service for Security Reference
+    /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class SecurityReferenceOperations

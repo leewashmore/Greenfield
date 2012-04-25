@@ -182,6 +182,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BenchmarkGridReturnData" nillable="true" type="tns:BenchmarkGridReturnData" />
+  <xs:complexType name="ArrayOfAssetAllocationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssetAllocationData" nillable="true" type="tns:AssetAllocationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAssetAllocationData" nillable="true" type="tns:ArrayOfAssetAllocationData" />
+  <xs:complexType name="AssetAllocationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ModelWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AssetAllocationData" nillable="true" type="tns:AssetAllocationData" />
   <xs:complexType name="ArrayOfHoldingsPercentageData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="HoldingsPercentageData" nillable="true" type="tns:HoldingsPercentageData" />
@@ -241,23 +258,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
-  <xs:complexType name="ArrayOfAssetAllocationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="AssetAllocationData" nillable="true" type="tns:AssetAllocationData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfAssetAllocationData" nillable="true" type="tns:ArrayOfAssetAllocationData" />
-  <xs:complexType name="AssetAllocationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ModelWeight" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioWeight" nillable="true" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="AssetAllocationData" nillable="true" type="tns:AssetAllocationData" />
   <xs:complexType name="ArrayOfMarketPerformanceSnapshotData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />

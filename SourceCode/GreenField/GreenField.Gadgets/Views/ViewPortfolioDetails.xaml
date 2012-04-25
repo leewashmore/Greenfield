@@ -10,149 +10,23 @@
              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
 
+    <helpers:ViewBaseUserControl.Resources>
+        <!--Grid Styles-->
+        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
+            <Setter Property="Background" Value="#9F1D21" />
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <!--Grid Styles End-->
+    </helpers:ViewBaseUserControl.Resources>
+    
+    
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="60*"/>
-        </Grid.RowDefinitions>-->
 
-        <!-- Benchmark Dropdown -->
-        <!--<StackPanel Orientation="Horizontal"  Margin="0, 5, 0, 0" Grid.Row="0">
-            <TextBlock TextAlignment="Right" FontWeight="Bold" VerticalAlignment="Center">Benchmark</TextBlock>
-            <ComboBox x:Name="cmbBenchmarks" VerticalAlignment="Center" 
-                          Margin="5,0,0,0" ItemsSource="{Binding }" />
-        </StackPanel>-->
-
-        <!-- Filters -->
-
-        <!--<StackPanel Orientation="Horizontal" Grid.Row="1">
-            <TextBlock FontWeight="Bold" FontStyle="Italic" 
-                               Text="Filters" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                               TextAlignment="Right"></TextBlock>
-            <ComboBox x:Name="cmbFilterField" Margin="5,0,0,0">
-                <ComboBoxItem IsSelected="True">Region</ComboBoxItem>
-                <ComboBoxItem >Country</ComboBoxItem>
-                <ComboBoxItem >Sector</ComboBoxItem>
-                <ComboBoxItem >Industry</ComboBoxItem>
-                <ComboBoxItem IsEnabled="False">
-                    <Line Stroke="Black" Fill="Black" StrokeThickness="1" X1="0" Y1="0" X2="200" Y2="0"/>
-                </ComboBoxItem>
-                <ComboBoxItem >Last Price</ComboBoxItem>
-                <ComboBoxItem >YTD Return</ComboBoxItem>
-                <ComboBoxItem >Avg. Daily Traded</ComboBoxItem>
-                <ComboBoxItem >Mkt. Cap 10</ComboBoxItem>
-                <ComboBoxItem >P/FV</ComboBoxItem>
-                <ComboBoxItem >Quant P/FV</ComboBoxItem>
-                <ComboBoxItem >PE10</ComboBoxItem>
-                <ComboBoxItem >Earn Gr 10</ComboBoxItem>
-                <ComboBoxItem >CAGR 10-11</ComboBoxItem>
-                <ComboBoxItem >P/CE 10</ComboBoxItem>
-                <ComboBoxItem >CE Gr 10</ComboBoxItem>
-                <ComboBoxItem >EV/EBITDA 10</ComboBoxItem>
-                <ComboBoxItem >P/BV 10</ComboBoxItem>
-                <ComboBoxItem >ROE 10</ComboBoxItem>
-                <ComboBoxItem >Net D/E 10</ComboBoxItem>
-                <ComboBoxItem >Tot D/E 10</ComboBoxItem>
-                <ComboBoxItem >EVBITDA</ComboBoxItem>
-            </ComboBox>
-            <ComboBox Margin="5,0,0,0">
-                <ComboBoxItem IsSelected="True">=</ComboBoxItem>
-                <ComboBoxItem>&gt;</ComboBoxItem>
-                <ComboBoxItem>&lt;</ComboBoxItem>
-                <ComboBoxItem>&lt;&gt;</ComboBoxItem>
-                <ComboBoxItem>&gt;=</ComboBoxItem>
-                <ComboBoxItem>&lt;=</ComboBoxItem>
-            </ComboBox>
-
-            <StackPanel Orientation="Vertical" Margin="5,0,0,0" VerticalAlignment="Stretch">
-                <TextBox Width="140" MaxWidth="140" x:Name="txtFilterValue" Visibility="Collapsed"/>
-                <ComboBox x:Name="cmbFilterCountries" Visibility="Visible" Height="25">
-                    <ComboBoxItem>Africa (AF)</ComboBoxItem>
-                    <ComboBoxItem>East Asia (EA)</ComboBoxItem>
-                    <ComboBoxItem>Eastern Europe (EE)</ComboBoxItem>
-                    <ComboBoxItem>...</ComboBoxItem>
-                </ComboBox>
-            </StackPanel>
-
-            <Button Margin="5,0,0,0" Height="23" Width="24"
-                    BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Refresh Results"
-                    HorizontalAlignment="Right" HorizontalContentAlignment="Center" >
-                <Image Source="../Images/Refresh.png" />
-            </Button>
-        </StackPanel>-->
-
-
-        <!-- Set filters -->
-        <!--<StackPanel x:Name="FiltersPanel" Visibility="Collapsed" Orientation="Vertical" Grid.Row="2">-->
-        <!--<Grid Margin="50,0,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="Region" HorizontalAlignment="Right"/>
-                <TextBlock Margin="3,0,0,0" Grid.Row="0" Grid.Column="1" Text="=" HorizontalAlignment="Center"/>
-                <TextBlock Margin="3,0,0,0" Grid.Row="0" Grid.Column="2" Text="East Asia"/>
-                <Image Margin="3,0,0,0" Grid.Row="0" Grid.Column="3" Source="RemoveFilter.png" Height="12" Width="19"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="Country" HorizontalAlignment="Right"/>
-                <TextBlock Margin="3,0,0,0" Grid.Row="1" Grid.Column="1" Text="=" HorizontalAlignment="Center"/>
-                <TextBlock Margin="3,0,0,0" Grid.Row="1" Grid.Column="2" Text="Indonesia"/>
-                <Image Margin="3,0,0,0" Grid.Row="1" Grid.Column="3" Source="RemoveFilter.png" Height="12" Width="19"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="Mkt. Cap 10" HorizontalAlignment="Right"/>
-                <TextBlock Margin="3,0,0,0" Grid.Row="2" Grid.Column="1" Text=">=" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-                <TextBlock Margin="3,0,0,0" Grid.Row="2" Grid.Column="2" Text="1000"/>
-                <Image Margin="3,0,0,0" Grid.Row="2" Grid.Column="3" Source="RemoveFilter.png" Height="12" Width="19"
-                           VerticalAlignment="Center" HorizontalAlignment="Center"></Image>
-            </Grid>-->
-
-        <!--<ItemsControl HorizontalAlignment="Center" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding EntityName}" />
-                            <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
-                                    CommandParameter="{Binding}"  Width="20">
-                                <Image Source="../Images/Delete.png"/>
-                            </Button>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>-->
-
-        <!-- Groupings -->
-        <!--<StackPanel Orientation="Horizontal" Grid.Row="3">
-            <TextBlock FontWeight="Bold" FontStyle="Italic" Text="Group By" 
-                       HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Right"></TextBlock>
-            <ComboBox Width="113" VerticalAlignment="Center" Margin="5,0,0,0">
-                <ComboBoxItem>Region</ComboBoxItem>
-                <ComboBoxItem>Country</ComboBoxItem>
-                <ComboBoxItem>Sector</ComboBoxItem>
-                <ComboBoxItem>Industry</ComboBoxItem>
-            </ComboBox>
-        </StackPanel>-->
-
-
-        <!-- Data Grid Options -->
-
-
-        <!-- Print/Export Buttons -->
+        <!--Export Controls-->
         <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -163,7 +37,7 @@
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
-                <Image Source="../Images/Excel.png" />
+                <Image Source="../Images/ExportExcel.png" />
             </Button>
             <Button Height="23" Width="24" Grid.Column="1"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
@@ -180,60 +54,68 @@
         </Grid>
 
         <!-- Data Grid -->
-        
-            <telerik:RadGridView x:Name="dgPortfolioDetails" Grid.Row="1" ShowGroupPanel="True" AutoGenerateColumns="False" 
-                                     ItemsSource="{Binding SelectedPortfolioDetailsData, Mode=TwoWay}" CanUserFreezeColumns="False" 
-                                     CanUserDeleteRows="False" CanUserInsertRows="False" CanUserReorderColumns="False" 
-                                     CanUserSortColumns="True" FrozenColumnCount="4" telerik:StyleManager.Theme="Metro"
-                                     AreRowDetailsFrozen="True" Grouping="dgPortfolioDetails_Grouping" 
-                                     Filtering="dgPortfolioDetails_Filtering" Filtered="dgPortfolioDetails_Filtered" >
-                <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
-                                                    IsFilterable="False"/>
-                    <telerik:GridViewDataColumn Header="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
-                                                    IsFilterable="False"/>
-                    <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding SecurityType}" IsGroupable="False"
-                                                    IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
-                                                    IsFilterable="True">
-                        <telerik:GridViewDataColumn.AggregateFunctions>
-                            <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
+
+        <telerik:RadGridView x:Name="dgPortfolioDetails" Grid.Row="1" ShowGroupPanel="True" AutoGenerateColumns="False" 
+                             ItemsSource="{Binding SelectedPortfolioDetailsData}" CanUserFreezeColumns="False" 
+                             CanUserDeleteRows="False" CanUserInsertRows="False" CanUserReorderColumns="False" 
+                             CanUserSortColumns="True" FrozenColumnCount="4" telerik:StyleManager.Theme="Metro"
+                             AreRowDetailsFrozen="True" Grouping="dgPortfolioDetails_Grouping" ScrollMode="Deferred"
+                             Filtering="dgPortfolioDetails_Filtering" Filtered="dgPortfolioDetails_Filtered" 
+                             RowIndicatorVisibility="Collapsed" UseLayoutRounding="True"
+                             FontFamily="Arial" FontSize="7">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
+                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding SecurityType}" IsGroupable="False"
+                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
+                                                    IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCell}" >
+                    <telerik:GridViewDataColumn.AggregateFunctions>
+                        <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
                                                                ResultFormatString="{}{0:n2}" />
-                            <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
+                        <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
                                                                ResultFormatString="{}{0:n2}" />
-                            <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
+                        <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
                                                                ResultFormatString="{}{0:n2}" />
-                        </telerik:GridViewDataColumn.AggregateFunctions>
-                    </telerik:GridViewDataColumn>
-                    <telerik:GridViewDataColumn Header="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
-                                                    DataFormatString="{}# {0:n0}" IsGroupable="True" IsFilterable="True" />
-                    <telerik:GridViewDataColumn Header="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
-                                                    DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
-                                                    DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}" 
-                                                    DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False"
-                                                    IsFilterable="False"/>
-                    <telerik:GridViewDataColumn Header="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
-                                                    DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Sector Name" DataMemberBinding="{Binding SectorName}" 
-                                                    DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True" />
-                    <telerik:GridViewDataColumn Header="Industry Name" DataMemberBinding="{Binding IndustryName}" 
-                                                    DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True" />
-                    <telerik:GridViewDataColumn Header="Sub-Industry Name" 
-                                                    DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" 
-                                                    IsFilterable="True" />
-                    <telerik:GridViewDataColumn Header="Security Type" DataMemberBinding="{Binding SecurityType}" 
-                                                    IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Balance Nominal" DataMemberBinding="{Binding BalanceNominal}" 
-                                                    IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Dirty-Value PC" DataMemberBinding="{Binding DirtyValuePC}" 
-                                                    IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Portfolio Dirty Value PC" DataMemberBinding="{Binding PortfolioDirtyValuePC}" 
-                                                    IsGroupable="False" IsFilterable="False" />
-                    <telerik:GridViewDataColumn Header="Market Cap" DataMemberBinding="{Binding MarketCapUSD,StringFormat=c}" 
-                                                    IsGroupable="False" IsFilterable="False" />
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
-        </Grid>
+                    </telerik:GridViewDataColumn.AggregateFunctions>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
+                                            DataFormatString="{}# {0:n0}" IsGroupable="True" IsFilterable="True"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
+                                            DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
+                                            DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
+                                            DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False"
+                                            IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
+                                            DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Sector Name" DataMemberBinding="{Binding SectorName}" 
+                                            DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True" 
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Industry Name" DataMemberBinding="{Binding IndustryName}" 
+                                            DataFormatString="{}{0:n2}%" IsGroupable="True" IsFilterable="True"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                <telerik:GridViewDataColumn Header="Sub-Industry Name" 
+                                            DataMemberBinding="{Binding SubIndustryName}" IsGroupable="True" 
+                                            IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Security Type" DataMemberBinding="{Binding SecurityType}" 
+                                                    IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Balance Nominal" DataMemberBinding="{Binding BalanceNominal}" 
+                                                    IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Dirty-Value PC" DataMemberBinding="{Binding DirtyValuePC}" 
+                                                    IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Portfolio Dirty Value PC" DataMemberBinding="{Binding PortfolioDirtyValuePC}" 
+                                                    IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                <telerik:GridViewDataColumn Header="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
+                                                    IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
 </helpers:ViewBaseUserControl>

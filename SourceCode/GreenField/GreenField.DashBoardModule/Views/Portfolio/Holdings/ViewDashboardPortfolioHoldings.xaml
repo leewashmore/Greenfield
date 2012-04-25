@@ -8,7 +8,7 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>

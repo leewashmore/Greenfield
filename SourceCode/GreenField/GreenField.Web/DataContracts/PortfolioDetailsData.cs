@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace GreenField.Web.DataContracts
 {
+    /// <summary>
+    /// Data Contract for Portfolio Details Data
+    /// </summary>
     [DataContract]
     public class PortfolioDetailsData
     {

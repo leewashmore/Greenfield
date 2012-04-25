@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace GreenField.Web.DataContracts
 {
+    /// <summary>
+    /// Data Contract class for Closing Price Chart.
+    /// </summary>
     [DataContract]
     public class PricingReferenceData
     {

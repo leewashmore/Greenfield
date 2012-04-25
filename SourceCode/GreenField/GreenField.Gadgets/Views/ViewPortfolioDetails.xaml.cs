@@ -25,6 +25,9 @@ using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// XAML.cs class for Portfolio Details UI
+    /// </summary>
     public partial class ViewPortfolioDetails : ViewBaseUserControl
     {
         #region Private Variables
@@ -368,6 +371,11 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        /// <summary>
+        /// Event when User groups the data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPortfolioDetails_Grouping(object sender, GridViewGroupingEventArgs e)
         {
             if (e.Action.ToString() != "Remove")
@@ -388,11 +396,14 @@ namespace GreenField.Gadgets.Views
             SetGroupedData();
         }
 
+        /// <summary>
+        /// Event when User starts filtering the data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
             Telerik.Windows.Controls.GridView.ColumnFilterDescriptor fd = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
-            string a = Convert.ToString(fd.Column.UniqueName);
-
         }
 
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
@@ -400,6 +411,9 @@ namespace GreenField.Gadgets.Views
             SetGroupedData();
         }
 
+        /// <summary>
+        /// Getting the currently filtered/grouped items from the DataGrid
+        /// </summary>
         private void SetGroupedData()
         {
             RangeObservableCollection<PortfolioDetailsData> collection = new RangeObservableCollection<PortfolioDetailsData>();
@@ -432,9 +446,13 @@ namespace GreenField.Gadgets.Views
             DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
         }
 
+        #region EventUnsubscribe
+
         public override void Dispose()
         {
             throw new NotImplementedException();
         }
+ 
+        #endregion
     }
 }
