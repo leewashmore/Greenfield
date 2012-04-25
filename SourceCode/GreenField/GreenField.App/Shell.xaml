@@ -200,8 +200,10 @@
                         <telerik:RadRibbonDropDownButton Text="Charting" LargeImage="Images/graph.png" Size="Large" Background="#9DA6C0" >
                             <telerik:RadRibbonDropDownButton.DropDownContent>
                                 <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
-                                    <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" Command="{Binding DashboardCompanyChartingClosingPriceCommand}" Background="#9DA6C0"/>
-                                    <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" Background="#9DA6C0"/>
+                                    <telerik:RadRibbonButton Text="Price/Comparision" LargeImage="Images/graph.png" Size="Large" 
+                                                             Command="{Binding DashboardCompanyChartingClosingPriceCommand}" Background="#9DA6C0"/>
+                                    <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" 
+                                                             Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" Background="#9DA6C0"/>
                                     <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" IsEnabled="False" Background="#9DA6C0"/>
                                     <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False" Background="#9DA6C0"/>
                                 </telerik:RadRibbonGroup>
@@ -289,10 +291,11 @@
                         <telerik:RadRibbonButton LargeImage="../Images/value.png" Text="Pricing" Size="Large" Command="{Binding GadgetPricingCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"  Background="#9DA6C0"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Theoretical Unrealized Gain Loss" Size="Large" 
+                                                 Command="{Binding GadgetTheoreticalUnrealizedGainLossCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/report.png" Text="Asset Allocation" Size="Large" 
+                        <telerik:RadRibbonButton LargeImage="../Images/assetAllocation.png" Text="Asset Allocation" Size="Large" 
                                                  Command="{Binding AssetAllocationCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
@@ -340,16 +343,16 @@
 
 
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton  LargeImage="../Images/ContributorDetractorImage.png" Text="Portfolio Details" Size="Large" 
+                        <telerik:RadRibbonButton  LargeImage="../Images/equityPortfolio.png" Text="Portfolio Details" Size="Large" 
                                                   Command="{Binding PortfolioDetailsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
-                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                    <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" 
                                                  Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
-                    </telerik:RadRibbonGroup>
+                    </telerik:RadRibbonGroup>-->
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>

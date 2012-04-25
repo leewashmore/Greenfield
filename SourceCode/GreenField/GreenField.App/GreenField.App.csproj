@@ -161,6 +161,9 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\assetAllocation.png" />
+    <Resource Include="Images\equityPortfolio.png" />
+    <Resource Include="Images\holdingsPieChart.png" />
     <Resource Include="Images\RemoveSnapshot.png" />
     <Resource Include="Images\AddSnapshot.png" />
     <Resource Include="Images\SaveAsSnapshot.png" />
