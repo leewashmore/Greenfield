@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Date
         /// </summary>
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace GreenField.Gadgets.ViewModels
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if ((_portfolioSelectionData != null) && (_effectiveDate != null))
-                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
 
             if (_eventAggregator != null)
             {
@@ -122,7 +122,7 @@ namespace GreenField.Gadgets.ViewModels
                     _portfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -154,7 +154,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, _effectiveDate, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else

@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.Views
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
         private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
@@ -147,7 +147,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, cellCountryID, cellSectorID)
+                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), cellCountryID, cellSectorID)
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);

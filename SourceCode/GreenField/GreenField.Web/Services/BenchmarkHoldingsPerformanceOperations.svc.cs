@@ -310,11 +310,17 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
-                string benchmarkId = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                GF_PORTFOLIO_HOLDINGS benchmarkRow = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
                         && t.PORTFOLIO_DATE.Equals(effectiveDate.Date))
-                    .FirstOrDefault()
-                    .BENCHMARK_ID.ToString();
+                    .FirstOrDefault();
+
+                //Return empty set if PORTFOLIO_ID and PORTFOLIO_DATE combination does not exist
+                if (benchmarkRow == null)
+                    return result;
+
+                string benchmarkId = benchmarkRow.BENCHMARK_ID;
+
                 if (benchmarkId != null)
                 {
                     List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = entity.GF_BENCHMARK_HOLDINGS
@@ -325,8 +331,8 @@ namespace GreenField.Web.Services
                         foreach (DimensionEntitiesService.GF_BENCHMARK_HOLDINGS record in data)
                         {
                             //calculte sum of BENCHMARK_WEIGHT for a country
-                            string country = record.ISO_COUNTRY_CODE;
-                            object sumBenchmarkWeightCountry = data.Where(t => t.ISO_COUNTRY_CODE == country).Sum(t => t.BENCHMARK_WEIGHT);
+                            string country = record.COUNTRYNAME;
+                            object sumBenchmarkWeightCountry = data.Where(t => t.COUNTRYNAME == country).Sum(t => t.BENCHMARK_WEIGHT);
 
                             //calculte sum of BENCHMARK_WEIGHT for a industry
                             string industry = record.GICS_INDUSTRY_NAME;
@@ -336,7 +342,7 @@ namespace GreenField.Web.Services
                                 result.Add(new IndexConstituentsData()
                                 {
                                     ConstituentName = record.ISSUE_NAME,
-                                    Country = country,
+                                    Country = country + " (" + record.ISO_COUNTRY_CODE + ")",
                                     Region = record.ASHEMM_PROP_REGION_CODE,
                                     Sector = record.GICS_SECTOR_NAME,
                                     Industry = industry,
@@ -351,6 +357,7 @@ namespace GreenField.Web.Services
                 }
                 return result;
             }
+
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);

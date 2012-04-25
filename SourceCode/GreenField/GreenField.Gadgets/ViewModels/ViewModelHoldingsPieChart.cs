@@ -70,7 +70,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -107,15 +107,15 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return "as of " + EffectiveDate.ToLongDateString();
+                return "as of " + Convert.ToDateTime(EffectiveDate).ToLongDateString();
             }
         }
 
         /// <summary>
         ///Effective Date as selected by the user 
         /// </summary>
-        private DateTime _effectiveDate;
-        public DateTime EffectiveDate
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
             set
@@ -126,7 +126,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter.Key !=null && _holdingDataFilter.Value!=null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
 
                     }
 
@@ -175,7 +175,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -211,7 +211,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -245,7 +245,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else

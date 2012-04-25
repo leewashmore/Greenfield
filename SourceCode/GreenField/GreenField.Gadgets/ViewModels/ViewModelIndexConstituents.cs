@@ -51,7 +51,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && PortfolioSelectionData != null)
             {
-                _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
             }
             if (_eventAggregator != null)
             {
@@ -102,8 +102,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// effective date selected
         /// </summary>
-        private DateTime _effectiveDate;
-        public DateTime EffectiveDate
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
             set
@@ -137,7 +137,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
                             IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -172,7 +172,7 @@ namespace GreenField.Gadgets.ViewModels
                     PortfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
                             IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }

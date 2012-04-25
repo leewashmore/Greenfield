@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.ViewModels
         //Selection Data
         public PortfolioSelectionData _PortfolioSelectionData;
         public BenchmarkSelectionData _benchmarkSelectionData;
-        public DateTime _effectiveDate;
+        public DateTime? _effectiveDate;
 
         //Gadget Data
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
@@ -57,7 +57,7 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+            _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
 
             if (_eventAggregator != null)
             {
@@ -105,7 +105,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
                     }
                 }
                 else
@@ -133,7 +133,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
                     }
                 }
                 else
@@ -161,7 +161,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
                     }
                 }
                 else
@@ -190,7 +190,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     _relativePerformanceSectorInfo = result;
                     //Service Call to Retrieve Performance Data relating Fund Selection Data/ Benchmark Selection Data and Effective Date
-                    _dbInteractivity.RetrieveRelativePerformanceData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceDataCallbackMethod);                    
+                    _dbInteractivity.RetrieveRelativePerformanceData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceDataCallbackMethod);                    
                 }
                 else
                 {

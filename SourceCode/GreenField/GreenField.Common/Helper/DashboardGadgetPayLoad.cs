@@ -22,19 +22,8 @@ namespace GreenField.Common.Helper
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
-        private DateTime _effectiveDate = DateTime.Now;
-        public DateTime EffectiveDate
-        {
-            get
-            {
-                return _effectiveDate;
-            }
-            set
-            {
-                this._effectiveDate = value;
-            }
-        }
-
+        public DateTime? EffectiveDate { get; set; }
+        
         public PeriodSelectionData PeriodSelectionData{ get; set; }        
 
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }

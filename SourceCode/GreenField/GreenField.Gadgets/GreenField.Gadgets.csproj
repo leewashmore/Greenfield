@@ -257,6 +257,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Assets\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Helpers\ChildExportOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
         #endregion
 
         #region Constructor
@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+            _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
             
             if (_eventAggregator != null)
             {
@@ -92,7 +92,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -120,7 +120,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -148,7 +148,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
                     }
                 }
                 else
@@ -177,7 +177,7 @@ namespace GreenField.Gadgets.ViewModels
                     //{
                     //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                     //}
-                    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                 }
                 else
                 {

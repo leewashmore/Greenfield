@@ -10,11 +10,11 @@
     mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
     <helpers:ViewBaseUserControl.Resources>
-        <!--Grid Styles-->
-        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Background" Value="#9F1D21"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -73,7 +73,8 @@
                     <telerik:RadGridView Name="dgRegionBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding RegionBreakdownInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowGroupFooters="True" ShowColumnFooters="True">
+                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowGroupFooters="True"
+                             FontSize="7" FontFamily="Arial" ShowColumnFooters="True">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Region" SortDirection="Ascending">
                                 <telerik:GroupDescriptor.AggregateFunctions>
@@ -91,13 +92,13 @@
                             </telerik:GroupDescriptor>
                         </telerik:RadGridView.GroupDescriptors>
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Right"/>
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Left"/>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>

@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && _PortfolioSelectionData != null)
             {
-                _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, _effectiveDate, RetrieveRegionBreakdownDataCallbackMethod);
+                _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -109,8 +109,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain effective date value from EffectiveDate Datepicker
         /// </summary>
-        private DateTime _effectiveDate;
-        public DateTime EffectiveDate
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
             set 
@@ -145,7 +145,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, _effectiveDate, RetrieveRegionBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
                         if (RegionBreakdownDataLoadEvent != null)
                             RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -179,7 +179,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData,_effectiveDate, RetrieveRegionBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
                         if (RegionBreakdownDataLoadEvent != null)
                             RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }

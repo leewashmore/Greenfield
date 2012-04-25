@@ -32,7 +32,7 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private PortfolioSelectionData _portfolioSelectionData;
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
 
         #endregion
 
@@ -54,7 +54,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
             {
-                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, _effectiveDate, false, RetrievePortfolioDetailsDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -455,7 +455,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
-                    RetrievePortfolioDetailsData(SelectedPortfolioId, _effectiveDate, GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
             catch (Exception)
@@ -480,7 +480,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, _effectiveDate, false, RetrievePortfolioDetailsDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
                     }
                 }
                 else

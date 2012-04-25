@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if ((_portfolioSelectionData != null) && (EffectiveDate != null))
             {
-                _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopHoldingsDataCallbackMethod);
             }                      
 
             if (_eventAggregator != null)
@@ -88,8 +88,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain effective date value from EffectiveDate Datepicker
         /// </summary>
-        private DateTime _effectiveDate;
-        public DateTime EffectiveDate
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
             set 
@@ -124,7 +124,7 @@ namespace GreenField.Gadgets.ViewModels
                     _portfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopHoldingsDataCallbackMethod);
                         if (TopHoldingsDataLoadedEvent != null)
                             TopHoldingsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -160,7 +160,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, _effectiveDate, RetrieveTopHoldingsDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(EffectiveDate), RetrieveTopHoldingsDataCallbackMethod);
                         if (TopHoldingsDataLoadedEvent != null)
                             TopHoldingsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }

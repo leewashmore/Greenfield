@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Contains the effective date
         /// </summary>
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
         #endregion
 
         #region Constructor
@@ -83,7 +83,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             {
-                _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
             }
            // _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
         }
@@ -130,7 +130,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -162,7 +162,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -194,7 +194,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else

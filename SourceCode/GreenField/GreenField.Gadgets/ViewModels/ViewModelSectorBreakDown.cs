@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && _PortfolioSelectionData != null)
             {
-                _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData,_effectiveDate, RetrieveSectorBreakdownDataCallbackMethod);
+                _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveSectorBreakdownDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -109,8 +109,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain effective date value from EffectiveDate Datepicker
         /// </summary>
-        private DateTime _effectiveDate;
-        public DateTime EffectiveDate
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
             set
@@ -144,7 +144,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, _effectiveDate, RetrieveSectorBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveSectorBreakdownDataCallbackMethod);
                         if (SectorBreakdownDataLoadEvent != null)
                             SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -178,7 +178,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, _effectiveDate, RetrieveSectorBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveSectorBreakdownDataCallbackMethod);
                         if (SectorBreakdownDataLoadEvent != null)
                             SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }

@@ -37,7 +37,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
         #endregion
 
         #region Constructor
@@ -61,7 +61,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             {
-                _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
+                _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
             }
 
             if (_eventAggregator != null)
@@ -117,7 +117,7 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
                     }
                 }
                 else
@@ -149,7 +149,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
                     }
                 }
                 else
@@ -181,7 +181,7 @@ namespace GreenField.Gadgets.ViewModels
                     _benchmarkSelectionData = benchmarkSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSecurityDataCallBackMethod, null, null, 1, 5);
                     }
                 }
                 else
@@ -212,7 +212,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, relativePerformanceGridCellData, 1);
                     if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate,
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate),
                             RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID, 1, 5);
                     }
                 }

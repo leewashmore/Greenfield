@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private IEventAggregator _eventAggregator;
         private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDateSet;
+        private DateTime? _effectiveDateSet;
 
         #endregion
 
@@ -486,8 +486,8 @@ namespace GreenField.Gadgets.ViewModels
                 if ((benchmarkSelectionData != null) && (_effectiveDateSet != null) && (ChartEntityList != null))
                 {
                     ChartEntityList.Add(benchmarkSelectionData);
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), _effectiveDateSet, RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
-                    _dbInteractivity.RetrieveBenchmarkGridReturnData(ChartEntityList.ToList(), _effectiveDateSet, RetrieveBenchmarkGridDataCallBackMethod);
+                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
+                    _dbInteractivity.RetrieveBenchmarkGridReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkGridDataCallBackMethod);
 
                 }
                 else
@@ -544,7 +544,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PlottedBenchmarkSeries.Any(t => t.InstrumentID == SelectedBenchmarkReference.InstrumentID))
                 {
                     ChartEntityList.Add(SelectedBenchmarkReference);
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), _effectiveDateSet, RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
+                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
                 }
             }
         }

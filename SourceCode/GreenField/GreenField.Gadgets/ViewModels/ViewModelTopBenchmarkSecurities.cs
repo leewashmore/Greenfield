@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Contains the effective date
         /// </summary>
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_effectiveDate != null && _portfolioSelectionData != null)
             {
-                _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, _effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
+                _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
             }
            // _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_benchmarkSelectionData, _effectiveDate, RetrieveTopBenchmarkSecuritiesDataCallbackMethod);
             
@@ -161,7 +161,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_portfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, _effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
 
                     }
                     RaisePropertyChanged(() => this.ValueTypesSelection);
@@ -198,7 +198,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
                             topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, _effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
                     }
                 }
                 else
@@ -232,7 +232,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
                             topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, _effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
+                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
                     }
                 }
                 else

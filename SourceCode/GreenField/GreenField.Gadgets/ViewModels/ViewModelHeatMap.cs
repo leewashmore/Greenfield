@@ -45,7 +45,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
         private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime _effectiveDate;
+        private DateTime? _effectiveDate;
 
         #endregion
 
@@ -66,7 +66,7 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
+            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
         }
 
         
