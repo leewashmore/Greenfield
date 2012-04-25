@@ -45,7 +45,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
-        private PortfolioSelectionData _PortfolioSelectionData;  
+        private PortfolioSelectionData _PortfolioSelectionData;
+
+        /// <summary>
+        /// Private member containing the Key Value Pair
+        /// </summary>
+        private KeyValuePair<String, String> _holdingDataFilter;
       
         #endregion
 
@@ -61,28 +66,20 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;           
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            _holdingDataFilter = param.DashboardGadgetPayload.HoldingDataFilter;
 
-            if (EffectiveDate != null && _PortfolioSelectionData != null)
+            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterDataset);
             }           
 
-            //if (_benchmarkSelectionData != null && EffectiveDate != null)
-            //{
-            //    _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
-            //}
-         //   _dbInteractivity.RetrieveHoldingsPercentageData(_benchmarkSelectionData, EffectiveDate, RetrieveHoldingsPercentageDataCallbackMethod);
-
-
-            
-            //_dbInteractivity.RetrieveIndexConstituentsData(_benchmarkSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
-           
         }
         #endregion
 
@@ -127,9 +124,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _effectiveDate = value;
 
-                    if (_PortfolioSelectionData != null && EffectiveDate != null)
+                    if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter.Key !=null && _holdingDataFilter.Value!=null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
 
                     }
 
@@ -137,77 +134,17 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
-
-
-       /// <summary>
-       /// Collection that contains the filter types to be displayed in the combo box
-       /// </summary>
-        public ObservableCollection<String> FilterTypes
-        {
-            get
-            {
-                return new ObservableCollection<string> { "Region", "Country", "Industry", "Sector" };
-            }
-        }
-
         /// <summary>
-        /// String that contains the selected filter type
+        /// Property that stores the benchmark name
         /// </summary>
-        private String _filterTypesSelection;
-        public String FilterTypesSelection
+        private String benchmarkName;
+        public String BenchmarkName
         {
-            get 
-            { 
-                return _filterTypesSelection;
-            }
+            get { return benchmarkName; }
             set
             {
-               
-                    _filterTypesSelection = value;
-                    _dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod); 
-                     RaisePropertyChanged(() => this.FilterTypesSelection);
-            }
-        }
-        /// <summary>
-        ///  Collection that contains the value types to be displayed in the combo box
-        /// </summary>
-        private List<String> _valueTypes;
-        public List<String> ValueTypes
-        {
-            get { return _valueTypes; }
-            set
-            {
-                if (_valueTypes != value)
-                {
-                    _valueTypes = value;
-
-                    RaisePropertyChanged(() => this.ValueTypes);
-                }
-            }            
-        }
-
-        /// <summary>
-        /// String that contains the selected value type
-        /// </summary>
-        private String _valueTypesSelection;
-        public String ValueTypesSelection
-        {
-            get { return _valueTypesSelection; }
-            set
-            {
-                if (_valueTypesSelection != value)
-                {
-                    _valueTypesSelection = value;
-
-                    if (_PortfolioSelectionData != null && EffectiveDate != null)
-                    {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);                      
-
-                    }
-                    RaisePropertyChanged(() => this.ValueTypesSelection);
-                }  
-                
+                benchmarkName = value;
+                RaisePropertyChanged(() => this.BenchmarkName);
             }
         }
 
@@ -236,9 +173,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -270,11 +207,11 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
 
-                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, FilterTypesSelection, ValueTypesSelection, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -288,7 +225,44 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }        
+        }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Holding Filter reference
+        /// </summary>
+        /// <param name="dataFilter">Key value pais consisting of the Filter Type and Filter Value selected by the user </param>
+        public void HandleFilterDataset(KeyValuePair<String,String> dataFilter)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (dataFilter.Key != null && dataFilter.Value !=null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, dataFilter, 1);
+                    _holdingDataFilter = dataFilter;
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, EffectiveDate, _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);       
+        }
+    
+
+
         #endregion
 
        #region Callback Methods
@@ -307,6 +281,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
 
                     HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);
+                    BenchmarkName = result[0].BenchmarkName;
                     if (null != holdingsPieChartDataLoadedEvent)
                         holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
@@ -324,22 +299,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }       
 
-        /// <summary>
-        /// Callback method that assigns value to ValueTypes
-        /// </summary>
-        /// <param name="result">Contains the list of value types for a selected region</param>
-        public void RetrieveValuesForFiltersCallbackMethod(List<String> result)
-        {
-            ValueTypes = result;        
-        }
-
         #endregion
 
        #region EventUnSubscribe
-
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterDataset);
         }
 
         #endregion

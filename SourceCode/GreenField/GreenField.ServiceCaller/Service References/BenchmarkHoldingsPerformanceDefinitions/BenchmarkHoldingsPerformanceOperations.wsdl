@@ -71,13 +71,13 @@
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveIndexConstituentsData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveValuesForFilters" />
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveValuesForFiltersShell" />
   </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveValuesForFiltersResponse" />
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveValuesForFiltersShellResponse" />
   </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_ServiceFaultFault_FaultMessage">
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_InputMessage">
@@ -86,6 +86,9 @@
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_OutputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePortfolioDetailsDataResponse" />
   </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveBenchmarkChartReturnData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveBenchmarkChartReturnData" />
   </wsdl:message>
@@ -93,7 +96,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveBenchmarkChartReturnDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveBenchmarkChartReturnData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveBenchmarkGridReturnData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveBenchmarkGridReturnData" />
@@ -102,7 +105,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveBenchmarkGridReturnDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveBenchmarkGridReturnData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveAssetAllocationData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveAssetAllocationData" />
@@ -117,7 +120,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHoldingsPercentageData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHoldingsPercentageDataForRegion_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegion" />
@@ -126,7 +129,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveHoldingsPercentageDataForRegionResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHoldingsPercentageDataForRegion_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveTopBenchmarkSecuritiesData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesData" />
@@ -135,7 +138,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveTopBenchmarkSecuritiesDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveTopBenchmarkSecuritiesData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketCapitalizationData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMarketCapitalizationData" />
@@ -144,7 +147,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMarketCapitalizationDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketSnapshotSelectionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionData" />
@@ -153,7 +156,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketSnapshotSelectionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketSnapshotPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreference" />
@@ -162,7 +165,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotData" />
@@ -171,7 +174,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q17:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotPerformance_InputMessage">
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformance" />
@@ -180,7 +183,7 @@
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformanceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q17:ServiceFault" />
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_UpdateMarketSnapshotPerformance_InputMessage">
     <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformance" />
@@ -189,7 +192,7 @@
     <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformanceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_UpdateMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotGroupPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreference" />
@@ -198,7 +201,7 @@
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q20:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RemoveMarketSnapshotGroupPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreference" />
@@ -207,7 +210,7 @@
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RemoveMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q20:ServiceFault" />
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q21:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotEntityPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreference" />
@@ -216,7 +219,7 @@
     <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_AddMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q21:ServiceFault" />
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q22:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RemoveMarketSnapshotEntityPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreference" />
@@ -225,7 +228,7 @@
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RemoveMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q22:ServiceFault" />
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q23:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
@@ -234,7 +237,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q23:ServiceFault" />
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q24:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHeatMapData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveHeatMapData" />
@@ -243,7 +246,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveHeatMapDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHeatMapData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q24:ServiceFault" />
+    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSectorData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorData" />
@@ -252,7 +255,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSectorData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
+    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q26:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionData" />
@@ -261,7 +264,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q26:ServiceFault" />
+    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q27:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionData" />
@@ -270,7 +273,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q27:ServiceFault" />
+    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q28:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionData" />
@@ -279,7 +282,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q28:ServiceFault" />
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q29:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSecurityData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityData" />
@@ -288,7 +291,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceSecurityData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q29:ServiceFault" />
+    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q30:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceData" />
@@ -297,7 +300,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q30:ServiceFault" />
+    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q31:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePerformanceGraphData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphData" />
@@ -306,7 +309,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q31:ServiceFault" />
+    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q32:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePerformanceGridData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGridData" />
@@ -315,7 +318,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGridDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePerformanceGridData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q32:ServiceFault" />
+    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q33:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveAttributionData" />
@@ -324,7 +327,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveAttributionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q33:ServiceFault" />
+    <wsdl:part xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q34:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="BenchmarkHoldingsPerformanceOperations">
     <wsdl:operation name="Temp">
@@ -361,14 +364,15 @@
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveIndexConstituentsDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveIndexConstituentsData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveIndexConstituentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveIndexConstituentsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveValuesForFilters">
-      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilters" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFilters_ServiceFaultFault_FaultMessage" />
+    <wsdl:operation name="RetrieveValuesForFiltersShell">
+      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersShell" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersShellResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersShellServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveValuesForFiltersShell_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrievePortfolioDetailsData">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetailsData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetailsDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetailsDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioDetailsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveBenchmarkChartReturnData">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkChartReturnData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveBenchmarkChartReturnData_InputMessage" />
@@ -588,8 +592,8 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveValuesForFilters">
-      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilters" style="document" />
+    <wsdl:operation name="RetrieveValuesForFiltersShell">
+      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFiltersShell" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -608,6 +612,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="RetrieveBenchmarkChartReturnData">
       <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveBenchmarkChartReturnData" style="document" />

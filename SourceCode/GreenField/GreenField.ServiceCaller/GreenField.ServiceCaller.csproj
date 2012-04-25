@@ -154,6 +154,9 @@
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HeatMapData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsPercentageData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

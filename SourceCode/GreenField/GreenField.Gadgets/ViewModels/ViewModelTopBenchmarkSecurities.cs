@@ -124,7 +124,7 @@ namespace GreenField.Gadgets.ViewModels
             {
 
                 _filterTypesSelection = value;
-                _dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod);
+                //_dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod);
                 RaisePropertyChanged(() => this.FilterTypesSelection);
             }
         }

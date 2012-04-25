@@ -443,6 +443,113 @@ namespace GreenField.App.ViewModel
         }
         #endregion
 
+        #region Filter Selector
+        /// <summary>
+        /// Stores the list of Filters
+        /// </summary>
+        /// <summary>
+        /// Collection that contains the filter types to be displayed in the combo box
+        /// </summary>
+        public ObservableCollection<String> FilterTypes
+        {
+            get
+            {
+                return new ObservableCollection<string> { "Region", "Country", "Industry", "Sector" };
+            }
+        }
+
+        /// <summary>
+        /// String that contains the selected filter type
+        /// </summary>
+        private String _filterTypesSelection;
+        public String FilterTypesSelection
+        {
+            get
+            {
+                return _filterTypesSelection;
+            }
+            set
+            {
+                _filterTypesSelection = value;
+                if (SelectedEffectiveDateInfo != new DateTime(0001, 01, 01))
+                    _dbInteractivity.RetriveValuesForFiltersShell(_filterTypesSelection, SelectedEffectiveDateInfo, RetrieveValuesForFiltersShellCallbackMethod);
+                RaisePropertyChanged(() => this.FilterTypesSelection);
+            }
+        }
+
+        /// <summary>
+        ///  Collection that contains the value types to be displayed in the combo box
+        /// </summary>
+        private HoldingsFilterSelectionData _filterSelectionInfo;
+        public HoldingsFilterSelectionData FilterSelectionInfo
+        {
+            get { return _filterSelectionInfo; }
+            set
+            {
+                if (_filterSelectionInfo != value)
+                {
+                    _filterSelectionInfo = value;
+                    ValueTypes = value.FilterValues;
+                    RaisePropertyChanged(() => this.FilterSelectionInfo);
+                }
+            }
+        }
+
+        /// <summary>
+        ///  Collection that contains the HoldingsFilterSelectionData to be displayed in the combo box
+        /// </summary>
+        private List<String> _valueTypes;
+        public List<String> ValueTypes
+        {
+            get { return _valueTypes; }
+            set
+            {
+                if (_valueTypes != value)
+                {
+                    _valueTypes = value;
+
+                    RaisePropertyChanged(() => this.ValueTypes);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores selected Value - Publishes FilterReferenceSetEvent on set event
+        /// </summary>
+        private String _selectedFilterValueInfo;
+        public String SelectedFilterValueInfo
+        {
+            get { return _selectedFilterValueInfo; }
+            set
+            {
+                if (_selectedFilterValueInfo != value)
+                {
+                    _selectedFilterValueInfo = value;
+                    RaisePropertyChanged(() => this.SelectedFilterValueInfo);
+                    if (value != null)
+                    {
+                        SelectorPayload.HoldingDataFilter = new KeyValuePair<String, String>(FilterTypesSelection, value);
+                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(new KeyValuePair<String, String>(FilterTypesSelection, value));
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stores visibility property of the filter selector for holdings pie chart
+        /// </summary>
+        private Visibility _filterVisibility = Visibility.Collapsed;
+        public Visibility FilterVisibility
+        {
+            get { return _filterVisibility; }
+            set
+            {
+                _filterVisibility = value;
+                RaisePropertyChanged(() => this.FilterVisibility);                
+            }
+        }
+        #endregion
+
         //#region Country Selector
         ///// <summary>
         ///// Stores visibility property of the country selector
@@ -2689,6 +2796,15 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Callback method that assigns value to ValueTypes
+        /// </summary>
+        /// <param name="result">Contains the list of value types for a selected region</param>
+        public void RetrieveValuesForFiltersShellCallbackMethod(HoldingsFilterSelectionData result)
+        {
+            FilterSelectionInfo = result;
+        }
+
         #endregion
 
         #region Helper Methods
@@ -2735,6 +2851,7 @@ namespace GreenField.App.ViewModel
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
+            FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
         }
 
         #endregion

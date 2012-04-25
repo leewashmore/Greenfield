@@ -67,7 +67,7 @@ namespace GreenField.ServiceCaller
 
         void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
-        void RetriveValuesForFilters(String filterType, Action<List<String>> callback);
+        void RetriveValuesForFiltersShell(string filterType, DateTime? effectiveDate, Action<HoldingsFilterSelectionData> callback);
 
         void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback);
 
@@ -88,8 +88,6 @@ namespace GreenField.ServiceCaller
         void RetrieveAttributionData(String name, Action<List<AttributionData>> callback);
 
         void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback);
-
-
 
         void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 

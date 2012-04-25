@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using System.Collections.Generic;
 
 namespace GreenField.Common.Helper
 {
@@ -37,5 +38,7 @@ namespace GreenField.Common.Helper
         public PeriodSelectionData PeriodSelectionData{ get; set; }        
 
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
+
+        public KeyValuePair<String, String> HoldingDataFilter { get; set; }
     }
 }

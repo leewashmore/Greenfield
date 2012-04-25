@@ -27,10 +27,10 @@
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations.xsd" MetadataType="Schema" ID="908b4b33-855e-4e16-9891-00847bac0423" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations1.xsd" MetadataType="Schema" ID="55fab4ed-57d0-4abe-bace-71ee365199bc" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations6.xsd" MetadataType="Schema" ID="26c2aeae-3abc-428b-8ca0-bdb56901ebf9" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd6" />
+    <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations2.xsd" MetadataType="Schema" ID="c4d68311-3a4e-4c33-b578-401023829422" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations.wsdl" MetadataType="Wsdl" ID="572b2f18-16a5-4350-a2b7-4f0f63800e29" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?wsdl" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations3.xsd" MetadataType="Schema" ID="70891a62-63e5-4e3f-b467-0fdbf9a9ee73" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations4.xsd" MetadataType="Schema" ID="dd758ce9-fd79-4516-85a8-3c69e6242a6d" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations2.xsd" MetadataType="Schema" ID="c4d68311-3a4e-4c33-b578-401023829422" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="BenchmarkHoldingsPerformanceOperations5.xsd" MetadataType="Schema" ID="86cd7891-a8b0-4795-867b-01444610e37b" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>

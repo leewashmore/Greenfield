@@ -15,6 +15,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using System.Collections.Generic;
 
 namespace GreenField.Common
 {
@@ -35,6 +36,7 @@ namespace GreenField.Common
 
     public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
 
+    public class HoldingFilterReferenceSetEvent : CompositePresentationEvent<KeyValuePair<String, String>> { }
 
     public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionType> { }    
 

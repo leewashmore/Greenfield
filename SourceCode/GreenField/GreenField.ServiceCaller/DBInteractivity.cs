@@ -696,33 +696,26 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-        public void RetriveValuesForFilters(String filterType, Action<List<String>> callback)
+        /// <summary>
+        /// Retrieves filter values for a selected filter type by calling the service
+        /// </summary>
+        /// <param name="filterType">Filter Type selected by the user</param>
+        /// <param name="effectiveDate">Effected Date selected by the user</param>
+        /// <param name="callback">callback method</param>
+        public void RetriveValuesForFiltersShell(string filterType, DateTime? effectiveDate, Action<HoldingsFilterSelectionData> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveValuesForFiltersAsync(filterType);
-            client.RetrieveValuesForFiltersCompleted += (se, e) =>
+            client.RetrieveValuesForFiltersShellAsync(filterType, effectiveDate);
+            client.RetrieveValuesForFiltersShellCompleted += (se, e) =>
             {
-                if (e.Error == null)
+                if (callback != null)
                 {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
+                    if (e.Result != null)
+                        callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
+                    callback(null);
                 }
             };
         }

@@ -116,6 +116,60 @@
             </StackPanel>
         </Grid>
 
+        <!--Filter Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding FilterVisibility}" Grid.Column="4">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbFilterSelector"
+                                         EmptyText="Select Filter..." 
+                                         ItemsSource="{Binding FilterTypes}"
+                                         SelectedValue="{Binding FilterTypesSelection, Mode=TwoWay}"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
+        <!--Value Selector-->
+        <Grid Margin="5,0,0,0" Visibility="{Binding FilterVisibility}" Grid.Column="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                <telerik:RadComboBox x:Name="cbValueSelector"
+                                         EmptyText="Select Value..." 
+                                         ItemsSource="{Binding ValueTypes}"
+                                         SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
+            </StackPanel>
+        </Grid>
+
         <!--Country Selector-->
         <!--<Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="4">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
