@@ -118,13 +118,13 @@ namespace GreenField.Web.Services
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate)
+                        && record.PORTFOLIO_DATE == effectiveDate.Date)
                         .ToList();
 
                 if (data.Count.Equals(0))
                     return result;
 
-                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.Sum(record => record.DIRTY_VALUE_PC).Value;
+                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.ToList().Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
 
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
@@ -172,13 +172,13 @@ namespace GreenField.Web.Services
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate)
+                        && record.PORTFOLIO_DATE == effectiveDate.Date)
                         .ToList();
 
                 if (data.Count.Equals(0))
                     return result;
 
-                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.Sum(record => record.DIRTY_VALUE_PC).Value;
+                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.ToList().Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
 
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
@@ -232,7 +232,7 @@ namespace GreenField.Web.Services
                 //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare
                 decimal sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && t.PORTFOLIO_DATE == effectiveDate)
+                        && t.PORTFOLIO_DATE == effectiveDate.Date)
                     .ToList()
                     .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
@@ -243,7 +243,7 @@ namespace GreenField.Web.Services
                 //Retrieve GF_PORTFOLIO_HOLDINGS data for top ten holdings based on DIRTY_VALUE_PC
                 List<GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate)
+                        && record.PORTFOLIO_DATE == effectiveDate.Date)
                     .OrderByDescending(record => record.DIRTY_VALUE_PC)
                     .Take(10)
                     .ToList();

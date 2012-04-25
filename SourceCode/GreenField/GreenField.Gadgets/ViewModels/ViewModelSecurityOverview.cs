@@ -33,7 +33,7 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData; 
+        private EntitySelectionData _entitySelectionData;
         #endregion
 
         #region Constructor
@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
 
             //Subscription to SecurityReferenceSet event
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-            
+
             //EntitySelectionData handling
             if (_entitySelectionData != null)
             {
@@ -241,6 +241,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _dbInteractivity.RetrieveSecurityReferenceDataByTicker(entitySelectionData.ShortName, RetrieveSecurityReferenceDataCallBackMethod);
+                    if (SecurityOverviewDataLoadEvent != null)
+                        SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 }
                 else
                 {
@@ -254,6 +256,14 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler SecurityOverviewDataLoadEvent;
+
         #endregion
 
         #region CallBack Method
@@ -286,6 +296,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (SecurityOverviewDataLoadEvent != null)
+                    SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -293,7 +305,18 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
+
+        #endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all subscribed events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+        }
 
         #endregion
     }

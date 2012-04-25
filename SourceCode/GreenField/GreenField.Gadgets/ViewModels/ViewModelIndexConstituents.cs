@@ -33,27 +33,23 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
-        /// <summary>
-        /// DashboardGadgetPayLoad fields
-        /// </summary>
-        private PortfolioSelectionData _portfolioSelectionData;
         #endregion
 
         #region Constructor
-         /// <summary>
-         /// Constructor
-         /// </summary>
-         /// <param name="param">DashboardGadgetparam</param>
-         public ViewModelIndexConstituents(DashboardGadgetParam param)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="param">DashboardGadgetparam</param>
+        public ViewModelIndexConstituents(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
-            if (EffectiveDate != null && _portfolioSelectionData != null)
+            if (EffectiveDate != null && PortfolioSelectionData != null)
             {
                 _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
             }
@@ -62,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
-        } 
+        }
         #endregion
 
         #region Properties
@@ -86,6 +82,24 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
+        /// DashboardGadgetPayLoad field
+        /// </summary>
+        private PortfolioSelectionData _portfolioSelectionData;
+        public PortfolioSelectionData PortfolioSelectionData
+        {
+            get { return _portfolioSelectionData; }
+            set
+            {
+                if (_portfolioSelectionData != value)
+                {
+                    _portfolioSelectionData = value;
+                    RaisePropertyChanged(() => PortfolioSelectionData);
+                }
+            }
+        }
+
+
+        /// <summary>
         /// effective date selected
         /// </summary>
         private DateTime _effectiveDate;
@@ -100,8 +114,8 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.EffectiveDate);
                 }
             }
-        }      
-  
+        }
+
         #endregion
         #endregion
 
@@ -121,7 +135,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _portfolioSelectionData != null)
+                    if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
@@ -132,7 +146,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -155,8 +169,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (portfolioSelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
-                    _portfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && _portfolioSelectionData != null)
+                    PortfolioSelectionData = portfolioSelectionData;
+                    if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, _effectiveDate, RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
@@ -167,7 +181,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -175,7 +189,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
         #endregion
 
         #region Callback Methods
@@ -208,8 +222,8 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
-        #endregion         
+        }
+        #endregion
 
         #region Event
         /// <summary>
@@ -228,7 +242,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
-        
+
         #endregion
     }
 
