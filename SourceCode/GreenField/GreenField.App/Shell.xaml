@@ -346,13 +346,14 @@
                         <telerik:RadRibbonButton  LargeImage="../Images/equityPortfolio.png" Text="Portfolio Details" Size="Large" 
                                                   Command="{Binding PortfolioDetailsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
-                    <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/HoldingsPieChartImage.png" Text="Holdings PieChart" Size="Large" 
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/holdingsPieChart.png" Text="Holdings PieChart" Size="Large" 
                                                  Command="{Binding GadgetHoldingsPieChartCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopBenchmarkSecuritiesImage.png" Text="Top Benchmark Securities" Size="Large" Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
-                    </telerik:RadRibbonGroup>-->
+                        <telerik:RadRibbonButton LargeImage="../Images/top10Holdings.png" Text="Top Benchmark Securities" Size="Large" 
+                                                 Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>

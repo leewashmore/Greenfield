@@ -450,9 +450,11 @@ namespace GreenField.Gadgets.Views
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextPortfolioDetails.Dispose();
+            this.DataContextPortfolioDetails = null;
+            this.DataContext = null;
         }
- 
+
         #endregion
     }
 }
