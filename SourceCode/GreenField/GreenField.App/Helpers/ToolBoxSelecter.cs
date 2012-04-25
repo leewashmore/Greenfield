@@ -53,19 +53,20 @@ namespace GreenField.App.Helpers
                 Visibility sectorSelectorVisibility = Visibility.Collapsed,
                 Visibility industrySelectorVisibility = Visibility.Collapsed,
                 Visibility regionSelectorVisibility = Visibility.Collapsed,
-                Visibility filterSelectorVisibility = Visibility.Collapsed
+                Visibility filterSelectorVisibility = Visibility.Collapsed,
+                bool allVisible = false                
             )
         {
-            ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY = securitySelectorVisibility;
-            ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY = snapshotSelectorVisibility;
-            ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY = portfolioSelectorVisibility;
-            ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY = effectiveDateSelectorVisibility;
-            ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY = periodSelectorVisibility;
-            ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY = countrySelectorVisibility;
-            ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY = sectorSelectorVisibility;
-            ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY = industrySelectorVisibility;
-            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = regionSelectorVisibility;
-            ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY = filterSelectorVisibility;
+            ToolBoxItemVisibility.SECURITY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : securitySelectorVisibility;
+            ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : snapshotSelectorVisibility;
+            ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : portfolioSelectorVisibility;
+            ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : effectiveDateSelectorVisibility;
+            ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : periodSelectorVisibility;
+            ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : countrySelectorVisibility;
+            ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : sectorSelectorVisibility;
+            ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : industrySelectorVisibility;
+            ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : regionSelectorVisibility;
+            ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : filterSelectorVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -224,6 +225,9 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.ADMIN_BROKER_RESEARCH:
                     UpdateToolBoxItemVisibility();
+                    break;
+                case DashboardCategoryType.USER_DASHBOARD:
+                    UpdateToolBoxItemVisibility(allVisible: true);
                     break;
                 default:
                     break;

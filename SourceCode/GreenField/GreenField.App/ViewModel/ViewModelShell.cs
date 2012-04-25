@@ -2046,6 +2046,8 @@ namespace GreenField.App.ViewModel
             try
             {
                 _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.USER_DASHBOARD);
+                UpdateToolBoxSelectorVisibility();
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboard", UriKind.Relative));
             }
             catch (Exception ex)
