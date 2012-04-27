@@ -124,6 +124,9 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
         {
+            if (entityIdentifiers != null)
+                throw new ArgumentNullException();
+
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
