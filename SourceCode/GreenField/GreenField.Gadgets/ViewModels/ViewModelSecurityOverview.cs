@@ -280,7 +280,6 @@ namespace GreenField.Gadgets.ViewModels
         /// event to handle data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler SecurityOverviewDataLoadEvent;
-
         #endregion
 
         #region CallBack Method

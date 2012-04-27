@@ -118,6 +118,17 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set 
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+
         #region Payload
         /// <summary>
         /// Stores payload to be published through aggregate events
@@ -353,6 +364,11 @@ namespace GreenField.App.ViewModel
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
                     if (_dbInteractivity != null)
                     {
+                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
                         _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -555,6 +571,11 @@ namespace GreenField.App.ViewModel
                 {
                     if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
                     {
+                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
                         _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
@@ -1209,6 +1230,13 @@ namespace GreenField.App.ViewModel
         }
         #endregion
         #endregion
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler ShellDataLoadEvent;
         #endregion
 
         #region ICommand Methods
@@ -2829,6 +2857,10 @@ namespace GreenField.App.ViewModel
                         FilterSelectorInfo = FilterSelectionInfo
                                         .Where(record => record.Filtertype == SelectedFilterType)
                                         .ToList(); 
+                    }
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                     }
                 }
                 else
