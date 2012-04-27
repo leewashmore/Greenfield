@@ -303,18 +303,22 @@
                             <telerik:RadRibbonButton LargeImage="../Images/assetAllocation.png" Text="Asset Allocation" Size="Large" 
                                                  Command="{Binding AssetAllocationCommand}"  Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/TopHoldingsImage.png" Text="Top Holdings" Size="Large" Command="{Binding GadgetTopHoldingsCommand}"  Background="#9DA6C0"/>
+                    <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonButton LargeImage="../Images/TopHoldings.png" Text="Top Holdings" Size="Large" 
+                                                 Command="{Binding GadgetTopHoldingsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/IndexConstituentsImage.png" Text="Index Constituents" Size="Large" Command="{Binding GadgetIndexConstituentsCommand}"  Background="#9DA6C0"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/IndexConstituents.png" Text="Index Constituents" Size="Large"
+                                                 Command="{Binding GadgetIndexConstituentsCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                      <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/RegionBreakdownImage.png" Text="Region Breakdown" Size="Large" Command="{Binding GadgetRegionBreakdownCommand}"  Background="#9DA6C0"/>
+                        <telerik:RadRibbonButton LargeImage="../Images/Breakdown.png" Text="Region Breakdown" Size="Large"
+                                                 Command="{Binding GadgetRegionBreakdownCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>
                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                        <telerik:RadRibbonButton LargeImage="../Images/SectorBreakdownImage.png" Text="Sector Breakdown" Size="Large" Command="{Binding GadgetSectorBreakdownCommand}"  Background="#9DA6C0"/>
-                    </telerik:RadRibbonGroup>-->
+                        <telerik:RadRibbonButton LargeImage="../Images/Breakdown.png" Text="Sector Breakdown" Size="Large" 
+                                                 Command="{Binding GadgetSectorBreakdownCommand}"  Background="#9DA6C0"/>
+                    </telerik:RadRibbonGroup>
                         <!--<telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                         <telerik:RadRibbonButton LargeImage="../Images/MarketCapitalizationImage.png" Text="Market Capitalization" Size="Large" Command="{Binding GadgetMarketCapitalizationCommand}"  Background="#9DA6C0"/>
                     </telerik:RadRibbonGroup>-->

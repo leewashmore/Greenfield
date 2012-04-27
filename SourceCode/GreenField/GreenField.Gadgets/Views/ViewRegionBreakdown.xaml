@@ -50,7 +50,7 @@
                         <telerik:SeriesMapping>
                             <telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}(#X{n2})" ItemToolTipFormat="#XCAT:#Y{n2}(#X{n2})">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%">
                                     <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                         <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
                                     </telerik:DoughnutSeriesDefinition.InteractivitySettings>
@@ -60,8 +60,8 @@
                                     </telerikCharting:DoughnutSeriesDefinition.LabelSettings>
                                 </telerik:DoughnutSeriesDefinition>
                             </telerik:SeriesMapping.SeriesDefinition>
-                            <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue" />
-                            <telerik:ItemMapping FieldName="Region" DataPointMember="LegendLabel" />
+                            <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue"/>
+                            <telerik:ItemMapping FieldName="Region" DataPointMember="XCategory" />
                         </telerik:SeriesMapping>
                     </telerik:RadChart.SeriesMappings>
                 </telerik:RadChart>
@@ -72,9 +72,9 @@
 
                     <telerik:RadGridView Name="dgRegionBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding RegionBreakdownInfo}" 
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowGroupFooters="True"
-                             FontSize="7" FontFamily="Arial" ShowColumnFooters="True">
+                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowGroupFooters="False"
+                             FontSize="7" FontFamily="Arial" ShowColumnFooters="False">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Region" SortDirection="Ascending">
                                 <telerik:GroupDescriptor.AggregateFunctions>
@@ -92,7 +92,8 @@
                             </telerik:GroupDescriptor>
                         </telerik:RadGridView.GroupDescriptors>
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Left"/>
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" 
+                                                        Width="*" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 

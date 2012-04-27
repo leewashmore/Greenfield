@@ -15,6 +15,7 @@ using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Data;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
@@ -29,9 +30,9 @@ namespace GreenField.Gadgets.Views
         {
             get { return _dataContextIndexConstituents; }
             set { _dataContextIndexConstituents = value; }
-        }    
-        
-        #endregion     
+        }
+
+        #endregion
 
         #region Constructor
         /// <summary>
@@ -44,7 +45,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             dataContextSource.IndexConstituentDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = dataContextSource;
-        } 
+        }
         #endregion
 
         #region Event
@@ -58,7 +59,7 @@ namespace GreenField.Gadgets.Views
                 this.gridBusyIndicator.IsBusy = true;
             else
                 this.gridBusyIndicator.IsBusy = false;
-        } 
+        }
         #endregion
 
         #region Export To Excel Methods
@@ -76,42 +77,14 @@ namespace GreenField.Gadgets.Views
                     } 
                 }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
             childExportOptions.Show();
-
-            //SaveFileDialog dialog = new SaveFileDialog()
-            //{
-            //    DefaultExt = "xls",
-            //    Filter = "Excel Workbook (*.xls)|*.xls|CSV (Comma delimited)|*.csv|Word Document (*.doc)|*.doc",
-            //};
-
-            //if (dialog.ShowDialog() == true)
-            //{
-            //    ExportFormat format = dialog.FilterIndex == 1 ? ExportFormat.Html :
-            //        dialog.FilterIndex == 2 ? ExportFormat.Csv : ExportFormat.Html;
-            //    using (Stream stream = dialog.OpenFile())
-            //    {
-            //        GridViewExportOptions exportOptions = new GridViewExportOptions()
-            //        {
-            //            Format = format,
-            //            ShowColumnFooters = true,
-            //            ShowColumnHeaders = true,
-            //            ShowGroupFooters = true
-            //        };
-            //        this.dgIndexConstituents.Export(stream, exportOptions);
-            //    }
-            //}
-
-        }
-
+           }
         private void dgIndexConstituents_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, () =>
-                {
-                    return null;
-                });
-        } 
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
+
+
         #endregion
-                
-                
         #region Dispose Method
         /// <summary>
         /// method to dispose all running events
@@ -122,7 +95,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextIndexConstituents.IndexConstituentDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = null;
             this.DataContext = null;
-        } 
+        }
         #endregion
     }
 }

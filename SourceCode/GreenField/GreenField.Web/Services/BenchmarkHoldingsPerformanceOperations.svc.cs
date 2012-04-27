@@ -113,6 +113,9 @@ namespace GreenField.Web.Services
         {
             try
             {
+                if (portfolioSelectionData == null || effectiveDate == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<SectorBreakdownData> result = new List<SectorBreakdownData>();
 
@@ -124,24 +127,36 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.ToList().Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
+                Decimal? netPortfolioValuation = data.Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
 
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
 
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
-                    if (record.DIRTY_VALUE_PC == null || record.BENCHMARK_WEIGHT == null)
+                    if (record.DIRTY_VALUE_PC == null)
                         continue;
+
+                    //Calculate Portfolio Weight
+                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+
+                    //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
+                    GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
+                            .Where(rec => rec.TICKER == record.TICKER)
+                            .FirstOrDefault();
+                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
+
+                    //Calculate Active Position
+                    decimal? activePosition = portfolioWeight - benchmarkWeight;
 
                     result.Add(new SectorBreakdownData()
                     {
                         Sector = record.GICS_SECTOR_NAME,
                         Industry = record.GICS_INDUSTRY_NAME,
                         Security = record.ISSUE_NAME,
-                        PortfolioShare = record.DIRTY_VALUE_PC / netPortfolioValuation,
-                        BenchmarkShare = record.BENCHMARK_WEIGHT,
-                        ActivePosition = (record.DIRTY_VALUE_PC / netPortfolioValuation) - record.BENCHMARK_WEIGHT
+                        PortfolioShare = portfolioWeight,
+                        BenchmarkShare = benchmarkWeight,
+                        ActivePosition = activePosition
                     });
                 }
 
@@ -167,6 +182,9 @@ namespace GreenField.Web.Services
         {
             try
             {
+                if (portfolioSelectionData == null || effectiveDate == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<RegionBreakdownData> result = new List<RegionBreakdownData>();
 
@@ -178,24 +196,36 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                Decimal? netPortfolioValuation = entity.GF_PORTFOLIO_HOLDINGS.ToList().Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
+                Decimal? netPortfolioValuation = data.Sum(record => Convert.ToDecimal(record.DIRTY_VALUE_PC));
 
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
 
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
-                    if (record.DIRTY_VALUE_PC == null || record.BENCHMARK_WEIGHT == null)
+                    if (record.DIRTY_VALUE_PC == null)
                         continue;
+
+                    //Calculate Portfolio Weight
+                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+
+                    //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
+                    GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
+                            .Where(rec => rec.TICKER == record.TICKER)
+                            .FirstOrDefault();
+                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
+
+                    //Calculate Active Position
+                    decimal? activePosition = portfolioWeight - benchmarkWeight;
 
                     result.Add(new RegionBreakdownData()
                     {
                         Region = record.ASHEMM_PROP_REGION_NAME,
                         Country = record.COUNTRYNAME,
                         Security = record.ISSUE_NAME,
-                        PortfolioShare = record.DIRTY_VALUE_PC / netPortfolioValuation,
-                        BenchmarkShare = record.BENCHMARK_WEIGHT,
-                        ActivePosition = (record.DIRTY_VALUE_PC / netPortfolioValuation) - record.BENCHMARK_WEIGHT
+                        PortfolioShare = portfolioWeight,
+                        BenchmarkShare = benchmarkWeight,
+                        ActivePosition = activePosition
                     });
                 }
 
@@ -257,16 +287,11 @@ namespace GreenField.Web.Services
                     decimal? portfolioWeight = record.DIRTY_VALUE_PC / sumMarketValuePortfolio;
 
                     //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
-                    decimal? benchmarkWeight = record.BENCHMARK_WEIGHT;
-                    if (benchmarkWeight == null)
-                    {
-                        GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
+                    GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
                             .Where(rec => rec.TICKER == record.TICKER)
                             .FirstOrDefault();
+                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
 
-                        benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
-
-                    }
 
                     //Calculate Active Position
                     decimal? activePosition = portfolioWeight - benchmarkWeight;
@@ -307,6 +332,10 @@ namespace GreenField.Web.Services
         {
             try
             {
+
+                if (portfolioSelectionData == null || effectiveDate == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
@@ -365,7 +394,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
+               
         /// <summary>
         /// Retrieves the filter values for a selected filter type
         /// </summary>
@@ -876,9 +905,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-
-
+        
         /// <summary>
         /// Retrieves Holdings data for showing pie chart for region allocation
         /// </summary>

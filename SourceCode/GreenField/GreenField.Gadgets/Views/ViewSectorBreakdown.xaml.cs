@@ -59,6 +59,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Flip Method
         /// <summary>
         /// Flipping between Grid & PieChart
         /// Using the method FlipItem in class Flipper.cs
@@ -75,7 +76,8 @@ namespace GreenField.Gadgets.Views
             {
                 Flipper.FlipItem(this.dgSectorBreakdown, this.crtSectorBreakdown);
             }
-        }
+        } 
+        #endregion
 
         #region Dispose Method
 

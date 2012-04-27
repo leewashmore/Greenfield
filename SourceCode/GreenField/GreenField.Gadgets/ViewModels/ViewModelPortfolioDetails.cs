@@ -433,7 +433,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                                 
             }

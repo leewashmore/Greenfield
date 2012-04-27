@@ -172,11 +172,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (EffectiveDate != null)
+                if (effectiveDate != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
                         _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveSectorBreakdownDataCallbackMethod);
                         if (SectorBreakdownDataLoadEvent != null)

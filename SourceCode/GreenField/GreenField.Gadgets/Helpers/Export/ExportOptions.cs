@@ -270,7 +270,8 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
-        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null)
+        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
+            , bool showGroupFooters = true)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
             if (element != null)
@@ -284,7 +285,16 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.VerticalAlignment = VerticalAlignment.Center;
                 exportElement.FontWeight = element.ExportElementFontWeight;
                 exportElement.TextAlignment = element.ExportElementTextAlignment;   
-            }          
+            }
+
+            if (exportElement.Element == ExportElement.GroupFooterRow || exportElement.Element == ExportElement.GroupFooterCell)
+            {
+                if (showGroupFooters == false)
+                {
+                    exportElement.Cancel = true;
+                    return; 
+                }
+            }
 
             if (exportElement.Element == ExportElement.Cell)
             {
@@ -293,7 +303,7 @@ namespace GreenField.Gadgets.Helpers
                     exportElement.Value = cellValueConverter();                    
                 }
             }
-            
+
             else if (exportElement.Element == ExportElement.GroupFooterCell)
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
