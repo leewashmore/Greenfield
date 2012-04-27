@@ -12,6 +12,9 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>
-        <ContentControl x:Name="cctrDashboardContent" Grid.Row="1"/>
+        <ContentControl x:Name="cctrDashboardContent"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Grid.Row="1"/>
     </Grid>    
 </UserControl>

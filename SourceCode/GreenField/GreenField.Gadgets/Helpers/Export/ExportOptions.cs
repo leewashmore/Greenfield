@@ -18,6 +18,9 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Filter options for RadGridView UIElement and RadChart UIElement 
+    /// </summary>
     public enum RadExportFilterOption
     {
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp")]
@@ -123,10 +126,24 @@ namespace GreenField.Gadgets.Helpers
         }        
     }
 
+    /// <summary>
+    /// Export Items to be displayed in the option list
+    /// </summary>
     public class RadExportOptions
     {
+        /// <summary>
+        /// Option name to be displayed in the dropdown list
+        /// </summary>
         public string ElementName { get; set; }
+
+        /// <summary>
+        /// UI element to be exported - RadGridView or RadChart
+        /// </summary>
         public UIElement Element { get; set; }
+
+        /// <summary>
+        /// Filter option based on the UIElement being exported
+        /// </summary>
         public RadExportFilterOption ExportFilterOption { get; set; }        
     }
 

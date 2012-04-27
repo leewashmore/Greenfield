@@ -37,7 +37,7 @@
                                      IsAutoScrollingEnabled="True" 
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Top"                                 
-                                     ColumnWidth="*">
+                                     ColumnWidth="*" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>

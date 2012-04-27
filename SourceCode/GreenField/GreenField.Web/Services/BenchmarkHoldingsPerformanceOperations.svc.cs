@@ -374,43 +374,48 @@ namespace GreenField.Web.Services
         /// <returns>HoldingsFilterSelectionData Object</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public HoldingsFilterSelectionData RetrieveValuesForFiltersShell(String filterType, DateTime? effectiveDate)
+        public List<FilterSelectionData> RetrieveFilterSelectionData(DateTime? effectiveDate)
         {
             try
             {
-                HoldingsFilterSelectionData entry = new HoldingsFilterSelectionData();
+                List<FilterSelectionData> result = new List<FilterSelectionData>();
                 //List<HoldingsFilterSelectionData> result = new List<HoldingsFilterSelectionData>();
                 //List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
                 //ResearchEntities research = new ResearchEntities();
                 //holdingData = research.tblHoldingsDatas.ToList();
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_DATE == effectiveDate.Value.Date).ToList();
-                switch (filterType)
-                {
-                    case "Region":
-                        entry.FilterValues = (from p in data where !String.IsNullOrEmpty(p.ASHEMM_PROP_REGION_CODE) select p.ASHEMM_PROP_REGION_CODE).Distinct().ToList();
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
+                    .Where(t => t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                    .ToList();
 
-                        entry.Filtertype = filterType;
-                        //result.Add(entry);
-                        break;
-                    case "Country":
-                        entry.FilterValues = (from p in data where !String.IsNullOrEmpty(p.ISO_COUNTRY_CODE) select p.ISO_COUNTRY_CODE).Distinct().ToList();
-                        entry.Filtertype = filterType;
-                        //result.Add(entry);
-                        break;
-                    case "Industry":
-                        entry.FilterValues = (from p in data where !String.IsNullOrEmpty(p.GICS_INDUSTRY_NAME) select p.GICS_INDUSTRY_NAME).Distinct().ToList();
-                        entry.Filtertype = filterType;
-                        //result.Add(entry);
-                        break;
-                    case "Sector":
-                        entry.FilterValues = (from p in data where !String.IsNullOrEmpty(p.GICS_SECTOR_NAME) select p.GICS_SECTOR_NAME).Distinct().ToList();
-                        entry.Filtertype = filterType;
-                        //result.Add(entry);
-                        break;
-                    default:
-                        break;
-                }
-                return entry;
+                List<FilterSelectionData> distinctRegions = data
+                            .Select(record => new FilterSelectionData() { Filtertype = "Region", FilterValues = record.ASHEMM_PROP_REGION_CODE == null ? String.Empty : record.ASHEMM_PROP_REGION_CODE })
+                            .Distinct()
+                            .OrderBy(record => record.FilterValues)
+                            .ToList();
+                result.AddRange(distinctRegions);
+
+                List<FilterSelectionData> distinctCountries = data
+                    .Select(record => new FilterSelectionData() { Filtertype = "Country", FilterValues = record.ISO_COUNTRY_CODE == null ? String.Empty : record.ISO_COUNTRY_CODE })
+                    .Distinct()
+                    .OrderBy(record => record.FilterValues)
+                    .ToList();
+                result.AddRange(distinctCountries);
+
+                List<FilterSelectionData> distinctSectors = data
+                    .Select(record => new FilterSelectionData() { Filtertype = "Sector", FilterValues = record.GICS_SECTOR_NAME == null ? String.Empty : record.GICS_SECTOR_NAME })
+                    .Distinct()
+                    .OrderBy(record => record.FilterValues)
+                    .ToList();
+                result.AddRange(distinctSectors);
+
+                List<FilterSelectionData> distinctIndustries = data
+                    .Select(record => new FilterSelectionData() { Filtertype = "Industry", FilterValues = record.GICS_INDUSTRY_NAME == null ? String.Empty : record.GICS_INDUSTRY_NAME })
+                    .Distinct()
+                    .OrderBy(record => record.FilterValues)
+                    .ToList();
+                result.AddRange(distinctIndustries);
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -1252,6 +1257,73 @@ namespace GreenField.Web.Services
             {
                 entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId);
                 return true;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        ///  save user preference in market performance snapshot gadget
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData
+            , List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
+            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo)
+        {
+            ResearchEntities entity = new ResearchEntities();
+            try
+            {
+                foreach (string groupName in createGroupPreferenceInfo)
+                {
+                    Int32 groupPreferenceId = Convert.ToInt32(entity.SetMarketSnapshotGroupPreference(marketSnapshotSelectionData.SnapshotPreferenceId, groupName));
+
+                    foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
+                    {
+                        if (preference.GroupName == groupName)
+                        {
+                            entity.SetMarketSnapshotEntityPreference(groupPreferenceId, preference.EntityName
+                                , preference.EntityReturnType, preference.EntityOrder);
+                        }
+                    }
+
+                }
+
+                foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
+                {
+                    if (!createGroupPreferenceInfo.Contains(preference.GroupName))
+                    {
+                        entity.SetMarketSnapshotEntityPreference(preference.GroupPreferenceID, preference.EntityName
+                            , preference.EntityReturnType, preference.EntityOrder);
+                    }
+                }
+
+                foreach (int groupPreferenceId in deleteGroupPreferenceInfo)
+                {
+                    entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
+                }
+
+                foreach (MarketSnapshotPreference preference in deleteEntityPreferenceInfo)
+                {
+                    entity.DeleteMarketSnapshotEntityPreference(preference.EntityPreferenceId);
+                }
+
+                foreach (MarketSnapshotPreference preference in updateEntityPreferenceInfo)
+                {
+                    entity.UpdateMarketSnapshotEntityPreference(preference.GroupPreferenceID
+                        , preference.EntityPreferenceId, preference.EntityOrder);
+                }
+
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName
+                    , marketSnapshotSelectionData.SnapshotName)).ToList<MarketSnapshotPreference>();
+
+                return userPreference;
             }
 
             catch (Exception ex)

@@ -13,24 +13,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveSecurityReferenceDataByTicker">
+  <xs:element name="RetrieveSecurityOverviewData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ticker" nillable="true" type="xs:string" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q2:EntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveSecurityReferenceDataByTickerResponse">
+  <xs:element name="RetrieveSecurityOverviewDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataByTickerResult" nillable="true" type="q2:SecurityOverviewData" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityOverviewDataResult" nillable="true" type="q3:SecurityOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrievePricingReferenceData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q3:ArrayOfEntitySelectionData" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q4:ArrayOfEntitySelectionData" />
         <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="totalReturnCheck" type="xs:boolean" />
@@ -41,7 +41,7 @@
   <xs:element name="RetrievePricingReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePricingReferenceDataResult" nillable="true" type="q4:ArrayOfPricingReferenceData" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePricingReferenceDataResult" nillable="true" type="q5:ArrayOfPricingReferenceData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,14 +53,14 @@
   <xs:element name="RetrieveEntitySelectionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveEntitySelectionDataResult" nillable="true" type="q5:ArrayOfEntitySelectionData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveEntitySelectionDataResult" nillable="true" type="q6:ArrayOfEntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveUnrealizedGainLossData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifier" nillable="true" type="q6:EntitySelectionData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifier" nillable="true" type="q7:EntitySelectionData" />
         <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
         <xs:element minOccurs="0" name="frequencyInterval" nillable="true" type="xs:string" />
@@ -70,7 +70,7 @@
   <xs:element name="RetrieveUnrealizedGainLossDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q7:ArrayOfUnrealizedGainLossData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q8:ArrayOfUnrealizedGainLossData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

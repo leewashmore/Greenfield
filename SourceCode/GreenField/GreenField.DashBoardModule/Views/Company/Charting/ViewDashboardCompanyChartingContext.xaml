@@ -36,6 +36,8 @@
                                      PreservePositionWhenMaximized="True"
                                      IsAutoScrollingEnabled="True" 
                                      HorizontalAlignment="Left"
+                                     HorizontalContentAlignment="Stretch" 
+                                     VerticalContentAlignment="Stretch"                                     
                                      VerticalAlignment="Top"                                 
                                      ColumnWidth="*">
                 </telerik:RadTileView>

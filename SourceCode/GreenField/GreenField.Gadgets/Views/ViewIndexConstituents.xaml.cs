@@ -64,94 +64,53 @@ namespace GreenField.Gadgets.Views
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog()
-            {
-                DefaultExt = "xls",
-                Filter = "Excel Workbook (*.xls)|*.xls|CSV (Comma delimited)|*.csv|Word Document (*.doc)|*.doc",
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                ExportFormat format = dialog.FilterIndex == 1 ? ExportFormat.Html :
-                    dialog.FilterIndex == 2 ? ExportFormat.Csv : ExportFormat.Html;
-                using (Stream stream = dialog.OpenFile())
+            ChildExportOptions childExportOptions = new ChildExportOptions
+                (
+                new List<RadExportOptions>
                 {
-                    GridViewExportOptions exportOptions = new GridViewExportOptions()
+                    new RadExportOptions() 
                     {
-                        Format = format,
-                        ShowColumnFooters = true,
-                        ShowColumnHeaders = true,
-                        ShowGroupFooters = true
-                    };
-                    this.dgIndexConstituents.Export(stream, exportOptions);
-                }
-            }
+                        Element = this.dgIndexConstituents,
+                        ElementName = "Index Constituent Data",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    } 
+                }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
+            childExportOptions.Show();
+
+            //SaveFileDialog dialog = new SaveFileDialog()
+            //{
+            //    DefaultExt = "xls",
+            //    Filter = "Excel Workbook (*.xls)|*.xls|CSV (Comma delimited)|*.csv|Word Document (*.doc)|*.doc",
+            //};
+
+            //if (dialog.ShowDialog() == true)
+            //{
+            //    ExportFormat format = dialog.FilterIndex == 1 ? ExportFormat.Html :
+            //        dialog.FilterIndex == 2 ? ExportFormat.Csv : ExportFormat.Html;
+            //    using (Stream stream = dialog.OpenFile())
+            //    {
+            //        GridViewExportOptions exportOptions = new GridViewExportOptions()
+            //        {
+            //            Format = format,
+            //            ShowColumnFooters = true,
+            //            ShowColumnHeaders = true,
+            //            ShowGroupFooters = true
+            //        };
+            //        this.dgIndexConstituents.Export(stream, exportOptions);
+            //    }
+            //}
 
         }
 
         private void dgIndexConstituents_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            if (e.Element == ExportElement.HeaderRow || e.Element == ExportElement.FooterRow
-                || e.Element == ExportElement.GroupFooterRow)
-            {
-                e.Background = Colors.Gray;
-                e.Foreground = Colors.Black;
-                e.FontSize = 20;
-                e.FontWeight = FontWeights.Bold;
-            }
-            else if (e.Element == ExportElement.Row)
-            {
-                //e.Background = RowBackgroundPicker.SelectedColor;
-                //e.Foreground = RowForegroundPicker.SelectedColor;
-            }
-            else if (e.Element == ExportElement.Cell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Foreground = Colors.Blue;
-            }
-            else if (e.Element == ExportElement.GroupHeaderRow)
-            {
-                e.FontFamily = new FontFamily("Verdana");
-                e.Background = Colors.LightGray;
-                e.Height = 30;
-            }
-            else if (e.Element == ExportElement.GroupHeaderCell &&
-                e.Value != null && e.Value.Equals("Chocolade"))
-            {
-                e.Value = "MyNewValue";
-            }
-            else if (e.Element == ExportElement.GroupFooterCell)
-            {
-                GridViewDataColumn column = e.Context as GridViewDataColumn;
-                QueryableCollectionViewGroup qcvGroup = e.Value as QueryableCollectionViewGroup;
-
-                if (column != null && qcvGroup != null && column.AggregateFunctions.Count() > 0)
+            RadGridView_ElementExport.ElementExporting(e, () =>
                 {
-                    e.Value = GetAggregates(qcvGroup, column);
-                }
-            }
+                    return null;
+                });
         } 
         #endregion
-
-        private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
-        {
-            List<string> aggregates = new List<string>();
-
-            foreach (AggregateFunction f in column.AggregateFunctions)
-            {
-                foreach (AggregateResult r in group.AggregateResults)
-                {
-                    if (f.FunctionName == r.FunctionName && r.FormattedValue != null)
-                    {
-                        aggregates.Add(r.FormattedValue.ToString());
-                    }
-                }
-            }
-
-            return String.Join(",", aggregates.ToArray());
-        }
+                
                 
         #region Dispose Method
         /// <summary>

@@ -36,7 +36,7 @@ namespace GreenField.Common
 
     public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
 
-    public class HoldingFilterReferenceSetEvent : CompositePresentationEvent<KeyValuePair<String, String>> { }
+    public class HoldingFilterReferenceSetEvent : CompositePresentationEvent<FilterSelectionData> { }
 
     public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionType> { }    
 

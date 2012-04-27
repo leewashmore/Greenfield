@@ -137,12 +137,11 @@
                         <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbFilterSelector"
                                          EmptyText="Select Filter..." 
-                                         ItemsSource="{Binding FilterTypes}"
-                                         SelectedValue="{Binding FilterTypesSelection, Mode=TwoWay}"
-                                        
-                                             FontSize="7"
-                                             FontFamily="Arial"
-                                             Width="150" 
+                                             ItemsSource="{Binding FilterTypeInfo}"
+                                         SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                             
+                                         FontSize="7"
+                                         FontFamily="Arial"
+                                         Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 
@@ -156,7 +155,7 @@
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
                                 </ItemsPanelTemplate>
-                            </telerik:RadComboBox.ItemsPanel>
+                            </telerik:RadComboBox.ItemsPanel>                            
                         </telerik:RadComboBox>
                     </StackPanel>
                 </Grid>
@@ -167,10 +166,10 @@
                         <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbValueSelector"
                                          EmptyText="Select Value..." 
-                                         ItemsSource="{Binding ValueTypes}"
+                                         ItemsSource="{Binding FilterSelectorInfo}"
+                                             DisplayMemberPath="FilterValues"
                                          SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
-                                       
-                                             FontSize="7"
+                                         FontSize="7"
                                              FontFamily="Arial" 
                                              Width="150" 
                                          Margin="5,0,0,0"
