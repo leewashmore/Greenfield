@@ -243,6 +243,11 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
                 if (value == Visibility.Visible && EntitySelectionInfo == null)
                 {
+                    BusyIndicatorContent = "Retrieving Security selection data...";
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
                     _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                 }
             }
@@ -337,6 +342,11 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.PortfolioSelectorVisibility);
                 if (value == Visibility.Visible && PortfolioSelectionInfo == null)
                 {
+                    BusyIndicatorContent = "Retrieving Portfolio selection data...";
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
                     _dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
                 }
             }
@@ -474,8 +484,7 @@ namespace GreenField.App.ViewModel
             {
                 return new List<string> { "Region", "Country", "Sector", "Industry" };
             }
-        }
-       
+        }       
 
         /// <summary>
         /// String that contains the selected filter type
@@ -742,14 +751,27 @@ namespace GreenField.App.ViewModel
                 {
                     if (SessionManager.SESSION != null)
                     {
+                        BusyIndicatorContent = "Retrieving Snapshot selection data...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
                         _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                     }
                     else
                     {
                         _manageSessions.GetSession((session) =>
                             {
-                                SessionManager.SESSION = session;
-                                _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                                if (session != null)
+                                {
+                                    SessionManager.SESSION = session;
+                                    BusyIndicatorContent = "Retrieving Snapshot selection data...";
+                                    if (ShellDataLoadEvent != null)
+                                    {
+                                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                                    }
+                                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod); 
+                                }
                             });
                     }
                 }
@@ -2746,6 +2768,10 @@ namespace GreenField.App.ViewModel
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            if (ShellDataLoadEvent != null)
+            {
+                ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -2793,6 +2819,10 @@ namespace GreenField.App.ViewModel
                     MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
             }
             catch (Exception ex)
             {
@@ -2817,7 +2847,7 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     try
                     {
-                        MarketSnapshotSelectionInfo = result;
+                        MarketSnapshotSelectionInfo = result;                        
                     }
                     catch (Exception ex)
                     {
@@ -2828,6 +2858,10 @@ namespace GreenField.App.ViewModel
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
