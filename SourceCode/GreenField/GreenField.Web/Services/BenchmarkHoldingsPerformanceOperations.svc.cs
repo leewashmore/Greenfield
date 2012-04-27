@@ -291,7 +291,7 @@ namespace GreenField.Web.Services
                             .Where(rec => rec.TICKER == record.TICKER)
                             .FirstOrDefault();
                     decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
-
+                                      
 
                     //Calculate Active Position
                     decimal? activePosition = portfolioWeight - benchmarkWeight;
