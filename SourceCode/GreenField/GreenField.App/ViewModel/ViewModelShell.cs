@@ -21,6 +21,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;
 using GreenField.App.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using Telerik.Windows.Controls;
 
 namespace GreenField.App.ViewModel
 {
@@ -117,6 +118,17 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set 
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+
         #region Payload
         /// <summary>
         /// Stores payload to be published through aggregate events
@@ -204,14 +216,17 @@ namespace GreenField.App.ViewModel
             {
                 _securitySearchText = value;
                 RaisePropertyChanged(() => this.SecuritySearchText);
-                if (value != String.Empty && EntitySelectionInfo != null)
-                    SecuritySelectorInfo = EntitySelectionInfo
-                                .Where(record => record.LongName.ToLower().Contains(value.ToLower())
-                                    || record.ShortName.ToLower().Contains(value.ToLower())
-                                    || record.InstrumentID.ToLower().Contains(value.ToLower()))
-                                .ToList();
-                else
-                    SecuritySelectorInfo = EntitySelectionInfo;
+                if (value != null)
+                {
+                    if (value != String.Empty && EntitySelectionInfo != null)
+                        SecuritySelectorInfo = EntitySelectionInfo
+                                    .Where(record => record.LongName.ToLower().Contains(value.ToLower())
+                                        || record.ShortName.ToLower().Contains(value.ToLower())
+                                        || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                    .ToList();
+                    else
+                        SecuritySelectorInfo = EntitySelectionInfo;
+                }
             }
         }
 
@@ -228,6 +243,11 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SecuritySelectorVisibility);
                 if (value == Visibility.Visible && EntitySelectionInfo == null)
                 {
+                    BusyIndicatorContent = "Retrieving Security selection data...";
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
                     _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                 }
             }
@@ -322,6 +342,11 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.PortfolioSelectorVisibility);
                 if (value == Visibility.Visible && PortfolioSelectionInfo == null)
                 {
+                    BusyIndicatorContent = "Retrieving Portfolio selection data...";
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
                     _dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
                 }
             }
@@ -347,6 +372,15 @@ namespace GreenField.App.ViewModel
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
+                    }
                 }
             }
         }
@@ -444,44 +478,42 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Filter Selector
-        /// <summary>
-        /// Stores the list of Filters
-        /// </summary>
-        /// <summary>
-        /// Collection that contains the filter types to be displayed in the combo box
-        /// </summary>
-        public ObservableCollection<String> FilterTypes
+        public List<string> FilterTypeInfo
         {
             get
             {
-                return new ObservableCollection<string> { "Region", "Country", "Industry", "Sector" };
+                return new List<string> { "Region", "Country", "Sector", "Industry" };
             }
-        }
+        }       
 
         /// <summary>
         /// String that contains the selected filter type
         /// </summary>
-        private String _filterTypesSelection;
-        public String FilterTypesSelection
+        private String _selectedfilterType;
+        public String SelectedFilterType
         {
             get
             {
-                return _filterTypesSelection;
+                return _selectedfilterType;
             }
             set
             {
-                _filterTypesSelection = value;
-                if (SelectedEffectiveDateInfo != new DateTime(0001, 01, 01))
-                    _dbInteractivity.RetriveValuesForFiltersShell(_filterTypesSelection, SelectedEffectiveDateInfo, RetrieveValuesForFiltersShellCallbackMethod);
-                RaisePropertyChanged(() => this.FilterTypesSelection);
+                _selectedfilterType = value;
+                RaisePropertyChanged(() => this.SelectedFilterType);
+                if (FilterSelectionInfo != null)
+                {
+                    FilterSelectorInfo = FilterSelectionInfo
+                                        .Where(record => record.Filtertype == value)
+                                        .ToList(); 
+                }
             }
         }
 
         /// <summary>
         ///  Collection that contains the value types to be displayed in the combo box
         /// </summary>
-        private HoldingsFilterSelectionData _filterSelectionInfo;
-        public HoldingsFilterSelectionData FilterSelectionInfo
+        private List<FilterSelectionData> _filterSelectionInfo;
+        public List<FilterSelectionData> FilterSelectionInfo
         {
             get { return _filterSelectionInfo; }
             set
@@ -489,26 +521,24 @@ namespace GreenField.App.ViewModel
                 if (_filterSelectionInfo != value)
                 {
                     _filterSelectionInfo = value;
-                    ValueTypes = value.FilterValues;
                     RaisePropertyChanged(() => this.FilterSelectionInfo);
                 }
             }
         }
 
         /// <summary>
-        ///  Collection that contains the HoldingsFilterSelectionData to be displayed in the combo box
+        ///  Collection that contains the value types to be displayed in the combo box
         /// </summary>
-        private List<String> _valueTypes;
-        public List<String> ValueTypes
+        private List<FilterSelectionData> _filterSelectorInfo;
+        public List<FilterSelectionData> FilterSelectorInfo
         {
-            get { return _valueTypes; }
+            get { return _filterSelectorInfo; }
             set
             {
-                if (_valueTypes != value)
+                if (_filterSelectorInfo != value)
                 {
-                    _valueTypes = value;
-
-                    RaisePropertyChanged(() => this.ValueTypes);
+                    _filterSelectorInfo = value;
+                    RaisePropertyChanged(() => this.FilterSelectorInfo);
                 }
             }
         }
@@ -516,8 +546,8 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected Value - Publishes FilterReferenceSetEvent on set event
         /// </summary>
-        private String _selectedFilterValueInfo;
-        public String SelectedFilterValueInfo
+        private FilterSelectionData _selectedFilterValueInfo;
+        public FilterSelectionData SelectedFilterValueInfo
         {
             get { return _selectedFilterValueInfo; }
             set
@@ -528,8 +558,8 @@ namespace GreenField.App.ViewModel
                     RaisePropertyChanged(() => this.SelectedFilterValueInfo);
                     if (value != null)
                     {
-                        SelectorPayload.HoldingDataFilter = new KeyValuePair<String, String>(FilterTypesSelection, value);
-                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(new KeyValuePair<String, String>(FilterTypesSelection, value));
+                        SelectorPayload.FilterSelectionData = value;
+                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(value);
                     }
                 }
             }
@@ -545,7 +575,19 @@ namespace GreenField.App.ViewModel
             set
             {
                 _filterVisibility = value;
-                RaisePropertyChanged(() => this.FilterVisibility);                
+                RaisePropertyChanged(() => this.FilterVisibility);
+                if (value == Visibility.Visible && FilterSelectionInfo == null)
+                {
+                    if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
+                    {
+                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
+                        _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                    }
+                }
             }
         }
         #endregion
@@ -709,14 +751,27 @@ namespace GreenField.App.ViewModel
                 {
                     if (SessionManager.SESSION != null)
                     {
+                        BusyIndicatorContent = "Retrieving Snapshot selection data...";
+                        if (ShellDataLoadEvent != null)
+                        {
+                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        }
                         _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                     }
                     else
                     {
                         _manageSessions.GetSession((session) =>
                             {
-                                SessionManager.SESSION = session;
-                                _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                                if (session != null)
+                                {
+                                    SessionManager.SESSION = session;
+                                    BusyIndicatorContent = "Retrieving Snapshot selection data...";
+                                    if (ShellDataLoadEvent != null)
+                                    {
+                                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                                    }
+                                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod); 
+                                }
                             });
                     }
                 }
@@ -1197,6 +1252,13 @@ namespace GreenField.App.ViewModel
         }
         #endregion
         #endregion
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler ShellDataLoadEvent;
         #endregion
 
         #region ICommand Methods
@@ -2706,6 +2768,10 @@ namespace GreenField.App.ViewModel
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            if (ShellDataLoadEvent != null)
+            {
+                ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -2753,6 +2819,10 @@ namespace GreenField.App.ViewModel
                     MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
             }
             catch (Exception ex)
             {
@@ -2777,7 +2847,7 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     try
                     {
-                        MarketSnapshotSelectionInfo = result;
+                        MarketSnapshotSelectionInfo = result;                        
                     }
                     catch (Exception ex)
                     {
@@ -2788,6 +2858,10 @@ namespace GreenField.App.ViewModel
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -2802,9 +2876,38 @@ namespace GreenField.App.ViewModel
         /// Callback method that assigns value to ValueTypes
         /// </summary>
         /// <param name="result">Contains the list of value types for a selected region</param>
-        public void RetrieveValuesForFiltersShellCallbackMethod(HoldingsFilterSelectionData result)
+        public void RetrieveFilterSelectionDataCallbackMethod(List<FilterSelectionData> result)
         {
-            FilterSelectionInfo = result;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    FilterSelectionInfo = result;
+                    if (SelectedFilterType != null)
+                    {
+                        FilterSelectorInfo = FilterSelectionInfo
+                                        .Where(record => record.Filtertype == SelectedFilterType)
+                                        .ToList(); 
+                    }
+                    if (ShellDataLoadEvent != null)
+                    {
+                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         #endregion

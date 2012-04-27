@@ -22,12 +22,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
-  <xs:complexType name="ArrayOfEntitySelectionData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEntitySelectionData" nillable="true" type="tns:ArrayOfEntitySelectionData" />
   <xs:complexType name="EntitySelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
@@ -39,6 +33,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+  <xs:complexType name="ArrayOfEntitySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEntitySelectionData" nillable="true" type="tns:ArrayOfEntitySelectionData" />
   <xs:complexType name="ArrayOfPricingReferenceData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />

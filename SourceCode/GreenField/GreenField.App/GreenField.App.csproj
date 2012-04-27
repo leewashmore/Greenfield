@@ -161,6 +161,9 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\TopHoldings.png" />
+    <Resource Include="Images\IndexConstituents.png" />
+    <Resource Include="Images\Breakdown.png" />
     <Resource Include="Images\top10Holdings.png" />
     <Resource Include="Images\assetAllocation.png" />
     <Resource Include="Images\equityPortfolio.png" />

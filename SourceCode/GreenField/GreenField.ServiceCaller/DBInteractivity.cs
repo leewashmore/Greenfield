@@ -59,11 +59,11 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveSecurityReferenceDataByTicker(string ticker, Action<SecurityOverviewData> callback)
+        public void RetrieveSecurityOverviewData(EntitySelectionData entitySelectionData, Action<SecurityOverviewData> callback)
         {
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
-            client.RetrieveSecurityReferenceDataByTickerAsync(ticker);
-            client.RetrieveSecurityReferenceDataByTickerCompleted += (se, e) =>
+            client.RetrieveSecurityOverviewDataAsync(entitySelectionData);
+            client.RetrieveSecurityOverviewDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
@@ -124,6 +124,9 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback)
         {
+            if (entityIdentifiers != null)
+                throw new ArgumentNullException();
+
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrievePricingReferenceDataAsync(entityIdentifiers.ToList(), startDateTime, endDateTime, totalReturnCheck, frequencyInterval);
             client.RetrievePricingReferenceDataCompleted += (se, e) =>
@@ -694,6 +697,44 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
+        
+        /// <summary>
+        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
+            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback)
+        {
+            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            client.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo
+                , deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo);
+            client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
         #endregion
 
         /// <summary>
@@ -702,20 +743,30 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">Filter Type selected by the user</param>
         /// <param name="effectiveDate">Effected Date selected by the user</param>
         /// <param name="callback">callback method</param>
-        public void RetriveValuesForFiltersShell(string filterType, DateTime? effectiveDate, Action<HoldingsFilterSelectionData> callback)
+        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveValuesForFiltersShellAsync(filterType, effectiveDate);
-            client.RetrieveValuesForFiltersShellCompleted += (se, e) =>
+            client.RetrieveFilterSelectionDataAsync(effectiveDate);
+            client.RetrieveFilterSelectionDataCompleted += (se, e) =>
             {
-                if (callback != null)
+                if (e.Error == null)
                 {
                     if (e.Result != null)
-                        callback(e.Result);
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
                 }
-                else
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    callback(null);
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -1325,5 +1376,8 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #endregion
+
+
+        
     }
 }

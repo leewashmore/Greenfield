@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member containing the Key Value Pair
         /// </summary>
-        private KeyValuePair<String, String> _holdingDataFilter;
+        private FilterSelectionData _holdingDataFilter;
 
         #endregion
 
@@ -65,18 +65,18 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _holdingDataFilter = param.DashboardGadgetPayload.HoldingDataFilter;
+            _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
 
-            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
             }
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterDataset);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSetEvent);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateReferenceSetEvent);
+                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
             }
 
            
@@ -104,11 +104,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Effective date appended by as of
         /// </summary>
+        private String _effectiveDateString;
         public String EffectiveDateString
         {
             get
             {
-                return "as of " + Convert.ToDateTime(EffectiveDate).ToLongDateString();
+                return _effectiveDateString;
+            }
+
+            set
+            {
+                _effectiveDateString = value;
+                RaisePropertyChanged(() => this.EffectiveDateString);
             }
         }
 
@@ -124,11 +131,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (_effectiveDate != value)
                 {
                     _effectiveDate = value;
+                    EffectiveDateString = Convert.ToDateTime(EffectiveDate).ToLongDateString();
 
-                    if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+                    if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, 
-                            _holdingDataFilter.Value, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
 
                     RaisePropertyChanged(() => this.EffectiveDate);
@@ -166,7 +173,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Selected Effective Date
         /// </summary>
         /// <param name="effectiveDate">Effectice date as selected by the user</param>
-        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        public void HandleEffectiveDateReferenceSetEvent(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -176,9 +183,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 }
                 else
@@ -198,7 +205,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Fund reference
         /// </summary>
         /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData Class</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        public void HandleFundReferenceSetEvent(PortfolioSelectionData PortfolioSelectionData)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -209,11 +216,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 }
                 else
@@ -232,22 +239,22 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Assigns UI Field Properties based on Holding Filter reference
         /// </summary>
-        /// <param name="dataFilter">Key value pais consisting of the Filter Type and Filter Value selected by the user </param>
-        public void HandleFilterDataset(KeyValuePair<String, String> dataFilter)
+        /// <param name="filterSelectionData">Key value pais consisting of the Filter Type and Filter Value selected by the user </param>
+        public void HandleFilterReferenceSetEvent(FilterSelectionData filterSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (dataFilter.Key != null && dataFilter.Value != null)
+                if (filterSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, dataFilter, 1);
-                    _holdingDataFilter = dataFilter;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter.Key != null && _holdingDataFilter.Value != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, filterSelectionData, 1);
+                    _holdingDataFilter = filterSelectionData;
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Key, _holdingDataFilter.Value, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 }
                 else
@@ -308,9 +315,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterDataset);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSetEvent);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateReferenceSetEvent);
+            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
         }
 
         #endregion

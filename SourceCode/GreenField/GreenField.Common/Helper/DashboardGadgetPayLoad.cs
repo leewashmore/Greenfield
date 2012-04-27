@@ -28,6 +28,6 @@ namespace GreenField.Common.Helper
 
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 
-        public KeyValuePair<String, String> HoldingDataFilter { get; set; }
+        public FilterSelectionData FilterSelectionData { get; set; }
     }
 }

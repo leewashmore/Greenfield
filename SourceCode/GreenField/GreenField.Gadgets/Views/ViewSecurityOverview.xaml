@@ -6,8 +6,24 @@
              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
 
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>        
+    </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
-        <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        <telerik:RadBusyIndicator x:Name="gridBusyIndicator"                                  
+                                  BusyContent="{Binding BusyIndicatorContent}"                                                        
+                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+            <!--telerik:StyleManager.Theme="Metro"-->
+            <!--OverlayStyle="{StaticResource RadBusyIndicatorOverlayStyle}"
+            <telerik:RadBusyIndicator.BusyContentTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding BusyIndicatorContent}" Foreground="Black"/>
+                </DataTemplate>
+            </telerik:RadBusyIndicator.BusyContentTemplate>-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

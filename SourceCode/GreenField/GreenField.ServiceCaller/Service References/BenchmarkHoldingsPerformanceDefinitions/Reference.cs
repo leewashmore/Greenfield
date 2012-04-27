@@ -707,17 +707,15 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="HoldingsFilterSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class HoldingsFilterSelectionData : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="FilterSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class FilterSelectionData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Collections.Generic.List<string> FilterValuesField;
+        private string FilterValuesField;
         
         private string FiltertypeField;
         
-        private string SelectedFilterValueField;
-        
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<string> FilterValues {
+        public string FilterValues {
             get {
                 return this.FilterValuesField;
             }
@@ -738,19 +736,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 if ((object.ReferenceEquals(this.FiltertypeField, value) != true)) {
                     this.FiltertypeField = value;
                     this.RaisePropertyChanged("Filtertype");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SelectedFilterValue {
-            get {
-                return this.SelectedFilterValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SelectedFilterValueField, value) != true)) {
-                    this.SelectedFilterValueField = value;
-                    this.RaisePropertyChanged("SelectedFilterValue");
                 }
             }
         }
@@ -3433,14 +3418,14 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.IndexConstituentsData> EndRetrieveIndexConstituentsData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
-            "sShell", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
-            "sShellResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveValuesForFilter" +
-            "sShellServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveValuesForFiltersShell(string filterType, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveFilterSelection" +
+            "Data", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveFilterSelection" +
+            "DataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveFilterSelection" +
+            "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData EndRetrieveValuesForFiltersShell(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> EndRetrieveFilterSelectionData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetail" +
             "sData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioDetail" +
@@ -3592,6 +3577,15 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         System.IAsyncResult BeginRemoveMarketSnapshotEntityPreference(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
         bool EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/SaveMarketSnapshotPrefe" +
+            "rence", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/SaveMarketSnapshotPrefe" +
+            "renceResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/SaveMarketSnapshotPrefe" +
+            "renceServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginSaveMarketSnapshotPreference(string userName, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo, System.Collections.Generic.List<int> deleteGroupPreferenceInfo, System.Collections.Generic.List<string> createGroupPreferenceInfo, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> EndSaveMarketSnapshotPreference(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
             "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
@@ -3812,19 +3806,19 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveValuesForFiltersShellCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveFilterSelectionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveValuesForFiltersShellCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveFilterSelectionDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData>)(this.results[0]));
             }
         }
     }
@@ -4154,6 +4148,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveMarketSnapshotPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveMarketSnapshotPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrievePortfolioRiskReturnDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -4407,11 +4420,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveIndexConstituentsDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveValuesForFiltersShellDelegate;
+        private BeginOperationDelegate onBeginRetrieveFilterSelectionDataDelegate;
         
-        private EndOperationDelegate onEndRetrieveValuesForFiltersShellDelegate;
+        private EndOperationDelegate onEndRetrieveFilterSelectionDataDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveValuesForFiltersShellCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveFilterSelectionDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrievePortfolioDetailsDataDelegate;
         
@@ -4514,6 +4527,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         private EndOperationDelegate onEndRemoveMarketSnapshotEntityPreferenceDelegate;
         
         private System.Threading.SendOrPostCallback onRemoveMarketSnapshotEntityPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveMarketSnapshotPreferenceDelegate;
+        
+        private EndOperationDelegate onEndSaveMarketSnapshotPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveMarketSnapshotPreferenceCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrievePortfolioRiskReturnDataDelegate;
         
@@ -4648,7 +4667,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         public event System.EventHandler<RetrieveIndexConstituentsDataCompletedEventArgs> RetrieveIndexConstituentsDataCompleted;
         
-        public event System.EventHandler<RetrieveValuesForFiltersShellCompletedEventArgs> RetrieveValuesForFiltersShellCompleted;
+        public event System.EventHandler<RetrieveFilterSelectionDataCompletedEventArgs> RetrieveFilterSelectionDataCompleted;
         
         public event System.EventHandler<RetrievePortfolioDetailsDataCompletedEventArgs> RetrievePortfolioDetailsDataCompleted;
         
@@ -4683,6 +4702,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         public event System.EventHandler<AddMarketSnapshotEntityPreferenceCompletedEventArgs> AddMarketSnapshotEntityPreferenceCompleted;
         
         public event System.EventHandler<RemoveMarketSnapshotEntityPreferenceCompletedEventArgs> RemoveMarketSnapshotEntityPreferenceCompleted;
+        
+        public event System.EventHandler<SaveMarketSnapshotPreferenceCompletedEventArgs> SaveMarketSnapshotPreferenceCompleted;
         
         public event System.EventHandler<RetrievePortfolioRiskReturnDataCompletedEventArgs> RetrievePortfolioRiskReturnDataCompleted;
         
@@ -5036,51 +5057,49 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveValuesForFiltersShell(string filterType, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveValuesForFiltersShell(filterType, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFilterSelectionData(effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrieveValuesForFiltersShell(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveValuesForFiltersShell(result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrieveFilterSelectionData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFilterSelectionData(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveValuesForFiltersShell(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string filterType = ((string)(inValues[0]));
-            System.Nullable<System.DateTime> effectiveDate = ((System.Nullable<System.DateTime>)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveValuesForFiltersShell(filterType, effectiveDate, callback, asyncState);
+        private System.IAsyncResult OnBeginRetrieveFilterSelectionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Nullable<System.DateTime> effectiveDate = ((System.Nullable<System.DateTime>)(inValues[0]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveFilterSelectionData(effectiveDate, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveValuesForFiltersShell(System.IAsyncResult result) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrieveValuesForFiltersShell(result);
+        private object[] OnEndRetrieveFilterSelectionData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrieveFilterSelectionData(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveValuesForFiltersShellCompleted(object state) {
-            if ((this.RetrieveValuesForFiltersShellCompleted != null)) {
+        private void OnRetrieveFilterSelectionDataCompleted(object state) {
+            if ((this.RetrieveFilterSelectionDataCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveValuesForFiltersShellCompleted(this, new RetrieveValuesForFiltersShellCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveFilterSelectionDataCompleted(this, new RetrieveFilterSelectionDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveValuesForFiltersShellAsync(string filterType, System.Nullable<System.DateTime> effectiveDate) {
-            this.RetrieveValuesForFiltersShellAsync(filterType, effectiveDate, null);
+        public void RetrieveFilterSelectionDataAsync(System.Nullable<System.DateTime> effectiveDate) {
+            this.RetrieveFilterSelectionDataAsync(effectiveDate, null);
         }
         
-        public void RetrieveValuesForFiltersShellAsync(string filterType, System.Nullable<System.DateTime> effectiveDate, object userState) {
-            if ((this.onBeginRetrieveValuesForFiltersShellDelegate == null)) {
-                this.onBeginRetrieveValuesForFiltersShellDelegate = new BeginOperationDelegate(this.OnBeginRetrieveValuesForFiltersShell);
+        public void RetrieveFilterSelectionDataAsync(System.Nullable<System.DateTime> effectiveDate, object userState) {
+            if ((this.onBeginRetrieveFilterSelectionDataDelegate == null)) {
+                this.onBeginRetrieveFilterSelectionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFilterSelectionData);
             }
-            if ((this.onEndRetrieveValuesForFiltersShellDelegate == null)) {
-                this.onEndRetrieveValuesForFiltersShellDelegate = new EndOperationDelegate(this.OnEndRetrieveValuesForFiltersShell);
+            if ((this.onEndRetrieveFilterSelectionDataDelegate == null)) {
+                this.onEndRetrieveFilterSelectionDataDelegate = new EndOperationDelegate(this.OnEndRetrieveFilterSelectionData);
             }
-            if ((this.onRetrieveValuesForFiltersShellCompletedDelegate == null)) {
-                this.onRetrieveValuesForFiltersShellCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveValuesForFiltersShellCompleted);
+            if ((this.onRetrieveFilterSelectionDataCompletedDelegate == null)) {
+                this.onRetrieveFilterSelectionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFilterSelectionDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveValuesForFiltersShellDelegate, new object[] {
-                        filterType,
-                        effectiveDate}, this.onEndRetrieveValuesForFiltersShellDelegate, this.onRetrieveValuesForFiltersShellCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveFilterSelectionDataDelegate, new object[] {
+                        effectiveDate}, this.onEndRetrieveFilterSelectionDataDelegate, this.onRetrieveFilterSelectionDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5904,6 +5923,64 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginSaveMarketSnapshotPreference(string userName, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo, System.Collections.Generic.List<int> deleteGroupPreferenceInfo, System.Collections.Generic.List<string> createGroupPreferenceInfo, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveMarketSnapshotPreference(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo, deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndSaveMarketSnapshotPreference(System.IAsyncResult result) {
+            return base.Channel.EndSaveMarketSnapshotPreference(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveMarketSnapshotPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData)(inValues[1]));
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference>)(inValues[2]));
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference>)(inValues[3]));
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference>)(inValues[4]));
+            System.Collections.Generic.List<int> deleteGroupPreferenceInfo = ((System.Collections.Generic.List<int>)(inValues[5]));
+            System.Collections.Generic.List<string> createGroupPreferenceInfo = ((System.Collections.Generic.List<string>)(inValues[6]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginSaveMarketSnapshotPreference(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo, deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveMarketSnapshotPreference(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndSaveMarketSnapshotPreference(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSaveMarketSnapshotPreferenceCompleted(object state) {
+            if ((this.SaveMarketSnapshotPreferenceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveMarketSnapshotPreferenceCompleted(this, new SaveMarketSnapshotPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveMarketSnapshotPreferenceAsync(string userName, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo, System.Collections.Generic.List<int> deleteGroupPreferenceInfo, System.Collections.Generic.List<string> createGroupPreferenceInfo) {
+            this.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo, deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo, null);
+        }
+        
+        public void SaveMarketSnapshotPreferenceAsync(string userName, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo, System.Collections.Generic.List<int> deleteGroupPreferenceInfo, System.Collections.Generic.List<string> createGroupPreferenceInfo, object userState) {
+            if ((this.onBeginSaveMarketSnapshotPreferenceDelegate == null)) {
+                this.onBeginSaveMarketSnapshotPreferenceDelegate = new BeginOperationDelegate(this.OnBeginSaveMarketSnapshotPreference);
+            }
+            if ((this.onEndSaveMarketSnapshotPreferenceDelegate == null)) {
+                this.onEndSaveMarketSnapshotPreferenceDelegate = new EndOperationDelegate(this.OnEndSaveMarketSnapshotPreference);
+            }
+            if ((this.onSaveMarketSnapshotPreferenceCompletedDelegate == null)) {
+                this.onSaveMarketSnapshotPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveMarketSnapshotPreferenceCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveMarketSnapshotPreferenceDelegate, new object[] {
+                        userName,
+                        marketSnapshotSelectionData,
+                        createEntityPreferenceInfo,
+                        updateEntityPreferenceInfo,
+                        deleteEntityPreferenceInfo,
+                        deleteGroupPreferenceInfo,
+                        createGroupPreferenceInfo}, this.onEndSaveMarketSnapshotPreferenceDelegate, this.onSaveMarketSnapshotPreferenceCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrievePortfolioRiskReturnData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
         }
@@ -6623,17 +6700,16 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveValuesForFiltersShell(string filterType, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = filterType;
-                _args[1] = effectiveDate;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveValuesForFiltersShell", _args, callback, asyncState);
+            public System.IAsyncResult BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = effectiveDate;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFilterSelectionData", _args, callback, asyncState);
                 return _result;
             }
             
-            public GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData EndRetrieveValuesForFiltersShell(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> EndRetrieveFilterSelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData _result = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.HoldingsFilterSelectionData)(base.EndInvoke("RetrieveValuesForFiltersShell", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.FilterSelectionData>)(base.EndInvoke("RetrieveFilterSelectionData", _args, result)));
                 return _result;
             }
             
@@ -6874,6 +6950,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             public bool EndRemoveMarketSnapshotEntityPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("RemoveMarketSnapshotEntityPreference", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSaveMarketSnapshotPreference(string userName, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData marketSnapshotSelectionData, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> createEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> updateEntityPreferenceInfo, System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> deleteEntityPreferenceInfo, System.Collections.Generic.List<int> deleteGroupPreferenceInfo, System.Collections.Generic.List<string> createGroupPreferenceInfo, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[7];
+                _args[0] = userName;
+                _args[1] = marketSnapshotSelectionData;
+                _args[2] = createEntityPreferenceInfo;
+                _args[3] = updateEntityPreferenceInfo;
+                _args[4] = deleteEntityPreferenceInfo;
+                _args[5] = deleteGroupPreferenceInfo;
+                _args[6] = createGroupPreferenceInfo;
+                System.IAsyncResult _result = base.BeginInvoke("SaveMarketSnapshotPreference", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> EndSaveMarketSnapshotPreference(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference>)(base.EndInvoke("SaveMarketSnapshotPreference", _args, result)));
                 return _result;
             }
             

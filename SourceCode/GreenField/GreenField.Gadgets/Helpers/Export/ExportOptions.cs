@@ -18,6 +18,9 @@ using System.Collections.Generic;
 
 namespace GreenField.Gadgets.Helpers
 {
+    /// <summary>
+    /// Filter options for RadGridView UIElement and RadChart UIElement 
+    /// </summary>
     public enum RadExportFilterOption
     {
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp")]
@@ -123,10 +126,24 @@ namespace GreenField.Gadgets.Helpers
         }        
     }
 
+    /// <summary>
+    /// Export Items to be displayed in the option list
+    /// </summary>
     public class RadExportOptions
     {
+        /// <summary>
+        /// Option name to be displayed in the dropdown list
+        /// </summary>
         public string ElementName { get; set; }
+
+        /// <summary>
+        /// UI element to be exported - RadGridView or RadChart
+        /// </summary>
         public UIElement Element { get; set; }
+
+        /// <summary>
+        /// Filter option based on the UIElement being exported
+        /// </summary>
         public RadExportFilterOption ExportFilterOption { get; set; }        
     }
 
@@ -253,7 +270,8 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
-        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null)
+        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
+            , bool showGroupFooters = true)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
             if (element != null)
@@ -267,7 +285,16 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.VerticalAlignment = VerticalAlignment.Center;
                 exportElement.FontWeight = element.ExportElementFontWeight;
                 exportElement.TextAlignment = element.ExportElementTextAlignment;   
-            }          
+            }
+
+            if (exportElement.Element == ExportElement.GroupFooterRow || exportElement.Element == ExportElement.GroupFooterCell)
+            {
+                if (showGroupFooters == false)
+                {
+                    exportElement.Cancel = true;
+                    return; 
+                }
+            }
 
             if (exportElement.Element == ExportElement.Cell)
             {
@@ -276,7 +303,7 @@ namespace GreenField.Gadgets.Helpers
                     exportElement.Value = cellValueConverter();                    
                 }
             }
-            
+
             else if (exportElement.Element == ExportElement.GroupFooterCell)
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;

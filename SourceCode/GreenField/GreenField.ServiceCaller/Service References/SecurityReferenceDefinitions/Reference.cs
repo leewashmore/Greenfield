@@ -792,14 +792,13 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         
         System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
-            "ker", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
-            "kerResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityReferenceDataByTic" +
-            "kerServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSecurityReferenceDataByTicker(string ticker, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityOverviewData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityOverviewDataRespon" +
+            "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityOverviewDataServic" +
+            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveSecurityOverviewData(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result);
+        GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData EndRetrieveSecurityOverviewData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataRespon" +
             "se")]
@@ -851,11 +850,11 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveSecurityReferenceDataByTickerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveSecurityOverviewDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveSecurityReferenceDataByTickerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveSecurityOverviewDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -935,11 +934,11 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveSecurityReferenceDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveSecurityReferenceDataByTickerDelegate;
+        private BeginOperationDelegate onBeginRetrieveSecurityOverviewDataDelegate;
         
-        private EndOperationDelegate onEndRetrieveSecurityReferenceDataByTickerDelegate;
+        private EndOperationDelegate onEndRetrieveSecurityOverviewDataDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveSecurityReferenceDataByTickerCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveSecurityOverviewDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrievePricingReferenceDataDelegate;
         
@@ -1014,7 +1013,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         
         public event System.EventHandler<RetrieveSecurityReferenceDataCompletedEventArgs> RetrieveSecurityReferenceDataCompleted;
         
-        public event System.EventHandler<RetrieveSecurityReferenceDataByTickerCompletedEventArgs> RetrieveSecurityReferenceDataByTickerCompleted;
+        public event System.EventHandler<RetrieveSecurityOverviewDataCompletedEventArgs> RetrieveSecurityOverviewDataCompleted;
         
         public event System.EventHandler<RetrievePricingReferenceDataCompletedEventArgs> RetrievePricingReferenceDataCompleted;
         
@@ -1071,49 +1070,49 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrieveSecurityReferenceDataByTicker(string ticker, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveSecurityReferenceDataByTicker(ticker, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrieveSecurityOverviewData(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSecurityOverviewData(entitySelectionData, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveSecurityReferenceDataByTicker(result);
+        GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveSecurityOverviewData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveSecurityOverviewData(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveSecurityReferenceDataByTicker(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string ticker = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).BeginRetrieveSecurityReferenceDataByTicker(ticker, callback, asyncState);
+        private System.IAsyncResult OnBeginRetrieveSecurityOverviewData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).BeginRetrieveSecurityOverviewData(entitySelectionData, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
-            GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveSecurityReferenceDataByTicker(result);
+        private object[] OnEndRetrieveSecurityOverviewData(System.IAsyncResult result) {
+            GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveSecurityOverviewData(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveSecurityReferenceDataByTickerCompleted(object state) {
-            if ((this.RetrieveSecurityReferenceDataByTickerCompleted != null)) {
+        private void OnRetrieveSecurityOverviewDataCompleted(object state) {
+            if ((this.RetrieveSecurityOverviewDataCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveSecurityReferenceDataByTickerCompleted(this, new RetrieveSecurityReferenceDataByTickerCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveSecurityOverviewDataCompleted(this, new RetrieveSecurityOverviewDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveSecurityReferenceDataByTickerAsync(string ticker) {
-            this.RetrieveSecurityReferenceDataByTickerAsync(ticker, null);
+        public void RetrieveSecurityOverviewDataAsync(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData) {
+            this.RetrieveSecurityOverviewDataAsync(entitySelectionData, null);
         }
         
-        public void RetrieveSecurityReferenceDataByTickerAsync(string ticker, object userState) {
-            if ((this.onBeginRetrieveSecurityReferenceDataByTickerDelegate == null)) {
-                this.onBeginRetrieveSecurityReferenceDataByTickerDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityReferenceDataByTicker);
+        public void RetrieveSecurityOverviewDataAsync(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveSecurityOverviewDataDelegate == null)) {
+                this.onBeginRetrieveSecurityOverviewDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityOverviewData);
             }
-            if ((this.onEndRetrieveSecurityReferenceDataByTickerDelegate == null)) {
-                this.onEndRetrieveSecurityReferenceDataByTickerDelegate = new EndOperationDelegate(this.OnEndRetrieveSecurityReferenceDataByTicker);
+            if ((this.onEndRetrieveSecurityOverviewDataDelegate == null)) {
+                this.onEndRetrieveSecurityOverviewDataDelegate = new EndOperationDelegate(this.OnEndRetrieveSecurityOverviewData);
             }
-            if ((this.onRetrieveSecurityReferenceDataByTickerCompletedDelegate == null)) {
-                this.onRetrieveSecurityReferenceDataByTickerCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSecurityReferenceDataByTickerCompleted);
+            if ((this.onRetrieveSecurityOverviewDataCompletedDelegate == null)) {
+                this.onRetrieveSecurityOverviewDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSecurityOverviewDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveSecurityReferenceDataByTickerDelegate, new object[] {
-                        ticker}, this.onEndRetrieveSecurityReferenceDataByTickerDelegate, this.onRetrieveSecurityReferenceDataByTickerCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveSecurityOverviewDataDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveSecurityOverviewDataDelegate, this.onRetrieveSecurityOverviewDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1354,16 +1353,16 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSecurityReferenceDataByTicker(string ticker, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveSecurityOverviewData(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
-                _args[0] = ticker;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityReferenceDataByTicker", _args, callback, asyncState);
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityOverviewData", _args, callback, asyncState);
                 return _result;
             }
             
-            public GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData EndRetrieveSecurityReferenceDataByTicker(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData EndRetrieveSecurityOverviewData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData _result = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData)(base.EndInvoke("RetrieveSecurityReferenceDataByTicker", _args, result)));
+                GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData _result = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData)(base.EndInvoke("RetrieveSecurityOverviewData", _args, result)));
                 return _result;
             }
             

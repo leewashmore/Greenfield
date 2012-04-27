@@ -34,13 +34,11 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="{Binding ShortName}" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="(" />
-                                        <TextBlock Text="{Binding LongName}" />
-                                        <TextBlock Text=")" />
-                                    </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
+                                    <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
+                                    <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
+                                    <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
                                 </StackPanel>
                             </DataTemplate>
                         </Setter.Value>
@@ -341,22 +339,31 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <telerik:RadComboBox Grid.Column="0"  Name="cmbAddSeries"
-                                     ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                     IsEditable="True" telerik:TextSearch.TextPath="ShortName" Width="150"
-                                     CanAutocompleteSelectItems="False" CanKeyboardNavigationSelectItems="True"
-                                     OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Animated"
-                                     Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
-                                     SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
-                                     ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
-                                     HorizontalAlignment="Right" TextSearchMode="Contains" IsTextSearchEnabled="False" />
+                        <telerik:RadComboBox Grid.Column="0" 
+                                             Name="cmbAddSeries"
+                                             ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
+                                             IsEditable="True" 
+                                             telerik:TextSearch.TextPath="ShortName"
+                                             Width="150"
+                                             CanAutocompleteSelectItems="True"
+                                             CanKeyboardNavigationSelectItems="False"
+                                             OpenDropDownOnFocus="True" 
+                                             StaysOpenOnEdit="True"
+                                             TextOptions.TextHintingMode="Fixed"
+                                             Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
+                                             SelectedItem="{Binding SelectedSeriesReference, Mode=TwoWay}"
+                                             ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
+                                             HorizontalAlignment="Right" 
+                                             TextSearchMode="Contains"
+                                             IsTextSearchEnabled="False" />
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
                             <Image Source="../Images/AddToChart.png"/>
                         </Button>
 
                     </Grid>
-
+                    
+                    
                     <Grid Grid.Row="6" Margin="0,2,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -368,7 +375,8 @@
                         <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
                                    Grid.Row="1" HorizontalAlignment="Right" />
                     </Grid>
-
+                    
+                    <!--List of Comparison entities-->
                     <Grid Grid.Row="7" Margin="0,2,0,0">
                         <ItemsControl  HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                             <ItemsControl.ItemTemplate>

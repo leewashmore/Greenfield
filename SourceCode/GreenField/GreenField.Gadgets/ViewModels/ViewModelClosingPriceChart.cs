@@ -699,6 +699,11 @@ namespace GreenField.Gadgets.ViewModels
                         PropertyName = "SortOrder",
                         Direction = System.ComponentModel.ListSortDirection.Ascending
                     });
+                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
+                    {
+                        PropertyName = "LongName",
+                        Direction = System.ComponentModel.ListSortDirection.Ascending
+                    });
                     SeriesReference.Source = SeriesReferenceSource;
                 }
                 else

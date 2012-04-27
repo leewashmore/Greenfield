@@ -61,6 +61,20 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         /// <summary>
+        /// Content displayed on the busy indicator
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set 
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }        
+
+        /// <summary>
         /// IssueName Property
         /// </summary>
         private string _issueName;
@@ -240,7 +254,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _dbInteractivity.RetrieveSecurityReferenceDataByTicker(entitySelectionData.ShortName, RetrieveSecurityReferenceDataCallBackMethod);
+                    _dbInteractivity.RetrieveSecurityOverviewData(entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
+                    BusyIndicatorContent = "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'";
                     if (SecurityOverviewDataLoadEvent != null)
                         SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 }
@@ -253,6 +268,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                if (SecurityOverviewDataLoadEvent != null)
+                    SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -263,7 +280,6 @@ namespace GreenField.Gadgets.ViewModels
         /// event to handle data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler SecurityOverviewDataLoadEvent;
-
         #endregion
 
         #region CallBack Method
@@ -295,9 +311,7 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-                if (SecurityOverviewDataLoadEvent != null)
-                    SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }                
             }
             catch (Exception ex)
             {
@@ -305,6 +319,8 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+            if (SecurityOverviewDataLoadEvent != null)
+                SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
         }
 
         #endregion

@@ -40,7 +40,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <TextBlock Text="{Binding BenchmarkName}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding EffectiveDate}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Text="{Binding EffectiveDate,StringFormat='MM/dd/yyyy'}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
                <Grid Grid.Row="1">
                     <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">

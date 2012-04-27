@@ -36,6 +36,19 @@ namespace GreenField.Gadgets.Views
 
             _dataContextSource = dataContextSource;            
             this.SetGridHeaders();
+            dataContextSource.SnapshotDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(dataContextSource_SnapshotDataLoadedEvent);
+        }
+
+        void dataContextSource_SnapshotDataLoadedEvent(Common.DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.biSnapshot.IsBusy = true;                
+            }
+            else
+            {
+                this.biSnapshot.IsBusy = false;                
+            }
         }        
 
         /// <summary>

@@ -94,12 +94,17 @@ namespace GreenField.Web.Services
         /// <returns>list of security overview data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public SecurityOverviewData RetrieveSecurityReferenceDataByTicker(string ticker)
+        public SecurityOverviewData RetrieveSecurityOverviewData(EntitySelectionData entitySelectionData)
         {
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW.Where(o => o.TICKER == ticker).FirstOrDefault();
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();
 
                 if (data == null)
                     return new SecurityOverviewData();
@@ -414,6 +419,7 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new EntitySelectionData()
                         {
+                            
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
                             ShortName = record.SHORT_NAME,
                             LongName = record.LONG_NAME,
@@ -423,6 +429,7 @@ namespace GreenField.Web.Services
                         });
                     }
                 }
+                                    
                 return result;
             }
             catch (Exception ex)
