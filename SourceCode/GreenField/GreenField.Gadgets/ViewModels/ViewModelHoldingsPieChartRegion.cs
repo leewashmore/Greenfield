@@ -104,11 +104,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Effective date appended by as of
         /// </summary>
+        private String _effectiveDateString;
         public String EffectiveDateString
         {
             get
             {
-                return "as of " + Convert.ToDateTime(EffectiveDate).ToLongDateString();
+                return _effectiveDateString;
+            }
+
+            set
+            {
+                _effectiveDateString = value;
+                RaisePropertyChanged(() => this.EffectiveDateString);
             }
         }
 
@@ -124,6 +131,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (_effectiveDate != value)
                 {
                     _effectiveDate = value;
+                    EffectiveDateString = Convert.ToDateTime(EffectiveDate).ToLongDateString();
 
                     if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter != null)
                     {
