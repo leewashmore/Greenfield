@@ -67,8 +67,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
-            dataContextSource.PortfolioDetailsDataLoadedEvent+=new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_PortfolioDetailsDataLoadedEvent);
-
+            dataContextSource.PortfolioDetailsDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_PortfolioDetailsDataLoadedEvent);
         }
 
         #endregion
@@ -88,7 +87,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-        
+
         #region ExportToExcel/PDF/Print
 
         /// <summary>

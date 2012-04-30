@@ -80,20 +80,20 @@
                                          FontSize="7">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
-                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
                             <telerik:GridViewDataColumn Header="Name" DataMemberBinding="{Binding IssueName}" IsGroupable="False"
-                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
                             <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding SecurityType}" IsGroupable="False"
-                                                    IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                                                        IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
                             <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
-                                                    IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCell}" >
+                                                        IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCell}" >
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
-                                                               ResultFormatString="{}{0:n2}" />
+                                                                   ResultFormatString="{}{0:n2}" />
                                     <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
-                                                               ResultFormatString="{}{0:n2}" />
+                                                                   ResultFormatString="{}{0:n2}" />
                                     <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
-                                                               ResultFormatString="{}{0:n2}" />
+                                                                   ResultFormatString="{}{0:n2}" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"

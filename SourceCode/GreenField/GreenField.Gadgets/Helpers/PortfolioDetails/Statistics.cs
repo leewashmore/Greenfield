@@ -15,7 +15,7 @@ namespace GreenField.Gadgets.Helpers
 {
     public class Statistics
     {
-        public static decimal GroupPortfolioWeight<TSource>(IEnumerable<TSource> source, Func<TSource, decimal> selector)
+        public static decimal GroupPortfolioWeight<TSource>(IEnumerable<TSource> source, Func<TSource, decimal?> selector)
         {
             int itemCount = source.Count();
             if (itemCount > 1)
@@ -24,7 +24,6 @@ namespace GreenField.Gadgets.Helpers
                 decimal sum = values.Sum();
                 return sum;
             }
-
             return 0;
         }
     }

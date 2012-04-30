@@ -85,6 +85,7 @@ namespace GreenField.Gadgets.Views
 
 
         #endregion
+
         #region Dispose Method
         /// <summary>
         /// method to dispose all running events
