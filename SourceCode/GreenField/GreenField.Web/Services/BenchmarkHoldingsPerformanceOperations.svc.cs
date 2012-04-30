@@ -140,14 +140,8 @@ namespace GreenField.Web.Services
                     //Calculate Portfolio Weight
                     decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
 
-                    //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
-                    GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
-                            .Where(rec => rec.TICKER == record.TICKER)
-                            .FirstOrDefault();
-                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
-
                     //Calculate Active Position
-                    decimal? activePosition = portfolioWeight - benchmarkWeight;
+                    decimal? activePosition = portfolioWeight - record.BENCHMARK_WEIGHT;
 
                     result.Add(new SectorBreakdownData()
                     {
@@ -155,7 +149,7 @@ namespace GreenField.Web.Services
                         Industry = record.GICS_INDUSTRY_NAME,
                         Security = record.ISSUE_NAME,
                         PortfolioShare = portfolioWeight,
-                        BenchmarkShare = benchmarkWeight,
+                        BenchmarkShare = record.BENCHMARK_WEIGHT,
                         ActivePosition = activePosition
                     });
                 }
@@ -209,14 +203,8 @@ namespace GreenField.Web.Services
                     //Calculate Portfolio Weight
                     decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
 
-                    //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
-                    GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
-                            .Where(rec => rec.TICKER == record.TICKER)
-                            .FirstOrDefault();
-                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
-
                     //Calculate Active Position
-                    decimal? activePosition = portfolioWeight - benchmarkWeight;
+                    decimal? activePosition = portfolioWeight - record.BENCHMARK_WEIGHT;
 
                     result.Add(new RegionBreakdownData()
                     {
@@ -224,7 +212,7 @@ namespace GreenField.Web.Services
                         Country = record.COUNTRYNAME,
                         Security = record.ISSUE_NAME,
                         PortfolioShare = portfolioWeight,
-                        BenchmarkShare = benchmarkWeight,
+                        BenchmarkShare = record.BENCHMARK_WEIGHT,
                         ActivePosition = activePosition
                     });
                 }
@@ -408,10 +396,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<FilterSelectionData> result = new List<FilterSelectionData>();
-                //List<HoldingsFilterSelectionData> result = new List<HoldingsFilterSelectionData>();
-                //List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-                //ResearchEntities research = new ResearchEntities();
-                //holdingData = research.tblHoldingsDatas.ToList();
+                
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
@@ -775,7 +760,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in k)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
 
                         break;
@@ -815,7 +800,7 @@ namespace GreenField.Web.Services
                         foreach (var a in c)
                         {
 
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
                         break;
                     case "Industry":
@@ -852,7 +837,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in s)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
 
                         break;
@@ -889,7 +874,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in d)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
 
                         break;
@@ -960,7 +945,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in k)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
                         break;
                     case "Country":
@@ -1000,7 +985,7 @@ namespace GreenField.Web.Services
                         foreach (var a in c)
                         {
 
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
                         break;
                     case "Industry":
@@ -1037,7 +1022,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in s)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
                         break;
                     case "Sector":
@@ -1073,7 +1058,7 @@ namespace GreenField.Web.Services
                         }
                         foreach (var a in d)
                         {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, ref result);
+                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
                         }
                         break;
                     default:
@@ -1096,16 +1081,32 @@ namespace GreenField.Web.Services
         /// <param name="sumForPortfolios">Stores the sum of Portfolio Weight</param>
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
-        public void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, ref List<HoldingsPercentageData> result)
+        private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result)
         {
-            for (int i = 0; i < result.Count; i++)
+            var segmentValue = (from p in result
+                               where p.SegmentName == name
+                               select p).FirstOrDefault();
+
+            if (segmentValue != null)
             {
-                if (name == result[i].SegmentName)
-                {
-                    result[i].PortfolioWeight = (b / sumForPortfolios) * 100;
-                    break;
-                }
+                segmentValue.PortfolioWeight = (b / sumForPortfolios) * 100;
             }
+            else
+            {
+                entry = new HoldingsPercentageData();
+                entry.SegmentName = name;
+                entry.PortfolioWeight = (b / sumForPortfolios) * 100;
+                entry.BenchmarkName = benchmarkName;
+                result.Add(entry);
+            }
+            //for (int i = 0; i < result.Count; i++)
+            //{
+            //    if (name == result[i].SegmentName)
+            //    {
+            //        result[i].PortfolioWeight = (b / sumForPortfolios) * 100;
+            //        break;
+            //    }                
+            //}
         }
         /// <summary>
         /// Calculates the percentage contribution for Benchmark and Portfolio.
@@ -1117,7 +1118,7 @@ namespace GreenField.Web.Services
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
         /// <param name="result">List of HoldingsPercentageData </param>
-        public void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result)
+        private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result)
         {
             entry = new HoldingsPercentageData();
             entry.SegmentName = name;
