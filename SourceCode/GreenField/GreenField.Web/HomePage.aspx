@@ -20,12 +20,12 @@
             height: 100%;
             text-align: center;
         }
-    </style>   
+    </style>
     <script type="text/javascript" src="Silverlight.js"></script>
     <script type="text/C#" runat="server">
         protected void Page_Load(object sender, EventArgs e)
         {
-            GreenField.Web.DataContracts.Session session = 
+            GreenField.Web.DataContracts.Session session =
                 (GreenField.Web.DataContracts.Session)HttpContext.Current.Session["Session"];
             if (null == session)
                 Response.Redirect("Login.aspx");
@@ -83,10 +83,8 @@
                 <img src="http://go.microsoft.com/fwlink/?LinkId=161376" alt="Get Microsoft Silverlight"
                     style="border-style: none" />
             </a>
-        </object>
-        <iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px;
-            border: 0px"></iframe>
-    </div>
+        </object><iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px;
+            border: 0px"></iframe></div>
     </form>
 </body>
 </html>
