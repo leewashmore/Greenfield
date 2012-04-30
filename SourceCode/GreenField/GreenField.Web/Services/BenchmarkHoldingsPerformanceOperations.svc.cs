@@ -1088,13 +1088,26 @@ namespace GreenField.Web.Services
 
             if (segmentValue != null)
             {
+                if (segmentValue.SegmentName == " ")
+                {
+                    segmentValue.SegmentName = "Unknown";
+                }
                 segmentValue.PortfolioWeight = (b / sumForPortfolios) * 100;
             }
             else
             {
-                entry = new HoldingsPercentageData();
-                entry.SegmentName = name;
+                
+                entry = new HoldingsPercentageData();               
                 entry.PortfolioWeight = (b / sumForPortfolios) * 100;
+                entry.BenchmarkWeight = 0;
+                if (name == " ")
+                {
+                    entry.SegmentName = "Unknown";
+                }
+                else
+                {
+                    entry.SegmentName = name;
+                }
                 entry.BenchmarkName = benchmarkName;
                 result.Add(entry);
             }
