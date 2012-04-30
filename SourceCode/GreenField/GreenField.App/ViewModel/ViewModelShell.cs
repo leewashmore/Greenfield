@@ -372,12 +372,12 @@ namespace GreenField.App.ViewModel
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
-                    if (_dbInteractivity != null)
+                    if (_dbInteractivity != null && _filterVisibility == Visibility.Visible)
                     {
-                        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
-                        if (ShellDataLoadEvent != null)
+                        BusyIndicatorContent = "Retrieving...";
+                        if (ShellFilterDataLoadEvent != null)
                         {
-                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
                         _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
                     }
@@ -581,80 +581,16 @@ namespace GreenField.App.ViewModel
                     if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
                     {
                         BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
-                        if (ShellDataLoadEvent != null)
+                        if (ShellFilterDataLoadEvent != null)
                         {
-                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
                         _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
             }
         }
-        #endregion
-
-        //#region Country Selector
-        ///// <summary>
-        ///// Stores visibility property of the country selector
-        ///// </summary>
-        //private Visibility _countrySelectorVisibility = Visibility.Collapsed;
-        //public Visibility CountrySelectorVisibility
-        //{
-        //    get { return _countrySelectorVisibility; }
-        //    set
-        //    {
-        //        _countrySelectorVisibility = value;
-        //        RaisePropertyChanged(() => this.CountrySelectorVisibility);
-        //    }
-        //}
-        //#endregion
-
-        //#region Sector Selector
-        ///// <summary>
-        ///// Stores visibility property of the sector selector
-        ///// </summary>
-        //private Visibility _sectorSelectorVisibility = Visibility.Collapsed;
-        //public Visibility SectorSelectorVisibility
-        //{
-        //    get { return _sectorSelectorVisibility; }
-        //    set
-        //    {
-        //        _sectorSelectorVisibility = value;
-        //        RaisePropertyChanged(() => this.SectorSelectorVisibility);
-        //    }
-        //}
-        //#endregion
-
-        //#region Industry Selector
-        ///// <summary>
-        ///// Stores visibility property of the industry selector
-        ///// </summary>
-        //private Visibility _industrySelectorVisibility = Visibility.Collapsed;
-        //public Visibility IndustrySelectorVisibility
-        //{
-        //    get { return _industrySelectorVisibility; }
-        //    set
-        //    {
-        //        _industrySelectorVisibility = value;
-        //        RaisePropertyChanged(() => this.IndustrySelectorVisibility);
-        //    }
-        //}
-        //#endregion
-
-        //#region Region Selector
-        ///// <summary>
-        ///// Stores visibility property of the region selector
-        ///// </summary>
-        //private Visibility _regionSelectorVisibility = Visibility.Collapsed;
-        //public Visibility RegionSelectorVisibility
-        //{
-        //    get { return _regionSelectorVisibility; }
-        //    set
-        //    {
-        //        _regionSelectorVisibility = value;
-        //        RaisePropertyChanged(() => this.RegionSelectorVisibility);
-        //    }
-        //}
-        //#endregion
+        #endregion        
 
         #region Snapshot Selector
         /// <summary>
@@ -1259,6 +1195,11 @@ namespace GreenField.App.ViewModel
         /// event to handle data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler ShellDataLoadEvent;
+
+        /// <summary>
+        /// event to handle filter data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler ShellFilterDataLoadEvent;
         #endregion
 
         #region ICommand Methods
@@ -2882,6 +2823,11 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+                if (ShellFilterDataLoadEvent != null)
+                {
+                    ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
@@ -2891,11 +2837,7 @@ namespace GreenField.App.ViewModel
                         FilterSelectorInfo = FilterSelectionInfo
                                         .Where(record => record.Filtertype == SelectedFilterType)
                                         .ToList(); 
-                    }
-                    if (ShellDataLoadEvent != null)
-                    {
-                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                    }
+                    }                   
                 }
                 else
                 {

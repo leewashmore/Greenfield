@@ -395,8 +395,11 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
-                    <helpers:ToolBox Grid.Column="0" x:Name="ctrToolBox" HorizontalAlignment="Left"/>
+                    <telerik:RadBusyIndicator x:Name="filterBusyIndicator"                                  
+                              BusyContent="{Binding BusyIndicatorContent}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" telerik:StyleManager.Theme="Metro">
+                        <helpers:ToolBox Grid.Column="0" x:Name="ctrToolBox" HorizontalAlignment="Left"/>
+                    </telerik:RadBusyIndicator>
                     <TextBlock Grid.Column="1" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                  x:Name="tbUserName" Foreground="White"  FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
                     <HyperlinkButton Grid.Column="2" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"

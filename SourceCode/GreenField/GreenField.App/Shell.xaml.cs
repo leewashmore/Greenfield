@@ -35,7 +35,13 @@ namespace GreenField.App
             {
                 this.DataContext = value;
                 value.ShellDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellDataLoadEvent);
+                value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(value_ShellFilterDataLoadEvent);
             }
+        }
+
+        void value_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            this.filterBusyIndicator.IsBusy = e.ShowBusy;
         }
 
         void dataContextSource_ShellDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
