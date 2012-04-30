@@ -284,7 +284,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try 
             {
-                if (result != null)
+                if (result != null && result.Count > 0)
                 {
 
                     HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);

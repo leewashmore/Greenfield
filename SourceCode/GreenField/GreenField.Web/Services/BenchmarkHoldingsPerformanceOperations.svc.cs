@@ -717,168 +717,191 @@ namespace GreenField.Web.Services
 
             try
             {
+
+                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue==null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
                 List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
+                
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
-                String benchmarkId = portfolioData[0].BENCHMARK_ID.ToString();
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate).ToList();
-
-                switch (filterType)
+                if (portfolioData.Count == 0 || portfolioData == null)
                 {
-                    case "Region":
-                        var q = from p in data
-                                where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var k = from p in portfolioData
-                                where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                    return result;                    
+                }               
+                String benchmarkId = portfolioData[0].BENCHMARK_ID.ToString();
+                if (benchmarkId != null)
+                {
 
-                        foreach (var a in q)
+                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate).ToList();
+                    if (data != null || data.Count != 0)
+                    {
+                        switch (filterType)
                         {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
+                            case "Region":
+                                var q = from p in data
+                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var k = from p in portfolioData
+                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
-                        foreach (var a in q)
-                        {
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in k)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in k)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
+                                foreach (var a in q)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
 
-                        break;
-                    case "Country":
-                        var l = from p in data
-                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var c = from p in portfolioData
-                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                foreach (var a in q)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                    continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in k)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in k)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
 
-                        foreach (var a in l)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
+                                break;
+                            case "Country":
+                                var l = from p in data
+                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var c = from p in portfolioData
+                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
-                        foreach (var a in l)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
+                                foreach (var a in l)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
 
-                        foreach (var a in c)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in c)
-                        {
+                                foreach (var a in l)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
 
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
-                        break;
-                    case "Industry":
-                        var m = from p in data
-                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                foreach (var a in c)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in c)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
+                                break;
+                            case "Industry":
+                                var m = from p in data
+                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
 
-                        var s = from p in portfolioData
-                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                                group p by p.GICS_SECTOR_NAME into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                var s = from p in portfolioData
+                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
-                        foreach (var a in m)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
-                        foreach (var a in m)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in s)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in s)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
+                                foreach (var a in m)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in m)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in s)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in s)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
 
-                        break;
-                    case "Sector":
-                        var n = from p in data
-                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                                group p by p.GICS_INDUSTRY_NAME into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var d = from p in portfolioData
-                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                                group p by p.GICS_INDUSTRY_NAME into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                break;
+                            case "Sector":
+                                var n = from p in data
+                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        group p by p.GICS_INDUSTRY_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var d = from p in portfolioData
+                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        group p by p.GICS_INDUSTRY_NAME into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
-                        foreach (var a in n)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
-                        foreach (var a in n)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in d)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in d)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
+                                foreach (var a in n)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in n)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in d)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in d)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
 
-                        break;
-                    default:
-                        break;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
                 return result;
             }
@@ -904,164 +927,183 @@ namespace GreenField.Web.Services
         {
             try
             {
+                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
                 List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
+                if (portfolioData.Count == 0 || portfolioData == null)
+                    return result;
                 String benchmarkId = portfolioData[0].BENCHMARK_ID.ToString();
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate).ToList();
-                switch (filterType)
+                if (benchmarkId != null)
                 {
-                    case "Region":
-                        var q = from p in data
-                                where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
-                                group p by p.ISO_COUNTRY_CODE into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var k = from p in portfolioData
-                                where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
-                                group p by p.ISO_COUNTRY_CODE into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
-                        foreach (var a in q)
+                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS.Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate).ToList();
+                    if (data != null || data.Count != 0)
+                    {
+                        switch (filterType)
                         {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
+                            case "Region":
+                                var q = from p in data
+                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        group p by p.ISO_COUNTRY_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var k = from p in portfolioData
+                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        group p by p.ISO_COUNTRY_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                foreach (var a in q)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
 
-                        foreach (var a in q)
-                        {
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in k)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in k)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
-                        break;
-                    case "Country":
-                        var l = from p in data
-                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var c = from p in portfolioData
-                                where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
-
-
-                        foreach (var a in l)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
-
-                        foreach (var a in l)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-
-                        foreach (var a in c)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in c)
-                        {
-
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
-                        break;
-                    case "Industry":
-                        var m = from p in data
-                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var s = from p in portfolioData
-                                where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                foreach (var a in q)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in k)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in k)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
+                                break;
+                            case "Country":
+                                var l = from p in data
+                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var c = from p in portfolioData
+                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
 
-                        foreach (var a in m)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
-                        }
-                        foreach (var a in m)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in s)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in s)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
-                        break;
-                    case "Sector":
-                        var n = from p in data
-                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
-                        var d = from p in portfolioData
-                                where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
-                                group p by p.ASHEMM_PROP_REGION_CODE into g
-                                select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+                                foreach (var a in l)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
 
-                        foreach (var a in n)
-                        {
-                            sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                foreach (var a in l)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+
+                                foreach (var a in c)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in c)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
+                                break;
+                            case "Industry":
+                                var m = from p in data
+                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var s = from p in portfolioData
+                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+
+                                foreach (var a in m)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in m)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in s)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in s)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
+                                break;
+                            case "Sector":
+                                var n = from p in data
+                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+                                var d = from p in portfolioData
+                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                                foreach (var a in n)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in n)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                }
+                                foreach (var a in d)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in d)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                }
+                                break;
+                            default:
+                                break;
                         }
-                        foreach (var a in n)
-                        {
-                            if (sumForBenchmarks == 0)
-                                continue;
-                            CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
-                        }
-                        foreach (var a in d)
-                        {
-                            sumForPortfolios = sumForPortfolios + a.PortfolioSum;
-                        }
-                        for (int i = 0; i < result.Count; i++)
-                        {
-                            if (result[i].PortfolioWeight.Equals(null))
-                            {
-                                result[i].PortfolioWeight = 0;
-                            }
-                        }
-                        foreach (var a in d)
-                        {
-                            CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId,ref result);
-                        }
-                        break;
-                    default:
-                        break;
+                    }
                 }
                 return result;
             }
