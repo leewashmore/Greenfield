@@ -22,9 +22,8 @@
 
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>            
         </Grid.RowDefinitions>
 
         <!--Export Controls-->
@@ -55,17 +54,16 @@
         </Grid>
 
         <!-- Data Grid -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1">           
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0" >
+                                              DisplayAfter="0">
                 <telerik:RadGridView x:Name="dgPortfolioDetails" ShowGroupPanel="True" AutoGenerateColumns="False" 
                              ItemsSource="{Binding SelectedPortfolioDetailsData}" CanUserFreezeColumns="False" 
                              CanUserDeleteRows="False" CanUserInsertRows="False" CanUserReorderColumns="False" 
-                             CanUserSortColumns="True" FrozenColumnCount="4" 
-                              Grouping="dgPortfolioDetails_Grouping" ScrollMode="Deferred"
+                             CanUserSortColumns="True" FrozenColumnCount="4" Grouping="dgPortfolioDetails_Grouping" 
                              Filtering="dgPortfolioDetails_Filtering" Filtered="dgPortfolioDetails_Filtered" 
                              RowIndicatorVisibility="Collapsed" UseLayoutRounding="True" ColumnWidth="*"
-                             FontFamily="Arial" FontSize="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible" >
+                             FontFamily="Arial" FontSize="7">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                     IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
