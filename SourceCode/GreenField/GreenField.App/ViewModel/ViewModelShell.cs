@@ -122,7 +122,7 @@ namespace GreenField.App.ViewModel
         public string BusyIndicatorContent
         {
             get { return _busyIndicatorContent; }
-            set 
+            set
             {
                 _busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
@@ -484,7 +484,7 @@ namespace GreenField.App.ViewModel
             {
                 return new List<string> { "Region", "Country", "Sector", "Industry" };
             }
-        }       
+        }
 
         /// <summary>
         /// String that contains the selected filter type
@@ -504,7 +504,7 @@ namespace GreenField.App.ViewModel
                 {
                     FilterSelectorInfo = FilterSelectionInfo
                                         .Where(record => record.Filtertype == value)
-                                        .ToList(); 
+                                        .ToList();
                 }
             }
         }
@@ -706,7 +706,7 @@ namespace GreenField.App.ViewModel
                                     {
                                         ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                                     }
-                                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod); 
+                                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
                                 }
                             });
                     }
@@ -2788,7 +2788,7 @@ namespace GreenField.App.ViewModel
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     try
                     {
-                        MarketSnapshotSelectionInfo = result;                        
+                        MarketSnapshotSelectionInfo = result;
                     }
                     catch (Exception ex)
                     {
@@ -2836,12 +2836,16 @@ namespace GreenField.App.ViewModel
                     {
                         FilterSelectorInfo = FilterSelectionInfo
                                         .Where(record => record.Filtertype == SelectedFilterType)
-                                        .ToList(); 
+                                        .ToList();
                     }                   
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (ShellDataLoadEvent != null)
+                {
+                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)

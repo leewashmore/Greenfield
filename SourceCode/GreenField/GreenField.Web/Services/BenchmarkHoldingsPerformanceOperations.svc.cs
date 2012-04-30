@@ -279,7 +279,7 @@ namespace GreenField.Web.Services
                             .Where(rec => rec.TICKER == record.TICKER)
                             .FirstOrDefault();
                     decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
-                                      
+
 
                     //Calculate Active Position
                     decimal? activePosition = portfolioWeight - benchmarkWeight;
@@ -382,7 +382,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-               
+
         /// <summary>
         /// Retrieves the filter values for a selected filter type
         /// </summary>
@@ -507,7 +507,6 @@ namespace GreenField.Web.Services
                 //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
 
         /// <summary>
         /// Method to retrieve data in Benchmark Chart
@@ -890,7 +889,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-        
+
         /// <summary>
         /// Retrieves Holdings data for showing pie chart for region allocation
         /// </summary>

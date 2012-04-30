@@ -257,6 +257,8 @@ namespace GreenField.Gadgets.ViewModels
                 SelectedPortfolioDetailsData.Clear();
                 SelectedPortfolioDetailsData.AddRange(result);
             }
+            if (null != PortfolioDetailsDataLoadedEvent)
+                PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
         }
 
         #endregion
@@ -441,6 +443,12 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler PortfolioDetailsDataLoadedEvent;
+
+        #endregion
+
         #region EventHandlers
 
         /// <summary>
@@ -455,6 +463,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
+                    if (null != PortfolioDetailsDataLoadedEvent)
+                        PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
@@ -480,6 +490,8 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
+                        if (null != PortfolioDetailsDataLoadedEvent)
+                            PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
                     }
                 }

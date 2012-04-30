@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -35,15 +36,30 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
-
         public ViewAssetAllocation(ViewModelAssetAllocation dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextAssetAllocation = dataContextSource;
+            dataContextSource.AssetAllocationDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_AssetAllocationDataLoadedEvent);
         }
-
         #endregion
+
+        /// <summary>
+        /// Data Retrieval Progress Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSource_AssetAllocationDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
 
         #region EventUnsubscribe
 

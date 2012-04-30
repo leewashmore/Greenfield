@@ -21,29 +21,32 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-            <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
+            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0">
+                <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
                                  CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                  FontFamily="Arial" FontSize="7">
-                <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
                                                 DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left"/>
-                    <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                        <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
                                                 Header="Portfolio %" 
                                                 DataMemberBinding="{Binding PortfolioWeight, StringFormat=\{0:n2\}%}" 
                                                 Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                        <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
                                                 DataMemberBinding="{Binding ModelWeight, StringFormat=\{0:n2\}%}" 
                                                 Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
                                                 DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n2\}%}" 
                                                 Width="Auto" HeaderTextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                        <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
                                                 DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending"/>
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </telerik:RadBusyIndicator>
         </Border>
     </Grid>
 </helpers:ViewBaseUserControl>

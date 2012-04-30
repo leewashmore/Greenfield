@@ -49,7 +49,7 @@ namespace GreenField.Web.Helpers
                     sumBenchmarkWeight = dimensionBenchmarkHoldingsData.Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
 
                     //if sum of DirtyValuePC or ModelWeight is zero then return empty set
-                    if ((sumDirtyValuePC == 0) || (sumBenchmarkWeight == 0))
+                    if ((sumDirtyValuePC == 0) || (sumBenchmarkWeight == 0) || (sumModelWeight == 0))
                         return result;
 
                     modelWeight = dimensionPortfolioHoldingsData.

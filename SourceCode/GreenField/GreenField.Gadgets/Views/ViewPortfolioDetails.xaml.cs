@@ -21,6 +21,7 @@ using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Common;
 #endif
 
 namespace GreenField.Gadgets.Views
@@ -66,10 +67,28 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
+            dataContextSource.PortfolioDetailsDataLoadedEvent+=new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_PortfolioDetailsDataLoadedEvent);
+
         }
 
         #endregion
 
+        #region DataProgressIndicator
+
+        void DataContextSource_PortfolioDetailsDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
+
+        #endregion
+        
         #region ExportToExcel/PDF/Print
 
         /// <summary>

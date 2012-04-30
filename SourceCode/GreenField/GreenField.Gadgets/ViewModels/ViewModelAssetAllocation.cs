@@ -104,6 +104,12 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
         #endregion
 
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler AssetAllocationDataLoadedEvent;
+
+        #endregion
+
         #region Event Handlers
         /// <summary>
         /// Handle Fund Change Event
@@ -122,8 +128,11 @@ namespace GreenField.Gadgets.ViewModels
                     _portfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
+                        if (null != AssetAllocationDataLoadedEvent)
+                            AssetAllocationDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
+
                 }
                 else
                 {
@@ -154,6 +163,8 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
+                        if (null != AssetAllocationDataLoadedEvent)
+                            AssetAllocationDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
@@ -193,6 +204,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (null != AssetAllocationDataLoadedEvent)
+                    AssetAllocationDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
