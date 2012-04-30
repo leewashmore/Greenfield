@@ -54,6 +54,8 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
             {
+                if (null != PortfolioDetailsDataLoadedEvent)
+                    PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 

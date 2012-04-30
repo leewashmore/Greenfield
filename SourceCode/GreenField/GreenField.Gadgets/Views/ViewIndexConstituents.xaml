@@ -132,6 +132,7 @@
                 </telerik:RadBusyIndicator>
             </Border>
         </Grid>
+        
     </Grid>
 
 </helpers:ViewBaseUserControl>
