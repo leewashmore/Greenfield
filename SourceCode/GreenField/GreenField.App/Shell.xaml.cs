@@ -41,8 +41,8 @@ namespace GreenField.App
 
         void value_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
-            this.filterBusyIndicator.IsBusy = e.ShowBusy;
-        }
+            this.ctrToolBox.filterBusyIndicator.IsBusy = e.ShowBusy;
+        }       
 
         void dataContextSource_ShellDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
