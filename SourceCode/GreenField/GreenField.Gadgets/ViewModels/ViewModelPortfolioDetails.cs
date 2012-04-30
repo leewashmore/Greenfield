@@ -488,7 +488,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (_effectiveDate != null && SelectedPortfolioId != null)
                     {
                         if (null != PortfolioDetailsDataLoadedEvent)
                             PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
