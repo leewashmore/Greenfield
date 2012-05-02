@@ -32,6 +32,11 @@ namespace GreenField.Web.DataContracts
 
        [DataMember]
        public Double STOCK_SELECTION_TOTAL { get; set; }
+
+
+
+
+
        
     }
 }

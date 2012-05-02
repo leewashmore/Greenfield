@@ -1019,10 +1019,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="name">Name of the Fund</param>
         /// <param name="callback"></param>
-        public void RetrieveAttributionData(String name, Action<List<AttributionData>> callback)
+        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveAttributionDataAsync(name);
+            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

@@ -3681,7 +3681,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             "Response")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" +
             "ServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveAttributionData(string nameOfFund, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveAttributionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData> EndRetrieveAttributionData(System.IAsyncResult result);
     }
@@ -6487,8 +6487,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveAttributionData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveAttributionData(nameOfFund, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveAttributionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveAttributionData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6497,8 +6497,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveAttributionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string nameOfFund = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveAttributionData(nameOfFund, callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveAttributionData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveAttributionData(System.IAsyncResult result) {
@@ -6514,11 +6515,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveAttributionDataAsync(string nameOfFund) {
-            this.RetrieveAttributionDataAsync(nameOfFund, null);
+        public void RetrieveAttributionDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveAttributionDataAsync(string nameOfFund, object userState) {
+        public void RetrieveAttributionDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveAttributionDataDelegate == null)) {
                 this.onBeginRetrieveAttributionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveAttributionData);
             }
@@ -6529,7 +6530,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveAttributionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveAttributionDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveAttributionDataDelegate, new object[] {
-                        nameOfFund}, this.onEndRetrieveAttributionDataDelegate, this.onRetrieveAttributionDataCompletedDelegate, userState);
+                        portfolioSelectionData,
+                        effectiveDate}, this.onEndRetrieveAttributionDataDelegate, this.onRetrieveAttributionDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -7125,9 +7127,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveAttributionData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = nameOfFund;
+            public System.IAsyncResult BeginRetrieveAttributionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveAttributionData", _args, callback, asyncState);
                 return _result;
             }

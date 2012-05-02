@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
 
-       
+        private DateTime? _effectiveDate;
 
         #endregion
 
@@ -58,6 +58,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelAttribution(DashboardGadgetParam param)
         {
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
@@ -104,21 +105,21 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="nameOfFund">Unique Identifier for a fund</param>
         /// <param name="callback">Callback for this method</param>
-        private void RetrieveAttributionData(String nameOfFund, Action<List<AttributionData>> callback)
+        private void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData,DateTime? effectiveDate, Action<List<AttributionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (nameOfFund != null)
+                if (portfolioSelectionData.PortfolioId != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, nameOfFund, 1);
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData.PortfolioId, 1);
                     if (callback != null)
                     {
                         Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveAttributionData(nameOfFund, callback);
+                        _dbInteractivity.RetrieveAttributionData(portfolioSelectionData,Convert.ToDateTime(effectiveDate), callback);
                     }
                     else
                     {
@@ -166,7 +167,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    RetrieveAttributionData(Convert.ToString(PortfolioSelectionData.PortfolioId), RetrieveAttributionDataCallBackMethod);
+                    RetrieveAttributionData( PortfolioSelectionData, _effectiveDate,RetrieveAttributionDataCallBackMethod);
                 }
                 else
                 {

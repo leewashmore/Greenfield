@@ -88,7 +88,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePerformanceGridData(String name, Action<List<PerformanceGridData>> callback);
 
-        void RetrieveAttributionData(String name, Action<List<AttributionData>> callback);
+        void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
 
         void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback);
 

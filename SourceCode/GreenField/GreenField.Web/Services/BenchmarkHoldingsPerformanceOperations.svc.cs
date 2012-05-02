@@ -1130,7 +1130,7 @@ namespace GreenField.Web.Services
 
             if (segmentValue != null)
             {
-                if (segmentValue.SegmentName == " ")
+                if (String.IsNullOrWhiteSpace(segmentValue.SegmentName))
                 {
                     segmentValue.SegmentName = "Unknown";
                 }
@@ -1142,7 +1142,7 @@ namespace GreenField.Web.Services
                 entry = new HoldingsPercentageData();               
                 entry.PortfolioWeight = (b / sumForPortfolios) * 100;
                 entry.BenchmarkWeight = 0;
-                if (name == " ")
+                if (String.IsNullOrWhiteSpace(name))
                 {
                     entry.SegmentName = "Unknown";
                 }
@@ -1152,15 +1152,7 @@ namespace GreenField.Web.Services
                 }
                 entry.BenchmarkName = benchmarkName;
                 result.Add(entry);
-            }
-            //for (int i = 0; i < result.Count; i++)
-            //{
-            //    if (name == result[i].SegmentName)
-            //    {
-            //        result[i].PortfolioWeight = (b / sumForPortfolios) * 100;
-            //        break;
-            //    }                
-            //}
+            }         
         }
         /// <summary>
         /// Calculates the percentage contribution for Benchmark and Portfolio.
@@ -1175,12 +1167,18 @@ namespace GreenField.Web.Services
         private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result)
         {
             entry = new HoldingsPercentageData();
-            entry.SegmentName = name;
+            if (String.IsNullOrWhiteSpace(name))
+            {
+                entry.SegmentName = "Unknown";
+            }
+            else
+            {
+                entry.SegmentName = name;
+            }
             entry.BenchmarkWeight = (a / sumForBenchmarks) * 100;
             entry.BenchmarkName = benchmarkName;
             result.Add(entry);
         }
-
         #endregion
 
         /// <summary>
@@ -2222,28 +2220,22 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<AttributionData> RetrieveAttributionData(String nameOfFund)
+        public List<AttributionData> RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
+            if (portfolioSelectionData == null || effectiveDate == null)
+                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
             List<AttributionData> result = new List<AttributionData>();
+            AttributionData entry = new AttributionData();
+            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            if (attributionData.Count == 0 || attributionData == null)
+                return result;
             try
             {
-                if (nameOfFund != null)
-                {
-                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-                    AttributionData entry = new AttributionData();
-                    ResearchEntities research = new ResearchEntities();
-                    holdingData = research.tblHoldingsDatas.ToList();
-
-                    foreach (tblHoldingsData d in holdingData)
-                    {
-                        entry = new AttributionData();
-                        entry.COUNTRY_ID = d.ISO_COUNTRY_CODE;
-                        entry.PORTFOLIO_WEIGHT = Convert.ToDouble(d.PORTFOLIO_WEIGHT);
-                        entry.BENCHMARK_WEIGHT = Convert.ToDouble(d.BENCHMARK_WEIGHT);
-                        result.Add(entry);
-                    }
+                for (int i = 0; i < attributionData.Count; i++)
+                { 
+                
                 }
-
+                        
                 return result;
             }
             catch (Exception ex)
@@ -2254,9 +2246,5 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
-
-
-
-
     }
 }
