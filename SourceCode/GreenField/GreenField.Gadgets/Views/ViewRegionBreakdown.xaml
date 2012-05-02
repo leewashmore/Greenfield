@@ -51,7 +51,7 @@
                         <telerik:SeriesMapping>
                             <telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%">
+                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%(#X{n2}%)">
                                     <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                         <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
                                     </telerik:DoughnutSeriesDefinition.InteractivitySettings>
@@ -63,6 +63,7 @@
                             </telerik:SeriesMapping.SeriesDefinition>
                             <telerik:ItemMapping FieldName="PortfolioShare" DataPointMember="YValue"/>
                             <telerik:ItemMapping FieldName="Region" DataPointMember="XCategory" />
+                            <telerik:ItemMapping FieldName="BenchmarkShare" DataPointMember="XValue"/>
                         </telerik:SeriesMapping>
                     </telerik:RadChart.SeriesMappings>
                 </telerik:RadChart>

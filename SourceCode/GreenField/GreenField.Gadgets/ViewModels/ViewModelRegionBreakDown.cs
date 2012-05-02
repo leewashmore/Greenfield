@@ -234,7 +234,8 @@ namespace GreenField.Gadgets.ViewModels
                             RegionSpecificInfo.Add(new RegionSpecificData()
                             {
                                 Region = item.Region,
-                                PortfolioShare = RegionBreakdownInfo.Where(t => t.Region == item.Region).Sum(r => r.PortfolioShare)
+                                PortfolioShare = RegionBreakdownInfo.Where(t => t.Region == item.Region).Sum(r => r.PortfolioShare),
+                                BenchmarkShare = RegionBreakdownInfo.Where(t => t.Region == item.Region).Sum(r => r.BenchmarkShare)
                             });
                         }
                     }

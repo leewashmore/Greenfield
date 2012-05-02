@@ -15,5 +15,6 @@ namespace GreenField.Gadgets.Models
     {
         public string Sector { get; set; }
         public decimal? PortfolioShare { get; set; }
+        public decimal? BenchmarkShare { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot" Height="26">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -31,9 +31,8 @@
                                          SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}"
                                          Text="{Binding SecuritySearchText, Mode=TwoWay}"
                                          EmptyText="Search Security..." 
-                                             
-                                             FontSize="7"
-                                             FontFamily="Arial"
+                                         FontSize="7"
+                                         FontFamily="Arial"
                                          telerik:TextSearch.TextPath="LongName"
                                          Width="150" 
                                          Margin="5,0,0,0"
@@ -72,12 +71,13 @@
                                          ItemsSource="{Binding PortfolioSelectorInfo}"
                                          SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
                                          Text="{Binding PortfolioSearchText, Mode=TwoWay}"
-                                             FontSize="7"
-                                             FontFamily="Arial"
+                                         FontSize="7"
+                                         FontFamily="Arial"
                                          DisplayMemberPath="PortfolioId"
                                          EmptyText="Search Portfolio..."                                     
                                          telerik:TextSearch.TextPath="PortfolioId"
-                                         Width="150" 
+                                         Width="auto" 
+                                         Height="25"
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 
@@ -105,7 +105,7 @@
                                                FontSize="7"
                                                VerticalContentAlignment="Center"
                                                FontFamily="Arial"
-                                           Width="100"                                           
+                                           Width="auto"                                           
                                            Margin="5,0,0,0"/>
                     </StackPanel>
                 </Grid>
@@ -116,14 +116,14 @@
                         <TextBlock Text="Start Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadDatePicker x:Name="dpStartDateSelector"
                                            SelectedValue="{Binding SelectedPeriodStartDateInfo, Mode=TwoWay}"
-                                           Width="100"
+                                           Width="auto"
                                                VerticalContentAlignment="Center"
                                              FontSize="7"
                                              FontFamily="Arial" Margin="5,0,0,0"/>
                         <TextBlock Text="End Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold" Margin="5,0,0,0"/>
                         <telerik:RadDatePicker x:Name="dpEndDateSelector"
                                            SelectedValue="{Binding SelectedPeriodEndDateInfo, Mode=TwoWay}"
-                                           Width="100"
+                                           Width="auto"
                                                VerticalContentAlignment="Center"
                                              FontSize="7"
                                              FontFamily="Arial"
@@ -141,7 +141,7 @@
                                          SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                             
                                          FontSize="7"
                                          FontFamily="Arial"
-                                         Width="150" 
+                                         Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 
@@ -174,7 +174,7 @@
                                          SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
                                          FontSize="7"
                                              FontFamily="Arial" 
-                                             Width="150" 
+                                             Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 
@@ -310,7 +310,7 @@
                                      TextOptions.TextHintingMode="Fixed" 
                                      CanAutocompleteSelectItems="True"
                                      EmptyText="Search Snapshot..."
-                                     Width="150"
+                                     Width="auto"
                                      Margin="5,0,0,0"
                                      CanKeyboardNavigationSelectItems="False"
                                      HorizontalAlignment="Center"

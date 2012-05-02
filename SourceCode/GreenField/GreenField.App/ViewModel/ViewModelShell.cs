@@ -859,22 +859,6 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        public ICommand GadgetTopContributorCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetTopContributorCommandMethod);
-            }
-        }
-
-        public ICommand GadgetTopDetractorCommand
-        {
-            get
-            {
-                return new DelegateCommand<object>(GadgetTopDetractorCommandMethod);
-            }
-        }
-
         public ICommand GadgetContributorDetractorCommand
         {
             get
@@ -2443,56 +2427,6 @@ namespace GreenField.App.ViewModel
                         {
                             DashboardTileHeader = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION,
                             DashboardTileObject = new ViewRelativePerformanceSecurityActivePosition(new ViewModelRelativePerformanceSecurityActivePosition(GetDashboardGadgetParam()))
-                        });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        /// <summary>
-        /// GadgetTopContributorCommand Execution Method - Add Gadget - TOP_CONTRIBUTOR
-        /// </summary>
-        /// <param name="param">SenderInfo</param>
-        private void GadgetTopContributorCommandMethod(object param)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
-                        (new DashboardTileViewItemInfo
-                        {
-                            DashboardTileHeader = GadgetNames.PERFORMANCE_TOP_CONTRIBUTOR,
-                            DashboardTileObject = new ViewTopContributor(new ViewModelTopContributor(GetDashboardGadgetParam()))
-                        });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        /// <summary>
-        /// GadgetTopDetractorCommand Execution Method - Add Gadget - TOP_DETRACTOR
-        /// </summary>
-        /// <param name="param">SenderInfo</param>
-        private void GadgetTopDetractorCommandMethod(object param)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
-                        (new DashboardTileViewItemInfo
-                        {
-                            DashboardTileHeader = GadgetNames.PERFORMANCE_TOP_DETRACTOR,
-                            DashboardTileObject = new ViewTopDetractor(new ViewModelTopDetractor(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)

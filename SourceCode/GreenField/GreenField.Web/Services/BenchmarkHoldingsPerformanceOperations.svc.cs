@@ -132,6 +132,17 @@ namespace GreenField.Web.Services
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
 
+                //Retrieve the Id of benchmark associated with the Portfolio
+                List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                //If the DataBase doesn't return a single Benchmark for a Portfolio
+                if (benchmarkId.Count != 1)
+                    throw new InvalidOperationException();
+
+                List<GF_BENCHMARK_HOLDINGS> benchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
                     if (record.DIRTY_VALUE_PC == null)
@@ -140,8 +151,11 @@ namespace GreenField.Web.Services
                     //Calculate Portfolio Weight
                     decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
 
+                    //Retrieve Benchmark Weight 
+                    decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
+
                     //Calculate Active Position
-                    decimal? activePosition = portfolioWeight - record.BENCHMARK_WEIGHT;
+                    decimal? activePosition = portfolioWeight - benchmarkWeight;
 
                     result.Add(new SectorBreakdownData()
                     {
@@ -149,7 +163,7 @@ namespace GreenField.Web.Services
                         Industry = record.GICS_INDUSTRY_NAME,
                         Security = record.ISSUE_NAME,
                         PortfolioShare = portfolioWeight,
-                        BenchmarkShare = record.BENCHMARK_WEIGHT,
+                        BenchmarkShare = benchmarkWeight,
                         ActivePosition = activePosition
                     });
                 }
@@ -195,6 +209,16 @@ namespace GreenField.Web.Services
                 if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                     throw new InvalidOperationException();
 
+                //Retrieve the Id of benchmark associated with the Portfolio
+                List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                //If the DataBase doesn't return a single Benchmark for a Portfolio
+                if (benchmarkId.Count != 1)
+                    throw new InvalidOperationException();
+
+                List<GF_BENCHMARK_HOLDINGS> benchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
                     if (record.DIRTY_VALUE_PC == null)
@@ -203,8 +227,11 @@ namespace GreenField.Web.Services
                     //Calculate Portfolio Weight
                     decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
 
+                    //Retrieve Benchmark Weight
+                    decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
+
                     //Calculate Active Position
-                    decimal? activePosition = portfolioWeight - record.BENCHMARK_WEIGHT;
+                    decimal? activePosition = portfolioWeight - benchmarkWeight;
 
                     result.Add(new RegionBreakdownData()
                     {
@@ -212,7 +239,7 @@ namespace GreenField.Web.Services
                         Country = record.COUNTRYNAME,
                         Security = record.ISSUE_NAME,
                         PortfolioShare = portfolioWeight,
-                        BenchmarkShare = record.BENCHMARK_WEIGHT,
+                        BenchmarkShare = benchmarkWeight,
                         ActivePosition = activePosition
                     });
                 }
@@ -1658,7 +1685,7 @@ namespace GreenField.Web.Services
         #region Relative Performance
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)
         {
             try
             {
@@ -1975,7 +2002,7 @@ namespace GreenField.Web.Services
         /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
+        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
         {
 
 
@@ -2037,7 +2064,7 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)
         {
             try
             {

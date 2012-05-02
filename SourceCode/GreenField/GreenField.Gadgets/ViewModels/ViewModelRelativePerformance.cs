@@ -29,7 +29,6 @@ namespace GreenField.Gadgets.ViewModels
 
         //Selection Data
         public PortfolioSelectionData _PortfolioSelectionData;
-        public BenchmarkSelectionData _benchmarkSelectionData;
         public DateTime? _effectiveDate;
 
         //Gadget Data
@@ -49,7 +48,6 @@ namespace GreenField.Gadgets.ViewModels
 
             //Selection Data Initialization
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             //Service Call to Retrieve Sector Data relating Fund Selection Data/ Benchmark Selection Data and Effective Date
@@ -57,34 +55,14 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceSectorDataCallbackMethod);
             //}
-            _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
+            _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
 
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         } 
-        #endregion
-
-        #region Properties
-        #region UI Fields
-
-        private List<AssetAllocationData> _assetAllocationInfo;
-        public List<AssetAllocationData> AssetAllocationInfo
-        {
-            get { return _assetAllocationInfo; }
-            set
-            {
-                if (_assetAllocationInfo != value)
-                {
-                    _assetAllocationInfo = value;
-                    RaisePropertyChanged(() => this.AssetAllocationInfo);
-                }
-            }
-        } 
-        #endregion
         #endregion
 
         #region Events
@@ -103,9 +81,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
                     }
                 }
                 else
@@ -131,9 +109,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
                     }
                 }
                 else
@@ -149,33 +127,6 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (benchmarkSelectionData != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-                    {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        } 
         #endregion
 
         #region Callback Methods
@@ -189,8 +140,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     _relativePerformanceSectorInfo = result;
-                    //Service Call to Retrieve Performance Data relating Fund Selection Data/ Benchmark Selection Data and Effective Date
-                    _dbInteractivity.RetrieveRelativePerformanceData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceDataCallbackMethod);                    
+                    //Service Call to Retrieve Performance Data relating Fund Selection Data and Effective Date
+                    _dbInteractivity.RetrieveRelativePerformanceData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceDataCallbackMethod);                    
                 }
                 else
                 {

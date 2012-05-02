@@ -12,7 +12,7 @@
     <Grid x:Name="LayoutRoot" Background="White">
         <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
             <!--Grid to display data-->
-            <telerik:RadGridView Name="dgTopContributor" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
+            <telerik:RadGridView Name="dgContributorDetractor" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserInsertRows="False"
                                     CanUserReorderColumns="False" CanUserSelect="False" telerik:StyleManager.Theme="Metro"
                                     IsReadOnly="True" ScrollMode="Deferred" ShowGroupPanel="False" CanUserSortColumns="False"
                                     RowIndicatorVisibility="Collapsed" ItemsSource="{Binding ContributorDetractorInfo}" AlternationCount="2" AlternateRowBackground="Wheat">

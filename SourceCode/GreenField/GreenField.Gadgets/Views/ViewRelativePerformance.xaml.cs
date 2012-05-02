@@ -29,7 +29,6 @@ namespace GreenField.Gadgets.Views
     {
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
         private PortfolioSelectionData _PortfolioSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime? _effectiveDate;
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
@@ -112,7 +111,6 @@ namespace GreenField.Gadgets.Views
             RelativePerformanceInfo = e.RelativePerformanceInfo;
 
             _PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
-            _benchmarkSelectionData = (this.DataContext as ViewModelRelativePerformance)._benchmarkSelectionData;
             _effectiveDate = (this.DataContext as ViewModelRelativePerformance)._effectiveDate;
             _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
             _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
@@ -147,7 +145,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), cellCountryID, cellSectorID)
+                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), cellCountryID, cellSectorID)
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
@@ -259,9 +257,7 @@ namespace GreenField.Gadgets.Views
                 return e.Value;
             });
         }
-
-
-
+        
         public override void Dispose()
         {
             throw new NotImplementedException();

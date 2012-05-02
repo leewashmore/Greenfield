@@ -166,8 +166,6 @@
     <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
-    <Compile Include="ViewModels\ViewModelTopContributor.cs" />
-    <Compile Include="ViewModels\ViewModelTopDetractor.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
@@ -245,12 +243,6 @@
     </Compile>
     <Compile Include="Views\ViewSecurityOverview.xaml.cs">
       <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewTopContributor.xaml.cs">
-      <DependentUpon>ViewTopContributor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewTopDetractor.xaml.cs">
-      <DependentUpon>ViewTopDetractor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewTopHoldings.xaml.cs">
       <DependentUpon>ViewTopHoldings.xaml</DependentUpon>
@@ -372,14 +364,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewSecurityOverview.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewTopContributor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewTopDetractor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

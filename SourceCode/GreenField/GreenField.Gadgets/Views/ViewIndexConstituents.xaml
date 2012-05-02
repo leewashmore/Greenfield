@@ -118,24 +118,24 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}"
                                                         Width="*"
-                                                        HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightCountry"
                                                         Header="Weight (Country)"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}"
                                                         Width="*"
-                                                        HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightIndustry"
                                                         Header="Weight (Industry)"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}"
                                                         Width="*"
-                                                        HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>

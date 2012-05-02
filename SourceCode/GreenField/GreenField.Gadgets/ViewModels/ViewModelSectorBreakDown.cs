@@ -232,7 +232,8 @@ namespace GreenField.Gadgets.ViewModels
                             SectorSpecificInfo.Add(new SectorSpecificData()
                             {
                                 Sector = item.Sector,
-                                PortfolioShare = SectorBreakdownInfo.Where(t => t.Sector == item.Sector).Sum(r => r.PortfolioShare)
+                                PortfolioShare = SectorBreakdownInfo.Where(t => t.Sector == item.Sector).Sum(r => r.PortfolioShare),
+                                BenchmarkShare = SectorBreakdownInfo.Where(t => t.Sector == item.Sector).Sum(r => r.BenchmarkShare)
                             });
                         }
                     }
