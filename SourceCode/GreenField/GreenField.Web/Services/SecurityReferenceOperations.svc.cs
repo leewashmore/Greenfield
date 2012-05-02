@@ -179,17 +179,13 @@ namespace GreenField.Web.Services
                     entityInstrumentID = Convert.ToString(entityIdentifiers[0].InstrumentID);
                     entityType = Convert.ToString(entityIdentifiers[0].Type);
 
-
                     DateTime webServiceStartTime = DateTime.Now;
 
-
                     List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData = entity.GF_PRICING_BASEVIEW
-                        .Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
-                        .OrderByDescending(res => res.FROMDATE).ToList();
+                    .Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >= startDate) && (r.FROMDATE < endDate))
+                    .OrderByDescending(res => res.FROMDATE).ToList();
 
                     DateTime webServiceEndTime = DateTime.Now;
-
-
 
                     // Calcluating the values of curPrice,curReturn,calculatedPrice
                     if (dimensionServicePricingData.Count != 0)
@@ -419,7 +415,7 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new EntitySelectionData()
                         {
-                            
+
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
                             ShortName = record.SHORT_NAME,
                             LongName = record.LONG_NAME,
@@ -429,7 +425,7 @@ namespace GreenField.Web.Services
                         });
                     }
                 }
-                                    
+
                 return result;
             }
             catch (Exception ex)

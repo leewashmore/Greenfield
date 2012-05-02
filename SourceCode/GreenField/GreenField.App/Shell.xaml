@@ -401,7 +401,6 @@
                                  x:Name="tbUserName" Foreground="White"  FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
                     <HyperlinkButton Grid.Column="2" Content="LogOut" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,0,0,0"
                                  x:Name="hypbtnLogout" Foreground="White" Command="{Binding LogOutCommand}" FontSize="8" FontFamily="Arial" FontWeight="Bold"/>
-
                 </Grid>
             </Border>
             <ContentControl

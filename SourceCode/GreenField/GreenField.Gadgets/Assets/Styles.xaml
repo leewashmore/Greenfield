@@ -12,7 +12,29 @@
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontWeight" Value="Bold"/>        
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+
+    <!--GridViewCellStyle-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+
+    <!--GridViewHeaderHeaderRowStyle-->
+    <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="MaxHeight" Value="15"/>
+    </Style>
+
+    <!--GridViewGroupPanelStyle-->
+    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
+        <Setter Property="Height" Value="10"/>
+        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="Background" Value="#9F1D21"/>
     </Style>
 
     <!--RadBusyIndicatorOverlayStyle -->

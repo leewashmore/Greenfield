@@ -396,7 +396,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<FilterSelectionData> result = new List<FilterSelectionData>();
-                
+
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
@@ -718,18 +718,18 @@ namespace GreenField.Web.Services
             try
             {
 
-                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue==null)
+                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
                 List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
-                
+
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
                 if (portfolioData.Count == 0 || portfolioData == null)
                 {
-                    return result;                    
-                }               
+                    return result;
+                }
                 String benchmarkId = portfolioData[0].BENCHMARK_ID.ToString();
                 if (benchmarkId != null)
                 {
@@ -757,7 +757,7 @@ namespace GreenField.Web.Services
                                 foreach (var a in q)
                                 {
                                     if (sumForBenchmarks == 0)
-                                    continue;
+                                        continue;
                                     CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
                                 }
                                 foreach (var a in k)
@@ -1125,8 +1125,8 @@ namespace GreenField.Web.Services
         private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result)
         {
             var segmentValue = (from p in result
-                               where p.SegmentName == name
-                               select p).FirstOrDefault();
+                                where p.SegmentName == name
+                                select p).FirstOrDefault();
 
             if (segmentValue != null)
             {
@@ -1138,8 +1138,8 @@ namespace GreenField.Web.Services
             }
             else
             {
-                
-                entry = new HoldingsPercentageData();               
+
+                entry = new HoldingsPercentageData();
                 entry.PortfolioWeight = (b / sumForPortfolios) * 100;
                 entry.BenchmarkWeight = 0;
                 if (String.IsNullOrWhiteSpace(name))

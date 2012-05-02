@@ -49,11 +49,10 @@ namespace GreenField.Gadgets.ViewModels
             //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
             //}
             _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
-            
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }
@@ -61,11 +60,16 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+
         #region UI Fields
+
         private ObservableCollection<RelativePerformanceActivePositionData> _relativePerformanceActivePositionInfo;
         public ObservableCollection<RelativePerformanceActivePositionData> RelativePerformanceActivePositionInfo
         {
-            get { return _relativePerformanceActivePositionInfo; }
+            get
+            {
+                return _relativePerformanceActivePositionInfo;
+            }
             set
             {
                 if (_relativePerformanceActivePositionInfo != value)
@@ -74,11 +78,14 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.RelativePerformanceActivePositionInfo);
                 }
             }
-        }        
+        }
+
         #endregion
+
         #endregion
 
         #region Event Handlers
+
         public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -194,6 +201,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+
         private void RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod(List<RelativePerformanceActivePositionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -217,6 +225,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
         #endregion
     }
 

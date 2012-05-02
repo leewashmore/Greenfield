@@ -48,7 +48,11 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
+            {
                 HandleSecurityReferenceSet(_entitySelectionData);
+                if (null != ClosingPriceDataLoadedEvent)
+                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            }
         }
 
         #endregion
@@ -585,7 +589,7 @@ namespace GreenField.Gadgets.ViewModels
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
 
-                    
+
                     _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
                     {
                         PlottedSeries.Clear();
@@ -745,13 +749,15 @@ namespace GreenField.Gadgets.ViewModels
 
                     PlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    if (null != ClosingPriceDataLoadedEvent)
-                        ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+
+                if (null != ClosingPriceDataLoadedEvent)
+                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {

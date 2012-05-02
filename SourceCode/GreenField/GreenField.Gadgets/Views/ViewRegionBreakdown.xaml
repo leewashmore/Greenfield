@@ -34,7 +34,8 @@
         <Grid Grid.Row="1">
             <!--doughnut chart-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" telerik:StyleManager.Theme="Metro" 
+                <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" 
+                                  telerik:StyleManager.Theme="Metro" 
                                       Visibility="Collapsed">
                     <telerik:RadChart.DefaultView>
                         <telerikCharting:ChartDefaultView>
@@ -74,7 +75,9 @@
                              CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowGroupFooters="False"
-                             FontSize="7" FontFamily="Arial" ShowColumnFooters="False">
+                             FontSize="7" FontFamily="Arial" ShowColumnFooters="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         GroupPanelBackground="#9F1D21">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Region" SortDirection="Ascending">
                                 <telerik:GroupDescriptor.AggregateFunctions>
@@ -93,13 +96,17 @@
                         </telerik:RadGridView.GroupDescriptors>
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" 
-                                                        Width="*" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        Width="*" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using System.ComponentModel.Composition;
 using Telerik.Windows.Controls;
 using System.IO;
 using Telerik.Windows.Documents.Model;
@@ -16,7 +15,6 @@ using Microsoft.Win32;
 #else
 using System.Windows.Controls;
 using System.Windows.Printing;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
@@ -68,6 +66,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
             dataContextSource.PortfolioDetailsDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(DataContextSource_PortfolioDetailsDataLoadedEvent);
+            this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
         }
 
         #endregion

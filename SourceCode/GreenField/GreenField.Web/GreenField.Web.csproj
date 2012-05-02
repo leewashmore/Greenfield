@@ -78,6 +78,7 @@
     <Content Include="Services\DashboardOperations.svc" />
     <Content Include="Services\LoggingOperations.svc" />
     <Content Include="Services\LoginOperations.svc" />
+    <Content Include="Services\PerformanceOperations.svc" />
     <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Silverlight.js" />
@@ -153,6 +154,9 @@
     </Compile>
     <Compile Include="Services\LoginOperations.svc.cs">
       <DependentUpon>LoginOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\PerformanceOperations.svc.cs">
+      <DependentUpon>PerformanceOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\SecurityReferenceOperations.svc.cs">
       <DependentUpon>SecurityReferenceOperations.svc</DependentUpon>

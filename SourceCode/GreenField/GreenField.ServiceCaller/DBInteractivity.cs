@@ -697,7 +697,7 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-        
+
         /// <summary>
         ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”
         /// </summary>
@@ -1376,8 +1376,5 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #endregion
-
-
-        
     }
 }

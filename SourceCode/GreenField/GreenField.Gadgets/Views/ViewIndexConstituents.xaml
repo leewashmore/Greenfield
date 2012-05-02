@@ -61,7 +61,10 @@
                                          IsReadOnly="True"
                                          ScrollMode="Deferred"
                                          FontSize="7"
-                                         FontFamily="Arial">                        
+                                         FontFamily="Arial"
+                                         GroupPanelBackground="#9F1D21"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">                        
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
@@ -74,7 +77,8 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         Width="*" 
                                                         HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <!--<telerik:GridViewDataColumn x:Name="dgcCountry"
                                                         Header=""
                                                         Width="auto"
@@ -86,14 +90,16 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcSector" 
                                                         Header="Sector"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding Sector}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left"
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <!--<telerik:GridViewDataColumn x:Name="dgcIndustry"
                                                         Header="" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -105,28 +111,32 @@
                                                         DataMemberBinding="{Binding SubIndustry}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeight"
                                                         Header="Weight" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightCountry"
                                                         Header="Weight (Country)"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding WeightCountry, StringFormat=\{0:n5\}}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeightIndustry"
                                                         Header="Weight (Industry)"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding WeightIndustry, StringFormat=\{0:n5\}}"
                                                         Width="*"
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>
+                                                        TextAlignment="Left"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>

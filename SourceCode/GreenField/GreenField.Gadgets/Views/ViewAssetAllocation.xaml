@@ -9,14 +9,11 @@
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
-        <!--Grid Styles-->
-
-        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
-            <Setter Property="Background" Value="#9F1D21" />
-            <Setter Property="Foreground" Value="White"/>
-        </Style>
-
-        <!--Grid Styles End-->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -27,23 +24,25 @@
                                  CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                 FontFamily="Arial" FontSize="7">
+                                 FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
-                                                DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left"/>
-                        <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcPortfolioWeight" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Header="Portfolio %" 
                                                 DataMemberBinding="{Binding PortfolioWeight, StringFormat=\{0:n2\}%}" 
-                                                Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcModelWeight" Header="Model %" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 DataMemberBinding="{Binding ModelWeight, StringFormat=\{0:n2\}%}" 
-                                                Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcBenchmarkWeight" Header="Benchmark %" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 DataMemberBinding="{Binding BenchmarkWeight, StringFormat=\{0:n2\}%}" 
-                                                Width="Auto" HeaderTextAlignment="Right"/>
-                        <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" HeaderCellStyle="{StaticResource GridViewHeaderCell}"
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="ActivePosition (Model)" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
-                                                Width="Auto" HeaderTextAlignment="Right" SortingState="Descending"/>
+                                                Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
