@@ -71,6 +71,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+                //_eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
             }
             //if (_PortfolioSelectionData != null && _effectiveDate != null)
             //{
@@ -219,6 +220,36 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);       
         
         }
+
+        public void HandlePeriodReferenceSet(DateTime effectiveDate)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (effectiveDate != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    _effectiveDate = effectiveDate;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                        RetrieveAttributionData(_PortfolioSelectionData, _effectiveDate, RetrieveAttributionDataCallBackMethod);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+
 
         #endregion       
 

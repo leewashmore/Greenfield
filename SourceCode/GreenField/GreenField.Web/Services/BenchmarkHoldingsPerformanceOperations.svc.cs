@@ -787,7 +787,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result,effectiveDate);
                                 }
                                 foreach (var a in k)
                                 {
@@ -804,7 +804,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result,effectiveDate);
                                 }
 
                                 break;
@@ -827,7 +827,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
 
                                 foreach (var a in c)
@@ -845,7 +845,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 break;
                             case "Industry":
@@ -867,7 +867,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in s)
                                 {
@@ -884,7 +884,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
 
                                 break;
@@ -906,7 +906,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in d)
                                 {
@@ -923,7 +923,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
 
                                 break;
@@ -991,7 +991,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in k)
                                 {
@@ -1008,7 +1008,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 break;
                             case "Country":
@@ -1031,7 +1031,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
 
                                 foreach (var a in c)
@@ -1049,7 +1049,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 break;
                             case "Industry":
@@ -1071,7 +1071,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in s)
                                 {
@@ -1088,7 +1088,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 break;
                             case "Sector":
@@ -1109,7 +1109,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in d)
                                 {
@@ -1126,7 +1126,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 break;
                             default:
@@ -1151,7 +1151,7 @@ namespace GreenField.Web.Services
         /// <param name="sumForPortfolios">Stores the sum of Portfolio Weight</param>
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
-        private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result)
+        private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result,DateTime effectiveDate)
         {
             var segmentValue = (from p in result
                                 where p.SegmentName == name
@@ -1180,6 +1180,7 @@ namespace GreenField.Web.Services
                     entry.SegmentName = name;
                 }
                 entry.BenchmarkName = benchmarkName;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
             }
         }
@@ -1193,7 +1194,7 @@ namespace GreenField.Web.Services
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
         /// <param name="result">List of HoldingsPercentageData </param>
-        private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result)
+        private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result,DateTime effectiveDate)
         {
             entry = new HoldingsPercentageData();
             if (String.IsNullOrWhiteSpace(name))
@@ -1206,6 +1207,7 @@ namespace GreenField.Web.Services
             }
             entry.BenchmarkWeight = (a / sumForBenchmarks) * 100;
             entry.BenchmarkName = benchmarkName;
+            entry.EffectiveDate = effectiveDate;
             result.Add(entry);
         }
         #endregion

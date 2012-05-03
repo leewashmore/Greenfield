@@ -36,7 +36,7 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" Orientation="Vertical">
                     <TextBlock Text="{Binding BenchmarkName}" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" />
-                    <TextBlock Text="{Binding EffectiveDate, StringFormat='MM/dd/yyyy'}" HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <TextBlock Text="{Binding EffectiveDate, StringFormat='dd/MM/yyyy'}" HorizontalAlignment="Center" VerticalAlignment="Top" />
                 </StackPanel>
                 <telerik:RadButton x:Name="btnFlip" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
                                        Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
@@ -101,9 +101,9 @@
                                                     TextAlignment="Left">
                                 </telerik:GridViewDataColumn>
                                 <telerik:GridViewDataColumn Header="Effective Date" 
-                                                    DataMemberBinding="{Binding EffectiveDate}"                                                     
+                                                    DataMemberBinding="{Binding EffectiveDate,StringFormat='dd/MM/yyyy'}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*" 
+                                                    Width="*"                                                     
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                                 </telerik:GridViewDataColumn>
@@ -117,12 +117,14 @@
                                                 DataMemberBinding="{Binding PortfolioWeight}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 Width="*" 
+                                                DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"/>
                                 <telerik:GridViewDataColumn Header="Benchmark Weight" 
                                                 DataMemberBinding="{Binding BenchmarkWeight}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*" 
+                                                DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"/>
                             </telerik:RadGridView.Columns>
