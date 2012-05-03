@@ -91,7 +91,10 @@
                                      ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
                                      UseLayoutRounding="True"
                                      FontSize="7"
-                                     FontFamily="Arial">
+                                     FontFamily="Arial"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn Header="Benchmark Name" 
                                                     DataMemberBinding="{Binding BenchmarkName}"  
@@ -119,14 +122,14 @@
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                TextAlignment="Right"/>
                                 <telerik:GridViewDataColumn Header="Benchmark Weight" 
                                                 DataMemberBinding="{Binding BenchmarkWeight}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                TextAlignment="Right"/>
                             </telerik:RadGridView.Columns>
                         </telerik:RadGridView>
                     </telerik:RadBusyIndicator>
