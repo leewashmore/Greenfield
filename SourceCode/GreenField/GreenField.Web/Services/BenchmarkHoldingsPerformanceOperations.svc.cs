@@ -787,7 +787,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForBenchmarks == 0)
                                         continue;
-                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result,effectiveDate);
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
                                 }
                                 foreach (var a in k)
                                 {
@@ -804,7 +804,7 @@ namespace GreenField.Web.Services
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
-                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result,effectiveDate);
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
 
                                 break;
@@ -1151,7 +1151,7 @@ namespace GreenField.Web.Services
         /// <param name="sumForPortfolios">Stores the sum of Portfolio Weight</param>
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
-        private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result,DateTime effectiveDate)
+        private void CalculatesPercentageForPortfolioSum(HoldingsPercentageData entry, decimal? sumForPortfolios, String name, decimal? b, String benchmarkName, ref List<HoldingsPercentageData> result, DateTime effectiveDate)
         {
             var segmentValue = (from p in result
                                 where p.SegmentName == name
@@ -1194,7 +1194,7 @@ namespace GreenField.Web.Services
         /// <param name="a">Benchmark Weight</param>
         /// <param name="b">Portfolio Weight</param>
         /// <param name="result">List of HoldingsPercentageData </param>
-        private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result,DateTime effectiveDate)
+        private void CalculatesPercentageForBenchmarkSum(HoldingsPercentageData entry, decimal? sumForBenchmarks, String name, decimal? a, String benchmarkName, ref List<HoldingsPercentageData> result, DateTime effectiveDate)
         {
             entry = new HoldingsPercentageData();
             if (String.IsNullOrWhiteSpace(name))
@@ -2255,7 +2255,7 @@ namespace GreenField.Web.Services
         {
             if (portfolioSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-            List<AttributionData> result = new List<AttributionData>();            
+            List<AttributionData> result = new List<AttributionData>();
             List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;

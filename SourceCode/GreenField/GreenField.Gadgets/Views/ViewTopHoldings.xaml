@@ -28,7 +28,7 @@
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ShowGroupFooters="True"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowColumnFooters="True"
-                                     FontSize="7" FontFamily="Arial" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" RowHeight="15">
+                                     FontSize="7" FontFamily="Arial" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" RowStyle="{StaticResource GridViewRowStyle}">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">

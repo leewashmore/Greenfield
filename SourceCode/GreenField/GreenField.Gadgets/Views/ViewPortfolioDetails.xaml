@@ -44,6 +44,11 @@
             <Setter Property="Height" Value="30"/>
         </Style>
 
+        <!--GridViewRowStyle-->
+        <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
+            <Setter Property="Height" Value="15"/>
+        </Style>
+
         <Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
             <Setter Property="Background" Value="#9F1D21"/>
         </Style>
@@ -116,7 +121,7 @@
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#9F1D21"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" RowStyle="{StaticResource GridViewRowStyle}">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" CellStyle="{StaticResource GridViewCellStyle}"

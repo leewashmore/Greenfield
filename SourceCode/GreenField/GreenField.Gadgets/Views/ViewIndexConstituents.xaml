@@ -65,7 +65,7 @@
                                          GroupPanelBackground="#9F1D21"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                         RowHeight="15">                        
+                                         RowStyle="{StaticResource GridViewRowStyle}">                        
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>

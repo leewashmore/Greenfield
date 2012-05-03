@@ -74,7 +74,7 @@
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="False"
                              FontSize="7" FontFamily="Arial" UseLayoutRounding="True" ShowGroupFooters="False"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" RowHeight="15"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupPanelBackground="#9F1D21" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
