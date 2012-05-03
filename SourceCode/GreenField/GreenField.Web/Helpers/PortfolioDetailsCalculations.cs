@@ -24,12 +24,14 @@ namespace GreenField.Web.Helpers
             sumDirtyValuePC = portfolioDetailsData.Sum(a => a.DirtyValuePC);
             sumModelWeight = portfolioDetailsData.Sum(a => a.AshEmmModelWeight);
 
+            //Removed for DEmo
             //if (sumModelWeight == 0 || sumDirtyValuePC == 0)
             //    return new List<PortfolioDetailsData>();
 
             foreach (PortfolioDetailsData item in portfolioDetailsData)
             {
                 item.PortfolioWeight = item.DirtyValuePC / sumDirtyValuePC;
+                item.RePortfolioWeight = item.PortfolioWeight;
                 //item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight;
             }
             return portfolioDetailsData;

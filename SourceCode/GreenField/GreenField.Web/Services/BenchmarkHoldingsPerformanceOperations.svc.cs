@@ -499,6 +499,7 @@ namespace GreenField.Web.Services
 
                 List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
                     Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                List<GF_BENCHMARK_HOLDINGS> asb = dimensionBenchmarkHoldingsData.OrderBy(a => a.ISSUE_NAME).ToList();
 
 
                 foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
@@ -516,8 +517,9 @@ namespace GreenField.Web.Services
                     portfolioResult.SecurityType = item.SECURITY_TYPE;
                     portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
                     portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                    portfolioResult.BenchmarkWeight = dimensionBenchmarkHoldingsData.
-                        Where(a => a.ISSUE_NAME == portfolioResult.IssueName).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault();
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
                     portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                     result.Add(portfolioResult);
                 }
@@ -1179,7 +1181,7 @@ namespace GreenField.Web.Services
                 }
                 entry.BenchmarkName = benchmarkName;
                 result.Add(entry);
-            }         
+            }
         }
         /// <summary>
         /// Calculates the percentage contribution for Benchmark and Portfolio.
@@ -2311,7 +2313,7 @@ namespace GreenField.Web.Services
                     entry.F_BM1_ASH_SEC_SELEC_SI = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
                     result.Add(entry);
                 }
-                        
+
                 return result;
             }
             catch (Exception ex)

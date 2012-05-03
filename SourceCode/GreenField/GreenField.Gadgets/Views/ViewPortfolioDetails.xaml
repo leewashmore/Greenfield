@@ -130,7 +130,7 @@
                                     <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
                                                                    ResultFormatString="{}{0:n2}" />
                                     <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
-                                                                   ResultFormatString="{}{0:n2}" />
+                                                                   ResultFormatString="{}{0:n4}" />
                                     <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
                                                                    ResultFormatString="{}{0:n2}" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
@@ -142,7 +142,7 @@
                                             DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCell}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
-                                            DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
+                                            DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCell}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
                                             DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False"
