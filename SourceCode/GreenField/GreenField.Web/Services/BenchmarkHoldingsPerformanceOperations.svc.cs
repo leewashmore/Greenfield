@@ -305,7 +305,7 @@ namespace GreenField.Web.Services
                     GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
                             .Where(rec => rec.TICKER == record.TICKER)
                             .FirstOrDefault();
-                    decimal? benchmarkWeight = specificHolding != null ? specificHolding.BENCHMARK_WEIGHT : null;
+                    decimal? benchmarkWeight = specificHolding != null ? Convert.ToDecimal(specificHolding.BENCHMARK_WEIGHT) : Convert.ToDecimal(null);
 
 
                     //Calculate Active Position
@@ -380,7 +380,7 @@ namespace GreenField.Web.Services
 
                             //calculte sum of BENCHMARK_WEIGHT for a industry
                             string industry = record.GICS_INDUSTRY_NAME;
-                            object sumBenchmarkWeightIndustry = data.Where(t => t.GICS_INDUSTRY_NAME == industry).Sum(t => t.BENCHMARK_WEIGHT);
+                            object sumBenchmarkWeightIndustry = data.Where(t => t.GICS_INDUSTRY_NAME == industry && t.COUNTRYNAME == country).Sum(t => t.BENCHMARK_WEIGHT);
                             if (sumBenchmarkWeightCountry != null && sumBenchmarkWeightIndustry != null)
                             {
                                 result.Add(new IndexConstituentsData()

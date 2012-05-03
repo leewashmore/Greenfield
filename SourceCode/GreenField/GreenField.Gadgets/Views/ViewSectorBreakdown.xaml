@@ -74,7 +74,7 @@
                              CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
                              RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="False"
                              FontSize="7" FontFamily="Arial" UseLayoutRounding="True" ShowGroupFooters="False"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" RowHeight="15"
                                          GroupPanelBackground="#9F1D21" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
@@ -94,7 +94,7 @@
                         </telerik:RadGridView.GroupDescriptors>
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>

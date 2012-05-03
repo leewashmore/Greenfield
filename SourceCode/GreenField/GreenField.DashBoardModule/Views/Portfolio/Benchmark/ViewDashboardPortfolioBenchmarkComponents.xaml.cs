@@ -40,8 +40,6 @@ namespace GreenField.DashboardModule.Views
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
-            this.tbHeader.Text = GadgetNames.BENCHMARK_INDEX_CONSTITUENTS;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
