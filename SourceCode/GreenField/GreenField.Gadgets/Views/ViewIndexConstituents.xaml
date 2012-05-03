@@ -45,7 +45,7 @@
         <!--Grid containing data to be displayed in the gadget-->
         <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator telerik:StyleManager.Theme="Metro" x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                     <telerik:RadGridView Name="dgIndexConstituents" 
                                          ItemsSource="{Binding IndexConstituentsInfo}" 
                                          telerik:StyleManager.Theme="Metro"
