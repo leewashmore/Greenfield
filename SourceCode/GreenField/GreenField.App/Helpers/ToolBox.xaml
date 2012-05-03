@@ -113,21 +113,27 @@
                 <!--Period Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="3">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="Start Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                        <telerik:RadDatePicker x:Name="dpStartDateSelector"
-                                           SelectedValue="{Binding SelectedPeriodStartDateInfo, Mode=TwoWay}"
-                                           Width="auto"
-                                               VerticalContentAlignment="Center"
-                                             FontSize="7"
-                                             FontFamily="Arial" Margin="5,0,0,0"/>
-                        <TextBlock Text="End Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold" Margin="5,0,0,0"/>
-                        <telerik:RadDatePicker x:Name="dpEndDateSelector"
-                                           SelectedValue="{Binding SelectedPeriodEndDateInfo, Mode=TwoWay}"
-                                           Width="auto"
-                                               VerticalContentAlignment="Center"
-                                             FontSize="7"
-                                             FontFamily="Arial"
-                                           Margin="5,0,0,0"/>
+                        <telerik:RadComboBox x:Name="cbPeriodSelector"
+                                         EmptyText="Select Period..." 
+                                         ItemsSource="{Binding PeriodTypeInfo}"
+                                           Width="auto"                                          
+                                         FontSize="7"
+                                         FontFamily="Arial"                                        
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
                     </StackPanel>
                 </Grid>               
 
@@ -137,7 +143,7 @@
                         <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbFilterSelector"
                                          EmptyText="Select Filter..." 
-                                             ItemsSource="{Binding FilterTypeInfo}"
+                                         ItemsSource="{Binding FilterTypeInfo}"
                                          SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                             
                                          FontSize="7"
                                          FontFamily="Arial"
@@ -170,10 +176,10 @@
                                 <telerik:RadComboBox x:Name="cbValueSelector"
                                          EmptyText="Select Value..." 
                                          ItemsSource="{Binding FilterSelectorInfo}"
-                                             DisplayMemberPath="FilterValues"
+                                         DisplayMemberPath="FilterValues"
                                          SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
                                          FontSize="7"
-                                             FontFamily="Arial" 
+                                         FontFamily="Arial" 
                                              Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"

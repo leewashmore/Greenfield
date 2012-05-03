@@ -63,11 +63,20 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-
-            //_dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallBackMethod);
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
-            if (_PortfolioSelectionData != null)
-                HandleFundReferenceSet(_PortfolioSelectionData);
+            if (_effectiveDate != null && _PortfolioSelectionData != null)
+            {
+                _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+            }
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+            }
+            //if (_PortfolioSelectionData != null && _effectiveDate != null)
+            //{
+            //    HandleFundReferenceSet(_PortfolioSelectionData);
+            //    HandleEffectiveDateSet(Convert.ToDateTime(_effectiveDate));
+            //}
         }
 
         #endregion
@@ -167,6 +176,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
+                    if(PortfolioSelectionData!=null && _effectiveDate !=null)
                     RetrieveAttributionData( PortfolioSelectionData, _effectiveDate,RetrieveAttributionDataCallBackMethod);
                 }
                 else
@@ -182,6 +192,34 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (effectiveDate != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    _effectiveDate = effectiveDate;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    RetrieveAttributionData(_PortfolioSelectionData, _effectiveDate, RetrieveAttributionDataCallBackMethod);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);       
+        
+        }
+
         #endregion       
 
         #region CallbackMethods
@@ -195,7 +233,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result != null && result.Count>0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     AttributionDataInfo = result;                    

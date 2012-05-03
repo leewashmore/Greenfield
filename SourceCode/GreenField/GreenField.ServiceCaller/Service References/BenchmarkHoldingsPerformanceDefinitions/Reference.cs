@@ -3225,70 +3225,219 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="AttributionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class AttributionData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double ASSET_ALLOCATIONField;
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_1MField;
         
-        private double BENCHMARK_RETURNField;
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_1YField;
         
-        private double BENCHMARK_WEIGHTField;
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_3MField;
         
-        private string COUNTRY_IDField;
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_3YField;
+        
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_5YField;
+        
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_6MField;
+        
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_SIField;
+        
+        private System.Nullable<decimal> BM1_RC_AVG_WGT_YTDField;
+        
+        private string COUNTRYField;
         
         private string COUNTRY_NAMEField;
         
-        private double PORTFOLIO_RETURNField;
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1MField;
         
-        private double PORTFOLIO_WEIGHTField;
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1YField;
         
-        private double STOCK_SELECTION_TOTALField;
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_5YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_6MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_SIField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTDField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_1MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_1YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_3MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_3YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_5YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_6MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_SIField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTDField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_5YField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_6MField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_SIField;
+        
+        private System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTDField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_1MField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_1YField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_3MField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_3YField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_5YField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_6MField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_SIField;
+        
+        private System.Nullable<decimal> F_POR_ASH_RC_CTN_YTDField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_1MField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_1YField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_3MField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_3YField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_5YField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_6MField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_SIField;
+        
+        private System.Nullable<decimal> POR_RC_AVG_WGT_YTDField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double ASSET_ALLOCATION {
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_1M {
             get {
-                return this.ASSET_ALLOCATIONField;
+                return this.BM1_RC_AVG_WGT_1MField;
             }
             set {
-                if ((this.ASSET_ALLOCATIONField.Equals(value) != true)) {
-                    this.ASSET_ALLOCATIONField = value;
-                    this.RaisePropertyChanged("ASSET_ALLOCATION");
+                if ((this.BM1_RC_AVG_WGT_1MField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_1MField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_1M");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BENCHMARK_RETURN {
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_1Y {
             get {
-                return this.BENCHMARK_RETURNField;
+                return this.BM1_RC_AVG_WGT_1YField;
             }
             set {
-                if ((this.BENCHMARK_RETURNField.Equals(value) != true)) {
-                    this.BENCHMARK_RETURNField = value;
-                    this.RaisePropertyChanged("BENCHMARK_RETURN");
+                if ((this.BM1_RC_AVG_WGT_1YField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_1YField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_1Y");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BENCHMARK_WEIGHT {
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_3M {
             get {
-                return this.BENCHMARK_WEIGHTField;
+                return this.BM1_RC_AVG_WGT_3MField;
             }
             set {
-                if ((this.BENCHMARK_WEIGHTField.Equals(value) != true)) {
-                    this.BENCHMARK_WEIGHTField = value;
-                    this.RaisePropertyChanged("BENCHMARK_WEIGHT");
+                if ((this.BM1_RC_AVG_WGT_3MField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_3MField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_3M");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string COUNTRY_ID {
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_3Y {
             get {
-                return this.COUNTRY_IDField;
+                return this.BM1_RC_AVG_WGT_3YField;
             }
             set {
-                if ((object.ReferenceEquals(this.COUNTRY_IDField, value) != true)) {
-                    this.COUNTRY_IDField = value;
-                    this.RaisePropertyChanged("COUNTRY_ID");
+                if ((this.BM1_RC_AVG_WGT_3YField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_3YField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_5Y {
+            get {
+                return this.BM1_RC_AVG_WGT_5YField;
+            }
+            set {
+                if ((this.BM1_RC_AVG_WGT_5YField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_5YField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_6M {
+            get {
+                return this.BM1_RC_AVG_WGT_6MField;
+            }
+            set {
+                if ((this.BM1_RC_AVG_WGT_6MField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_6MField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_SI {
+            get {
+                return this.BM1_RC_AVG_WGT_SIField;
+            }
+            set {
+                if ((this.BM1_RC_AVG_WGT_SIField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_SIField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BM1_RC_AVG_WGT_YTD {
+            get {
+                return this.BM1_RC_AVG_WGT_YTDField;
+            }
+            set {
+                if ((this.BM1_RC_AVG_WGT_YTDField.Equals(value) != true)) {
+                    this.BM1_RC_AVG_WGT_YTDField = value;
+                    this.RaisePropertyChanged("BM1_RC_AVG_WGT_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string COUNTRY {
+            get {
+                return this.COUNTRYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.COUNTRYField, value) != true)) {
+                    this.COUNTRYField = value;
+                    this.RaisePropertyChanged("COUNTRY");
                 }
             }
         }
@@ -3307,40 +3456,521 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PORTFOLIO_RETURN {
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1M {
             get {
-                return this.PORTFOLIO_RETURNField;
+                return this.F_BM1_ASH_ASSET_ALLOC_1MField;
             }
             set {
-                if ((this.PORTFOLIO_RETURNField.Equals(value) != true)) {
-                    this.PORTFOLIO_RETURNField = value;
-                    this.RaisePropertyChanged("PORTFOLIO_RETURN");
+                if ((this.F_BM1_ASH_ASSET_ALLOC_1MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_1MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_1M");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PORTFOLIO_WEIGHT {
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1Y {
             get {
-                return this.PORTFOLIO_WEIGHTField;
+                return this.F_BM1_ASH_ASSET_ALLOC_1YField;
             }
             set {
-                if ((this.PORTFOLIO_WEIGHTField.Equals(value) != true)) {
-                    this.PORTFOLIO_WEIGHTField = value;
-                    this.RaisePropertyChanged("PORTFOLIO_WEIGHT");
+                if ((this.F_BM1_ASH_ASSET_ALLOC_1YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_1YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_1Y");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double STOCK_SELECTION_TOTAL {
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3M {
             get {
-                return this.STOCK_SELECTION_TOTALField;
+                return this.F_BM1_ASH_ASSET_ALLOC_3MField;
             }
             set {
-                if ((this.STOCK_SELECTION_TOTALField.Equals(value) != true)) {
-                    this.STOCK_SELECTION_TOTALField = value;
-                    this.RaisePropertyChanged("STOCK_SELECTION_TOTAL");
+                if ((this.F_BM1_ASH_ASSET_ALLOC_3MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_3MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_3M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3Y {
+            get {
+                return this.F_BM1_ASH_ASSET_ALLOC_3YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_ASSET_ALLOC_3YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_3YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_5Y {
+            get {
+                return this.F_BM1_ASH_ASSET_ALLOC_5YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_ASSET_ALLOC_5YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_5YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_6M {
+            get {
+                return this.F_BM1_ASH_ASSET_ALLOC_6MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_ASSET_ALLOC_6MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_6MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_SI {
+            get {
+                return this.F_BM1_ASH_ASSET_ALLOC_SIField;
+            }
+            set {
+                if ((this.F_BM1_ASH_ASSET_ALLOC_SIField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_SIField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTD {
+            get {
+                return this.F_BM1_ASH_ASSET_ALLOC_YTDField;
+            }
+            set {
+                if ((this.F_BM1_ASH_ASSET_ALLOC_YTDField.Equals(value) != true)) {
+                    this.F_BM1_ASH_ASSET_ALLOC_YTDField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_ASSET_ALLOC_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_1M {
+            get {
+                return this.F_BM1_ASH_RC_CTN_1MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_1MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_1MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_1M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_1Y {
+            get {
+                return this.F_BM1_ASH_RC_CTN_1YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_1YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_1YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_1Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_3M {
+            get {
+                return this.F_BM1_ASH_RC_CTN_3MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_3MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_3MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_3M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_3Y {
+            get {
+                return this.F_BM1_ASH_RC_CTN_3YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_3YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_3YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_5Y {
+            get {
+                return this.F_BM1_ASH_RC_CTN_5YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_5YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_5YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_6M {
+            get {
+                return this.F_BM1_ASH_RC_CTN_6MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_6MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_6MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_SI {
+            get {
+                return this.F_BM1_ASH_RC_CTN_SIField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_SIField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_SIField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTD {
+            get {
+                return this.F_BM1_ASH_RC_CTN_YTDField;
+            }
+            set {
+                if ((this.F_BM1_ASH_RC_CTN_YTDField.Equals(value) != true)) {
+                    this.F_BM1_ASH_RC_CTN_YTDField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_RC_CTN_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1M {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_1MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_1MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_1MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_1M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1Y {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_1YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_1YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_1YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_1Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3M {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_3MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_3MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_3MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_3M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3Y {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_3YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_3YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_3YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_5Y {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_5YField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_5YField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_5YField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_6M {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_6MField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_6MField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_6MField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_SI {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_SIField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_SIField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_SIField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTD {
+            get {
+                return this.F_BM1_ASH_SEC_SELEC_YTDField;
+            }
+            set {
+                if ((this.F_BM1_ASH_SEC_SELEC_YTDField.Equals(value) != true)) {
+                    this.F_BM1_ASH_SEC_SELEC_YTDField = value;
+                    this.RaisePropertyChanged("F_BM1_ASH_SEC_SELEC_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_1M {
+            get {
+                return this.F_POR_ASH_RC_CTN_1MField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_1MField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_1MField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_1M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_1Y {
+            get {
+                return this.F_POR_ASH_RC_CTN_1YField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_1YField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_1YField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_1Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_3M {
+            get {
+                return this.F_POR_ASH_RC_CTN_3MField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_3MField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_3MField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_3M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_3Y {
+            get {
+                return this.F_POR_ASH_RC_CTN_3YField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_3YField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_3YField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_5Y {
+            get {
+                return this.F_POR_ASH_RC_CTN_5YField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_5YField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_5YField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_6M {
+            get {
+                return this.F_POR_ASH_RC_CTN_6MField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_6MField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_6MField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_SI {
+            get {
+                return this.F_POR_ASH_RC_CTN_SIField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_SIField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_SIField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> F_POR_ASH_RC_CTN_YTD {
+            get {
+                return this.F_POR_ASH_RC_CTN_YTDField;
+            }
+            set {
+                if ((this.F_POR_ASH_RC_CTN_YTDField.Equals(value) != true)) {
+                    this.F_POR_ASH_RC_CTN_YTDField = value;
+                    this.RaisePropertyChanged("F_POR_ASH_RC_CTN_YTD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_1M {
+            get {
+                return this.POR_RC_AVG_WGT_1MField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_1MField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_1MField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_1M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_1Y {
+            get {
+                return this.POR_RC_AVG_WGT_1YField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_1YField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_1YField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_1Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_3M {
+            get {
+                return this.POR_RC_AVG_WGT_3MField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_3MField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_3MField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_3M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_3Y {
+            get {
+                return this.POR_RC_AVG_WGT_3YField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_3YField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_3YField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_3Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_5Y {
+            get {
+                return this.POR_RC_AVG_WGT_5YField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_5YField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_5YField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_5Y");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_6M {
+            get {
+                return this.POR_RC_AVG_WGT_6MField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_6MField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_6MField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_6M");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_SI {
+            get {
+                return this.POR_RC_AVG_WGT_SIField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_SIField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_SIField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_SI");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> POR_RC_AVG_WGT_YTD {
+            get {
+                return this.POR_RC_AVG_WGT_YTDField;
+            }
+            set {
+                if ((this.POR_RC_AVG_WGT_YTDField.Equals(value) != true)) {
+                    this.POR_RC_AVG_WGT_YTDField = value;
+                    this.RaisePropertyChanged("POR_RC_AVG_WGT_YTD");
                 }
             }
         }

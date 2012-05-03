@@ -2251,16 +2251,65 @@ namespace GreenField.Web.Services
         {
             if (portfolioSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-            List<AttributionData> result = new List<AttributionData>();
-            AttributionData entry = new AttributionData();
+            List<AttributionData> result = new List<AttributionData>();            
             List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;
             try
             {
                 for (int i = 0; i < attributionData.Count; i++)
-                { 
-                
+                {
+                    AttributionData entry = new AttributionData();
+                    entry.COUNTRY = attributionData[i].COUNTRY;
+                    entry.COUNTRY_NAME = attributionData[i].COUNTRY_NAME;
+                    entry.POR_RC_AVG_WGT_1M = attributionData[i].POR_RC_AVG_WGT_1M;
+                    entry.BM1_RC_AVG_WGT_1M = attributionData[i].BM1_RC_AVG_WGT_1M;
+                    entry.F_POR_ASH_RC_CTN_1M = attributionData[i].F_POR_ASH_RC_CTN_1M;
+                    entry.F_BM1_ASH_RC_CTN_1M = attributionData[i].F_BM1_ASH_RC_CTN_1M;
+                    entry.F_BM1_ASH_ASSET_ALLOC_1M = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1M;
+                    entry.F_BM1_ASH_SEC_SELEC_1M = attributionData[i].F_BM1_ASH_SEC_SELEC_1M;
+                    entry.POR_RC_AVG_WGT_3M = attributionData[i].POR_RC_AVG_WGT_3M;
+                    entry.BM1_RC_AVG_WGT_3M = attributionData[i].BM1_RC_AVG_WGT_3M;
+                    entry.F_POR_ASH_RC_CTN_3M = attributionData[i].F_POR_ASH_RC_CTN_3M;
+                    entry.F_BM1_ASH_ASSET_ALLOC_3M = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3M;
+                    entry.F_BM1_ASH_SEC_SELEC_3M = attributionData[i].F_BM1_ASH_SEC_SELEC_3M;
+                    entry.POR_RC_AVG_WGT_6M = attributionData[i].POR_RC_AVG_WGT_6M;
+                    entry.BM1_RC_AVG_WGT_6M = attributionData[i].BM1_RC_AVG_WGT_6M;
+                    entry.F_POR_ASH_RC_CTN_6M = attributionData[i].F_POR_ASH_RC_CTN_6M;
+                    entry.F_BM1_ASH_RC_CTN_6M = attributionData[i].F_BM1_ASH_RC_CTN_6M;
+                    entry.F_BM1_ASH_ASSET_ALLOC_6M = attributionData[i].F_BM1_ASH_ASSET_ALLOC_6M;
+                    entry.F_BM1_ASH_SEC_SELEC_6M = attributionData[i].F_BM1_ASH_SEC_SELEC_6M;
+                    entry.POR_RC_AVG_WGT_YTD = attributionData[i].POR_RC_AVG_WGT_YTD;
+                    entry.BM1_RC_AVG_WGT_YTD = attributionData[i].BM1_RC_AVG_WGT_YTD;
+                    entry.F_POR_ASH_RC_CTN_YTD = attributionData[i].F_POR_ASH_RC_CTN_YTD;
+                    entry.F_BM1_ASH_RC_CTN_YTD = attributionData[i].F_BM1_ASH_RC_CTN_YTD;
+                    entry.F_BM1_ASH_ASSET_ALLOC_YTD = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
+                    entry.F_BM1_ASH_SEC_SELEC_YTD = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
+                    entry.POR_RC_AVG_WGT_1Y = attributionData[i].POR_RC_AVG_WGT_1Y;
+                    entry.BM1_RC_AVG_WGT_1Y = attributionData[i].BM1_RC_AVG_WGT_1Y;
+                    entry.F_POR_ASH_RC_CTN_1Y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
+                    entry.F_BM1_ASH_RC_CTN_1Y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
+                    entry.F_BM1_ASH_ASSET_ALLOC_1Y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
+                    entry.F_BM1_ASH_SEC_SELEC_1Y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
+                    entry.POR_RC_AVG_WGT_3Y = attributionData[i].POR_RC_AVG_WGT_3Y;
+                    entry.BM1_RC_AVG_WGT_3Y = attributionData[i].BM1_RC_AVG_WGT_3Y;
+                    entry.F_POR_ASH_RC_CTN_3Y = attributionData[i].F_POR_ASH_RC_CTN_3Y;
+                    entry.F_BM1_ASH_RC_CTN_3Y = attributionData[i].F_BM1_ASH_RC_CTN_3Y;
+                    entry.F_BM1_ASH_ASSET_ALLOC_3Y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3Y;
+                    entry.F_BM1_ASH_SEC_SELEC_3Y = attributionData[i].F_BM1_ASH_SEC_SELEC_3Y;
+                    entry.POR_RC_AVG_WGT_5Y = attributionData[i].POR_RC_AVG_WGT_5Y;
+                    entry.BM1_RC_AVG_WGT_5Y = attributionData[i].BM1_RC_AVG_WGT_5Y;
+                    entry.F_POR_ASH_RC_CTN_5Y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
+                    entry.F_BM1_ASH_RC_CTN_5Y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
+                    entry.F_BM1_ASH_ASSET_ALLOC_5Y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
+                    entry.F_BM1_ASH_SEC_SELEC_5Y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
+                    entry.POR_RC_AVG_WGT_SI = attributionData[i].POR_RC_AVG_WGT_SI;
+                    entry.BM1_RC_AVG_WGT_SI = attributionData[i].BM1_RC_AVG_WGT_SI;
+                    entry.F_POR_ASH_RC_CTN_SI = attributionData[i].F_POR_ASH_RC_CTN_SI;
+                    entry.F_BM1_ASH_RC_CTN_SI = attributionData[i].F_BM1_ASH_RC_CTN_SI;
+                    entry.F_BM1_ASH_ASSET_ALLOC_SI = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
+                    entry.F_BM1_ASH_SEC_SELEC_SI = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
+                    result.Add(entry);
                 }
                         
                 return result;

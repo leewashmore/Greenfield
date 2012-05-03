@@ -20,6 +20,15 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewHoldingsPieChartRegion : ViewBaseUserControl
     {
+        /// <summary>
+        /// Export Types to be passed to the ExportOptions class
+        /// </summary>
+        private static class ExportTypes
+        {
+            public const string HOLDINGS_PIE_CHART_REGION = "Holdings Pie Chart for Region";
+            public const string HOLDINGS_PIE_GRID_REGION = "Holdings Pie Grid for Region";
+        }
+
         #region Constructor
         /// <summary>
         /// Constructor
@@ -32,6 +41,8 @@ namespace GreenField.Gadgets.Views
             this.DataContextHoldingsPieChartRegion = dataContextSource;
             dataContextSource.holdingsPieChartForRegionDataLoadedEvent +=
                 new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartRegionDataLoadedEvent);
+            this.crtHoldingsPercentageRegion.Visibility = Visibility.Visible;
+            this.dgHoldingsPercentageRegion.Visibility = Visibility.Collapsed;
 
         }
         #endregion
@@ -58,6 +69,44 @@ namespace GreenField.Gadgets.Views
             {
                 this.busyIndicatorChart.IsBusy = false;
                 this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Flipping between Grid & Chart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.dgHoldingsPercentageRegion.Visibility == Visibility.Visible)
+                Flipper.FlipItem(this.dgHoldingsPercentageRegion, this.crtHoldingsPercentageRegion);
+            else
+                Flipper.FlipItem(this.crtHoldingsPercentageRegion, this.dgHoldingsPercentageRegion);
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID_REGION, Element = this.dgHoldingsPercentageRegion, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART_REGION, Element = this.crtHoldingsPercentageRegion, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
+                    
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

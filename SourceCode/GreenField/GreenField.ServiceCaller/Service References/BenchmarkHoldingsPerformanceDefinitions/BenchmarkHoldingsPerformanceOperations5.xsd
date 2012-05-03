@@ -456,14 +456,56 @@
   <xs:element name="ArrayOfAttributionData" nillable="true" type="tns:ArrayOfAttributionData" />
   <xs:complexType name="AttributionData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ASSET_ALLOCATION" type="xs:double" />
-      <xs:element minOccurs="0" name="BENCHMARK_RETURN" type="xs:double" />
-      <xs:element minOccurs="0" name="BENCHMARK_WEIGHT" type="xs:double" />
-      <xs:element minOccurs="0" name="COUNTRY_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BM1_RC_AVG_WGT_YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="COUNTRY" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="COUNTRY_NAME" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PORTFOLIO_RETURN" type="xs:double" />
-      <xs:element minOccurs="0" name="PORTFOLIO_WEIGHT" type="xs:double" />
-      <xs:element minOccurs="0" name="STOCK_SELECTION_TOTAL" type="xs:double" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_ASSET_ALLOC_YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_RC_CTN_YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_BM1_ASH_SEC_SELEC_YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="F_POR_ASH_RC_CTN_YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_1M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_3M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_3Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_5Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_6M" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_SI" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="POR_RC_AVG_WGT_YTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AttributionData" nillable="true" type="tns:AttributionData" />

@@ -34,7 +34,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region Constructor
+            #region Constructor
 
         public ViewModelMultiLineBenchmark(DashboardGadgetParam param)
         {

@@ -408,52 +408,60 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected period start date
         /// </summary>
-        private DateTime? _selectedPeriodStartDateInfo;
-        public DateTime? SelectedPeriodStartDateInfo
-        {
-            get { return _selectedPeriodStartDateInfo; }
-            set
-            {
-                _selectedPeriodStartDateInfo = value;
-                RaisePropertyChanged(() => this.SelectedPeriodStartDateInfo);
-                if (value != null)
-                {
-                    if (SelectorPayload.PeriodSelectionData == null)
-                    {
-                        SelectorPayload.PeriodSelectionData = new PeriodSelectionData();
-                    }
-                    SelectorPayload.PeriodSelectionData.PeriodStartDate = Convert.ToDateTime(value);
-                    if (SelectorPayload.PeriodSelectionData.PeriodEndDate != null)
-                    {
-                        _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(SelectorPayload.PeriodSelectionData);
-                    }
-                }
-            }
-        }
+        //private DateTime? _selectedPeriodStartDateInfo;
+        //public DateTime? SelectedPeriodStartDateInfo
+        //{
+        //    get { return _selectedPeriodStartDateInfo; }
+        //    set
+        //    {
+        //        _selectedPeriodStartDateInfo = value;
+        //        RaisePropertyChanged(() => this.SelectedPeriodStartDateInfo);
+        //        if (value != null)
+        //        {
+        //            if (SelectorPayload.PeriodSelectionData == null)
+        //            {
+        //                SelectorPayload.PeriodSelectionData = new PeriodSelectionData();
+        //            }
+        //            SelectorPayload.PeriodSelectionData.PeriodStartDate = Convert.ToDateTime(value);
+        //            if (SelectorPayload.PeriodSelectionData.PeriodEndDate != null)
+        //            {
+        //                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(SelectorPayload.PeriodSelectionData);
+        //            }
+        //        }
+        //    }
+        //}
 
-        /// <summary>
-        /// Stores selected period end date - Publishes PeriodReferenceSetEvent on set event
-        /// </summary>
-        private DateTime? _selectedPeriodEndDateInfo;
-        public DateTime? SelectedPeriodEndDateInfo
+        ///// <summary>
+        ///// Stores selected period end date - Publishes PeriodReferenceSetEvent on set event
+        ///// </summary>
+        //private DateTime? _selectedPeriodEndDateInfo;
+        //public DateTime? SelectedPeriodEndDateInfo
+        //{
+        //    get { return _selectedPeriodEndDateInfo; }
+        //    set
+        //    {
+        //        _selectedPeriodEndDateInfo = value;
+        //        RaisePropertyChanged(() => this.SelectedPeriodStartDateInfo);
+        //        if (value != null)
+        //        {
+        //            if (SelectorPayload.PeriodSelectionData == null)
+        //            {
+        //                SelectorPayload.PeriodSelectionData = new PeriodSelectionData();
+        //            }
+        //            SelectorPayload.PeriodSelectionData.PeriodEndDate = Convert.ToDateTime(value);
+        //            if (SelectorPayload.PeriodSelectionData.PeriodStartDate != null)
+        //            {
+        //                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(SelectorPayload.PeriodSelectionData);
+        //            }
+        //        }
+        //    }
+        //}
+
+        public List<string> PeriodTypeInfo
         {
-            get { return _selectedPeriodEndDateInfo; }
-            set
+            get
             {
-                _selectedPeriodEndDateInfo = value;
-                RaisePropertyChanged(() => this.SelectedPeriodStartDateInfo);
-                if (value != null)
-                {
-                    if (SelectorPayload.PeriodSelectionData == null)
-                    {
-                        SelectorPayload.PeriodSelectionData = new PeriodSelectionData();
-                    }
-                    SelectorPayload.PeriodSelectionData.PeriodEndDate = Convert.ToDateTime(value);
-                    if (SelectorPayload.PeriodSelectionData.PeriodStartDate != null)
-                    {
-                        _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(SelectorPayload.PeriodSelectionData);
-                    }
-                }
+                return new List<string> { "1M", "3M", "6M", "YTD","1Y","3Y","5Y","SI"};
             }
         }
 
@@ -468,10 +476,33 @@ namespace GreenField.App.ViewModel
             {
                 _periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
-                if (value == Visibility.Collapsed)
+                //if (value == Visibility.Collapsed)
+                //{
+                //    SelectedPeriodStartDateInfo = null;
+                //    SelectedPeriodEndDateInfo = null;
+                //}
+            }
+        }
+
+        /// <summary>
+        /// String that contains the selected filter type
+        /// </summary>
+        private String _selectedPeriodType;
+        public String SelectedPeriodType
+        {
+            get
+            {
+                return _selectedPeriodType;
+            }
+            set
+            {
+                _selectedPeriodType = value;
+                RaisePropertyChanged(() => this._selectedPeriodType);
+                if (FilterSelectionInfo != null)
                 {
-                    SelectedPeriodStartDateInfo = null;
-                    SelectedPeriodEndDateInfo = null;
+                    FilterSelectorInfo = FilterSelectionInfo
+                                        .Where(record => record.Filtertype == value)
+                                        .ToList();
                 }
             }
         }
