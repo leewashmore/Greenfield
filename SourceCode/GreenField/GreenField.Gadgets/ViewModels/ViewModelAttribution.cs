@@ -115,7 +115,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="nameOfFund">Unique Identifier for a fund</param>
         /// <param name="callback">Callback for this method</param>
-        private void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData,DateTime? effectiveDate, Action<List<AttributionData>> callback)
+        private void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime? effectiveDate, Action<List<AttributionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -129,7 +129,7 @@ namespace GreenField.Gadgets.ViewModels
                         Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveAttributionData(portfolioSelectionData,Convert.ToDateTime(effectiveDate), callback);
+                        _dbInteractivity.RetrieveAttributionData(portfolioSelectionData, Convert.ToDateTime(effectiveDate), callback);
                     }
                     else
                     {
@@ -177,8 +177,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if(PortfolioSelectionData!=null && _effectiveDate !=null)
-                    RetrieveAttributionData( PortfolioSelectionData, _effectiveDate,RetrieveAttributionDataCallBackMethod);
+                    if (PortfolioSelectionData != null && _effectiveDate != null)
+                        RetrieveAttributionData(PortfolioSelectionData, _effectiveDate, RetrieveAttributionDataCallBackMethod);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
                     if (_PortfolioSelectionData != null && _effectiveDate != null)
-                    RetrieveAttributionData(_PortfolioSelectionData, _effectiveDate, RetrieveAttributionDataCallBackMethod);
+                        RetrieveAttributionData(_PortfolioSelectionData, _effectiveDate, RetrieveAttributionDataCallBackMethod);
                 }
                 else
                 {
@@ -217,8 +217,8 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);       
-        
+            Logging.LogEndMethod(_logger, methodNamespace);
+
         }
 
         public void HandlePeriodReferenceSet(DateTime effectiveDate)
@@ -251,7 +251,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
 
-        #endregion       
+        #endregion
 
         #region CallbackMethods
         /// <summary>
@@ -264,17 +264,18 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null && result.Count>0)
+                if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    AttributionDataInfo = result;                    
+                    AttributionDataInfo = result;
                     if (null != attributionDataLoadedEvent)
-                            attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                        attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (null != attributionDataLoadedEvent)
+                        attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
 
@@ -286,7 +287,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        #endregion      
+        #endregion
 
     }
 }

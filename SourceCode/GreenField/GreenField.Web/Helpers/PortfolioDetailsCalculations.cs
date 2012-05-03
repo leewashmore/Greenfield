@@ -32,6 +32,9 @@ namespace GreenField.Web.Helpers
             {
                 item.PortfolioWeight = item.DirtyValuePC / sumDirtyValuePC;
                 item.RePortfolioWeight = item.PortfolioWeight;
+                item.ReBenchmarkWeight = item.BenchmarkWeight;
+                item.ReAshEmmModelWeight = item.AshEmmModelWeight;
+                item.ActivePosition = item.AshEmmModelWeight - item.BenchmarkWeight;
                 //item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight;
             }
             return portfolioDetailsData;
