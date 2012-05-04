@@ -113,10 +113,12 @@
                 <!--Period Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="3">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbPeriodSelector"
                                          EmptyText="Select Period..." 
                                          ItemsSource="{Binding PeriodTypeInfo}"
-                                           Width="auto"                                          
+                                         SelectedValue="{Binding SelectedPeriodType,Mode=TwoWay}"    
+                                         Width="auto"                                          
                                          FontSize="7"
                                          FontFamily="Arial"                                        
                                          Margin="5,0,0,0"
@@ -308,10 +310,9 @@
                         <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
                                      SelectedItem="{Binding SelectedMarketSnapshotSelectionInfo, Mode=TwoWay}"
                                      Text="{Binding MarketPerformanceSnapshotSearchText, Mode=TwoWay}"
-                                     DisplayMemberPath="SnapshotName"
-                                             
-                                             FontSize="7"
-                                             FontFamily="Arial"
+                                     DisplayMemberPath="SnapshotName"                                             
+                                     FontSize="7"
+                                     FontFamily="Arial"
                                      telerik:TextSearch.TextPath="SnapshotName"  
                                      TextOptions.TextHintingMode="Fixed" 
                                      CanAutocompleteSelectItems="True"

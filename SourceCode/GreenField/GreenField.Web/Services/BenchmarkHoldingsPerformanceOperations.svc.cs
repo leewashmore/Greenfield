@@ -2244,11 +2244,12 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Retrieves Attribution Data for a particular composite/fund
+        /// Retrieves Attribution Data for a particular composite/fund and Effective Date
         /// Filtering data based on fund name
         /// </summary>
-        /// <param name="nameOfFund">Name of the selected fund</param>
-        /// <returns></returns>
+        /// <param name="portfolioSelectionData">Portfolio Data that contains the name of the selected portfolio</param>
+        /// <param name="effectiveDate">Selected Effective Date</param>
+        /// <returns>List of Attribution Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<AttributionData> RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)

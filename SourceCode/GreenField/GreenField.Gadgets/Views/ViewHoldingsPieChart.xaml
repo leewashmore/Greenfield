@@ -6,7 +6,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:telerikCharting="clr-namespace:Telerik.Windows.Controls.Charting;assembly=Telerik.Windows.Controls.Charting"
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"  
-             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">   
     <helpers:ViewBaseUserControl.Resources>
@@ -21,11 +21,7 @@
         <Grid.ColumnDefinitions>           
             <ColumnDefinition Width="*"/>                  
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="1*"/>
-            </Grid.ColumnDefinitions>-->
+        <Grid Grid.Column="0">            
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>               
             </Grid.RowDefinitions>

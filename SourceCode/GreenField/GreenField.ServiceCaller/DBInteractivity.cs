@@ -1014,11 +1014,12 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Interaction Method for Attribution Gadget
-        /// <summary>
+       /// <summary>
         /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="name">Name of the Fund</param>
-        /// <param name="callback"></param>
+       /// </summary>
+       /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
+       /// <param name="effectiveDate">Contains the selected effective date</param>
+       /// <param name="callback">callback</param>
         public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();

@@ -140,6 +140,7 @@
       <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
+    <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -30,7 +30,7 @@ namespace GreenField.Common
 
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 
-    public class PeriodReferenceSetEvent : CompositePresentationEvent<PeriodSelectionData> { }
+    public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 

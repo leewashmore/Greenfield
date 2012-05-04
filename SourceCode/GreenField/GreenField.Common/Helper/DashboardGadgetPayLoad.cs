@@ -23,11 +23,11 @@ namespace GreenField.Common.Helper
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
         public DateTime? EffectiveDate { get; set; }
-        
-        public PeriodSelectionData PeriodSelectionData{ get; set; }        
-
+       
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 
         public FilterSelectionData FilterSelectionData { get; set; }
+
+        public String PeriodSelectionData { get; set; }
     }
 }
