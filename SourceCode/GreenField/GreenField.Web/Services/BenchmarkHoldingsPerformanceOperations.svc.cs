@@ -1312,7 +1312,7 @@ namespace GreenField.Web.Services
                     mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
                     mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
                     mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
-                    //mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
+                    mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
                     //mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
                     mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
                     mktCapData.BenchmarkWeight = 0;
@@ -1333,7 +1333,7 @@ namespace GreenField.Web.Services
         private List<MarketCapitalizationData> RetrieveBenchmarkMktCapData(List<MarketCapitalizationData> portfolioData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
         {
            
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
+                //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
 
@@ -1341,7 +1341,7 @@ namespace GreenField.Web.Services
                 List<string> benchmarkId = portfolioData.Select(a => a.Benchmark_ID).Distinct().ToList();
 
                 //If the DataBase doesn't return a single Benchmark for a Portfolio
-                if (benchmarkId.Count != 1)
+                if (benchmarkId == null || benchmarkId.Count != 1)
                     throw new InvalidOperationException();
 
                 if (isExCashSecurity)
@@ -1367,43 +1367,75 @@ namespace GreenField.Web.Services
                     switch (filterType)
                     {
                         case GreenfieldConstants.REGION:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.COUNTRY:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.INDUSTRY:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.SECTOR:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                             break;
                         default:
                             break;
                     }
                 }
-
+                //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
+                //    portfolioData.Capacity = portfolioData.Count + dimensionServiceBenchmarkData.Count;
                 //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
-                foreach (GF_BENCHMARK_HOLDINGS benchmarkData in filteredResult)
+                foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
                 {
-                    foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
-                    {
-                        if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                        {
-                            MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                    var existingPortfolio = from p in portfolioData
+                                            where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
+                                            select p;
 
-                            mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                            mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                            mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                            mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-                           
-                            portfolioData.Add(mktCapData);
-                        }
-                    }                    
+                    if (existingPortfolio.Count() == 0)
+                    {
+                        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                        portfolioData.Add(mktCapData);
+                    }
+                    //for (int i = portfolioData.Count - 1; i >= 0; i--)
+                    //{
+                    //    if (portfolioData[i].AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                    //    {
+                    //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                    //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                    //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                    //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                    //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                    //        portfolioData.Add(mktCapData);
+                    //        break;
+                    //    }
+                    //}
+
+                    //foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
+                    //{
+                    //    if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                    //    {
+                    //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                    //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                    //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                    //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                    //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                    //        portfolioData.Add(mktCapData);
+                    //    }
+                    //}                    
                 }
 
                 return portfolioData;
