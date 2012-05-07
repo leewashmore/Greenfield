@@ -286,20 +286,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
-  <xs:complexType name="ArrayOfPortfolioRiskReturnData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPortfolioRiskReturnData" nillable="true" type="tns:ArrayOfPortfolioRiskReturnData" />
-  <xs:complexType name="PortfolioRiskReturnData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BenchMarkValue" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DataPointName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioValue" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
   <xs:complexType name="ArrayOfHeatMapData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="HeatMapData" nillable="true" type="tns:HeatMapData" />
@@ -505,4 +491,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AttributionData" nillable="true" type="tns:AttributionData" />
+  <xs:complexType name="ArrayOfPortfolioRiskReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPortfolioRiskReturnData" nillable="true" type="tns:ArrayOfPortfolioRiskReturnData" />
+  <xs:complexType name="PortfolioRiskReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchMarkValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataPointName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioValue" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
 </xs:schema>

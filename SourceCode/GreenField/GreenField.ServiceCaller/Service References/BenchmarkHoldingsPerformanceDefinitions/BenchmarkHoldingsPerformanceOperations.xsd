@@ -242,17 +242,7 @@
       <xs:sequence>
         <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q30:PortfolioSelectionData" />
         <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="benchmarkSelectionData" nillable="true" type="q31:BenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrievePortfolioRiskReturnDataResponse">
-    <xs:complexType>
-      <xs:sequence>
         <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePortfolioRiskReturnDataResult" nillable="true" type="q32:ArrayOfPortfolioRiskReturnData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="RetrieveHeatMapData">
     <xs:complexType>
       <xs:sequence />
@@ -409,6 +399,21 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q53="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAttributionDataResult" nillable="true" type="q53:ArrayOfAttributionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioRiskReturnData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q64:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePortfolioRiskReturnDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePortfolioRiskReturnDataResult" nillable="true" type="q65:ArrayOfPortfolioRiskReturnData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

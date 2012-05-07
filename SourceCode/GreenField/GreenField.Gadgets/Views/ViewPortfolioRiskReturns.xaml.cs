@@ -28,9 +28,11 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextRiskReturn = dataContextSource;           
             dataContextSource.portfolioRiskReturnDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
+
 
         #region Private Methods
         /// <summary>
@@ -49,11 +51,29 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Property of the type of View Model for this view
+        /// </summary>
+        private ViewModelPortfolioRiskReturns _dataContextRiskReturn;
+        public ViewModelPortfolioRiskReturns DataContextRiskReturn
+        {
+            get { return _dataContextRiskReturn; }
+            set { _dataContextRiskReturn = value; }
+        }
+
         #endregion
 
+        #region RemoveEvents
+        /// <summary>
+        /// Disposing events
+        /// </summary>
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextRiskReturn.portfolioRiskReturnDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
+            this.DataContextRiskReturn.Dispose();
+            this.DataContextRiskReturn = null;
+            this.DataContext = null;
         }
+        #endregion
     }
 }

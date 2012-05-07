@@ -146,15 +146,7 @@
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
-  </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
-  </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveHeatMapData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveHeatMapData" />
   </wsdl:message>
@@ -245,6 +237,14 @@
   <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
+  </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage">
+  </wsdl:message>
   <wsdl:portType name="BenchmarkHoldingsPerformanceOperations">
     <wsdl:operation name="Temp">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/Temp" message="tns:BenchmarkHoldingsPerformanceOperations_Temp_InputMessage" />
@@ -324,11 +324,6 @@
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitalizationDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveMarketCapitalizationData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitalizationDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioRiskReturnData">
-      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
     <wsdl:operation name="RetrieveHeatMapData">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveHeatMapData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveHeatMapData_OutputMessage" />
@@ -378,6 +373,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrieveAttributionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioRiskReturnData">
+      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnData" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnDataResponse" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsPerformanceOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BenchmarkHoldingsPerformanceOperations" type="tns:BenchmarkHoldingsPerformanceOperations">
@@ -568,18 +568,6 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="RetrievePortfolioRiskReturnData">
-      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="RetrieveHeatMapData">
       <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapData" style="document" />
       <wsdl:input>
@@ -690,6 +678,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveAttributionData">
       <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveAttributionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePortfolioRiskReturnData">
+      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskReturnData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

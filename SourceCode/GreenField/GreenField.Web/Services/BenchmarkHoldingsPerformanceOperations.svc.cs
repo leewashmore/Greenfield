@@ -1525,70 +1525,7 @@ namespace GreenField.Web.Services
 
         
 
-        /// <summary>
-        /// Retrieves Portfolio Risk Return Data
-        /// </summary>
-        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
-        /// <param name="benchmarkSelectionData">Contains Selected Benchmark Data </param>
-        /// <param name="effectiveDate">Effective Date selected by user</param>
-        /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
-        {
-            try
-            {
-                List<PortfolioRiskReturnData> portfolioRiskReturnValues = new List<PortfolioRiskReturnData>();
-
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Expected Return",
-                    PortfolioValue = 18.1.ToString(),
-                    BenchMarkValue = 15.3.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Alpha",
-                    PortfolioValue = 1.8.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Beta",
-                    PortfolioValue = 0.95.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Standard Deviation",
-                    PortfolioValue = 15.1.ToString(),
-                    BenchMarkValue = 15.7.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Sharpe Ratio",
-                    PortfolioValue = 0.18.ToString(),
-                    BenchMarkValue = 0.13.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Information Ratio",
-                    PortfolioValue = 1.81.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Turnover Ratio",
-                    PortfolioValue = 11.14.ToString()
-                });
-                return portfolioRiskReturnValues;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+       
 
         #region Heat Map Operation Contract
         [OperationContract]
@@ -2256,6 +2193,50 @@ namespace GreenField.Web.Services
                     result.Add(entry);
                 }
 
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Portfolio Risk Return Data
+        /// </summary>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
+        /// <param name="benchmarkSelectionData">Contains Selected Benchmark Data </param>
+        /// <param name="effectiveDate">Effective Date selected by user</param>
+        /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        {
+            if (portfolioSelectionData == null || effectiveDate == null)
+                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+            List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
+           List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            if (riskReturnData == null)
+                return result;            
+            try
+            {
+                PortfolioRiskReturnData entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Alpha";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE=="Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.PortfolioValue =(riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                result.Add(entry);
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Beta";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                result.Add(entry);
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Information Ratio";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                result.Add(entry);
                 return result;
             }
             catch (Exception ex)

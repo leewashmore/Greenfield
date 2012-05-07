@@ -2177,66 +2177,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PortfolioRiskReturnData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class PortfolioRiskReturnData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string BenchMarkValueField;
-        
-        private string DataPointNameField;
-        
-        private string PortfolioValueField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BenchMarkValue {
-            get {
-                return this.BenchMarkValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.BenchMarkValueField, value) != true)) {
-                    this.BenchMarkValueField = value;
-                    this.RaisePropertyChanged("BenchMarkValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataPointName {
-            get {
-                return this.DataPointNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DataPointNameField, value) != true)) {
-                    this.DataPointNameField = value;
-                    this.RaisePropertyChanged("DataPointName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PortfolioValue {
-            get {
-                return this.PortfolioValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PortfolioValueField, value) != true)) {
-                    this.PortfolioValueField = value;
-                    this.RaisePropertyChanged("PortfolioValue");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="HeatMapData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class HeatMapData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -3842,6 +3782,66 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PortfolioRiskReturnData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class PortfolioRiskReturnData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Nullable<decimal> BenchMarkValueField;
+        
+        private string DataPointNameField;
+        
+        private System.Nullable<decimal> PortfolioValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> BenchMarkValue {
+            get {
+                return this.BenchMarkValueField;
+            }
+            set {
+                if ((this.BenchMarkValueField.Equals(value) != true)) {
+                    this.BenchMarkValueField = value;
+                    this.RaisePropertyChanged("BenchMarkValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DataPointName {
+            get {
+                return this.DataPointNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DataPointNameField, value) != true)) {
+                    this.DataPointNameField = value;
+                    this.RaisePropertyChanged("DataPointName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioValue {
+            get {
+                return this.PortfolioValueField;
+            }
+            set {
+                if ((this.PortfolioValueField.Equals(value) != true)) {
+                    this.PortfolioValueField = value;
+                    this.RaisePropertyChanged("PortfolioValue");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations")]
     public interface BenchmarkHoldingsPerformanceOperations {
@@ -3984,15 +3984,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
-            "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
-            "turnDataResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
-            "turnDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
-        
-        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapDataResp" +
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveHeatMapDataServ" +
@@ -4081,6 +4072,15 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         System.IAsyncResult BeginRetrieveAttributionData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData> EndRetrieveAttributionData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
+            "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
+            "turnDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
+            "turnDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -4374,25 +4374,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrievePortfolioRiskReturnDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RetrievePortfolioRiskReturnDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveHeatMapDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -4583,6 +4564,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrievePortfolioRiskReturnDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrievePortfolioRiskReturnDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class BenchmarkHoldingsPerformanceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations>, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations {
         
         private BeginOperationDelegate onBeginTempDelegate;
@@ -4681,12 +4681,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveMarketCapitalizationDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrievePortfolioRiskReturnDataDelegate;
-        
-        private EndOperationDelegate onEndRetrievePortfolioRiskReturnDataDelegate;
-        
-        private System.Threading.SendOrPostCallback onRetrievePortfolioRiskReturnDataCompletedDelegate;
-        
         private BeginOperationDelegate onBeginRetrieveHeatMapDataDelegate;
         
         private EndOperationDelegate onEndRetrieveHeatMapDataDelegate;
@@ -4746,6 +4740,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         private EndOperationDelegate onEndRetrieveAttributionDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveAttributionDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrievePortfolioRiskReturnDataDelegate;
+        
+        private EndOperationDelegate onEndRetrievePortfolioRiskReturnDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrievePortfolioRiskReturnDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -4832,8 +4832,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         public event System.EventHandler<RetrieveMarketCapitalizationDataCompletedEventArgs> RetrieveMarketCapitalizationDataCompleted;
         
-        public event System.EventHandler<RetrievePortfolioRiskReturnDataCompletedEventArgs> RetrievePortfolioRiskReturnDataCompleted;
-        
         public event System.EventHandler<RetrieveHeatMapDataCompletedEventArgs> RetrieveHeatMapDataCompleted;
         
         public event System.EventHandler<RetrieveRelativePerformanceSectorDataCompletedEventArgs> RetrieveRelativePerformanceSectorDataCompleted;
@@ -4853,6 +4851,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         public event System.EventHandler<RetrievePerformanceGridDataCompletedEventArgs> RetrievePerformanceGridDataCompleted;
         
         public event System.EventHandler<RetrieveAttributionDataCompletedEventArgs> RetrieveAttributionDataCompleted;
+        
+        public event System.EventHandler<RetrievePortfolioRiskReturnDataCompletedEventArgs> RetrievePortfolioRiskReturnDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -5630,56 +5630,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePortfolioRiskReturnData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
-            return base.Channel.EndRetrievePortfolioRiskReturnData(result);
-        }
-        
-        private System.IAsyncResult OnBeginRetrievePortfolioRiskReturnData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData)(inValues[1]));
-            System.DateTime effectiveDate = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrievePortfolioRiskReturnData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
-        }
-        
-        private object[] OnEndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrievePortfolioRiskReturnData(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRetrievePortfolioRiskReturnDataCompleted(object state) {
-            if ((this.RetrievePortfolioRiskReturnDataCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrievePortfolioRiskReturnDataCompleted(this, new RetrievePortfolioRiskReturnDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RetrievePortfolioRiskReturnDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate) {
-            this.RetrievePortfolioRiskReturnDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, null);
-        }
-        
-        public void RetrievePortfolioRiskReturnDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, object userState) {
-            if ((this.onBeginRetrievePortfolioRiskReturnDataDelegate == null)) {
-                this.onBeginRetrievePortfolioRiskReturnDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePortfolioRiskReturnData);
-            }
-            if ((this.onEndRetrievePortfolioRiskReturnDataDelegate == null)) {
-                this.onEndRetrievePortfolioRiskReturnDataDelegate = new EndOperationDelegate(this.OnEndRetrievePortfolioRiskReturnData);
-            }
-            if ((this.onRetrievePortfolioRiskReturnDataCompletedDelegate == null)) {
-                this.onRetrievePortfolioRiskReturnDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePortfolioRiskReturnDataCompleted);
-            }
-            base.InvokeAsync(this.onBeginRetrievePortfolioRiskReturnDataDelegate, new object[] {
-                        fundSelectionData,
-                        benchmarkSelectionData,
-                        effectiveDate}, this.onEndRetrievePortfolioRiskReturnDataDelegate, this.onRetrievePortfolioRiskReturnDataCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveHeatMapData(callback, asyncState);
         }
@@ -6179,6 +6129,54 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                         effectiveDate}, this.onEndRetrieveAttributionDataDelegate, this.onRetrieveAttributionDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePortfolioRiskReturnData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
+            return base.Channel.EndRetrievePortfolioRiskReturnData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrievePortfolioRiskReturnData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrievePortfolioRiskReturnData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrievePortfolioRiskReturnData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrievePortfolioRiskReturnDataCompleted(object state) {
+            if ((this.RetrievePortfolioRiskReturnDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrievePortfolioRiskReturnDataCompleted(this, new RetrievePortfolioRiskReturnDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrievePortfolioRiskReturnDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, null);
+        }
+        
+        public void RetrievePortfolioRiskReturnDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+            if ((this.onBeginRetrievePortfolioRiskReturnDataDelegate == null)) {
+                this.onBeginRetrievePortfolioRiskReturnDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePortfolioRiskReturnData);
+            }
+            if ((this.onEndRetrievePortfolioRiskReturnDataDelegate == null)) {
+                this.onEndRetrievePortfolioRiskReturnDataDelegate = new EndOperationDelegate(this.OnEndRetrievePortfolioRiskReturnData);
+            }
+            if ((this.onRetrievePortfolioRiskReturnDataCompletedDelegate == null)) {
+                this.onRetrievePortfolioRiskReturnDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePortfolioRiskReturnDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrievePortfolioRiskReturnDataDelegate, new object[] {
+                        portfolioSelectionData,
+                        effectiveDate}, this.onEndRetrievePortfolioRiskReturnDataDelegate, this.onRetrievePortfolioRiskReturnDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -6480,21 +6478,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
-                _args[0] = fundSelectionData;
-                _args[1] = benchmarkSelectionData;
-                _args[2] = effectiveDate;
-                System.IAsyncResult _result = base.BeginInvoke("RetrievePortfolioRiskReturnData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData>)(base.EndInvoke("RetrievePortfolioRiskReturnData", _args, result)));
-                return _result;
-            }
-            
             public System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[0];
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveHeatMapData", _args, callback, asyncState);
@@ -6642,6 +6625,20 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData> EndRetrieveAttributionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AttributionData>)(base.EndInvoke("RetrieveAttributionData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrievePortfolioRiskReturnData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
+                System.IAsyncResult _result = base.BeginInvoke("RetrievePortfolioRiskReturnData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> EndRetrievePortfolioRiskReturnData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioRiskReturnData>)(base.EndInvoke("RetrievePortfolioRiskReturnData", _args, result)));
                 return _result;
             }
         }
