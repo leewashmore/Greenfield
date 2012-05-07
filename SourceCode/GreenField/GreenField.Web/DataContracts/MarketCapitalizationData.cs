@@ -10,57 +10,90 @@ namespace GreenField.Web.DataContracts
     public class MarketCapitalizationData
     {
         [DataMember]
-        public string MegaLowerLimit { get; set; }
+        public string Benchmark_ID { get; set; }
 
         [DataMember]
-        public string LargeLowerLimit { get; set; }
+        public string Portfolio_ID { get; set; }
 
         [DataMember]
-        public string MediumLowerLimit { get; set; }
+        public decimal? PortfolioDirtyValuePC { get; set; }
 
         [DataMember]
-        public string SmallLowerLimit { get; set; }
+        public decimal? BenchmarkWeight { get; set; }
 
         [DataMember]
-        public long PortfolioWeightedAverage { get; set; }
+        public decimal? MarketCapitalInUSD { get; set; }
 
         [DataMember]
-        public long BenchmarkWeightedAverage { get; set; }
+        public string SecurityThemeCode { get; set; }
 
         [DataMember]
-        public long PortfolioWeightedMedian { get; set; }
+        public decimal? LargeRange { get; set; }
 
         [DataMember]
-        public long BenchmarkWeightedMedian { get; set; }
+        public decimal? MediumRange { get; set; }
 
         [DataMember]
-        public double PortfolioMegaShare { get; set; }
+        public decimal? SmallRange { get; set; }
 
         [DataMember]
-        public double BenchmarkMegaShare { get; set; }
+        public decimal? MicroRange { get; set; }
 
         [DataMember]
-        public double PortfolioLargeShare { get; set; }
+        public decimal? UndefinedRange { get; set; }
 
         [DataMember]
-        public double BenchmarkLargeShare { get; set; }
-        
-        [DataMember]
-        public double PortfolioMediumShare { get; set; }
+        public decimal? PortfolioSumMegaRange { get; set; }
 
         [DataMember]
-        public double BenchmarkMediumShare { get; set; }
+        public decimal? PortfolioSumLargeRange { get; set; }
 
         [DataMember]
-        public double PortfolioSmallShare { get; set; }
+        public decimal? PortfolioSumMediumRange { get; set; }
 
         [DataMember]
-        public double BenchmarkSmallShare { get; set; }
+        public decimal? PortfolioSumSmallRange { get; set; }
 
         [DataMember]
-        public double PortfolioMicroShare { get; set; }
+        public decimal? PortfolioSumMicroRange { get; set; }
 
         [DataMember]
-        public double BenchmarkMicroShare { get; set; }
+        public decimal? PortfolioSumUndefinedRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumMegaRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumLargeRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumMediumRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumSmallRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumMicroRange { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkSumUndefinedRange { get; set; }
+
+        [DataMember]
+        public decimal? PortfolioWtdAvg { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkWtdAvg { get; set; }
+
+        [DataMember]
+        public decimal? PortfolioWtdMedian { get; set; }
+
+        [DataMember]
+        public decimal? BenchmarkWtdMedian { get; set; }
+
+        [DataMember]
+        public string AsecSecShortName { get; set; }
+
     }
+
+   
 }

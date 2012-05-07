@@ -267,11 +267,18 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-
-        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback)
+        /// <summary>
+        /// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        /// <param name="effectiveDate">Effective date as selected by the user</param>
+        /// <param name="filterType">The filter type selected by the user</param>
+        /// <param name="filterValue">The filter value selected by the user</param>
+        /// <param name="callback"></param>  
+        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
         {
             BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

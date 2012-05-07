@@ -23,7 +23,8 @@ namespace GreenField.App.Helpers
         SECTOR_SELECTOR,
         INDUSTRY_SELECTOR,
         REGION_SELECTOR,
-        FILTER_SELECTOR
+        FILTER_SELECTOR,
+        MKT_CAP_SELECTOR
     }
 
     public static class ToolBoxItemVisibility
@@ -38,6 +39,7 @@ namespace GreenField.App.Helpers
         public static Visibility INDUSTRY_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility REGION_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility FILTER_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility MKT_CAP_VISIBILITY = Visibility.Collapsed;
     }
 
     public static class ToolBoxSelecter
@@ -54,6 +56,7 @@ namespace GreenField.App.Helpers
                 Visibility industrySelectorVisibility = Visibility.Collapsed,
                 Visibility regionSelectorVisibility = Visibility.Collapsed,
                 Visibility filterSelectorVisibility = Visibility.Collapsed,
+                Visibility mktCapSelectorVisibility = Visibility.Collapsed,
                 bool allVisible = false                
             )
         {
@@ -67,6 +70,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : industrySelectorVisibility;
             ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : regionSelectorVisibility;
             ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : filterSelectorVisibility;
+            ToolBoxItemVisibility.MKT_CAP_VISIBILITY = allVisible ? Visibility.Visible : mktCapSelectorVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -229,6 +233,9 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.USER_DASHBOARD:
                     UpdateToolBoxItemVisibility(allVisible: true);
+                    break;
+                case DashboardCategoryType.MKT_CAP:
+                    UpdateToolBoxItemVisibility();
                     break;
                 default:
                     break;
