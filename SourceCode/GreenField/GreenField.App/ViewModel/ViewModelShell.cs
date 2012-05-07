@@ -62,7 +62,7 @@ namespace GreenField.App.ViewModel
             _eventAggregator = eventAggregator;
             _dbInteractivity = dbInteractivity;
 
-            if(_eventAggregator != null)
+            if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
             }
@@ -82,6 +82,7 @@ namespace GreenField.App.ViewModel
                                         _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
                                         _dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallbackMethod);
                                         //_dbInteractivity.RetrieveBenchmarkSelectionData(RetrieveBenchmarkSelectionDataCallBackMethod);
+
                                     }
                                 }
                             });
@@ -143,6 +144,8 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SnapshotBusyIndicatorContent);
             }
         }
+
+
 
         #region Payload
         /// <summary>
@@ -419,17 +422,17 @@ namespace GreenField.App.ViewModel
         }
         #endregion
 
-        #region Period Selector        
+        #region Period Selector
 
         public List<String> PeriodTypeInfo
         {
             get
             {
-                return new List<String> { "1M", "3M", "6M", "YTD","1Y","3Y","5Y","SI"};
+                return new List<String> { "1M", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "SI" };
             }
         }
 
-       
+
 
         /// <summary>
         /// Stores visibility property of the period selector
@@ -442,7 +445,7 @@ namespace GreenField.App.ViewModel
             {
                 _periodSelectorVisibility = value;
                 RaisePropertyChanged(() => this.PeriodSelectorVisibility);
-               
+
             }
         }
 
@@ -583,7 +586,7 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
-        #endregion        
+        #endregion
 
         #region Snapshot Selector
         /// <summary>
@@ -620,6 +623,7 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
 
         /// <summary>
         /// Stores selected snapshot - Publishes MarketPerformanceSnapshotReferenceSetEvent on set event
@@ -1182,7 +1186,7 @@ namespace GreenField.App.ViewModel
                 default:
                     break;
             }
-        } 
+        }
         #endregion
 
         #region ICommand Methods
@@ -1897,7 +1901,7 @@ namespace GreenField.App.ViewModel
             try
             {
                 _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
-                    .Publish(new MarketPerformanceSnapshotActionPayload() 
+                    .Publish(new MarketPerformanceSnapshotActionPayload()
                     {
                         ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_ADD,
                         MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
@@ -2794,7 +2798,7 @@ namespace GreenField.App.ViewModel
                         FilterSelectorInfo = FilterSelectionInfo
                                         .Where(record => record.Filtertype == SelectedFilterType)
                                         .ToList();
-                    }                   
+                    }
                 }
                 else
                 {

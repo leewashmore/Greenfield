@@ -20,6 +20,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
         
                 <!--Security Selector-->
@@ -349,6 +350,13 @@
                         </Button>
                     </StackPanel>
                     </telerik:RadBusyIndicator>
+                </Grid>
+                <Grid Margin="5,0,0,0" Visibility="{Binding mktCapExCashSelectorVisibility}" Grid.Column="9">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">                       
+                        <CheckBox Content="Select To Exclude Cash Securities" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" />
+                    </StackPanel>
+                    
                 </Grid>
             </Grid>
         </ScrollViewer>

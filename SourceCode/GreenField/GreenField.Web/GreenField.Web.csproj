@@ -131,6 +131,8 @@
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
+    <Compile Include="Helpers\GreenfieldConstants.cs" />
+    <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
     <Compile Include="Helpers\PortfolioDetailsCalculations.cs" />
     <Compile Include="Helpers\Service Faults\FaultDescriptions.Designer.cs" />
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />

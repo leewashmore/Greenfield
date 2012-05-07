@@ -49,6 +49,10 @@ namespace GreenField.Common
 
     public class DashboardTileViewItemAdded : CompositePresentationEvent<DashboardTileViewItemInfo> { }
 
+    public class MarketCapitalizationSetEvent : CompositePresentationEvent<FilterSelectionData> { }
+
+    public class ExCashSecuritySetEvent : CompositePresentationEvent<bool> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }

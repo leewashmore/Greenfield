@@ -1745,272 +1745,422 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="MarketCapitalizationData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MarketCapitalizationData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double BenchmarkLargeShareField;
+        private string AsecSecShortNameField;
         
-        private double BenchmarkMediumShareField;
+        private System.Nullable<decimal> BenchmarkSumLargeRangeField;
         
-        private double BenchmarkMegaShareField;
+        private System.Nullable<decimal> BenchmarkSumMediumRangeField;
         
-        private double BenchmarkMicroShareField;
+        private System.Nullable<decimal> BenchmarkSumMegaRangeField;
         
-        private double BenchmarkSmallShareField;
+        private System.Nullable<decimal> BenchmarkSumMicroRangeField;
         
-        private long BenchmarkWeightedAverageField;
+        private System.Nullable<decimal> BenchmarkSumSmallRangeField;
         
-        private long BenchmarkWeightedMedianField;
+        private System.Nullable<decimal> BenchmarkSumUndefinedRangeField;
         
-        private string LargeLowerLimitField;
+        private System.Nullable<decimal> BenchmarkWeightField;
         
-        private string MediumLowerLimitField;
+        private System.Nullable<decimal> BenchmarkWtdAvgField;
         
-        private string MegaLowerLimitField;
+        private System.Nullable<decimal> BenchmarkWtdMedianField;
         
-        private double PortfolioLargeShareField;
+        private string Benchmark_IDField;
         
-        private double PortfolioMediumShareField;
+        private System.Nullable<decimal> LargeRangeField;
         
-        private double PortfolioMegaShareField;
+        private System.Nullable<decimal> MarketCapitalInUSDField;
         
-        private double PortfolioMicroShareField;
+        private System.Nullable<decimal> MediumRangeField;
         
-        private double PortfolioSmallShareField;
+        private System.Nullable<decimal> MicroRangeField;
         
-        private long PortfolioWeightedAverageField;
+        private System.Nullable<decimal> PortfolioDirtyValuePCField;
         
-        private long PortfolioWeightedMedianField;
+        private System.Nullable<decimal> PortfolioSumLargeRangeField;
         
-        private string SmallLowerLimitField;
+        private System.Nullable<decimal> PortfolioSumMediumRangeField;
+        
+        private System.Nullable<decimal> PortfolioSumMegaRangeField;
+        
+        private System.Nullable<decimal> PortfolioSumMicroRangeField;
+        
+        private System.Nullable<decimal> PortfolioSumSmallRangeField;
+        
+        private System.Nullable<decimal> PortfolioSumUndefinedRangeField;
+        
+        private System.Nullable<decimal> PortfolioWtdAvgField;
+        
+        private System.Nullable<decimal> PortfolioWtdMedianField;
+        
+        private string Portfolio_IDField;
+        
+        private string SecurityThemeCodeField;
+        
+        private System.Nullable<decimal> SmallRangeField;
+        
+        private System.Nullable<decimal> UndefinedRangeField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkLargeShare {
+        public string AsecSecShortName {
             get {
-                return this.BenchmarkLargeShareField;
+                return this.AsecSecShortNameField;
             }
             set {
-                if ((this.BenchmarkLargeShareField.Equals(value) != true)) {
-                    this.BenchmarkLargeShareField = value;
-                    this.RaisePropertyChanged("BenchmarkLargeShare");
+                if ((object.ReferenceEquals(this.AsecSecShortNameField, value) != true)) {
+                    this.AsecSecShortNameField = value;
+                    this.RaisePropertyChanged("AsecSecShortName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkMediumShare {
+        public System.Nullable<decimal> BenchmarkSumLargeRange {
             get {
-                return this.BenchmarkMediumShareField;
+                return this.BenchmarkSumLargeRangeField;
             }
             set {
-                if ((this.BenchmarkMediumShareField.Equals(value) != true)) {
-                    this.BenchmarkMediumShareField = value;
-                    this.RaisePropertyChanged("BenchmarkMediumShare");
+                if ((this.BenchmarkSumLargeRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumLargeRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumLargeRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkMegaShare {
+        public System.Nullable<decimal> BenchmarkSumMediumRange {
             get {
-                return this.BenchmarkMegaShareField;
+                return this.BenchmarkSumMediumRangeField;
             }
             set {
-                if ((this.BenchmarkMegaShareField.Equals(value) != true)) {
-                    this.BenchmarkMegaShareField = value;
-                    this.RaisePropertyChanged("BenchmarkMegaShare");
+                if ((this.BenchmarkSumMediumRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumMediumRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumMediumRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkMicroShare {
+        public System.Nullable<decimal> BenchmarkSumMegaRange {
             get {
-                return this.BenchmarkMicroShareField;
+                return this.BenchmarkSumMegaRangeField;
             }
             set {
-                if ((this.BenchmarkMicroShareField.Equals(value) != true)) {
-                    this.BenchmarkMicroShareField = value;
-                    this.RaisePropertyChanged("BenchmarkMicroShare");
+                if ((this.BenchmarkSumMegaRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumMegaRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumMegaRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double BenchmarkSmallShare {
+        public System.Nullable<decimal> BenchmarkSumMicroRange {
             get {
-                return this.BenchmarkSmallShareField;
+                return this.BenchmarkSumMicroRangeField;
             }
             set {
-                if ((this.BenchmarkSmallShareField.Equals(value) != true)) {
-                    this.BenchmarkSmallShareField = value;
-                    this.RaisePropertyChanged("BenchmarkSmallShare");
+                if ((this.BenchmarkSumMicroRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumMicroRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumMicroRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long BenchmarkWeightedAverage {
+        public System.Nullable<decimal> BenchmarkSumSmallRange {
             get {
-                return this.BenchmarkWeightedAverageField;
+                return this.BenchmarkSumSmallRangeField;
             }
             set {
-                if ((this.BenchmarkWeightedAverageField.Equals(value) != true)) {
-                    this.BenchmarkWeightedAverageField = value;
-                    this.RaisePropertyChanged("BenchmarkWeightedAverage");
+                if ((this.BenchmarkSumSmallRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumSmallRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumSmallRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long BenchmarkWeightedMedian {
+        public System.Nullable<decimal> BenchmarkSumUndefinedRange {
             get {
-                return this.BenchmarkWeightedMedianField;
+                return this.BenchmarkSumUndefinedRangeField;
             }
             set {
-                if ((this.BenchmarkWeightedMedianField.Equals(value) != true)) {
-                    this.BenchmarkWeightedMedianField = value;
-                    this.RaisePropertyChanged("BenchmarkWeightedMedian");
+                if ((this.BenchmarkSumUndefinedRangeField.Equals(value) != true)) {
+                    this.BenchmarkSumUndefinedRangeField = value;
+                    this.RaisePropertyChanged("BenchmarkSumUndefinedRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LargeLowerLimit {
+        public System.Nullable<decimal> BenchmarkWeight {
             get {
-                return this.LargeLowerLimitField;
+                return this.BenchmarkWeightField;
             }
             set {
-                if ((object.ReferenceEquals(this.LargeLowerLimitField, value) != true)) {
-                    this.LargeLowerLimitField = value;
-                    this.RaisePropertyChanged("LargeLowerLimit");
+                if ((this.BenchmarkWeightField.Equals(value) != true)) {
+                    this.BenchmarkWeightField = value;
+                    this.RaisePropertyChanged("BenchmarkWeight");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MediumLowerLimit {
+        public System.Nullable<decimal> BenchmarkWtdAvg {
             get {
-                return this.MediumLowerLimitField;
+                return this.BenchmarkWtdAvgField;
             }
             set {
-                if ((object.ReferenceEquals(this.MediumLowerLimitField, value) != true)) {
-                    this.MediumLowerLimitField = value;
-                    this.RaisePropertyChanged("MediumLowerLimit");
+                if ((this.BenchmarkWtdAvgField.Equals(value) != true)) {
+                    this.BenchmarkWtdAvgField = value;
+                    this.RaisePropertyChanged("BenchmarkWtdAvg");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MegaLowerLimit {
+        public System.Nullable<decimal> BenchmarkWtdMedian {
             get {
-                return this.MegaLowerLimitField;
+                return this.BenchmarkWtdMedianField;
             }
             set {
-                if ((object.ReferenceEquals(this.MegaLowerLimitField, value) != true)) {
-                    this.MegaLowerLimitField = value;
-                    this.RaisePropertyChanged("MegaLowerLimit");
+                if ((this.BenchmarkWtdMedianField.Equals(value) != true)) {
+                    this.BenchmarkWtdMedianField = value;
+                    this.RaisePropertyChanged("BenchmarkWtdMedian");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioLargeShare {
+        public string Benchmark_ID {
             get {
-                return this.PortfolioLargeShareField;
+                return this.Benchmark_IDField;
             }
             set {
-                if ((this.PortfolioLargeShareField.Equals(value) != true)) {
-                    this.PortfolioLargeShareField = value;
-                    this.RaisePropertyChanged("PortfolioLargeShare");
+                if ((object.ReferenceEquals(this.Benchmark_IDField, value) != true)) {
+                    this.Benchmark_IDField = value;
+                    this.RaisePropertyChanged("Benchmark_ID");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioMediumShare {
+        public System.Nullable<decimal> LargeRange {
             get {
-                return this.PortfolioMediumShareField;
+                return this.LargeRangeField;
             }
             set {
-                if ((this.PortfolioMediumShareField.Equals(value) != true)) {
-                    this.PortfolioMediumShareField = value;
-                    this.RaisePropertyChanged("PortfolioMediumShare");
+                if ((this.LargeRangeField.Equals(value) != true)) {
+                    this.LargeRangeField = value;
+                    this.RaisePropertyChanged("LargeRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioMegaShare {
+        public System.Nullable<decimal> MarketCapitalInUSD {
             get {
-                return this.PortfolioMegaShareField;
+                return this.MarketCapitalInUSDField;
             }
             set {
-                if ((this.PortfolioMegaShareField.Equals(value) != true)) {
-                    this.PortfolioMegaShareField = value;
-                    this.RaisePropertyChanged("PortfolioMegaShare");
+                if ((this.MarketCapitalInUSDField.Equals(value) != true)) {
+                    this.MarketCapitalInUSDField = value;
+                    this.RaisePropertyChanged("MarketCapitalInUSD");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioMicroShare {
+        public System.Nullable<decimal> MediumRange {
             get {
-                return this.PortfolioMicroShareField;
+                return this.MediumRangeField;
             }
             set {
-                if ((this.PortfolioMicroShareField.Equals(value) != true)) {
-                    this.PortfolioMicroShareField = value;
-                    this.RaisePropertyChanged("PortfolioMicroShare");
+                if ((this.MediumRangeField.Equals(value) != true)) {
+                    this.MediumRangeField = value;
+                    this.RaisePropertyChanged("MediumRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PortfolioSmallShare {
+        public System.Nullable<decimal> MicroRange {
             get {
-                return this.PortfolioSmallShareField;
+                return this.MicroRangeField;
             }
             set {
-                if ((this.PortfolioSmallShareField.Equals(value) != true)) {
-                    this.PortfolioSmallShareField = value;
-                    this.RaisePropertyChanged("PortfolioSmallShare");
+                if ((this.MicroRangeField.Equals(value) != true)) {
+                    this.MicroRangeField = value;
+                    this.RaisePropertyChanged("MicroRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long PortfolioWeightedAverage {
+        public System.Nullable<decimal> PortfolioDirtyValuePC {
             get {
-                return this.PortfolioWeightedAverageField;
+                return this.PortfolioDirtyValuePCField;
             }
             set {
-                if ((this.PortfolioWeightedAverageField.Equals(value) != true)) {
-                    this.PortfolioWeightedAverageField = value;
-                    this.RaisePropertyChanged("PortfolioWeightedAverage");
+                if ((this.PortfolioDirtyValuePCField.Equals(value) != true)) {
+                    this.PortfolioDirtyValuePCField = value;
+                    this.RaisePropertyChanged("PortfolioDirtyValuePC");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long PortfolioWeightedMedian {
+        public System.Nullable<decimal> PortfolioSumLargeRange {
             get {
-                return this.PortfolioWeightedMedianField;
+                return this.PortfolioSumLargeRangeField;
             }
             set {
-                if ((this.PortfolioWeightedMedianField.Equals(value) != true)) {
-                    this.PortfolioWeightedMedianField = value;
-                    this.RaisePropertyChanged("PortfolioWeightedMedian");
+                if ((this.PortfolioSumLargeRangeField.Equals(value) != true)) {
+                    this.PortfolioSumLargeRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumLargeRange");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SmallLowerLimit {
+        public System.Nullable<decimal> PortfolioSumMediumRange {
             get {
-                return this.SmallLowerLimitField;
+                return this.PortfolioSumMediumRangeField;
             }
             set {
-                if ((object.ReferenceEquals(this.SmallLowerLimitField, value) != true)) {
-                    this.SmallLowerLimitField = value;
-                    this.RaisePropertyChanged("SmallLowerLimit");
+                if ((this.PortfolioSumMediumRangeField.Equals(value) != true)) {
+                    this.PortfolioSumMediumRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumMediumRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioSumMegaRange {
+            get {
+                return this.PortfolioSumMegaRangeField;
+            }
+            set {
+                if ((this.PortfolioSumMegaRangeField.Equals(value) != true)) {
+                    this.PortfolioSumMegaRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumMegaRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioSumMicroRange {
+            get {
+                return this.PortfolioSumMicroRangeField;
+            }
+            set {
+                if ((this.PortfolioSumMicroRangeField.Equals(value) != true)) {
+                    this.PortfolioSumMicroRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumMicroRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioSumSmallRange {
+            get {
+                return this.PortfolioSumSmallRangeField;
+            }
+            set {
+                if ((this.PortfolioSumSmallRangeField.Equals(value) != true)) {
+                    this.PortfolioSumSmallRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumSmallRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioSumUndefinedRange {
+            get {
+                return this.PortfolioSumUndefinedRangeField;
+            }
+            set {
+                if ((this.PortfolioSumUndefinedRangeField.Equals(value) != true)) {
+                    this.PortfolioSumUndefinedRangeField = value;
+                    this.RaisePropertyChanged("PortfolioSumUndefinedRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioWtdAvg {
+            get {
+                return this.PortfolioWtdAvgField;
+            }
+            set {
+                if ((this.PortfolioWtdAvgField.Equals(value) != true)) {
+                    this.PortfolioWtdAvgField = value;
+                    this.RaisePropertyChanged("PortfolioWtdAvg");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> PortfolioWtdMedian {
+            get {
+                return this.PortfolioWtdMedianField;
+            }
+            set {
+                if ((this.PortfolioWtdMedianField.Equals(value) != true)) {
+                    this.PortfolioWtdMedianField = value;
+                    this.RaisePropertyChanged("PortfolioWtdMedian");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Portfolio_ID {
+            get {
+                return this.Portfolio_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Portfolio_IDField, value) != true)) {
+                    this.Portfolio_IDField = value;
+                    this.RaisePropertyChanged("Portfolio_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityThemeCode {
+            get {
+                return this.SecurityThemeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityThemeCodeField, value) != true)) {
+                    this.SecurityThemeCodeField = value;
+                    this.RaisePropertyChanged("SecurityThemeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SmallRange {
+            get {
+                return this.SmallRangeField;
+            }
+            set {
+                if ((this.SmallRangeField.Equals(value) != true)) {
+                    this.SmallRangeField = value;
+                    this.RaisePropertyChanged("SmallRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> UndefinedRange {
+            get {
+                return this.UndefinedRangeField;
+            }
+            set {
+                if ((this.UndefinedRangeField.Equals(value) != true)) {
+                    this.UndefinedRangeField = value;
+                    this.RaisePropertyChanged("UndefinedRange");
                 }
             }
         }
@@ -3830,9 +3980,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             "ationDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrieveMarketCapitaliz" +
             "ationDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
             "turnData", ReplyAction="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePortfolioRiskRe" +
@@ -4214,10 +4364,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             this.results = results;
         }
         
-        public GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData>)(this.results[0]));
             }
         }
     }
@@ -5426,24 +5576,26 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveMarketCapitalizationData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.EndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveMarketCapitalizationData(result);
         }
         
         private System.IAsyncResult OnBeginRetrieveMarketCapitalizationData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData)(inValues[1]));
-            System.DateTime effectiveDate = ((System.DateTime)(inValues[2]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveMarketCapitalizationData(fundSelectionData, benchmarkSelectionData, effectiveDate, callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            string filterType = ((string)(inValues[2]));
+            string filterValue = ((string)(inValues[3]));
+            bool isExCashSecurity = ((bool)(inValues[4]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, callback, asyncState);
         }
         
         private object[] OnEndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
-            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrieveMarketCapitalizationData(result);
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).EndRetrieveMarketCapitalizationData(result);
             return new object[] {
                     retVal};
         }
@@ -5455,11 +5607,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrieveMarketCapitalizationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, null);
+        public void RetrieveMarketCapitalizationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity) {
+            this.RetrieveMarketCapitalizationDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, null);
         }
         
-        public void RetrieveMarketCapitalizationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveMarketCapitalizationDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, object userState) {
             if ((this.onBeginRetrieveMarketCapitalizationDataDelegate == null)) {
                 this.onBeginRetrieveMarketCapitalizationDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketCapitalizationData);
             }
@@ -5470,9 +5622,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrieveMarketCapitalizationDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketCapitalizationDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveMarketCapitalizationDataDelegate, new object[] {
-                        fundSelectionData,
-                        benchmarkSelectionData,
-                        effectiveDate}, this.onEndRetrieveMarketCapitalizationDataDelegate, this.onRetrieveMarketCapitalizationDataCompletedDelegate, userState);
+                        portfolioSelectionData,
+                        effectiveDate,
+                        filterType,
+                        filterValue,
+                        isExCashSecurity}, this.onEndRetrieveMarketCapitalizationDataDelegate, this.onRetrieveMarketCapitalizationDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6309,18 +6463,20 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData fundSelectionData, GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkSelectionData benchmarkSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
-                _args[0] = fundSelectionData;
-                _args[1] = benchmarkSelectionData;
-                _args[2] = effectiveDate;
+            public System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
+                _args[2] = filterType;
+                _args[3] = filterValue;
+                _args[4] = isExCashSecurity;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketCapitalizationData", _args, callback, asyncState);
                 return _result;
             }
             
-            public GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData EndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData _result = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData)(base.EndInvoke("RetrieveMarketCapitalizationData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData>)(base.EndInvoke("RetrieveMarketCapitalizationData", _args, result)));
                 return _result;
             }
             
