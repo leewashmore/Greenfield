@@ -3105,22 +3105,24 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="PerformanceGridData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class PerformanceGridData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private double FIFTH_YEARField;
+        private System.Nullable<decimal> FIFTH_YEARField;
         
-        private double FIRST_YEARField;
+        private System.Nullable<decimal> FIRST_YEARField;
         
-        private double MTDField;
+        private System.Nullable<decimal> MTDField;
         
-        private double QTDField;
+        private string NameField;
         
-        private double TENTH_YEARField;
+        private System.Nullable<decimal> QTDField;
         
-        private double THIRD_YEARField;
+        private System.Nullable<decimal> TENTH_YEARField;
         
-        private double YTDField;
+        private System.Nullable<decimal> THIRD_YEARField;
+        
+        private System.Nullable<decimal> YTDField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FIFTH_YEAR {
+        public System.Nullable<decimal> FIFTH_YEAR {
             get {
                 return this.FIFTH_YEARField;
             }
@@ -3133,7 +3135,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double FIRST_YEAR {
+        public System.Nullable<decimal> FIRST_YEAR {
             get {
                 return this.FIRST_YEARField;
             }
@@ -3146,7 +3148,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double MTD {
+        public System.Nullable<decimal> MTD {
             get {
                 return this.MTDField;
             }
@@ -3159,7 +3161,20 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double QTD {
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> QTD {
             get {
                 return this.QTDField;
             }
@@ -3172,7 +3187,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double TENTH_YEAR {
+        public System.Nullable<decimal> TENTH_YEAR {
             get {
                 return this.TENTH_YEARField;
             }
@@ -3185,7 +3200,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double THIRD_YEAR {
+        public System.Nullable<decimal> THIRD_YEAR {
             get {
                 return this.THIRD_YEARField;
             }
@@ -3198,7 +3213,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double YTD {
+        public System.Nullable<decimal> YTD {
             get {
                 return this.YTDField;
             }
@@ -4302,7 +4317,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             "DataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsPerformanceOperations/RetrievePerformanceGrid" +
             "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePerformanceGridData(string nameOfFund, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePerformanceGridData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGridData> EndRetrievePerformanceGridData(System.IAsyncResult result);
         
@@ -7065,8 +7080,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrievePerformanceGridData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePerformanceGridData(nameOfFund, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations.BeginRetrievePerformanceGridData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePerformanceGridData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -7075,8 +7090,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrievePerformanceGridData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string nameOfFund = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrievePerformanceGridData(nameOfFund, callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations)(this)).BeginRetrievePerformanceGridData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrievePerformanceGridData(System.IAsyncResult result) {
@@ -7092,11 +7108,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
             }
         }
         
-        public void RetrievePerformanceGridDataAsync(string nameOfFund) {
-            this.RetrievePerformanceGridDataAsync(nameOfFund, null);
+        public void RetrievePerformanceGridDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
+            this.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate, null);
         }
         
-        public void RetrievePerformanceGridDataAsync(string nameOfFund, object userState) {
+        public void RetrievePerformanceGridDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrievePerformanceGridDataDelegate == null)) {
                 this.onBeginRetrievePerformanceGridDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePerformanceGridData);
             }
@@ -7107,7 +7123,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 this.onRetrievePerformanceGridDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePerformanceGridDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrievePerformanceGridDataDelegate, new object[] {
-                        nameOfFund}, this.onEndRetrievePerformanceGridDataDelegate, this.onRetrievePerformanceGridDataCompletedDelegate, userState);
+                        portfolioSelectionData,
+                        effectiveDate}, this.onEndRetrievePerformanceGridDataDelegate, this.onRetrievePerformanceGridDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -7735,9 +7752,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePerformanceGridData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = nameOfFund;
+            public System.IAsyncResult BeginRetrievePerformanceGridData(GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrievePerformanceGridData", _args, callback, asyncState);
                 return _result;
             }

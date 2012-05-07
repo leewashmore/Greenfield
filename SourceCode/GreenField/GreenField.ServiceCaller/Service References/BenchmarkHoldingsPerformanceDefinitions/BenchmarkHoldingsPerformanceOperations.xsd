@@ -538,21 +538,22 @@
   <xs:element name="RetrievePerformanceGridData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="nameOfFund" nillable="true" type="xs:string" />
+        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q63:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrievePerformanceGridDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q63="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePerformanceGridDataResult" nillable="true" type="q63:ArrayOfPerformanceGridData" />
+        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePerformanceGridDataResult" nillable="true" type="q64:ArrayOfPerformanceGridData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveAttributionData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q64="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q64:PortfolioSelectionData" />
+        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q65:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
@@ -560,7 +561,7 @@
   <xs:element name="RetrieveAttributionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q65="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAttributionDataResult" nillable="true" type="q65:ArrayOfAttributionData" />
+        <xs:element xmlns:q66="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveAttributionDataResult" nillable="true" type="q66:ArrayOfAttributionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
