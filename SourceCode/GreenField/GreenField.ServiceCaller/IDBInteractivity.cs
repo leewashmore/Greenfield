@@ -109,7 +109,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback);
 
-        void RetrievePerformanceGridData(String name, Action<List<PerformanceGridData>> callback);
+        void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback);
 
         void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
 

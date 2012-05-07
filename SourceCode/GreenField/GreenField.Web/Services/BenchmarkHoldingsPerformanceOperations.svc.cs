@@ -1889,27 +1889,46 @@ namespace GreenField.Web.Services
 
         /// <summary>
         /// Retrieves Performance grid data for a particular composite/fund.
-        /// Filtering data based on the fund name.
+        /// Filtering data based on the fund name and Effective date.
         /// </summary>
-        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <param name="portfolioSelectionData">Portfolio Data that contains the name of the selected portfolio</param>
+        /// <param name="effectiveDate">Selected Effective Date</param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGridData> RetrievePerformanceGridData(String nameOfFund)
+        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
-            List<PerformanceGridData> result = new List<PerformanceGridData>();
+            if (portfolioSelectionData == null || effectiveDate == null)
+            throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+           List<PerformanceGridData> result = new List<PerformanceGridData>();
+           DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();           
+           if (performanceData == null)
+           return result;
+           String portfolioID = performanceData.PORTFOLIO;
+           String benchmarkID =  DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).FirstOrDefault().BENCHMARK_ID;
             try
             {
-                if (nameOfFund != null)
                 {
-                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
                     PerformanceGridData entry = new PerformanceGridData();
-                    ResearchEntities research = new ResearchEntities();
-                    holdingData = research.tblHoldingsDatas.ToList();
-                    result.Add(new PerformanceGridData() { MTD = 23, QTD = 29, YTD = 13, FIRST_YEAR = 12, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
-                    result.Add(new PerformanceGridData() { MTD = 13, QTD = 19, YTD = 23, FIRST_YEAR = 15, THIRD_YEAR = 17, FIFTH_YEAR = 09, TENTH_YEAR = 39 });
-                    result.Add(new PerformanceGridData() { MTD = 24, QTD = 28, YTD = 19, FIRST_YEAR = 15, THIRD_YEAR = 11, FIFTH_YEAR = 16, TENTH_YEAR = 19 });
-                    result.Add(new PerformanceGridData() { MTD = 25, QTD = 26, YTD = 15, FIRST_YEAR = 13, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
+                    entry.Name = portfolioID;
+                    entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
+                    entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
+                    entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
+                    entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
+                    entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
+                    entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
+                    entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
+                    result.Add(entry);
+                    entry = new PerformanceGridData();
+                    entry.Name = benchmarkID;
+                    entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
+                    entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
+                    entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
+                    entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
+                    entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
+                    entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
+                    entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
+                    result.Add(entry);
                 }
                 return result;
             }

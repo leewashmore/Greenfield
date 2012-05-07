@@ -417,13 +417,14 @@
   <xs:element name="ArrayOfPerformanceGridData" nillable="true" type="tns:ArrayOfPerformanceGridData" />
   <xs:complexType name="PerformanceGridData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FIFTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="FIRST_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="TENTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="THIRD_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
+      <xs:element minOccurs="0" name="FIFTH_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FIRST_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TENTH_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="THIRD_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
