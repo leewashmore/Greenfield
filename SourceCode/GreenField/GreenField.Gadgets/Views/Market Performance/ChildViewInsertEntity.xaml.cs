@@ -36,7 +36,8 @@ namespace GreenField.Gadgets.Views
             }
 
             this._groupNames = groupNames;
-            this.DataContext = new ChildViewModelInsertEntity(result);            
+            this.DataContext = new ChildViewModelInsertEntity(result);
+            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         }
 
         public MarketSnapshotPreference InsertedMarketSnapshotPreference { get; set; }
@@ -49,7 +50,8 @@ namespace GreenField.Gadgets.Views
             {
                 if (_groupNames.Contains(InsertedMarketSnapshotPreference.GroupName))
                 {
-                    MessageBox.Show("Group name '" + InsertedMarketSnapshotPreference.GroupName + "' is already present. Please input a different group name");
+                    MessageBox.Show("Group name '" + InsertedMarketSnapshotPreference.GroupName
+                        + "' is already present in this snapshot. Please input a different group name");
                     return;
                 } 
             }
@@ -59,9 +61,18 @@ namespace GreenField.Gadgets.Views
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
-            
+            this.DialogResult = false;            
         }
+
+        private void txtGroupName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
+        }
+
+        private void cmbEntitySelection_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
+        }       
 
 
         

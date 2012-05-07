@@ -1318,7 +1318,7 @@ namespace GreenField.Web.Services
                     mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
                     mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
                     mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
-                    //mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
+                    mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
                     //mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
                     mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
                     mktCapData.BenchmarkWeight = 0;
@@ -1339,7 +1339,7 @@ namespace GreenField.Web.Services
         private List<MarketCapitalizationData> RetrieveBenchmarkMktCapData(List<MarketCapitalizationData> portfolioData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
         {
            
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
+                //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
 
@@ -1347,7 +1347,7 @@ namespace GreenField.Web.Services
                 List<string> benchmarkId = portfolioData.Select(a => a.Benchmark_ID).Distinct().ToList();
 
                 //If the DataBase doesn't return a single Benchmark for a Portfolio
-                if (benchmarkId.Count != 1)
+                if (benchmarkId == null || benchmarkId.Count != 1)
                     throw new InvalidOperationException();
 
                 if (isExCashSecurity)
@@ -1373,43 +1373,75 @@ namespace GreenField.Web.Services
                     switch (filterType)
                     {
                         case GreenfieldConstants.REGION:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.COUNTRY:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.INDUSTRY:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
 
                             break;
                         case GreenfieldConstants.SECTOR:
-                            filteredResult = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+                            dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                             break;
                         default:
                             break;
                     }
                 }
-
+                //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
+                //    portfolioData.Capacity = portfolioData.Count + dimensionServiceBenchmarkData.Count;
                 //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
-                foreach (GF_BENCHMARK_HOLDINGS benchmarkData in filteredResult)
+                foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
                 {
-                    foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
-                    {
-                        if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                        {
-                            MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                    var existingPortfolio = from p in portfolioData
+                                            where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
+                                            select p;
 
-                            mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                            mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                            mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                            mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-                           
-                            portfolioData.Add(mktCapData);
-                        }
-                    }                    
+                    if (existingPortfolio.Count() == 0)
+                    {
+                        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                        portfolioData.Add(mktCapData);
+                    }
+                    //for (int i = portfolioData.Count - 1; i >= 0; i--)
+                    //{
+                    //    if (portfolioData[i].AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                    //    {
+                    //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                    //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                    //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                    //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                    //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                    //        portfolioData.Add(mktCapData);
+                    //        break;
+                    //    }
+                    //}
+
+                    //foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
+                    //{
+                    //    if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                    //    {
+                    //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                    //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                    //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                    //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                    //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                    //        portfolioData.Add(mktCapData);
+                    //    }
+                    //}                    
                 }
 
                 return portfolioData;
@@ -1499,70 +1531,7 @@ namespace GreenField.Web.Services
 
         
 
-        /// <summary>
-        /// Retrieves Portfolio Risk Return Data
-        /// </summary>
-        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
-        /// <param name="benchmarkSelectionData">Contains Selected Benchmark Data </param>
-        /// <param name="effectiveDate">Effective Date selected by user</param>
-        /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate)
-        {
-            try
-            {
-                List<PortfolioRiskReturnData> portfolioRiskReturnValues = new List<PortfolioRiskReturnData>();
-
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Expected Return",
-                    PortfolioValue = 18.1.ToString(),
-                    BenchMarkValue = 15.3.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Alpha",
-                    PortfolioValue = 1.8.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Beta",
-                    PortfolioValue = 0.95.ToString(),
-                    BenchMarkValue = "N/A"
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Standard Deviation",
-                    PortfolioValue = 15.1.ToString(),
-                    BenchMarkValue = 15.7.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Sharpe Ratio",
-                    PortfolioValue = 0.18.ToString(),
-                    BenchMarkValue = 0.13.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Information Ratio",
-                    PortfolioValue = 1.81.ToString()
-                });
-                portfolioRiskReturnValues.Add(new PortfolioRiskReturnData()
-                {
-                    DataPointName = "Turnover Ratio",
-                    PortfolioValue = 11.14.ToString()
-                });
-                return portfolioRiskReturnValues;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+       
 
         #region Heat Map Operation Contract
         [OperationContract]
@@ -2230,6 +2199,50 @@ namespace GreenField.Web.Services
                     result.Add(entry);
                 }
 
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Portfolio Risk Return Data
+        /// </summary>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
+        /// <param name="benchmarkSelectionData">Contains Selected Benchmark Data </param>
+        /// <param name="effectiveDate">Effective Date selected by user</param>
+        /// <returns>returns List of PortfolioRiskReturnData containing Portfolio Risk Return Data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        {
+            if (portfolioSelectionData == null || effectiveDate == null)
+                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+            List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
+           List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            if (riskReturnData == null)
+                return result;            
+            try
+            {
+                PortfolioRiskReturnData entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Alpha";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE=="Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.PortfolioValue =(riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                result.Add(entry);
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Beta";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                result.Add(entry);
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Information Ratio";
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                result.Add(entry);
                 return result;
             }
             catch (Exception ex)

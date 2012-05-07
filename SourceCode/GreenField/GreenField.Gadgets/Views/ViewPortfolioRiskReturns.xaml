@@ -7,6 +7,13 @@
              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
     
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>          
@@ -21,11 +28,35 @@
                                      CanUserDeleteRows="False" IsReadOnly="True"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
-                                     UseLayoutRounding="True">
+                                     UseLayoutRounding="True"
+                                     FontSize="7"
+                                     FontFamily="Arial"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="dgDataPointName" Header=" " DataMemberBinding="{Binding DataPointName}" Width="*" TextAlignment="Left"/>
-                    <telerik:GridViewDataColumn x:Name="dgPortfolioValue" Header="Portfolio" DataMemberBinding="{Binding PortfolioValue}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn x:Name="dgBenchMarkValue" Header="BenchMark" DataMemberBinding="{Binding BenchMarkValue}" Width="Auto" HeaderTextAlignment="Right" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="dgDataPointName" 
+                                                Header=" " 
+                                                DataMemberBinding="{Binding DataPointName}" 
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="*" 
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"/>
+                    <telerik:GridViewDataColumn x:Name="dgPortfolioValue" 
+                                                Header="Portfolio" 
+                                                DataMemberBinding="{Binding PortfolioValue}" 
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                Width="*"   
+                                                HeaderTextAlignment="Left"                                                    
+                                                TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn x:Name="dgBenchMarkValue" 
+                                                 Header="BenchMark" 
+                                                 DataMemberBinding="{Binding BenchMarkValue}" 
+                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                 Width="*"   
+                                                 HeaderTextAlignment="Left"
+                                                 DataFormatString="{}{0:n2}"
+                                                 TextAlignment="Right"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>

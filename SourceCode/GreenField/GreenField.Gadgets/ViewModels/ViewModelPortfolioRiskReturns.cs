@@ -46,12 +46,7 @@ namespace GreenField.Gadgets.ViewModels
         /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
-
-        /// <summary>
-        ///  private member object of the BenchmarkSelectionData class for storing Benchmark Selection Data
-        /// </summary>
-        private BenchmarkSelectionData _benchmarkSelectionData;
-
+       
         /// <summary>
         /// Contains the effective date
         /// </summary>
@@ -69,23 +64,20 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;           
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);             
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null )
             {
-                _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
             }
-           // _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrievePortfolioRiskReturnDataCallbackMethod);
+          
         }
         #endregion
 
@@ -128,9 +120,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+                        if (null != portfolioRiskReturnDataLoadedEvent)
+                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -160,9 +154,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+                        if (null != portfolioRiskReturnDataLoadedEvent)
+                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
                     }
                 }
                 else
@@ -178,37 +174,6 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        /// <summary>
-        /// Assigns UI Field Properties based on Benchmark reference
-        /// </summary>
-        /// <param name="benchmarkSelectionData">Object of BenchmarkSelectionData Class containg Benchmark data</param>
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (benchmarkSelectionData != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-                    {
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
         #endregion
 
         #region Callback Methods
@@ -228,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PortfolioRiskReturnInfo = new ObservableCollection<PortfolioRiskReturnData>(result);
                     if (null != portfolioRiskReturnDataLoadedEvent)
-                        portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
@@ -243,6 +208,18 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        #endregion       
+        #endregion 
+      
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);           
+        }
+
+        #endregion
     }
 }

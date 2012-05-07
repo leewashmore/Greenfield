@@ -129,7 +129,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        private Decimal? GetPricingDataByInstrumentIdReturnTypeAndFromDate(string instrumentId, string returnType, DateTime recordDate, out DateTime returnDate)
+        private Decimal? GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(string instrumentId, string returnType, DateTime recordDate, out DateTime returnDate)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
             GF_PRICING_BASEVIEW pricingRecord = null;
@@ -190,61 +190,61 @@ namespace GreenField.Web.Services
 
                     #region Today's Pricing Data
                     DateTime presentBusinessDate = DateTime.Today;
-                    Decimal? presentBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? presentBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, presentBusinessDate, out presentBusinessDate);
                     #endregion
 
                     #region Last Date Pricing Data
                     DateTime lastBusinessDate = presentBusinessDate;
-                    Decimal? lastBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? lastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastBusinessDate, out lastBusinessDate);
                     #endregion
 
                     #region Second Last Date Pricing Data
                     DateTime secondLastBusinessDate = lastBusinessDate;
-                    Decimal? secondLastBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? secondLastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, secondLastBusinessDate, out secondLastBusinessDate);
                     #endregion
 
                     #region Last Week Date Pricing Data
                     DateTime lastWeekBusinessDate = DateTime.Today.AddDays(-7);
-                    Decimal? lastWeekBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? lastWeekBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastWeekBusinessDate, out lastWeekBusinessDate);
                     #endregion
 
                     #region Last Month Date Pricing Data
                     DateTime lastMonthBusinessDate = DateTime.Today.AddMonths(-1);
-                    Decimal? lastMonthBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? lastMonthBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastMonthBusinessDate, out lastMonthBusinessDate);
                     #endregion
 
                     #region Last Quarter Date Pricing Data
                     DateTime lastQuarterBusinessDate = DateTime.Today.AddMonths(-3);
-                    Decimal? lastQuarterBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? lastQuarterBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastQuarterBusinessDate, out lastQuarterBusinessDate);
                     #endregion
 
                     #region Last Year Date Pricing Data
                     DateTime lastYearBusinessDate = new DateTime(DateTime.Today.Year - 1, 12, 31);
-                    Decimal? lastYearBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? lastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastYearBusinessDate, out lastYearBusinessDate);
                     #endregion
 
                     #region Second Last Year Date Pricing Data
                     DateTime secondLastYearBusinessDate = new DateTime(DateTime.Today.Year - 2, 12, 31);
-                    Decimal? secondLastYearBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? secondLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, secondLastYearBusinessDate, out secondLastYearBusinessDate);
                     #endregion
 
                     #region Third Last Year Date Pricing Data
                     DateTime thirdLastYearBusinessDate = new DateTime(DateTime.Today.Year - 3, 12, 31);
-                    Decimal? thirdLastYearBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? thirdLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, thirdLastYearBusinessDate, out thirdLastYearBusinessDate);
                     #endregion
 
                     #region Fourth Last Year Date Pricing Data
                     DateTime fourthLastYearBusinessDate = new DateTime(DateTime.Today.Year - 4, 12, 31);
-                    Decimal? fourthLastYearBusinessDatePrice = GetPricingDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    Decimal? fourthLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, fourthLastYearBusinessDate, out fourthLastYearBusinessDate);
                     #endregion
 
@@ -518,7 +518,11 @@ namespace GreenField.Web.Services
                         preference.EntityType, preference.EntityOrder);
                 }
 
-                return null;
+                MarketSnapshotSelectionData result = (entity.GetMarketSnapshotSelectionData(userName))
+                    .ToList<MarketSnapshotSelectionData>()
+                    .Where(record => record.SnapshotName == snapshotName)
+                    .FirstOrDefault();
+                return result;
             }
 
             catch (Exception ex)

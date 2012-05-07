@@ -126,8 +126,8 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void SetGridHeaders()
         {
-            //Entity Descrition
-            this.radGridSnapshot.Columns[0].Header = String.Empty;
+            //Entity Description
+            this.radGridSnapshot.Columns[0].Header = "Description";
             //Entity Return Type
             this.radGridSnapshot.Columns[1].Header = "Return";
             //Market Performance for Last Working Date
