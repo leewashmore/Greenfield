@@ -85,7 +85,7 @@
 			 contract="LoggingDefinitions.LoggingOperations" name="BasicHttpBinding_LoggingOperations" />
 			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsPerformanceOperations"
-			 contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
+			 contract="BenchmarkHoldingsDefinitions.BenchmarkHoldingsPerformanceOperations"
 			 name="BenchmarkHoldingsPerformanceOperations" />
 		</client>
 

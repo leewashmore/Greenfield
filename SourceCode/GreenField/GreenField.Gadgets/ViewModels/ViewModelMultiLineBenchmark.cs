@@ -14,7 +14,7 @@ using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 
 namespace GreenField.Gadgets.ViewModels

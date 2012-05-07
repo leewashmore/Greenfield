@@ -16,7 +16,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
 using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {

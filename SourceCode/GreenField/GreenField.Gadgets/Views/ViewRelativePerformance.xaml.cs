@@ -21,7 +21,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Events;
 using Telerik.Windows.Controls;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.Views
 {

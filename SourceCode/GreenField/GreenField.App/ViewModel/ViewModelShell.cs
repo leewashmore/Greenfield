@@ -20,7 +20,7 @@ using GreenField.App.Models;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;
 using GreenField.App.Helpers;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 

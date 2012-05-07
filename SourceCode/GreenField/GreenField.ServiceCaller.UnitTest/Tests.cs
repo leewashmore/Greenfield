@@ -12,7 +12,7 @@ using Microsoft.Silverlight.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GreenField.ServiceCaller;
 using System.Collections.Generic;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 

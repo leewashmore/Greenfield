@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller;
 using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {

@@ -74,7 +74,7 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Services\BenchmarkHoldingsPerformanceOperations.svc" />
+    <Content Include="Services\BenchmarkHoldingsOperations.svc" />
     <Content Include="Services\DashboardOperations.svc" />
     <Content Include="Services\LoggingOperations.svc" />
     <Content Include="Services\LoginOperations.svc" />
@@ -146,8 +146,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\BenchmarkHoldingsPerformanceOperations.svc.cs">
-      <DependentUpon>BenchmarkHoldingsPerformanceOperations.svc</DependentUpon>
+    <Compile Include="Services\BenchmarkHoldingsOperations.svc.cs">
+      <DependentUpon>BenchmarkHoldingsOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DashboardOperations.svc.cs">
       <DependentUpon>DashboardOperations.svc</DependentUpon>

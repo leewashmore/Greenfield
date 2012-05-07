@@ -15,7 +15,7 @@ using Microsoft.Practices.Prism.Events;
 using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common.Helper;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels

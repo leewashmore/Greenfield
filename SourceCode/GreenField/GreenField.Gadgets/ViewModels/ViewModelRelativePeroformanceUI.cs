@@ -14,7 +14,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.Generic;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.PerformanceDefinitions;
