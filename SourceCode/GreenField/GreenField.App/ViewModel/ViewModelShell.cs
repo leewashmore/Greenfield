@@ -64,7 +64,7 @@ namespace GreenField.App.ViewModel
 
             if(_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotUpdateSelectionEvent);
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
             }
             if (_manageSessions != null)
             {
@@ -657,7 +657,7 @@ namespace GreenField.App.ViewModel
             {
                 _marketPerformanceSnapshotSearchText = value;
                 RaisePropertyChanged(() => this.MarketPerformanceSnapshotSearchText);
-                if (value != String.Empty && MarketSnapshotSelectionInfo != null)
+                if (value != String.Empty && value != null && MarketSnapshotSelectionInfo != null)
                     MarketSnapshotSelectorInfo = MarketSnapshotSelectionInfo
                                 .Where(record => record.SnapshotName.ToLower().Contains(value.ToLower())).ToList();
                 else
@@ -1161,8 +1161,8 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Event Handlers
-        public void HandleMarketPerformanceSnapshotUpdateSelectionEvent(MarketPerformanceSnapshotActionPayload result)
-        {
+        public void HandleMarketPerformanceSnapshotActionCompletionEvent(MarketPerformanceSnapshotActionPayload result)
+        { 
             switch (result.ActionType)
             {
                 case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE:
@@ -1182,8 +1182,6 @@ namespace GreenField.App.ViewModel
                 default:
                     break;
             }
-            
-            RetrieveMarketSnapshotSelectionData();
         } 
         #endregion
 

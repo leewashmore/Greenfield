@@ -76,6 +76,16 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+        #region Snapshot Header
+        public string MorningSnapshotHeader
+        {
+            get
+            { 
+                return "Market Performance Snapshot (" + DateTime.Today.ToShortDateString() + ")"; 
+            }            
+        } 
+        #endregion        
+
         #region Entity Selection Data
         /// <summary>
         /// Entity selection data for securities, commodities, benchmarks/indecies

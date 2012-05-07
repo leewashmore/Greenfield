@@ -311,7 +311,8 @@
                         <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
                                      SelectedItem="{Binding SelectedMarketSnapshotSelectionInfo, Mode=TwoWay}"
                                      Text="{Binding MarketPerformanceSnapshotSearchText, Mode=TwoWay}"
-                                     DisplayMemberPath="SnapshotName"                                             
+                                     DisplayMemberPath="SnapshotName"      
+                                             VerticalContentAlignment="Center"
                                      FontSize="7"
                                      FontFamily="Arial"
                                      telerik:TextSearch.TextPath="SnapshotName"  
@@ -328,23 +329,23 @@
                                      IsEditable="True" 
                                      IsFilteringEnabled="True"/>
                         <telerik:RadButton Name="btnSaveMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
-                            Margin="5,0,0,0" ToolTipService.ToolTip="Save" Command="{Binding MarketSnapshotSaveCommand}"
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Save" Command="{Binding MarketSnapshotSaveCommand}"
                                            telerik:StyleManager.Theme="Metro">
-                            <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                            <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Stretch="Fill"/>
                         </telerik:RadButton>
                         <Button Name="btnSaveAsMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
-                            Margin="5,0,0,0" ToolTipService.ToolTip="Save As" Command="{Binding MarketSnapshotSaveAsCommandMethod}">
-                            <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Save As" Command="{Binding MarketSnapshotSaveAsCommand}">
+                            <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Stretch="Fill"/>
                         </Button>
                         <telerik:RadButton Name="btnAddNewMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
-                            Margin="5,0,0,0" ToolTipService.ToolTip="Add New" Command="{Binding MarketSnapshotAddCommandMethod}"
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Add New" Command="{Binding MarketSnapshotAddCommand}"
                                            telerik:StyleManager.Theme="Metro">
-                            <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                            <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Stretch="Fill"/>
                         </telerik:RadButton>
                         <Button Name="btnDeleteMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
-                            Margin="5,0,0,0" ToolTipService.ToolTip="Delete" Command="{Binding MarketSnapshotRemoveCommandMethod}"
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Delete" Command="{Binding MarketSnapshotRemoveCommand}"
                                 telerik:StyleManager.Theme="Metro">
-                            <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
+                            <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Stretch="Fill"/>
                         </Button>
                     </StackPanel>
                     </telerik:RadBusyIndicator>

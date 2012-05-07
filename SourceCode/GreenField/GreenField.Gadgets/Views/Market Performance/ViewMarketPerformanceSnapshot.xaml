@@ -26,8 +26,7 @@
         </ResourceDictionary>        
     </UserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}"
-                              telerik:StyleManager.Theme="Metro" Foreground="#213671" FontSize="8" FontFamily="Arial"
+    <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="8" FontFamily="Arial"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
         <Grid x:Name="LayoutRoot">
             <Grid>
@@ -37,48 +36,43 @@
                 </Grid.RowDefinitions>
 
                 <!--gadget header-->
-                <TextBlock Text="{Binding MorningSnapshotHeader}" Grid.Row="0" HorizontalAlignment="Center"
-                       VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                <TextBlock Grid.Row="0" Text="{Binding MorningSnapshotHeader}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
 
                 <!--grid containing benchmark data-->
-                <telerik:RadGridView HorizontalAlignment="Left" Margin="0,5,0,0" Name="radGridSnapshot" VerticalAlignment="Top" IsReadOnly="true" 
+                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" 
                                  ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                  AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
-                                 telerik:StyleManager.Theme="Metro" AutoExpandGroups="True" FontSize="7" FontFamily="Arial"
+                                 telerik:StyleManager.Theme="Metro" AutoExpandGroups="True" FontSize="7" FontFamily="Arial" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
                                  ItemsSource="{Binding MarketPerformanceSnapshotInfo}" IsFilteringAllowed="False"
                                  SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False">
-                    <!--<telerik:RadGridView.GroupHeaderTemplate>
-                    <DataTemplate>
-                        <TextBlock Foreground="#9DA6C0" Text="{Binding}"/>
-                    </DataTemplate>
-                </telerik:RadGridView.GroupHeaderTemplate>-->
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
-                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened">
+                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="8" FontFamily="Arial">
                             <telerik:RadContextMenu.Items>
-                                <telerik:RadMenuItem x:Name="miAddGroup" Header="Add Group" FontWeight="Bold" Command="{Binding AddEntityGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miAddGroup" Height="25" VerticalContentAlignment="Center" Header="Add Group" FontWeight="Bold" Command="{Binding AddEntityGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/AddGroup.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miRemoveGroup" Header="Remove Group" FontWeight="Bold" Command="{Binding RemoveEntityGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miRemoveGroup" Height="25" VerticalContentAlignment="Center" Header="Remove Group" FontWeight="Bold" Command="{Binding RemoveEntityGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/RemoveGroup.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miAddEntity" Header="Add Entity to Group" FontWeight="Bold" Command="{Binding AddEntityToGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miAddEntity" Height="25" VerticalContentAlignment="Center" Header="Add Entity to Group" FontWeight="Bold" Command="{Binding AddEntityToGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/AddEntity.png" Stretch="Fill"/>
                                         </DataTemplate>
                                     </telerik:RadMenuItem.IconTemplate>
                                 </telerik:RadMenuItem>
-                                <telerik:RadMenuItem x:Name="miRemoveEntity" Header="Remove Entity from Group" FontWeight="Bold" Command="{Binding RemoveEntityFromGroupCommand}">
+                                <telerik:RadMenuItem x:Name="miRemoveEntity" Height="25" VerticalContentAlignment="Center" Header="Remove Entity from Group" FontWeight="Bold" Command="{Binding RemoveEntityFromGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>
                                         <DataTemplate>
                                             <Image Source="/GreenField.Gadgets;component/Images/RemoveEntity.png" Stretch="Fill"/>
@@ -90,11 +84,11 @@
                     </telerik:RadContextMenu.ContextMenu>
                     <telerik:RadGridView.Columns>
                         <!--Entity Description Column-->
-                        <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left"
-                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityName}"
+                        <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
+                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityName}" 
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         <!--Entity Return Type Column-->
-                        <telerik:GridViewDataColumn Width="*" IsReadOnly="true" TextAlignment="Right" HeaderTextAlignment="Right"
+                        <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
                                                 DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityReturnType}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         <!--Entity Performance Return Columns-->

@@ -86,7 +86,7 @@ namespace GreenField.Common
 
       public static class EntityReturnType
     {
-        public static string TotalReturnType = "Total(Gross)";
+        public static string TotalReturnType = "Total";
         public static string NetReturnType = "Net";
         public static string PriceReturnType = "Price";
     }

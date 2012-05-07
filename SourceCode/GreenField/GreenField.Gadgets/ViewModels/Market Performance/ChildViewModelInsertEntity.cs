@@ -92,7 +92,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
         /// </summary>
@@ -132,7 +131,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (EntitySelectionInfo != null)
                 {
-                    if (value != String.Empty)
+                    if (value != String.Empty && value != null)
                     {
                         EntityFilterSelectionInfo = EntitySelectionInfo
                             .Where(record => record.ShortName.ToLower().Contains(value.ToLower())
@@ -156,18 +155,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedEntity = value;
                 this.RaisePropertyChanged(() => this.SelectedEntity);
-                if (value.Type == EntityType.SECURITY || value.Type == EntityType.BENCHMARK)
+                if (value != null)
                 {
-                    ReturnTypeSelectionVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    ReturnTypeSelectionVisibility = Visibility.Collapsed;
-                    SelectedMarketSnapshotPreference.EntityReturnType = null;
-                }
+                    if (value.Type == EntityType.SECURITY || value.Type == EntityType.BENCHMARK)
+                    {
+                        ReturnTypeSelectionVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ReturnTypeSelectionVisibility = Visibility.Collapsed;
+                        SelectedMarketSnapshotPreference.EntityReturnType = null;
+                    }
 
-                SelectedMarketSnapshotPreference.EntityName = value.LongName;
-                SelectedMarketSnapshotPreference.EntityType = value.Type;
+                    SelectedMarketSnapshotPreference.EntityName = value.LongName;
+                    SelectedMarketSnapshotPreference.EntityType = value.Type; 
+                }
             }
         }
         #endregion
@@ -187,7 +189,6 @@ namespace GreenField.Gadgets.ViewModels
                         .ToList();
                     BenchmarkToggleChecked = !value;
                     CommodityToggleChecked = !value;
-                    IndexToggleChecked = !value;
                 }
             }
         }
@@ -203,11 +204,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
-                                .Where(record => record.Type == EntityType.BENCHMARK)
+                                .Where(record => record.Type == EntityType.INDEX)
                                 .ToList();
                     SecurityToggleChecked = !value;
                     CommodityToggleChecked = !value;
-                    IndexToggleChecked = !value;
                 }
             }
         }
@@ -227,33 +227,9 @@ namespace GreenField.Gadgets.ViewModels
                                 .ToList();
                     SecurityToggleChecked = !value;
                     BenchmarkToggleChecked = !value;
-                    IndexToggleChecked = !value;
                 }
             }
         }
-
-        private bool? _indexToggleChecked = false;
-        public bool? IndexToggleChecked
-        {
-            get { return _indexToggleChecked; }
-            set
-            {
-                _indexToggleChecked = value;
-                RaisePropertyChanged(() => this.IndexToggleChecked);
-                if (value == true)
-                {
-                    EntitySelectionInfo = EntitySelectionInfoSource
-                                .Where(record => record.Type == EntityType.INDEX)
-                                .ToList();
-                    SecurityToggleChecked = !value;
-                    BenchmarkToggleChecked = !value;
-                    CommodityToggleChecked = !value;
-                }
-            }
-        }
-
-
-
 
         #region Return Type Selection
         /// <summary>
@@ -323,7 +299,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_selectedMarketSnapshotPreference == null)
                 {
-                    _selectedMarketSnapshotPreference = new MarketSnapshotPreference();
+                    _selectedMarketSnapshotPreference = new MarketSnapshotPreference() { EntityReturnType = EntityReturnType.TotalReturnType };
                 }
                 return _selectedMarketSnapshotPreference;
             }
