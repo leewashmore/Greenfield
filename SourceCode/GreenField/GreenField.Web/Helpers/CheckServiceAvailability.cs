@@ -20,9 +20,10 @@ namespace GreenField.Web.Helpers
                 MetadataSet metaData = client.GetMetadata();
                 return isServiceUp;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 isServiceUp = false;
+                ExceptionTrace.LogException(ex);
                 return isServiceUp;
             }
         }
