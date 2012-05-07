@@ -14,6 +14,7 @@ using GreenField.DAL;
 using System.ServiceModel.Activation;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
+using System.ServiceModel.Description;
 using System.Data.Objects;
 
 namespace GreenField.Web.Services
@@ -53,6 +54,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 List<PortfolioSelectionData> result = new List<PortfolioSelectionData>();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -1258,7 +1265,6 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
 
-
                 if (entity.GF_PORTFOLIO_HOLDINGS == null && entity.GF_BENCHMARK_HOLDINGS.Count() == 0)
                     return null;
 
@@ -2234,5 +2240,7 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
+
     }
 }

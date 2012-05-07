@@ -11,6 +11,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
 
+
 namespace GreenField.ServiceCaller
 {
     /// <summary>
@@ -799,6 +800,8 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
+
+
         /// <summary>
         /// Retrieves filter values for a selected filter type by calling the service
         /// </summary>
@@ -1437,6 +1440,39 @@ namespace GreenField.ServiceCaller
         }
 
         #endregion
+
+        #endregion
+
+        #region Slice3 Interaction Methods
+
+        /// <summary>
+        /// Service Caller Method for Relative Performance UI Data
+        /// </summary>
+        /// <param name="objSelectedEntity">Data of Selected Entities</param>
+        /// <param name="objEffectiveDate">Selected Date</param>
+        /// <param name="callback">List of Relative Performance Data</param>
+        public void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceUIDataAsync(objSelectedEntity, objEffectiveDate);
+            client.RetrieveRelativePerformanceUIDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
 
         #endregion
     }

@@ -101,11 +101,17 @@ namespace GreenField.DashboardModule.Views
                 Content = null
             });
 
+
+
+
+
+
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 400,
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = null
+                Content = new ViewRelativePerformanceUI(new ViewModelRelativePeroformanceUI(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

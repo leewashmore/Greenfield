@@ -375,7 +375,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected effective date - Publishes EffectiveDateReferenceSetEvent on set event
         /// </summary>
-        private DateTime? _selectedEffectiveDateInfo = null;
+        private DateTime? _selectedEffectiveDateInfo = DateTime.Today.AddDays(-1);
         public DateTime? SelectedEffectiveDateInfo
         {
             get

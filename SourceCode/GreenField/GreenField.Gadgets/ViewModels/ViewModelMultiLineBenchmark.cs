@@ -34,7 +34,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-            #region Constructor
+        #region Constructor
 
         public ViewModelMultiLineBenchmark(DashboardGadgetParam param)
         {
@@ -131,8 +131,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if(_gridBenchmarkData==null)
-                    _gridBenchmarkData= new RangeObservableCollection<BenchmarkGridReturnData>();
+                if (_gridBenchmarkData == null)
+                    _gridBenchmarkData = new RangeObservableCollection<BenchmarkGridReturnData>();
                 return _gridBenchmarkData;
             }
             set

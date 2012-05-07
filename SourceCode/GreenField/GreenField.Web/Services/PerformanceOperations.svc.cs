@@ -5,6 +5,9 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.ServiceModel.Activation;
+using GreenField.Web.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using System.Configuration;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using System.Resources;
@@ -15,6 +18,9 @@ using GreenField.DAL;
 
 namespace GreenField.Web.Services
 {
+    /// <summary>
+    /// Service for Performance Operations
+    /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class PerformanceOperations
@@ -38,6 +44,33 @@ namespace GreenField.Web.Services
                 return new ResourceManager(typeof(FaultDescriptions));
             }
         }
+
+        [OperationContract]
+        public List<RelativePerformanceUIData> RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate)
+        {
+            //Null Arguement Check
+            if ((objSelectedEntity == null) || (objEffectiveDate == null) || (objSelectedEntity.Count == 0))
+                throw new Exception();
+
+            //If dictionary object doesn't contains Security/Portfolio data, return empty set
+            if (!objSelectedEntity.ContainsKey("SECURITY") || !objSelectedEntity.ContainsKey("PORTFOLIO"))
+                return new List<RelativePerformanceUIData>();
+
+            //Create new Entity for service
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+
+            string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
+            string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
+            List<string> countryName = new List<string>();
+            List<string> SectorName = new List<string>();
+
+            countryName = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).Select(a => a.COUNTRY_NAME).ToList();
+            SectorName = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).Select(a => a.GICS_LVL1).ToList();
+
+            List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
+            return result;
+        }
+
 
         #region Market Performance Snapshot Operation Contracts
 
@@ -409,7 +442,6 @@ namespace GreenField.Web.Services
                                 , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);
                         }
                     }
-
                 }
 
                 foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
@@ -497,7 +529,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public bool RemoveMarketSnapshotPreference(string userName, string snapshotName)

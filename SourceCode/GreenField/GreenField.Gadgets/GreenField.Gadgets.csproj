@@ -165,6 +165,7 @@
     <Compile Include="ViewModels\ViewModelRelativePerformanceCountryActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
+    <Compile Include="ViewModels\ViewModelRelativePeroformanceUI.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
@@ -238,6 +239,9 @@
     </Compile>
     <Compile Include="Views\ViewRelativePerformance.xaml.cs">
       <DependentUpon>ViewRelativePerformance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewRelativePerformanceUI.xaml.cs">
+      <DependentUpon>ViewRelativePerformanceUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewSectorBreakdown.xaml.cs">
       <DependentUpon>ViewSectorBreakdown.xaml</DependentUpon>
@@ -359,6 +363,10 @@
     <Page Include="Views\ViewRelativePerformance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewRelativePerformanceUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewSectorBreakdown.xaml">
       <SubType>Designer</SubType>

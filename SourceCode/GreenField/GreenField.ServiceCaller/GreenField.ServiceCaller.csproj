@@ -275,6 +275,9 @@
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.RelativePerformanceUIData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
       <SubType>Designer</SubType>

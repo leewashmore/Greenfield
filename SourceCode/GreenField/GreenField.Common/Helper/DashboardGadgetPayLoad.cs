@@ -23,7 +23,18 @@ namespace GreenField.Common.Helper
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
-        public DateTime? EffectiveDate { get; set; }
+        private DateTime? _effectiveDate = DateTime.Now.AddDays(-1);
+        public DateTime? EffectiveDate
+        {
+            get
+            {
+                return _effectiveDate;
+            }
+            set
+            {
+                _effectiveDate = value;
+            }
+        }
        
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 

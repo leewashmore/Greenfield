@@ -122,6 +122,7 @@
     <Compile Include="DataContracts\RelativePerformanceActivePositionData.cs" />
     <Compile Include="DataContracts\RelativePerformanceData.cs" />
     <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceUIData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
     <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
+    <Compile Include="Helpers\CheckServiceAvailability.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\GreenfieldConstants.cs" />
@@ -189,7 +191,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Helpers\Service Faults\FaultDescriptions.resx" />
+    <EmbeddedResource Include="Helpers\Service Faults\FaultDescriptions.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

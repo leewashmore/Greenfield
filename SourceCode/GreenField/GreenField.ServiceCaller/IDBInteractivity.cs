@@ -93,6 +93,8 @@ namespace GreenField.ServiceCaller
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
+
+
         void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
 
         void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback);
@@ -120,6 +122,12 @@ namespace GreenField.ServiceCaller
         void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback);
 
         void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback);
+        #endregion
+
+        #region Slice-3
+
+        void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback);
+
         #endregion
 
     }

@@ -64,7 +64,7 @@
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="BasicHttpBinding_PerformanceOperations" maxBufferSize="2147483647"
+    <binding name="PerformanceOperations" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
@@ -92,8 +92,8 @@
     contract="BenchmarkHoldingsPerformanceDefinitions.BenchmarkHoldingsPerformanceOperations"
     name="BenchmarkHoldingsPerformanceOperations" />
    <endpoint address="http://localhost:59430/Services/PerformanceOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_PerformanceOperations"
-    contract="PerformanceDefinitions.PerformanceOperations" name="BasicHttpBinding_PerformanceOperations" />
+    binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
+    contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
   </client>
 
 	</system.serviceModel>
