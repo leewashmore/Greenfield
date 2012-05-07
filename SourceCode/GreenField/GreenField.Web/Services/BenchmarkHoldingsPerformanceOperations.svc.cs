@@ -1319,7 +1319,7 @@ namespace GreenField.Web.Services
                     mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
                     mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
                     mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
-                    //mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
+                    mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
                     mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
                     mktCapData.BenchmarkWeight = 0;
                     
@@ -1466,8 +1466,9 @@ namespace GreenField.Web.Services
                          throw new ArgumentNullException(ServiceFaultResourceManager.GetString(GreenfieldConstants.SERVICE_NULL_ARG_EXC_MSG).ToString());
 
                      List<MarketCapitalizationData> mktCap = new List<MarketCapitalizationData>();
+                     List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
                      MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-                
+                                     
                     //Consolidated list Portfolio and benchmark Data
                      mktCap = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
 
@@ -1512,8 +1513,8 @@ namespace GreenField.Web.Services
                     mktCapData.BenchmarkSumMicroRange = lstmktCapBenchmark[0].BenchmarkSumMicroRange;
                     mktCapData.BenchmarkSumUndefinedRange = lstmktCapBenchmark[0].BenchmarkSumUndefinedRange;
 
-                    mktCap.Add(mktCapData);
-                    return mktCap;  
+                    result.Add(mktCapData);
+                    return result;  
 
             }
             catch (Exception ex)

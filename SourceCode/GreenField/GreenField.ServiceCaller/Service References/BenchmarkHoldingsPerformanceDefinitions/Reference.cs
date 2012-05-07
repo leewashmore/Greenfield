@@ -1747,59 +1747,59 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         
         private string AsecSecShortNameField;
         
-        private System.Nullable<decimal> BenchmarkSumLargeRangeField;
+        private decimal BenchmarkSumLargeRangeField;
         
-        private System.Nullable<decimal> BenchmarkSumMediumRangeField;
+        private decimal BenchmarkSumMediumRangeField;
         
-        private System.Nullable<decimal> BenchmarkSumMegaRangeField;
+        private decimal BenchmarkSumMegaRangeField;
         
-        private System.Nullable<decimal> BenchmarkSumMicroRangeField;
+        private decimal BenchmarkSumMicroRangeField;
         
-        private System.Nullable<decimal> BenchmarkSumSmallRangeField;
+        private decimal BenchmarkSumSmallRangeField;
         
-        private System.Nullable<decimal> BenchmarkSumUndefinedRangeField;
+        private decimal BenchmarkSumUndefinedRangeField;
         
         private System.Nullable<decimal> BenchmarkWeightField;
         
-        private System.Nullable<decimal> BenchmarkWtdAvgField;
+        private decimal BenchmarkWtdAvgField;
         
-        private System.Nullable<decimal> BenchmarkWtdMedianField;
+        private decimal BenchmarkWtdMedianField;
         
         private string Benchmark_IDField;
         
-        private System.Nullable<decimal> LargeRangeField;
+        private decimal LargeRangeField;
         
         private System.Nullable<decimal> MarketCapitalInUSDField;
         
-        private System.Nullable<decimal> MediumRangeField;
+        private decimal MediumRangeField;
         
-        private System.Nullable<decimal> MicroRangeField;
+        private decimal MicroRangeField;
         
         private System.Nullable<decimal> PortfolioDirtyValuePCField;
         
-        private System.Nullable<decimal> PortfolioSumLargeRangeField;
+        private decimal PortfolioSumLargeRangeField;
         
-        private System.Nullable<decimal> PortfolioSumMediumRangeField;
+        private decimal PortfolioSumMediumRangeField;
         
-        private System.Nullable<decimal> PortfolioSumMegaRangeField;
+        private decimal PortfolioSumMegaRangeField;
         
-        private System.Nullable<decimal> PortfolioSumMicroRangeField;
+        private decimal PortfolioSumMicroRangeField;
         
-        private System.Nullable<decimal> PortfolioSumSmallRangeField;
+        private decimal PortfolioSumSmallRangeField;
         
-        private System.Nullable<decimal> PortfolioSumUndefinedRangeField;
+        private decimal PortfolioSumUndefinedRangeField;
         
-        private System.Nullable<decimal> PortfolioWtdAvgField;
+        private decimal PortfolioWtdAvgField;
         
-        private System.Nullable<decimal> PortfolioWtdMedianField;
+        private decimal PortfolioWtdMedianField;
         
         private string Portfolio_IDField;
         
         private string SecurityThemeCodeField;
         
-        private System.Nullable<decimal> SmallRangeField;
+        private decimal SmallRangeField;
         
-        private System.Nullable<decimal> UndefinedRangeField;
+        private decimal UndefinedRangeField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string AsecSecShortName {
@@ -1815,7 +1815,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumLargeRange {
+        public decimal BenchmarkSumLargeRange {
             get {
                 return this.BenchmarkSumLargeRangeField;
             }
@@ -1828,7 +1828,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumMediumRange {
+        public decimal BenchmarkSumMediumRange {
             get {
                 return this.BenchmarkSumMediumRangeField;
             }
@@ -1841,7 +1841,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumMegaRange {
+        public decimal BenchmarkSumMegaRange {
             get {
                 return this.BenchmarkSumMegaRangeField;
             }
@@ -1854,7 +1854,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumMicroRange {
+        public decimal BenchmarkSumMicroRange {
             get {
                 return this.BenchmarkSumMicroRangeField;
             }
@@ -1867,7 +1867,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumSmallRange {
+        public decimal BenchmarkSumSmallRange {
             get {
                 return this.BenchmarkSumSmallRangeField;
             }
@@ -1880,7 +1880,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkSumUndefinedRange {
+        public decimal BenchmarkSumUndefinedRange {
             get {
                 return this.BenchmarkSumUndefinedRangeField;
             }
@@ -1906,7 +1906,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkWtdAvg {
+        public decimal BenchmarkWtdAvg {
             get {
                 return this.BenchmarkWtdAvgField;
             }
@@ -1919,7 +1919,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> BenchmarkWtdMedian {
+        public decimal BenchmarkWtdMedian {
             get {
                 return this.BenchmarkWtdMedianField;
             }
@@ -1945,7 +1945,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> LargeRange {
+        public decimal LargeRange {
             get {
                 return this.LargeRangeField;
             }
@@ -1971,7 +1971,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> MediumRange {
+        public decimal MediumRange {
             get {
                 return this.MediumRangeField;
             }
@@ -1984,7 +1984,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> MicroRange {
+        public decimal MicroRange {
             get {
                 return this.MicroRangeField;
             }
@@ -2010,7 +2010,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumLargeRange {
+        public decimal PortfolioSumLargeRange {
             get {
                 return this.PortfolioSumLargeRangeField;
             }
@@ -2023,7 +2023,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumMediumRange {
+        public decimal PortfolioSumMediumRange {
             get {
                 return this.PortfolioSumMediumRangeField;
             }
@@ -2036,7 +2036,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumMegaRange {
+        public decimal PortfolioSumMegaRange {
             get {
                 return this.PortfolioSumMegaRangeField;
             }
@@ -2049,7 +2049,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumMicroRange {
+        public decimal PortfolioSumMicroRange {
             get {
                 return this.PortfolioSumMicroRangeField;
             }
@@ -2062,7 +2062,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumSmallRange {
+        public decimal PortfolioSumSmallRange {
             get {
                 return this.PortfolioSumSmallRangeField;
             }
@@ -2075,7 +2075,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioSumUndefinedRange {
+        public decimal PortfolioSumUndefinedRange {
             get {
                 return this.PortfolioSumUndefinedRangeField;
             }
@@ -2088,7 +2088,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioWtdAvg {
+        public decimal PortfolioWtdAvg {
             get {
                 return this.PortfolioWtdAvgField;
             }
@@ -2101,7 +2101,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> PortfolioWtdMedian {
+        public decimal PortfolioWtdMedian {
             get {
                 return this.PortfolioWtdMedianField;
             }
@@ -2140,7 +2140,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> SmallRange {
+        public decimal SmallRange {
             get {
                 return this.SmallRangeField;
             }
@@ -2153,7 +2153,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> UndefinedRange {
+        public decimal UndefinedRange {
             get {
                 return this.UndefinedRangeField;
             }

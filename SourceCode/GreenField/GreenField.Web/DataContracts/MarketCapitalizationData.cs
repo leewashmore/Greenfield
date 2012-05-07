@@ -28,67 +28,67 @@ namespace GreenField.Web.DataContracts
         public string SecurityThemeCode { get; set; }
 
         [DataMember]
-        public decimal? LargeRange { get; set; }
+        public decimal LargeRange { get; set; }
 
         [DataMember]
-        public decimal? MediumRange { get; set; }
+        public decimal MediumRange { get; set; }
 
         [DataMember]
-        public decimal? SmallRange { get; set; }
+        public decimal SmallRange { get; set; }
 
         [DataMember]
-        public decimal? MicroRange { get; set; }
+        public decimal MicroRange { get; set; }
 
         [DataMember]
-        public decimal? UndefinedRange { get; set; }
+        public decimal UndefinedRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumMegaRange { get; set; }
+        public decimal PortfolioSumMegaRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumLargeRange { get; set; }
+        public decimal PortfolioSumLargeRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumMediumRange { get; set; }
+        public decimal PortfolioSumMediumRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumSmallRange { get; set; }
+        public decimal PortfolioSumSmallRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumMicroRange { get; set; }
+        public decimal PortfolioSumMicroRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioSumUndefinedRange { get; set; }
+        public decimal PortfolioSumUndefinedRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumMegaRange { get; set; }
+        public decimal BenchmarkSumMegaRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumLargeRange { get; set; }
+        public decimal BenchmarkSumLargeRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumMediumRange { get; set; }
+        public decimal BenchmarkSumMediumRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumSmallRange { get; set; }
+        public decimal BenchmarkSumSmallRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumMicroRange { get; set; }
+        public decimal BenchmarkSumMicroRange { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkSumUndefinedRange { get; set; }
+        public decimal BenchmarkSumUndefinedRange { get; set; }
 
         [DataMember]
-        public decimal? PortfolioWtdAvg { get; set; }
+        public decimal PortfolioWtdAvg { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkWtdAvg { get; set; }
+        public decimal BenchmarkWtdAvg { get; set; }
 
         [DataMember]
-        public decimal? PortfolioWtdMedian { get; set; }
+        public decimal PortfolioWtdMedian { get; set; }
 
         [DataMember]
-        public decimal? BenchmarkWtdMedian { get; set; }
+        public decimal BenchmarkWtdMedian { get; set; }
 
         [DataMember]
         public string AsecSecShortName { get; set; }
