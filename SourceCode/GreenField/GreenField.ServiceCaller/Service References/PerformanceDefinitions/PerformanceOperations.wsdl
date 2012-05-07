@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PerformanceOperations" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotSelectionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotSelectionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotSelectionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotSelectionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformance" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformance" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformanceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveMarketSnapshotPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveMarketSnapshotPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveAsMarketSnapshotPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAsMarketSnapshotPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveAsMarketSnapshotPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveAsMarketSnapshotPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_SaveAsMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotPreference" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotPreferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="PerformanceOperations">
+    <wsdl:operation name="RetrieveMarketSnapshotSelectionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotSelectionData" message="tns:PerformanceOperations_RetrieveMarketSnapshotSelectionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotSelectionDataResponse" message="tns:PerformanceOperations_RetrieveMarketSnapshotSelectionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotSelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketSnapshotSelectionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMarketSnapshotPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreference" message="tns:PerformanceOperations_RetrieveMarketSnapshotPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_RetrieveMarketSnapshotPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataResponse" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotPerformance">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformance" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformanceResponse" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformanceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMarketSnapshotPerformance">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformance" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformanceResponse" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformanceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotGroupPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreference" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreferenceResponse" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotEntityPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreference" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreferenceResponse" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveMarketSnapshotPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreference" message="tns:PerformanceOperations_SaveMarketSnapshotPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_SaveMarketSnapshotPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_SaveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveAsMarketSnapshotPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/SaveAsMarketSnapshotPreference" message="tns:PerformanceOperations_SaveAsMarketSnapshotPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/SaveAsMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_SaveAsMarketSnapshotPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/SaveAsMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_SaveAsMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotPreference">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_PerformanceOperations" type="tns:PerformanceOperations">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RetrieveMarketSnapshotSelectionData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotSelectionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMarketSnapshotPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotPerformance">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateMarketSnapshotPerformance">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformance" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotGroupPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddMarketSnapshotEntityPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SaveMarketSnapshotPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAsMarketSnapshotPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/SaveAsMarketSnapshotPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveMarketSnapshotPreference">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PerformanceOperations">
+    <wsdl:port name="BasicHttpBinding_PerformanceOperations" binding="tns:BasicHttpBinding_PerformanceOperations">
+      <soap:address location="http://localhost:59430/Services/PerformanceOperations.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

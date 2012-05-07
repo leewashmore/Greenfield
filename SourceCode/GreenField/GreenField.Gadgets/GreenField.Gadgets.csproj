@@ -170,8 +170,8 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
-    <Compile Include="Views\Market Performance\ChildViewInsertGroup.xaml.cs">
-      <DependentUpon>ChildViewInsertGroup.xaml</DependentUpon>
+    <Compile Include="Views\Market Performance\ChildViewInsertSnapshot.xaml.cs">
+      <DependentUpon>ChildViewInsertSnapshot.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Market Performance\ChildViewInsertEntity.xaml.cs">
       <DependentUpon>ChildViewInsertEntity.xaml</DependentUpon>
@@ -268,9 +268,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Market Performance\ChildViewInsertGroup.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Views\Market Performance\ChildViewInsertSnapshot.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Market Performance\ChildViewInsertEntity.xaml">
       <Generator>MSBuild:Compile</Generator>

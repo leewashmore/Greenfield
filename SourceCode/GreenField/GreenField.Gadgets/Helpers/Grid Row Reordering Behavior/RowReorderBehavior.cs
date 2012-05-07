@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {

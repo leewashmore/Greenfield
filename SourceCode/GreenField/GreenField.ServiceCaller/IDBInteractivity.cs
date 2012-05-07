@@ -5,6 +5,7 @@ using System.Text;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -67,8 +68,30 @@ namespace GreenField.ServiceCaller
 
         void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
+        /// <summary>
+        /// Save changes in a specific user snapshot
+        /// </summary>
+        /// <param name="userName">User name</param>
+        /// <param name="marketSnapshotSelectionData">Snapshot details</param>
+        /// <param name="createEntityPreferenceInfo">Snapshot preference for entities that are to be created</param>
+        /// <param name="updateEntityPreferenceInfo">Snapshot preference for entities that are to be updated</param>
+        /// <param name="deleteEntityPreferenceInfo">Snapshot preference for entities that are to be removed</param>
+        /// <param name="deleteGroupPreferenceInfo">Group preference Ids for entity groups that are to be removed</param>
+        /// <param name="createGroupPreferenceInfo">Group names for entity groups that are to be created</param>
+        /// <param name="callback">Callback method that takes List of MarketSnapshotPreference as its argument</param>
         void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
             , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback);
+
+        /// <summary>
+        /// Save changes to a new snapshot specified by user
+        /// </summary>
+        /// <param name="userName">User name</param>
+        /// <param name="snapshotName">Snapshot name</param>
+        /// <param name="snapshotPreference">Snapshot preference details</param>
+        /// <param name="callback">Callback Method that takes List of MarketSnapshotSelectionData as it's argument</param>
+        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback);
+
+        void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
         void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
 

@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Views
 {

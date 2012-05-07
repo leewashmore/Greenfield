@@ -305,6 +305,7 @@
 
                 <!--Snapshot Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="8">
+                    <telerik:RadBusyIndicator x:Name="snapshotBusyIndicator" BusyContent="{Binding BusyIndicatorContent}" DisplayAfter="0" FontSize="8" FontFamily="Arial" IsIndeterminate="True">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
@@ -346,6 +347,7 @@
                             <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Height="16" Width="16" Stretch="Fill"/>
                         </Button>
                     </StackPanel>
+                    </telerik:RadBusyIndicator>
                 </Grid>
             </Grid>
         </ScrollViewer>

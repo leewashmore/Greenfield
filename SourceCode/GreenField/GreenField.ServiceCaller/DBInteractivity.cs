@@ -8,6 +8,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
 
 namespace GreenField.ServiceCaller
@@ -478,7 +479,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketSnapshotSelectionDataAsync(userName);
             client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
             {
@@ -516,7 +517,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -552,7 +553,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
             client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
             {
@@ -589,7 +590,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
             client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -618,7 +619,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
             client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -647,7 +648,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -676,7 +677,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -706,7 +707,7 @@ namespace GreenField.ServiceCaller
         public void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
             , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo
                 , deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo);
             client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
@@ -729,6 +730,60 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot” as a new snapshot
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
+            , List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, snapshotPreference);
+            client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RemoveMarketSnapshotPreferenceAsync(userName, snapshotName);
+            client.RemoveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
                     MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);

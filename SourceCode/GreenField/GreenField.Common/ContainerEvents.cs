@@ -15,6 +15,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 
 namespace GreenField.Common
@@ -34,11 +35,13 @@ namespace GreenField.Common
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 
-    public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
-
     public class HoldingFilterReferenceSetEvent : CompositePresentationEvent<FilterSelectionData> { }
 
-    public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionType> { }    
+    public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
+
+    public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }
+
+    public class MarketPerformanceSnapshotActionCompletionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }    
 
     public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
 
@@ -62,8 +65,35 @@ namespace GreenField.Common
         public IManageSessions ManageSessions { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
-    }    
+    }
 
+    /// <summary>
+    /// Stores the payload for the MarketPerformanceSnapshotActionEvent and MarketPerformanceSnapshotActionCompletionEvent
+    /// </summary>
+    public class MarketPerformanceSnapshotActionPayload
+    {
+        /// <summary>
+        /// Store the Action Type
+        /// </summary>
+        public MarketPerformanceSnapshotActionType ActionType { get; set; }
+
+        /// <summary>
+        /// Stores user's snapshot details
+        /// </summary>
+        public List<MarketSnapshotSelectionData> MarketSnapshotSelectionInfo { get; set; }
+
+        /// <summary>
+        /// Stores snapshot details for the selected snapshot
+        /// </summary>
+        public MarketSnapshotSelectionData SelectedMarketSnapshotSelectionIndo { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public MarketPerformanceSnapshotActionPayload()
+        {
+        }
+    }
 }
 
 

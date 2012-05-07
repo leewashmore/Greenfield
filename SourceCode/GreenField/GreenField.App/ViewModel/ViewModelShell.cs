@@ -21,6 +21,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Common.Helper;
 using GreenField.App.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 
 namespace GreenField.App.ViewModel
@@ -61,7 +62,10 @@ namespace GreenField.App.ViewModel
             _eventAggregator = eventAggregator;
             _dbInteractivity = dbInteractivity;
 
-
+            if(_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotUpdateSelectionEvent);
+            }
             if (_manageSessions != null)
             {
                 try
@@ -126,6 +130,17 @@ namespace GreenField.App.ViewModel
             {
                 _busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+
+        private string _snapshotBusyIndicatorContent;
+        public string SnapshotBusyIndicatorContent
+        {
+            get { return _snapshotBusyIndicatorContent; }
+            set
+            {
+                _snapshotBusyIndicatorContent = value;
+                RaisePropertyChanged(() => this.SnapshotBusyIndicatorContent);
             }
         }
 
@@ -663,31 +678,7 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SnapshotSelectorVisibility);
                 if (value == Visibility.Visible && MarketSnapshotSelectionInfo == null)
                 {
-                    if (SessionManager.SESSION != null)
-                    {
-                        BusyIndicatorContent = "Retrieving Snapshot selection data...";
-                        if (ShellDataLoadEvent != null)
-                        {
-                            ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        }
-                        _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
-                    }
-                    else
-                    {
-                        _manageSessions.GetSession((session) =>
-                            {
-                                if (session != null)
-                                {
-                                    SessionManager.SESSION = session;
-                                    BusyIndicatorContent = "Retrieving Snapshot selection data...";
-                                    if (ShellDataLoadEvent != null)
-                                    {
-                                        ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                                    }
-                                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
-                                }
-                            });
-                    }
+                    RetrieveMarketSnapshotSelectionData();
                 }
             }
         }
@@ -1162,6 +1153,38 @@ namespace GreenField.App.ViewModel
         /// event to handle filter data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler ShellFilterDataLoadEvent;
+
+        /// <summary>
+        /// event to handle snapshot selector data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler ShellSnapshotDataLoadEvent;
+        #endregion
+
+        #region Event Handlers
+        public void HandleMarketPerformanceSnapshotUpdateSelectionEvent(MarketPerformanceSnapshotActionPayload result)
+        {
+            switch (result.ActionType)
+            {
+                case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE:
+                    break;
+                case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS:
+                    MarketSnapshotSelectionInfo.Add(result.SelectedMarketSnapshotSelectionIndo);
+                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionIndo;
+                    break;
+                case MarketPerformanceSnapshotActionType.SNAPSHOT_ADD:
+                    MarketSnapshotSelectionInfo.Add(result.SelectedMarketSnapshotSelectionIndo);
+                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionIndo;
+                    break;
+                case MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE:
+                    MarketSnapshotSelectionInfo.Remove(result.SelectedMarketSnapshotSelectionIndo);
+                    SelectedMarketSnapshotSelectionInfo = null;
+                    break;
+                default:
+                    break;
+            }
+            
+            RetrieveMarketSnapshotSelectionData();
+        } 
         #endregion
 
         #region ICommand Methods
@@ -1875,7 +1898,13 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Publish(MarketPerformanceSnapshotActionType.SNAPSHOT_ADD);
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                    .Publish(new MarketPerformanceSnapshotActionPayload() 
+                    {
+                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_ADD,
+                        MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
+                        SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                    });
             }
             catch (Exception ex)
             {
@@ -1905,7 +1934,13 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Publish(MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE);
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                   .Publish(new MarketPerformanceSnapshotActionPayload()
+                   {
+                       ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE,
+                       MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
+                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                   });
             }
             catch (Exception ex)
             {
@@ -1925,7 +1960,13 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Publish(MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS);
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                   .Publish(new MarketPerformanceSnapshotActionPayload()
+                   {
+                       ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS,
+                       MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
+                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                   });
             }
             catch (Exception ex)
             {
@@ -1955,7 +1996,13 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Publish(MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE);
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>()
+                   .Publish(new MarketPerformanceSnapshotActionPayload()
+                   {
+                       ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE,
+                       MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
+                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                   });
             }
             catch (Exception ex)
             {
@@ -2712,9 +2759,9 @@ namespace GreenField.App.ViewModel
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (ShellDataLoadEvent != null)
+                if (ShellSnapshotDataLoadEvent != null)
                 {
-                    ShellDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -2817,6 +2864,46 @@ namespace GreenField.App.ViewModel
             FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
         }
 
+
+        private void RetrieveMarketSnapshotSelectionData()
+        {
+            Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            try
+            {
+                if (SessionManager.SESSION != null)
+                {
+                    SnapshotBusyIndicatorContent = "Retrieving Snapshot selection data...";
+                    if (ShellSnapshotDataLoadEvent != null)
+                    {
+                        ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                    _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                }
+                else
+                {
+                    _manageSessions.GetSession((session) =>
+                    {
+                        if (session != null)
+                        {
+                            SessionManager.SESSION = session;
+                            SnapshotBusyIndicatorContent = "Retrieving Snapshot selection data...";
+                            if (ShellSnapshotDataLoadEvent != null)
+                            {
+                                ShellSnapshotDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            }
+                            _dbInteractivity.RetrieveMarketSnapshotSelectionData(SessionManager.SESSION.UserName, RetrieveMarketSnapshotSelectionDataCallbackMethod);
+                        }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+
+            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+        }
         #endregion
 
     }

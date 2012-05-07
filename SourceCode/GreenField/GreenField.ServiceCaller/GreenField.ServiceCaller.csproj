@@ -99,6 +99,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\PerformanceDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\SecurityReferenceDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -121,19 +126,10 @@
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\BenchmarkHoldingsPerformanceOperations6.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.AssetAllocationData.datasource">
@@ -164,15 +160,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketCapitalizationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotPreference.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.MarketSnapshotSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsPerformanceDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions.PerformanceGraphData.datasource">
@@ -279,6 +266,37 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SecurityReferenceDefinitions\GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -328,6 +346,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
+    <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -353,6 +378,7 @@
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
+    <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
   </ItemGroup>

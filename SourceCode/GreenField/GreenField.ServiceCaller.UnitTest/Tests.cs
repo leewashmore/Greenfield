@@ -21,15 +21,16 @@ namespace Greenfield.ServiceCaller.UnitTest
     [TestClass]
     public class DbInteractivityTestClass : SilverlightTest
     {
+        #region Security Overview
         /// <summary>
-        /// RetrieveSecurityReferenceDataByTicker Test Method - Null Result Set for specifit Ticker
+        /// RetrieveSecurityOverviewData Test Method - Null Result Set for specifit Ticker
         /// </summary>
         [TestMethod]
         [Asynchronous]
         public void RetrieveSecurityOverviewDataTestMethod()
         {
             DBInteractivity instance = new DBInteractivity();
-            EntitySelectionData entityIdentifier =  new EntitySelectionData() 
+            EntitySelectionData entityIdentifier = new EntitySelectionData()
                     {
                         InstrumentID = "BRPETROBRE",
                         LongName = "PETROBRAS - PETROLEO BRAS",
@@ -43,8 +44,10 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
 
-        }
+        } 
+        #endregion
 
+        #region ToolBox Selectors
         /// <summary>
         /// RetrieveEntitySelectionData Test Method - Null Result Set
         /// </summary>
@@ -59,8 +62,10 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
 
-        }
+        } 
+        #endregion
 
+        #region Closing/Gross Price Chart
         /// <summary>
         /// RetrievePricingReferenceData Test Method - Sample Data
         /// entityIdentifiers - Instrument ID - BRPETROBRE
@@ -168,8 +173,10 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreEqual<int>(0, result.Count, "Pricing Reference Data Should Be Empty");
                 EnqueueTestComplete();
             });
-        }
+        } 
+        #endregion
 
+        #region Unrealized Gain Loss Chart
         /// <summary>
         /// RetrieveUnrealizedGainLossData Test Method - Sample Data
         /// </summary>
@@ -265,6 +272,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                     Assert.AreEqual<int>(0, resultSet.Count, "Unrealized Gain-Loss Data Should Be Empty");
                     EnqueueTestComplete();
                 });
-        }
+        } 
+        #endregion
     }
 }

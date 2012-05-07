@@ -41,9 +41,11 @@
             </helpers:ItemStyleSelector.ItemStyle>
         </helpers:ItemStyleSelector>
     </controls:ChildWindow.Resources>
-    <Grid x:Name="LayoutRoot" Margin="2">
+    
+    <Grid x:Name="LayoutRoot" Margin="2" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -54,27 +56,47 @@
                 <TextBox x:Name="txtGroupName" TextWrapping="Wrap" Width="339" Margin="5,0,0,0" />
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Margin="0,5,0,0">
+        
+        <Grid Grid.Row="1" Margin="0,2,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <telerik:RadToggleButton Grid.Column="0" Content="Security" IsChecked="{Binding SecurityToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadToggleButton Grid.Column="1" Content="Benchmark" IsChecked="{Binding BenchmarkToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadToggleButton Grid.Column="2" Content="Commodity" IsChecked="{Binding CommodityToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadToggleButton Grid.Column="3" Content="Index" IsChecked="{Binding IndexToggleChecked, Mode=TwoWay}"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,2,0,0">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                <!--<telerik:RadComboBox x:Name="radSelectBenchmark" Width="378"
-                                     VerticalAlignment="Top" HorizontalAlignment="Left" SelectedIndex="0"
-                                     ItemsSource="{Binding UngroupedBenchmarkSelectionInfo}" DisplayMemberPath="Name"
-                                     SelectedItem="{Binding SelectedBenchmarkSelectionInfo, Mode=TwoWay}">
+                <!--ItemsSource="{Binding EntitySelectionGroupInfo.View.Groups, Converter={StaticResource FlattenGroupConverter}}"-->
+                <!--ItemContainerStyleSelector="{StaticResource ItemStyleSelector}"-->
+                <telerik:RadComboBox x:Name="cmbEntitySelection" Width="378"
+                                     ItemsSource="{Binding EntityFilterSelectionInfo}"
+                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}" 
+                                     SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"                                     
+                                     IsEditable="True" telerik:TextSearch.TextPath="LongName" EmptyText="Search Entity..." 
+                                     CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False"
+                                     OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
+                                     HorizontalAlignment="Right" IsTextSearchEnabled="False">
                     <telerik:RadComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>
                     </telerik:RadComboBox.ItemsPanel>
-                </telerik:RadComboBox>-->
-                <telerik:RadComboBox x:Name="cmbEntitySelection" Width="378"
-                                     ItemsSource="{Binding EntitySelectionGroupInfo.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}" 
-                                     SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
-                                     ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
-                                     IsEditable="True" telerik:TextSearch.TextPath="LongName" EmptyText="Search Entity..." 
-                                     CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False"
-                                     OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
-                                     HorizontalAlignment="Right" IsTextSearchEnabled="False" />
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding LongName}"/>
+                                <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}"/>
+                                <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}"/>
+                                <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,5,0,0" Visibility="{Binding ReturnTypeSelectionVisibility}">
                         <telerik:RadRadioButton x:Name="rbtnTotal" Content="Total Return" IsChecked="{Binding TotalReturnTypeChecked, Mode=TwoWay}"/>
                         <telerik:RadRadioButton Margin="5,0,0,0" x:Name="rbtnNet" Content="Price Return" IsChecked="{Binding PriceReturnTypeChecked, Mode=TwoWay}"/>                        
@@ -82,8 +104,8 @@
             </StackPanel>
         </Grid>
 
-        <telerik:RadButton x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" Grid.Row="2" />
-        <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0" Grid.Row="2" />
+        <telerik:RadButton x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="3" />
+        <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,2,79,0" Grid.Row="3" />
 
     </Grid>
 </controls:ChildWindow>
