@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\ViewModelRelativePeroformanceUI.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
+    <Compile Include="ViewModels\ViewModelSlice1ChartExtension.cs" />
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
@@ -248,6 +249,9 @@
     </Compile>
     <Compile Include="Views\ViewSecurityOverview.xaml.cs">
       <DependentUpon>ViewSecurityOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSlice1ChartExtension.xaml.cs">
+      <DependentUpon>ViewSlice1ChartExtension.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewTopHoldings.xaml.cs">
       <DependentUpon>ViewTopHoldings.xaml</DependentUpon>
@@ -373,6 +377,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewSecurityOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSlice1ChartExtension.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
