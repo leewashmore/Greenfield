@@ -41,6 +41,23 @@ GO
 /****** Object:  User [WPSuperUser]    Script Date: 03/23/2012 10:24:21 ******/
 CREATE USER [WPSuperUser] FOR LOGIN [WPSuperUser] WITH DEFAULT_SCHEMA=[dbo]
 GO
+
+exec sp_addrolemember @rolename = 'aspnet_Membership_BasicAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Membership_ReportingAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Personalization_BasicAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Personalization_ReportingAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Personalization_FullAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Profile_BasicAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Profile_ReportingAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Profile_FullAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Roles_BasicAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Roles_ReportingAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Roles_FullAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_WebEvent_FullAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'aspnet_Membership_FullAccess' , @membername = 'WPSuperUser' 
+exec sp_addrolemember @rolename = 'db_owner' , @membername = 'WPSuperUser' 
+GO
+
 /****** Object:  Schema [aspnet_WebEvent_FullAccess]    Script Date: 03/23/2012 10:24:22 ******/
 CREATE SCHEMA [aspnet_WebEvent_FullAccess] AUTHORIZATION [aspnet_WebEvent_FullAccess]
 GO
@@ -4570,4 +4587,15 @@ ALTER TABLE [dbo].[tblICP_VoterInfo]  WITH CHECK ADD  CONSTRAINT [FK_tblICP_Vote
 REFERENCES [dbo].[tblICP_VoteType] ([VoteTypeID])
 GO
 ALTER TABLE [dbo].[tblICP_VoterInfo] CHECK CONSTRAINT [FK_tblICP_VoterInfo_tblICP_VoteType]
+GO
+
+
+--DATA:
+insert into aspnet_Applications values ('GreenField', 'greenfield','27EE923E-BBD9-4A46-9F8A-C577A62C6C10',null)
+insert into aspnet_SchemaVersions values('common',1,1)
+insert into aspnet_SchemaVersions values('health monitoring',1,1)
+insert into aspnet_SchemaVersions values('membership',1,1)
+insert into aspnet_SchemaVersions values('personalization',1,1)
+insert into aspnet_SchemaVersions values('profile',1,1)
+insert into aspnet_SchemaVersions values('role manager',1,1)
 GO

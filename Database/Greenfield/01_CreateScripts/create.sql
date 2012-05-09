@@ -1,3 +1,11 @@
+CREATE USER [WPSuperUser] FOR LOGIN [WPSuperUser] WITH DEFAULT_SCHEMA=[dbo]
+GO
+
+exec sp_addrolemember @rolename = 'db_owner' , @membername = 'WPSuperUser' 
+GO
+
+
+
 IF OBJECT_ID ('dbo.tblDashboardPreference') IS NOT NULL
 	DROP TABLE dbo.tblDashboardPreference
 GO
