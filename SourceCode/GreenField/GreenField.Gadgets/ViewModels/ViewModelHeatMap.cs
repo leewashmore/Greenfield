@@ -137,8 +137,11 @@ namespace GreenField.Gadgets.ViewModels
         }
         void RetrieveHeatMapDataCallbackMethod(List<HeatMapData> result)
         {
-            HeatMapInfo = result;
-            RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
+            if (result != null)
+            {
+                HeatMapInfo = result;
+                RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
+            }
         }
             
     }

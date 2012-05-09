@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -29,8 +30,7 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         private PortfolioSelectionData _PortfolioSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime? _effectiveDate;
+       
         #endregion
 
         #region Constructor
@@ -41,19 +41,19 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
 
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
-            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            Period = param.DashboardGadgetPayload.PeriodSelectionData;
 
-            //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-            //{
-            //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _period != null)
+            {
+                _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData,Convert.ToDateTime( _effectiveDate),_period, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+            }
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
                 _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }
         }
@@ -80,13 +80,49 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private DateTime? _effectiveDate;
+        public DateTime? EffectiveDate
+        {
+            get { return _effectiveDate; }
+            set
+            {
+                if (_effectiveDate != value)
+                {
+                    _effectiveDate = value;
+                    RaisePropertyChanged(() => EffectiveDate);
+                }
+            }
+        }
+
+        private string _period;
+        public string Period
+        {
+            get { return _period; }
+            set
+            {
+                if (_period != value)
+                {
+                    _period = value;
+                    RaisePropertyChanged(() => Period);
+                }
+            }
+        }        
+
         #endregion
+
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler CountryActivePositionDataLoadEvent;
 
         #endregion
 
         #region Event Handlers
 
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -97,9 +133,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        if (CountryActivePositionDataLoadEvent != null)
+                            CountryActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -124,10 +162,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (effectiveDate != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    EffectiveDate = effectiveDate;
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        if (CountryActivePositionDataLoadEvent != null)
+                            CountryActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -143,19 +183,22 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
+        public void HandlePeriodReferenceSet(string period)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (benchmarkSelectionData != null)
+                if (period != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, benchmarkSelectionData, 1);
-                    _benchmarkSelectionData = benchmarkSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
+                    Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
+                    Period = period;
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod);
+
+                        if (CountryActivePositionDataLoadEvent != null)
+                            CountryActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -180,11 +223,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (filter != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                    //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
-                    //{
-                    //    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
-                    //}
-                    _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
+                    {
+                        _dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                        if (CountryActivePositionDataLoadEvent != null)
+                            CountryActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }                    
+                    //_dbInteractivity.RetrieveRelativePerformanceCountryActivePositionData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceCountryActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
                 }
                 else
                 {
@@ -217,6 +262,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (CountryActivePositionDataLoadEvent != null)
+                    CountryActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -224,6 +271,20 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        #endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all subscribed events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickEvent);
         }
 
         #endregion

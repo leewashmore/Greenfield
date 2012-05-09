@@ -4,12 +4,17 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
+             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
     mc:Ignorable="d"
-    xmlns:example="clr-namespace:GreenField.Gadgets.ViewModels"
     d:DesignHeight="300" d:DesignWidth="400">
     <helpers:ViewBaseUserControl.Resources>
-        <example:ViewModelHeatMap x:Key="DataContext" Region="world" />
+        <telerik:ExtendedDataConverter x:Key="ExtendedDataConverter" />
+        <DataTemplate x:Key="CustomToolTipDataTemplate">
+            <StackPanel Margin="10,5">
+                <TextBlock FontWeight="Bold" Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
+                <TextBlock Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD', StringFormat=\{0:n2\}%}" />
+            </StackPanel>
+        </DataTemplate>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot">
@@ -19,56 +24,64 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.Resources>
-            <telerik:ExtendedDataConverter x:Key="ExtendedDataConverter" />
-            <DataTemplate x:Key="CustomToolTipDataTemplate">
-                <StackPanel Margin="10,5">
-                    <TextBlock FontWeight="Bold" Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
-                    <TextBlock Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='HugsPerCapita'}" />
-                </StackPanel>
-            </DataTemplate>
-        </Grid.Resources>
 
-        <telerik:RadMap x:Name="RadMap1"
-                    BorderBrush="Black"
-                    BorderThickness="1"                        
-                    UseDefaultLayout="False"
-                    MouseClickMode="None" 
-                    MouseDoubleClickMode="None"
-                    MouseDragMode="None"
-                    IsMouseWheelZoomEnabled="False" Grid.Column="0" Grid.Row="0">
+        <!--Rad Map Control-->
+        <telerik:RadMap x:Name="rmHeatMap"
+                        Background="White"
+                        BorderBrush="Black"
+                        BorderThickness="1"                        
+                        UseDefaultLayout="False"
+                        MouseClickMode="None" 
+                        MouseDoubleClickMode="None"
+                        MouseDragMode="None"
+                        IsMouseWheelZoomEnabled="False" Grid.Column="0" Grid.Row="0">
+
             <telerik:RadMap.Provider>
-                <telerik:EmptyProvider />
+                <telerik:EmptyProvider/>
             </telerik:RadMap.Provider>
+
             <telerik:InformationLayer x:Name="InformationLayer">
                 <telerik:InformationLayer.Reader>
-                    <telerik:MapShapeReader Source="{Binding Source={StaticResource DataContext}, Path=ShapefileSourceUri}" 
-                                            PreviewReadCompleted="MapPreviewReadCompleted" ToolTipTemplate="{StaticResource CustomToolTipDataTemplate}"/>
+                    <telerik:MapShapeReader Source="{Binding ShapefileSourceUri}" 
+                                            DataSource="{Binding ShapefileDataSourceUri}"
+                                            ToolTipTemplate="{StaticResource CustomToolTipDataTemplate}"
+                                            
+                                            PreviewReadCompleted="MapPreviewReadCompleted" />
                 </telerik:InformationLayer.Reader>
+                <!--<telerik:InformationLayer.ShapeFill>ReadCompleted="MapShapeReader_ReadCompleted"
+                    <telerik:MapShapeFill Fill="#FFF7DE" Stroke="#5A636B" StrokeThickness="1" />
+                </telerik:InformationLayer.ShapeFill>
+                <telerik:InformationLayer.HighlightFill>
+                    <telerik:MapShapeFill Fill="#F7E7BD" Stroke="#5A636B" StrokeThickness="1" />
+                </telerik:InformationLayer.HighlightFill>-->
                 <telerik:InformationLayer.Colorizer>
-                    <telerik:ColorMeasureScale ExtendedPropertyName="HugsPerCapita" MinValue="0" MaxValue="100" Mode="RangesPredefinedColors">
-                        <telerik:ColorMeasureScale.ShapeFillCollection>
+                    <telerik:ColorMeasureScale ExtendedPropertyName="CountryPerformance" MinValue="0" MaxValue="3" Mode="Step">
+
+                        <!--<telerik:ColorMeasureScale.ShapeFillCollection>
                             <telerik:MapShapeFill Fill="White" Stroke="Black" StrokeThickness="2" />
-                        </telerik:ColorMeasureScale.ShapeFillCollection>
+                            <telerik:MapShapeFill Fill="Red" Stroke="Black" StrokeThickness="2" />
+                            <telerik:MapShapeFill Fill="Gray" Stroke="Black" StrokeThickness="2" />
+                            <telerik:MapShapeFill Fill="Green" Stroke="Black" StrokeThickness="2" />
+                        </telerik:ColorMeasureScale.ShapeFillCollection>-->
                         <telerik:ColorMeasureScale.RangeCollection>
-                            <telerik:MapRange MinValue="0" MaxValue="10">
+                            <telerik:MapRange MinValue="0" MaxValue="0">
+                                <telerik:MapRange.ShapeFill>
+                                    <telerik:MapShapeFill Fill="White"/>
+                                </telerik:MapRange.ShapeFill>
+                            </telerik:MapRange>
+                            <telerik:MapRange MinValue="1" MaxValue="1">
+                                <telerik:MapRange.ShapeFill>
+                                    <telerik:MapShapeFill Fill="Red"/>
+                                </telerik:MapRange.ShapeFill>
+                            </telerik:MapRange>
+                            <telerik:MapRange MinValue="2" MaxValue="2">
                                 <telerik:MapRange.ShapeFill>
                                     <telerik:MapShapeFill Fill="Gray"/>
                                 </telerik:MapRange.ShapeFill>
                             </telerik:MapRange>
-                            <telerik:MapRange MinValue="10" MaxValue="45">
+                            <telerik:MapRange MinValue="3" MaxValue="3">
                                 <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Yellow" />
-                                </telerik:MapRange.ShapeFill>
-                            </telerik:MapRange>
-                            <telerik:MapRange MinValue="45" MaxValue="75">
-                                <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Aqua" />
-                                </telerik:MapRange.ShapeFill>
-                            </telerik:MapRange>
-                            <telerik:MapRange MinValue="75" MaxValue="100">
-                                <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Red"/>
+                                    <telerik:MapShapeFill Fill="Green"/>
                                 </telerik:MapRange.ShapeFill>
                             </telerik:MapRange>
                         </telerik:ColorMeasureScale.RangeCollection>
@@ -77,7 +90,7 @@
             </telerik:InformationLayer>
         </telerik:RadMap>
 
-        <telerik:MapLegend MarkerSize="40,20" 
+        <!--<telerik:MapLegend MarkerSize="40,20" 
                             VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" 
                             Format="{}{0:0,,.0}" LabelLayout="Between"
                             Layer="{Binding ElementName=InformationLayer}">
@@ -87,6 +100,6 @@
                     <Run FontSize="14">(in millions sq.km.)</Run>
                 </TextBlock>
             </telerik:MapLegend.Header>
-        </telerik:MapLegend>
+        </telerik:MapLegend>-->
     </Grid>
 </helpers:ViewBaseUserControl>  

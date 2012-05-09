@@ -19,25 +19,25 @@ namespace GreenField.Web.DataContracts
         /// Market value with respect to the entity
         /// </summary>
         [DataMember]
-        public double? MarketValue { get; set; }
+        public decimal? MarketValue { get; set; }
 
         /// <summary>
         /// Percentage representation of weight entity holds in the Fund/Composite
         /// </summary>
         [DataMember]
-        public double? FundWeight { get; set; }
+        public decimal? FundWeight { get; set; }
 
         /// <summary>
         /// Percentage representation of weight entity holds in the Benchmark
         /// </summary>
         [DataMember]
-        public double? BenchmarkWeight { get; set; }
+        public decimal? BenchmarkWeight { get; set; }
 
         /// <summary>
         ///Difference between the percentage representation of weight entity holds in the Fund/Composite and Benchmark
         /// </summary>
         [DataMember]
-        public double? ActivePosition { get; set; }
+        public decimal? ActivePosition { get; set; }
     }
 
     [DataContract]

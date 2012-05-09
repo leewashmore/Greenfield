@@ -25,6 +25,28 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+        <!--GridViewHeaderRowStyle-->
+        <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="Background" Value="#9F1D21"/>
+            <Setter Property="MaxHeight" Value="12"/>
+        </Style>
+        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
+            <Setter Property="Background" Value="#9F1D21" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+        <!--GridViewGroupPanelItemStyle-->
+        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
+            <Setter Property="Background" Value="#9F1D21"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <!--GridViewRowStyle-->
+        <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
+            <Setter Property="Height" Value="15"/>
+        </Style>
     </helpers:ViewBaseUserControl.Resources>
 
 
@@ -38,7 +60,8 @@
         <Grid Grid.Row="0">
             <TextBlock Text="Relative Performance" FontWeight="Bold" HorizontalAlignment="Center"/>
         </Grid>
-        <!--Export Row-->
+
+            <!--Export Row-->
         <Grid Grid.Row="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <telerik:RadButton x:Name="btnExportExcel" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -57,58 +80,82 @@
         </Grid>
         <!--Grid Row-->
         <Grid Grid.Row="2">
-            <telerik:RadGridView Name="dgRelativePerformance" AutoGenerateColumns="False" IsFilteringAllowed="True" FrozenColumnCount="1"
-                             CanUserSelect="True" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro" SelectionMode="Single"
-                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime" ShowGroupFooters="True"
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="True" SelectionUnit="Cell" ElementExporting="dgRelativePerformance_ElementExporting"
-                             RowLoaded="dgRelativePerformance_RowLoaded" SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged">
+            <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                <telerik:RadGridView Name="dgRelativePerformance" 
+                                     AutoGenerateColumns="False" 
+                                     IsFilteringAllowed="True" 
+                                     FrozenColumnCount="1"
+                                     CanUserSelect="True" 
+                                     CanUserReorderColumns="False" 
+                                     CanUserInsertRows="False" 
+                                     telerik:StyleManager.Theme="Metro" 
+                                     SelectionMode="Single"
+                                     CanUserDeleteRows="False" 
+                                     IsReadOnly="True" 
+                                     CanUserSortColumns="False" 
+                                     ScrollMode="RealTime" 
+                                     ShowGroupFooters="True"
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     ShowColumnFooters="True" 
+                                     AlternationCount="2" 
+                                     AlternateRowBackground="Wheat"
+                                     SelectionUnit="Cell" 
+                                     ElementExporting="dgRelativePerformance_ElementExporting"
+                                     RowLoaded="dgRelativePerformance_RowLoaded" 
+                                     SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}">
 
-                <telerik:RadGridView.Columns>
-                    <!--CountryID Column-->
-                    <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id">
-                        <telerik:GridViewDataColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CountryID}" Foreground="Gray" FontWeight="Bold"/>
-                            </DataTemplate>
-                        </telerik:GridViewDataColumn.CellTemplate>
-                        <telerik:GridViewDataColumn.Footer>
-                            <TextBlock Text="Total"/>
-                        </telerik:GridViewDataColumn.Footer>
-                    </telerik:GridViewDataColumn>
+                    <telerik:RadGridView.Columns>
+                        <!--CountryID Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCell}">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CountryID}" Foreground="Gray" FontWeight="Bold"/>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                            <telerik:GridViewDataColumn.Footer>
+                                <TextBlock Text="Total"/>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
 
-                    <!--Totals Column-->
-                    <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterCellStyle="{StaticResource GridViewCustomFooterCellStyle}">
-                        <telerik:GridViewDataColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Gray" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Gray" FontWeight="Bold"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </telerik:GridViewDataColumn.CellTemplate>
-                        <telerik:GridViewDataColumn.AggregateFunctions>
-                            <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" ResultFormatString="{}{0:n2} " SourceField="AggregateCountryAlpha" />
-                            <telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />
-                        </telerik:GridViewDataColumn.AggregateFunctions>
-                        <telerik:GridViewDataColumn.Footer>
-                            <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </telerik:AggregateResultsList>
-                        </telerik:GridViewDataColumn.Footer>
-                    </telerik:GridViewDataColumn>
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
+                        <!--Totals Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterCellStyle="{StaticResource GridViewCustomFooterCellStyle}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCell}">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Gray" FontWeight="Bold"/>
+                                        <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Gray" FontWeight="Bold"/>-->
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" ResultFormatString="{}{0:n2} " SourceField="AggregateCountryAlpha" />
+                                <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:GridViewDataColumn.Footer>
+                                <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </telerik:AggregateResultsList>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </telerik:RadBusyIndicator>
         </Grid>
 
     </Grid>

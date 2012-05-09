@@ -8,12 +8,9 @@ using System.ServiceModel.Activation;
 using GreenField.Web.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
-using GreenField.Web.DimensionEntitiesService;
-using System.Configuration;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
 using GreenField.Web.Helpers;
-using GreenField.Web.DataContracts;
 using GreenField.DAL;
 
 namespace GreenField.Web.Services
@@ -553,5 +550,6 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
     }
 }

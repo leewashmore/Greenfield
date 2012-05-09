@@ -146,11 +146,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
-    <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
+    <Compile Include="ViewModels\ViewModelHeatMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
@@ -182,6 +184,7 @@
     </Compile>
     <Compile Include="Views\ViewHeatMap.xaml.cs">
       <DependentUpon>ViewHeatMap.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\ViewHoldingsPieChartRegion.xaml.cs">
       <DependentUpon>ViewHoldingsPieChartRegion.xaml</DependentUpon>

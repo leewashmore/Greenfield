@@ -13,6 +13,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 
 namespace GreenField.Common
@@ -81,7 +82,7 @@ namespace GreenField.Common
     public class RelativePerformanceGridCellData
     {
         public string CountryID { get; set; }
-        public int? SectorID { get; set; }        
+        public string SectorID { get; set; }        
     }
 
       public static class EntityReturnType
