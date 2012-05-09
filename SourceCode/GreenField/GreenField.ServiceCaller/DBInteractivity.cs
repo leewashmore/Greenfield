@@ -1409,7 +1409,7 @@ namespace GreenField.ServiceCaller
 
         #region Interaction Method for Heat Map
 
-        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHeatMapDataAsync();

@@ -20,24 +20,12 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewHeatMap : ViewBaseUserControl
     {
-        private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
-        private const string COUNTRY_YTD_FIELD = "CountryYTD";
-        private List<HeatMapData> _heatMapInfo;
+        private const string NonDbfDataField = "HugsPerCapita";
 
-        #region Constructor
         public ViewHeatMap(ViewModelHeatMap dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            
-            dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
-        } 
-        #endregion
-
-        #region Event Handler
-        private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
-        {
-            _heatMapInfo = e.HeatMapInfo;
         }
 
         private void MapPreviewReadCompleted(object sender, PreviewReadShapesCompletedEventArgs eventArgs)
@@ -50,48 +38,38 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
-        #endregion
 
-        #region Helper Methods
         private void SetAdditionalData(MapShape shape)
         {
             ExtendedData extendedData = shape.ExtendedData;
             if (extendedData != null)
             {
-                string countryID = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
-
-                if (!extendedData.PropertySet.ContainsKey(COUNTRY_PERFORMANCE_FIELD))
+                // add new property to ExtendedData   
+                if (!extendedData.PropertySet.ContainsKey(NonDbfDataField))
                 {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_PERFORMANCE_FIELD, COUNTRY_PERFORMANCE_FIELD, typeof(int), (int)PerformanceType.NO_RELATION);
+                    extendedData.PropertySet.RegisterProperty(NonDbfDataField, "HugsPerCapita", typeof(int), 0);
                 }
 
-                if (!extendedData.PropertySet.ContainsKey(COUNTRY_YTD_FIELD))
-                {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, COUNTRY_YTD_FIELD, typeof(Double?), null);
-                }
+                string country = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
+                int additionalFieldValue = this.GetHugsByCountry(country);
 
-                if (_heatMapInfo != null)
-                {
-                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
-                    if (countryRecord != null)
-                    {
-                        shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault().CountryPerformance);
-                        shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault().CountryYTD);
-                    }
-                }               
+                // assign value to new property   
+                shape.ExtendedData.SetValue(NonDbfDataField, additionalFieldValue);
 
             }
-        }         
-        #endregion
-
-        private void MapShapeReader_ReadCompleted(object sender, ReadShapesCompletedEventArgs eventArgs)
-        {
-
         }
 
-        public override void Dispose()
+        private int GetHugsByCountry(string stateName)
         {
-            throw new NotImplementedException();
+            switch (stateName)
+            {
+                case "RU":
+                    return 43;
+                case "IN":
+                    return 50;
+                default:
+                    return 0;
+            }
         }
     }
 }

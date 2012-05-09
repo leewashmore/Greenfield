@@ -21,10 +21,16 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelHeatMap : NotificationObject
+    public class ViewModelHeatMap : ViewModelBase
     {
+        protected const string ShapeRelativeUriFormat = "DataSources/Geospatial/{0}.{1}";
+        protected const string ShapeExtension = "shp";
+        protected const string DbfExtension = "dbf";
 
-        #region PrivateMembers
+        private string _region;
+        private Uri _shapefileSourceUri;
+        private Uri _shapefileDataSourceUri;
+       
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
@@ -47,12 +53,6 @@ namespace GreenField.Gadgets.ViewModels
         private BenchmarkSelectionData _benchmarkSelectionData;
         private DateTime? _effectiveDate;
 
-        #endregion
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="param">DashboardGadgetParam received from Appliccation level controls</param>
         public ViewModelHeatMap(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -61,29 +61,12 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-
-            //if (_PortfolioSelectionData != null && _effectiveDate != null)
-            //{
-            //    _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, _effectiveDate, RetrieveHeatMapDataCallbackMethod);
-            //}
-            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, _benchmarkSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+            this.PropertyChanged += this.ShapefileViewModelPropertyChanged;
+            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
         }
-
-        
-
-        protected const string ShapeRelativeUriFormat = "DataSources/Geospatial/{0}.{1}";
-        protected const string ShapeExtension = "shp";
-        protected const string DbfExtension = "dbf";
-
-
-
         public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;
 
-        /// <summary>
-        /// Region
-        /// </summary>
-        private string _region = "world";
-        public string Region 
+        public string Region
         {
             get
             {
@@ -94,56 +77,51 @@ namespace GreenField.Gadgets.ViewModels
                 if (this._region != value)
                 {
                     this._region = value;
-                    RaisePropertyChanged(() => this.Region);
-
-                    this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, ShapeExtension), UriKind.Relative);
-                    this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, DbfExtension), UriKind.Relative);
+                    this.OnPropertyChanged("Region");
                 }
             }
         }
 
-        private Uri _shapefileSourceUri;
         public Uri ShapefileSourceUri
         {
             get
             {
-                if (_shapefileSourceUri == null)
-                {
-                    _shapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, ShapeExtension), UriKind.Relative);
-                }
-                return this._shapefileSourceUri; 
+                return this._shapefileSourceUri;
             }
             set
             {
                 if (this._shapefileSourceUri != value)
                 {
                     this._shapefileSourceUri = value;
-                    RaisePropertyChanged(() => this.ShapefileSourceUri);
+                    this.OnPropertyChanged("ShapefileSourceUri");
                 }
             }
         }
 
-        private Uri _shapefileDataSourceUri;
         public Uri ShapefileDataSourceUri
         {
             get
             {
-                if (_shapefileDataSourceUri == null)
-                {
-                    this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, DbfExtension), UriKind.Relative);
-                }
-                return this._shapefileDataSourceUri; 
+                return this._shapefileDataSourceUri;
             }
             set
             {
                 if (this._shapefileDataSourceUri != value)
                 {
                     this._shapefileDataSourceUri = value;
-                    RaisePropertyChanged(() => this.ShapefileDataSourceUri);
+                    this.OnPropertyChanged("ShapefileDataSourceUri");
                 }
             }
         }
 
+        private void ShapefileViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Region")
+            {
+                this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, ShapeExtension), UriKind.Relative);
+                this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, DbfExtension), UriKind.Relative);
+            }
+        }
         private List<HeatMapData> _heatMapInfo;
         public List<HeatMapData> HeatMapInfo
         {
@@ -153,12 +131,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (_heatMapInfo != value)
                 {
                     _heatMapInfo = value;
-                    RaisePropertyChanged(() => this.HeatMapInfo);
+                    this.OnPropertyChanged("HeatMapInfo");
                 }
             }
         }
-        
-        void RetrieveHeatMapDataCallbackMethod(List<HeatMapData> result) 
+        void RetrieveHeatMapDataCallbackMethod(List<HeatMapData> result)
         {
             HeatMapInfo = result;
             RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
