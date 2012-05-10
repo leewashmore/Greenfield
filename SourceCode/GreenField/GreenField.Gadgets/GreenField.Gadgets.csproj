@@ -182,12 +182,21 @@
     <Compile Include="Views\Market Performance\ViewMarketPerformanceSnapshot.xaml.cs">
       <DependentUpon>ViewMarketPerformanceSnapshot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewCommodityIndex.xaml.cs">
+      <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFXEconomicData.xaml.cs">
+      <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewHeatMap.xaml.cs">
       <DependentUpon>ViewHeatMap.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\ViewHoldingsPieChartRegion.xaml.cs">
       <DependentUpon>ViewHoldingsPieChartRegion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMacroDBKeyAnnualReport.xaml.cs">
+      <DependentUpon>ViewMacroDBKeyAnnualReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
@@ -287,11 +296,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ViewCommodityIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewFXEconomicData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ViewHeatMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewHoldingsPieChartRegion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMacroDBKeyAnnualReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -56,18 +57,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member to store mkt cap data
         /// </summary>
-        private List<MarketCapitalizationData> _marketCapitalizationInfo;
+        private MarketCapitalizationData _marketCapitalizationInfo;
 
         /// <summary>
         /// Private member to store effective date
         /// </summary>
-        private DateTime? _effectiveDate = System.DateTime.Now;
+        private DateTime? _effectiveDate;// Seema 8-may-2012= System.DateTime.Now;
 
         /// <summary>
         /// Private member to store info about including or excluding cash securities
         /// </summary>
         private bool _isExCashSecurity = false;
-        
+
         #endregion
 
         #region Constructor
@@ -98,7 +99,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<MarketCapitalizationSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
             }
-        } 
+        }
         #endregion
 
         #region Properties
@@ -107,7 +108,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores data for Mkt Cap grid
         /// </summary>
-        public List<MarketCapitalizationData> MarketCapitalizationInfo
+        public MarketCapitalizationData MarketCapitalizationInfo
         {
             get { return _marketCapitalizationInfo; }
             set
@@ -140,17 +141,17 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>       
         public DateTime? EffectiveDate
         {
-            get 
-            {                
-                return _effectiveDate; 
+            get
+            {
+                return _effectiveDate;
             }
             set
             {
                 if (_effectiveDate != value)
                 {
 
-                    _effectiveDate = value;                    
-                                        
+                    _effectiveDate = value;
+
                     //if (_portfolioSelectionData != null && EffectiveDate != null )
                     //{
                     //    _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
@@ -184,7 +185,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-       
+
         #endregion
         #endregion
 
@@ -211,7 +212,7 @@ namespace GreenField.Gadgets.ViewModels
                             _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
                             _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
-                    
+
                     }
                 }
                 else
@@ -243,10 +244,10 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
                     {
-                        if(_mktCapDataFilter != null)
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        if (_mktCapDataFilter != null)
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
                     }
                 }
                 else
@@ -293,7 +294,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-    
+
         #endregion
 
         #region Callback Methods
@@ -308,10 +309,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (marketCapitalizationData != null)
+                if (marketCapitalizationData != null && marketCapitalizationData.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, marketCapitalizationData, 1);
-                    MarketCapitalizationInfo = marketCapitalizationData;
+                    MarketCapitalizationInfo = marketCapitalizationData.FirstOrDefault();
+                    this.RaisePropertyChanged(() => this.MarketCapitalizationInfo);
                 }
                 else
                 {
@@ -350,7 +352,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
-        #endregion         
+        #endregion
 
         #region EventUnSubscribe
         /// <summary>
@@ -365,5 +367,5 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-    }    
+    }
 }
