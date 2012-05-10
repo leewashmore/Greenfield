@@ -1533,16 +1533,46 @@ namespace GreenField.Web.Services
         #region Heat Map Operation Contract
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<HeatMapData> RetrieveHeatMapData()
+        public List<HeatMapData> RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)
         {
+            if (fundSelectionData == null || effectiveDate == null)
+                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+          
             List<HeatMapData> result = new List<HeatMapData>();
-            HeatMapData entry = new HeatMapData();
-            ResearchEntities research = new ResearchEntities();
-            result.Add(new HeatMapData() { CountryID = "RU", CountryPerformance = PerformanceGrade.OVER_PERFORMING, CountryYTD = 90 });
-            result.Add(new HeatMapData() { CountryID = "IN", CountryPerformance = PerformanceGrade.OVER_PERFORMING, CountryYTD = 95 });
-            result.Add(new HeatMapData() { CountryID = "AF", CountryPerformance = PerformanceGrade.FLAT_PERFORMING, CountryYTD = 10 });
-            result.Add(new HeatMapData() { CountryID = "AU", CountryPerformance = PerformanceGrade.UNDER_PERFORMING, CountryYTD = 20 });
-            return result;
+            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            if (data == null || data.Count == 0)
+             return result;
+            for (int i = 0; i < data.Count; i++)
+            {
+                HeatMapData entry = new HeatMapData();
+                if (data[i].COUNTRY == null)
+                continue;
+                entry.CountryID = data[i].COUNTRY;               
+                entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
+                Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD ;
+                if(diff>Convert.ToDecimal(0.05))
+                {
+                 entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
+                }
+                else
+                if(diff<Convert.ToDecimal(0.05))
+                {
+                 entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
+                }
+                else
+                if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
+                {
+                 entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
+                }
+                else
+                if(data[i].F_POR_ASH_RC_CTN_YTD==null || data[i].F_BM1_ASH_RC_CTN_YTD==null)
+                {
+                    entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                    entry.CountryYTD = Convert.ToDecimal(0);
+                }
+                result.Add(entry);            
+            }
+                return result;
         }
         #endregion
 

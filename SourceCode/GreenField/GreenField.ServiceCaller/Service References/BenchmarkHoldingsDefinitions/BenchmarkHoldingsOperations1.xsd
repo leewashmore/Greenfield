@@ -296,7 +296,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="CountryID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryPerformance" type="tns:PerformanceType" />
-      <xs:element minOccurs="0" name="CountryYTD" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="CountryYTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="HeatMapData" nillable="true" type="tns:HeatMapData" />

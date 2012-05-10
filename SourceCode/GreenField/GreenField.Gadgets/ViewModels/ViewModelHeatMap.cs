@@ -21,13 +21,13 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelHeatMap : ViewModelBase
+    public class ViewModelHeatMap : NotificationObject
     {
         protected const string ShapeRelativeUriFormat = "DataSources/Geospatial/{0}.{1}";
         protected const string ShapeExtension = "shp";
         protected const string DbfExtension = "dbf";
 
-        private string _region;
+        private string _region ;
         private Uri _shapefileSourceUri;
         private Uri _shapefileDataSourceUri;
        
@@ -61,26 +61,21 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            this.PropertyChanged += this.ShapefileViewModelPropertyChanged;
-            _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
-        }
-        public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;
+            this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", ShapeExtension), UriKind.Relative);
+            this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", DbfExtension), UriKind.Relative);
+            if (_effectiveDate != null && _PortfolioSelectionData != null)
+            {
+                _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+            }
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);              
+            }  
+            //_dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+        }      
 
-        public string Region
-        {
-            get
-            {
-                return this._region;
-            }
-            set
-            {
-                if (this._region != value)
-                {
-                    this._region = value;
-                    this.OnPropertyChanged("Region");
-                }
-            }
-        }
+        public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;       
 
         public Uri ShapefileSourceUri
         {
@@ -93,7 +88,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (this._shapefileSourceUri != value)
                 {
                     this._shapefileSourceUri = value;
-                    this.OnPropertyChanged("ShapefileSourceUri");
+                    this.RaisePropertyChanged("ShapefileSourceUri");
                 }
             }
         }
@@ -109,40 +104,161 @@ namespace GreenField.Gadgets.ViewModels
                 if (this._shapefileDataSourceUri != value)
                 {
                     this._shapefileDataSourceUri = value;
-                    this.OnPropertyChanged("ShapefileDataSourceUri");
+                    this.RaisePropertyChanged("ShapefileDataSourceUri");
                 }
             }
-        }
+        }        
 
-        private void ShapefileViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "Region")
-            {
-                this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, ShapeExtension), UriKind.Relative);
-                this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, this.Region, DbfExtension), UriKind.Relative);
-            }
-        }
         private List<HeatMapData> _heatMapInfo;
         public List<HeatMapData> HeatMapInfo
         {
-            get { return _heatMapInfo; }
+            get
+
+            {
+                if (_heatMapInfo == null)
+                {
+                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    {
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                    }
+                  
+                }
+                return _heatMapInfo;
+            }
             set
             {
                 if (_heatMapInfo != value)
                 {
                     _heatMapInfo = value;
-                    this.OnPropertyChanged("HeatMapInfo");
+                    this.RaisePropertyChanged("HeatMapInfo");
                 }
             }
-        }
+        }        
+
         void RetrieveHeatMapDataCallbackMethod(List<HeatMapData> result)
         {
-            if (result != null)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
             {
-                HeatMapInfo = result;
-                RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
+                if (result != null && result.Count > 0)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    HeatMapInfo = result;
+                    if (null != heatMapDataLoadedEvent)
+                        heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    RetrieveHeatMapDataCompletedEvent(new RetrieveHeatMapDataCompleteEventArgs() { HeatMapInfo = result });
+                }
+                
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    if (null != heatMapDataLoadedEvent)
+                        heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+               
         }
             
+
+        #region Event 
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler heatMapDataLoadedEvent;
+        #endregion
+
+
+        #region Event Handlers
+        /// <summary>
+        /// Assigns UI Field Properties based on Fund reference
+        /// </summary>
+        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData class containg the Fund Selection Data </param>
+        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (PortfolioSelectionData != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
+                    _PortfolioSelectionData = PortfolioSelectionData;
+                    if (PortfolioSelectionData != null && _effectiveDate != null)
+                    {
+                        if (null != heatMapDataLoadedEvent)
+                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Effective Date
+        /// </summary>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+
+        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (effectiveDate != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    _effectiveDate = effectiveDate;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    {
+                        if (null != heatMapDataLoadedEvent)
+                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+        #endregion
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);         
+        }
+
+        #endregion
     }
 }

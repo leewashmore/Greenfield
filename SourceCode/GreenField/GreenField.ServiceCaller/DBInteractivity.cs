@@ -1412,7 +1412,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHeatMapDataAsync();
+            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

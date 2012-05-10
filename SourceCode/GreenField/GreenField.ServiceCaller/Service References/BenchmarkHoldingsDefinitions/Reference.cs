@@ -2184,7 +2184,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PerformanceType CountryPerformanceField;
         
-        private System.Nullable<double> CountryYTDField;
+        private System.Nullable<decimal> CountryYTDField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string CountryID {
@@ -2213,7 +2213,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> CountryYTD {
+        public System.Nullable<decimal> CountryYTD {
             get {
                 return this.CountryYTDField;
             }
@@ -3958,7 +3958,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataServiceFaultFau" +
             "lt", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveHeatMapData(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result);
         
@@ -5594,8 +5594,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveHeatMapData(callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHeatMapData(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHeatMapData(fundSelectionData, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5604,7 +5604,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveHeatMapData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHeatMapData(callback, asyncState);
+            GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData = ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHeatMapData(fundSelectionData, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveHeatMapData(System.IAsyncResult result) {
@@ -5620,11 +5622,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveHeatMapDataAsync() {
-            this.RetrieveHeatMapDataAsync(null);
+        public void RetrieveHeatMapDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate) {
+            this.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate, null);
         }
         
-        public void RetrieveHeatMapDataAsync(object userState) {
+        public void RetrieveHeatMapDataAsync(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, object userState) {
             if ((this.onBeginRetrieveHeatMapDataDelegate == null)) {
                 this.onBeginRetrieveHeatMapDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHeatMapData);
             }
@@ -5634,7 +5636,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             if ((this.onRetrieveHeatMapDataCompletedDelegate == null)) {
                 this.onRetrieveHeatMapDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveHeatMapDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveHeatMapDataDelegate, null, this.onEndRetrieveHeatMapDataDelegate, this.onRetrieveHeatMapDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveHeatMapDataDelegate, new object[] {
+                        fundSelectionData,
+                        effectiveDate}, this.onEndRetrieveHeatMapDataDelegate, this.onRetrieveHeatMapDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6442,8 +6446,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveHeatMapData(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginRetrieveHeatMapData(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = fundSelectionData;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveHeatMapData", _args, callback, asyncState);
                 return _result;
             }
