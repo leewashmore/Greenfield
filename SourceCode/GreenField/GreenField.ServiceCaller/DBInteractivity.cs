@@ -504,11 +504,6 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(null);
                 }
-                else
-                {
-                    MessageBox.Show(e.Error.ToString());
-                }
-
             };
 
         }
