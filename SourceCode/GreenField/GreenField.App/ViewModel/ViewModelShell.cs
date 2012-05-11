@@ -478,7 +478,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<string> { "Region", "Country", "Sector", "Industry" };
+                return new List<string> { "Region", "Country", "Sector", "Industry", "Show Everything" };
             }
         }
 
@@ -498,9 +498,21 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SelectedFilterType);
                 if (FilterSelectionInfo != null)
                 {
-                    FilterSelectorInfo = FilterSelectionInfo
-                                        .Where(record => record.Filtertype == value)
-                                        .ToList();
+                    if (value == "Show Everything")
+                    {
+                        FilterSelectionData filterSelData = new FilterSelectionData();
+                        filterSelData.Filtertype = value;
+                        filterSelData.FilterValues = string.Empty;
+
+                        SelectorPayload.FilterSelectionData = filterSelData;
+                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
+                    }
+                    else
+                    {
+                        FilterSelectorInfo = FilterSelectionInfo
+                                            .Where(record => record.Filtertype == value)
+                                            .ToList();
+                    }
                 }
             }
         }
@@ -686,6 +698,28 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
+        
+        /// <summary>
+        /// Stores checked-unchecked value for ExCash checkbox
+        /// </summary>
+        private bool _isExCashSecurity = false;
+        public bool IsExCashSecurity
+        {
+            get { return _isExCashSecurity; }
+            set
+            {
+                _isExCashSecurity = value;
+                RaisePropertyChanged(() => this.IsExCashSecurity);
+                if (value != null)
+                {
+                    _selectorPayload.IsExCashSecurityData = value;
+                    _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
+                }
+            }
+        }
+    
+
         #endregion
         #endregion
         #endregion

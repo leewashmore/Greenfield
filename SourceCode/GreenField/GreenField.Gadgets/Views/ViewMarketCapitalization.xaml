@@ -97,7 +97,7 @@
         <StackPanel Grid.Row="8" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
             <TextBlock Text="Undefined" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <!--<TextBlock Text=" &lt; " HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
-            <TextBlock Text="{Binding MarketCapitalizationInfo.UndefinedRange}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+            <!--<TextBlock Text="{Binding MarketCapitalizationInfo.UndefinedRange}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>-->
         </StackPanel>
         <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         <TextBlock Grid.Row="8" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>

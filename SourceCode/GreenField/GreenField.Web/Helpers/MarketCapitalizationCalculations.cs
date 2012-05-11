@@ -32,7 +32,7 @@ namespace GreenField.Web.Helpers
 
             foreach (MarketCapitalizationData _mktCapData in marketCapDetails)
             {
-                if (!(string.IsNullOrEmpty(_mktCapData.Portfolio_ID)) && (_mktCapData.MarketCapitalInUSD != 0))
+                if (!(string.IsNullOrEmpty(_mktCapData.Portfolio_ID)) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
                     portfolioWtdAvg = portfolioWtdAvg +Convert.ToDecimal(_mktCapData.PortfolioDirtyValuePC / totalPortfolioMV * _mktCapData.MarketCapitalInUSD);
             }           
 
@@ -56,7 +56,7 @@ namespace GreenField.Web.Helpers
 
             foreach (MarketCapitalizationData _mktCapData in marketCapDetails)
             {
-                if (string.IsNullOrEmpty(_mktCapData.Portfolio_ID))
+                if (string.IsNullOrEmpty(_mktCapData.Portfolio_ID) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
                     benchmarkWtdAvg = benchmarkWtdAvg + Convert.ToDecimal(_mktCapData.BenchmarkWeight / totalBenchmarkWeight * _mktCapData.MarketCapitalInUSD);
             }
             return benchmarkWtdAvg;

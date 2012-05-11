@@ -736,6 +736,8 @@ namespace GreenField.Web.Services
                 return dataTable;
             }
         }
+
+       
         #endregion
 
         #region HoldingPieChart Operation Contracts
@@ -1307,8 +1309,11 @@ namespace GreenField.Web.Services
                             dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                             break;
-                        default:
+                        case GreenfieldConstants.SHOW_EVERYTHING:                            
+
                             break;
+                        //default:
+                        //    break;
                     }                    
                 }
 

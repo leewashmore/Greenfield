@@ -41,5 +41,7 @@ namespace GreenField.Common.Helper
         public FilterSelectionData FilterSelectionData { get; set; }
 
         public String PeriodSelectionData { get; set; }
+
+        public bool IsExCashSecurityData { get; set; }
     }
 }

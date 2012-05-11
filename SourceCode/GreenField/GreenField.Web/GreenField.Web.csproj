@@ -74,6 +74,7 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Services\ModelFXOperations.svc" />
     <Content Include="Services\BenchmarkHoldingsOperations.svc" />
     <Content Include="Services\DashboardOperations.svc" />
     <Content Include="Services\LoggingOperations.svc" />
@@ -105,6 +106,7 @@
     <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
     <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\MacroDatabaseKeyAnnualReportData.cs" />
     <Compile Include="DataContracts\MarketCapitalizationData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MembershipUserInfo.cs" />
@@ -139,6 +141,9 @@
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />
     <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
+    <Compile Include="Services\ModelFXOperations.svc.cs">
+      <DependentUpon>ModelFXOperations.svc</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
       <AutoGen>True</AutoGen>
