@@ -20,6 +20,7 @@ using System.Collections.Generic;
 
 namespace GreenField.Common
 {
+    public class RelativePerformanceGridCountrySectorClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 

@@ -44,6 +44,11 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
+        private void btn_DetailsClick(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
         #region Event
         /// <summary>
         ///  event to handle RadBusyIndicator
@@ -74,5 +79,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         } 
         #endregion
+       
     }
 }

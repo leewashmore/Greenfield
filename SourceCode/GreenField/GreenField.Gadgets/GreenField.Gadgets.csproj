@@ -150,9 +150,6 @@
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
-    <Compile Include="ViewModels\ViewModelHeatMap.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
@@ -187,10 +184,6 @@
     </Compile>
     <Compile Include="Views\ViewFXEconomicData.xaml.cs">
       <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewHeatMap.xaml.cs">
-      <DependentUpon>ViewHeatMap.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Views\ViewHoldingsPieChartRegion.xaml.cs">
       <DependentUpon>ViewHoldingsPieChartRegion.xaml</DependentUpon>
@@ -301,10 +294,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewFXEconomicData.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewHeatMap.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -443,6 +432,9 @@
     <Resource Include="Images\Excel.png" />
     <Resource Include="Images\PDF.png" />
     <Resource Include="Images\Print.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ToggleIcon.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

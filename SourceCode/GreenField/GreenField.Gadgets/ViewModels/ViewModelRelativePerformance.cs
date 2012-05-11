@@ -13,10 +13,12 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -62,6 +64,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Subscribe(HandleRelativePerformanceGridCountrySectorClickEvent);
             }
         } 
         #endregion
@@ -92,6 +95,20 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _period = value;
                     RaisePropertyChanged(() => Period);
+                }
+            }
+        }
+
+        private ObservableCollection<RelativePerformanceSecurityData> _securityDetails;
+        public ObservableCollection<RelativePerformanceSecurityData> SecurityDetails
+        {
+            get { return _securityDetails; }
+            set
+            {
+                if (_securityDetails != value)
+                {
+                    _securityDetails = value;
+                    RaisePropertyChanged(() => SecurityDetails);
                 }
             }
         }        
@@ -199,6 +216,43 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        /// <summary>
+        /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
+        /// </summary>
+        /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
+        public void HandleRelativePerformanceGridCountrySectorClickEvent(RelativePerformanceGridCellData relativePerformanceGridCellData)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (relativePerformanceGridCellData != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, relativePerformanceGridCellData, 1);
+                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    {
+                        if(relativePerformanceGridCellData.SectorID == null)
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                        else if(relativePerformanceGridCellData.CountryID == null)
+                            _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                        if (RelativePerformanceDataLoadEvent != null)
+                            RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
         #endregion
 
         #region Callback Methods
@@ -258,7 +312,36 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
+
+        /// <summary>
+        /// Callback method for RetrieveRelativePerformanceSecurityData Service call
+        /// </summary>
+        /// <param name="result">RelativePerformanceSecurityData Collection</param>
+        public void RetrieveRelativePerformanceSecurityDataCallBackMethod(List<RelativePerformanceSecurityData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    SecurityDetails = new ObservableCollection<RelativePerformanceSecurityData>(result);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (RelativePerformanceDataLoadEvent != null)
+                    RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         #endregion         
 
         #region Dispose Method

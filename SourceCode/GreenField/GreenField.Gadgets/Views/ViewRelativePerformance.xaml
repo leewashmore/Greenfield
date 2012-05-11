@@ -15,6 +15,7 @@
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
             </Border>
         </ControlTemplate>
+
         <SolidColorBrush x:Key="ControlOuterBorder" Color="#FF848484"/>
         <Style x:Key="GridViewCustomFooterCellStyle" TargetType="telerik:GridViewFooterCell">
             <Setter Property="Template" Value="{StaticResource GridViewFooterCellTemplate}"/>
@@ -25,12 +26,30 @@
             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+       
+        <!--GridViewHeaderCellStyle for dynamically created columns -->
+        <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
+            <Border MouseLeftButtonDown="CustomHeaderCellBorder_MouseLeftButtonDown">
+                <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+        <Style TargetType="telerik:GridViewHeaderCell" x:Key="GridViewHeaderCellClickable">
+            <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+            <Setter Property="Background" Value="#9F1D21" />
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="12"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
         <!--GridViewHeaderRowStyle-->
         <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
             <Setter Property="Height" Value="12"/>
             <Setter Property="Background" Value="#9F1D21"/>
             <Setter Property="MaxHeight" Value="12"/>
         </Style>
+        <!--GridViewHeaderCellStyle-->
         <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
             <Setter Property="Background" Value="#9F1D21" />
             <Setter Property="Foreground" Value="White"/>
@@ -48,7 +67,6 @@
             <Setter Property="Height" Value="15"/>
         </Style>
     </helpers:ViewBaseUserControl.Resources>
-
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
@@ -69,18 +87,74 @@
                     <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </telerik:RadButton>
                 <telerik:RadButton x:Name="btnExportPDF" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Export to Pdf">
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Export to Pdf" ><!--Click="btnExportToPdf_Click">-->
                     <Image Source="../Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </telerik:RadButton>
                 <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
                                    Margin="2,0,0,0" ToolTipService.ToolTip="Print">
                     <Image Source="../Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 </telerik:RadButton>
+                <telerik:RadButton x:Name="btnToggle" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Toggle" Visibility="Collapsed" Click="btn_ToggleClick">
+                    <Image Source="../Images/ToggleIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                </telerik:RadButton>
             </StackPanel>
         </Grid>
         <!--Grid Row-->
         <Grid Grid.Row="2">
+            <telerik:RadGridView x:Name="dgCountrySecurityDetails" 
+                                 AutoGenerateColumns="False"
+                                 CanUserDeleteRows="False"
+                                 CanUserInsertRows="False"
+                                 ShowColumnFooters="False"
+                                 ShowGroupPanel="False"
+                                 ScrollMode="RealTime"
+                                 telerik:StyleManager.Theme="Metro"
+                                 CanUserReorderColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 IsReadOnly="True"
+                                 AlternationCount="2" 
+                                 AlternateRowBackground="Wheat"
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 Visibility="Collapsed"
+                                 ItemsSource="{Binding SecurityDetails}">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SecurityCountryID}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                    <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" Width="*" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SecurityName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                </telerik:RadGridView.Columns>                
+            </telerik:RadGridView>
+
+            <telerik:RadGridView x:Name="dgSectorSecurityDetails" 
+                                 AutoGenerateColumns="False"
+                                 CanUserDeleteRows="False"
+                                 CanUserInsertRows="False"
+                                 ShowColumnFooters="False"
+                                 ShowGroupPanel="False"
+                                 ScrollMode="RealTime"
+                                 telerik:StyleManager.Theme="Metro"
+                                 CanUserReorderColumns="False"
+                                 RowIndicatorVisibility="Collapsed"
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 IsReadOnly="True"
+                                 AlternationCount="2" 
+                                 AlternateRowBackground="Wheat"
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 Visibility="Collapsed"
+                                 ItemsSource="{Binding SecurityDetails}">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" IsFilterable="False" Width="auto" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SecuritySectorName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                    <telerik:GridViewDataColumn x:Name="dgcSectorCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SecurityCountryID}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                    <telerik:GridViewDataColumn x:Name="dgcSectorSecurity" Header="Security" IsFilterable="False" Width="*" HeaderTextAlignment="Left"
+                                                        DataMemberBinding="{Binding SecurityName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
             <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                
                 <telerik:RadGridView Name="dgRelativePerformance" 
                                      AutoGenerateColumns="False" 
                                      IsFilteringAllowed="True" 
@@ -108,6 +182,7 @@
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}">
 
+                    
                     <telerik:RadGridView.Columns>
                         <!--CountryID Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCell}">
@@ -154,6 +229,7 @@
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>
                     </telerik:RadGridView.Columns>
+                
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
         </Grid>

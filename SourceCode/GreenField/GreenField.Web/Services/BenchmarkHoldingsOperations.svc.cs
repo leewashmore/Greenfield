@@ -123,6 +123,12 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<SectorBreakdownData> result = new List<SectorBreakdownData>();
@@ -200,6 +206,12 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<RegionBreakdownData> result = new List<RegionBreakdownData>();
@@ -279,6 +291,12 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 List<TopHoldingsData> result = new List<TopHoldingsData>();
 
@@ -322,7 +340,7 @@ namespace GreenField.Web.Services
                     result.Add(new TopHoldingsData()
                     {
                         Ticker = record.TICKER,
-                        Holding = record.PORTFOLIO_ID,
+                        Holding = record.ISSUE_NAME,
                         MarketValue = record.DIRTY_VALUE_PC,
                         PortfolioShare = portfolioWeight,
                         BenchmarkShare = benchmarkWeight,
@@ -358,6 +376,12 @@ namespace GreenField.Web.Services
 
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();

@@ -2637,12 +2637,12 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
-                        (new DashboardTileViewItemInfo
-                        {
-                            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
-                            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
-                        });
+                //_eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                //        (new DashboardTileViewItemInfo
+                //        {
+                //            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
+                //            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
+                //        });
             }
             catch (Exception ex)
             {
