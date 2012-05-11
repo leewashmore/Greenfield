@@ -23,12 +23,27 @@ namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelHeatMap : NotificationObject
     {
+        /// <summary>
+        /// Relative Uri
+        /// </summary>
         protected const string ShapeRelativeUriFormat = "DataSources/Geospatial/{0}.{1}";
+        /// <summary>
+        /// Extension for shape file
+        /// </summary>
         protected const string ShapeExtension = "shp";
+        /// <summary>
+        /// Extension for Data source file
+        /// </summary>
         protected const string DbfExtension = "dbf";
 
         private string _region ;
+        /// <summary>
+        /// Uri for Shape file
+        /// </summary>
         private Uri _shapefileSourceUri;
+        /// <summary>
+        /// Uri for Data Source file
+        /// </summary>
         private Uri _shapefileDataSourceUri;
        
         /// <summary>
@@ -47,19 +62,25 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         /// <summary>
-        /// private member object of the PortfolioSelectionData class for storing Fund Selection Data
+        /// private member object of the PortfolioSelectionData class for storing Portfolio Selection Data
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
-        private BenchmarkSelectionData _benchmarkSelectionData;
+         /// <summary>
+        /// Effective Date 
+       /// </summary>
         private DateTime? _effectiveDate;
+        #region Constructor
 
+        /// <summary>
+        /// Constructor of the class that initializes various objects
+        /// </summary>
+        /// <param name="param">MEF Eventaggrigator instance</param>
         public ViewModelHeatMap(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;          
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", ShapeExtension), UriKind.Relative);
             this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", DbfExtension), UriKind.Relative);
@@ -73,10 +94,16 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);              
             }  
             //_dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
-        }      
+        }
 
-        public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;       
+        #endregion
 
+      
+       
+        #region Properties
+        /// <summary>
+        /// Property that stores the Uri for Shape file Source
+        /// </summary>
         public Uri ShapefileSourceUri
         {
             get
@@ -92,7 +119,9 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Property that stores the Uri for Data Source file
+        /// </summary>
         public Uri ShapefileDataSourceUri
         {
             get
@@ -108,7 +137,9 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }        
-
+        /// <summary>
+        /// Collection that stores the Heat Map Data
+        /// </summary>
         private List<HeatMapData> _heatMapInfo;
         public List<HeatMapData> HeatMapInfo
         {
@@ -133,8 +164,14 @@ namespace GreenField.Gadgets.ViewModels
                     this.RaisePropertyChanged("HeatMapInfo");
                 }
             }
-        }        
+        }
+        #endregion
 
+        #region CallbackMethods
+        /// <summary>
+        /// Retrieves Heat Map Data from the Web Service
+        /// </summary>
+        /// <param name="result">List of the type of HeatMapData</param>
         void RetrieveHeatMapDataCallbackMethod(List<HeatMapData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -166,21 +203,26 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
                
         }
-            
+        #endregion
 
-        #region Event 
+
+        #region Event
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler heatMapDataLoadedEvent;
+         /// <summary>
+        /// Event for the Retrieval of Data 
+        /// </summary>
+        public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;      
         #endregion
 
 
         #region Event Handlers
         /// <summary>
-        /// Assigns UI Field Properties based on Fund reference
+        /// Assigns UI Field Properties based on Portfolio reference
         /// </summary>
-        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData class containg the Fund Selection Data </param>
+        /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData class containg the Portfolio Selection Data </param>
         public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
 
@@ -216,7 +258,6 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Effective Date
         /// </summary>
         /// <param name="effectiveDate">Effective Date selected by the user</param>
-
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
 

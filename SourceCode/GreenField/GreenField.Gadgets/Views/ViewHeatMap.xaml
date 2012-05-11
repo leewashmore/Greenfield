@@ -6,11 +6,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"   
     mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    <!--<helpers:ViewBaseUserControl.Resources>
-        <telerik:ExtendedDataConverter x:Key="ExtendedDataConverter" />
-    </helpers:ViewBaseUserControl.Resources>-->
-           
+    d:DesignHeight="300" d:DesignWidth="400"> 
     <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,13 +19,13 @@
             <DataTemplate x:Key="CustomToolTipDataTemplate">
                 <StackPanel Margin="10,5">
                     <TextBlock FontWeight="Bold" Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
-                    <TextBlock Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD', StringFormat=\{0:n2\}%}" />
+                    <TextBlock Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD'}" />
                 </StackPanel>
             </DataTemplate>
         </Grid.Resources>
         <telerik:RadBusyIndicator x:Name="busyIndicatorMap" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadMap x:Name="RadMap1"       
-                        Background="White"
+                        Background="LightBlue"
                         BorderBrush="Black"
                         BorderThickness="1"                        
                         UseDefaultLayout="False"
@@ -47,33 +43,7 @@
                                             DataSource="{Binding ShapefileDataSourceUri}"
                                             ToolTipTemplate="{StaticResource CustomToolTipDataTemplate}"                                            
                                             PreviewReadCompleted="MapPreviewReadCompleted" />
-                    </telerik:InformationLayer.Reader>
-                    <!--<telerik:InformationLayer.Colorizer>
-                    <telerik:ColorMeasureScale ExtendedPropertyName="CountryPerformance" MinValue="0" MaxValue="3" Mode="RangesPredefinedColors">              
-
-                        <telerik:ColorMeasureScale.ShapeFillCollection>
-                            <telerik:MapShapeFill Fill="White" Stroke="Black" StrokeThickness="2" />
-                           
-                        </telerik:ColorMeasureScale.ShapeFillCollection>
-                        <telerik:ColorMeasureScale.RangeCollection>
-                            <telerik:MapRange MinValue="0" MaxValue="1">
-                                <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Yellow"/>
-                                </telerik:MapRange.ShapeFill>
-                            </telerik:MapRange>
-                            <telerik:MapRange MinValue="1" MaxValue="2">
-                                <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Gray"/>
-                                </telerik:MapRange.ShapeFill>
-                            </telerik:MapRange>
-                            <telerik:MapRange MinValue="2" MaxValue="3">
-                                <telerik:MapRange.ShapeFill>
-                                    <telerik:MapShapeFill Fill="Red" />
-                                </telerik:MapRange.ShapeFill>
-                            </telerik:MapRange>                           
-                        </telerik:ColorMeasureScale.RangeCollection>
-                    </telerik:ColorMeasureScale>
-                </telerik:InformationLayer.Colorizer>-->
+                    </telerik:InformationLayer.Reader>              
                 </telerik:InformationLayer>
             </telerik:RadMap>
         </telerik:RadBusyIndicator>

@@ -1534,7 +1534,12 @@ namespace GreenField.Web.Services
         #endregion
 
         #endregion
-
+        /// <summary>
+        /// Retrieves Heat Map Data for a particular portfolio and date
+        /// </summary>
+        /// <param name="fundSelectionData">Contains Selected Fund Data</param>
+        /// <param name="effectiveDate">Effectice date as selected by the user</param>
+        /// <returns></returns>
         #region Heat Map Operation Contract
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -1560,7 +1565,7 @@ namespace GreenField.Web.Services
                  entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
                 }
                 else
-                if(diff<Convert.ToDecimal(0.05))
+                if(diff<Convert.ToDecimal(-0.05))
                 {
                  entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
                 }

@@ -18,15 +18,33 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Class for the Heat Map View
+    /// </summary>
     public partial class ViewHeatMap : ViewBaseUserControl
 
     {
-       private const string NonDbfDataField = "HugsPerCapita";
+      /// <summary>
+      /// Constant String for country performance
+      /// </summary>
        private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
+        /// <summary>
+       ///  Constant String for country YTD
+        /// </summary>
        private const string COUNTRY_YTD_FIELD = "CountryYTD";
+        /// <summary>
+        /// Private Collection of type Heat Map Data
+        /// </summary>
        private List<HeatMapData> _heatMapInfo;
-       private List<MapShape> _shapes = new List<MapShape>(); 
-
+        /// <summary>
+        /// Private Collection of type Map Shape
+        /// </summary>
+       private List<MapShape> _shapes = new List<MapShape>();
+       #region Constructor
+       /// <summary>
+       /// Constructor
+        /// </summary>
+       /// <param name="dataContextSource">ViewModelHeatMap as Data context for this View</param>
        public ViewHeatMap(ViewModelHeatMap dataContextSource)
        {
            InitializeComponent();
@@ -36,6 +54,7 @@ namespace GreenField.Gadgets.Views
            dataContextSource.heatMapDataLoadedEvent +=
            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
        }
+       #endregion
 
        /// <summary>
        /// Property of the type of View Model for this view
@@ -46,7 +65,10 @@ namespace GreenField.Gadgets.Views
            get { return _dataContextHeatMap; }
            set { _dataContextHeatMap = value; }
        }
-
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
          private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
         {
             _heatMapInfo = e.HeatMapInfo;
@@ -61,28 +83,39 @@ namespace GreenField.Gadgets.Views
                     if (countryRecord != null)
                     {
                         _shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
-                        _shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD,countryRecord.CountryYTD);
+                        _shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
+                         AddColorizerToInformationLayer(_shape, countryRecord);
                     }
+                  
                 }
             }
-            //AddColorizerToInformationLayer();
+          
         }
+        /// <summary>
+        /// Adding Colour to Each Shape
+        /// </summary>
+        /// <param name="_shape">Shape</param>
+        /// <param name="countryRecord">Country record of type heat map data</param>
+         private void AddColorizerToInformationLayer(MapShape _shape, HeatMapData countryRecord)
+         {
+             if ((int)(countryRecord.CountryPerformance) == 3)
+                 _shape.Fill = new SolidColorBrush(Colors.Green);
+             else
+                 if ((int)(countryRecord.CountryPerformance) == 1)
+                     _shape.Fill = new SolidColorBrush(Colors.Red);
+                 else
+                     if ((int)(countryRecord.CountryPerformance) == 2)
+                         _shape.Fill = new SolidColorBrush(Colors.Gray);
+                     else
+                         if ((int)(countryRecord.CountryPerformance) == 0)
+                             _shape.Fill = new SolidColorBrush(Colors.White);                     
+         }
 
-          //private void AddColorizerToInformationLayer()
-         // {
-         //     this.informationLayer.Colorizer.ExtendedPropertyName = "COUNTRY_PERFORMANCE_FIELD";             
-         //     ColorMeasureScale scale = new ColorMeasureScale();
-         //     //MapShapeFillCollection msc = new MapShapeFillCollection();
-            
-         //     //scale.RangeCollection[0].MaxValue = 10;
-         //     //scale.sha
-         //     //scale.RangeCollection[scale.RangeCollection.Count - 2].MaxValue = scale.RangeCollection.Last().MaxValue;
-         //     //scale.RangeCollection.Remove(scale.RangeCollection.Last()); 
-              
-
-         //}
-
-
+        /// <summary>
+        /// Completed event for Map Preview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void MapPreviewReadCompleted(object sender, PreviewReadShapesCompletedEventArgs eventArgs)
         {
             if (eventArgs.Error == null)
@@ -95,7 +128,10 @@ namespace GreenField.Gadgets.Views
 
             _heatMapInfo = ((ViewModelHeatMap)this.DataContext).HeatMapInfo;
         }
-
+        /// <summary>
+        /// Registers Properties for Heat Map
+        /// </summary>
+        /// <param name="shape">Map Shape</param>
         private void SetAdditionalData(MapShape shape)
         {
             ExtendedData extendedData = shape.ExtendedData;
