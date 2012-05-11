@@ -78,7 +78,7 @@ namespace GreenField.Web.Helpers
             {
                 SqlCommand command = new SqlCommand(procName, connection);
                 command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.Add(paramName, paramVal);
+                command.Parameters.AddWithValue(paramName, paramVal);
                 //command.Parameters.Add("@Region", paramRegionVal);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
                 DataTable dataTable = new DataTable();

@@ -9,10 +9,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewMacroDBKeyAnnualReport : UserControl
+    public partial class ViewMacroDBKeyAnnualReport : ViewBaseUserControl
     {
         public ViewMacroDBKeyAnnualReport()
         {
