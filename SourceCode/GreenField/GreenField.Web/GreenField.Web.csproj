@@ -99,11 +99,12 @@
     <Compile Include="DataContracts\AttributionData.cs" />
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
+    <Compile Include="DataContracts\ChartExtensionData.cs" />
     <Compile Include="DataContracts\EntitySelectionData.cs" />
     <Compile Include="DataContracts\Enumerations.cs" />
+    <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\HeatMapData.cs" />
     <Compile Include="DataContracts\HoldingsData.cs" />
-    <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
     <Compile Include="DataContracts\IndexConstituentsData.cs" />
     <Compile Include="DataContracts\MarketCapitalizationData.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\GreenfieldConstants.cs" />
     <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
+    <Compile Include="Helpers\ChartExtensionCalculations.cs" />
     <Compile Include="Helpers\PortfolioDetailsCalculations.cs" />
     <Compile Include="Helpers\Service Faults\FaultDescriptions.Designer.cs" />
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />

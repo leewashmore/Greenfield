@@ -236,6 +236,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        
         <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
                              telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
             <telerik:RadExpander.Header>
@@ -251,7 +252,8 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
-                    <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" 
+                                       VerticalAlignment="Center"
                                        Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                         <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>

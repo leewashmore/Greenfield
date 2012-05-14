@@ -40,10 +40,10 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
-            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);            
+            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -58,7 +58,7 @@ namespace GreenField.DashboardModule.Views
                 EventAggregator = _eventAggregator,
                 LoggerFacade = _logger
             };
-                        
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.SECURITY_OVERVIEW, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
@@ -91,7 +91,7 @@ namespace GreenField.DashboardModule.Views
             {
                 RestoredHeight = 400,
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_CHART_EXTENTION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = null
+                Content = new ViewSlice1ChartExtension(new ViewModelSlice1ChartExtension(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
@@ -163,6 +163,6 @@ namespace GreenField.DashboardModule.Views
                 Content = null
             });
         }
-        
+
     }
 }

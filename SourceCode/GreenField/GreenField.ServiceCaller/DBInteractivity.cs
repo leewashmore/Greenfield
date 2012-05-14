@@ -1475,6 +1475,35 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Service Caller Method for Chart Extension Gadget
+        /// </summary>
+        /// <param name="objSelectedEntities">Collection of selected Portfolio and/or Securitie</param>
+        /// <param name="objEffectiveDate">Selected Date</param>
+        /// <param name="callback">Collection of Chart Extension Data</param>
+        public void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveChartExtensionDataAsync(objSelectedEntities, objEffectiveDate);
+            client.RetrieveChartExtensionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
+
         #endregion
     }
 }

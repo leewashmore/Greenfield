@@ -25,9 +25,9 @@ namespace GreenField.Common
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
 
-    public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
+    public class SecurityReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> { }
 
-    public class PortfolioReferenceSetEvent : CompositePresentationEvent<PortfolioSelectionData> { }
+    public class PortfolioReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData> { }
 
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 

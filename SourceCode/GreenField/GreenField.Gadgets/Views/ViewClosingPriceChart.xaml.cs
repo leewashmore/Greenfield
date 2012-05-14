@@ -146,6 +146,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Frequency Interval Changed Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbFrequencyInterval_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             string timeInterval = Convert.ToString(cmbTime.SelectedValue);
@@ -242,6 +247,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Event for Grid Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e);
@@ -265,6 +275,11 @@ namespace GreenField.Gadgets.Views
             return String.Join(",", aggregates.ToArray());
         }
 
+        /// <summary>
+        /// Time Interval Drop Down Closed Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
             if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
@@ -291,6 +306,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Selection Changed Event for Time ComboBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
 

@@ -119,9 +119,22 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.AssetAllocationData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -135,6 +148,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.FilterSelectionData.datasource">
@@ -190,10 +206,6 @@
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.TopHoldingsData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
     <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />
@@ -270,12 +282,16 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
     <None Include="Service References\DashboardDefinitions\DashboardOperations.xsd">
       <SubType>Designer</SubType>
@@ -382,18 +398,7 @@
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
