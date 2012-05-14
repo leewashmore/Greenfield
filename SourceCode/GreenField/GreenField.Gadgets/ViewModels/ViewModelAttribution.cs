@@ -125,7 +125,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         switch (value)
                         {
-                            case "1M":
+                            case "1M":                                
                                 List<PeriodAttributeData> result = new List<PeriodAttributeData>();                                    
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
@@ -140,6 +140,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result.Add(entry);
                                     }
                                 PeriodAttributionInfo = result;
+                                if (null != attributionDataLoadedEvent)
+                                    attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "3M":
                                  List<PeriodAttributeData> result3M = new List<PeriodAttributeData>();                                    
@@ -156,6 +158,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result3M.Add(entry);
                                     }
                                 PeriodAttributionInfo = result3M;
+                                if (null != attributionDataLoadedEvent)
+                                    attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "6M":
                                 List<PeriodAttributeData> result6M = new List<PeriodAttributeData>();                                    
@@ -172,6 +176,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result6M.Add(entry);
                                     }
                                   PeriodAttributionInfo = result6M;
+                                  if (null != attributionDataLoadedEvent)
+                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "YTD":
                                  List<PeriodAttributeData> resultYTD = new List<PeriodAttributeData>();                                    
@@ -188,6 +194,8 @@ namespace GreenField.Gadgets.ViewModels
                                       resultYTD.Add(entry);
                                     }
                                  PeriodAttributionInfo = resultYTD;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "1Y":
                                 List<PeriodAttributeData> result1Y = new List<PeriodAttributeData>();                                    
@@ -204,6 +212,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result1Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result1Y;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "3Y":
                                 List<PeriodAttributeData> result3Y = new List<PeriodAttributeData>();                                    
@@ -220,6 +230,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result3Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result3Y;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "5Y":
                                   List<PeriodAttributeData> result5Y = new List<PeriodAttributeData>();                                    
@@ -236,6 +248,8 @@ namespace GreenField.Gadgets.ViewModels
                                       result5Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result5Y;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "SI":
                                 List<PeriodAttributeData> resultSI = new List<PeriodAttributeData>();                                    
@@ -252,12 +266,16 @@ namespace GreenField.Gadgets.ViewModels
                                       resultSI.Add(entry);
                                     }
                                  PeriodAttributionInfo = resultSI;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                         }
 
                     }
                 
-            }        
+            } 
+       
+
         }
         /// <summary>
         /// Collection binded to the Attribution Grid
@@ -275,7 +293,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_periodAttributionInfo != value)
                 {
-                    _periodAttributionInfo = value;
+                    _periodAttributionInfo = value;  
                     RaisePropertyChanged(() => this.PeriodAttributionInfo);
                 }
             }
@@ -379,11 +397,14 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
                     if (_PortfolioSelectionData != null && _effectiveDate != null)
-                    SelectedPeriod = selectedPeriodType;                   
+                    if (null != attributionDataLoadedEvent)
+                        attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    SelectedPeriod = selectedPeriodType;
+                    
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                
                 }
             }
             catch (Exception ex)
