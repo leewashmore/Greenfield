@@ -573,16 +573,16 @@ namespace GreenField.Web.Services
         /// Method to retrieve data in Benchmark Chart
         /// </summary>
         /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objEffectiveDate"></param>
+        /// <param name="objStartDate"></param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate)
+        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate)
         {
             try
             {
                 List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
-                if ((objBenchmarkIdentifier != null) && (objEffectiveDate != null))
+                if ((objSelectedEntities != null) && (objStartDate != null))
                 {
                     Random random = new Random();
 
@@ -761,7 +761,7 @@ namespace GreenField.Web.Services
             }
         }
 
-       
+
         #endregion
 
         #region HoldingPieChart Operation Contracts
@@ -1333,11 +1333,11 @@ namespace GreenField.Web.Services
                         dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                         break;
-                        case GreenfieldConstants.SHOW_EVERYTHING:                            
+                    case GreenfieldConstants.SHOW_EVERYTHING:
 
                         break;
-                        //default:
-                        //    break;
+                    //default:
+                    //    break;
                 }
             }
 
@@ -1558,6 +1558,7 @@ namespace GreenField.Web.Services
         #endregion
 
         #endregion
+
         /// <summary>
         /// Retrieves Heat Map Data for a particular portfolio and date
         /// </summary>
@@ -1571,42 +1572,42 @@ namespace GreenField.Web.Services
         {
             if (fundSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-          
+
             List<HeatMapData> result = new List<HeatMapData>();
             List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (data == null || data.Count == 0)
-             return result;
+                return result;
             for (int i = 0; i < data.Count; i++)
             {
                 HeatMapData entry = new HeatMapData();
                 if (data[i].COUNTRY == null)
-                continue;
-                entry.CountryID = data[i].COUNTRY;               
+                    continue;
+                entry.CountryID = data[i].COUNTRY;
                 entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
-                Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD ;
-                if(diff>Convert.ToDecimal(0.05))
+                Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
+                if (diff > Convert.ToDecimal(0.05))
                 {
-                 entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
+                    entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
                 }
                 else
-                if(diff<Convert.ToDecimal(-0.05))
-                {
-                 entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
-                }
-                else
-                if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
-                {
-                 entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
-                }
-                else
-                if(data[i].F_POR_ASH_RC_CTN_YTD==null || data[i].F_BM1_ASH_RC_CTN_YTD==null)
-                {
-                    entry.CountryPerformance = PerformanceGrade.NO_RELATION;
-                    entry.CountryYTD = Convert.ToDecimal(0);
-                }
-                result.Add(entry);            
+                    if (diff < Convert.ToDecimal(-0.05))
+                    {
+                        entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
+                    }
+                    else
+                        if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
+                        {
+                            entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
+                        }
+                        else
+                            if (data[i].F_POR_ASH_RC_CTN_YTD == null || data[i].F_BM1_ASH_RC_CTN_YTD == null)
+                            {
+                                entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                entry.CountryYTD = Convert.ToDecimal(0);
+                            }
+                result.Add(entry);
             }
-                return result;
+            return result;
         }
         #endregion
 
@@ -1658,13 +1659,13 @@ namespace GreenField.Web.Services
         public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             if (portfolioSelectionData == null || effectiveDate == null)
-            throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-           List<PerformanceGridData> result = new List<PerformanceGridData>();
-           DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();           
-           if (performanceData == null)
-           return result;
-           String portfolioID = performanceData.PORTFOLIO;
-           String benchmarkID =  DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).FirstOrDefault().BENCHMARK_ID;
+                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+            List<PerformanceGridData> result = new List<PerformanceGridData>();
+            DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
+            if (performanceData == null)
+                return result;
+            String portfolioID = performanceData.PORTFOLIO;
+            String benchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).FirstOrDefault().BENCHMARK_ID;
             try
             {
                 {
@@ -1799,15 +1800,15 @@ namespace GreenField.Web.Services
             if (portfolioSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
             List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
-           List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (riskReturnData == null)
-                return result;            
+                return result;
             try
             {
                 PortfolioRiskReturnData entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Alpha";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE=="Net").Select(t => t.RC_ALPHA).FirstOrDefault());
-                entry.PortfolioValue =(riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Beta";

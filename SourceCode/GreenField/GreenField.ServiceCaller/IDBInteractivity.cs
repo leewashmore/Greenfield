@@ -117,7 +117,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
-        void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback);
+        void RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntites, DateTime objStartDate, Action<List<BenchmarkChartReturnData>> callback);
 
         void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback);
 

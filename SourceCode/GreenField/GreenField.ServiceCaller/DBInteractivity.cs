@@ -973,13 +973,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for multiLine Benchmark Chart
         /// </summary>
-        /// <param name="objBenchmarkIdentifier">Benchmark Identifier</param>
-        /// <param name="objEffectiveDate">Effective Date for which Data is Required</param>
+        /// <param name="objSelectedPortfolio">Benchmark Identifier</param>
+        /// <param name="objStartDate">Effective Date for which Data is Required</param>
         /// <param name="callback">Collection of Benchmark Return Data</param>
-        public void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback)
+        public void RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate, Action<List<BenchmarkChartReturnData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
+            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities, objStartDate);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

@@ -131,8 +131,8 @@
   <xs:element name="RetrieveBenchmarkChartReturnData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="objBenchmarkIdentifier" nillable="true" type="q15:ArrayOfBenchmarkSelectionData" />
-        <xs:element minOccurs="0" name="objEffectiveDate" type="xs:dateTime" />
+        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="objSelectedEntities" nillable="true" type="q15:ArrayOfKeyValueOfstringstring" />
+        <xs:element minOccurs="0" name="objStartDate" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
