@@ -17,11 +17,12 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Common.Helper;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardMarketsSnapshotMarketPerformance : UserControl
+    public partial class ViewDashboardMarketsSnapshotMarketPerformance : UserControl//, INavigationAware, IConfirmNavigationRequest
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -40,6 +41,7 @@ namespace GreenField.DashboardModule.Views
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
+            
 
             //this.tbHeader.Text = GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT;
         }
@@ -56,5 +58,34 @@ namespace GreenField.DashboardModule.Views
 
             this.cctrDashboardContent.Content = new ViewMarketPerformanceSnapshot(new ViewModelMarketPerformanceSnapshot(param));
         }
+
+        #region INavigationAware Methods
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {            
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+        }
+        #endregion
+
+        #region IConfirmNavigationRequest Method
+        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+        {
+            if (MessageBox.Show("On navigation any unsaved changes might be lost. Are you sure you want to navigate", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                continuationCallback(true);
+                return;
+            }
+            continuationCallback(false);
+        } 
+        #endregion
     }
 }

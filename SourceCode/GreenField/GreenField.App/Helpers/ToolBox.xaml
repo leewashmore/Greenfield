@@ -352,9 +352,9 @@
                     </telerik:RadBusyIndicator>
                 </Grid>
                 <Grid Margin="5,0,0,0" Visibility="{Binding MarketCapCashSelectorVisibility}" Grid.Column="9">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">                       
-                        <CheckBox Content="Select To Exclude Cash Securities" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <CheckBox Content="Select To Exclude Cash Securities" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto"
+                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold" />                        
                     </StackPanel>
                     
                 </Grid>

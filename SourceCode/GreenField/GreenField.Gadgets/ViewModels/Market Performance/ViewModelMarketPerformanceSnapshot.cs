@@ -22,6 +22,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.SessionDefinitions;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -30,9 +31,8 @@ namespace GreenField.Gadgets.ViewModels
     /// </summary>[Export(typeof(ViewModelMorningSnapshot))]
     public class ViewModelMarketPerformanceSnapshot : NotificationObject
     {
-        #region PrivateFields
+        #region Fields
         //MEF Singletons
-        public IDBInteractivity _dbInteractivity;
         private IEventAggregator _eventAggregator;
         private IManageSessions _manageSessions;
         private ILoggerFacade _logger;
@@ -42,7 +42,6 @@ namespace GreenField.Gadgets.ViewModels
         private List<MarketSnapshotPreference> _deletePreferenceInfo = new List<MarketSnapshotPreference>();
         private List<int> _deleteGroupInfo = new List<int>();
         private List<string> _createGroupInfo = new List<string>();
-        private MarketSnapshotSelectionData _selectedLocalMarketSnapshotSelectionData = null;
         #endregion
 
         #region Constructor
@@ -64,27 +63,34 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Subscribe(HandleMarketPerformanceSnapshotNameReferenceSetEvent);
-                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionEvent); 
+                _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionEvent);
             }
 
             //RetrieveMarketSnapshotPreference Service Call
-            if (SelectedMarketSnapshotSelectionInfo != null)                    
+            if (SelectedMarketSnapshotSelectionInfo != null)
             {
                 HandleMarketPerformanceSnapshotNameReferenceSetEvent(SelectedMarketSnapshotSelectionInfo);
             }
-        }       
+        }
         #endregion
 
         #region Properties
+        #region Service Caller IDBInteractivity
+        /// <summary>
+        /// Service Caller instance - to be used in class behind to invoke Entity Selection data retrieval after the constructor of view is invoked
+        /// </summary>
+        public IDBInteractivity _dbInteractivity { get; set; }
+        #endregion
+
         #region Snapshot Header
         public string MorningSnapshotHeader
         {
             get
-            { 
-                return "Market Performance Snapshot (" + DateTime.Today.ToShortDateString() + ")"; 
-            }            
-        } 
-        #endregion        
+            {
+                return "Market Performance Snapshot (" + DateTime.Today.ToString("MMMM d, yyyy") + ") - Emerging Markets";
+            }
+        }
+        #endregion
 
         #region Entity Selection Data
         /// <summary>
@@ -95,7 +101,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return _entitySelectionInfo; }
             set { _entitySelectionInfo = value; }
-        } 
+        }
         #endregion
 
         #region Populated MarketPerformanceSnapshot Data
@@ -106,14 +112,14 @@ namespace GreenField.Gadgets.ViewModels
         private List<PopulatedMarketPerformanceSnapshotData> _populatedMarketPerformanceSnapshotInfo;
         public List<PopulatedMarketPerformanceSnapshotData> PopulatedMarketPerformanceSnapshotInfo
         {
-            get 
+            get
             {
-                if (_populatedMarketPerformanceSnapshotInfo == null)
-                    _populatedMarketPerformanceSnapshotInfo = new List<PopulatedMarketPerformanceSnapshotData>();
-                return _populatedMarketPerformanceSnapshotInfo; 
+                //if (_populatedMarketPerformanceSnapshotInfo == null)
+                //    _populatedMarketPerformanceSnapshotInfo = new List<PopulatedMarketPerformanceSnapshotData>();
+                return _populatedMarketPerformanceSnapshotInfo;
             }
             set { _populatedMarketPerformanceSnapshotInfo = value; }
-        } 
+        }
         #endregion
 
         #region MarketSnapshot Selection Data
@@ -135,7 +141,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return _marketSnapshotSelectionInfo; }
             set { _marketSnapshotSelectionInfo = value; }
-        } 
+        }
         #endregion
 
         #region Market Snapshot Preference
@@ -157,10 +163,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (_marketSnapshotPreferenceInfo == null)
-                {
-                    _marketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
-                }
+                //if (_marketSnapshotPreferenceInfo == null)
+                //{
+                //    _marketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
+                //}
                 return _marketSnapshotPreferenceInfo;
             }
             set
@@ -168,7 +174,7 @@ namespace GreenField.Gadgets.ViewModels
                 _marketSnapshotPreferenceInfo = value;
                 RaisePropertyChanged(() => this.MarketSnapshotPreferenceInfo);
             }
-        } 
+        }
         #endregion
 
         #region Market Performance Snapshot Data
@@ -180,10 +186,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (_marketPerformanceSnapshotInfo == null)
-                {
-                    _marketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>();
-                }
+                //if (_marketPerformanceSnapshotInfo == null)
+                //{
+                //    _marketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>();
+                //}
                 return _marketPerformanceSnapshotInfo;
             }
             set
@@ -208,7 +214,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedMarketPerformanceSnapshotInfo = value;
                 RaisePropertyChanged(() => this.SelectedMarketPerformanceSnapshotInfo);
             }
-        } 
+        }
         #endregion
 
         #region Busy Indicator Notification Content
@@ -224,9 +230,9 @@ namespace GreenField.Gadgets.ViewModels
                 _busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
-        }         
+        }
         #endregion
-        #endregion        
+        #endregion
 
         #region ICommand
         public ICommand AddEntityGroupCommand
@@ -273,17 +279,26 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                //Get all group names present in the snapshot
-                List<string> snapshotGroupNames = MarketPerformanceSnapshotInfo
-                    .Select(i => i.MarketSnapshotPreferenceInfo.GroupName).Distinct().ToList();
-
-                //Get all entities present in the snapshot
-                List<string> snapshotEntityNames = MarketPerformanceSnapshotInfo
-                    .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
-
                 //Cases Where EntitySelectionInfo Data Asychronous call thread is still active
                 if (EntitySelectionInfo == null)
                     return;
+
+                //Get all group names present in the snapshot
+                List<string> snapshotGroupNames = new List<string>();
+                if (MarketPerformanceSnapshotInfo != null)
+                {
+                    snapshotGroupNames = MarketPerformanceSnapshotInfo
+                        .Select(i => i.MarketSnapshotPreferenceInfo.GroupName).Distinct().ToList();
+                }
+
+
+                //Get all entities present in the snapshot
+                List<string> snapshotEntityNames = new List<string>();
+                if (MarketPerformanceSnapshotInfo != null)
+                {
+                    snapshotEntityNames = MarketPerformanceSnapshotInfo
+                        .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
+                }
 
                 //Open Child Window to receive inserted entity details
                 ChildViewInsertEntity childViewModelInsertEntity
@@ -303,18 +318,31 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (childViewModelInsertEntity.InsertedMarketSnapshotPreference != null)
                             {
-                                //Create Preference object
+                                //Create Preference object - We assign a new uncommitted GroupPreferenceId to the entity and place it with Entity Order 1
                                 MarketSnapshotPreference insertedMarketSnapshotPreference = childViewModelInsertEntity.InsertedMarketSnapshotPreference;
                                 insertedMarketSnapshotPreference.GroupPreferenceID = GetLastGroupPreferenceId() + 1;
-                                insertedMarketSnapshotPreference.EntityOrder = 1;                               
+                                insertedMarketSnapshotPreference.EntityOrder = 1;
 
-                                MarketSnapshotPreferenceInfo.Add(insertedMarketSnapshotPreference);                               
-                                
+                                //Add the inserted entity to MarketSnapshotPreferenceInfo 
+                                if (MarketSnapshotPreferenceInfo == null)
+                                {
+                                    MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
+                                }
+                                MarketSnapshotPreferenceInfo.Add(insertedMarketSnapshotPreference);
+
+                                //Reorder MarketSnapshotPreferenceInfo by GroupPreferenceID and then by EntityOrder
+                                MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceInfo
+                                    .OrderBy(record => record.GroupPreferenceID)
+                                    .ThenBy(record => record.EntityOrder)
+                                    .ToList();
+
+                                //abc();
+
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving performance data for inserted entity ...");
-                                    _dbInteractivity.RetrieveMarketPerformanceSnapshotData( new List<MarketSnapshotPreference> { insertedMarketSnapshotPreference }
+                                    _dbInteractivity.RetrieveMarketPerformanceSnapshotData(new List<MarketSnapshotPreference> { insertedMarketSnapshotPreference }
                                         , RetrieveMarketPerformanceSnapshotDataByEntityCallbackMethod);
                                 }
                             }
@@ -324,6 +352,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                         Logging.LogException(_logger, ex);
+                        BusyIndicatorNotification();
                     }
                     Logging.LogEndMethod(_logger, childUnloadedMethodNamespace);
                     #endregion
@@ -350,17 +379,38 @@ namespace GreenField.Gadgets.ViewModels
                 if (MessageBox.Show("Remove Group - '" + SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName
                     + "'?", "Remove Group", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    //Remove Entity from the snapshot
-                    foreach (MarketPerformanceSnapshotData entry in MarketPerformanceSnapshotInfo
-                        .Where(record => record.MarketSnapshotPreferenceInfo.GroupName
-                            == SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName)
-                        .ToList())
+                    BusyIndicatorNotification(true, "Removing selected group from the snapshot");
+                    //Remove Entity from the snapshot                    
+                    if (MarketPerformanceSnapshotInfo != null)
                     {
-                        MarketPerformanceSnapshotInfo.Remove(entry);
+                        foreach (MarketPerformanceSnapshotData entry in MarketPerformanceSnapshotInfo
+                                        .Where(record => record.MarketSnapshotPreferenceInfo.GroupName
+                                            == SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName)
+                                        .ToList())
+                        {
+                            MarketPerformanceSnapshotInfo.Remove(entry);
+                        }
+
                         MarketSnapshotPreferenceInfo = MarketPerformanceSnapshotInfo
-                            .Select(record => record.MarketSnapshotPreferenceInfo)
-                            .ToList();
-                    }             
+                                .Select(record => record.MarketSnapshotPreferenceInfo)
+                                .ToList(); 
+                    }
+
+                    #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo != null)
+                    {
+                        PopulatedMarketPerformanceSnapshotData selectedPopulatedMarketPerformanceSnapshotInfo = PopulatedMarketPerformanceSnapshotInfo
+                                            .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
+
+                        if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
+                        {
+                            PopulatedMarketPerformanceSnapshotInfo
+                                .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo)
+                                .FirstOrDefault()
+                                .MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList();
+                        }
+                    }
+                    #endregion
                 }
             }
             catch (Exception ex)
@@ -368,7 +418,9 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);            
+            Logging.LogEndMethod(_logger, methodNamespace);
+            BusyIndicatorNotification();
+            //abc();
         }
 
         /// <summary>
@@ -381,13 +433,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                //Get all entities present in the snapshot
-                List<string> snapshotEntityNames = MarketPerformanceSnapshotInfo
-                    .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
-
                 //Cases Where EntitySelectionInfo Data Asychronous call thread is still active
                 if (EntitySelectionInfo == null)
                     return;
+
+                //Get all entities present in the snapshot
+                List<string> snapshotEntityNames = new List<string>();
+                if (MarketPerformanceSnapshotInfo != null)
+                {
+                    snapshotEntityNames = MarketPerformanceSnapshotInfo
+                        .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
+                }
 
                 //Open Child Window to receive inserted entity details
                 ChildViewInsertEntity childViewModelInsertEntity
@@ -407,13 +463,19 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (childViewModelInsertEntity.InsertedMarketSnapshotPreference != null)
                             {
+                                BusyIndicatorNotification(true, "Updating preference structure ...");
                                 //Create Preference object
                                 MarketSnapshotPreference insertedMarketSnapshotPreference = childViewModelInsertEntity.InsertedMarketSnapshotPreference;
                                 insertedMarketSnapshotPreference.GroupName = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName;
                                 insertedMarketSnapshotPreference.GroupPreferenceID = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID;
-                                
+
                                 //Rearrange Entity Orders
                                 insertedMarketSnapshotPreference.EntityOrder = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.EntityOrder;
+                                if (MarketSnapshotPreferenceInfo == null)
+                                {
+                                    MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
+                                }
+
                                 foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
                                 {
                                     if (entity.GroupPreferenceID != insertedMarketSnapshotPreference.GroupPreferenceID)
@@ -423,14 +485,23 @@ namespace GreenField.Gadgets.ViewModels
                                     entity.EntityOrder++;
                                 }
 
+                                //Add inserted entity to MarketSnapshotPreferenceInfo
                                 MarketSnapshotPreferenceInfo.Add(insertedMarketSnapshotPreference);
+
+                                //Reorder MarketSnapshotPreferenceInfo
+                                MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceInfo
+                                    .OrderBy(record => record.GroupPreferenceID)
+                                    .ThenBy(record => record.EntityOrder)
+                                    .ToList();
+
+                                //abc();
+
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving performance data for inserted entity ...");
                                     _dbInteractivity.RetrieveMarketPerformanceSnapshotData(new List<MarketSnapshotPreference> { insertedMarketSnapshotPreference }
                                            , RetrieveMarketPerformanceSnapshotDataByEntityCallbackMethod);
-                                    //_dbInteractivity.RetrieveMarketPerformanceSnapshotData(MarketSnapshotPreferenceInfo, RetrieveMarketPerformanceSnapshotDataCallbackMethod);
                                 }
                             }
                         }
@@ -439,8 +510,9 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                         Logging.LogException(_logger, ex);
+                        BusyIndicatorNotification();
                     }
-                    Logging.LogEndMethod(_logger, childUnloadedMethodNamespace); 
+                    Logging.LogEndMethod(_logger, childUnloadedMethodNamespace);
                     #endregion
                 };
             }
@@ -464,21 +536,43 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (MessageBox.Show("Remove Entity - '" + SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.EntityName + "'?", "Remove Entity", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    //Rearrange Entity Order
-                    foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
+                    BusyIndicatorNotification(true, "Removing selected entity from the snapshot");
+                    if (MarketSnapshotPreferenceInfo != null)
                     {
-                        if (entity.GroupPreferenceID != SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID)
-                            continue;
-                        if (entity.EntityOrder < SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.EntityOrder)
-                            continue;
-                        entity.EntityOrder--;
+                        //Rearrange Entity Order
+                        foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
+                        {
+                            if (entity.GroupPreferenceID != SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+                                continue;
+                            if (entity.EntityOrder < SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.EntityOrder)
+                                continue;
+                            entity.EntityOrder--;
+                        }
+
+                        //Remove Entity from the snapshot
+                        MarketPerformanceSnapshotInfo.Remove(SelectedMarketPerformanceSnapshotInfo);
+
+                        //Reorder MarketSnapshotPreferenceInfo
+                        MarketSnapshotPreferenceInfo = MarketPerformanceSnapshotInfo
+                                .Select(record => record.MarketSnapshotPreferenceInfo)
+                                .ToList(); 
                     }
 
-                    //Remove Entity from the snapshot
-                    MarketPerformanceSnapshotInfo.Remove(SelectedMarketPerformanceSnapshotInfo);
-                    MarketSnapshotPreferenceInfo = MarketPerformanceSnapshotInfo
-                            .Select(record => record.MarketSnapshotPreferenceInfo)
-                            .ToList();
+                    #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo != null)
+                    {
+                        PopulatedMarketPerformanceSnapshotData selectedPopulatedMarketPerformanceSnapshotInfo = PopulatedMarketPerformanceSnapshotInfo
+                                            .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
+
+                        if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
+                        {
+                            PopulatedMarketPerformanceSnapshotInfo
+                                .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo)
+                                .FirstOrDefault()
+                                .MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList();
+                        }
+                    }
+                    #endregion
                 }
             }
             catch (Exception ex)
@@ -487,11 +581,13 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+            BusyIndicatorNotification();
+            //abc();
         }
         #endregion
 
         #region Events
-        public event DataRetrievalProgressIndicatorEventHandler SnapshotPerfromanceDataLoadedEvent;
+        public event DataRetrievalProgressIndicatorEventHandler SnapshotPerformanceDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -509,24 +605,41 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                    //if (SelectedMarketSnapshotSelectionInfo != null)
+                    //{
+                    //    if (SelectedMarketSnapshotSelectionInfo.SnapshotName == result.SnapshotName)
+                    //        return;
+                    //}                   
+
                     SelectedMarketSnapshotSelectionInfo = result;
 
                     //If the selected snapshot has already been cached on client side no requirement of another service call
                     #region Client cache check
-                    PopulatedMarketPerformanceSnapshotData PopulatedMarketPerformanceSnapshotOriginalInfo
-                                    = PopulatedMarketPerformanceSnapshotInfo.Where(record => record.MarketSnapshotSelectionInfo == result).FirstOrDefault();
-                    if (PopulatedMarketPerformanceSnapshotOriginalInfo != null)
+                    if (PopulatedMarketPerformanceSnapshotInfo != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving performance data for selected snapshot ...");
-                        MarketSnapshotPreferenceOriginalInfo = PopulatedMarketPerformanceSnapshotOriginalInfo
-                            .MarketPerformanceSnapshotInfo
-                            .Select(record => record.MarketSnapshotPreferenceInfo)
-                            .ToList();
-                        MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceOriginalInfo;
-                        MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>
-                            (PopulatedMarketPerformanceSnapshotOriginalInfo.MarketPerformanceSnapshotInfo);
-                        BusyIndicatorNotification(false);
-                        return;
+                        PopulatedMarketPerformanceSnapshotData PopulatedMarketPerformanceSnapshotOriginalInfo
+                                                    = PopulatedMarketPerformanceSnapshotInfo.Where(record => record.MarketSnapshotSelectionInfo == result).FirstOrDefault();
+                        if (PopulatedMarketPerformanceSnapshotOriginalInfo != null)
+                        {
+                            BusyIndicatorNotification(true, "Retrieving performance data for selected snapshot ...");
+                            MarketSnapshotPreferenceOriginalInfo = PopulatedMarketPerformanceSnapshotOriginalInfo
+                                .MarketPerformanceSnapshotInfo
+                                .Select(record => record.MarketSnapshotPreferenceInfo)
+                                .OrderBy(record => record.GroupPreferenceID)
+                                .ThenBy(record => record.EntityOrder)
+                                .ToList();
+
+                            MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceOriginalInfo;
+                            MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>
+                                (PopulatedMarketPerformanceSnapshotOriginalInfo.MarketPerformanceSnapshotInfo
+                                .OrderBy(record => record.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+                                .ThenBy(record => record.MarketSnapshotPreferenceInfo.EntityOrder)
+                                .ToList());
+
+                            BusyIndicatorNotification();
+                            return;
+                        }
                     }
                     #endregion
 
@@ -581,7 +694,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
 
-        } 
+        }
         #endregion
 
         #region Snapshot Action Events
@@ -595,7 +708,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     MarketSnapshotSelectionInfo = result.MarketSnapshotSelectionInfo;
-                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionIndo;
+                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionInfo;
                     switch (result.ActionType)
                     {
                         case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE:
@@ -639,8 +752,6 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification(true, "Retrieving preference changes ...");
                 GetMarketSnapshotPreferenceCRUDInfo();
 
-                int snapshotId = SelectedMarketSnapshotSelectionInfo.SnapshotPreferenceId;
-
                 if (SessionManager.SESSION == null)
                 {
                     BusyIndicatorNotification(true, "Retrieving session details ...");
@@ -657,7 +768,6 @@ namespace GreenField.Gadgets.ViewModels
                                     if (_dbInteractivity != null)
                                     {
                                         BusyIndicatorNotification(true, "Updating preference changes ...");
-                                        _selectedLocalMarketSnapshotSelectionData = SelectedMarketSnapshotSelectionInfo;
                                         _dbInteractivity.SaveMarketSnapshotPreference(SessionManager.SESSION.UserName, SelectedMarketSnapshotSelectionInfo
                                             , _createPreferenceInfo, _updatePreferenceInfo, _deletePreferenceInfo, _deleteGroupInfo, _createGroupInfo
                                             , SaveMarketSnapshotPreferenceCallbackMethod);
@@ -737,6 +847,9 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        ///  MarketPerformanceSnapshotRemoveAction Event Handler
+        /// </summary>
         private void HandleMarketPerformanceSnapshotRemoveActionEvent()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -750,7 +863,8 @@ namespace GreenField.Gadgets.ViewModels
                         if (SessionManager.SESSION != null)
                         {
                             BusyIndicatorNotification(true, "Removing selected snapshot ...");
-                            _dbInteractivity.RemoveMarketSnapshotPreference(SessionManager.SESSION.UserName, SelectedMarketSnapshotSelectionInfo.SnapshotName, RemoveMarketSnapshotPreferenceCallbackMethod);
+                            _dbInteractivity.RemoveMarketSnapshotPreference(SessionManager.SESSION.UserName
+                                , SelectedMarketSnapshotSelectionInfo.SnapshotName, RemoveMarketSnapshotPreferenceCallbackMethod);
                         }
                         else
                         {
@@ -767,7 +881,8 @@ namespace GreenField.Gadgets.ViewModels
                                         SessionManager.SESSION = session;
 
                                         BusyIndicatorNotification(true, "Removing selected snapshot ...");
-                                        _dbInteractivity.RemoveMarketSnapshotPreference(SessionManager.SESSION.UserName, SelectedMarketSnapshotSelectionInfo.SnapshotName, RemoveMarketSnapshotPreferenceCallbackMethod);
+                                        _dbInteractivity.RemoveMarketSnapshotPreference(SessionManager.SESSION.UserName
+                                            , SelectedMarketSnapshotSelectionInfo.SnapshotName, RemoveMarketSnapshotPreferenceCallbackMethod);
                                     }
                                     else
                                     {
@@ -793,9 +908,10 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
         #endregion
 
+        #region ChildViewInsertSnapshot Unloaded Event
         /// <summary>
         /// ChildViewInsertSnapshot Unloaded Event Handler for SaveAs Action
         /// </summary>
@@ -816,7 +932,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (SessionManager.SESSION != null)
                             {
-                                BusyIndicatorNotification(true, "Retreiving performance data based on snapshot preference ...");
+                                BusyIndicatorNotification(true, "Creating snapshot and assigning preference structure...");
                                 _dbInteractivity.SaveAsMarketSnapshotPreference(SessionManager.SESSION.UserName
                                     , view.tbSnapshotName.Text, MarketSnapshotPreferenceInfo, SaveAsMarketSnapshotPreferenceCallbackMethod);
                             }
@@ -834,7 +950,7 @@ namespace GreenField.Gadgets.ViewModels
                                             Logging.LogMethodParameter(_logger, sessionMethodNamespace, session, 1);
                                             SessionManager.SESSION = session;
 
-                                            BusyIndicatorNotification(true, "Retreiving performance data based on snapshot preference ...");
+                                            BusyIndicatorNotification(true, "Creating snapshot and assigning preference structure...");
                                             _dbInteractivity.SaveAsMarketSnapshotPreference(session.UserName
                                                 , view.tbSnapshotName.Text, MarketSnapshotPreferenceInfo, SaveAsMarketSnapshotPreferenceCallbackMethod);
                                         }
@@ -889,7 +1005,7 @@ namespace GreenField.Gadgets.ViewModels
                             MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
                             if (SessionManager.SESSION != null)
                             {
-                                BusyIndicatorNotification(true, "Adding new snapshot ...");
+                                BusyIndicatorNotification(true, "Creating snapshot ...");
                                 _dbInteractivity.SaveAsMarketSnapshotPreference(SessionManager.SESSION.UserName
                                     , view.tbSnapshotName.Text, MarketSnapshotPreferenceInfo, AddMarketSnapshotPreferenceCallbackMethod);
                             }
@@ -907,7 +1023,7 @@ namespace GreenField.Gadgets.ViewModels
                                             Logging.LogMethodParameter(_logger, sessionMethodNamespace, session, 1);
                                             SessionManager.SESSION = session;
 
-                                            BusyIndicatorNotification(true, "Adding new snapshot ...");
+                                            BusyIndicatorNotification(true, "Creating snapshot ...");
                                             _dbInteractivity.SaveAsMarketSnapshotPreference(session.UserName
                                                 , view.tbSnapshotName.Text, MarketSnapshotPreferenceInfo, AddMarketSnapshotPreferenceCallbackMethod);
                                         }
@@ -942,6 +1058,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, childUnloadedMethodNamespace);
         }
         #endregion
+        #endregion
 
         #region Callback Methods
         /// <summary>
@@ -959,7 +1076,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     if (_dbInteractivity != null)
                     {
-                        MarketSnapshotPreferenceOriginalInfo = result;                        
+                        MarketSnapshotPreferenceOriginalInfo = result;
                         MarketSnapshotPreferenceInfo = result;
 
                         BusyIndicatorNotification(true, "Retreiving performance data based on snapshot preference ...");
@@ -971,7 +1088,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -997,11 +1114,15 @@ namespace GreenField.Gadgets.ViewModels
                     MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>(result);
 
                     #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo == null)
+                    {
+                        PopulatedMarketPerformanceSnapshotInfo = new List<PopulatedMarketPerformanceSnapshotData>();
+                    }
                     PopulatedMarketPerformanceSnapshotInfo.Add(new PopulatedMarketPerformanceSnapshotData()
-                                {                                    
+                                {
                                     MarketPerformanceSnapshotInfo = result,
                                     MarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo
-                                }); 
+                                });
                     #endregion
                 }
                 else
@@ -1020,7 +1141,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Callback method for RetrieveMarketPerformanceSnapshotData Service call - Gets performance data for entities enlisted in the selected snapshot
+        /// Callback method for RetrieveMarketPerformanceSnapshotData Service call - Gets performance data for a single entity
         /// </summary>
         /// <param name="result">List of MarketPerformanceSnapshotData objects</param>
         private void RetrieveMarketPerformanceSnapshotDataByEntityCallbackMethod(List<MarketPerformanceSnapshotData> result)
@@ -1031,27 +1152,48 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    MarketPerformanceSnapshotInfo.Add(result.FirstOrDefault());
-
-                    #region Client cache implementation
-                    PopulatedMarketPerformanceSnapshotData populatedMarketPerformanceSnapshotInfo = PopulatedMarketPerformanceSnapshotInfo
-                        .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
-
-                    if (populatedMarketPerformanceSnapshotInfo != null)
+                    if (!result.Count.Equals(0))
                     {
-                        PopulatedMarketPerformanceSnapshotInfo.Remove(populatedMarketPerformanceSnapshotInfo);
-                        populatedMarketPerformanceSnapshotInfo.MarketPerformanceSnapshotInfo.Add(result.FirstOrDefault());
-                        PopulatedMarketPerformanceSnapshotInfo.Add(populatedMarketPerformanceSnapshotInfo);                        
-                    }                    
-                    #endregion
+                        Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                        //Add Performance data for the entity to MarketPerformanceSnapshotInfo
+                        if (MarketPerformanceSnapshotInfo == null)
+                        {
+                            MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>();
+                        }
+                        MarketPerformanceSnapshotInfo.Add(result.FirstOrDefault());
+
+                        //Reorder MarketPerformanceSnapshotInfo
+                        MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>(MarketPerformanceSnapshotInfo
+                                        .OrderBy(record => record.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+                                        .ThenBy(record => record.MarketSnapshotPreferenceInfo.EntityOrder)
+                                        .ToList());
+
+                        #region Client cache implementation
+                        if (PopulatedMarketPerformanceSnapshotInfo != null)
+                        {
+                            PopulatedMarketPerformanceSnapshotData selectedPopulatedMarketPerformanceSnapshotInfo = PopulatedMarketPerformanceSnapshotInfo
+                                                .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
+
+                            if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
+                            {
+                                PopulatedMarketPerformanceSnapshotInfo
+                                    .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo)
+                                    .FirstOrDefault()
+                                    .MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList();
+                            }
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-
-                BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
@@ -1059,7 +1201,8 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }         
+            BusyIndicatorNotification();
+        }
 
         /// <summary>
         /// Callback method for RetrieveMarketSnapshotPreference Service call - Gets user's Snapshot preference for the selected Snapshot
@@ -1074,44 +1217,56 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    
+
                     //Reassign the preference details to local properties
                     MarketSnapshotPreferenceOriginalInfo = result;
                     MarketSnapshotPreferenceInfo = result;
 
-                    #region Client cache update
-                    //Remove the snapshot entry and re add the preference details to the client cache
-                    PopulatedMarketPerformanceSnapshotData PopulatedMarketPerformanceSnapshotOriginalInfo
-                        = PopulatedMarketPerformanceSnapshotInfo
-                        .Where(record => record.MarketSnapshotSelectionInfo == _selectedLocalMarketSnapshotSelectionData)
-                        .FirstOrDefault();
-
-                    if (PopulatedMarketPerformanceSnapshotOriginalInfo != null)
+                    //Update MarketPerformanceSnapshotInfo
+                    if (MarketPerformanceSnapshotInfo != null)
                     {
-                        PopulatedMarketPerformanceSnapshotInfo.Remove(PopulatedMarketPerformanceSnapshotOriginalInfo);
-                        PopulatedMarketPerformanceSnapshotInfo.Add(new PopulatedMarketPerformanceSnapshotData()
+                        foreach (MarketPerformanceSnapshotData data in MarketPerformanceSnapshotInfo)
                         {
-                            MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList(),
-                            MarketSnapshotSelectionInfo = _selectedLocalMarketSnapshotSelectionData
-                        });                        
+                            foreach (MarketSnapshotPreference preference in MarketSnapshotPreferenceInfo)
+                            {
+                                if (preference.EntityName == data.MarketSnapshotPreferenceInfo.EntityName
+                                    && preference.EntityReturnType == data.MarketSnapshotPreferenceInfo.EntityReturnType)
+                                {
+                                    data.MarketSnapshotPreferenceInfo = preference;
+                                }
+                            }
+                        } 
                     }
-                    #endregion                    
-                    
+
+                    #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo != null)
+                    {
+                        PopulatedMarketPerformanceSnapshotData selectedPopulatedMarketPerformanceSnapshotInfo = PopulatedMarketPerformanceSnapshotInfo
+                                            .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
+
+                        if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
+                        {
+                            PopulatedMarketPerformanceSnapshotInfo
+                                .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo)
+                                .FirstOrDefault()
+                                .MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList();
+                        }
+                    }
+                    #endregion
+
                     //Raise event for completion of the save action event
                     _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>()
                         .Publish(new MarketPerformanceSnapshotActionPayload()
                         {
                             ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE,
-                            SelectedMarketSnapshotSelectionIndo = _selectedLocalMarketSnapshotSelectionData,
+                            SelectedMarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo,
                             MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
                         });
-
-                    _selectedLocalMarketSnapshotSelectionData = null;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
-                }                
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
             }
             catch (Exception ex)
             {
@@ -1120,7 +1275,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
             BusyIndicatorNotification();
-        }         
+        }
 
         /// <summary>
         /// Callback method for RetrieveEntitySelectionData Service call - Gets all Entity available for selection
@@ -1135,9 +1290,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    
+
                     //Entity Selection Data for Currency is not required
-                    EntitySelectionInfo = result.Where(record => record.Type != EntityType.CURRENCY).ToList();                    
+                    EntitySelectionInfo = result.Where(record => record.Type != EntityType.CURRENCY).ToList();
                 }
                 else
                 {
@@ -1150,13 +1305,13 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             BusyIndicatorNotification();
-            Logging.LogEndMethod(_logger, methodNamespace);            
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         /// <summary>
-        /// Callback method for RetrieveEntitySelectionData Service call - Gets all Entity available for selection
+        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates a new snapshot with assigned name and existing structure
         /// </summary>
-        /// <param name="result">List of EntitySelectionData objects</param>
+        /// <param name="result">List of MarketSnapshotSelectionData objects</param>
         private void SaveAsMarketSnapshotPreferenceCallbackMethod(MarketSnapshotSelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1168,6 +1323,11 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
 
                     #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo == null)
+                    {
+                        PopulatedMarketPerformanceSnapshotInfo = new List<PopulatedMarketPerformanceSnapshotData>();
+                    }
+
                     PopulatedMarketPerformanceSnapshotInfo.Add(new PopulatedMarketPerformanceSnapshotData()
                     {
                         MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList(),
@@ -1176,6 +1336,10 @@ namespace GreenField.Gadgets.ViewModels
                     #endregion
 
                     SelectedMarketSnapshotSelectionInfo = result;
+                    if (MarketSnapshotSelectionInfo == null)
+                    {
+                        MarketSnapshotSelectionInfo = new List<MarketSnapshotSelectionData>();
+                    }
                     MarketSnapshotSelectionInfo.Add(result);
                     MarketSnapshotPreferenceOriginalInfo = MarketSnapshotPreferenceInfo;
 
@@ -1183,10 +1347,9 @@ namespace GreenField.Gadgets.ViewModels
                         .Publish(new MarketPerformanceSnapshotActionPayload()
                         {
                             ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS,
-                            SelectedMarketSnapshotSelectionIndo = result,
+                            SelectedMarketSnapshotSelectionInfo = result,
                             MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo
                         });
-                    
                 }
                 else
                 {
@@ -1198,15 +1361,12 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            if (SnapshotPerfromanceDataLoadedEvent != null)
-            {
-                SnapshotPerfromanceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-            }
             Logging.LogEndMethod(_logger, methodNamespace);
+            BusyIndicatorNotification();
         }
 
         /// <summary>
-        /// Callback method for SaveAsMarketSnapshotPreference Service call - 
+        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates a new snapshot with assigned name and blank structure
         /// </summary>
         /// <param name="result">Added snapshot details</param>
         private void AddMarketSnapshotPreferenceCallbackMethod(MarketSnapshotSelectionData result)
@@ -1221,6 +1381,11 @@ namespace GreenField.Gadgets.ViewModels
                     MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>();
 
                     #region Client cache implementation
+                    if (PopulatedMarketPerformanceSnapshotInfo == null)
+                    {
+                        PopulatedMarketPerformanceSnapshotInfo = new List<PopulatedMarketPerformanceSnapshotData>();
+                    }
+
                     PopulatedMarketPerformanceSnapshotInfo.Add(new PopulatedMarketPerformanceSnapshotData()
                     {
                         MarketPerformanceSnapshotInfo = MarketPerformanceSnapshotInfo.ToList(),
@@ -1229,14 +1394,19 @@ namespace GreenField.Gadgets.ViewModels
                     #endregion
 
                     SelectedMarketSnapshotSelectionInfo = result;
+                    if (MarketSnapshotSelectionInfo == null)
+                    {
+                        MarketSnapshotSelectionInfo = new List<MarketSnapshotSelectionData>();
+                    }
                     MarketSnapshotSelectionInfo.Add(result);
-                    MarketSnapshotPreferenceOriginalInfo = MarketSnapshotPreferenceInfo;
+
+                    MarketSnapshotPreferenceOriginalInfo = MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
 
                     _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>()
                         .Publish(new MarketPerformanceSnapshotActionPayload()
                         {
                             ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_ADD,
-                            SelectedMarketSnapshotSelectionIndo = result,
+                            SelectedMarketSnapshotSelectionInfo = result,
                             MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo
                         });
 
@@ -1251,10 +1421,14 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            BusyIndicatorNotification();
             Logging.LogEndMethod(_logger, methodNamespace);
+            BusyIndicatorNotification();
         }
 
+        /// <summary>
+        /// Callback method for RemoveMarketSnapshotPreference Service call - removes selected snapshot
+        /// </summary>
+        /// <param name="result">True/False</param>
         private void RemoveMarketSnapshotPreferenceCallbackMethod(bool? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1265,28 +1439,36 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
 
-
                     #region Client cache update
-                    //Remove the snapshot entry from the client cache
-                    PopulatedMarketPerformanceSnapshotData PopulatedMarketPerformanceSnapshotOriginalInfo
-                        = PopulatedMarketPerformanceSnapshotInfo
-                        .Where(record => record.MarketSnapshotSelectionInfo == _selectedLocalMarketSnapshotSelectionData)
-                        .FirstOrDefault();
-
-                    if (PopulatedMarketPerformanceSnapshotOriginalInfo != null)
+                    if (PopulatedMarketPerformanceSnapshotInfo != null)
                     {
-                        PopulatedMarketPerformanceSnapshotInfo.Remove(PopulatedMarketPerformanceSnapshotOriginalInfo);                        
-                    }
-                    #endregion                    
+                        //Remove the snapshot entry from the client cache
+                        PopulatedMarketPerformanceSnapshotData PopulatedMarketPerformanceSnapshotOriginalInfo
+                            = PopulatedMarketPerformanceSnapshotInfo
+                            .Where(record => record.MarketSnapshotSelectionInfo == SelectedMarketSnapshotSelectionInfo)
+                            .FirstOrDefault();
 
-                    MarketSnapshotSelectionInfo.Remove(_selectedLocalMarketSnapshotSelectionData);
-                    _selectedLocalMarketSnapshotSelectionData = null;
+                        if (PopulatedMarketPerformanceSnapshotOriginalInfo != null)
+                        {
+                            PopulatedMarketPerformanceSnapshotInfo.Remove(PopulatedMarketPerformanceSnapshotOriginalInfo);
+                        }
+                    }
+                    #endregion
+
+                    if (MarketSnapshotSelectionInfo != null)
+                    {
+                        MarketSnapshotSelectionInfo.Remove(SelectedMarketSnapshotSelectionInfo);
+                    }                    
+                    SelectedMarketSnapshotSelectionInfo = null;
+
+                    MarketPerformanceSnapshotInfo = new ObservableCollection<MarketPerformanceSnapshotData>();
+                    MarketSnapshotPreferenceOriginalInfo = MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
 
                     _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>()
                         .Publish(new MarketPerformanceSnapshotActionPayload()
                         {
                             ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE,
-                            SelectedMarketSnapshotSelectionIndo = null,
+                            SelectedMarketSnapshotSelectionInfo = null,
                             MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo
                         });
 
@@ -1301,11 +1483,11 @@ namespace GreenField.Gadgets.ViewModels
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            BusyIndicatorNotification();
             Logging.LogEndMethod(_logger, methodNamespace);
+            BusyIndicatorNotification();
         }
-                
-        #endregion                
+
+        #endregion
 
         #region Helper Methods
         /// <summary>
@@ -1319,12 +1501,15 @@ namespace GreenField.Gadgets.ViewModels
             int lastGroupPreferenceId = 0;
             try
             {
-                foreach (MarketPerformanceSnapshotData record in MarketPerformanceSnapshotInfo)
+                if (MarketPerformanceSnapshotInfo != null)
                 {
-                    if (record.MarketSnapshotPreferenceInfo.GroupPreferenceID > lastGroupPreferenceId)
+                    foreach (MarketPerformanceSnapshotData record in MarketPerformanceSnapshotInfo)
                     {
-                        lastGroupPreferenceId = record.MarketSnapshotPreferenceInfo.GroupPreferenceID;
-                    }
+                        if (record.MarketSnapshotPreferenceInfo.GroupPreferenceID > lastGroupPreferenceId)
+                        {
+                            lastGroupPreferenceId = record.MarketSnapshotPreferenceInfo.GroupPreferenceID;
+                        }
+                    } 
                 }
 
             }
@@ -1337,6 +1522,9 @@ namespace GreenField.Gadgets.ViewModels
             return lastGroupPreferenceId;
         }
 
+        /// <summary>
+        /// Compares MarketSnapshotPreferenceInfo and MarketSnapshotPreferenceOriginalInfo and creates CRUD lists
+        /// </summary>
         private void GetMarketSnapshotPreferenceCRUDInfo()
         {
             //Get createPreferenceInfo
@@ -1353,12 +1541,11 @@ namespace GreenField.Gadgets.ViewModels
                         .Where(record => record.GroupPreferenceID == preference.GroupPreferenceID)
                         .Count().Equals(0))
                 {
-                    
+
                     if (!(crtGroupInfo.Contains(preference.GroupName)))
                     {
-                        
                         crtGroupInfo.Add(preference.GroupName);
-                    }                    
+                    }
                 }
 
                 if (MarketSnapshotPreferenceOriginalInfo
@@ -1369,15 +1556,15 @@ namespace GreenField.Gadgets.ViewModels
                     continue;
                 }
 
-                if ( MarketSnapshotPreferenceOriginalInfo
+                if (MarketSnapshotPreferenceOriginalInfo
                     .Where(record => record.EntityPreferenceId == preference.EntityPreferenceId
                         && record.EntityOrder == preference.EntityOrder
                         && record.GroupPreferenceID == preference.GroupPreferenceID)
                     .Count().Equals(0))
                 {
-                    updPreferenceInfo.Add(preference);                    
+                    updPreferenceInfo.Add(preference);
                 }
-                
+
             }
 
             if (MarketSnapshotPreferenceOriginalInfo.Count > MarketSnapshotPreferenceInfo.Count)
@@ -1415,26 +1602,31 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (message != null)
                 BusyIndicatorContent = message;
-            if (SnapshotPerfromanceDataLoadedEvent != null)
+            if (SnapshotPerformanceDataLoadedEvent != null)
             {
-                SnapshotPerfromanceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = showBusyIndicator });
+                SnapshotPerformanceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = showBusyIndicator });
             }
         }
 
         #endregion
-    }
 
-    public class PopulatedMarketPerformanceSnapshotData
-    {
-        /// <summary>
-        /// Stores the snapshot selection data with reference to the snapshot credentials
-        /// </summary>
-        public MarketSnapshotSelectionData MarketSnapshotSelectionInfo { get; set; }
+        //public void abc()
+        //{
+        //    string A = String.Empty;
+        //    foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceInfo)
+        //    {
+        //        if (record.EntityName != null)
+        //        {
+        //            A = A + record.EntityName + " " +
+        //                record.GroupPreferenceID.ToString() + " " +
+        //                ((int)record.EntityOrder).ToString() + "\n";
+        //        }
+        //    }
+        //    MessageBox.Show(A);
+        //}
 
-        /// <summary>
-        /// Stores the performance data for the snapshot selection data
-        /// </summary>
-        public List<MarketPerformanceSnapshotData> MarketPerformanceSnapshotInfo { get; set; }
+
+        
     }
 
 }

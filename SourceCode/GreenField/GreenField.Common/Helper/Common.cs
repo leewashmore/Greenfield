@@ -38,7 +38,8 @@ namespace GreenField.Common
         SNAPSHOT_SAVE,
         SNAPSHOT_SAVE_AS,
         SNAPSHOT_ADD,
-        SNAPSHOT_REMOVE
+        SNAPSHOT_REMOVE,
+        SNAPSHOT_PAGE_NAVIGATION
     }
 
     public static class Application

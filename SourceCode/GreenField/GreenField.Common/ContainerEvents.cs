@@ -90,7 +90,7 @@ namespace GreenField.Common
         /// <summary>
         /// Stores snapshot details for the selected snapshot
         /// </summary>
-        public MarketSnapshotSelectionData SelectedMarketSnapshotSelectionIndo { get; set; }
+        public MarketSnapshotSelectionData SelectedMarketSnapshotSelectionInfo { get; set; }
 
         /// <summary>
         /// Constructor
