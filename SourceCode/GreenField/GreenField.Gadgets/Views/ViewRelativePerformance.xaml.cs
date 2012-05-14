@@ -22,13 +22,31 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Events;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
+using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Documents.FormatProviders.Pdf;
+using System.IO;
+using System.Collections;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewRelativePerformance : ViewBaseUserControl
     {
+        #region Properties
+        /// <summary>
+        /// property to set data context
+        /// </summary>
+        private ViewModelRelativePerformance _dataContextRelativePerformance;
+        public ViewModelRelativePerformance DataContextRelativePerformance
+        {
+            get { return _dataContextRelativePerformance; }
+            set { _dataContextRelativePerformance = value; }
+        }
+
+        #endregion
+
         private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
-        private PortfolioSelectionData _PortfolioSelectionData;
+        PortfolioSelectionData _PortfolioSelectionData;
         private DateTime? _effectiveDate;
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
@@ -38,7 +56,9 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+            DataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
             DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
+            this.DataContextRelativePerformance = DataContextSource;
         }
 
         private List<RelativePerformanceData> _relativePerformanceInfo;
@@ -84,15 +104,15 @@ namespace GreenField.Gadgets.Views
                 CellTemp.Append("<StackPanel Orientation='Horizontal'>");
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
-                CellTemp.Append("<TextBlock ");
-                CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].ActivePosition, StringFormat= (\\{0:n2\\}%)}'/>");
+                //CellTemp.Append("<TextBlock ");
+                //CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].ActivePosition, StringFormat= (\\{0:n2\\}%)}'/>");
                 CellTemp.Append("</StackPanel>");
                 CellTemp.Append("</DataTemplate>");
 
                 dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
-                double? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
+                decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
                 string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorAlphaValue.ToString()), 2).ToString();
-                double? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
+                decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
                 string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorActiviePositionValue.ToString()), 2).ToString();
                 
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
@@ -102,7 +122,7 @@ namespace GreenField.Gadgets.Views
                 };
 
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
-
+                dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
                 dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
                 
                 dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
@@ -111,10 +131,25 @@ namespace GreenField.Gadgets.Views
             RelativePerformanceInfo = e.RelativePerformanceInfo;
 
             _PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
-            _effectiveDate = (this.DataContext as ViewModelRelativePerformance)._effectiveDate;
+            _effectiveDate = (this.DataContext as ViewModelRelativePerformance).EffectiveDate;
             _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
             _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
-        }        
+        }
+
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSourceRelativePerformanceLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
+
+        #endregion
 
         private void dgRelativePerformance_RowLoaded(object sender, RowLoadedEventArgs e)
         {
@@ -140,12 +175,14 @@ namespace GreenField.Gadgets.Views
                 if (cell.Column.DisplayIndex == this.dgRelativePerformance.Columns.Count - 1)
                     continue;
                 
-                int cellSectorID = (cell.Value as RelativePerformanceCountrySpecificData).SectorID;
-                string cellCountryID = (cell.ParentRow.DataContext as RelativePerformanceData).CountryID;
+                //string cellSectorID = (cell.Value as RelativePerformanceCountrySpecificData).SectorID;
+                //string cellCountryID = (cell.ParentRow.DataContext as RelativePerformanceData).CountryID;
+                decimal? activePosition = (cell.ParentRow.DataContext as RelativePerformanceData).AggregateCountryActivePosition;
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), cellCountryID, cellSectorID)
+                    //Content = new RelativePerformanceTooltip(_dbInteractivity, _PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), cellCountryID, cellSectorID)
+                    Content = activePosition,
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
@@ -162,7 +199,22 @@ namespace GreenField.Gadgets.Views
 
             //Ignore cells on Column ID column
             if (selectedColumnIndex == 0)
+            {
+                btnExportExcel.Visibility = Visibility.Collapsed;
+                btnExportPDF.Visibility = Visibility.Collapsed;
+                btnPrint.Visibility = Visibility.Collapsed;
+                dgRelativePerformance.Visibility = Visibility.Collapsed;
+                dgSectorSecurityDetails.Visibility = Visibility.Collapsed;
+                btnToggle.Visibility = Visibility.Visible;
+                dgCountrySecurityDetails.Visibility = Visibility.Visible;
+
+                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
+                {
+                    CountryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID,
+                    SectorID = null,
+                });
                 return;
+            }
 
             //Ignore null cells
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
@@ -172,7 +224,7 @@ namespace GreenField.Gadgets.Views
             }
 
             string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID;
-            int? sectorID = null;
+            string sectorID = null;
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
             {
                 sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] as RelativePerformanceCountrySpecificData).SectorID;
@@ -187,26 +239,38 @@ namespace GreenField.Gadgets.Views
         }
 
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            int sectorID;
-
+        {           
             if (e.OriginalSource is TextBlock)
             {
-                bool sectorIDNullValidation = int.TryParse(((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName, out sectorID);
-                if (sectorIDNullValidation)
+                string sectorID = ((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName.ToString();
+                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
                 {
-                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
-                    {
-                        SectorID = sectorID
-                    });
-                }
-                else
-                {
-                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData());
-                }
+                    SectorID = sectorID
+                });
             }
         }
 
+        private void CustomHeaderCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock)
+            {
+                string sectorID = (e.OriginalSource as TextBlock).Text.ToString();
+                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
+                {
+                    CountryID = null,
+                    SectorID = sectorID
+                });
+                btnExportExcel.Visibility = Visibility.Collapsed;
+                btnExportPDF.Visibility = Visibility.Collapsed;
+                btnPrint.Visibility = Visibility.Collapsed;
+                dgRelativePerformance.Visibility = Visibility.Collapsed;
+                btnToggle.Visibility = Visibility.Visible;
+                dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
+                dgSectorSecurityDetails.Visibility = Visibility.Visible;
+            }
+        }
+
+        #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             ChildExportOptions childExportOptions = new ChildExportOptions
@@ -256,11 +320,208 @@ namespace GreenField.Gadgets.Views
                 }
                 return e.Value;
             });
+        } 
+        #endregion
+
+        private void btn_ToggleClick(object sender, RoutedEventArgs e)
+        {
+            btnExportExcel.Visibility = Visibility.Visible;
+            btnExportPDF.Visibility = Visibility.Visible;
+            btnPrint.Visibility = Visibility.Visible;
+            dgRelativePerformance.Visibility = Visibility.Visible;
+            btnToggle.Visibility = Visibility.Collapsed;
+            dgSectorSecurityDetails.Visibility = Visibility.Collapsed;
+            dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
         }
-        
+
+        //#region Export To Pdf Methods
+
+        ///// <summary>
+        ///// Event handler when user wants to Export the Grid to PDF
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void btnExportToPdf_Click(object sender, RoutedEventArgs e)
+        //{
+        //    SaveFileDialog dialog = new SaveFileDialog();
+        //    dialog.DefaultExt = "*.pdf";
+        //    dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
+
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        RadDocument document = CreateDocument(dgRelativePerformance);
+        //        document.LayoutMode = DocumentLayoutMode.Paged;
+        //        document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+        //        document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+        //        PdfFormatProvider provider = new PdfFormatProvider();
+        //        using (Stream output = dialog.OpenFile())
+        //        {
+        //            provider.Export(document, output);
+        //        }
+        //    }
+        //}       
+
+        //private RadDocument CreateDocument(RadGridView grid)
+        //{
+        //    List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
+        //                                             orderby c.DisplayIndex
+        //                                             select c).ToList();
+        //    Table table = new Table();
+        //    RadDocument document = new RadDocument();
+        //    Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+        //    section.Blocks.Add(table);
+        //    document.Sections.Add(section);
+
+        //    if (grid.ShowColumnHeaders)
+        //    {
+        //        TableRow headerRow = new TableRow();
+        //        if (grid.GroupDescriptors.Count() > 0)
+        //        {
+        //            TableCell indentCell = new TableCell();
+        //            indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+        //            indentCell.Background = Colors.Gray;
+        //            headerRow.Cells.Add(indentCell);
+        //        }
+
+        //        for (int i = 0; i < columns.Count(); i++)
+        //        {
+        //            TableCell cell = new TableCell();
+        //            cell.Background = Colors.White;
+        //            AddCellValue(cell, columns[i].UniqueName);
+        //            cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
+        //            headerRow.Cells.Add(cell);
+        //        }
+
+        //        table.Rows.Add(headerRow);
+        //    }
+
+        //    if (grid.Items.Groups != null)
+        //    {
+        //        for (int i = 0; i < grid.Items.Groups.Count(); i++)
+        //        {
+        //            AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        AddDataRows(table, grid.Items, columns, grid);
+        //    }
+
+        //    return document;
+        //}
+
+        //private void AddDataRows(Table table, IList items, IList<GridViewBoundColumnBase> columns, RadGridView grid)
+        //{
+        //    for (int i = 0; i < items.Count; i++)
+        //    {
+        //        TableRow row = new TableRow();
+
+        //        if (grid.GroupDescriptors.Count() > 0)
+        //        {
+        //            TableCell indentCell = new TableCell();
+        //            indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+        //            indentCell.Background = Colors.White;
+        //            row.Cells.Add(indentCell);
+        //        }
+
+        //        for (int j = 0; j < columns.Count(); j++)
+        //        {
+        //            TableCell cell = new TableCell();
+
+        //            object value = columns[j].GetValueForItem(items[i]);
+
+        //            AddCellValue(cell, value != null ? value.ToString() : string.Empty);
+
+        //            cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
+        //            cell.Background = Colors.White;
+
+        //            row.Cells.Add(cell);
+        //        }
+
+        //        table.Rows.Add(row);
+        //    }
+        //}
+
+        //private void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid)
+        //{
+        //    TableRow row = new TableRow();
+
+        //    int level = GetGroupLevel(group);
+        //    if (level > 0)
+        //    {
+        //        TableCell cell = new TableCell();
+        //        cell.PreferredWidth = new TableWidthUnit(level * 20);
+        //        cell.Background = Colors.White;
+        //        row.Cells.Add(cell);
+        //    }
+
+        //    TableCell aggregatesCell = new TableCell();
+        //    aggregatesCell.Background = Colors.White;
+        //    aggregatesCell.ColumnSpan = columns.Count() + (grid.GroupDescriptors.Count() > 0 ? 1 : 0) - (level > 0 ? 1 : 0);
+
+        //    AddCellValue(aggregatesCell, group.Key != null ? group.Key.ToString() : string.Empty);
+
+        //    foreach (AggregateResult result in group.AggregateResults)
+        //    {
+        //        AddCellValue(aggregatesCell, result.FormattedValue != null ? result.FormattedValue.ToString() : string.Empty);
+        //    }
+
+        //    row.Cells.Add(aggregatesCell);
+
+        //    table.Rows.Add(row);
+
+        //    if (group.HasSubgroups)
+        //    {
+        //        for (int i = 0; i < group.Subgroups.Count(); i++)
+        //        {
+        //            AddGroupRow(table, group.Subgroups[i] as QueryableCollectionViewGroup, columns, grid);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < group.ItemCount; i++)
+        //        {
+        //            AddDataRows(table, group.Items, columns, grid);
+        //        }
+        //    }
+        //}
+
+        //private void AddCellValue(TableCell cell, string value)
+        //{
+        //    Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
+        //    cell.Blocks.Add(paragraph);
+        //    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
+        //    span.Text = value;
+        //    paragraph.Inlines.Add(span);
+        //}
+
+        //private int GetGroupLevel(IGroup group)
+        //{
+        //    int level = 0;
+        //    IGroup parent = group.ParentGroup;
+        //    while (parent != null)
+        //    {
+        //        level++;
+        //        parent = parent.ParentGroup;
+        //    }
+        //    return level;
+        //} 
+
+        //#endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextRelativePerformance.Dispose();
+            this.DataContextRelativePerformance.RelativePerformanceDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
+            this.DataContextRelativePerformance.RelativePerformanceGridBuildEvent -= new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
+            this.DataContextRelativePerformance= null;
+            this.DataContext = null;
         }
+        #endregion
+       
     }
 }

@@ -15,6 +15,13 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+
+        <!--GridViewGroupPanelStyle-->
+        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="FontSize" Value="7"/>
+            <Setter Property="Background" Value="#9F1D21"/>
+        </Style>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -69,13 +76,28 @@
             <!--grid containing data-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-                    <telerik:RadGridView Name="dgSectorBreakdown" AutoGenerateColumns="False" ItemsSource="{Binding SectorBreakdownInfo}" 
-                             CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                             CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" 
-                             RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" ShowColumnFooters="False"
-                             FontSize="7" FontFamily="Arial" UseLayoutRounding="True" ShowGroupFooters="False"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupPanelBackground="#9F1D21" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
+                    <telerik:RadGridView Name="dgSectorBreakdown" 
+                                         AutoGenerateColumns="False" 
+                                         ItemsSource="{Binding SectorBreakdownInfo}" 
+                                         CanUserSelect="False" 
+                                         CanUserReorderColumns="False" 
+                                         CanUserInsertRows="False" 
+                                         telerik:StyleManager.Theme="Metro"
+                                         CanUserDeleteRows="False" 
+                                         IsReadOnly="True" 
+                                         CanUserSortColumns="False" 
+                                         ScrollMode="Deferred" 
+                                         RowIndicatorVisibility="Collapsed" 
+                                         ShowGroupPanel="False" 
+                                         ShowColumnFooters="False"
+                                         FontSize="7" 
+                                         FontFamily="Arial" 
+                                         UseLayoutRounding="True" 
+                                         ShowGroupFooters="False"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupPanelBackground="#9F1D21" 
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
                                 <telerik:GroupDescriptor.AggregateFunctions>

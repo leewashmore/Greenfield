@@ -18,28 +18,104 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Class for the Heat Map View
+    /// </summary>
     public partial class ViewHeatMap : ViewBaseUserControl
+
     {
-        private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
-        private const string COUNTRY_YTD_FIELD = "CountryYTD";
-        private List<HeatMapData> _heatMapInfo;
+      /// <summary>
+      /// Constant String for country performance
+      /// </summary>
+       private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
+        /// <summary>
+       ///  Constant String for country YTD
+        /// </summary>
+       private const string COUNTRY_YTD_FIELD = "CountryYTD";
+        /// <summary>
+        /// Private Collection of type Heat Map Data
+        /// </summary>
+       private List<HeatMapData> _heatMapInfo;
+        /// <summary>
+        /// Private Collection of type Map Shape
+        /// </summary>
+       private List<MapShape> _shapes = new List<MapShape>();
+       #region Constructor
+       /// <summary>
+       /// Constructor
+        /// </summary>
+       /// <param name="dataContextSource">ViewModelHeatMap as Data context for this View</param>
+       public ViewHeatMap(ViewModelHeatMap dataContextSource)
+       {
+           InitializeComponent();
+           this.DataContext = dataContextSource;
+           this.DataContextHeatMap = dataContextSource;
+           dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
+           dataContextSource.heatMapDataLoadedEvent +=
+           new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
+       }
+       #endregion
 
-        #region Constructor
-        public ViewHeatMap(ViewModelHeatMap dataContextSource)
-        {
-            InitializeComponent();
-            this.DataContext = dataContextSource;
-            
-            dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
-        } 
-        #endregion
-
-        #region Event Handler
-        private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
+       /// <summary>
+       /// Property of the type of View Model for this view
+       /// </summary>
+       private ViewModelHeatMap _dataContextHeatMap;
+       public ViewModelHeatMap DataContextHeatMap
+       {
+           get { return _dataContextHeatMap; }
+           set { _dataContextHeatMap = value; }
+       }
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+         private void dataContextSource_RetrieveHeatMapDataCompletedEvent(Common.RetrieveHeatMapDataCompleteEventArgs e)
         {
             _heatMapInfo = e.HeatMapInfo;
-        }
 
+            if (_heatMapInfo != null)
+            {
+                foreach (MapShape _shape in _shapes)
+                {
+                    string countryID = (string)_shape.ExtendedData.GetValue("ISO_2DIGIT");
+
+                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
+                    if (countryRecord != null)
+                    {
+                        _shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
+                        _shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
+                         AddColorizerToInformationLayer(_shape, countryRecord);
+                    }
+                  
+                }
+            }
+          
+        }
+        /// <summary>
+        /// Adding Colour to Each Shape
+        /// </summary>
+        /// <param name="_shape">Shape</param>
+        /// <param name="countryRecord">Country record of type heat map data</param>
+         private void AddColorizerToInformationLayer(MapShape _shape, HeatMapData countryRecord)
+         {
+             if ((int)(countryRecord.CountryPerformance) == 3)
+                 _shape.Fill = new SolidColorBrush(Colors.Green);
+             else
+                 if ((int)(countryRecord.CountryPerformance) == 1)
+                     _shape.Fill = new SolidColorBrush(Colors.Red);
+                 else
+                     if ((int)(countryRecord.CountryPerformance) == 2)
+                         _shape.Fill = new SolidColorBrush(Colors.Gray);
+                     else
+                         if ((int)(countryRecord.CountryPerformance) == 0)
+                             _shape.Fill = new SolidColorBrush(Colors.White);                     
+         }
+
+        /// <summary>
+        /// Completed event for Map Preview
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
         private void MapPreviewReadCompleted(object sender, PreviewReadShapesCompletedEventArgs eventArgs)
         {
             if (eventArgs.Error == null)
@@ -49,49 +125,59 @@ namespace GreenField.Gadgets.Views
                     this.SetAdditionalData(shape);
                 }
             }
-        }
-        #endregion
 
-        #region Helper Methods
+            _heatMapInfo = ((ViewModelHeatMap)this.DataContext).HeatMapInfo;
+        }
+        /// <summary>
+        /// Registers Properties for Heat Map
+        /// </summary>
+        /// <param name="shape">Map Shape</param>
         private void SetAdditionalData(MapShape shape)
         {
             ExtendedData extendedData = shape.ExtendedData;
             if (extendedData != null)
             {
-                string countryID = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
-
+                _shapes.Add(shape);               
+               
                 if (!extendedData.PropertySet.ContainsKey(COUNTRY_PERFORMANCE_FIELD))
                 {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_PERFORMANCE_FIELD, COUNTRY_PERFORMANCE_FIELD, typeof(int), (int)PerformanceType.NO_RELATION);
+                    extendedData.PropertySet.RegisterProperty(COUNTRY_PERFORMANCE_FIELD, "CountryPerformance", typeof(int), 0);
                 }
-
                 if (!extendedData.PropertySet.ContainsKey(COUNTRY_YTD_FIELD))
                 {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, COUNTRY_YTD_FIELD, typeof(Double?), null);
-                }
-
-                if (_heatMapInfo != null)
-                {
-                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
-                    if (countryRecord != null)
-                    {
-                        shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault().CountryPerformance);
-                        shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault().CountryYTD);
-                    }
-                }               
-
+                    extendedData.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
+                }              
             }
-        }         
-        #endregion
-
-        private void MapShapeReader_ReadCompleted(object sender, ReadShapesCompletedEventArgs eventArgs)
-        {
-
         }
 
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void dataContextSource_heatMapDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorMap.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorMap.IsBusy = false;
+            }
+        }
+
+        #region RemoveEvents
+        /// <summary>
+        /// Disposing events
+        /// </summary>
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextHeatMap.heatMapDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_heatMapDataLoadedEvent);
+            this.DataContextHeatMap.Dispose();
+            this.DataContextHeatMap = null;
+            this.DataContext = null;
         }
+        #endregion
+
     }
 }

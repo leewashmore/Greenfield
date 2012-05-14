@@ -17,10 +17,24 @@
                     <helpers:DataContextProxy x:Key="DataContextProxy"/>
                     <helpers:DraggedItemTemplateConverter x:Key="DraggedItemTemplateConverter"/>
                     <DataTemplate x:Key="DraggedItemTemplate">
-                        <StackPanel Orientation="Horizontal" Margin="2">
-                            <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName, Converter={StaticResource DraggedItemTemplateConverter}}" FontWeight="Bold"/>
+                        <StackPanel Orientation="Horizontal" Margin="2" Background="#9F1D21">
+                            <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName, Converter={StaticResource DraggedItemTemplateConverter}}" 
+                                       FontWeight="Bold" Foreground="White" FontFamily="Arial" FontSize="8"/>
                         </StackPanel>
                     </DataTemplate>
+                    <DataTemplate x:Key="DropItemTemplate">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName, Converter={StaticResource DraggedItemTemplateConverter}}" 
+                                       FontWeight="Bold" FontFamily="Arial" FontSize="8" Foreground="#9F1D21"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    <Style TargetType="telerik:TreeViewDragCue" x:Key="DragCueStyle">
+                        <Setter Property="Background" Value="#9F1D21"/>
+                        <Setter Property="Opacity" Value="0.9"/>
+                        <Setter Property="BorderBrush" Value="#9F1D21"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>        
@@ -45,7 +59,7 @@
                                  AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
                                  telerik:StyleManager.Theme="Metro" AutoExpandGroups="True" FontSize="7" FontFamily="Arial" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
-                                 ItemsSource="{Binding MarketPerformanceSnapshotInfo}" IsFilteringAllowed="False"
+                                 ItemsSource="{Binding MarketPerformanceSnapshotInfo}" IsFilteringAllowed="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
@@ -85,7 +99,7 @@
                     <telerik:RadGridView.Columns>
                         <!--Entity Description Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityName}" 
+                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityName}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         <!--Entity Return Type Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
@@ -120,8 +134,7 @@
 
                     <!--enabling the grid to group by "GroupName"-->
                     <telerik:RadGridView.GroupDescriptors>
-                        <telerik:GroupDescriptor Member="MarketSnapshotPreferenceInfo.GroupName"
-                                     SortDirection="Ascending"/>
+                        <telerik:GroupDescriptor Member="MarketSnapshotPreferenceInfo.GroupName"/>
                     </telerik:RadGridView.GroupDescriptors>
 
                     <telerik:RadGridView.SortDescriptors>
@@ -131,10 +144,11 @@
 
                     <!--drag and drop functionality-->
                     <i:Interaction.Behaviors>
-                        <helpers:RowReorderBehavior x:Name="ReorderBehavior" 
-                                                DragCueItemTemplate="{StaticResource DraggedItemTemplate}"
-                                                DragCueTooltipContentTemplate="{StaticResource DraggedItemTemplate}"
-                                                Reordered="ReorderBehavior_Reordered" Reordering="ReorderBehavior_Reordering"/>
+                        <helpers:RowReorderBehavior x:Name="ReorderBehavior"
+                                                    DragCueItemTemplate="{StaticResource DraggedItemTemplate}"
+                                                    DragCueStyle="{StaticResource DragCueStyle}"
+                                                    DragCueTooltipContentTemplate="{StaticResource DropItemTemplate}"
+                                                    Reordered="ReorderBehavior_Reordered" Reordering="ReorderBehavior_Reordering"/>
                     </i:Interaction.Behaviors>
 
                 </telerik:RadGridView>

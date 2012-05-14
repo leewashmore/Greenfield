@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -56,12 +57,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member to store mkt cap data
         /// </summary>
-        private List<MarketCapitalizationData> _marketCapitalizationInfo;
+        private MarketCapitalizationData _marketCapitalizationInfo;
 
         /// <summary>
         /// Private member to store effective date
         /// </summary>
-        private DateTime? _effectiveDate = System.DateTime.Now;
+        private DateTime? _effectiveDate;// Seema 8-may-2012= System.DateTime.Now;
 
         /// <summary>
         /// Private member to store info about including or excluding cash securities
@@ -81,6 +82,7 @@ namespace GreenField.Gadgets.ViewModels
             //_benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _mktCapDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
+            IsExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
 
             //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             //{
@@ -95,10 +97,10 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 //_eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<MarketCapitalizationSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
+                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
             }
-        } 
+        }
         #endregion
 
         #region Properties
@@ -107,7 +109,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores data for Mkt Cap grid
         /// </summary>
-        public List<MarketCapitalizationData> MarketCapitalizationInfo
+        public MarketCapitalizationData MarketCapitalizationInfo
         {
             get { return _marketCapitalizationInfo; }
             set
@@ -140,17 +142,17 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>       
         public DateTime? EffectiveDate
         {
-            get 
-            {                
-                return _effectiveDate; 
+            get
+            {
+                return _effectiveDate;
             }
             set
             {
                 if (_effectiveDate != value)
                 {
 
-                    _effectiveDate = value;                    
-                                        
+                    _effectiveDate = value;
+
                     //if (_portfolioSelectionData != null && EffectiveDate != null )
                     //{
                     //    _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
@@ -173,19 +175,27 @@ namespace GreenField.Gadgets.ViewModels
                 if (_isExCashSecurity != value)
                 {
                     _isExCashSecurity = value;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
-                    {
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                    //if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
+                    //{
+                    //    _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
 
-                    }
+                    //}
 
                     RaisePropertyChanged(() => this.EffectiveDate);
                 }
             }
         }
 
-       
+
         #endregion
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle data retrieval progress indicator
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler MarketCapitalizationDataLoadEvent;
+
         #endregion
 
         #region Event Handlers
@@ -211,7 +221,8 @@ namespace GreenField.Gadgets.ViewModels
                             _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
                             _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
-                    
+                        if (MarketCapitalizationDataLoadEvent != null)
+                            MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -243,10 +254,12 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
                     {
-                        if(_mktCapDataFilter != null)
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        if (_mktCapDataFilter != null)
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        if (MarketCapitalizationDataLoadEvent != null)
+                            MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -279,6 +292,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null && _mktCapDataFilter != null)
                     {
                         _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        if (MarketCapitalizationDataLoadEvent != null)
+                            MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
                 }
                 else
@@ -293,7 +308,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-    
+
         #endregion
 
         #region Callback Methods
@@ -308,15 +323,18 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (marketCapitalizationData != null)
+                if (marketCapitalizationData != null && marketCapitalizationData.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, marketCapitalizationData, 1);
-                    MarketCapitalizationInfo = marketCapitalizationData;
+                    MarketCapitalizationInfo = marketCapitalizationData.FirstOrDefault();
+                    this.RaisePropertyChanged(() => this.MarketCapitalizationInfo);
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (MarketCapitalizationDataLoadEvent != null)
+                    MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -331,16 +349,16 @@ namespace GreenField.Gadgets.ViewModels
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
-            {
-                if (isExCashSec)
-                {
+            {               
                     Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
                     IsExCashSecurity = isExCashSec;
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
+                        if (_effectiveDate != null && _portfolioSelectionData != null )//&& _mktCapDataFilter != null)
+                    {
+                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        if (MarketCapitalizationDataLoadEvent != null)
+                            MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }                    
+                
             }
             catch (Exception ex)
             {
@@ -350,7 +368,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
-        #endregion         
+        #endregion
 
         #region EventUnSubscribe
         /// <summary>
@@ -365,5 +383,5 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-    }    
+    }
 }

@@ -89,9 +89,10 @@ namespace GreenField.Web.Services
                     return null;
 
                 ResearchEntities entity = new ResearchEntities();
-                List<MarketSnapshotSelectionData> userPreference
-                    = (entity.GetMarketSnapshotSelectionData(userName)).ToList<MarketSnapshotSelectionData>();
-
+                List<MarketSnapshotSelectionData> userPreference = (entity.GetMarketSnapshotSelectionData(userName))
+                    .OrderBy(record => record.SnapshotName)
+                    .ToList<MarketSnapshotSelectionData>();
+                
                 return userPreference;
             }
             catch (Exception ex)
@@ -553,5 +554,6 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
     }
 }

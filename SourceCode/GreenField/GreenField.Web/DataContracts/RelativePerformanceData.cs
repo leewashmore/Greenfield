@@ -16,45 +16,45 @@ namespace GreenField.Web.DataContracts
         public List<RelativePerformanceCountrySpecificData> RelativePerformanceCountrySpecificInfo { get; set; }
 
         [DataMember]
-        public double? AggregateCountryAlpha { get; set; }
+        public decimal? AggregateCountryAlpha { get; set; }
 
         [DataMember]
-        public double? AggregateCountryPortfolioShare { get; set; }
+        public decimal? AggregateCountryPortfolioShare { get; set; }
 
         [DataMember]
-        public double? AggregateCountryBenchmarkShare { get; set; }
+        public decimal? AggregateCountryBenchmarkShare { get; set; }
 
         [DataMember]
-        public double? AggregateCountryActivePosition { get; set; }
+        public decimal? AggregateCountryActivePosition { get; set; }
     }
 
     [DataContract]
     public class RelativePerformanceCountrySpecificData
     {
         [DataMember]
-        public int SectorID { get; set; }
+        public string SectorID { get; set; }
 
         [DataMember]
         public string SectorName { get; set; }
 
         [DataMember]
-        public double? Alpha { get; set; }
+        public decimal? Alpha { get; set; }
 
         [DataMember]
-        public double? PortfolioShare { get; set; }
+        public decimal? PortfolioShare { get; set; }
 
         [DataMember]
-        public double? BenchmarkShare { get; set; }
+        public decimal? BenchmarkShare { get; set; }
 
         [DataMember]
-        public double? ActivePosition { get; set; }
+        public decimal? ActivePosition { get; set; }
     }
 
     [DataContract]
     public class RelativePerformanceSectorData : IEquatable<RelativePerformanceSectorData>
     {
         [DataMember]
-        public int SectorID { get; set; }
+        public string SectorID { get; set; }
 
         [DataMember]
         public string SectorName { get; set; }

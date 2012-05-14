@@ -16,7 +16,7 @@ namespace GreenField.Web.DataContracts
         public PerformanceGrade CountryPerformance;
 
         [DataMember]
-        public Double? CountryYTD;
+        public Decimal? CountryYTD;
         
     }
 }

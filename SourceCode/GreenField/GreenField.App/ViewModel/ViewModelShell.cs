@@ -145,8 +145,6 @@ namespace GreenField.App.ViewModel
             }
         }
 
-
-
         #region Payload
         /// <summary>
         /// Stores payload to be published through aggregate events
@@ -375,7 +373,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores selected effective date - Publishes EffectiveDateReferenceSetEvent on set event
         /// </summary>
-        private DateTime? _selectedEffectiveDateInfo = DateTime.Today.AddDays(-1);
+        private DateTime? _selectedEffectiveDateInfo = DateTime.Today.AddDays(-1).Date;
         public DateTime? SelectedEffectiveDateInfo
         {
             get
@@ -478,7 +476,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<string> { "Region", "Country", "Sector", "Industry" };
+                return new List<string> { "Region", "Country", "Sector", "Industry", "Show Everything" };
             }
         }
 
@@ -498,9 +496,21 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SelectedFilterType);
                 if (FilterSelectionInfo != null)
                 {
-                    FilterSelectorInfo = FilterSelectionInfo
-                                        .Where(record => record.Filtertype == value)
-                                        .ToList();
+                    if (value == "Show Everything")
+                    {
+                        FilterSelectionData filterSelData = new FilterSelectionData();
+                        filterSelData.Filtertype = value;
+                        filterSelData.FilterValues = string.Empty;
+
+                        SelectorPayload.FilterSelectionData = filterSelData;
+                        _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
+                    }
+                    else
+                    {
+                        FilterSelectorInfo = FilterSelectionInfo
+                                            .Where(record => record.Filtertype == value)
+                                            .ToList();
+                    }
                 }
             }
         }
@@ -586,6 +596,20 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Stores visibility property of the filter selector for holdings pie chart
+        /// </summary>
+        private Visibility _marketCapCashSelectorVisibility = Visibility.Collapsed;
+        public Visibility MarketCapCashSelectorVisibility
+        {
+            get { return _marketCapCashSelectorVisibility; }
+            set
+            {
+                _marketCapCashSelectorVisibility = value;
+                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);               
+            }
+        }
         #endregion
 
         #region Snapshot Selector
@@ -642,6 +666,10 @@ namespace GreenField.App.ViewModel
                     RaisePropertyChanged(() => this.MarketSnapshotRemoveCommand);
                     if (value != null)
                     {
+                        if (MarketPerformanceSnapshotSearchText != value.SnapshotName)
+                        {
+                            MarketPerformanceSnapshotSearchText = value.SnapshotName;
+                        }
                         SelectorPayload.MarketSnapshotSelectionData = value;
                         _eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Publish(value);
                     }
@@ -686,6 +714,42 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
+        
+        /// <summary>
+        /// Stores checked-unchecked value for ExCash checkbox
+        /// </summary>
+        private bool _isExCashSecurity = false;
+        public bool IsExCashSecurity
+        {
+            get { return _isExCashSecurity; }
+            set
+            {
+                _isExCashSecurity = value;
+                RaisePropertyChanged(() => this.IsExCashSecurity);
+                if (value != null)
+                {
+                    _selectorPayload.IsExCashSecurityData = value;
+                    _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
+                }
+            }
+        }
+    
+
+        #endregion
+
+        #region Cash/NoCash Selector
+        private Visibility _mktCapExCashSelectorVisibility = Visibility.Collapsed;
+        public Visibility MktCapExCashSelectorVisibility
+        {
+            get { return _mktCapExCashSelectorVisibility; }
+            set
+            {
+                _mktCapExCashSelectorVisibility = value;
+                RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);                
+            }
+        }
+        
         #endregion
         #endregion
         #endregion
@@ -1166,26 +1230,20 @@ namespace GreenField.App.ViewModel
 
         #region Event Handlers
         public void HandleMarketPerformanceSnapshotActionCompletionEvent(MarketPerformanceSnapshotActionPayload result)
-        { 
-            switch (result.ActionType)
+        {
+            if (!(result.ActionType == MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION))
             {
-                case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE:
-                    break;
-                case MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS:
-                    MarketSnapshotSelectionInfo.Add(result.SelectedMarketSnapshotSelectionIndo);
-                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionIndo;
-                    break;
-                case MarketPerformanceSnapshotActionType.SNAPSHOT_ADD:
-                    MarketSnapshotSelectionInfo.Add(result.SelectedMarketSnapshotSelectionIndo);
-                    SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionIndo;
-                    break;
-                case MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE:
-                    MarketSnapshotSelectionInfo.Remove(result.SelectedMarketSnapshotSelectionIndo);
-                    SelectedMarketSnapshotSelectionInfo = null;
-                    break;
-                default:
-                    break;
+                MarketSnapshotSelectionInfo = result.MarketSnapshotSelectionInfo.OrderBy(record => record.SnapshotName).ToList();
+                SelectedMarketSnapshotSelectionInfo = result.SelectedMarketSnapshotSelectionInfo;
             }
+            else
+            {
+                SelectedMarketSnapshotSelectionInfo = null;
+                //UpdateToolBoxSelectorVisibility();
+            }
+
+            RaisePropertyChanged(() => this.MarketSnapshotSaveCommand);
+            RaisePropertyChanged(() => this.MarketSnapshotRemoveCommand);
         }
         #endregion
 
@@ -1634,8 +1692,8 @@ namespace GreenField.App.ViewModel
             {
                 _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.MARKETS_SNAPSHOT_SUMMARY);
-                UpdateToolBoxSelectorVisibility();
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardMarketsSnapshotSummary", UriKind.Relative));
+                UpdateToolBoxSelectorVisibility();
             }
             catch (Exception ex)
             {
@@ -1905,7 +1963,7 @@ namespace GreenField.App.ViewModel
                     {
                         ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_ADD,
                         MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
-                        SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                        SelectedMarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo
                     });
             }
             catch (Exception ex)
@@ -1941,7 +1999,7 @@ namespace GreenField.App.ViewModel
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE,
                        MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
-                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                       SelectedMarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo
                    });
             }
             catch (Exception ex)
@@ -1967,7 +2025,7 @@ namespace GreenField.App.ViewModel
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_SAVE_AS,
                        MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
-                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                       SelectedMarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo
                    });
             }
             catch (Exception ex)
@@ -2003,7 +2061,7 @@ namespace GreenField.App.ViewModel
                    {
                        ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_REMOVE,
                        MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
-                       SelectedMarketSnapshotSelectionIndo = SelectedMarketSnapshotSelectionInfo
+                       SelectedMarketSnapshotSelectionInfo = SelectedMarketSnapshotSelectionInfo
                    });
             }
             catch (Exception ex)
@@ -2603,12 +2661,12 @@ namespace GreenField.App.ViewModel
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
-                        (new DashboardTileViewItemInfo
-                        {
-                            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
-                            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
-                        });
+                //_eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                //        (new DashboardTileViewItemInfo
+                //        {
+                //            DashboardTileHeader = GadgetNames.PERFORMANCE_HEAT_MAP,
+                //            DashboardTileObject = new ViewHeatMap(new ViewModelHeatMap(GetDashboardGadgetParam()))
+                //        });
             }
             catch (Exception ex)
             {
@@ -2862,8 +2920,10 @@ namespace GreenField.App.ViewModel
             //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
-            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
+            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;            
             FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
+            MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
+            
         }
 
 

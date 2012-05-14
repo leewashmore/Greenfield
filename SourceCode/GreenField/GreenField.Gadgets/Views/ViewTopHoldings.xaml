@@ -16,21 +16,42 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <HyperlinkButton Grid.Row="0" Content="Details" HorizontalAlignment="Right"/>
+
+            <Grid Grid.Row="0">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
+                </StackPanel>
+            </Grid>
+        <!--Click="btn_DetailsClick"-->
+        <Grid Grid.Row="1">
             <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 <!--grid containing data for the gadget-->
-                <telerik:RadGridView Grid.Row="1" Name="dgTopHoldings" AutoGenerateColumns="False" ItemsSource="{Binding TopHoldingsInfo}" 
-                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred" ShowGroupFooters="True"
-                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True" ShowColumnFooters="True"
-                                     FontSize="7" FontFamily="Arial" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" RowStyle="{StaticResource GridViewRowStyle}">
+                <telerik:RadGridView Name="dgTopHoldings" 
+                                     AutoGenerateColumns="False" 
+                                     ItemsSource="{Binding TopHoldingsInfo}" 
+                                     CanUserSelect="False" 
+                                     CanUserReorderColumns="False" 
+                                     CanUserInsertRows="False" 
+                                     telerik:StyleManager.Theme="Metro"
+                                     CanUserDeleteRows="False" 
+                                     IsReadOnly="True" 
+                                     CanUserSortColumns="False" 
+                                     ScrollMode="Deferred" 
+                                     ShowGroupFooters="True"
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     UseLayoutRounding="True" 
+                                     ShowColumnFooters="True"
+                                     FontSize="7" 
+                                     FontFamily="Arial" 
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Right" 
+                        <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.Footer>
                                 <TextBlock Text="Top 10"/>
@@ -43,21 +64,21 @@
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     DataFormatString="{}{0:n0}" IsFilterable="False"/>
                         <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare,StringFormat=\{0:n2\}%}"
-                                                    Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
+                                                    Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="PortfolioShare"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare,StringFormat=\{0:n2\}%}"
-                                                    Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
+                                                    Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="BenchmarkShare"/>
                             </telerik:GridViewDataColumn.AggregateFunctions>
                         </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgcBet" Header="Active Position" DataMemberBinding="{Binding ActivePosition,StringFormat=\{0:n2\}%}" 
-                                                    Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
+                                                    Width="auto" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction ResultFormatString="{}{0:n2}%" SourceField="ActivePosition"/>
@@ -66,7 +87,7 @@
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
-        </Grid>
+            </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
 

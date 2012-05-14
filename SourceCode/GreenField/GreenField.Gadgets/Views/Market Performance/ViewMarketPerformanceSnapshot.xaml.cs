@@ -18,6 +18,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -36,7 +37,7 @@ namespace GreenField.Gadgets.Views
 
             _dataContextSource = dataContextSource;            
             this.SetGridHeaders();
-            dataContextSource.SnapshotPerfromanceDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(dataContextSource_SnapshotPerfromanceDataLoadedEvent);
+            dataContextSource.SnapshotPerformanceDataLoadedEvent += new Common.DataRetrievalProgressIndicatorEventHandler(dataContextSource_SnapshotPerfromanceDataLoadedEvent);
 
             //RetrieveEntitySelectionData Service Call
             if (dataContextSource._dbInteractivity != null && dataContextSource.EntitySelectionInfo == null)
@@ -131,7 +132,7 @@ namespace GreenField.Gadgets.Views
             //Entity Return Type
             this.radGridSnapshot.Columns[1].Header = "Return";
             //Market Performance for Last Working Date
-            this.radGridSnapshot.Columns[2].Header = DateTime.Today.AddDays(-1).ToShortDateString();
+            this.radGridSnapshot.Columns[2].Header = DateTime.Today.AddDays(-1).ToString("d");
             //Market Performance for Week to Date
             this.radGridSnapshot.Columns[3].Header = "WTD";
             //Market Performance for Month to Date
@@ -150,19 +151,29 @@ namespace GreenField.Gadgets.Views
 
         private void ReorderBehavior_Reordered(object sender, ReorderedEventArgs e)
         {
-            this.radGridSnapshot.Rebind();
-            string A = String.Empty;
-            List<MarketPerformanceSnapshotData> dataContext = (e.SourceGrid.ItemsSource as ObservableCollection<MarketPerformanceSnapshotData>).ToList();
-            foreach (MarketPerformanceSnapshotData record in dataContext)
+            //Update MarketSnapshotPreferenceInfo after reordering
+            _dataContextSource.MarketSnapshotPreferenceInfo = _dataContextSource.MarketPerformanceSnapshotInfo
+                .Select(record => record.MarketSnapshotPreferenceInfo)
+                .ToList();
+
+            #region Client cache implementation
+            if (_dataContextSource.PopulatedMarketPerformanceSnapshotInfo != null)
             {
-                if (record.MarketSnapshotPreferenceInfo.EntityName != null)
+                PopulatedMarketPerformanceSnapshotData selectedPopulatedMarketPerformanceSnapshotInfo = _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
+                                    .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo).FirstOrDefault();
+
+                if (selectedPopulatedMarketPerformanceSnapshotInfo != null)
                 {
-                    A = A + record.MarketSnapshotPreferenceInfo.EntityName + " " +
-                        record.MarketSnapshotPreferenceInfo.GroupPreferenceID.ToString() + " " +
-                        ((int)record.MarketSnapshotPreferenceInfo.EntityOrder).ToString() + "\n";
+                    _dataContextSource.PopulatedMarketPerformanceSnapshotInfo
+                        .Where(record => record.MarketSnapshotSelectionInfo == _dataContextSource.SelectedMarketSnapshotSelectionInfo)
+                        .FirstOrDefault()
+                        .MarketPerformanceSnapshotInfo = _dataContextSource.MarketPerformanceSnapshotInfo.ToList();
                 }
             }
-            MessageBox.Show(A);
+            #endregion
+        
+            this.radGridSnapshot.Rebind();
+            //_dataContextSource.abc();
 
         }
 
@@ -455,6 +466,9 @@ namespace GreenField.Gadgets.Views
                 //}
             }
         }
+
+        
+        
 
             
 

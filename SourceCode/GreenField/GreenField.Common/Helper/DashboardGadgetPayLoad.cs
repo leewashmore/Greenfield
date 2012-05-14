@@ -23,7 +23,7 @@ namespace GreenField.Common.Helper
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
-        private DateTime? _effectiveDate = DateTime.Now.AddDays(-1);
+        private DateTime? _effectiveDate = DateTime.Now.AddDays(-1).Date;
         public DateTime? EffectiveDate
         {
             get
@@ -41,5 +41,7 @@ namespace GreenField.Common.Helper
         public FilterSelectionData FilterSelectionData { get; set; }
 
         public String PeriodSelectionData { get; set; }
+
+        public bool IsExCashSecurityData { get; set; }
     }
 }

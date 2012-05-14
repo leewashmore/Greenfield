@@ -17,6 +17,9 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using Microsoft.Practices.Prism.Commands;
+using System.ComponentModel.Composition;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -56,7 +59,7 @@ namespace GreenField.Gadgets.ViewModels
             if ((_portfolioSelectionData != null) && (EffectiveDate != null))
             {
                 _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopHoldingsDataCallbackMethod);
-            }                      
+            }
 
             if (_eventAggregator != null)
             {
@@ -92,7 +95,7 @@ namespace GreenField.Gadgets.ViewModels
         public DateTime? EffectiveDate
         {
             get { return _effectiveDate; }
-            set 
+            set
             {
                 if (_effectiveDate != value)
                 {
@@ -101,8 +104,16 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        
 
+
+        #endregion
+
+        #region ICommand
+
+        public ICommand DetailsCommand
+        {
+            get { return new DelegateCommand<object>(DetailsCommandMethod); }
+        }
         #endregion
         #endregion
 
@@ -134,7 +145,7 @@ namespace GreenField.Gadgets.ViewModels
                         Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     }
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -169,7 +180,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -178,7 +189,27 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-       
+
+        #endregion
+
+        #region ICommand Methods
+
+        private void DetailsCommandMethod(object param)
+        {
+            Logging.LogBeginMethod(_logger,String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+            try 
+	        {
+                //_regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));
+
+		
+	        }
+	         catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+        }
         #endregion
 
         #region Callback Methods
