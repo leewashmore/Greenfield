@@ -504,4 +504,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RelativePerformanceCountrySpecificData" nillable="true" type="tns:RelativePerformanceCountrySpecificData" />
+  <xs:complexType name="ArrayOfChartExtensionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChartExtensionData" nillable="true" type="tns:ArrayOfChartExtensionData" />
+  <xs:complexType name="ChartExtensionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdjustedDollarPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountTraded" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PriceReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
 </xs:schema>

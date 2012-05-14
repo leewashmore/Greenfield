@@ -95,15 +95,7 @@ namespace GreenField.Gadgets.Views
 
         #region Events
 
-        /// <summary>
-        /// Rad-Grid Element Exporting Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
-        {
-            RadGridView_ElementExport.ElementExporting(e);
-        }
+        
 
         #endregion
 

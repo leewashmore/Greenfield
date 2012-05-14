@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
       <xsd:import schemaLocation="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="BenchmarkHoldingsOperations_Temp_InputMessage">
@@ -245,6 +246,12 @@
   <wsdl:message name="BenchmarkHoldingsOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q25:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsOperations_RetrieveChartExtensionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveChartExtensionData" />
+  </wsdl:message>
+  <wsdl:message name="BenchmarkHoldingsOperations_RetrieveChartExtensionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveChartExtensionDataResponse" />
+  </wsdl:message>
   <wsdl:portType name="BenchmarkHoldingsOperations">
     <wsdl:operation name="Temp">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/Temp" message="tns:BenchmarkHoldingsOperations_Temp_InputMessage" />
@@ -378,6 +385,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRelativePerformanceData" message="tns:BenchmarkHoldingsOperations_RetrieveRelativePerformanceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRelativePerformanceDataResponse" message="tns:BenchmarkHoldingsOperations_RetrieveRelativePerformanceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRelativePerformanceDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveChartExtensionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveChartExtensionData" message="tns:BenchmarkHoldingsOperations_RetrieveChartExtensionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveChartExtensionDataResponse" message="tns:BenchmarkHoldingsOperations_RetrieveChartExtensionData_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BenchmarkHoldingsOperations" type="tns:BenchmarkHoldingsOperations">
@@ -699,6 +710,15 @@
       <wsdl:fault name="ServiceFaultFault">
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveChartExtensionData">
+      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveChartExtensionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="BenchmarkHoldingsOperations">
