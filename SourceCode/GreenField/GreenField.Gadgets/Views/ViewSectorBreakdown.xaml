@@ -15,6 +15,13 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
+
+        <!--GridViewGroupPanelStyle-->
+        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
+            <Setter Property="Height" Value="10"/>
+            <Setter Property="FontSize" Value="7"/>
+            <Setter Property="Background" Value="#9F1D21"/>
+        </Style>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -87,7 +94,7 @@
                                          FontFamily="Arial" 
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="False"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" 
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupPanelBackground="#9F1D21" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
