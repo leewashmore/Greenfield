@@ -79,11 +79,6 @@
     <Compile Include="ManageLogins.cs" />
     <Compile Include="ManageSessions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\BenchmarkHoldingsDefinitions\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\DashboardDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,94 +114,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.AssetAllocationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.AttributionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkChartReturnData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkGridReturnData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.FilterSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.HeatMapData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.HoldingsPercentageData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.IndexConstituentsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.MarketCapitalizationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PerformanceGraphData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PerformanceGridData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioDetailsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioRiskReturnData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RegionBreakdownData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceActivePositionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceSectorData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceSecurityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.SectorBreakdownData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.TopBenchmarkSecuritiesData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.TopHoldingsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
     <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />
     <None Include="Service References\DashboardDefinitions\configuration.svcinfo" />
@@ -279,13 +186,6 @@
     <None Include="Service References\SessionDefinitions\configuration91.svcinfo" />
     <None Include="Service References\SessionDefinitions\configuration.svcinfo" />
     <None Include="Service References\SessionDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -390,7 +290,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
