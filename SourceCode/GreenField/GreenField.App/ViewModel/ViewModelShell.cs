@@ -598,6 +598,20 @@ namespace GreenField.App.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Stores visibility property of the filter selector for holdings pie chart
+        /// </summary>
+        private Visibility _marketCapCashSelectorVisibility = Visibility.Collapsed;
+        public Visibility MarketCapCashSelectorVisibility
+        {
+            get { return _marketCapCashSelectorVisibility; }
+            set
+            {
+                _marketCapCashSelectorVisibility = value;
+                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);               
+            }
+        }
         #endregion
 
         #region Snapshot Selector
@@ -2898,6 +2912,8 @@ namespace GreenField.App.ViewModel
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
             FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
+            MarketCapCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
+            
         }
 
 
