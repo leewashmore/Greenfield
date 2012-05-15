@@ -354,7 +354,7 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="9">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">                       
                         <CheckBox Content="Cash/NoCash" HorizontalAlignment="Left" VerticalAlignment="Top" 
-                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Include Cash" />
+                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash" />
                     </StackPanel>
                     
                 </Grid>
