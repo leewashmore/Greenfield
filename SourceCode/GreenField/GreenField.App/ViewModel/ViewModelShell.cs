@@ -727,11 +727,10 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-                if (value != null)
-                {
+               
                     _selectorPayload.IsExCashSecurityData = value;
                     _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
-                }
+               
             }
         }
     
@@ -739,6 +738,9 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Cash/NoCash Selector
+        /// <summary>
+        /// Strores market cap excluding cash securities checkbox visibility
+        /// </summary>
         private Visibility _mktCapExCashSelectorVisibility = Visibility.Collapsed;
         public Visibility MktCapExCashSelectorVisibility
         {

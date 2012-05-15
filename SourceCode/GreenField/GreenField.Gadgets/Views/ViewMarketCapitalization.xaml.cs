@@ -19,7 +19,7 @@ namespace GreenField.Gadgets.Views
         public ViewMarketCapitalization(ViewModelMarketCapitalization DataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
+            this.DataContext = DataContextSource;            
             DataContextSource.MarketCapitalizationDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceMarketCapitalizationLoadEvent);
         }
 

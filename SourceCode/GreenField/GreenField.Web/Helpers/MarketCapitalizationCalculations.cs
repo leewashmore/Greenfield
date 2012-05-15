@@ -80,7 +80,7 @@ namespace GreenField.Web.Helpers
 
             //Arrange list in ascending order by "MarketCapitalInUSD"
             mktCapDetails = marketCapitalizationData
-                                        .Where(list => list.SecurityThemeCode != GreenfieldConstants.CASH)
+                                        //.Where(list => list.SecurityThemeCode != GreenfieldConstants.CASH)
                                         .OrderBy(list => list.MarketCapitalInUSD).ToList();
 
             //Calculate total Market Value(DirtyValue_PC) for portfolio
@@ -122,7 +122,7 @@ namespace GreenField.Web.Helpers
 
             //Arrange list in ascending order by "MarketCapitalInUSD"
             mktCapDetails = marketCapitalizationData
-                                        .Where(list => list.SecurityThemeCode !=GreenfieldConstants.CASH)
+                                        //.Where(list => list.SecurityThemeCode !=GreenfieldConstants.CASH)
                                         .OrderBy(list => list.MarketCapitalInUSD).ToList();
 
             //Calculate total Benchmark weight(Ex-Cash)
