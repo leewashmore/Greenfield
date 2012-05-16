@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="78d57da2-9fe1-4a3d-9727-70f8d17e22c0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="588f0a33-82fe-4422-8d0b-9987053f0cd7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,14 +23,14 @@
     <MetadataSource Address="http://localhost:59430/Services/DashboardOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DashboardOperations.xsd" MetadataType="Schema" ID="a40529ae-504d-4f7d-9751-8fb148a1eda8" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="DashboardOperations1.xsd" MetadataType="Schema" ID="63e14e21-9288-465c-9ff4-8b2b0e62bbb2" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="DashboardOperations.disco" MetadataType="Disco" ID="78d88fbe-6198-42c7-9cc4-4bb6eb5eac79" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?disco" />
-    <MetadataFile FileName="DashboardOperations2.xsd" MetadataType="Schema" ID="8121d4c8-3793-40ef-9a8d-4836c20aa123" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="DashboardOperations3.xsd" MetadataType="Schema" ID="a26ea71c-a341-46c6-b523-2c3e6ea0f66c" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd5" />
-    <MetadataFile FileName="DashboardOperations4.xsd" MetadataType="Schema" ID="849a6148-c326-40e0-aa1f-18d315616ba4" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="DashboardOperations5.xsd" MetadataType="Schema" ID="a2fb6e9b-d091-4b77-a39f-bd2edf061065" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="DashboardOperations.wsdl" MetadataType="Wsdl" ID="12b82586-6d1e-4bca-b68a-6ea2e043c85c" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?wsdl" />
+    <MetadataFile FileName="DashboardOperations.xsd" MetadataType="Schema" ID="e9d1417b-79c9-49fe-8ef8-abcf981dc548" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="DashboardOperations1.xsd" MetadataType="Schema" ID="721f6ba5-7265-41a7-985d-0e26f8c96ea7" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="DashboardOperations.disco" MetadataType="Disco" ID="e19e8f21-116a-42d2-ae22-b028adbcdd10" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?disco" />
+    <MetadataFile FileName="DashboardOperations2.xsd" MetadataType="Schema" ID="fe0d5252-73a0-4754-ad3d-a4c99bc1bc1d" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="DashboardOperations3.xsd" MetadataType="Schema" ID="42cd65c9-0be3-49a7-8bd9-1dc4d0843c7d" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="DashboardOperations4.xsd" MetadataType="Schema" ID="37622b89-8f7b-46ce-97e2-8591ff8a6f1a" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="DashboardOperations5.xsd" MetadataType="Schema" ID="338c6829-6230-4597-a42b-c8489f42844b" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="DashboardOperations.wsdl" MetadataType="Wsdl" ID="6d4d879b-2213-4df0-9b30-d12f30418eb8" SourceId="1" SourceUrl="http://localhost:59430/Services/DashboardOperations.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

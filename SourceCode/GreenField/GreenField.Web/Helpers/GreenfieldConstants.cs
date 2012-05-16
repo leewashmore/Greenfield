@@ -23,7 +23,7 @@ namespace GreenField.Web.Helpers
         public const string BLANK_VAL = "Blank";
         public const string DECIMAL_DEF_VAL = "0";
         public const string INVALID_DATA_ERR_MSG = "Invalid Data";
-        public const string CASH = "Cash";
+        public const string CASH = "CASH";
         public const string REGION = "Region";
         public const string SECTOR = "Sector";
         public const string COUNTRY = "Country";

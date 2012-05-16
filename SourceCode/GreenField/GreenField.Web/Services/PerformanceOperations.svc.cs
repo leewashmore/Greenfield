@@ -42,6 +42,8 @@ namespace GreenField.Web.Services
             }
         }
 
+        #region PerformanceServices
+
         [OperationContract]
         public List<RelativePerformanceUIData> RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate)
         {
@@ -61,13 +63,14 @@ namespace GreenField.Web.Services
             List<string> countryName = new List<string>();
             List<string> SectorName = new List<string>();
 
-            countryName = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).Select(a => a.COUNTRY_NAME).ToList();
-            SectorName = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).Select(a => a.GICS_LVL1).ToList();
+            countryName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.COUNTRY_NAME).ToList();
+            SectorName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
 
             List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
             return result;
         }
 
+        #endregion
 
         #region Market Performance Snapshot Operation Contracts
 

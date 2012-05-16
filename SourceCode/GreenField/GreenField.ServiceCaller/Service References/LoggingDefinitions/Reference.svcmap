@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="bdf5c068-6304-41c4-b6e2-dcf789e65b05" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c2048c2f-12d2-4262-8215-7c1186dd2723" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -8,7 +8,9 @@
     <GenerateInternalTypes>false</GenerateInternalTypes>
     <GenerateMessageContracts>false</GenerateMessageContracts>
     <NamespaceMappings />
-    <CollectionMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
     <GenerateSerializableTypes>false</GenerateSerializableTypes>
     <Serializer>Auto</Serializer>
     <UseSerializerForFaults>true</UseSerializerForFaults>
@@ -21,11 +23,11 @@
     <MetadataSource Address="http://localhost:59430/Services/LoggingOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="LoggingOperations.xsd" MetadataType="Schema" ID="fb9e69cf-0f94-417e-b388-6a60e54b6754" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="LoggingOperations1.xsd" MetadataType="Schema" ID="8c8d8092-5ecf-4e70-aff8-8d01268ca56c" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="LoggingOperations.wsdl" MetadataType="Wsdl" ID="3495d8fc-3e44-40fb-84cc-0352208bdb32" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?wsdl" />
-    <MetadataFile FileName="LoggingOperations.disco" MetadataType="Disco" ID="9d12bd65-a083-40b5-b9cd-eb4a4f2bddf4" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?disco" />
-    <MetadataFile FileName="LoggingOperations2.xsd" MetadataType="Schema" ID="0b59a05f-d285-4fa6-9451-60ae90f8cef8" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="LoggingOperations.xsd" MetadataType="Schema" ID="62573552-0983-44a6-9205-af433e8a0ff1" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="LoggingOperations1.xsd" MetadataType="Schema" ID="1dfecc97-4656-4d09-ae64-ee067e04b77e" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="LoggingOperations.wsdl" MetadataType="Wsdl" ID="c322cb70-9417-438f-91c5-e2c6142e935e" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?wsdl" />
+    <MetadataFile FileName="LoggingOperations.disco" MetadataType="Disco" ID="c6b59369-ec5e-453e-891d-4d4d387bcd41" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?disco" />
+    <MetadataFile FileName="LoggingOperations2.xsd" MetadataType="Schema" ID="1bf44789-7bf8-41ca-9581-de8012dac513" SourceId="1" SourceUrl="http://localhost:59430/Services/LoggingOperations.svc?xsd=xsd0" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

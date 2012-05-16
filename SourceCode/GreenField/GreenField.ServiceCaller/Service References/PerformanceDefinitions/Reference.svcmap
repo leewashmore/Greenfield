@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d6667f66-26e8-49f4-aeed-e0c25ffd60f6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d8c6db7a-dfc7-4398-b662-adec8843e09b" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,15 +23,15 @@
     <MetadataSource Address="http://localhost:59430/Services/PerformanceOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="PerformanceOperations.disco" MetadataType="Disco" ID="4065958b-eb3e-4a69-93c2-371d7912ad4f" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?disco" />
-    <MetadataFile FileName="PerformanceOperations.wsdl" MetadataType="Wsdl" ID="85e528b1-89d9-4eb5-9504-1fb4f2d5244b" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?wsdl" />
-    <MetadataFile FileName="PerformanceOperations.xsd" MetadataType="Schema" ID="32494da2-1741-40ec-b937-a705df56d489" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd5" />
-    <MetadataFile FileName="PerformanceOperations1.xsd" MetadataType="Schema" ID="5d884119-c4e6-4d62-afa1-a7dca539a516" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="PerformanceOperations2.xsd" MetadataType="Schema" ID="0f14719d-21e2-4a23-af19-b4868a9fdb47" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd6" />
-    <MetadataFile FileName="PerformanceOperations3.xsd" MetadataType="Schema" ID="f26e35c7-9aa8-44e2-bcf8-ad1b13b1320e" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="PerformanceOperations4.xsd" MetadataType="Schema" ID="a54bd373-387a-49d4-a52b-9c7e2468d27e" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="PerformanceOperations5.xsd" MetadataType="Schema" ID="ce112819-cce7-4752-bfa1-24194f923c16" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="PerformanceOperations6.xsd" MetadataType="Schema" ID="6b77f471-9aa7-4e37-89ba-6a565b336b87" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="PerformanceOperations.disco" MetadataType="Disco" ID="68ddcbe2-beb2-4e78-ae85-138cd12d96cc" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?disco" />
+    <MetadataFile FileName="PerformanceOperations.wsdl" MetadataType="Wsdl" ID="a2c1a2f9-6ad0-4e3c-910f-7abd11baea55" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?wsdl" />
+    <MetadataFile FileName="PerformanceOperations.xsd" MetadataType="Schema" ID="20238246-4524-4888-97b9-494559d579c3" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="PerformanceOperations1.xsd" MetadataType="Schema" ID="a6c34673-983c-47c8-b7c4-b57e3805c4a4" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="PerformanceOperations2.xsd" MetadataType="Schema" ID="8e0c5c38-05a3-4d99-a070-503a9c940686" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd6" />
+    <MetadataFile FileName="PerformanceOperations3.xsd" MetadataType="Schema" ID="0c95d8ff-a06a-44be-b079-6e1fbb458f01" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="PerformanceOperations4.xsd" MetadataType="Schema" ID="bb407c6b-4830-4059-a3bb-1330e024893b" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="PerformanceOperations5.xsd" MetadataType="Schema" ID="41e2cdaa-c744-41d1-84c9-b4b776212511" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="PerformanceOperations6.xsd" MetadataType="Schema" ID="c022753f-d2ec-4c29-bd2c-4891a46d21ee" SourceId="1" SourceUrl="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2568c060-339a-4fe3-84ba-e4a32f71aa3f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="21ea84b6-5ea1-416f-aa7c-aa793b400e2e" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,12 +23,13 @@
     <MetadataSource Address="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BenchmarkHoldingsOperations.xsd" MetadataType="Schema" ID="ca8d8529-94da-43fb-bac0-5dc0169e461d" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="BenchmarkHoldingsOperations1.xsd" MetadataType="Schema" ID="d36227f1-dcb0-4893-ae78-f834bfe3b935" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="BenchmarkHoldingsOperations.wsdl" MetadataType="Wsdl" ID="68e35297-1d20-474b-99ea-02b510111137" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?wsdl" />
-    <MetadataFile FileName="BenchmarkHoldingsOperations2.xsd" MetadataType="Schema" ID="563cd1dc-4ff8-41d9-991f-7b32ec140495" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="BenchmarkHoldingsOperations.disco" MetadataType="Disco" ID="a0197c8a-4d99-4272-ad33-49d34ff982f9" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?disco" />
-    <MetadataFile FileName="BenchmarkHoldingsOperations3.xsd" MetadataType="Schema" ID="7dafceaa-433c-442c-82c2-49ad5ebd2f50" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations.xsd" MetadataType="Schema" ID="1399fd26-25d0-46be-936a-126d7520b430" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations1.xsd" MetadataType="Schema" ID="9f3eaa3a-3e68-4b7f-9150-9b50e423357b" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations.wsdl" MetadataType="Wsdl" ID="ab739246-7e1e-4fa8-a7d8-08fb8a03b0ec" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?wsdl" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations2.xsd" MetadataType="Schema" ID="38bcec5b-9235-44d4-9474-d0419f8a1dc4" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations3.xsd" MetadataType="Schema" ID="fbdd91cc-df16-45f4-b6e1-01b2653f750d" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations.disco" MetadataType="Disco" ID="efd72eb2-fe85-45b2-9fb8-18dfa23c9d5a" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?disco" />
+    <MetadataFile FileName="BenchmarkHoldingsOperations4.xsd" MetadataType="Schema" ID="97abe003-be81-4fc2-bb8b-2bdf36e00f2e" SourceId="1" SourceUrl="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
