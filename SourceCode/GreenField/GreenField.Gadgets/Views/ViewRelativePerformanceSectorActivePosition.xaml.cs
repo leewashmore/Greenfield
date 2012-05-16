@@ -11,20 +11,64 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewRelativePerformanceSectorActivePosition : ViewBaseUserControl
     {
+        #region Properties
+        /// <summary>
+        /// property to set data context
+        /// </summary>
+        private ViewModelRelativePerformanceSectorActivePosition _dataContextRelativePerformanceSectorActivePosition;
+        public ViewModelRelativePerformanceSectorActivePosition DataContextRelativePerformanceSectorActivePosition
+        {
+            get { return _dataContextRelativePerformanceSectorActivePosition; }
+            set { _dataContextRelativePerformanceSectorActivePosition = value; }
+        }
+
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewRelativePerformanceSectorActivePosition(ViewModelRelativePerformanceSectorActivePosition dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }
+            dataContextSource.SectorActivePositionDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSectorActivePositionLoadEvent);
+            this.DataContextRelativePerformanceSectorActivePosition = dataContextSource;
+        } 
+        #endregion
 
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSourceRelativePerformanceSectorActivePositionLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
+        #endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextRelativePerformanceSectorActivePosition.Dispose();
+            this.DataContextRelativePerformanceSectorActivePosition.SectorActivePositionDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSectorActivePositionLoadEvent);
+            this.DataContextRelativePerformanceSectorActivePosition = null;
+            this.DataContext = null;
         }
+        #endregion
     }
 }

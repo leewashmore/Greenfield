@@ -35,11 +35,17 @@ namespace GreenField.App
             {
                 this.DataContext = value;
                 value.ShellDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellDataLoadEvent);
-                value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(value_ShellFilterDataLoadEvent);
+                value.ShellFilterDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellFilterDataLoadEvent);
+                value.ShellSnapshotDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ShellSnapshotDataLoadEvent);
             }
         }
 
-        void value_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        void dataContextSource_ShellSnapshotDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            this.ctrToolBox.snapshotBusyIndicator.IsBusy = e.ShowBusy;
+        }
+
+        void dataContextSource_ShellFilterDataLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
             this.ctrToolBox.filterBusyIndicator.IsBusy = e.ShowBusy;
         }       

@@ -1,92 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfSecurityOverviewData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSecurityOverviewData" nillable="true" type="tns:ArrayOfSecurityOverviewData" />
-  <xs:complexType name="SecurityOverviewData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FiscalYearEnd" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PrimaryAnalyst" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SubIndustry" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Website" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="SecurityOverviewData" nillable="true" type="tns:SecurityOverviewData" />
-  <xs:complexType name="EntitySelectionData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
-      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
-  <xs:complexType name="ArrayOfEntitySelectionData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfEntitySelectionData" nillable="true" type="tns:ArrayOfEntitySelectionData" />
-  <xs:complexType name="ArrayOfPricingReferenceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPricingReferenceData" nillable="true" type="tns:ArrayOfPricingReferenceData" />
-  <xs:complexType name="PricingReferenceData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AdjustedDollarPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyClosingPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyGrossReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyPriceReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailySpotFX" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="IndexedPrice" type="xs:decimal" />
-      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Volume" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PricingReferenceData" nillable="true" type="tns:PricingReferenceData" />
-  <xs:complexType name="ArrayOfUnrealizedGainLossData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfUnrealizedGainLossData" nillable="true" type="tns:ArrayOfUnrealizedGainLossData" />
-  <xs:complexType name="UnrealizedGainLossData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AdjustedPrice" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Cost" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyClosingPrice" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyGrossReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailyPriceReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DailySpotFX" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MovingAverage" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="NinetyDayWtAvg" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UnrealizedGainLoss" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Volume" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="WtAvgCost" nillable="true" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="UnrealizedGainLossData" nillable="true" type="tns:UnrealizedGainLossData" />
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+  <xs:element name="RetrieveSecurityReferenceData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityReferenceDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceDataResult" nillable="true" type="q1:ArrayOfSecurityOverviewData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityOverviewData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q2:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityOverviewDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveSecurityOverviewDataResult" nillable="true" type="q3:SecurityOverviewData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePricingReferenceData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q4:ArrayOfEntitySelectionData" />
+        <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="totalReturnCheck" type="xs:boolean" />
+        <xs:element minOccurs="0" name="frequencyDuration" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePricingReferenceDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrievePricingReferenceDataResult" nillable="true" type="q5:ArrayOfPricingReferenceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveEntitySelectionData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveEntitySelectionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveEntitySelectionDataResult" nillable="true" type="q6:ArrayOfEntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveUnrealizedGainLossData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="entityIdentifier" nillable="true" type="q7:EntitySelectionData" />
+        <xs:element minOccurs="0" name="startDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDateTime" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="frequencyInterval" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveUnrealizedGainLossDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveUnrealizedGainLossDataResult" nillable="true" type="q8:ArrayOfUnrealizedGainLossData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

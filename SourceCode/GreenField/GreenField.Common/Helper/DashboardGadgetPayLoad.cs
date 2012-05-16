@@ -9,7 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 
 namespace GreenField.Common.Helper
@@ -22,12 +23,25 @@ namespace GreenField.Common.Helper
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
-        public DateTime? EffectiveDate { get; set; }
-        
-        public PeriodSelectionData PeriodSelectionData{ get; set; }        
-
+        private DateTime? _effectiveDate = DateTime.Now.AddDays(-1).Date;
+        public DateTime? EffectiveDate
+        {
+            get
+            {
+                return _effectiveDate;
+            }
+            set
+            {
+                _effectiveDate = value;
+            }
+        }
+       
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 
         public FilterSelectionData FilterSelectionData { get; set; }
+
+        public String PeriodSelectionData { get; set; }
+
+        public bool IsExCashSecurityData { get; set; }
     }
 }

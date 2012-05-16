@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 5/2/2012 5:09:23 PM
+// Generation date: 14-May-12 6:31:27 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -75,6 +75,23 @@ namespace GreenField.Web.DimensionEntitiesService
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_BENCHMARK_HOLDINGS> _GF_BENCHMARK_HOLDINGS;
+        /// <summary>
+        /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIBUTION> GF_PERF_DAILY_ATTRIBUTION
+        {
+            get
+            {
+                if ((this._GF_PERF_DAILY_ATTRIBUTION == null))
+                {
+                    this._GF_PERF_DAILY_ATTRIBUTION = base.CreateQuery<GF_PERF_DAILY_ATTRIBUTION>("GF_PERF_DAILY_ATTRIBUTION");
+                }
+                return this._GF_PERF_DAILY_ATTRIBUTION;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIBUTION> _GF_PERF_DAILY_ATTRIBUTION;
         /// <summary>
         /// There are no comments for GF_PERF_MONTHLY_ATTRIBUTION in the schema.
         /// </summary>
@@ -263,29 +280,20 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_TRANSACTIONS> _GF_TRANSACTIONS;
         /// <summary>
-        /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIBUTION> GF_PERF_DAILY_ATTRIBUTION
-        {
-            get
-            {
-                if ((this._GF_PERF_DAILY_ATTRIBUTION == null))
-                {
-                    this._GF_PERF_DAILY_ATTRIBUTION = base.CreateQuery<GF_PERF_DAILY_ATTRIBUTION>("GF_PERF_DAILY_ATTRIBUTION");
-                }
-                return this._GF_PERF_DAILY_ATTRIBUTION;
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIBUTION> _GF_PERF_DAILY_ATTRIBUTION;
-        /// <summary>
         /// There are no comments for GF_BENCHMARK_HOLDINGS in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         public void AddToGF_BENCHMARK_HOLDINGS(GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS)
         {
             base.AddObject("GF_BENCHMARK_HOLDINGS", gF_BENCHMARK_HOLDINGS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_DAILY_ATTRIBUTION(GF_PERF_DAILY_ATTRIBUTION gF_PERF_DAILY_ATTRIBUTION)
+        {
+            base.AddObject("GF_PERF_DAILY_ATTRIBUTION", gF_PERF_DAILY_ATTRIBUTION);
         }
         /// <summary>
         /// There are no comments for GF_PERF_MONTHLY_ATTRIBUTION in the schema.
@@ -375,39 +383,25 @@ namespace GreenField.Web.DimensionEntitiesService
         {
             base.AddObject("GF_TRANSACTIONS", gF_TRANSACTIONS);
         }
-        /// <summary>
-        /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public void AddToGF_PERF_DAILY_ATTRIBUTION(GF_PERF_DAILY_ATTRIBUTION gF_PERF_DAILY_ATTRIBUTION)
-        {
-            base.AddObject("GF_PERF_DAILY_ATTRIBUTION", gF_PERF_DAILY_ATTRIBUTION);
-        }
     }
     /// <summary>
     /// There are no comments for Model.GF_BENCHMARK_HOLDINGS in the schema.
     /// </summary>
     /// <KeyProperties>
     /// PORTFOLIO_DATE
-    /// BENCHMARK_ID
-    /// ASEC_SEC_SHORT_NAME
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_DATE", "BENCHMARK_ID", "ASEC_SEC_SHORT_NAME")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_DATE")]
     public partial class GF_BENCHMARK_HOLDINGS
     {
         /// <summary>
         /// Create a new GF_BENCHMARK_HOLDINGS object.
         /// </summary>
         /// <param name="pORTFOLIO_DATE">Initial value of PORTFOLIO_DATE.</param>
-        /// <param name="bENCHMARK_ID">Initial value of BENCHMARK_ID.</param>
-        /// <param name="aSEC_SEC_SHORT_NAME">Initial value of ASEC_SEC_SHORT_NAME.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_BENCHMARK_HOLDINGS CreateGF_BENCHMARK_HOLDINGS(global::System.DateTime pORTFOLIO_DATE, string bENCHMARK_ID, string aSEC_SEC_SHORT_NAME)
+        public static GF_BENCHMARK_HOLDINGS CreateGF_BENCHMARK_HOLDINGS(global::System.DateTime pORTFOLIO_DATE)
         {
             GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS = new GF_BENCHMARK_HOLDINGS();
             gF_BENCHMARK_HOLDINGS.PORTFOLIO_DATE = pORTFOLIO_DATE;
-            gF_BENCHMARK_HOLDINGS.BENCHMARK_ID = bENCHMARK_ID;
-            gF_BENCHMARK_HOLDINGS.ASEC_SEC_SHORT_NAME = aSEC_SEC_SHORT_NAME;
             return gF_BENCHMARK_HOLDINGS;
         }
         /// <summary>
@@ -431,6 +425,69 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.DateTime _PORTFOLIO_DATE;
         partial void OnPORTFOLIO_DATEChanging(global::System.DateTime value);
         partial void OnPORTFOLIO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_ID
+        {
+            get
+            {
+                return this._PORTFOLIO_ID;
+            }
+            set
+            {
+                this.OnPORTFOLIO_IDChanging(value);
+                this._PORTFOLIO_ID = value;
+                this.OnPORTFOLIO_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(string value);
+        partial void OnPORTFOLIO_IDChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_THEME_SUBGROUP_CODE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_THEME_SUBGROUP_CODE
+        {
+            get
+            {
+                return this._PORTFOLIO_THEME_SUBGROUP_CODE;
+            }
+            set
+            {
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(value);
+                this._PORTFOLIO_THEME_SUBGROUP_CODE = value;
+                this.OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_THEME_SUBGROUP_CODE;
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanging(string value);
+        partial void OnPORTFOLIO_THEME_SUBGROUP_CODEChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO_CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO_CURRENCY
+        {
+            get
+            {
+                return this._PORTFOLIO_CURRENCY;
+            }
+            set
+            {
+                this.OnPORTFOLIO_CURRENCYChanging(value);
+                this._PORTFOLIO_CURRENCY = value;
+                this.OnPORTFOLIO_CURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO_CURRENCY;
+        partial void OnPORTFOLIO_CURRENCYChanging(string value);
+        partial void OnPORTFOLIO_CURRENCYChanged();
         /// <summary>
         /// There are no comments for Property BENCHMARK_ID in the schema.
         /// </summary>
@@ -1168,6 +1225,4005 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnBARRA_RISK_FACTOR_PBETEWLDChanged();
     }
     /// <summary>
+    /// There are no comments for Model.GF_PERF_DAILY_ATTRIBUTION in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// NODE_NAME
+    /// TO_DATE
+    /// PORTFOLIO
+    /// AGG_LVL_1
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("NODE_NAME", "TO_DATE", "PORTFOLIO", "AGG_LVL_1")]
+    public partial class GF_PERF_DAILY_ATTRIBUTION
+    {
+        /// <summary>
+        /// Create a new GF_PERF_DAILY_ATTRIBUTION object.
+        /// </summary>
+        /// <param name="nODE_NAME">Initial value of NODE_NAME.</param>
+        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
+        /// <param name="pORTFOLIO">Initial value of PORTFOLIO.</param>
+        /// <param name="aGG_LVL_1">Initial value of AGG_LVL_1.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_DAILY_ATTRIBUTION CreateGF_PERF_DAILY_ATTRIBUTION(string nODE_NAME, global::System.DateTime tO_DATE, string pORTFOLIO, string aGG_LVL_1)
+        {
+            GF_PERF_DAILY_ATTRIBUTION gF_PERF_DAILY_ATTRIBUTION = new GF_PERF_DAILY_ATTRIBUTION();
+            gF_PERF_DAILY_ATTRIBUTION.NODE_NAME = nODE_NAME;
+            gF_PERF_DAILY_ATTRIBUTION.TO_DATE = tO_DATE;
+            gF_PERF_DAILY_ATTRIBUTION.PORTFOLIO = pORTFOLIO;
+            gF_PERF_DAILY_ATTRIBUTION.AGG_LVL_1 = aGG_LVL_1;
+            return gF_PERF_DAILY_ATTRIBUTION;
+        }
+        /// <summary>
+        /// There are no comments for Property NODE_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string NODE_NAME
+        {
+            get
+            {
+                return this._NODE_NAME;
+            }
+            set
+            {
+                this.OnNODE_NAMEChanging(value);
+                this._NODE_NAME = value;
+                this.OnNODE_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _NODE_NAME;
+        partial void OnNODE_NAMEChanging(string value);
+        partial void OnNODE_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property TO_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.DateTime TO_DATE
+        {
+            get
+            {
+                return this._TO_DATE;
+            }
+            set
+            {
+                this.OnTO_DATEChanging(value);
+                this._TO_DATE = value;
+                this.OnTO_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.DateTime _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.DateTime value);
+        partial void OnTO_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property PORT_GROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORT_GROUP
+        {
+            get
+            {
+                return this._PORT_GROUP;
+            }
+            set
+            {
+                this.OnPORT_GROUPChanging(value);
+                this._PORT_GROUP = value;
+                this.OnPORT_GROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORT_GROUP;
+        partial void OnPORT_GROUPChanging(string value);
+        partial void OnPORT_GROUPChanged();
+        /// <summary>
+        /// There are no comments for Property PORTFOLIO in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string PORTFOLIO
+        {
+            get
+            {
+                return this._PORTFOLIO;
+            }
+            set
+            {
+                this.OnPORTFOLIOChanging(value);
+                this._PORTFOLIO = value;
+                this.OnPORTFOLIOChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _PORTFOLIO;
+        partial void OnPORTFOLIOChanging(string value);
+        partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property BM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM
+        {
+            get
+            {
+                return this._BM;
+            }
+            set
+            {
+                this.OnBMChanging(value);
+                this._BM = value;
+                this.OnBMChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM;
+        partial void OnBMChanging(string value);
+        partial void OnBMChanged();
+        /// <summary>
+        /// There are no comments for Property BMNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMNAME
+        {
+            get
+            {
+                return this._BMNAME;
+            }
+            set
+            {
+                this.OnBMNAMEChanging(value);
+                this._BMNAME = value;
+                this.OnBMNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMNAME;
+        partial void OnBMNAMEChanging(string value);
+        partial void OnBMNAMEChanged();
+        /// <summary>
+        /// There are no comments for Property AGG_LVL_1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string AGG_LVL_1
+        {
+            get
+            {
+                return this._AGG_LVL_1;
+            }
+            set
+            {
+                this.OnAGG_LVL_1Changing(value);
+                this._AGG_LVL_1 = value;
+                this.OnAGG_LVL_1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _AGG_LVL_1;
+        partial void OnAGG_LVL_1Changing(string value);
+        partial void OnAGG_LVL_1Changed();
+        /// <summary>
+        /// There are no comments for Property AGG_LVL_1_LONG_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string AGG_LVL_1_LONG_NAME
+        {
+            get
+            {
+                return this._AGG_LVL_1_LONG_NAME;
+            }
+            set
+            {
+                this.OnAGG_LVL_1_LONG_NAMEChanging(value);
+                this._AGG_LVL_1_LONG_NAME = value;
+                this.OnAGG_LVL_1_LONG_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _AGG_LVL_1_LONG_NAME;
+        partial void OnAGG_LVL_1_LONG_NAMEChanging(string value);
+        partial void OnAGG_LVL_1_LONG_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUER in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUER
+        {
+            get
+            {
+                return this._ISSUER;
+            }
+            set
+            {
+                this.OnISSUERChanging(value);
+                this._ISSUER = value;
+                this.OnISSUERChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUER;
+        partial void OnISSUERChanging(string value);
+        partial void OnISSUERChanged();
+        /// <summary>
+        /// There are no comments for Property COUNTRY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string COUNTRY
+        {
+            get
+            {
+                return this._COUNTRY;
+            }
+            set
+            {
+                this.OnCOUNTRYChanging(value);
+                this._COUNTRY = value;
+                this.OnCOUNTRYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _COUNTRY;
+        partial void OnCOUNTRYChanging(string value);
+        partial void OnCOUNTRYChanged();
+        /// <summary>
+        /// There are no comments for Property COUNTRY_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string COUNTRY_NAME
+        {
+            get
+            {
+                return this._COUNTRY_NAME;
+            }
+            set
+            {
+                this.OnCOUNTRY_NAMEChanging(value);
+                this._COUNTRY_NAME = value;
+                this.OnCOUNTRY_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _COUNTRY_NAME;
+        partial void OnCOUNTRY_NAMEChanging(string value);
+        partial void OnCOUNTRY_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property COUNTRY_ZONE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string COUNTRY_ZONE
+        {
+            get
+            {
+                return this._COUNTRY_ZONE;
+            }
+            set
+            {
+                this.OnCOUNTRY_ZONEChanging(value);
+                this._COUNTRY_ZONE = value;
+                this.OnCOUNTRY_ZONEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _COUNTRY_ZONE;
+        partial void OnCOUNTRY_ZONEChanging(string value);
+        partial void OnCOUNTRY_ZONEChanged();
+        /// <summary>
+        /// There are no comments for Property COUNTRY_ZONE1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string COUNTRY_ZONE1
+        {
+            get
+            {
+                return this._COUNTRY_ZONE1;
+            }
+            set
+            {
+                this.OnCOUNTRY_ZONE1Changing(value);
+                this._COUNTRY_ZONE1 = value;
+                this.OnCOUNTRY_ZONE1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _COUNTRY_ZONE1;
+        partial void OnCOUNTRY_ZONE1Changing(string value);
+        partial void OnCOUNTRY_ZONE1Changed();
+        /// <summary>
+        /// There are no comments for Property SEC_GROUP in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_GROUP
+        {
+            get
+            {
+                return this._SEC_GROUP;
+            }
+            set
+            {
+                this.OnSEC_GROUPChanging(value);
+                this._SEC_GROUP = value;
+                this.OnSEC_GROUPChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_GROUP;
+        partial void OnSEC_GROUPChanging(string value);
+        partial void OnSEC_GROUPChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_GROUP_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_GROUP_NAME
+        {
+            get
+            {
+                return this._SEC_GROUP_NAME;
+            }
+            set
+            {
+                this.OnSEC_GROUP_NAMEChanging(value);
+                this._SEC_GROUP_NAME = value;
+                this.OnSEC_GROUP_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_GROUP_NAME;
+        partial void OnSEC_GROUP_NAMEChanging(string value);
+        partial void OnSEC_GROUP_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_NAME
+        {
+            get
+            {
+                return this._SEC_NAME;
+            }
+            set
+            {
+                this.OnSEC_NAMEChanging(value);
+                this._SEC_NAME = value;
+                this.OnSEC_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_NAME;
+        partial void OnSEC_NAMEChanging(string value);
+        partial void OnSEC_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_TYPE
+        {
+            get
+            {
+                return this._SEC_TYPE;
+            }
+            set
+            {
+                this.OnSEC_TYPEChanging(value);
+                this._SEC_TYPE = value;
+                this.OnSEC_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_TYPE;
+        partial void OnSEC_TYPEChanging(string value);
+        partial void OnSEC_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_TYPE_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_TYPE_NAME
+        {
+            get
+            {
+                return this._SEC_TYPE_NAME;
+            }
+            set
+            {
+                this.OnSEC_TYPE_NAMEChanging(value);
+                this._SEC_TYPE_NAME = value;
+                this.OnSEC_TYPE_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_TYPE_NAME;
+        partial void OnSEC_TYPE_NAMEChanging(string value);
+        partial void OnSEC_TYPE_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_INV_THEME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_INV_THEME
+        {
+            get
+            {
+                return this._SEC_INV_THEME;
+            }
+            set
+            {
+                this.OnSEC_INV_THEMEChanging(value);
+                this._SEC_INV_THEME = value;
+                this.OnSEC_INV_THEMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_INV_THEME;
+        partial void OnSEC_INV_THEMEChanging(string value);
+        partial void OnSEC_INV_THEMEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_ISSUE_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> SEC_ISSUE_DATE
+        {
+            get
+            {
+                return this._SEC_ISSUE_DATE;
+            }
+            set
+            {
+                this.OnSEC_ISSUE_DATEChanging(value);
+                this._SEC_ISSUE_DATE = value;
+                this.OnSEC_ISSUE_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _SEC_ISSUE_DATE;
+        partial void OnSEC_ISSUE_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnSEC_ISSUE_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_ISSUE_PRICE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> SEC_ISSUE_PRICE
+        {
+            get
+            {
+                return this._SEC_ISSUE_PRICE;
+            }
+            set
+            {
+                this.OnSEC_ISSUE_PRICEChanging(value);
+                this._SEC_ISSUE_PRICE = value;
+                this.OnSEC_ISSUE_PRICEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _SEC_ISSUE_PRICE;
+        partial void OnSEC_ISSUE_PRICEChanging(global::System.Nullable<decimal> value);
+        partial void OnSEC_ISSUE_PRICEChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_ISSUE_YIELD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> SEC_ISSUE_YIELD
+        {
+            get
+            {
+                return this._SEC_ISSUE_YIELD;
+            }
+            set
+            {
+                this.OnSEC_ISSUE_YIELDChanging(value);
+                this._SEC_ISSUE_YIELD = value;
+                this.OnSEC_ISSUE_YIELDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _SEC_ISSUE_YIELD;
+        partial void OnSEC_ISSUE_YIELDChanging(global::System.Nullable<decimal> value);
+        partial void OnSEC_ISSUE_YIELDChanged();
+        /// <summary>
+        /// There are no comments for Property SEC_ISIN in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_ISIN
+        {
+            get
+            {
+                return this._SEC_ISIN;
+            }
+            set
+            {
+                this.OnSEC_ISINChanging(value);
+                this._SEC_ISIN = value;
+                this.OnSEC_ISINChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_ISIN;
+        partial void OnSEC_ISINChanging(string value);
+        partial void OnSEC_ISINChanged();
+        /// <summary>
+        /// There are no comments for Property GICS_LVL1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string GICS_LVL1
+        {
+            get
+            {
+                return this._GICS_LVL1;
+            }
+            set
+            {
+                this.OnGICS_LVL1Changing(value);
+                this._GICS_LVL1 = value;
+                this.OnGICS_LVL1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _GICS_LVL1;
+        partial void OnGICS_LVL1Changing(string value);
+        partial void OnGICS_LVL1Changed();
+        /// <summary>
+        /// There are no comments for Property SEC_QUO_CURRENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string SEC_QUO_CURRENCY
+        {
+            get
+            {
+                return this._SEC_QUO_CURRENCY;
+            }
+            set
+            {
+                this.OnSEC_QUO_CURRENCYChanging(value);
+                this._SEC_QUO_CURRENCY = value;
+                this.OnSEC_QUO_CURRENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _SEC_QUO_CURRENCY;
+        partial void OnSEC_QUO_CURRENCYChanging(string value);
+        partial void OnSEC_QUO_CURRENCYChanged();
+        /// <summary>
+        /// There are no comments for Property COUPON_RATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> COUPON_RATE
+        {
+            get
+            {
+                return this._COUPON_RATE;
+            }
+            set
+            {
+                this.OnCOUPON_RATEChanging(value);
+                this._COUPON_RATE = value;
+                this.OnCOUPON_RATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _COUPON_RATE;
+        partial void OnCOUPON_RATEChanging(global::System.Nullable<decimal> value);
+        partial void OnCOUPON_RATEChanged();
+        /// <summary>
+        /// There are no comments for Property MATURITY_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> MATURITY_DATE
+        {
+            get
+            {
+                return this._MATURITY_DATE;
+            }
+            set
+            {
+                this.OnMATURITY_DATEChanging(value);
+                this._MATURITY_DATE = value;
+                this.OnMATURITY_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _MATURITY_DATE;
+        partial void OnMATURITY_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnMATURITY_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property INTEREST_TYPE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string INTEREST_TYPE
+        {
+            get
+            {
+                return this._INTEREST_TYPE;
+            }
+            set
+            {
+                this.OnINTEREST_TYPEChanging(value);
+                this._INTEREST_TYPE = value;
+                this.OnINTEREST_TYPEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _INTEREST_TYPE;
+        partial void OnINTEREST_TYPEChanging(string value);
+        partial void OnINTEREST_TYPEChanged();
+        /// <summary>
+        /// There are no comments for Property ISSUER_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ISSUER_NAME
+        {
+            get
+            {
+                return this._ISSUER_NAME;
+            }
+            set
+            {
+                this.OnISSUER_NAMEChanging(value);
+                this._ISSUER_NAME = value;
+                this.OnISSUER_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ISSUER_NAME;
+        partial void OnISSUER_NAMEChanging(string value);
+        partial void OnISSUER_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_SP_FROM_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> RATINGS_SP_FROM_DATE
+        {
+            get
+            {
+                return this._RATINGS_SP_FROM_DATE;
+            }
+            set
+            {
+                this.OnRATINGS_SP_FROM_DATEChanging(value);
+                this._RATINGS_SP_FROM_DATE = value;
+                this.OnRATINGS_SP_FROM_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _RATINGS_SP_FROM_DATE;
+        partial void OnRATINGS_SP_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnRATINGS_SP_FROM_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_SP_RATING in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_SP_RATING
+        {
+            get
+            {
+                return this._RATINGS_SP_RATING;
+            }
+            set
+            {
+                this.OnRATINGS_SP_RATINGChanging(value);
+                this._RATINGS_SP_RATING = value;
+                this.OnRATINGS_SP_RATINGChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_SP_RATING;
+        partial void OnRATINGS_SP_RATINGChanging(string value);
+        partial void OnRATINGS_SP_RATINGChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_SP_RATING_AGENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_SP_RATING_AGENCY
+        {
+            get
+            {
+                return this._RATINGS_SP_RATING_AGENCY;
+            }
+            set
+            {
+                this.OnRATINGS_SP_RATING_AGENCYChanging(value);
+                this._RATINGS_SP_RATING_AGENCY = value;
+                this.OnRATINGS_SP_RATING_AGENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_SP_RATING_AGENCY;
+        partial void OnRATINGS_SP_RATING_AGENCYChanging(string value);
+        partial void OnRATINGS_SP_RATING_AGENCYChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_MO_FROM_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> RATINGS_MO_FROM_DATE
+        {
+            get
+            {
+                return this._RATINGS_MO_FROM_DATE;
+            }
+            set
+            {
+                this.OnRATINGS_MO_FROM_DATEChanging(value);
+                this._RATINGS_MO_FROM_DATE = value;
+                this.OnRATINGS_MO_FROM_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _RATINGS_MO_FROM_DATE;
+        partial void OnRATINGS_MO_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnRATINGS_MO_FROM_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_MO_RATING in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_MO_RATING
+        {
+            get
+            {
+                return this._RATINGS_MO_RATING;
+            }
+            set
+            {
+                this.OnRATINGS_MO_RATINGChanging(value);
+                this._RATINGS_MO_RATING = value;
+                this.OnRATINGS_MO_RATINGChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_MO_RATING;
+        partial void OnRATINGS_MO_RATINGChanging(string value);
+        partial void OnRATINGS_MO_RATINGChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_MO_RATING_AGENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_MO_RATING_AGENCY
+        {
+            get
+            {
+                return this._RATINGS_MO_RATING_AGENCY;
+            }
+            set
+            {
+                this.OnRATINGS_MO_RATING_AGENCYChanging(value);
+                this._RATINGS_MO_RATING_AGENCY = value;
+                this.OnRATINGS_MO_RATING_AGENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_MO_RATING_AGENCY;
+        partial void OnRATINGS_MO_RATING_AGENCYChanging(string value);
+        partial void OnRATINGS_MO_RATING_AGENCYChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_FI_FROM_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> RATINGS_FI_FROM_DATE
+        {
+            get
+            {
+                return this._RATINGS_FI_FROM_DATE;
+            }
+            set
+            {
+                this.OnRATINGS_FI_FROM_DATEChanging(value);
+                this._RATINGS_FI_FROM_DATE = value;
+                this.OnRATINGS_FI_FROM_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _RATINGS_FI_FROM_DATE;
+        partial void OnRATINGS_FI_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnRATINGS_FI_FROM_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_FI_RATING in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_FI_RATING
+        {
+            get
+            {
+                return this._RATINGS_FI_RATING;
+            }
+            set
+            {
+                this.OnRATINGS_FI_RATINGChanging(value);
+                this._RATINGS_FI_RATING = value;
+                this.OnRATINGS_FI_RATINGChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_FI_RATING;
+        partial void OnRATINGS_FI_RATINGChanging(string value);
+        partial void OnRATINGS_FI_RATINGChanged();
+        /// <summary>
+        /// There are no comments for Property RATINGS_FI_RATING_AGENCY in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string RATINGS_FI_RATING_AGENCY
+        {
+            get
+            {
+                return this._RATINGS_FI_RATING_AGENCY;
+            }
+            set
+            {
+                this.OnRATINGS_FI_RATING_AGENCYChanging(value);
+                this._RATINGS_FI_RATING_AGENCY = value;
+                this.OnRATINGS_FI_RATING_AGENCYChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _RATINGS_FI_RATING_AGENCY;
+        partial void OnRATINGS_FI_RATING_AGENCYChanging(string value);
+        partial void OnRATINGS_FI_RATING_AGENCYChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_EXPOSURE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_EXPOSURE
+        {
+            get
+            {
+                return this._POR_RC_EXPOSURE;
+            }
+            set
+            {
+                this.OnPOR_RC_EXPOSUREChanging(value);
+                this._POR_RC_EXPOSURE = value;
+                this.OnPOR_RC_EXPOSUREChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_EXPOSURE;
+        partial void OnPOR_RC_EXPOSUREChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_EXPOSUREChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_MARKET_VALUE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_MARKET_VALUE
+        {
+            get
+            {
+                return this._POR_RC_MARKET_VALUE;
+            }
+            set
+            {
+                this.OnPOR_RC_MARKET_VALUEChanging(value);
+                this._POR_RC_MARKET_VALUE = value;
+                this.OnPOR_RC_MARKET_VALUEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_MARKET_VALUE;
+        partial void OnPOR_RC_MARKET_VALUEChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_MARKET_VALUEChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_CASH_FLOW in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_CASH_FLOW
+        {
+            get
+            {
+                return this._POR_RC_CASH_FLOW;
+            }
+            set
+            {
+                this.OnPOR_RC_CASH_FLOWChanging(value);
+                this._POR_RC_CASH_FLOW = value;
+                this.OnPOR_RC_CASH_FLOWChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_CASH_FLOW;
+        partial void OnPOR_RC_CASH_FLOWChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_CASH_FLOWChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_WGT_EOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_WGT_EOD
+        {
+            get
+            {
+                return this._POR_RC_WGT_EOD;
+            }
+            set
+            {
+                this.OnPOR_RC_WGT_EODChanging(value);
+                this._POR_RC_WGT_EOD = value;
+                this.OnPOR_RC_WGT_EODChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_WGT_EOD;
+        partial void OnPOR_RC_WGT_EODChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_WGT_EODChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_WGT_SOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_WGT_SOD
+        {
+            get
+            {
+                return this._POR_RC_WGT_SOD;
+            }
+            set
+            {
+                this.OnPOR_RC_WGT_SODChanging(value);
+                this._POR_RC_WGT_SOD = value;
+                this.OnPOR_RC_WGT_SODChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_WGT_SOD;
+        partial void OnPOR_RC_WGT_SODChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_WGT_SODChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1D
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_1D;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_1DChanging(value);
+                this._POR_RC_AVG_WGT_1D = value;
+                this.OnPOR_RC_AVG_WGT_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1D;
+        partial void OnPOR_RC_AVG_WGT_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_1DChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1W
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_1W;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_1WChanging(value);
+                this._POR_RC_AVG_WGT_1W = value;
+                this.OnPOR_RC_AVG_WGT_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1W;
+        partial void OnPOR_RC_AVG_WGT_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_1WChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_MTD
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_MTD;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_MTDChanging(value);
+                this._POR_RC_AVG_WGT_MTD = value;
+                this.OnPOR_RC_AVG_WGT_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_MTD;
+        partial void OnPOR_RC_AVG_WGT_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_YTD
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_YTD;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_YTDChanging(value);
+                this._POR_RC_AVG_WGT_YTD = value;
+                this.OnPOR_RC_AVG_WGT_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_YTD;
+        partial void OnPOR_RC_AVG_WGT_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1Y
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_1Y;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_1YChanging(value);
+                this._POR_RC_AVG_WGT_1Y = value;
+                this.OnPOR_RC_AVG_WGT_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1Y;
+        partial void OnPOR_RC_AVG_WGT_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_1YChanged();
+        /// <summary>
+        /// There are no comments for Property POR_RC_AVG_WGT_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_RC_AVG_WGT_QTD
+        {
+            get
+            {
+                return this._POR_RC_AVG_WGT_QTD;
+            }
+            set
+            {
+                this.OnPOR_RC_AVG_WGT_QTDChanging(value);
+                this._POR_RC_AVG_WGT_QTD = value;
+                this.OnPOR_RC_AVG_WGT_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_QTD;
+        partial void OnPOR_RC_AVG_WGT_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_RC_AVG_WGT_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_WGT_EOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_WGT_EOD
+        {
+            get
+            {
+                return this._BM1_RC_WGT_EOD;
+            }
+            set
+            {
+                this.OnBM1_RC_WGT_EODChanging(value);
+                this._BM1_RC_WGT_EOD = value;
+                this.OnBM1_RC_WGT_EODChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_WGT_EOD;
+        partial void OnBM1_RC_WGT_EODChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_WGT_EODChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_WGT_SOD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_WGT_SOD
+        {
+            get
+            {
+                return this._BM1_RC_WGT_SOD;
+            }
+            set
+            {
+                this.OnBM1_RC_WGT_SODChanging(value);
+                this._BM1_RC_WGT_SOD = value;
+                this.OnBM1_RC_WGT_SODChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_WGT_SOD;
+        partial void OnBM1_RC_WGT_SODChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_WGT_SODChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1D
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_1D;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_1DChanging(value);
+                this._BM1_RC_AVG_WGT_1D = value;
+                this.OnBM1_RC_AVG_WGT_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1D;
+        partial void OnBM1_RC_AVG_WGT_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1W
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_1W;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_1WChanging(value);
+                this._BM1_RC_AVG_WGT_1W = value;
+                this.OnBM1_RC_AVG_WGT_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1W;
+        partial void OnBM1_RC_AVG_WGT_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_MTD
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_MTD;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_MTDChanging(value);
+                this._BM1_RC_AVG_WGT_MTD = value;
+                this.OnBM1_RC_AVG_WGT_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_MTD;
+        partial void OnBM1_RC_AVG_WGT_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_YTD
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_YTD;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_YTDChanging(value);
+                this._BM1_RC_AVG_WGT_YTD = value;
+                this.OnBM1_RC_AVG_WGT_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_YTD;
+        partial void OnBM1_RC_AVG_WGT_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1Y
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_1Y;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_1YChanging(value);
+                this._BM1_RC_AVG_WGT_1Y = value;
+                this.OnBM1_RC_AVG_WGT_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1Y;
+        partial void OnBM1_RC_AVG_WGT_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_AVG_WGT_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_QTD
+        {
+            get
+            {
+                return this._BM1_RC_AVG_WGT_QTD;
+            }
+            set
+            {
+                this.OnBM1_RC_AVG_WGT_QTDChanging(value);
+                this._BM1_RC_AVG_WGT_QTD = value;
+                this.OnBM1_RC_AVG_WGT_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_QTD;
+        partial void OnBM1_RC_AVG_WGT_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_AVG_WGT_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_1D
+        {
+            get
+            {
+                return this._BM1_QC_TWR_1D;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_1DChanging(value);
+                this._BM1_QC_TWR_1D = value;
+                this.OnBM1_QC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_1D;
+        partial void OnBM1_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_1W
+        {
+            get
+            {
+                return this._BM1_QC_TWR_1W;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_1WChanging(value);
+                this._BM1_QC_TWR_1W = value;
+                this.OnBM1_QC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_1W;
+        partial void OnBM1_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_MTD
+        {
+            get
+            {
+                return this._BM1_QC_TWR_MTD;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_MTDChanging(value);
+                this._BM1_QC_TWR_MTD = value;
+                this.OnBM1_QC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_MTD;
+        partial void OnBM1_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_YTD
+        {
+            get
+            {
+                return this._BM1_QC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_YTDChanging(value);
+                this._BM1_QC_TWR_YTD = value;
+                this.OnBM1_QC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_YTD;
+        partial void OnBM1_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_1Y
+        {
+            get
+            {
+                return this._BM1_QC_TWR_1Y;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_1YChanging(value);
+                this._BM1_QC_TWR_1Y = value;
+                this.OnBM1_QC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_1Y;
+        partial void OnBM1_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_QC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_QC_TWR_QTD
+        {
+            get
+            {
+                return this._BM1_QC_TWR_QTD;
+            }
+            set
+            {
+                this.OnBM1_QC_TWR_QTDChanging(value);
+                this._BM1_QC_TWR_QTD = value;
+                this.OnBM1_QC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_QC_TWR_QTD;
+        partial void OnBM1_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_QC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_1D
+        {
+            get
+            {
+                return this._BM1_RC_TWR_1D;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_1DChanging(value);
+                this._BM1_RC_TWR_1D = value;
+                this.OnBM1_RC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_1D;
+        partial void OnBM1_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_1W
+        {
+            get
+            {
+                return this._BM1_RC_TWR_1W;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_1WChanging(value);
+                this._BM1_RC_TWR_1W = value;
+                this.OnBM1_RC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_1W;
+        partial void OnBM1_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_MTD
+        {
+            get
+            {
+                return this._BM1_RC_TWR_MTD;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_MTDChanging(value);
+                this._BM1_RC_TWR_MTD = value;
+                this.OnBM1_RC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_MTD;
+        partial void OnBM1_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_YTD
+        {
+            get
+            {
+                return this._BM1_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_YTDChanging(value);
+                this._BM1_RC_TWR_YTD = value;
+                this.OnBM1_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_YTD;
+        partial void OnBM1_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_1Y
+        {
+            get
+            {
+                return this._BM1_RC_TWR_1Y;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_1YChanging(value);
+                this._BM1_RC_TWR_1Y = value;
+                this.OnBM1_RC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_1Y;
+        partial void OnBM1_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_RC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_RC_TWR_QTD
+        {
+            get
+            {
+                return this._BM1_RC_TWR_QTD;
+            }
+            set
+            {
+                this.OnBM1_RC_TWR_QTDChanging(value);
+                this._BM1_RC_TWR_QTD = value;
+                this.OnBM1_RC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_RC_TWR_QTD;
+        partial void OnBM1_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_RC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1D
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_1D;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_1DChanging(value);
+                this._POR_TOP_QC_TWR_1D = value;
+                this.OnPOR_TOP_QC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1D;
+        partial void OnPOR_TOP_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1W
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_1W;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_1WChanging(value);
+                this._POR_TOP_QC_TWR_1W = value;
+                this.OnPOR_TOP_QC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1W;
+        partial void OnPOR_TOP_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_MTD
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_MTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_MTDChanging(value);
+                this._POR_TOP_QC_TWR_MTD = value;
+                this.OnPOR_TOP_QC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_MTD;
+        partial void OnPOR_TOP_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_YTD
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_YTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_YTDChanging(value);
+                this._POR_TOP_QC_TWR_YTD = value;
+                this.OnPOR_TOP_QC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_YTD;
+        partial void OnPOR_TOP_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1Y
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_1Y;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_1YChanging(value);
+                this._POR_TOP_QC_TWR_1Y = value;
+                this.OnPOR_TOP_QC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1Y;
+        partial void OnPOR_TOP_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_QC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_QC_TWR_QTD
+        {
+            get
+            {
+                return this._POR_TOP_QC_TWR_QTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_QC_TWR_QTDChanging(value);
+                this._POR_TOP_QC_TWR_QTD = value;
+                this.OnPOR_TOP_QC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_QTD;
+        partial void OnPOR_TOP_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_QC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1D
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_1DChanging(value);
+                this._BM1_TOP_QC_TWR_1D = value;
+                this.OnBM1_TOP_QC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1D;
+        partial void OnBM1_TOP_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1W
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_1WChanging(value);
+                this._BM1_TOP_QC_TWR_1W = value;
+                this.OnBM1_TOP_QC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1W;
+        partial void OnBM1_TOP_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_MTDChanging(value);
+                this._BM1_TOP_QC_TWR_MTD = value;
+                this.OnBM1_TOP_QC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_MTD;
+        partial void OnBM1_TOP_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_YTDChanging(value);
+                this._BM1_TOP_QC_TWR_YTD = value;
+                this.OnBM1_TOP_QC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_YTD;
+        partial void OnBM1_TOP_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_1YChanging(value);
+                this._BM1_TOP_QC_TWR_1Y = value;
+                this.OnBM1_TOP_QC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1Y;
+        partial void OnBM1_TOP_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_TWR_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_TWR_QTDChanging(value);
+                this._BM1_TOP_QC_TWR_QTD = value;
+                this.OnBM1_TOP_QC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_QTD;
+        partial void OnBM1_TOP_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1D
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_1DChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_1D = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1D;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1W
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_1WChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_1W = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1W;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_MTDChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_MTD = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_MTD;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_YTDChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_YTD = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_YTD;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_1YChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_1Y = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1Y;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_QC_EXCESS_RTN_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_QC_EXCESS_RTN_QTDChanging(value);
+                this._BM1_TOP_QC_EXCESS_RTN_QTD = value;
+                this.OnBM1_TOP_QC_EXCESS_RTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_QTD;
+        partial void OnBM1_TOP_QC_EXCESS_RTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_QC_EXCESS_RTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1D
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_1D;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_1DChanging(value);
+                this._POR_TOP_RC_TWR_1D = value;
+                this.OnPOR_TOP_RC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1D;
+        partial void OnPOR_TOP_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1W
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_1W;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_1WChanging(value);
+                this._POR_TOP_RC_TWR_1W = value;
+                this.OnPOR_TOP_RC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1W;
+        partial void OnPOR_TOP_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_MTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_MTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_MTDChanging(value);
+                this._POR_TOP_RC_TWR_MTD = value;
+                this.OnPOR_TOP_RC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_MTD;
+        partial void OnPOR_TOP_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_YTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_YTDChanging(value);
+                this._POR_TOP_RC_TWR_YTD = value;
+                this.OnPOR_TOP_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_YTD;
+        partial void OnPOR_TOP_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1Y
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_1Y;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_1YChanging(value);
+                this._POR_TOP_RC_TWR_1Y = value;
+                this.OnPOR_TOP_RC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1Y;
+        partial void OnPOR_TOP_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_TWR_QTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_TWR_QTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_TWR_QTDChanging(value);
+                this._POR_TOP_RC_TWR_QTD = value;
+                this.OnPOR_TOP_RC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_QTD;
+        partial void OnPOR_TOP_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_1DChanging(value);
+                this._BM1_TOP_RC_TWR_1D = value;
+                this.OnBM1_TOP_RC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1D;
+        partial void OnBM1_TOP_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_1WChanging(value);
+                this._BM1_TOP_RC_TWR_1W = value;
+                this.OnBM1_TOP_RC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1W;
+        partial void OnBM1_TOP_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_MTDChanging(value);
+                this._BM1_TOP_RC_TWR_MTD = value;
+                this.OnBM1_TOP_RC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_MTD;
+        partial void OnBM1_TOP_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_YTDChanging(value);
+                this._BM1_TOP_RC_TWR_YTD = value;
+                this.OnBM1_TOP_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_YTD;
+        partial void OnBM1_TOP_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_1YChanging(value);
+                this._BM1_TOP_RC_TWR_1Y = value;
+                this.OnBM1_TOP_RC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1Y;
+        partial void OnBM1_TOP_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_TWR_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_TWR_QTDChanging(value);
+                this._BM1_TOP_RC_TWR_QTD = value;
+                this.OnBM1_TOP_RC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_QTD;
+        partial void OnBM1_TOP_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_1DChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_1D = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1D;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_1WChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_1W = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1W;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_MTDChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_MTD = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_MTD;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_YTDChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_YTD = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_YTD;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_1YChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_1Y = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1Y;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_EXCESS_RTN_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_EXCESS_RTN_QTDChanging(value);
+                this._BM1_TOP_RC_EXCESS_RTN_QTD = value;
+                this.OnBM1_TOP_RC_EXCESS_RTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_QTD;
+        partial void OnBM1_TOP_RC_EXCESS_RTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_EXCESS_RTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1D
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_1D;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_1DChanging(value);
+                this._POR_TOP_RC_CTN_1D = value;
+                this.OnPOR_TOP_RC_CTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1D;
+        partial void OnPOR_TOP_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1W
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_1W;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_1WChanging(value);
+                this._POR_TOP_RC_CTN_1W = value;
+                this.OnPOR_TOP_RC_CTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1W;
+        partial void OnPOR_TOP_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_MTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_MTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_MTDChanging(value);
+                this._POR_TOP_RC_CTN_MTD = value;
+                this.OnPOR_TOP_RC_CTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_MTD;
+        partial void OnPOR_TOP_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_YTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_YTDChanging(value);
+                this._POR_TOP_RC_CTN_YTD = value;
+                this.OnPOR_TOP_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_YTD;
+        partial void OnPOR_TOP_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1Y
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_1YChanging(value);
+                this._POR_TOP_RC_CTN_1Y = value;
+                this.OnPOR_TOP_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1Y;
+        partial void OnPOR_TOP_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property POR_TOP_RC_CTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> POR_TOP_RC_CTN_QTD
+        {
+            get
+            {
+                return this._POR_TOP_RC_CTN_QTD;
+            }
+            set
+            {
+                this.OnPOR_TOP_RC_CTN_QTDChanging(value);
+                this._POR_TOP_RC_CTN_QTD = value;
+                this.OnPOR_TOP_RC_CTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_QTD;
+        partial void OnPOR_TOP_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnPOR_TOP_RC_CTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_1DChanging(value);
+                this._BM1_TOP_RC_CTN_1D = value;
+                this.OnBM1_TOP_RC_CTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1D;
+        partial void OnBM1_TOP_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_1WChanging(value);
+                this._BM1_TOP_RC_CTN_1W = value;
+                this.OnBM1_TOP_RC_CTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1W;
+        partial void OnBM1_TOP_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_MTDChanging(value);
+                this._BM1_TOP_RC_CTN_MTD = value;
+                this.OnBM1_TOP_RC_CTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_MTD;
+        partial void OnBM1_TOP_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_YTDChanging(value);
+                this._BM1_TOP_RC_CTN_YTD = value;
+                this.OnBM1_TOP_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_YTD;
+        partial void OnBM1_TOP_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_1YChanging(value);
+                this._BM1_TOP_RC_CTN_1Y = value;
+                this.OnBM1_TOP_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1Y;
+        partial void OnBM1_TOP_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CTN_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CTN_QTDChanging(value);
+                this._BM1_TOP_RC_CTN_QTD = value;
+                this.OnBM1_TOP_RC_CTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_QTD;
+        partial void OnBM1_TOP_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1DChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_1D = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1D;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1WChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_1W = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1W;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_MTDChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_MTD = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_MTD;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_YTDChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_YTD = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_YTD;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1YChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_1Y = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1Y;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_ASSET_ALLOC_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_ASSET_ALLOC_QTDChanging(value);
+                this._BM1_TOP_RC_ASSET_ALLOC_QTD = value;
+                this.OnBM1_TOP_RC_ASSET_ALLOC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_QTD;
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_ASSET_ALLOC_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_1DChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_1D = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1D;
+        partial void OnBM1_TOP_RC_SEC_SELEC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_1WChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_1W = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1W;
+        partial void OnBM1_TOP_RC_SEC_SELEC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_MTDChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_MTD = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_MTD;
+        partial void OnBM1_TOP_RC_SEC_SELEC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_YTDChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_YTD = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_YTD;
+        partial void OnBM1_TOP_RC_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_1YChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_1Y = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1Y;
+        partial void OnBM1_TOP_RC_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_SEC_SELEC_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_SEC_SELEC_QTDChanging(value);
+                this._BM1_TOP_RC_SEC_SELEC_QTD = value;
+                this.OnBM1_TOP_RC_SEC_SELEC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_QTD;
+        partial void OnBM1_TOP_RC_SEC_SELEC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_SEC_SELEC_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1D
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_1D;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_1DChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_1D = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1D;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1W
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_1W;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_1WChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_1W = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1W;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_MTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_MTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_MTDChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_MTD = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_MTD;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_YTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_YTDChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_YTD = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_YTD;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1Y
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_1YChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_1Y = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1Y;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_QTD
+        {
+            get
+            {
+                return this._BM1_TOP_RC_CURR_ALLOC_QTD;
+            }
+            set
+            {
+                this.OnBM1_TOP_RC_CURR_ALLOC_QTDChanging(value);
+                this._BM1_TOP_RC_CURR_ALLOC_QTD = value;
+                this.OnBM1_TOP_RC_CURR_ALLOC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_QTD;
+        partial void OnBM1_TOP_RC_CURR_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnBM1_TOP_RC_CURR_ALLOC_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1D
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_1D;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_1DChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_1D = value;
+                this.OnADJ_RTN_POR_QC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1D;
+        partial void OnADJ_RTN_POR_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1W
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_1W;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_1WChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_1W = value;
+                this.OnADJ_RTN_POR_QC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1W;
+        partial void OnADJ_RTN_POR_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_MTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_MTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_MTDChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_MTD = value;
+                this.OnADJ_RTN_POR_QC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_MTD;
+        partial void OnADJ_RTN_POR_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_YTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_YTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_YTDChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_YTD = value;
+                this.OnADJ_RTN_POR_QC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_YTD;
+        partial void OnADJ_RTN_POR_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1Y
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_1Y;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_1YChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_1Y = value;
+                this.OnADJ_RTN_POR_QC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1Y;
+        partial void OnADJ_RTN_POR_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_QTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_QC_TWR_QTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_QC_TWR_QTDChanging(value);
+                this._ADJ_RTN_POR_QC_TWR_QTD = value;
+                this.OnADJ_RTN_POR_QC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_QTD;
+        partial void OnADJ_RTN_POR_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_QC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1D
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_1D;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_1DChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_1D = value;
+                this.OnADJ_RTN_POR_RC_TWR_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1D;
+        partial void OnADJ_RTN_POR_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_1DChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1W
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_1W;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_1WChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_1W = value;
+                this.OnADJ_RTN_POR_RC_TWR_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1W;
+        partial void OnADJ_RTN_POR_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_1WChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_MTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_MTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_MTDChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_MTD = value;
+                this.OnADJ_RTN_POR_RC_TWR_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_MTD;
+        partial void OnADJ_RTN_POR_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_YTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_YTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_YTDChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_YTD = value;
+                this.OnADJ_RTN_POR_RC_TWR_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_YTD;
+        partial void OnADJ_RTN_POR_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1Y
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_1Y;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_1YChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_1Y = value;
+                this.OnADJ_RTN_POR_RC_TWR_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1Y;
+        partial void OnADJ_RTN_POR_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_1YChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_QTD
+        {
+            get
+            {
+                return this._ADJ_RTN_POR_RC_TWR_QTD;
+            }
+            set
+            {
+                this.OnADJ_RTN_POR_RC_TWR_QTDChanging(value);
+                this._ADJ_RTN_POR_RC_TWR_QTD = value;
+                this.OnADJ_RTN_POR_RC_TWR_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_QTD;
+        partial void OnADJ_RTN_POR_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_RTN_POR_RC_TWR_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1D
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_1D;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_1DChanging(value);
+                this._ADJ_BM1_QC_EXRTN_1D = value;
+                this.OnADJ_BM1_QC_EXRTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1D;
+        partial void OnADJ_BM1_QC_EXRTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1W
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_1W;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_1WChanging(value);
+                this._ADJ_BM1_QC_EXRTN_1W = value;
+                this.OnADJ_BM1_QC_EXRTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1W;
+        partial void OnADJ_BM1_QC_EXRTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_MTD
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_MTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_MTDChanging(value);
+                this._ADJ_BM1_QC_EXRTN_MTD = value;
+                this.OnADJ_BM1_QC_EXRTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_MTD;
+        partial void OnADJ_BM1_QC_EXRTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_YTD
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_YTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_YTDChanging(value);
+                this._ADJ_BM1_QC_EXRTN_YTD = value;
+                this.OnADJ_BM1_QC_EXRTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_YTD;
+        partial void OnADJ_BM1_QC_EXRTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1Y
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_1Y;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_1YChanging(value);
+                this._ADJ_BM1_QC_EXRTN_1Y = value;
+                this.OnADJ_BM1_QC_EXRTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1Y;
+        partial void OnADJ_BM1_QC_EXRTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_QC_EXRTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_QTD
+        {
+            get
+            {
+                return this._ADJ_BM1_QC_EXRTN_QTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_QC_EXRTN_QTDChanging(value);
+                this._ADJ_BM1_QC_EXRTN_QTD = value;
+                this.OnADJ_BM1_QC_EXRTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_QTD;
+        partial void OnADJ_BM1_QC_EXRTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_QC_EXRTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1D
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_1D;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_1DChanging(value);
+                this._ADJ_BM1_RC_EXRTN_1D = value;
+                this.OnADJ_BM1_RC_EXRTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1D;
+        partial void OnADJ_BM1_RC_EXRTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1W
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_1W;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_1WChanging(value);
+                this._ADJ_BM1_RC_EXRTN_1W = value;
+                this.OnADJ_BM1_RC_EXRTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1W;
+        partial void OnADJ_BM1_RC_EXRTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_MTD
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_MTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_MTDChanging(value);
+                this._ADJ_BM1_RC_EXRTN_MTD = value;
+                this.OnADJ_BM1_RC_EXRTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_MTD;
+        partial void OnADJ_BM1_RC_EXRTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_YTD
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_YTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_YTDChanging(value);
+                this._ADJ_BM1_RC_EXRTN_YTD = value;
+                this.OnADJ_BM1_RC_EXRTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_YTD;
+        partial void OnADJ_BM1_RC_EXRTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1Y
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_1Y;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_1YChanging(value);
+                this._ADJ_BM1_RC_EXRTN_1Y = value;
+                this.OnADJ_BM1_RC_EXRTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1Y;
+        partial void OnADJ_BM1_RC_EXRTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property ADJ_BM1_RC_EXRTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_QTD
+        {
+            get
+            {
+                return this._ADJ_BM1_RC_EXRTN_QTD;
+            }
+            set
+            {
+                this.OnADJ_BM1_RC_EXRTN_QTDChanging(value);
+                this._ADJ_BM1_RC_EXRTN_QTD = value;
+                this.OnADJ_BM1_RC_EXRTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_QTD;
+        partial void OnADJ_BM1_RC_EXRTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnADJ_BM1_RC_EXRTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1D
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_1D;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_1DChanging(value);
+                this._F_POR_ASH_RC_CTN_1D = value;
+                this.OnF_POR_ASH_RC_CTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1D;
+        partial void OnF_POR_ASH_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1W
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_1W;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_1WChanging(value);
+                this._F_POR_ASH_RC_CTN_1W = value;
+                this.OnF_POR_ASH_RC_CTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1W;
+        partial void OnF_POR_ASH_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_MTD
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_MTD;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_MTDChanging(value);
+                this._F_POR_ASH_RC_CTN_MTD = value;
+                this.OnF_POR_ASH_RC_CTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_MTD;
+        partial void OnF_POR_ASH_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_YTD
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_YTDChanging(value);
+                this._F_POR_ASH_RC_CTN_YTD = value;
+                this.OnF_POR_ASH_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_YTD;
+        partial void OnF_POR_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1Y
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_1YChanging(value);
+                this._F_POR_ASH_RC_CTN_1Y = value;
+                this.OnF_POR_ASH_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1Y;
+        partial void OnF_POR_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_QTD
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_QTD;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_QTDChanging(value);
+                this._F_POR_ASH_RC_CTN_QTD = value;
+                this.OnF_POR_ASH_RC_CTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_QTD;
+        partial void OnF_POR_ASH_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1D
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_1D;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_1DChanging(value);
+                this._F_BM1_ASH_RC_CTN_1D = value;
+                this.OnF_BM1_ASH_RC_CTN_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1D;
+        partial void OnF_BM1_ASH_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_1DChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1W
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_1W;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_1WChanging(value);
+                this._F_BM1_ASH_RC_CTN_1W = value;
+                this.OnF_BM1_ASH_RC_CTN_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1W;
+        partial void OnF_BM1_ASH_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_1WChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_MTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_MTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_MTDChanging(value);
+                this._F_BM1_ASH_RC_CTN_MTD = value;
+                this.OnF_BM1_ASH_RC_CTN_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_MTD;
+        partial void OnF_BM1_ASH_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_YTDChanging(value);
+                this._F_BM1_ASH_RC_CTN_YTD = value;
+                this.OnF_BM1_ASH_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_YTD;
+        partial void OnF_BM1_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_1YChanging(value);
+                this._F_BM1_ASH_RC_CTN_1Y = value;
+                this.OnF_BM1_ASH_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1Y;
+        partial void OnF_BM1_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_QTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_QTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_QTDChanging(value);
+                this._F_BM1_ASH_RC_CTN_QTD = value;
+                this.OnF_BM1_ASH_RC_CTN_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_QTD;
+        partial void OnF_BM1_ASH_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1D
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_1D;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_1DChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_1D = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1D;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1W
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_1W;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_1WChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_1W = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1W;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_MTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_MTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_MTDChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_MTD = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_MTD;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_YTD = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_YTD;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_1Y = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1Y;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_QTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_QTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_QTDChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_QTD = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_QTD;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1D
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_1D;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_1DChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_1D = value;
+                this.OnF_BM1_ASH_SEC_SELEC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1D;
+        partial void OnF_BM1_ASH_SEC_SELEC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1W
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_1W;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_1WChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_1W = value;
+                this.OnF_BM1_ASH_SEC_SELEC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1W;
+        partial void OnF_BM1_ASH_SEC_SELEC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_MTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_MTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_MTDChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_MTD = value;
+                this.OnF_BM1_ASH_SEC_SELEC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_MTD;
+        partial void OnF_BM1_ASH_SEC_SELEC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_YTDChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_YTD = value;
+                this.OnF_BM1_ASH_SEC_SELEC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_YTD;
+        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_1YChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_1Y = value;
+                this.OnF_BM1_ASH_SEC_SELEC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1Y;
+        partial void OnF_BM1_ASH_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_QTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_QTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_QTDChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_QTD = value;
+                this.OnF_BM1_ASH_SEC_SELEC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_QTD;
+        partial void OnF_BM1_ASH_SEC_SELEC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1D in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1D
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_1D;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_1DChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_1D = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_1DChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1D;
+        partial void OnF_BM1_ASH_CURR_ALLOC_1DChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_1DChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1W
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_1W;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_1WChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_1W = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1W;
+        partial void OnF_BM1_ASH_CURR_ALLOC_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_1WChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_MTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_MTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_MTDChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_MTD = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_MTD;
+        partial void OnF_BM1_ASH_CURR_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_YTD = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_YTD;
+        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_1YChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_1Y = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1Y;
+        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_QTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_QTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_QTDChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_QTD = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_QTD;
+        partial void OnF_BM1_ASH_CURR_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_QTDChanged();
+    }
+    /// <summary>
     /// There are no comments for Model.GF_PERF_MONTHLY_ATTRIBUTION in the schema.
     /// </summary>
     /// <KeyProperties>
@@ -1280,6 +5336,48 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _PORTFOLIO;
         partial void OnPORTFOLIOChanging(string value);
         partial void OnPORTFOLIOChanged();
+        /// <summary>
+        /// There are no comments for Property BM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM
+        {
+            get
+            {
+                return this._BM;
+            }
+            set
+            {
+                this.OnBMChanging(value);
+                this._BM = value;
+                this.OnBMChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM;
+        partial void OnBMChanging(string value);
+        partial void OnBMChanged();
+        /// <summary>
+        /// There are no comments for Property BMNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMNAME
+        {
+            get
+            {
+                return this._BMNAME;
+            }
+            set
+            {
+                this.OnBMNAMEChanging(value);
+                this._BMNAME = value;
+                this.OnBMNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMNAME;
+        partial void OnBMNAMEChanging(string value);
+        partial void OnBMNAMEChanged();
         /// <summary>
         /// There are no comments for Property AGG_LVL_1 in the schema.
         /// </summary>
@@ -5502,846 +9600,6 @@ namespace GreenField.Web.DimensionEntitiesService
         partial void OnBM1_TOP_RC_CURR_ALLOC_SIChanging(global::System.Nullable<decimal> value);
         partial void OnBM1_TOP_RC_CURR_ALLOC_SIChanged();
         /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_1M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1M
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_1M;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_1MChanging(value);
-                this._F_POR_ASH_RC_CTN_1M = value;
-                this.OnF_POR_ASH_RC_CTN_1MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1M;
-        partial void OnF_POR_ASH_RC_CTN_1MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_1MChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_3M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_3M
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_3M;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_3MChanging(value);
-                this._F_POR_ASH_RC_CTN_3M = value;
-                this.OnF_POR_ASH_RC_CTN_3MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_3M;
-        partial void OnF_POR_ASH_RC_CTN_3MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_3MChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_6M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_6M
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_6M;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_6MChanging(value);
-                this._F_POR_ASH_RC_CTN_6M = value;
-                this.OnF_POR_ASH_RC_CTN_6MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_6M;
-        partial void OnF_POR_ASH_RC_CTN_6MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_6MChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_YTD
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_YTDChanging(value);
-                this._F_POR_ASH_RC_CTN_YTD = value;
-                this.OnF_POR_ASH_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_YTD;
-        partial void OnF_POR_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1Y
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_1YChanging(value);
-                this._F_POR_ASH_RC_CTN_1Y = value;
-                this.OnF_POR_ASH_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1Y;
-        partial void OnF_POR_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_3Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_3Y
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_3Y;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_3YChanging(value);
-                this._F_POR_ASH_RC_CTN_3Y = value;
-                this.OnF_POR_ASH_RC_CTN_3YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_3Y;
-        partial void OnF_POR_ASH_RC_CTN_3YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_3YChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_5Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_5Y
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_5Y;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_5YChanging(value);
-                this._F_POR_ASH_RC_CTN_5Y = value;
-                this.OnF_POR_ASH_RC_CTN_5YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_5Y;
-        partial void OnF_POR_ASH_RC_CTN_5YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_5YChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_SI in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_SI
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_SI;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_SIChanging(value);
-                this._F_POR_ASH_RC_CTN_SI = value;
-                this.OnF_POR_ASH_RC_CTN_SIChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_SI;
-        partial void OnF_POR_ASH_RC_CTN_SIChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_SIChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_1M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1M
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_1M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_1MChanging(value);
-                this._F_BM1_ASH_RC_CTN_1M = value;
-                this.OnF_BM1_ASH_RC_CTN_1MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1M;
-        partial void OnF_BM1_ASH_RC_CTN_1MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_1MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_3M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_3M
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_3M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_3MChanging(value);
-                this._F_BM1_ASH_RC_CTN_3M = value;
-                this.OnF_BM1_ASH_RC_CTN_3MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_3M;
-        partial void OnF_BM1_ASH_RC_CTN_3MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_3MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_6M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_6M
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_6M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_6MChanging(value);
-                this._F_BM1_ASH_RC_CTN_6M = value;
-                this.OnF_BM1_ASH_RC_CTN_6MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_6M;
-        partial void OnF_BM1_ASH_RC_CTN_6MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_6MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_YTDChanging(value);
-                this._F_BM1_ASH_RC_CTN_YTD = value;
-                this.OnF_BM1_ASH_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_YTD;
-        partial void OnF_BM1_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_1YChanging(value);
-                this._F_BM1_ASH_RC_CTN_1Y = value;
-                this.OnF_BM1_ASH_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1Y;
-        partial void OnF_BM1_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_3Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_3Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_3Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_3YChanging(value);
-                this._F_BM1_ASH_RC_CTN_3Y = value;
-                this.OnF_BM1_ASH_RC_CTN_3YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_3Y;
-        partial void OnF_BM1_ASH_RC_CTN_3YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_3YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_5Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_5Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_5Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_5YChanging(value);
-                this._F_BM1_ASH_RC_CTN_5Y = value;
-                this.OnF_BM1_ASH_RC_CTN_5YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_5Y;
-        partial void OnF_BM1_ASH_RC_CTN_5YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_5YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_SI in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_SI
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_SI;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_SIChanging(value);
-                this._F_BM1_ASH_RC_CTN_SI = value;
-                this.OnF_BM1_ASH_RC_CTN_SIChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_SI;
-        partial void OnF_BM1_ASH_RC_CTN_SIChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_SIChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1M
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_1M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_1MChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_1M = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_1MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1M;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_3M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3M
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_3M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_3MChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_3M = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_3MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_3M;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_3MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_3MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_6M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_6M
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_6M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_6MChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_6M = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_6MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_6M;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_6MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_6MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_YTD = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_YTD;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_1Y = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1Y;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_3Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_3Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_3YChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_3Y = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_3YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_3Y;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_3YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_3YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_5Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_5Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_5Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_5YChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_5Y = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_5YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_5Y;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_5YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_5YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_SI in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_SI
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_SI;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_SIChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_SI = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_SIChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_SI;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_SIChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_SIChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1M
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_1M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_1MChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_1M = value;
-                this.OnF_BM1_ASH_SEC_SELEC_1MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1M;
-        partial void OnF_BM1_ASH_SEC_SELEC_1MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_1MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_3M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3M
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_3M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_3MChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_3M = value;
-                this.OnF_BM1_ASH_SEC_SELEC_3MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_3M;
-        partial void OnF_BM1_ASH_SEC_SELEC_3MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_3MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_6M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_6M
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_6M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_6MChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_6M = value;
-                this.OnF_BM1_ASH_SEC_SELEC_6MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_6M;
-        partial void OnF_BM1_ASH_SEC_SELEC_6MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_6MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_YTDChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_YTD = value;
-                this.OnF_BM1_ASH_SEC_SELEC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_YTD;
-        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_1YChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_1Y = value;
-                this.OnF_BM1_ASH_SEC_SELEC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1Y;
-        partial void OnF_BM1_ASH_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_3Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_3Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_3YChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_3Y = value;
-                this.OnF_BM1_ASH_SEC_SELEC_3YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_3Y;
-        partial void OnF_BM1_ASH_SEC_SELEC_3YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_3YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_5Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_5Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_5Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_5YChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_5Y = value;
-                this.OnF_BM1_ASH_SEC_SELEC_5YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_5Y;
-        partial void OnF_BM1_ASH_SEC_SELEC_5YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_5YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_SI in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_SI
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_SI;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_SIChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_SI = value;
-                this.OnF_BM1_ASH_SEC_SELEC_SIChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_SI;
-        partial void OnF_BM1_ASH_SEC_SELEC_SIChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_SIChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1M
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_1M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_1MChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_1M = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_1MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1M;
-        partial void OnF_BM1_ASH_CURR_ALLOC_1MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_1MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_3M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_3M
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_3M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_3MChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_3M = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_3MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_3M;
-        partial void OnF_BM1_ASH_CURR_ALLOC_3MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_3MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_6M in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_6M
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_6M;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_6MChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_6M = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_6MChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_6M;
-        partial void OnF_BM1_ASH_CURR_ALLOC_6MChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_6MChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_YTD = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_YTD;
-        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_1YChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_1Y = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1Y;
-        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_3Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_3Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_3Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_3YChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_3Y = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_3YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_3Y;
-        partial void OnF_BM1_ASH_CURR_ALLOC_3YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_3YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_5Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_5Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_5Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_5YChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_5Y = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_5YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_5Y;
-        partial void OnF_BM1_ASH_CURR_ALLOC_5YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_5YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_SI in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_SI
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_SI;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_SIChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_SI = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_SIChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_SI;
-        partial void OnF_BM1_ASH_CURR_ALLOC_SIChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_SIChanged();
-        /// <summary>
         /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1M in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -7265,6 +10523,846 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_SI_ANN;
         partial void OnADJ_BM1_RC_EXRTN_SI_ANNChanging(global::System.Nullable<decimal> value);
         partial void OnADJ_BM1_RC_EXRTN_SI_ANNChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1M
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_1M;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_1MChanging(value);
+                this._F_POR_ASH_RC_CTN_1M = value;
+                this.OnF_POR_ASH_RC_CTN_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1M;
+        partial void OnF_POR_ASH_RC_CTN_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_1MChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_3M
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_3M;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_3MChanging(value);
+                this._F_POR_ASH_RC_CTN_3M = value;
+                this.OnF_POR_ASH_RC_CTN_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_3M;
+        partial void OnF_POR_ASH_RC_CTN_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_3MChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_6M
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_6M;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_6MChanging(value);
+                this._F_POR_ASH_RC_CTN_6M = value;
+                this.OnF_POR_ASH_RC_CTN_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_6M;
+        partial void OnF_POR_ASH_RC_CTN_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_6MChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_YTD
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_YTDChanging(value);
+                this._F_POR_ASH_RC_CTN_YTD = value;
+                this.OnF_POR_ASH_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_YTD;
+        partial void OnF_POR_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1Y
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_1YChanging(value);
+                this._F_POR_ASH_RC_CTN_1Y = value;
+                this.OnF_POR_ASH_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1Y;
+        partial void OnF_POR_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_3Y
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_3Y;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_3YChanging(value);
+                this._F_POR_ASH_RC_CTN_3Y = value;
+                this.OnF_POR_ASH_RC_CTN_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_3Y;
+        partial void OnF_POR_ASH_RC_CTN_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_3YChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_5Y
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_5Y;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_5YChanging(value);
+                this._F_POR_ASH_RC_CTN_5Y = value;
+                this.OnF_POR_ASH_RC_CTN_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_5Y;
+        partial void OnF_POR_ASH_RC_CTN_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_5YChanged();
+        /// <summary>
+        /// There are no comments for Property F_POR_ASH_RC_CTN_SI in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_SI
+        {
+            get
+            {
+                return this._F_POR_ASH_RC_CTN_SI;
+            }
+            set
+            {
+                this.OnF_POR_ASH_RC_CTN_SIChanging(value);
+                this._F_POR_ASH_RC_CTN_SI = value;
+                this.OnF_POR_ASH_RC_CTN_SIChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_SI;
+        partial void OnF_POR_ASH_RC_CTN_SIChanging(global::System.Nullable<decimal> value);
+        partial void OnF_POR_ASH_RC_CTN_SIChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1M
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_1M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_1MChanging(value);
+                this._F_BM1_ASH_RC_CTN_1M = value;
+                this.OnF_BM1_ASH_RC_CTN_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1M;
+        partial void OnF_BM1_ASH_RC_CTN_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_1MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_3M
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_3M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_3MChanging(value);
+                this._F_BM1_ASH_RC_CTN_3M = value;
+                this.OnF_BM1_ASH_RC_CTN_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_3M;
+        partial void OnF_BM1_ASH_RC_CTN_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_3MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_6M
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_6M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_6MChanging(value);
+                this._F_BM1_ASH_RC_CTN_6M = value;
+                this.OnF_BM1_ASH_RC_CTN_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_6M;
+        partial void OnF_BM1_ASH_RC_CTN_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_6MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_YTDChanging(value);
+                this._F_BM1_ASH_RC_CTN_YTD = value;
+                this.OnF_BM1_ASH_RC_CTN_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_YTD;
+        partial void OnF_BM1_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_1YChanging(value);
+                this._F_BM1_ASH_RC_CTN_1Y = value;
+                this.OnF_BM1_ASH_RC_CTN_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1Y;
+        partial void OnF_BM1_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_3Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_3Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_3YChanging(value);
+                this._F_BM1_ASH_RC_CTN_3Y = value;
+                this.OnF_BM1_ASH_RC_CTN_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_3Y;
+        partial void OnF_BM1_ASH_RC_CTN_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_3YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_5Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_5Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_5YChanging(value);
+                this._F_BM1_ASH_RC_CTN_5Y = value;
+                this.OnF_BM1_ASH_RC_CTN_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_5Y;
+        partial void OnF_BM1_ASH_RC_CTN_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_5YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_RC_CTN_SI in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_SI
+        {
+            get
+            {
+                return this._F_BM1_ASH_RC_CTN_SI;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_RC_CTN_SIChanging(value);
+                this._F_BM1_ASH_RC_CTN_SI = value;
+                this.OnF_BM1_ASH_RC_CTN_SIChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_SI;
+        partial void OnF_BM1_ASH_RC_CTN_SIChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_RC_CTN_SIChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1M
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_1M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_1MChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_1M = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1M;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3M
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_3M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_3MChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_3M = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_3M;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_3MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_6M
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_6M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_6MChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_6M = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_6M;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_6MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_YTD = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_YTD;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_1Y = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1Y;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_3Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_3Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_3YChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_3Y = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_3Y;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_3YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_5Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_5Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_5YChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_5Y = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_5Y;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_5YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_SI in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_SI
+        {
+            get
+            {
+                return this._F_BM1_ASH_ASSET_ALLOC_SI;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_ASSET_ALLOC_SIChanging(value);
+                this._F_BM1_ASH_ASSET_ALLOC_SI = value;
+                this.OnF_BM1_ASH_ASSET_ALLOC_SIChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_SI;
+        partial void OnF_BM1_ASH_ASSET_ALLOC_SIChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_ASSET_ALLOC_SIChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1M
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_1M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_1MChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_1M = value;
+                this.OnF_BM1_ASH_SEC_SELEC_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1M;
+        partial void OnF_BM1_ASH_SEC_SELEC_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_1MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3M
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_3M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_3MChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_3M = value;
+                this.OnF_BM1_ASH_SEC_SELEC_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_3M;
+        partial void OnF_BM1_ASH_SEC_SELEC_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_3MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_6M
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_6M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_6MChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_6M = value;
+                this.OnF_BM1_ASH_SEC_SELEC_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_6M;
+        partial void OnF_BM1_ASH_SEC_SELEC_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_6MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_YTDChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_YTD = value;
+                this.OnF_BM1_ASH_SEC_SELEC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_YTD;
+        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_1YChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_1Y = value;
+                this.OnF_BM1_ASH_SEC_SELEC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1Y;
+        partial void OnF_BM1_ASH_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_3Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_3Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_3YChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_3Y = value;
+                this.OnF_BM1_ASH_SEC_SELEC_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_3Y;
+        partial void OnF_BM1_ASH_SEC_SELEC_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_3YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_5Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_5Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_5YChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_5Y = value;
+                this.OnF_BM1_ASH_SEC_SELEC_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_5Y;
+        partial void OnF_BM1_ASH_SEC_SELEC_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_5YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_SI in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_SI
+        {
+            get
+            {
+                return this._F_BM1_ASH_SEC_SELEC_SI;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_SEC_SELEC_SIChanging(value);
+                this._F_BM1_ASH_SEC_SELEC_SI = value;
+                this.OnF_BM1_ASH_SEC_SELEC_SIChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_SI;
+        partial void OnF_BM1_ASH_SEC_SELEC_SIChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_SEC_SELEC_SIChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1M
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_1M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_1MChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_1M = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1M;
+        partial void OnF_BM1_ASH_CURR_ALLOC_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_1MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_3M
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_3M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_3MChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_3M = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_3M;
+        partial void OnF_BM1_ASH_CURR_ALLOC_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_3MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_6M
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_6M;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_6MChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_6M = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_6M;
+        partial void OnF_BM1_ASH_CURR_ALLOC_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_6MChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_YTD
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_YTD;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_YTD = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_YTD;
+        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_1Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_1YChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_1Y = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_1YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1Y;
+        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_3Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_3Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_3YChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_3Y = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_3Y;
+        partial void OnF_BM1_ASH_CURR_ALLOC_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_3YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_5Y
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_5Y;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_5YChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_5Y = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_5Y;
+        partial void OnF_BM1_ASH_CURR_ALLOC_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_5YChanged();
+        /// <summary>
+        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_SI in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_SI
+        {
+            get
+            {
+                return this._F_BM1_ASH_CURR_ALLOC_SI;
+            }
+            set
+            {
+                this.OnF_BM1_ASH_CURR_ALLOC_SIChanging(value);
+                this._F_BM1_ASH_CURR_ALLOC_SI = value;
+                this.OnF_BM1_ASH_CURR_ALLOC_SIChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_SI;
+        partial void OnF_BM1_ASH_CURR_ALLOC_SIChanging(global::System.Nullable<decimal> value);
+        partial void OnF_BM1_ASH_CURR_ALLOC_SIChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PERF_TOPLEVELMONTH in the schema.
@@ -12143,3962 +16241,5 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _VALUE_SC;
         partial void OnVALUE_SCChanging(global::System.Nullable<decimal> value);
         partial void OnVALUE_SCChanged();
-    }
-    /// <summary>
-    /// There are no comments for Model.GF_PERF_DAILY_ATTRIBUTION in the schema.
-    /// </summary>
-    /// <KeyProperties>
-    /// NODE_NAME
-    /// TO_DATE
-    /// PORTFOLIO
-    /// AGG_LVL_1
-    /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("NODE_NAME", "TO_DATE", "PORTFOLIO", "AGG_LVL_1")]
-    public partial class GF_PERF_DAILY_ATTRIBUTION
-    {
-        /// <summary>
-        /// Create a new GF_PERF_DAILY_ATTRIBUTION object.
-        /// </summary>
-        /// <param name="nODE_NAME">Initial value of NODE_NAME.</param>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTFOLIO">Initial value of PORTFOLIO.</param>
-        /// <param name="aGG_LVL_1">Initial value of AGG_LVL_1.</param>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_DAILY_ATTRIBUTION CreateGF_PERF_DAILY_ATTRIBUTION(string nODE_NAME, global::System.DateTime tO_DATE, string pORTFOLIO, string aGG_LVL_1)
-        {
-            GF_PERF_DAILY_ATTRIBUTION gF_PERF_DAILY_ATTRIBUTION = new GF_PERF_DAILY_ATTRIBUTION();
-            gF_PERF_DAILY_ATTRIBUTION.NODE_NAME = nODE_NAME;
-            gF_PERF_DAILY_ATTRIBUTION.TO_DATE = tO_DATE;
-            gF_PERF_DAILY_ATTRIBUTION.PORTFOLIO = pORTFOLIO;
-            gF_PERF_DAILY_ATTRIBUTION.AGG_LVL_1 = aGG_LVL_1;
-            return gF_PERF_DAILY_ATTRIBUTION;
-        }
-        /// <summary>
-        /// There are no comments for Property NODE_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string NODE_NAME
-        {
-            get
-            {
-                return this._NODE_NAME;
-            }
-            set
-            {
-                this.OnNODE_NAMEChanging(value);
-                this._NODE_NAME = value;
-                this.OnNODE_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _NODE_NAME;
-        partial void OnNODE_NAMEChanging(string value);
-        partial void OnNODE_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property TO_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime TO_DATE
-        {
-            get
-            {
-                return this._TO_DATE;
-            }
-            set
-            {
-                this.OnTO_DATEChanging(value);
-                this._TO_DATE = value;
-                this.OnTO_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _TO_DATE;
-        partial void OnTO_DATEChanging(global::System.DateTime value);
-        partial void OnTO_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property PORT_GROUP in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string PORT_GROUP
-        {
-            get
-            {
-                return this._PORT_GROUP;
-            }
-            set
-            {
-                this.OnPORT_GROUPChanging(value);
-                this._PORT_GROUP = value;
-                this.OnPORT_GROUPChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _PORT_GROUP;
-        partial void OnPORT_GROUPChanging(string value);
-        partial void OnPORT_GROUPChanged();
-        /// <summary>
-        /// There are no comments for Property PORTFOLIO in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string PORTFOLIO
-        {
-            get
-            {
-                return this._PORTFOLIO;
-            }
-            set
-            {
-                this.OnPORTFOLIOChanging(value);
-                this._PORTFOLIO = value;
-                this.OnPORTFOLIOChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _PORTFOLIO;
-        partial void OnPORTFOLIOChanging(string value);
-        partial void OnPORTFOLIOChanged();
-        /// <summary>
-        /// There are no comments for Property AGG_LVL_1 in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string AGG_LVL_1
-        {
-            get
-            {
-                return this._AGG_LVL_1;
-            }
-            set
-            {
-                this.OnAGG_LVL_1Changing(value);
-                this._AGG_LVL_1 = value;
-                this.OnAGG_LVL_1Changed();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _AGG_LVL_1;
-        partial void OnAGG_LVL_1Changing(string value);
-        partial void OnAGG_LVL_1Changed();
-        /// <summary>
-        /// There are no comments for Property AGG_LVL_1_LONG_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string AGG_LVL_1_LONG_NAME
-        {
-            get
-            {
-                return this._AGG_LVL_1_LONG_NAME;
-            }
-            set
-            {
-                this.OnAGG_LVL_1_LONG_NAMEChanging(value);
-                this._AGG_LVL_1_LONG_NAME = value;
-                this.OnAGG_LVL_1_LONG_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _AGG_LVL_1_LONG_NAME;
-        partial void OnAGG_LVL_1_LONG_NAMEChanging(string value);
-        partial void OnAGG_LVL_1_LONG_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property ISSUER in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string ISSUER
-        {
-            get
-            {
-                return this._ISSUER;
-            }
-            set
-            {
-                this.OnISSUERChanging(value);
-                this._ISSUER = value;
-                this.OnISSUERChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _ISSUER;
-        partial void OnISSUERChanging(string value);
-        partial void OnISSUERChanged();
-        /// <summary>
-        /// There are no comments for Property COUNTRY in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string COUNTRY
-        {
-            get
-            {
-                return this._COUNTRY;
-            }
-            set
-            {
-                this.OnCOUNTRYChanging(value);
-                this._COUNTRY = value;
-                this.OnCOUNTRYChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _COUNTRY;
-        partial void OnCOUNTRYChanging(string value);
-        partial void OnCOUNTRYChanged();
-        /// <summary>
-        /// There are no comments for Property COUNTRY_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string COUNTRY_NAME
-        {
-            get
-            {
-                return this._COUNTRY_NAME;
-            }
-            set
-            {
-                this.OnCOUNTRY_NAMEChanging(value);
-                this._COUNTRY_NAME = value;
-                this.OnCOUNTRY_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _COUNTRY_NAME;
-        partial void OnCOUNTRY_NAMEChanging(string value);
-        partial void OnCOUNTRY_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property COUNTRY_ZONE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string COUNTRY_ZONE
-        {
-            get
-            {
-                return this._COUNTRY_ZONE;
-            }
-            set
-            {
-                this.OnCOUNTRY_ZONEChanging(value);
-                this._COUNTRY_ZONE = value;
-                this.OnCOUNTRY_ZONEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _COUNTRY_ZONE;
-        partial void OnCOUNTRY_ZONEChanging(string value);
-        partial void OnCOUNTRY_ZONEChanged();
-        /// <summary>
-        /// There are no comments for Property COUNTRY_ZONE1 in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string COUNTRY_ZONE1
-        {
-            get
-            {
-                return this._COUNTRY_ZONE1;
-            }
-            set
-            {
-                this.OnCOUNTRY_ZONE1Changing(value);
-                this._COUNTRY_ZONE1 = value;
-                this.OnCOUNTRY_ZONE1Changed();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _COUNTRY_ZONE1;
-        partial void OnCOUNTRY_ZONE1Changing(string value);
-        partial void OnCOUNTRY_ZONE1Changed();
-        /// <summary>
-        /// There are no comments for Property SEC_GROUP in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_GROUP
-        {
-            get
-            {
-                return this._SEC_GROUP;
-            }
-            set
-            {
-                this.OnSEC_GROUPChanging(value);
-                this._SEC_GROUP = value;
-                this.OnSEC_GROUPChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_GROUP;
-        partial void OnSEC_GROUPChanging(string value);
-        partial void OnSEC_GROUPChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_GROUP_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_GROUP_NAME
-        {
-            get
-            {
-                return this._SEC_GROUP_NAME;
-            }
-            set
-            {
-                this.OnSEC_GROUP_NAMEChanging(value);
-                this._SEC_GROUP_NAME = value;
-                this.OnSEC_GROUP_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_GROUP_NAME;
-        partial void OnSEC_GROUP_NAMEChanging(string value);
-        partial void OnSEC_GROUP_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_NAME
-        {
-            get
-            {
-                return this._SEC_NAME;
-            }
-            set
-            {
-                this.OnSEC_NAMEChanging(value);
-                this._SEC_NAME = value;
-                this.OnSEC_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_NAME;
-        partial void OnSEC_NAMEChanging(string value);
-        partial void OnSEC_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_TYPE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_TYPE
-        {
-            get
-            {
-                return this._SEC_TYPE;
-            }
-            set
-            {
-                this.OnSEC_TYPEChanging(value);
-                this._SEC_TYPE = value;
-                this.OnSEC_TYPEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_TYPE;
-        partial void OnSEC_TYPEChanging(string value);
-        partial void OnSEC_TYPEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_TYPE_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_TYPE_NAME
-        {
-            get
-            {
-                return this._SEC_TYPE_NAME;
-            }
-            set
-            {
-                this.OnSEC_TYPE_NAMEChanging(value);
-                this._SEC_TYPE_NAME = value;
-                this.OnSEC_TYPE_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_TYPE_NAME;
-        partial void OnSEC_TYPE_NAMEChanging(string value);
-        partial void OnSEC_TYPE_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_INV_THEME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_INV_THEME
-        {
-            get
-            {
-                return this._SEC_INV_THEME;
-            }
-            set
-            {
-                this.OnSEC_INV_THEMEChanging(value);
-                this._SEC_INV_THEME = value;
-                this.OnSEC_INV_THEMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_INV_THEME;
-        partial void OnSEC_INV_THEMEChanging(string value);
-        partial void OnSEC_INV_THEMEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_ISSUE_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> SEC_ISSUE_DATE
-        {
-            get
-            {
-                return this._SEC_ISSUE_DATE;
-            }
-            set
-            {
-                this.OnSEC_ISSUE_DATEChanging(value);
-                this._SEC_ISSUE_DATE = value;
-                this.OnSEC_ISSUE_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _SEC_ISSUE_DATE;
-        partial void OnSEC_ISSUE_DATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnSEC_ISSUE_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_ISSUE_PRICE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> SEC_ISSUE_PRICE
-        {
-            get
-            {
-                return this._SEC_ISSUE_PRICE;
-            }
-            set
-            {
-                this.OnSEC_ISSUE_PRICEChanging(value);
-                this._SEC_ISSUE_PRICE = value;
-                this.OnSEC_ISSUE_PRICEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _SEC_ISSUE_PRICE;
-        partial void OnSEC_ISSUE_PRICEChanging(global::System.Nullable<decimal> value);
-        partial void OnSEC_ISSUE_PRICEChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_ISSUE_YIELD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> SEC_ISSUE_YIELD
-        {
-            get
-            {
-                return this._SEC_ISSUE_YIELD;
-            }
-            set
-            {
-                this.OnSEC_ISSUE_YIELDChanging(value);
-                this._SEC_ISSUE_YIELD = value;
-                this.OnSEC_ISSUE_YIELDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _SEC_ISSUE_YIELD;
-        partial void OnSEC_ISSUE_YIELDChanging(global::System.Nullable<decimal> value);
-        partial void OnSEC_ISSUE_YIELDChanged();
-        /// <summary>
-        /// There are no comments for Property SEC_ISIN in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_ISIN
-        {
-            get
-            {
-                return this._SEC_ISIN;
-            }
-            set
-            {
-                this.OnSEC_ISINChanging(value);
-                this._SEC_ISIN = value;
-                this.OnSEC_ISINChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_ISIN;
-        partial void OnSEC_ISINChanging(string value);
-        partial void OnSEC_ISINChanged();
-        /// <summary>
-        /// There are no comments for Property GICS_LVL1 in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string GICS_LVL1
-        {
-            get
-            {
-                return this._GICS_LVL1;
-            }
-            set
-            {
-                this.OnGICS_LVL1Changing(value);
-                this._GICS_LVL1 = value;
-                this.OnGICS_LVL1Changed();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _GICS_LVL1;
-        partial void OnGICS_LVL1Changing(string value);
-        partial void OnGICS_LVL1Changed();
-        /// <summary>
-        /// There are no comments for Property SEC_QUO_CURRENCY in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string SEC_QUO_CURRENCY
-        {
-            get
-            {
-                return this._SEC_QUO_CURRENCY;
-            }
-            set
-            {
-                this.OnSEC_QUO_CURRENCYChanging(value);
-                this._SEC_QUO_CURRENCY = value;
-                this.OnSEC_QUO_CURRENCYChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _SEC_QUO_CURRENCY;
-        partial void OnSEC_QUO_CURRENCYChanging(string value);
-        partial void OnSEC_QUO_CURRENCYChanged();
-        /// <summary>
-        /// There are no comments for Property COUPON_RATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> COUPON_RATE
-        {
-            get
-            {
-                return this._COUPON_RATE;
-            }
-            set
-            {
-                this.OnCOUPON_RATEChanging(value);
-                this._COUPON_RATE = value;
-                this.OnCOUPON_RATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _COUPON_RATE;
-        partial void OnCOUPON_RATEChanging(global::System.Nullable<decimal> value);
-        partial void OnCOUPON_RATEChanged();
-        /// <summary>
-        /// There are no comments for Property MATURITY_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> MATURITY_DATE
-        {
-            get
-            {
-                return this._MATURITY_DATE;
-            }
-            set
-            {
-                this.OnMATURITY_DATEChanging(value);
-                this._MATURITY_DATE = value;
-                this.OnMATURITY_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _MATURITY_DATE;
-        partial void OnMATURITY_DATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnMATURITY_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property INTEREST_TYPE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string INTEREST_TYPE
-        {
-            get
-            {
-                return this._INTEREST_TYPE;
-            }
-            set
-            {
-                this.OnINTEREST_TYPEChanging(value);
-                this._INTEREST_TYPE = value;
-                this.OnINTEREST_TYPEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _INTEREST_TYPE;
-        partial void OnINTEREST_TYPEChanging(string value);
-        partial void OnINTEREST_TYPEChanged();
-        /// <summary>
-        /// There are no comments for Property ISSUER_NAME in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string ISSUER_NAME
-        {
-            get
-            {
-                return this._ISSUER_NAME;
-            }
-            set
-            {
-                this.OnISSUER_NAMEChanging(value);
-                this._ISSUER_NAME = value;
-                this.OnISSUER_NAMEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _ISSUER_NAME;
-        partial void OnISSUER_NAMEChanging(string value);
-        partial void OnISSUER_NAMEChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_SP_FROM_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> RATINGS_SP_FROM_DATE
-        {
-            get
-            {
-                return this._RATINGS_SP_FROM_DATE;
-            }
-            set
-            {
-                this.OnRATINGS_SP_FROM_DATEChanging(value);
-                this._RATINGS_SP_FROM_DATE = value;
-                this.OnRATINGS_SP_FROM_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _RATINGS_SP_FROM_DATE;
-        partial void OnRATINGS_SP_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnRATINGS_SP_FROM_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_SP_RATING in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_SP_RATING
-        {
-            get
-            {
-                return this._RATINGS_SP_RATING;
-            }
-            set
-            {
-                this.OnRATINGS_SP_RATINGChanging(value);
-                this._RATINGS_SP_RATING = value;
-                this.OnRATINGS_SP_RATINGChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_SP_RATING;
-        partial void OnRATINGS_SP_RATINGChanging(string value);
-        partial void OnRATINGS_SP_RATINGChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_SP_RATING_AGENCY in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_SP_RATING_AGENCY
-        {
-            get
-            {
-                return this._RATINGS_SP_RATING_AGENCY;
-            }
-            set
-            {
-                this.OnRATINGS_SP_RATING_AGENCYChanging(value);
-                this._RATINGS_SP_RATING_AGENCY = value;
-                this.OnRATINGS_SP_RATING_AGENCYChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_SP_RATING_AGENCY;
-        partial void OnRATINGS_SP_RATING_AGENCYChanging(string value);
-        partial void OnRATINGS_SP_RATING_AGENCYChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_MO_FROM_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> RATINGS_MO_FROM_DATE
-        {
-            get
-            {
-                return this._RATINGS_MO_FROM_DATE;
-            }
-            set
-            {
-                this.OnRATINGS_MO_FROM_DATEChanging(value);
-                this._RATINGS_MO_FROM_DATE = value;
-                this.OnRATINGS_MO_FROM_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _RATINGS_MO_FROM_DATE;
-        partial void OnRATINGS_MO_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnRATINGS_MO_FROM_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_MO_RATING in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_MO_RATING
-        {
-            get
-            {
-                return this._RATINGS_MO_RATING;
-            }
-            set
-            {
-                this.OnRATINGS_MO_RATINGChanging(value);
-                this._RATINGS_MO_RATING = value;
-                this.OnRATINGS_MO_RATINGChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_MO_RATING;
-        partial void OnRATINGS_MO_RATINGChanging(string value);
-        partial void OnRATINGS_MO_RATINGChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_MO_RATING_AGENCY in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_MO_RATING_AGENCY
-        {
-            get
-            {
-                return this._RATINGS_MO_RATING_AGENCY;
-            }
-            set
-            {
-                this.OnRATINGS_MO_RATING_AGENCYChanging(value);
-                this._RATINGS_MO_RATING_AGENCY = value;
-                this.OnRATINGS_MO_RATING_AGENCYChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_MO_RATING_AGENCY;
-        partial void OnRATINGS_MO_RATING_AGENCYChanging(string value);
-        partial void OnRATINGS_MO_RATING_AGENCYChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_FI_FROM_DATE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<global::System.DateTime> RATINGS_FI_FROM_DATE
-        {
-            get
-            {
-                return this._RATINGS_FI_FROM_DATE;
-            }
-            set
-            {
-                this.OnRATINGS_FI_FROM_DATEChanging(value);
-                this._RATINGS_FI_FROM_DATE = value;
-                this.OnRATINGS_FI_FROM_DATEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<global::System.DateTime> _RATINGS_FI_FROM_DATE;
-        partial void OnRATINGS_FI_FROM_DATEChanging(global::System.Nullable<global::System.DateTime> value);
-        partial void OnRATINGS_FI_FROM_DATEChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_FI_RATING in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_FI_RATING
-        {
-            get
-            {
-                return this._RATINGS_FI_RATING;
-            }
-            set
-            {
-                this.OnRATINGS_FI_RATINGChanging(value);
-                this._RATINGS_FI_RATING = value;
-                this.OnRATINGS_FI_RATINGChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_FI_RATING;
-        partial void OnRATINGS_FI_RATINGChanging(string value);
-        partial void OnRATINGS_FI_RATINGChanged();
-        /// <summary>
-        /// There are no comments for Property RATINGS_FI_RATING_AGENCY in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public string RATINGS_FI_RATING_AGENCY
-        {
-            get
-            {
-                return this._RATINGS_FI_RATING_AGENCY;
-            }
-            set
-            {
-                this.OnRATINGS_FI_RATING_AGENCYChanging(value);
-                this._RATINGS_FI_RATING_AGENCY = value;
-                this.OnRATINGS_FI_RATING_AGENCYChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private string _RATINGS_FI_RATING_AGENCY;
-        partial void OnRATINGS_FI_RATING_AGENCYChanging(string value);
-        partial void OnRATINGS_FI_RATING_AGENCYChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_EXPOSURE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_EXPOSURE
-        {
-            get
-            {
-                return this._POR_RC_EXPOSURE;
-            }
-            set
-            {
-                this.OnPOR_RC_EXPOSUREChanging(value);
-                this._POR_RC_EXPOSURE = value;
-                this.OnPOR_RC_EXPOSUREChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_EXPOSURE;
-        partial void OnPOR_RC_EXPOSUREChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_EXPOSUREChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_MARKET_VALUE in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_MARKET_VALUE
-        {
-            get
-            {
-                return this._POR_RC_MARKET_VALUE;
-            }
-            set
-            {
-                this.OnPOR_RC_MARKET_VALUEChanging(value);
-                this._POR_RC_MARKET_VALUE = value;
-                this.OnPOR_RC_MARKET_VALUEChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_MARKET_VALUE;
-        partial void OnPOR_RC_MARKET_VALUEChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_MARKET_VALUEChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_CASH_FLOW in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_CASH_FLOW
-        {
-            get
-            {
-                return this._POR_RC_CASH_FLOW;
-            }
-            set
-            {
-                this.OnPOR_RC_CASH_FLOWChanging(value);
-                this._POR_RC_CASH_FLOW = value;
-                this.OnPOR_RC_CASH_FLOWChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_CASH_FLOW;
-        partial void OnPOR_RC_CASH_FLOWChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_CASH_FLOWChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_WGT_EOD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_WGT_EOD
-        {
-            get
-            {
-                return this._POR_RC_WGT_EOD;
-            }
-            set
-            {
-                this.OnPOR_RC_WGT_EODChanging(value);
-                this._POR_RC_WGT_EOD = value;
-                this.OnPOR_RC_WGT_EODChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_WGT_EOD;
-        partial void OnPOR_RC_WGT_EODChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_WGT_EODChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_WGT_SOD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_WGT_SOD
-        {
-            get
-            {
-                return this._POR_RC_WGT_SOD;
-            }
-            set
-            {
-                this.OnPOR_RC_WGT_SODChanging(value);
-                this._POR_RC_WGT_SOD = value;
-                this.OnPOR_RC_WGT_SODChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_WGT_SOD;
-        partial void OnPOR_RC_WGT_SODChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_WGT_SODChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1D
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_1D;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_1DChanging(value);
-                this._POR_RC_AVG_WGT_1D = value;
-                this.OnPOR_RC_AVG_WGT_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1D;
-        partial void OnPOR_RC_AVG_WGT_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_1DChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1W
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_1W;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_1WChanging(value);
-                this._POR_RC_AVG_WGT_1W = value;
-                this.OnPOR_RC_AVG_WGT_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1W;
-        partial void OnPOR_RC_AVG_WGT_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_1WChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_MTD
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_MTD;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_MTDChanging(value);
-                this._POR_RC_AVG_WGT_MTD = value;
-                this.OnPOR_RC_AVG_WGT_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_MTD;
-        partial void OnPOR_RC_AVG_WGT_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_YTD
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_YTD;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_YTDChanging(value);
-                this._POR_RC_AVG_WGT_YTD = value;
-                this.OnPOR_RC_AVG_WGT_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_YTD;
-        partial void OnPOR_RC_AVG_WGT_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_1Y
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_1Y;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_1YChanging(value);
-                this._POR_RC_AVG_WGT_1Y = value;
-                this.OnPOR_RC_AVG_WGT_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_1Y;
-        partial void OnPOR_RC_AVG_WGT_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_1YChanged();
-        /// <summary>
-        /// There are no comments for Property POR_RC_AVG_WGT_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_RC_AVG_WGT_QTD
-        {
-            get
-            {
-                return this._POR_RC_AVG_WGT_QTD;
-            }
-            set
-            {
-                this.OnPOR_RC_AVG_WGT_QTDChanging(value);
-                this._POR_RC_AVG_WGT_QTD = value;
-                this.OnPOR_RC_AVG_WGT_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_RC_AVG_WGT_QTD;
-        partial void OnPOR_RC_AVG_WGT_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_RC_AVG_WGT_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_WGT_EOD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_WGT_EOD
-        {
-            get
-            {
-                return this._BM1_RC_WGT_EOD;
-            }
-            set
-            {
-                this.OnBM1_RC_WGT_EODChanging(value);
-                this._BM1_RC_WGT_EOD = value;
-                this.OnBM1_RC_WGT_EODChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_WGT_EOD;
-        partial void OnBM1_RC_WGT_EODChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_WGT_EODChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_WGT_SOD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_WGT_SOD
-        {
-            get
-            {
-                return this._BM1_RC_WGT_SOD;
-            }
-            set
-            {
-                this.OnBM1_RC_WGT_SODChanging(value);
-                this._BM1_RC_WGT_SOD = value;
-                this.OnBM1_RC_WGT_SODChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_WGT_SOD;
-        partial void OnBM1_RC_WGT_SODChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_WGT_SODChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1D
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_1D;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_1DChanging(value);
-                this._BM1_RC_AVG_WGT_1D = value;
-                this.OnBM1_RC_AVG_WGT_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1D;
-        partial void OnBM1_RC_AVG_WGT_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1W
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_1W;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_1WChanging(value);
-                this._BM1_RC_AVG_WGT_1W = value;
-                this.OnBM1_RC_AVG_WGT_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1W;
-        partial void OnBM1_RC_AVG_WGT_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_MTD
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_MTD;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_MTDChanging(value);
-                this._BM1_RC_AVG_WGT_MTD = value;
-                this.OnBM1_RC_AVG_WGT_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_MTD;
-        partial void OnBM1_RC_AVG_WGT_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_YTD
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_YTD;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_YTDChanging(value);
-                this._BM1_RC_AVG_WGT_YTD = value;
-                this.OnBM1_RC_AVG_WGT_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_YTD;
-        partial void OnBM1_RC_AVG_WGT_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_1Y
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_1Y;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_1YChanging(value);
-                this._BM1_RC_AVG_WGT_1Y = value;
-                this.OnBM1_RC_AVG_WGT_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_1Y;
-        partial void OnBM1_RC_AVG_WGT_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_AVG_WGT_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_AVG_WGT_QTD
-        {
-            get
-            {
-                return this._BM1_RC_AVG_WGT_QTD;
-            }
-            set
-            {
-                this.OnBM1_RC_AVG_WGT_QTDChanging(value);
-                this._BM1_RC_AVG_WGT_QTD = value;
-                this.OnBM1_RC_AVG_WGT_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_AVG_WGT_QTD;
-        partial void OnBM1_RC_AVG_WGT_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_AVG_WGT_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_1D
-        {
-            get
-            {
-                return this._BM1_QC_TWR_1D;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_1DChanging(value);
-                this._BM1_QC_TWR_1D = value;
-                this.OnBM1_QC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_1D;
-        partial void OnBM1_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_1W
-        {
-            get
-            {
-                return this._BM1_QC_TWR_1W;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_1WChanging(value);
-                this._BM1_QC_TWR_1W = value;
-                this.OnBM1_QC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_1W;
-        partial void OnBM1_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_MTD
-        {
-            get
-            {
-                return this._BM1_QC_TWR_MTD;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_MTDChanging(value);
-                this._BM1_QC_TWR_MTD = value;
-                this.OnBM1_QC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_MTD;
-        partial void OnBM1_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_YTD
-        {
-            get
-            {
-                return this._BM1_QC_TWR_YTD;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_YTDChanging(value);
-                this._BM1_QC_TWR_YTD = value;
-                this.OnBM1_QC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_YTD;
-        partial void OnBM1_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_1Y
-        {
-            get
-            {
-                return this._BM1_QC_TWR_1Y;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_1YChanging(value);
-                this._BM1_QC_TWR_1Y = value;
-                this.OnBM1_QC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_1Y;
-        partial void OnBM1_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_QC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_QC_TWR_QTD
-        {
-            get
-            {
-                return this._BM1_QC_TWR_QTD;
-            }
-            set
-            {
-                this.OnBM1_QC_TWR_QTDChanging(value);
-                this._BM1_QC_TWR_QTD = value;
-                this.OnBM1_QC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_QC_TWR_QTD;
-        partial void OnBM1_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_QC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_1D
-        {
-            get
-            {
-                return this._BM1_RC_TWR_1D;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_1DChanging(value);
-                this._BM1_RC_TWR_1D = value;
-                this.OnBM1_RC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_1D;
-        partial void OnBM1_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_1W
-        {
-            get
-            {
-                return this._BM1_RC_TWR_1W;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_1WChanging(value);
-                this._BM1_RC_TWR_1W = value;
-                this.OnBM1_RC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_1W;
-        partial void OnBM1_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_MTD
-        {
-            get
-            {
-                return this._BM1_RC_TWR_MTD;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_MTDChanging(value);
-                this._BM1_RC_TWR_MTD = value;
-                this.OnBM1_RC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_MTD;
-        partial void OnBM1_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_YTD
-        {
-            get
-            {
-                return this._BM1_RC_TWR_YTD;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_YTDChanging(value);
-                this._BM1_RC_TWR_YTD = value;
-                this.OnBM1_RC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_YTD;
-        partial void OnBM1_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_1Y
-        {
-            get
-            {
-                return this._BM1_RC_TWR_1Y;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_1YChanging(value);
-                this._BM1_RC_TWR_1Y = value;
-                this.OnBM1_RC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_1Y;
-        partial void OnBM1_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_RC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_RC_TWR_QTD
-        {
-            get
-            {
-                return this._BM1_RC_TWR_QTD;
-            }
-            set
-            {
-                this.OnBM1_RC_TWR_QTDChanging(value);
-                this._BM1_RC_TWR_QTD = value;
-                this.OnBM1_RC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_RC_TWR_QTD;
-        partial void OnBM1_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_RC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1D
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_1D;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_1DChanging(value);
-                this._POR_TOP_QC_TWR_1D = value;
-                this.OnPOR_TOP_QC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1D;
-        partial void OnPOR_TOP_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1W
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_1W;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_1WChanging(value);
-                this._POR_TOP_QC_TWR_1W = value;
-                this.OnPOR_TOP_QC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1W;
-        partial void OnPOR_TOP_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_MTD
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_MTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_MTDChanging(value);
-                this._POR_TOP_QC_TWR_MTD = value;
-                this.OnPOR_TOP_QC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_MTD;
-        partial void OnPOR_TOP_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_YTD
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_YTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_YTDChanging(value);
-                this._POR_TOP_QC_TWR_YTD = value;
-                this.OnPOR_TOP_QC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_YTD;
-        partial void OnPOR_TOP_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_1Y
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_1Y;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_1YChanging(value);
-                this._POR_TOP_QC_TWR_1Y = value;
-                this.OnPOR_TOP_QC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_1Y;
-        partial void OnPOR_TOP_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_QC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_QC_TWR_QTD
-        {
-            get
-            {
-                return this._POR_TOP_QC_TWR_QTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_QC_TWR_QTDChanging(value);
-                this._POR_TOP_QC_TWR_QTD = value;
-                this.OnPOR_TOP_QC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_QC_TWR_QTD;
-        partial void OnPOR_TOP_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_QC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1D
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_1DChanging(value);
-                this._BM1_TOP_QC_TWR_1D = value;
-                this.OnBM1_TOP_QC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1D;
-        partial void OnBM1_TOP_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1W
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_1WChanging(value);
-                this._BM1_TOP_QC_TWR_1W = value;
-                this.OnBM1_TOP_QC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1W;
-        partial void OnBM1_TOP_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_MTDChanging(value);
-                this._BM1_TOP_QC_TWR_MTD = value;
-                this.OnBM1_TOP_QC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_MTD;
-        partial void OnBM1_TOP_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_YTDChanging(value);
-                this._BM1_TOP_QC_TWR_YTD = value;
-                this.OnBM1_TOP_QC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_YTD;
-        partial void OnBM1_TOP_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_1YChanging(value);
-                this._BM1_TOP_QC_TWR_1Y = value;
-                this.OnBM1_TOP_QC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_1Y;
-        partial void OnBM1_TOP_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_TWR_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_TWR_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_TWR_QTDChanging(value);
-                this._BM1_TOP_QC_TWR_QTD = value;
-                this.OnBM1_TOP_QC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_TWR_QTD;
-        partial void OnBM1_TOP_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1D
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_1DChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_1D = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1D;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1W
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_1WChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_1W = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1W;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_MTDChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_MTD = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_MTD;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_YTDChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_YTD = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_YTD;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_1YChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_1Y = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_1Y;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_QC_EXCESS_RTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_QC_EXCESS_RTN_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_QC_EXCESS_RTN_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_QC_EXCESS_RTN_QTDChanging(value);
-                this._BM1_TOP_QC_EXCESS_RTN_QTD = value;
-                this.OnBM1_TOP_QC_EXCESS_RTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_QC_EXCESS_RTN_QTD;
-        partial void OnBM1_TOP_QC_EXCESS_RTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_QC_EXCESS_RTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1D
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_1D;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_1DChanging(value);
-                this._POR_TOP_RC_TWR_1D = value;
-                this.OnPOR_TOP_RC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1D;
-        partial void OnPOR_TOP_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1W
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_1W;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_1WChanging(value);
-                this._POR_TOP_RC_TWR_1W = value;
-                this.OnPOR_TOP_RC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1W;
-        partial void OnPOR_TOP_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_MTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_MTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_MTDChanging(value);
-                this._POR_TOP_RC_TWR_MTD = value;
-                this.OnPOR_TOP_RC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_MTD;
-        partial void OnPOR_TOP_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_YTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_YTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_YTDChanging(value);
-                this._POR_TOP_RC_TWR_YTD = value;
-                this.OnPOR_TOP_RC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_YTD;
-        partial void OnPOR_TOP_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_1Y
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_1Y;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_1YChanging(value);
-                this._POR_TOP_RC_TWR_1Y = value;
-                this.OnPOR_TOP_RC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_1Y;
-        partial void OnPOR_TOP_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_TWR_QTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_TWR_QTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_TWR_QTDChanging(value);
-                this._POR_TOP_RC_TWR_QTD = value;
-                this.OnPOR_TOP_RC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_TWR_QTD;
-        partial void OnPOR_TOP_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_1DChanging(value);
-                this._BM1_TOP_RC_TWR_1D = value;
-                this.OnBM1_TOP_RC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1D;
-        partial void OnBM1_TOP_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_1WChanging(value);
-                this._BM1_TOP_RC_TWR_1W = value;
-                this.OnBM1_TOP_RC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1W;
-        partial void OnBM1_TOP_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_MTDChanging(value);
-                this._BM1_TOP_RC_TWR_MTD = value;
-                this.OnBM1_TOP_RC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_MTD;
-        partial void OnBM1_TOP_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_YTDChanging(value);
-                this._BM1_TOP_RC_TWR_YTD = value;
-                this.OnBM1_TOP_RC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_YTD;
-        partial void OnBM1_TOP_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_1YChanging(value);
-                this._BM1_TOP_RC_TWR_1Y = value;
-                this.OnBM1_TOP_RC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_1Y;
-        partial void OnBM1_TOP_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_TWR_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_TWR_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_TWR_QTDChanging(value);
-                this._BM1_TOP_RC_TWR_QTD = value;
-                this.OnBM1_TOP_RC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_TWR_QTD;
-        partial void OnBM1_TOP_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_1DChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_1D = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1D;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_1WChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_1W = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1W;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_MTDChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_MTD = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_MTD;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_YTDChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_YTD = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_YTD;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_1YChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_1Y = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_1Y;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_EXCESS_RTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_EXCESS_RTN_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_EXCESS_RTN_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_EXCESS_RTN_QTDChanging(value);
-                this._BM1_TOP_RC_EXCESS_RTN_QTD = value;
-                this.OnBM1_TOP_RC_EXCESS_RTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_EXCESS_RTN_QTD;
-        partial void OnBM1_TOP_RC_EXCESS_RTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_EXCESS_RTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1D
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_1D;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_1DChanging(value);
-                this._POR_TOP_RC_CTN_1D = value;
-                this.OnPOR_TOP_RC_CTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1D;
-        partial void OnPOR_TOP_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1W
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_1W;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_1WChanging(value);
-                this._POR_TOP_RC_CTN_1W = value;
-                this.OnPOR_TOP_RC_CTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1W;
-        partial void OnPOR_TOP_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_MTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_MTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_MTDChanging(value);
-                this._POR_TOP_RC_CTN_MTD = value;
-                this.OnPOR_TOP_RC_CTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_MTD;
-        partial void OnPOR_TOP_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_YTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_YTDChanging(value);
-                this._POR_TOP_RC_CTN_YTD = value;
-                this.OnPOR_TOP_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_YTD;
-        partial void OnPOR_TOP_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_1Y
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_1YChanging(value);
-                this._POR_TOP_RC_CTN_1Y = value;
-                this.OnPOR_TOP_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_1Y;
-        partial void OnPOR_TOP_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property POR_TOP_RC_CTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> POR_TOP_RC_CTN_QTD
-        {
-            get
-            {
-                return this._POR_TOP_RC_CTN_QTD;
-            }
-            set
-            {
-                this.OnPOR_TOP_RC_CTN_QTDChanging(value);
-                this._POR_TOP_RC_CTN_QTD = value;
-                this.OnPOR_TOP_RC_CTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _POR_TOP_RC_CTN_QTD;
-        partial void OnPOR_TOP_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnPOR_TOP_RC_CTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_1DChanging(value);
-                this._BM1_TOP_RC_CTN_1D = value;
-                this.OnBM1_TOP_RC_CTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1D;
-        partial void OnBM1_TOP_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_1WChanging(value);
-                this._BM1_TOP_RC_CTN_1W = value;
-                this.OnBM1_TOP_RC_CTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1W;
-        partial void OnBM1_TOP_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_MTDChanging(value);
-                this._BM1_TOP_RC_CTN_MTD = value;
-                this.OnBM1_TOP_RC_CTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_MTD;
-        partial void OnBM1_TOP_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_YTDChanging(value);
-                this._BM1_TOP_RC_CTN_YTD = value;
-                this.OnBM1_TOP_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_YTD;
-        partial void OnBM1_TOP_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_1YChanging(value);
-                this._BM1_TOP_RC_CTN_1Y = value;
-                this.OnBM1_TOP_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_1Y;
-        partial void OnBM1_TOP_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CTN_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CTN_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CTN_QTDChanging(value);
-                this._BM1_TOP_RC_CTN_QTD = value;
-                this.OnBM1_TOP_RC_CTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CTN_QTD;
-        partial void OnBM1_TOP_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1DChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_1D = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1D;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1WChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_1W = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1W;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_MTDChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_MTD = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_MTD;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_YTDChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_YTD = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_YTD;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1YChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_1Y = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_1Y;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_ASSET_ALLOC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_ASSET_ALLOC_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_ASSET_ALLOC_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_ASSET_ALLOC_QTDChanging(value);
-                this._BM1_TOP_RC_ASSET_ALLOC_QTD = value;
-                this.OnBM1_TOP_RC_ASSET_ALLOC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_ASSET_ALLOC_QTD;
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_ASSET_ALLOC_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_1DChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_1D = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1D;
-        partial void OnBM1_TOP_RC_SEC_SELEC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_1WChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_1W = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1W;
-        partial void OnBM1_TOP_RC_SEC_SELEC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_MTDChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_MTD = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_MTD;
-        partial void OnBM1_TOP_RC_SEC_SELEC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_YTDChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_YTD = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_YTD;
-        partial void OnBM1_TOP_RC_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_1YChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_1Y = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_1Y;
-        partial void OnBM1_TOP_RC_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_SEC_SELEC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_SEC_SELEC_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_SEC_SELEC_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_SEC_SELEC_QTDChanging(value);
-                this._BM1_TOP_RC_SEC_SELEC_QTD = value;
-                this.OnBM1_TOP_RC_SEC_SELEC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_SEC_SELEC_QTD;
-        partial void OnBM1_TOP_RC_SEC_SELEC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_SEC_SELEC_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1D
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_1D;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_1DChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_1D = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1D;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1W
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_1W;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_1WChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_1W = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1W;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_MTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_MTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_MTDChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_MTD = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_MTD;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_YTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_YTDChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_YTD = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_YTD;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_1Y
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_1YChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_1Y = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_1Y;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property BM1_TOP_RC_CURR_ALLOC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> BM1_TOP_RC_CURR_ALLOC_QTD
-        {
-            get
-            {
-                return this._BM1_TOP_RC_CURR_ALLOC_QTD;
-            }
-            set
-            {
-                this.OnBM1_TOP_RC_CURR_ALLOC_QTDChanging(value);
-                this._BM1_TOP_RC_CURR_ALLOC_QTD = value;
-                this.OnBM1_TOP_RC_CURR_ALLOC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _BM1_TOP_RC_CURR_ALLOC_QTD;
-        partial void OnBM1_TOP_RC_CURR_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnBM1_TOP_RC_CURR_ALLOC_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1D
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_1D;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_1DChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_1D = value;
-                this.OnADJ_RTN_POR_QC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1D;
-        partial void OnADJ_RTN_POR_QC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1W
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_1W;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_1WChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_1W = value;
-                this.OnADJ_RTN_POR_QC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1W;
-        partial void OnADJ_RTN_POR_QC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_MTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_MTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_MTDChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_MTD = value;
-                this.OnADJ_RTN_POR_QC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_MTD;
-        partial void OnADJ_RTN_POR_QC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_YTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_YTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_YTDChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_YTD = value;
-                this.OnADJ_RTN_POR_QC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_YTD;
-        partial void OnADJ_RTN_POR_QC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_1Y
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_1Y;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_1YChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_1Y = value;
-                this.OnADJ_RTN_POR_QC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_1Y;
-        partial void OnADJ_RTN_POR_QC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_QC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_QC_TWR_QTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_QC_TWR_QTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_QC_TWR_QTDChanging(value);
-                this._ADJ_RTN_POR_QC_TWR_QTD = value;
-                this.OnADJ_RTN_POR_QC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_QC_TWR_QTD;
-        partial void OnADJ_RTN_POR_QC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_QC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1D
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_1D;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_1DChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_1D = value;
-                this.OnADJ_RTN_POR_RC_TWR_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1D;
-        partial void OnADJ_RTN_POR_RC_TWR_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_1DChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1W
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_1W;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_1WChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_1W = value;
-                this.OnADJ_RTN_POR_RC_TWR_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1W;
-        partial void OnADJ_RTN_POR_RC_TWR_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_1WChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_MTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_MTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_MTDChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_MTD = value;
-                this.OnADJ_RTN_POR_RC_TWR_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_MTD;
-        partial void OnADJ_RTN_POR_RC_TWR_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_YTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_YTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_YTDChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_YTD = value;
-                this.OnADJ_RTN_POR_RC_TWR_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_YTD;
-        partial void OnADJ_RTN_POR_RC_TWR_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_1Y
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_1Y;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_1YChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_1Y = value;
-                this.OnADJ_RTN_POR_RC_TWR_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_1Y;
-        partial void OnADJ_RTN_POR_RC_TWR_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_1YChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_RTN_POR_RC_TWR_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_RTN_POR_RC_TWR_QTD
-        {
-            get
-            {
-                return this._ADJ_RTN_POR_RC_TWR_QTD;
-            }
-            set
-            {
-                this.OnADJ_RTN_POR_RC_TWR_QTDChanging(value);
-                this._ADJ_RTN_POR_RC_TWR_QTD = value;
-                this.OnADJ_RTN_POR_RC_TWR_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_RTN_POR_RC_TWR_QTD;
-        partial void OnADJ_RTN_POR_RC_TWR_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_RTN_POR_RC_TWR_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1D
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_1D;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_1DChanging(value);
-                this._ADJ_BM1_QC_EXRTN_1D = value;
-                this.OnADJ_BM1_QC_EXRTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1D;
-        partial void OnADJ_BM1_QC_EXRTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1W
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_1W;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_1WChanging(value);
-                this._ADJ_BM1_QC_EXRTN_1W = value;
-                this.OnADJ_BM1_QC_EXRTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1W;
-        partial void OnADJ_BM1_QC_EXRTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_MTD
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_MTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_MTDChanging(value);
-                this._ADJ_BM1_QC_EXRTN_MTD = value;
-                this.OnADJ_BM1_QC_EXRTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_MTD;
-        partial void OnADJ_BM1_QC_EXRTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_YTD
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_YTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_YTDChanging(value);
-                this._ADJ_BM1_QC_EXRTN_YTD = value;
-                this.OnADJ_BM1_QC_EXRTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_YTD;
-        partial void OnADJ_BM1_QC_EXRTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_1Y
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_1Y;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_1YChanging(value);
-                this._ADJ_BM1_QC_EXRTN_1Y = value;
-                this.OnADJ_BM1_QC_EXRTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_1Y;
-        partial void OnADJ_BM1_QC_EXRTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_QC_EXRTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_QC_EXRTN_QTD
-        {
-            get
-            {
-                return this._ADJ_BM1_QC_EXRTN_QTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_QC_EXRTN_QTDChanging(value);
-                this._ADJ_BM1_QC_EXRTN_QTD = value;
-                this.OnADJ_BM1_QC_EXRTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_QC_EXRTN_QTD;
-        partial void OnADJ_BM1_QC_EXRTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_QC_EXRTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1D
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_1D;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_1DChanging(value);
-                this._ADJ_BM1_RC_EXRTN_1D = value;
-                this.OnADJ_BM1_RC_EXRTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1D;
-        partial void OnADJ_BM1_RC_EXRTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1W
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_1W;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_1WChanging(value);
-                this._ADJ_BM1_RC_EXRTN_1W = value;
-                this.OnADJ_BM1_RC_EXRTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1W;
-        partial void OnADJ_BM1_RC_EXRTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_MTD
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_MTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_MTDChanging(value);
-                this._ADJ_BM1_RC_EXRTN_MTD = value;
-                this.OnADJ_BM1_RC_EXRTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_MTD;
-        partial void OnADJ_BM1_RC_EXRTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_YTD
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_YTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_YTDChanging(value);
-                this._ADJ_BM1_RC_EXRTN_YTD = value;
-                this.OnADJ_BM1_RC_EXRTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_YTD;
-        partial void OnADJ_BM1_RC_EXRTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_1Y
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_1Y;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_1YChanging(value);
-                this._ADJ_BM1_RC_EXRTN_1Y = value;
-                this.OnADJ_BM1_RC_EXRTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_1Y;
-        partial void OnADJ_BM1_RC_EXRTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property ADJ_BM1_RC_EXRTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> ADJ_BM1_RC_EXRTN_QTD
-        {
-            get
-            {
-                return this._ADJ_BM1_RC_EXRTN_QTD;
-            }
-            set
-            {
-                this.OnADJ_BM1_RC_EXRTN_QTDChanging(value);
-                this._ADJ_BM1_RC_EXRTN_QTD = value;
-                this.OnADJ_BM1_RC_EXRTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _ADJ_BM1_RC_EXRTN_QTD;
-        partial void OnADJ_BM1_RC_EXRTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnADJ_BM1_RC_EXRTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1D
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_1D;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_1DChanging(value);
-                this._F_POR_ASH_RC_CTN_1D = value;
-                this.OnF_POR_ASH_RC_CTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1D;
-        partial void OnF_POR_ASH_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1W
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_1W;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_1WChanging(value);
-                this._F_POR_ASH_RC_CTN_1W = value;
-                this.OnF_POR_ASH_RC_CTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1W;
-        partial void OnF_POR_ASH_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_MTD
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_MTD;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_MTDChanging(value);
-                this._F_POR_ASH_RC_CTN_MTD = value;
-                this.OnF_POR_ASH_RC_CTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_MTD;
-        partial void OnF_POR_ASH_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_YTD
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_YTDChanging(value);
-                this._F_POR_ASH_RC_CTN_YTD = value;
-                this.OnF_POR_ASH_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_YTD;
-        partial void OnF_POR_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_1Y
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_1YChanging(value);
-                this._F_POR_ASH_RC_CTN_1Y = value;
-                this.OnF_POR_ASH_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_1Y;
-        partial void OnF_POR_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_POR_ASH_RC_CTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_POR_ASH_RC_CTN_QTD
-        {
-            get
-            {
-                return this._F_POR_ASH_RC_CTN_QTD;
-            }
-            set
-            {
-                this.OnF_POR_ASH_RC_CTN_QTDChanging(value);
-                this._F_POR_ASH_RC_CTN_QTD = value;
-                this.OnF_POR_ASH_RC_CTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_POR_ASH_RC_CTN_QTD;
-        partial void OnF_POR_ASH_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_POR_ASH_RC_CTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1D
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_1D;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_1DChanging(value);
-                this._F_BM1_ASH_RC_CTN_1D = value;
-                this.OnF_BM1_ASH_RC_CTN_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1D;
-        partial void OnF_BM1_ASH_RC_CTN_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_1DChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1W
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_1W;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_1WChanging(value);
-                this._F_BM1_ASH_RC_CTN_1W = value;
-                this.OnF_BM1_ASH_RC_CTN_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1W;
-        partial void OnF_BM1_ASH_RC_CTN_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_1WChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_MTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_MTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_MTDChanging(value);
-                this._F_BM1_ASH_RC_CTN_MTD = value;
-                this.OnF_BM1_ASH_RC_CTN_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_MTD;
-        partial void OnF_BM1_ASH_RC_CTN_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_YTDChanging(value);
-                this._F_BM1_ASH_RC_CTN_YTD = value;
-                this.OnF_BM1_ASH_RC_CTN_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_YTD;
-        partial void OnF_BM1_ASH_RC_CTN_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_1YChanging(value);
-                this._F_BM1_ASH_RC_CTN_1Y = value;
-                this.OnF_BM1_ASH_RC_CTN_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_1Y;
-        partial void OnF_BM1_ASH_RC_CTN_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_RC_CTN_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_RC_CTN_QTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_RC_CTN_QTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_RC_CTN_QTDChanging(value);
-                this._F_BM1_ASH_RC_CTN_QTD = value;
-                this.OnF_BM1_ASH_RC_CTN_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_RC_CTN_QTD;
-        partial void OnF_BM1_ASH_RC_CTN_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_RC_CTN_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1D
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_1D;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_1DChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_1D = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1D;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1W
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_1W;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_1WChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_1W = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1W;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_MTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_MTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_MTDChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_MTD = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_MTD;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_YTD = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_YTD;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_1Y = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_1Y;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_ASSET_ALLOC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_ASSET_ALLOC_QTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_ASSET_ALLOC_QTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_ASSET_ALLOC_QTDChanging(value);
-                this._F_BM1_ASH_ASSET_ALLOC_QTD = value;
-                this.OnF_BM1_ASH_ASSET_ALLOC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_ASSET_ALLOC_QTD;
-        partial void OnF_BM1_ASH_ASSET_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_ASSET_ALLOC_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1D
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_1D;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_1DChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_1D = value;
-                this.OnF_BM1_ASH_SEC_SELEC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1D;
-        partial void OnF_BM1_ASH_SEC_SELEC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1W
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_1W;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_1WChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_1W = value;
-                this.OnF_BM1_ASH_SEC_SELEC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1W;
-        partial void OnF_BM1_ASH_SEC_SELEC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_MTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_MTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_MTDChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_MTD = value;
-                this.OnF_BM1_ASH_SEC_SELEC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_MTD;
-        partial void OnF_BM1_ASH_SEC_SELEC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_YTDChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_YTD = value;
-                this.OnF_BM1_ASH_SEC_SELEC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_YTD;
-        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_1YChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_1Y = value;
-                this.OnF_BM1_ASH_SEC_SELEC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_1Y;
-        partial void OnF_BM1_ASH_SEC_SELEC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_SEC_SELEC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_SEC_SELEC_QTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_SEC_SELEC_QTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_SEC_SELEC_QTDChanging(value);
-                this._F_BM1_ASH_SEC_SELEC_QTD = value;
-                this.OnF_BM1_ASH_SEC_SELEC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_SEC_SELEC_QTD;
-        partial void OnF_BM1_ASH_SEC_SELEC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_SEC_SELEC_QTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1D in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1D
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_1D;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_1DChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_1D = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_1DChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1D;
-        partial void OnF_BM1_ASH_CURR_ALLOC_1DChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_1DChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1W in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1W
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_1W;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_1WChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_1W = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_1WChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1W;
-        partial void OnF_BM1_ASH_CURR_ALLOC_1WChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_1WChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_MTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_MTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_MTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_MTDChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_MTD = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_MTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_MTD;
-        partial void OnF_BM1_ASH_CURR_ALLOC_MTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_MTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_YTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_YTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_YTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_YTD = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_YTD;
-        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_YTDChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_1Y in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_1Y
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_1Y;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_1YChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_1Y = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_1YChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_1Y;
-        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_1YChanged();
-        /// <summary>
-        /// There are no comments for Property F_BM1_ASH_CURR_ALLOC_QTD in the schema.
-        /// </summary>
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.Nullable<decimal> F_BM1_ASH_CURR_ALLOC_QTD
-        {
-            get
-            {
-                return this._F_BM1_ASH_CURR_ALLOC_QTD;
-            }
-            set
-            {
-                this.OnF_BM1_ASH_CURR_ALLOC_QTDChanging(value);
-                this._F_BM1_ASH_CURR_ALLOC_QTD = value;
-                this.OnF_BM1_ASH_CURR_ALLOC_QTDChanged();
-            }
-        }
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.Nullable<decimal> _F_BM1_ASH_CURR_ALLOC_QTD;
-        partial void OnF_BM1_ASH_CURR_ALLOC_QTDChanging(global::System.Nullable<decimal> value);
-        partial void OnF_BM1_ASH_CURR_ALLOC_QTDChanged();
     }
 }

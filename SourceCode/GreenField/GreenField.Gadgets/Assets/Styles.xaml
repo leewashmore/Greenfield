@@ -27,8 +27,8 @@
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
         <Setter Property="Height" Value="15"/>
     </Style>
-    
-    
+
+
     <!--GridViewHeaderHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
         <Setter Property="Height" Value="15"/>
@@ -42,31 +42,34 @@
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="Background" Value="#9F1D21"/>
     </Style>
-
-    <!--RadBusyIndicatorOverlayStyle -->
-    <Style x:Key="RadBusyIndicatorOverlayStyle" TargetType="Rectangle">
-        <Setter Property="Stroke" Value="#FFDA8282" />
-        <Setter Property="Fill" Value="LightGray">
-            <!--<Setter.Value>
-                <LinearGradientBrush EndPoint="0.5,1"
-                                     MappingMode="RelativeToBoundingBox"
-                                     StartPoint="0.5,0">
-                    <GradientStop Color="#FF6BBDD2"
-                                  Offset="0" />
-                    <GradientStop Color="#FFD2CC34"
-                                  Offset="0.209" />
-                    <GradientStop Color="#FFC2CE8E"
-                                  Offset="0.512" />
-                    <GradientStop Color="#FF86C0CE"
-                                  Offset="0.897" />
-                    <GradientStop Color="#FF8E9334"
-                                  Offset="0" />
-                </LinearGradientBrush>
-            </Setter.Value>-->
-        </Setter>
-        <Setter Property="Opacity"
-                Value="0.75" />
+   
+    <!--Chart Item Label Style-->
+    <Style x:Key="ItemLabelStyle"
+       TargetType="TextBlock">
+        <Setter Property="Foreground"
+            Value="Black" />
+        <Setter Property="FontSize"
+            Value="8" />
+        <Setter Property="FontStyle"
+            Value="Normal" />
     </Style>
 
+    <!--Chart Legend Style-->
+    <Style x:Key="ChartLegendStyle" TargetType="telerik:ChartLegend">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="LegendItemMarkerShape" Value="SquareRounded"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Width" Value="20"/>
+    </Style>
 
+    <!--Chart Legend Style-->
+    <Style x:Key="ChartLegendItemStyle" TargetType="telerik:ChartLegendItem">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+    
 </ResourceDictionary>

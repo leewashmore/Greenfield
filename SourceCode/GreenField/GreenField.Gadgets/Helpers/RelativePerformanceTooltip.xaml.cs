@@ -12,16 +12,17 @@ using System.Windows.Shapes;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller;
 using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {
     public partial class RelativePerformanceTooltip : UserControl
     {
-        public RelativePerformanceTooltip(IDBInteractivity dbInteractivity, PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, string countryID, int? sectorID)
+        public RelativePerformanceTooltip(IDBInteractivity dbInteractivity, PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, string countryID, string sectorID)
         {
             InitializeComponent();
-            dbInteractivity.RetrieveRelativePerformanceSecurityData(PortfolioSelectionData, effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, countryID, sectorID);                        
+            //dbInteractivity.RetrieveRelativePerformanceSecurityData(PortfolioSelectionData, effectiveDate, RetrieveRelativePerformanceSecurityDataCallBackMethod, countryID, sectorID);                        
         }
 
         private ObservableCollection<RelativePerformanceSecurityData> _relativePerformanceToolTipInfo;
@@ -35,31 +36,31 @@ namespace GreenField.Gadgets.Helpers
                 {
                     this.FirstSecurityName.Text = value[0].SecurityName;
                     this.FirstSecurityAlpha.Text = value[0].SecurityAlpha.ToString();
-                    this.FirstSecurityActivePosition.Text = value[0].SecurityActivePosition.ToString();
+                    //this.FirstSecurityActivePosition.Text = value[0].SecurityActivePosition.ToString();
                 }
                 if (value.Count > 1)
                 {
                     this.SecondSecurityName.Text = value[1].SecurityName;
                     this.SecondSecurityAlpha.Text = value[1].SecurityAlpha.ToString();
-                    this.SecondSecurityActivePosition.Text = value[1].SecurityActivePosition.ToString();
+                 //   this.SecondSecurityActivePosition.Text = value[1].SecurityActivePosition.ToString();
                 }
                 if (value.Count > 2)
                 {
                     this.ThirdSecurityName.Text = value[2].SecurityName;
                     this.ThirdSecurityAlpha.Text = value[2].SecurityAlpha.ToString();
-                    this.ThirdSecurityActivePosition.Text = value[2].SecurityActivePosition.ToString();
+                   // this.ThirdSecurityActivePosition.Text = value[2].SecurityActivePosition.ToString();
                 }
                 if (value.Count > 3)
                 {
                     this.FourthSecurityName.Text = value[3].SecurityName;
                     this.FourthSecurityAlpha.Text = value[3].SecurityAlpha.ToString();
-                    this.FourthSecurityActivePosition.Text = value[3].SecurityActivePosition.ToString();
+                  //  this.FourthSecurityActivePosition.Text = value[3].SecurityActivePosition.ToString();
                 }
                 if (value.Count > 4)
                 {
                     this.FifthSecurityName.Text = value[4].SecurityName;
                     this.FifthSecurityAlpha.Text = value[4].SecurityAlpha.ToString();
-                    this.FifthSecurityActivePosition.Text = value[4].SecurityActivePosition.ToString();
+                   // this.FifthSecurityActivePosition.Text = value[4].SecurityActivePosition.ToString();
                 }
 
             }

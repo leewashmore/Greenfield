@@ -1,31 +1,95 @@
-﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewAttribution"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewAttribution"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"         
     mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     d:DesignHeight="300" d:DesignWidth="400">
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>            
-        </Grid.RowDefinitions>        
-        <telerik:RadGridView Grid.Row="0" Name="dgTopTenSecurities"  AutoGenerateColumns="True" 
-                                     ItemsSource="{Binding AttributionDataInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
+        </Grid.RowDefinitions>
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+            <telerik:RadGridView Grid.Row="0" Name="dgAttribution"  AutoGenerateColumns="False" 
+                                     ItemsSource="{Binding PeriodAttributionInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
-                                     UseLayoutRounding="True">
-            <!--<telerik:RadGridView.Columns>                
-                <telerik:GridViewDataColumn Header="CountryID" 
-                                            DataMemberBinding="{Binding COUNTRY_ID}" />                
-                <telerik:GridViewDataColumn Header="Portfolio Weight"
-                                            DataMemberBinding="{Binding PORTFOLIO_WEIGHT}" DataFormatString="{}{0:n4}%"/>
-                <telerik:GridViewDataColumn Header="Benchmark Weight" 
-                                            DataMemberBinding="{Binding BENCHMARK_WEIGHT}" DataFormatString="{}{0:n4}%"/> 
-            </telerik:RadGridView.Columns>-->
+                                     UseLayoutRounding="True"
+                                     FontSize="7"
+                                     FontFamily="Arial"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="COUNTRY" 
+                                                    DataMemberBinding="{Binding COUNTRY}"  
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    Width="*" 
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left">
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="COUNTRY NAME" 
+                                                    DataMemberBinding="{Binding COUNTRY_NAME}"                                                     
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    Width="*" 
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left">
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="PORTFOLIO WEIGHT"                                                     
+                                                 DataMemberBinding="{Binding PORTFOLIO_WEIGHT}"          
+                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                 Width="*"   
+                                                 HeaderTextAlignment="Left"                                                    
+                                                 TextAlignment="Right"/>
+                <telerik:GridViewDataColumn Header="BENCHMARK WEIGHT" 
+                                                DataMemberBinding="{Binding BENCHMARK_WEIGHT}"                                                
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                Width="*" 
+                                                DataFormatString="{}{0:n2}"
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Left"/>
+                <telerik:GridViewDataColumn Header="PORTFOLIO RETURN" 
+                                                DataMemberBinding="{Binding PORTFOLIO_RETURN}"                                               
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="*" 
+                                                DataFormatString="{}{0:n2}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Right"/>
+                <telerik:GridViewDataColumn Header="BENCHMARK RETURN" 
+                                                DataMemberBinding="{Binding BENCHMARK_RETURN}"                                               
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="*" 
+                                                DataFormatString="{}{0:n2}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Right"/>
+                <telerik:GridViewDataColumn Header="ASSET ALLOCATION" 
+                                                DataMemberBinding="{Binding ASSET_ALLOCATION}"                                               
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="*" 
+                                                DataFormatString="{}{0:n2}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Right"/>
+                <telerik:GridViewDataColumn Header="STOCK SELECTION TOTAL" 
+                                                DataMemberBinding="{Binding STOCK_SELECTION_TOTAL}"                                               
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Width="*" 
+                                                DataFormatString="{}{0:n2}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Right"/>
+            </telerik:RadGridView.Columns>
         </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
     </Grid>
-</UserControl>
+</helpers:ViewBaseUserControl>

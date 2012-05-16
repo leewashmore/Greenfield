@@ -10,24 +10,27 @@ namespace GreenField.Web.DataContracts
     public class PerformanceGridData
     {
         [DataMember]
-        public Double MTD;
+        public String Name;
 
         [DataMember]
-        public Double QTD;
+        public Decimal? MTD;
 
         [DataMember]
-        public Double YTD;
+        public Decimal? QTD;
 
         [DataMember]
-        public Double FIRST_YEAR;
+        public Decimal? YTD;
 
         [DataMember]
-        public Double THIRD_YEAR;
+        public Decimal? FIRST_YEAR;
 
         [DataMember]
-        public Double FIFTH_YEAR;
+        public Decimal? THIRD_YEAR;
 
         [DataMember]
-        public Double TENTH_YEAR;
+        public Decimal? FIFTH_YEAR;
+
+        [DataMember]
+        public Decimal? TENTH_YEAR;
     }
 }

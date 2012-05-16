@@ -14,28 +14,28 @@ namespace GreenField.Web.DataContracts
         public MarketSnapshotPreference MarketSnapshotPreferenceInfo { get; set; }
 
         [DataMember]
-        public double? DateToDateReturn { get; set; }
+        public Decimal? DateToDateReturn { get; set; }
 
         [DataMember]
-        public double? WeekToDateReturn { get; set; }
+        public Decimal? WeekToDateReturn { get; set; }
 
         [DataMember]
-        public double? MonthToDateReturn { get; set; }
+        public Decimal? MonthToDateReturn { get; set; }
 
         [DataMember]
-        public double? QuarterToDateReturn { get; set; }
+        public Decimal? QuarterToDateReturn { get; set; }
 
         [DataMember]
-        public double? YearToDateReturn { get; set; }
+        public Decimal? YearToDateReturn { get; set; }
 
         [DataMember]
-        public double? LastYearReturn { get; set; }
+        public Decimal? LastYearReturn { get; set; }
 
         [DataMember]
-        public double? SecondLastYearReturn { get; set; }
+        public Decimal? SecondLastYearReturn { get; set; }
 
         [DataMember]
-        public double? ThirdLastYearReturn { get; set; }
+        public Decimal? ThirdLastYearReturn { get; set; }
     }
 
 }

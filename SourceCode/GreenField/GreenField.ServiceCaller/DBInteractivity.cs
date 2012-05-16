@@ -7,8 +7,10 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using System.Windows;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
+
 
 namespace GreenField.ServiceCaller
 {
@@ -204,7 +206,7 @@ namespace GreenField.ServiceCaller
         #region Build2 Interaction Methods
         public void RetrievePortfolioSelectionData(Action<List<PortfolioSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrievePortfolioSelectionDataAsync();
             client.RetrievePortfolioSelectionDataCompleted += (se, e) =>
             {
@@ -235,7 +237,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveBenchmarkSelectionDataAsync();
             client.RetrieveBenchmarkSelectionDataCompleted += (se, e) =>
             {
@@ -267,10 +269,18 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<MarketCapitalizationData> callback)
+        /// <summary>
+        /// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        /// <param name="effectiveDate">Effective date as selected by the user</param>
+        /// <param name="filterType">The filter type selected by the user</param>
+        /// <param name="filterValue">The filter value selected by the user</param>
+        /// <param name="callback"></param>  
+        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -293,7 +303,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
@@ -330,7 +340,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
@@ -367,7 +377,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
@@ -404,7 +414,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
@@ -441,7 +451,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
@@ -478,7 +488,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketSnapshotSelectionDataAsync(userName);
             client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
             {
@@ -516,7 +526,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
@@ -552,7 +562,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
             client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
             {
@@ -589,7 +599,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
             client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -618,7 +628,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
             client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
             {
@@ -647,7 +657,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -676,7 +686,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
             client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
             {
@@ -706,7 +716,7 @@ namespace GreenField.ServiceCaller
         public void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
             , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo
                 , deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo);
             client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
@@ -735,7 +745,63 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
+
+        /// <summary>
+        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot” as a new snapshot
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
+            , List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, snapshotPreference);
+            client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RemoveMarketSnapshotPreferenceAsync(userName, snapshotName);
+            client.RemoveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
         #endregion
+
+
 
         /// <summary>
         /// Retrieves filter values for a selected filter type by calling the service
@@ -745,7 +811,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">callback method</param>
         public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveFilterSelectionDataAsync(effectiveDate);
             client.RetrieveFilterSelectionDataCompleted += (se, e) =>
             {
@@ -771,11 +837,11 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceData>> callback)
+        public void RetrieveRelativePerformanceData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String period, Action<List<RelativePerformanceData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
 
-            client.RetrieveRelativePerformanceDataAsync(fundSelectionData, effectiveDate);
+           client.RetrieveRelativePerformanceDataAsync(portfolioSelectionData, effectiveDate, period);
             client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -805,7 +871,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
             {
@@ -834,10 +900,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveRelativePerformanceSecurityData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, int? sectorID = null, int order = 0, int? maxRecords = null)
+        public void RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,string period, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, string sectorID = null)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveRelativePerformanceSecurityDataAsync(fundSelectionData, effectiveDate, countryID, sectorID, order, maxRecords);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveRelativePerformanceSecurityDataAsync(portfolioSelectionData, effectiveDate,period, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -875,7 +941,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">collection of Portfolio Details Data</param>
         public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
@@ -907,13 +973,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for multiLine Benchmark Chart
         /// </summary>
-        /// <param name="objBenchmarkIdentifier">Benchmark Identifier</param>
-        /// <param name="objEffectiveDate">Effective Date for which Data is Required</param>
+        /// <param name="objSelectedPortfolio">Benchmark Identifier</param>
+        /// <param name="objStartDate">Effective Date for which Data is Required</param>
         /// <param name="callback">Collection of Benchmark Return Data</param>
-        public void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback)
+        public void RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate, Action<List<BenchmarkChartReturnData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities, objStartDate);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -943,7 +1009,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveBenchmarkGridReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
             client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
             {
@@ -982,7 +1048,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>
         public void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrievePerformanceGraphDataAsync(name);
             client.RetrievePerformanceGraphDataCompleted += (se, e) =>
             {
@@ -1017,11 +1083,12 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
-        /// <param name="name">Name of the Fund</param>
-        /// <param name="callback"></param>
+        /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
+        /// <param name="effectiveDate">Contains the selected effective date</param>
+        /// <param name="callback">callback</param>
         public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
@@ -1063,7 +1130,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>   
         public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
@@ -1102,7 +1169,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>  
         public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
@@ -1138,10 +1205,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="name">Name of the fund</param>
         /// <param name="callback"></param>
-        public void RetrievePerformanceGridData(string name, Action<List<PerformanceGridData>> callback)
+        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrievePerformanceGridDataAsync(name);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1179,7 +1246,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">callback</param>
         public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
             client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
             {
@@ -1215,10 +1282,10 @@ namespace GreenField.ServiceCaller
         /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
         /// <param name="effectiveDate">Effective Date selected by the user</param>
         /// <param name="callback">callback</param>
-        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
+        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrievePortfolioRiskReturnDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
             client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1245,10 +1312,10 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-        public void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
+        public void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveRelativePerformanceCountryActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveRelativePerformanceCountryActivePositionDataAsync(portfolioSelectionData,effectiveDate,period, countryID, sectorID);
             client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1276,10 +1343,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
+        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveRelativePerformanceSectorActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveRelativePerformanceSectorActivePositionDataAsync(portfolioSelectionData,effectiveDate,period, countryID, sectorID);
             client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1307,10 +1374,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, int? sectorID = null)
+        public void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(fundSelectionData, benchmarkSelectionData, effectiveDate, countryID, sectorID);
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(portfolioSelectionData,effectiveDate,period, countryID, sectorID);
             client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1342,10 +1409,10 @@ namespace GreenField.ServiceCaller
 
         #region Interaction Method for Heat Map
 
-        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, BenchmarkSelectionData benchmarkSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
         {
-            BenchmarkHoldingsPerformanceOperationsClient client = new BenchmarkHoldingsPerformanceOperationsClient();
-            client.RetrieveHeatMapDataAsync();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1374,6 +1441,68 @@ namespace GreenField.ServiceCaller
         }
 
         #endregion
+
+        #endregion
+
+        #region Slice3 Interaction Methods
+
+        /// <summary>
+        /// Service Caller Method for Relative Performance UI Data
+        /// </summary>
+        /// <param name="objSelectedEntity">Data of Selected Entities</param>
+        /// <param name="objEffectiveDate">Selected Date</param>
+        /// <param name="callback">List of Relative Performance Data</param>
+        public void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceUIDataAsync(objSelectedEntity, objEffectiveDate);
+            client.RetrieveRelativePerformanceUIDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service Caller Method for Chart Extension Gadget
+        /// </summary>
+        /// <param name="objSelectedEntities">Collection of selected Portfolio and/or Securitie</param>
+        /// <param name="objEffectiveDate">Selected Date</param>
+        /// <param name="callback">Collection of Chart Extension Data</param>
+        public void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveChartExtensionDataAsync(objSelectedEntities, objEffectiveDate);
+            client.RetrieveChartExtensionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
 
         #endregion
     }

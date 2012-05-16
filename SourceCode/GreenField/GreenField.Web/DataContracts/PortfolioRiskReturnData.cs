@@ -13,10 +13,10 @@ namespace GreenField.Web.DataContracts
         public String DataPointName;
 
         [DataMember]
-        public String PortfolioValue;
+        public Decimal? PortfolioValue;
 
         [DataMember]
-        public String BenchMarkValue;
+        public Decimal? BenchMarkValue;
 
     }
 }

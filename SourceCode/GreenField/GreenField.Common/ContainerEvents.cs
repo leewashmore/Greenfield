@@ -14,37 +14,45 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common.Helper;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 
 namespace GreenField.Common
 {
+    public class RelativePerformanceGridCountrySectorClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
 
-    public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
+    public class SecurityReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> { }
 
-    public class PortfolioReferenceSetEvent : CompositePresentationEvent<PortfolioSelectionData> { }
+    public class PortfolioReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData> { }
 
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 
-    public class PeriodReferenceSetEvent : CompositePresentationEvent<PeriodSelectionData> { }
+    public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 
-    public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
-
     public class HoldingFilterReferenceSetEvent : CompositePresentationEvent<FilterSelectionData> { }
 
-    public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionType> { }    
+    public class MarketPerformanceSnapshotReferenceSetEvent : CompositePresentationEvent<MarketSnapshotSelectionData> { }
+
+    public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }
+
+    public class MarketPerformanceSnapshotActionCompletionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }    
 
     public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
 
     public class DashboardGadgetSave : CompositePresentationEvent<object> { }
 
     public class DashboardTileViewItemAdded : CompositePresentationEvent<DashboardTileViewItemInfo> { }
+
+    public class MarketCapitalizationSetEvent : CompositePresentationEvent<FilterSelectionData> { }
+
+    public class ExCashSecuritySetEvent : CompositePresentationEvent<bool> { }
 
     public class DashboardTileViewItemInfo
     {
@@ -62,8 +70,35 @@ namespace GreenField.Common
         public IManageSessions ManageSessions { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
-    }    
+    }
 
+    /// <summary>
+    /// Stores the payload for the MarketPerformanceSnapshotActionEvent and MarketPerformanceSnapshotActionCompletionEvent
+    /// </summary>
+    public class MarketPerformanceSnapshotActionPayload
+    {
+        /// <summary>
+        /// Store the Action Type
+        /// </summary>
+        public MarketPerformanceSnapshotActionType ActionType { get; set; }
+
+        /// <summary>
+        /// Stores user's snapshot details
+        /// </summary>
+        public List<MarketSnapshotSelectionData> MarketSnapshotSelectionInfo { get; set; }
+
+        /// <summary>
+        /// Stores snapshot details for the selected snapshot
+        /// </summary>
+        public MarketSnapshotSelectionData SelectedMarketSnapshotSelectionInfo { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public MarketPerformanceSnapshotActionPayload()
+        {
+        }
+    }
 }
 
 

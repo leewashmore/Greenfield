@@ -14,11 +14,14 @@ using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// ViewModel for Multi-Line Benchmark UI
+    /// </summary>
     public class ViewModelMultiLineBenchmark : NotificationObject
     {
         #region Private Fields
@@ -29,25 +32,62 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private IEventAggregator _eventAggregator;
-        private BenchmarkSelectionData _benchmarkSelectionData;
-        private DateTime? _effectiveDateSet;
+        private EntitySelectionData _entitySelectionData;
+        private PortfolioSelectionData _portfolioSelectionData;
+        private string _periodSelectionData;
 
         #endregion
 
-            #region Constructor
+        #region Constructor
 
+        /// <summary>
+        /// Constructor that initialises the Class
+        /// </summary>
+        /// <param name="param"></param>
         public ViewModelMultiLineBenchmark(DashboardGadgetParam param)
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _benchmarkSelectionData = param.DashboardGadgetPayload.BenchmarkSelectionData;
-            _eventAggregator.GetEvent<BenchmarkReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet, false);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleBenchmarkReferenceSet_EffectiveDate, false);
-            _effectiveDateSet = param.DashboardGadgetPayload.EffectiveDate;
-            if ((_benchmarkSelectionData != null) && (_effectiveDateSet != null))
-                HandleBenchmarkReferenceSet(_benchmarkSelectionData);
-            _dbInteractivity.RetrieveBenchmarkSelectionData(RetrieveBenchmarkSelectionDataCallBackMethod);
+            if (param != null)
+            {
+                _dbInteractivity = param.DBInteractivity;
+                _logger = param.LoggerFacade;
+                _eventAggregator = param.EventAggregator;
+
+                _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+                _selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
+                _periodSelectionData = param.DashboardGadgetPayload.PeriodSelectionData;
+
+                if ((_entitySelectionData != null) && (_periodSelectionData != null) && (_entitySelectionData.LongName != null))
+                {
+                    Dictionary<string, string> objSelectedEntity = new Dictionary<string, string>();
+                    objSelectedEntity.Add("SECURITY", _entitySelectionData.LongName);
+                    if (_selectedPortfolio != null && _selectedPortfolio.PortfolioId != null)
+                        objSelectedEntity.Add("PORTFOLIO", _selectedPortfolio.PortfolioId);
+                    StartDate = GetStartDate(_periodSelectionData);
+                    if (StartDate != null)
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler MultiLineBenchmarkDataLoadedEvent;
+
+        #endregion
+
+        #region EventSubscribe
+
+        /// <summary>
+        /// Subscribing to Events
+        /// </summary>
+        /// <param name="_eventAggregator"></param>
+        public void SubscribeEvents(IEventAggregator _eventAggregator)
+        {
+            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
         }
 
         #endregion
@@ -71,6 +111,63 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _chartEntityList = value;
                 this.RaisePropertyChanged(() => this.ChartEntityList);
+            }
+        }
+
+        /// <summary>
+        /// Selected Security
+        /// </summary>
+        private EntitySelectionData _selectedSecurity;
+        public EntitySelectionData SelectedSecurity
+        {
+            get
+            {
+                if (_selectedSecurity == null)
+                    _selectedSecurity = new EntitySelectionData();
+                return _entitySelectionData;
+            }
+            set
+            {
+                _entitySelectionData = value;
+                this.RaisePropertyChanged(() => this.SelectedSecurity);
+            }
+        }
+
+        /// <summary>
+        /// Selected Portfolio
+        /// </summary>
+        private PortfolioSelectionData _selectedPortfolio;
+        public PortfolioSelectionData PortfolioSelectionData
+        {
+            get
+            {
+                if (_selectedPortfolio == null)
+                    _selectedPortfolio = new PortfolioSelectionData();
+                return _selectedPortfolio;
+            }
+            set
+            {
+                _selectedPortfolio = value;
+                this.RaisePropertyChanged(() => this._selectedPortfolio);
+            }
+        }
+
+        /// <summary>
+        /// Selected Entities
+        /// </summary>
+        private Dictionary<string, string> _selectedEntities;
+        public Dictionary<string, string> SelectedEntities
+        {
+            get
+            {
+                if (_selectedEntities == null)
+                    _selectedEntities = new Dictionary<string, string>();
+                return _selectedEntities;
+            }
+            set
+            {
+                _selectedEntities = value;
+                this.RaisePropertyChanged(() => this.SelectedEntities);
             }
         }
 
@@ -106,19 +203,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ChartArea _chartAreaVolume;
-        public ChartArea ChartAreaVolume
-        {
-            get
-            {
-                return this._chartAreaVolume;
-            }
-            set
-            {
-                this._chartAreaVolume = value;
-            }
-        }
-
         #endregion
 
         #region GridProperties
@@ -131,8 +215,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if(_gridBenchmarkData==null)
-                    _gridBenchmarkData= new RangeObservableCollection<BenchmarkGridReturnData>();
+                if (_gridBenchmarkData == null)
+                    _gridBenchmarkData = new RangeObservableCollection<BenchmarkGridReturnData>();
                 return _gridBenchmarkData;
             }
             set
@@ -193,36 +277,6 @@ namespace GreenField.Gadgets.ViewModels
         #region Time Range Properties
 
         /// <summary>
-        /// Collection of Time Range Options
-        /// </summary>
-        private ObservableCollection<String> _timeRange;
-        public ObservableCollection<String> TimeRange
-        {
-            get
-            {
-                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months", "YTD", "1-Year", "2-Years", 
-                    "3-Years", "4-Years", "5-Years", "10-Years", "Custom" };
-            }
-        }
-
-        /// <summary>
-        /// Selected Time Range for the Chart
-        /// </summary>
-        private string _selectedTimeRange = "1-Year";
-        public string SelectedTimeRange
-        {
-            get
-            {
-                return _selectedTimeRange;
-            }
-            set
-            {
-                _selectedTimeRange = value;
-                this.RaisePropertyChanged(() => this.SelectedTimeRange);
-            }
-        }
-
-        /// <summary>
         /// Chart Start Date
         /// </summary>
         private DateTime _startDate;
@@ -236,71 +290,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _startDate = value;
                 this.RaisePropertyChanged(() => this.StartDate);
-            }
-        }
-
-        /// <summary>
-        /// Chart End Date
-        /// </summary>
-        private DateTime _endDate;
-        public DateTime EndDate
-        {
-            get
-            {
-                return _endDate;
-            }
-            set
-            {
-                _endDate = value;
-                this.RaisePropertyChanged(() => this.EndDate);
-            }
-        }
-
-        #endregion
-
-        #region FrequencySelection
-
-        /// <summary>
-        /// Frequency Interval for chart
-        /// </summary>
-        private ObservableCollection<string> _frequencyInterval;
-        public ObservableCollection<string> FrequencyInterval
-        {
-            get
-            {
-                if (_frequencyInterval == null)
-                {
-                    _frequencyInterval = new ObservableCollection<string>();
-                    _frequencyInterval.Add("Daily");
-                    _frequencyInterval.Add("Weekly");
-                    _frequencyInterval.Add("Monthly");
-                    _frequencyInterval.Add("Quarterly");
-                    _frequencyInterval.Add("Half-Yearly");
-                    _frequencyInterval.Add("Yearly");
-                }
-                return _frequencyInterval;
-            }
-            set
-            {
-                _frequencyInterval = value;
-                this.RaisePropertyChanged(() => this.FrequencyInterval);
-            }
-        }
-
-        /// <summary>
-        /// Selected Frequency interval
-        /// </summary>
-        private string _selectedFrequencyInterval = "Daily";
-        public string SelectedFrequencyInterval
-        {
-            get
-            {
-                return _selectedFrequencyInterval;
-            }
-            set
-            {
-                _selectedFrequencyInterval = value;
-                this.RaisePropertyChanged(() => this.SelectedFrequencyInterval);
             }
         }
 
@@ -472,22 +461,63 @@ namespace GreenField.Gadgets.ViewModels
                 return _zoomOutCommand;
             }
         }
+
         #endregion
 
         #region EventHandlers
 
-        public void HandleBenchmarkReferenceSet(BenchmarkSelectionData benchmarkSelectionData)
+        public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 //ArgumentNullException
-                if ((benchmarkSelectionData != null) && (_effectiveDateSet != null) && (ChartEntityList != null))
+                if (entitySelectionData != null && entitySelectionData.LongName != null)
                 {
-                    ChartEntityList.Add(benchmarkSelectionData);
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
-                    _dbInteractivity.RetrieveBenchmarkGridReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkGridDataCallBackMethod);
+                    if (SelectedEntities.ContainsKey("SECURITY"))
+                        SelectedEntities.Remove("SECURITY");
+
+                    SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
+                    if (StartDate != null && SelectedEntities != null)
+                    {
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                        if (null != MultiLineBenchmarkDataLoadedEvent)
+                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                //ArgumentNullException
+                if (portfolioSelectionData != null && portfolioSelectionData.PortfolioId != null)
+                {
+                    if (SelectedEntities.ContainsKey("PORTFOLIO"))
+                        SelectedEntities.Remove("PORTFOLIO");
+
+                    SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
+                    if (StartDate != null && SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY"))
+                    {
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                        if (null != MultiLineBenchmarkDataLoadedEvent)
+                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
 
                 }
                 else
@@ -503,18 +533,22 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public void HandleBenchmarkReferenceSet_EffectiveDate(DateTime effectiveDate)
+        public void HandleEffectiveDateSet(string periodSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 //ArgumentNullException
-                if ((_effectiveDateSet != null) && (ChartEntityList != null))
+                if (periodSelectionData != null)
                 {
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), effectiveDate, RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
-                    _dbInteractivity.RetrieveBenchmarkGridReturnData(ChartEntityList.ToList(), effectiveDate, RetrieveBenchmarkGridDataCallBackMethod);
-
+                    StartDate = GetStartDate(periodSelectionData);
+                    if (SelectedEntities.ContainsKey("SECURITY") && StartDate != null)
+                    {
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                        if (null != MultiLineBenchmarkDataLoadedEvent)
+                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
                 }
                 else
                 {
@@ -544,7 +578,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (!PlottedBenchmarkSeries.Any(t => t.InstrumentID == SelectedBenchmarkReference.InstrumentID))
                 {
                     ChartEntityList.Add(SelectedBenchmarkReference);
-                    _dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
+                    //_dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
                 }
             }
         }
@@ -571,7 +605,6 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomInCommandMethod(object parameter)
         {
             ZoomIn(this.ChartAreaPricing);
-            ZoomIn(this.ChartAreaVolume);
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
@@ -582,12 +615,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public bool ZoomInCommandValidation(object parameter)
         {
-            if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+            if (this.ChartAreaPricing == null)
                 return false;
 
             return
-                this.ChartAreaPricing.ZoomScrollSettingsX.Range > this.ChartAreaPricing.ZoomScrollSettingsX.MinZoomRange &&
-                this.ChartAreaVolume.ZoomScrollSettingsX.Range > this.ChartAreaVolume.ZoomScrollSettingsX.MinZoomRange;
+                this.ChartAreaPricing.ZoomScrollSettingsX.Range > this.ChartAreaPricing.ZoomScrollSettingsX.MinZoomRange;
         }
 
         /// <summary>
@@ -597,7 +629,6 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomOutCommandMethod(object parameter)
         {
             ZoomOut(this.ChartAreaPricing);
-            ZoomOut(this.ChartAreaVolume);
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
@@ -608,11 +639,10 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public bool ZoomOutCommandValidation(object parameter)
         {
-            if (this.ChartAreaPricing == null || this.ChartAreaVolume == null)
+            if (this.ChartAreaPricing == null)
                 return false;
 
-            return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d &&
-                this.ChartAreaVolume.ZoomScrollSettingsX.Range < 1d;
+            return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d;
         }
 
         #endregion
@@ -658,35 +688,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method for Benchmark Reference Service call related to updated Time Range - Updates Chart
         /// </summary>
         /// <param name="result">PricingReferenceData collection</param>
-        private void RetrieveBenchmarkChartDataCallBackMethod_TimeRange(List<BenchmarkChartReturnData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
-            try
-            {
-                if (result != null)
-                {
-                    PlottedBenchmarkSeries.Clear();
-                    PlottedBenchmarkSeries.AddRange(result);
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-        }
-
-        /// <summary>
-        /// Callback method for Pricing Reference Service call related to updated Security Reference - Updates Chart
-        /// </summary>
-        /// <param name="result">PricingReferenceData collection</param>
-        private void RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference(List<BenchmarkChartReturnData> result)
+        private void RetrieveBenchmarkChartDataCallBackMethod(List<BenchmarkChartReturnData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -778,6 +780,66 @@ namespace GreenField.Gadgets.ViewModels
             chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+        /// <summary>
+        /// Helper method to calculate start date for the chart
+        /// </summary>
+        /// <param name="period">Period selected from toolbar</param>
+        /// <returns>startDate of type DateTime</returns>
+        public DateTime GetStartDate(string period)
+        {
+            DateTime startDate = DateTime.Today;
+
+            switch (period)
+            {
+                case "1M":
+                    {
+                        startDate = startDate.AddMonths(-1);
+                        break;
+                    }
+                case "3M":
+                    {
+                        startDate = startDate.AddMonths(-3);
+                        break;
+                    }
+                case "6M":
+                    {
+                        startDate = startDate.AddMonths(-6);
+                        break;
+                    }
+                case "YTD":
+                    {
+                        startDate = new DateTime(startDate.Year, 1, 1);
+                        break;
+                    }
+                case "1Y":
+                    {
+                        startDate = startDate.AddYears(-1);
+                        break;
+                    }
+                case "3Y":
+                    {
+                        startDate = startDate.AddYears(-3);
+                        break;
+                    }
+                case "5Y":
+                    {
+                        startDate = startDate.AddYears(-5);
+                        break;
+                    }
+                case "SI":
+                    {
+                        startDate = new DateTime(2000, 1, 1);
+                        break;
+                    }
+                default:
+                    {
+                        startDate = startDate.AddMonths(-1);
+                        break;
+                    }
+            }
+            return startDate;
         }
 
         #endregion

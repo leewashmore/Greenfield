@@ -72,10 +72,6 @@
       [UserDashboardPreferance].[UserPref] AS [UserPref]
       FROM [dbo].[UserDashboardPreferance] AS [UserDashboardPreferance]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.Store.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
-            <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreference" />
-            <End Role="tblMarketSnapshotEntityPreference" EntitySet="tblMarketSnapshotEntityPreference" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" Association="ResearchModel.Store.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
             <End Role="tblMarketSnapshotPreference" EntitySet="tblMarketSnapshotPreference" />
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreference" />
@@ -390,6 +386,7 @@
           <Property Name="EntityName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="EntityReturnType" Type="nvarchar" MaxLength="50" />
           <Property Name="EntityOrder" Type="int" Nullable="false" />
+          <Property Name="EntityType" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotGroupPreference">
           <Key>
@@ -607,20 +604,6 @@
           <Property Name="UserId" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="UserPref" Type="nvarchar(max)" />
         </EntityType>
-        <Association Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
-          <End Role="tblMarketSnapshotGroupPreference" Type="ResearchModel.Store.tblMarketSnapshotGroupPreference" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tblMarketSnapshotEntityPreference" Type="ResearchModel.Store.tblMarketSnapshotEntityPreference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblMarketSnapshotGroupPreference">
-              <PropertyRef Name="GroupPreferenceId" />
-            </Principal>
-            <Dependent Role="tblMarketSnapshotEntityPreference">
-              <PropertyRef Name="GroupPreferenceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
           <End Role="tblMarketSnapshotPreference" Type="ResearchModel.Store.tblMarketSnapshotPreference" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -686,6 +669,7 @@
           <Parameter Name="grouppreferenceid" Type="int" Mode="In" />
           <Parameter Name="entityName" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="entityReturnType" Type="nvarchar" Mode="In" />
+          <Parameter Name="entityType" Type="nvarchar" Mode="In" />
           <Parameter Name="entityOrder" Type="int" Mode="In" />
         </Function>
         <Function Name="SetMarketSnapshotGroupPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -766,23 +750,32 @@
             <Parameter Name="PreferenceGroupID" Mode="In" Type="String" />
             <Parameter Name="GadgetPosition" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="DeleteMarketSnapshotEntityPreference" ReturnType="Collection(Int32)">
+          <Parameter Name="entitypreferenceid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMarketSnapshotGroupPreference" ReturnType="Collection(Int32)">
+          <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMarketSnapshotPreference" ReturnType="Collection(Int32)">
+            <Parameter Name="userId" Mode="In" Type="String" />
+            <Parameter Name="snapshotname" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="tblMarketSnapshotEntityPreferences" EntityType="ResearchModel.tblMarketSnapshotEntityPreference" />
           <EntitySet Name="tblMarketSnapshotGroupPreferences" EntityType="ResearchModel.tblMarketSnapshotGroupPreference" />
           <EntitySet Name="tblMarketSnapshotPreferences" EntityType="ResearchModel.tblMarketSnapshotPreference" />
-          <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
-            <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
-            <End Role="tblMarketSnapshotEntityPreference" EntitySet="tblMarketSnapshotEntityPreferences" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" Association="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
             <End Role="tblMarketSnapshotPreference" EntitySet="tblMarketSnapshotPreferences" />
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
           </AssociationSet>
-          <FunctionImport Name="GetMarketSnapshotSelectionData" ReturnType="Collection(ResearchModel.MarketSnapshotSelectionData)">
-          <Parameter Name="userId" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
-            <Parameter Name="userid" Mode="In" Type="String" />
+          <FunctionImport Name="UpdateMarketSnapshotPreference" ReturnType="Collection(Int32)">
+            <Parameter Name="userId" Mode="In" Type="String" />
             <Parameter Name="snapshotname" Mode="In" Type="String" />
+            <Parameter Name="snapshotpreferenceid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateMarketSnapshotEntityPreference" ReturnType="Collection(Int32)">
+            <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
+            <Parameter Name="entitypreferenceid" Mode="In" Type="Int32" />
+            <Parameter Name="entityOrder" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SetMarketSnapshotPreference" ReturnType="Collection(Decimal)">
             <Parameter Name="userId" Mode="In" Type="String" />
@@ -796,26 +789,14 @@
             <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
             <Parameter Name="entityName" Mode="In" Type="String" />
             <Parameter Name="entityReturnType" Mode="In" Type="String" />
+            <Parameter Name="entityType" Mode="In" Type="String" />
             <Parameter Name="entityOrder" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="UpdateMarketSnapshotEntityPreference" ReturnType="Collection(Int32)">
-            <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
-            <Parameter Name="entitypreferenceid" Mode="In" Type="Int32" />
-            <Parameter Name="entityOrder" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="UpdateMarketSnapshotPreference" ReturnType="Collection(Int32)">
+          <FunctionImport Name="GetMarketSnapshotSelectionData" ReturnType="Collection(ResearchModel.MarketSnapshotSelectionData)">
             <Parameter Name="userId" Mode="In" Type="String" />
-            <Parameter Name="snapshotname" Mode="In" Type="String" />
-            <Parameter Name="snapshotpreferenceid" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DeleteMarketSnapshotEntityPreference" ReturnType="Collection(Int32)">
-          <Parameter Name="entitypreferenceid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteMarketSnapshotGroupPreference" ReturnType="Collection(Int32)">
-          <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="DeleteMarketSnapshotPreference" ReturnType="Collection(Int32)">
-            <Parameter Name="userId" Mode="In" Type="String" />
+          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
+            <Parameter Name="userid" Mode="In" Type="String" />
             <Parameter Name="snapshotname" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -1359,6 +1340,10 @@
           <Property Type="Single" Name="BARRA_RISK_FACTOR_LIQUIDITY" />
           <Property Type="Single" Name="BARRA_RISK_FACTOR_LEVERAGE" />
         </EntityType>
+        <ComplexType Name="MarketSnapshotSelectionData">
+          <Property Type="Int32" Name="SnapshotPreferenceId" Nullable="false" />
+          <Property Type="String" Name="SnapshotName" Nullable="false" />
+        </ComplexType>
         <EntityType Name="tblMarketSnapshotEntityPreference">
           <Key>
             <PropertyRef Name="EntityPreferenceId" />
@@ -1368,7 +1353,7 @@
           <Property Type="String" Name="EntityName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="EntityReturnType" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="EntityOrder" Nullable="false" />
-          <NavigationProperty Name="tblMarketSnapshotGroupPreference" Relationship="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" FromRole="tblMarketSnapshotEntityPreference" ToRole="tblMarketSnapshotGroupPreference" />
+          <Property Type="String" Name="EntityType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotGroupPreference">
           <Key>
@@ -1377,7 +1362,6 @@
           <Property Type="Int32" Name="GroupPreferenceId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="SnapshotPreferenceId" Nullable="false" />
           <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="tblMarketSnapshotEntityPreferences" Relationship="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" FromRole="tblMarketSnapshotGroupPreference" ToRole="tblMarketSnapshotEntityPreference" />
           <NavigationProperty Name="tblMarketSnapshotPreference" Relationship="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" FromRole="tblMarketSnapshotGroupPreference" ToRole="tblMarketSnapshotPreference" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotPreference">
@@ -1389,18 +1373,6 @@
           <Property Type="String" Name="UserId" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblMarketSnapshotGroupPreferences" Relationship="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" FromRole="tblMarketSnapshotPreference" ToRole="tblMarketSnapshotGroupPreference" />
         </EntityType>
-        <Association Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
-          <End Type="ResearchModel.tblMarketSnapshotGroupPreference" Role="tblMarketSnapshotGroupPreference" Multiplicity="1" />
-          <End Type="ResearchModel.tblMarketSnapshotEntityPreference" Role="tblMarketSnapshotEntityPreference" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblMarketSnapshotGroupPreference">
-              <PropertyRef Name="GroupPreferenceId" />
-            </Principal>
-            <Dependent Role="tblMarketSnapshotEntityPreference">
-              <PropertyRef Name="GroupPreferenceId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
           <End Type="ResearchModel.tblMarketSnapshotPreference" Role="tblMarketSnapshotPreference" Multiplicity="1" />
           <End Type="ResearchModel.tblMarketSnapshotGroupPreference" Role="tblMarketSnapshotGroupPreference" Multiplicity="*" />
@@ -1413,10 +1385,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="MarketSnapshotSelectionData">
-          <Property Type="Int32" Name="SnapshotPreferenceId" Nullable="false" />
-          <Property Type="String" Name="SnapshotName" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="MarketSnapshotPreference">
           <Property Type="String" Name="GroupName" Nullable="false" />
           <Property Type="Int32" Name="GroupPreferenceID" Nullable="false" />
@@ -1424,6 +1392,7 @@
           <Property Type="String" Name="EntityName" Nullable="true" />
           <Property Type="Int32" Name="EntityOrder" Nullable="true" />
           <Property Type="String" Name="EntityReturnType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EntityType" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1901,9 +1870,13 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetDashBoardPreferenceByUserName" FunctionName="ResearchModel.Store.GetDashBoardPreferenceByUserName" />
           <FunctionImportMapping FunctionImportName="SetDashBoardPreference" FunctionName="ResearchModel.Store.SetDashBoardPreference" />
+          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotEntityPreference" />
+          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotGroupPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotGroupPreference" />
+          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotPreference" />
           <EntitySetMapping Name="tblMarketSnapshotEntityPreferences">
             <EntityTypeMapping TypeName="ResearchModel.tblMarketSnapshotEntityPreference">
               <MappingFragment StoreEntitySet="tblMarketSnapshotEntityPreference">
+                <ScalarProperty Name="EntityType" ColumnName="EntityType" />
                 <ScalarProperty Name="EntityOrder" ColumnName="EntityOrder" />
                 <ScalarProperty Name="EntityReturnType" ColumnName="EntityReturnType" />
                 <ScalarProperty Name="EntityName" ColumnName="EntityName" />
@@ -1930,6 +1903,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotPreference" />
+          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotEntityPreference" />
+          <FunctionImportMapping FunctionImportName="SetMarketSnapshotPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotPreference" />
+          <FunctionImportMapping FunctionImportName="SetMarketSnapshotGroupPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotGroupPreference" />
+          <FunctionImportMapping FunctionImportName="SetMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotEntityPreference" />
           <FunctionImportMapping FunctionImportName="GetMarketSnapshotSelectionData" FunctionName="ResearchModel.Store.GetMarketSnapshotSelectionData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ResearchModel.MarketSnapshotSelectionData">
@@ -1947,17 +1925,10 @@
                 <ScalarProperty Name="EntityName" ColumnName="EntityName" />
                 <ScalarProperty Name="EntityOrder" ColumnName="EntityOrder" />
                 <ScalarProperty Name="EntityReturnType" ColumnName="EntityReturnType" />
+                <ScalarProperty Name="EntityType" ColumnName="EntityType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SetMarketSnapshotPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotPreference" />
-          <FunctionImportMapping FunctionImportName="SetMarketSnapshotGroupPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotGroupPreference" />
-          <FunctionImportMapping FunctionImportName="SetMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotEntityPreference" />
-          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotEntityPreference" />
-          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotPreference" />
-          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotEntityPreference" />
-          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotGroupPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotGroupPreference" />
-          <FunctionImportMapping FunctionImportName="DeleteMarketSnapshotPreference" FunctionName="ResearchModel.Store.DeleteMarketSnapshotPreference" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2000,16 +1971,12 @@
         <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="13.375" PointY="13.75" Height="1.5956835937500031" />
         <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="0.75" PointY="14.75" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="15.375" PointY="3.75" Height="8.51853515625001" />
-        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.75" PointX="17.75" PointY="15.5" Height="2.1725878906249978" />
-        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotGroupPreference" Width="1.75" PointX="15.5" PointY="15.625" Height="1.9802864583333406" />
-        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotPreference" Width="1.75" PointX="13.25" PointY="15.75" Height="1.7879850260416674" />
-        <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" >
-          <ConnectorPoint PointX="17.25" PointY="16.615143229166669" />
-          <ConnectorPoint PointX="17.75" PointY="16.615143229166669" />
-        </AssociationConnector>
+        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.5" PointX="3.375" PointY="15.75" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotGroupPreference" Width="1.5" PointX="17.625" PointY="0.875" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotPreference" Width="1.5" PointX="15.375" PointY="0.875" Height="1.7879850260416674" />
         <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" >
-          <ConnectorPoint PointX="15" PointY="16.643992513020834" />
-          <ConnectorPoint PointX="15.5" PointY="16.643992513020834" />
+          <ConnectorPoint PointX="16.875" PointY="1.7689925130208337" />
+          <ConnectorPoint PointX="17.625" PointY="1.7689925130208337" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

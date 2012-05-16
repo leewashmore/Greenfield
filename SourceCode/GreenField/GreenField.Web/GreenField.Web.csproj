@@ -74,7 +74,8 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Services\BenchmarkHoldingsPerformanceOperations.svc" />
+    <Content Include="Services\ModelFXOperations.svc" />
+    <Content Include="Services\BenchmarkHoldingsOperations.svc" />
     <Content Include="Services\DashboardOperations.svc" />
     <Content Include="Services\LoggingOperations.svc" />
     <Content Include="Services\LoginOperations.svc" />
@@ -94,18 +95,19 @@
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\AggregatedData.cs" />
     <Compile Include="DataContracts\AssetAllocationData.cs" />
     <Compile Include="DataContracts\AttributionData.cs" />
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
+    <Compile Include="DataContracts\ChartExtensionData.cs" />
     <Compile Include="DataContracts\EntitySelectionData.cs" />
     <Compile Include="DataContracts\Enumerations.cs" />
+    <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\HeatMapData.cs" />
     <Compile Include="DataContracts\HoldingsData.cs" />
-    <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\HoldingsPercentageData.cs" />
     <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\MacroDatabaseKeyAnnualReportData.cs" />
     <Compile Include="DataContracts\MarketCapitalizationData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MembershipUserInfo.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="DataContracts\RelativePerformanceActivePositionData.cs" />
     <Compile Include="DataContracts\RelativePerformanceData.cs" />
     <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceUIData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
     <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs" />
@@ -129,21 +132,28 @@
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
+    <Compile Include="Helpers\CheckServiceAvailability.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
+    <Compile Include="Helpers\GreenfieldConstants.cs" />
+    <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
+    <Compile Include="Helpers\ChartExtensionCalculations.cs" />
     <Compile Include="Helpers\PortfolioDetailsCalculations.cs" />
     <Compile Include="Helpers\Service Faults\FaultDescriptions.Designer.cs" />
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />
     <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
+    <Compile Include="Services\ModelFXOperations.svc.cs">
+      <DependentUpon>ModelFXOperations.svc</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
     </Compile>
-    <Compile Include="Services\BenchmarkHoldingsPerformanceOperations.svc.cs">
-      <DependentUpon>BenchmarkHoldingsPerformanceOperations.svc</DependentUpon>
+    <Compile Include="Services\BenchmarkHoldingsOperations.svc.cs">
+      <DependentUpon>BenchmarkHoldingsOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DashboardOperations.svc.cs">
       <DependentUpon>DashboardOperations.svc</DependentUpon>
@@ -187,7 +197,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Helpers\Service Faults\FaultDescriptions.resx" />
+    <EmbeddedResource Include="Helpers\Service Faults\FaultDescriptions.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

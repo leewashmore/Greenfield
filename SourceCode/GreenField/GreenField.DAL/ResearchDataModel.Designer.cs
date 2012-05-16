@@ -18,7 +18,6 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), "tblMarketSnapshotEntityPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotEntityPreference), true)]
 [assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotPreference), "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), true)]
 
 #endregion
@@ -951,8 +950,47 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotEntityPreference(Nullable<global::System.Int32> entitypreferenceid)
+        {
+            ObjectParameter entitypreferenceidParameter;
+            if (entitypreferenceid.HasValue)
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
+            }
+            else
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotEntityPreference", entitypreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotGroupPreference(Nullable<global::System.Int32> grouppreferenceid)
+        {
+            ObjectParameter grouppreferenceidParameter;
+            if (grouppreferenceid.HasValue)
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
+            }
+            else
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotGroupPreference", grouppreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         /// <param name="userId">No Metadata Documentation available.</param>
-        public ObjectResult<MarketSnapshotSelectionData> GetMarketSnapshotSelectionData(global::System.String userId)
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname)
         {
             ObjectParameter userIdParameter;
             if (userId != null)
@@ -962,26 +1000,6 @@ namespace GreenField.DAL
             else
             {
                 userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<MarketSnapshotSelectionData>("GetMarketSnapshotSelectionData", userIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userid">No Metadata Documentation available.</param>
-        /// <param name="snapshotname">No Metadata Documentation available.</param>
-        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(global::System.String userid, global::System.String snapshotname)
-        {
-            ObjectParameter useridParameter;
-            if (userid != null)
-            {
-                useridParameter = new ObjectParameter("userid", userid);
-            }
-            else
-            {
-                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
             }
     
             ObjectParameter snapshotnameParameter;
@@ -994,7 +1012,89 @@ namespace GreenField.DAL
                 snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", useridParameter, snapshotnameParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotPreference", userIdParameter, snapshotnameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname, Nullable<global::System.Int32> snapshotpreferenceid)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotpreferenceidParameter;
+            if (snapshotpreferenceid.HasValue)
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", snapshotpreferenceid);
+            }
+            else
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotPreference", userIdParameter, snapshotnameParameter, snapshotpreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
+        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
+        /// <param name="entityOrder">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, Nullable<global::System.Int32> entitypreferenceid, Nullable<global::System.Int32> entityOrder)
+        {
+            ObjectParameter grouppreferenceidParameter;
+            if (grouppreferenceid.HasValue)
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
+            }
+            else
+            {
+                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter entitypreferenceidParameter;
+            if (entitypreferenceid.HasValue)
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
+            }
+            else
+            {
+                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter entityOrderParameter;
+            if (entityOrder.HasValue)
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", entityOrder);
+            }
+            else
+            {
+                entityOrderParameter = new ObjectParameter("entityOrder", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotEntityPreference", grouppreferenceidParameter, entitypreferenceidParameter, entityOrderParameter);
         }
     
         /// <summary>
@@ -1063,8 +1163,9 @@ namespace GreenField.DAL
         /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
         /// <param name="entityName">No Metadata Documentation available.</param>
         /// <param name="entityReturnType">No Metadata Documentation available.</param>
+        /// <param name="entityType">No Metadata Documentation available.</param>
         /// <param name="entityOrder">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Decimal>> SetMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, global::System.String entityName, global::System.String entityReturnType, Nullable<global::System.Int32> entityOrder)
+        public ObjectResult<Nullable<global::System.Decimal>> SetMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, global::System.String entityName, global::System.String entityReturnType, global::System.String entityType, Nullable<global::System.Int32> entityOrder)
         {
             ObjectParameter grouppreferenceidParameter;
             if (grouppreferenceid.HasValue)
@@ -1096,45 +1197,14 @@ namespace GreenField.DAL
                 entityReturnTypeParameter = new ObjectParameter("entityReturnType", typeof(global::System.String));
             }
     
-            ObjectParameter entityOrderParameter;
-            if (entityOrder.HasValue)
+            ObjectParameter entityTypeParameter;
+            if (entityType != null)
             {
-                entityOrderParameter = new ObjectParameter("entityOrder", entityOrder);
+                entityTypeParameter = new ObjectParameter("entityType", entityType);
             }
             else
             {
-                entityOrderParameter = new ObjectParameter("entityOrder", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Decimal>>("SetMarketSnapshotEntityPreference", grouppreferenceidParameter, entityNameParameter, entityReturnTypeParameter, entityOrderParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
-        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
-        /// <param name="entityOrder">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotEntityPreference(Nullable<global::System.Int32> grouppreferenceid, Nullable<global::System.Int32> entitypreferenceid, Nullable<global::System.Int32> entityOrder)
-        {
-            ObjectParameter grouppreferenceidParameter;
-            if (grouppreferenceid.HasValue)
-            {
-                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
-            }
-            else
-            {
-                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter entitypreferenceidParameter;
-            if (entitypreferenceid.HasValue)
-            {
-                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
-            }
-            else
-            {
-                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
+                entityTypeParameter = new ObjectParameter("entityType", typeof(global::System.String));
             }
     
             ObjectParameter entityOrderParameter;
@@ -1147,16 +1217,14 @@ namespace GreenField.DAL
                 entityOrderParameter = new ObjectParameter("entityOrder", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotEntityPreference", grouppreferenceidParameter, entitypreferenceidParameter, entityOrderParameter);
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("SetMarketSnapshotEntityPreference", grouppreferenceidParameter, entityNameParameter, entityReturnTypeParameter, entityTypeParameter, entityOrderParameter);
         }
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="snapshotname">No Metadata Documentation available.</param>
-        /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname, Nullable<global::System.Int32> snapshotpreferenceid)
+        public ObjectResult<MarketSnapshotSelectionData> GetMarketSnapshotSelectionData(global::System.String userId)
         {
             ObjectParameter userIdParameter;
             if (userId != null)
@@ -1166,6 +1234,26 @@ namespace GreenField.DAL
             else
             {
                 userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MarketSnapshotSelectionData>("GetMarketSnapshotSelectionData", userIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userid">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(global::System.String userid, global::System.String snapshotname)
+        {
+            ObjectParameter useridParameter;
+            if (userid != null)
+            {
+                useridParameter = new ObjectParameter("userid", userid);
+            }
+            else
+            {
+                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
             }
     
             ObjectParameter snapshotnameParameter;
@@ -1178,85 +1266,7 @@ namespace GreenField.DAL
                 snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
             }
     
-            ObjectParameter snapshotpreferenceidParameter;
-            if (snapshotpreferenceid.HasValue)
-            {
-                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", snapshotpreferenceid);
-            }
-            else
-            {
-                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotPreference", userIdParameter, snapshotnameParameter, snapshotpreferenceidParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotEntityPreference(Nullable<global::System.Int32> entitypreferenceid)
-        {
-            ObjectParameter entitypreferenceidParameter;
-            if (entitypreferenceid.HasValue)
-            {
-                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", entitypreferenceid);
-            }
-            else
-            {
-                entitypreferenceidParameter = new ObjectParameter("entitypreferenceid", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotEntityPreference", entitypreferenceidParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotGroupPreference(Nullable<global::System.Int32> grouppreferenceid)
-        {
-            ObjectParameter grouppreferenceidParameter;
-            if (grouppreferenceid.HasValue)
-            {
-                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", grouppreferenceid);
-            }
-            else
-            {
-                grouppreferenceidParameter = new ObjectParameter("grouppreferenceid", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotGroupPreference", grouppreferenceidParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="snapshotname">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> DeleteMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter snapshotnameParameter;
-            if (snapshotname != null)
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
-            }
-            else
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("DeleteMarketSnapshotPreference", userIdParameter, snapshotnameParameter);
+            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", useridParameter, snapshotnameParameter);
         }
 
         #endregion
@@ -6794,13 +6804,15 @@ namespace GreenField.DAL
         /// <param name="groupPreferenceId">Initial value of the GroupPreferenceId property.</param>
         /// <param name="entityName">Initial value of the EntityName property.</param>
         /// <param name="entityOrder">Initial value of the EntityOrder property.</param>
-        public static tblMarketSnapshotEntityPreference CreatetblMarketSnapshotEntityPreference(global::System.Int32 entityPreferenceId, global::System.Int32 groupPreferenceId, global::System.String entityName, global::System.Int32 entityOrder)
+        /// <param name="entityType">Initial value of the EntityType property.</param>
+        public static tblMarketSnapshotEntityPreference CreatetblMarketSnapshotEntityPreference(global::System.Int32 entityPreferenceId, global::System.Int32 groupPreferenceId, global::System.String entityName, global::System.Int32 entityOrder, global::System.String entityType)
         {
             tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference = new tblMarketSnapshotEntityPreference();
             tblMarketSnapshotEntityPreference.EntityPreferenceId = entityPreferenceId;
             tblMarketSnapshotEntityPreference.GroupPreferenceId = groupPreferenceId;
             tblMarketSnapshotEntityPreference.EntityName = entityName;
             tblMarketSnapshotEntityPreference.EntityOrder = entityOrder;
+            tblMarketSnapshotEntityPreference.EntityType = entityType;
             return tblMarketSnapshotEntityPreference;
         }
 
@@ -6929,50 +6941,33 @@ namespace GreenField.DAL
         private global::System.Int32 _EntityOrder;
         partial void OnEntityOrderChanging(global::System.Int32 value);
         partial void OnEntityOrderChanged();
-
-        #endregion
-    
-        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference")]
-        public tblMarketSnapshotGroupPreference tblMarketSnapshotGroupPreference
+        public global::System.String EntityType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value;
+                return _EntityType;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value = value;
+                OnEntityTypeChanging(value);
+                ReportPropertyChanging("EntityType");
+                _EntityType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("EntityType");
+                OnEntityTypeChanged();
             }
         }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferenceReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", value);
-                }
-            }
-        }
+        private global::System.String _EntityType;
+        partial void OnEntityTypeChanging(global::System.String value);
+        partial void OnEntityTypeChanged();
 
         #endregion
+    
     }
     
     /// <summary>
@@ -7081,28 +7076,6 @@ namespace GreenField.DAL
         #endregion
     
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference")]
-        public EntityCollection<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreferences
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -12257,6 +12230,30 @@ namespace GreenField.DAL
         private global::System.String _EntityReturnType;
         partial void OnEntityReturnTypeChanging(global::System.String value);
         partial void OnEntityReturnTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityType
+        {
+            get
+            {
+                return _EntityType;
+            }
+            set
+            {
+                OnEntityTypeChanging(value);
+                ReportPropertyChanging("EntityType");
+                _EntityType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityType");
+                OnEntityTypeChanged();
+            }
+        }
+        private global::System.String _EntityType;
+        partial void OnEntityTypeChanging(global::System.String value);
+        partial void OnEntityTypeChanged();
 
         #endregion
     }

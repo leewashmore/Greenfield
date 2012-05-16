@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -225,34 +225,35 @@ namespace GreenField.Gadgets.Helpers
         {
             Grid grid = new Grid()
             {
-                Height = 8,
+                Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
+                Height = 2,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 IsHitTestVisible = false,
                 VerticalAlignment = VerticalAlignment.Stretch
             };
             grid.ColumnDefinitions.Add(new ColumnDefinition()
             {
-                Width = new GridLength(8)
+                Width = new GridLength(2)
             });
             grid.ColumnDefinitions.Add(new ColumnDefinition());
             Ellipse ellipse = new Ellipse()
             {
-                Stroke = new SolidColorBrush(Colors.Orange),
+                Stroke = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
                 StrokeThickness = 2,
-                Fill = new SolidColorBrush(Colors.Orange),
+                Fill = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
-                Width = 8,
-                Height = 8
+                Width = 2,
+                Height = 2
             };
             Rectangle rectangle = new Rectangle()
             {
-                Fill = new SolidColorBrush(Colors.Orange),
+                Fill = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
                 RadiusX = 2,
                 RadiusY = 2,
                 VerticalAlignment = VerticalAlignment.Stretch,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
-                Height = 2
+                Height = 1
             };
             Grid.SetColumn(ellipse, 0);
             Grid.SetColumn(rectangle, 1);
@@ -617,6 +618,10 @@ namespace GreenField.Gadgets.Helpers
         {
             var cue = new TreeViewDragCue();
             cue.Style = this.DragCueStyle;
+            cue.FontFamily = new FontFamily("Arial");
+            cue.Foreground = new SolidColorBrush(Colors.White);
+            cue.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
+            cue.FontSize = 8;
             cue.DragTooltipContentTemplate = this.DragCueTooltipContentTemplate;
             cue.DragActionContentTemplate = this.DragCueActionContentTemplate;
             cue.ItemTemplate = this.DragCueItemTemplate;

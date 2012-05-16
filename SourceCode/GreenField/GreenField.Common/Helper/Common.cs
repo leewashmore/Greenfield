@@ -12,7 +12,8 @@ using System.Text;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 
 namespace GreenField.Common
@@ -37,7 +38,8 @@ namespace GreenField.Common
         SNAPSHOT_SAVE,
         SNAPSHOT_SAVE_AS,
         SNAPSHOT_ADD,
-        SNAPSHOT_REMOVE
+        SNAPSHOT_REMOVE,
+        SNAPSHOT_PAGE_NAVIGATION
     }
 
     public static class Application
@@ -81,12 +83,12 @@ namespace GreenField.Common
     public class RelativePerformanceGridCellData
     {
         public string CountryID { get; set; }
-        public int? SectorID { get; set; }        
+        public string SectorID { get; set; }        
     }
 
       public static class EntityReturnType
     {
-        public static string TotalReturnType = "Total(Gross)";
+        public static string TotalReturnType = "Total";
         public static string NetReturnType = "Net";
         public static string PriceReturnType = "Price";
     }

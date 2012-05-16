@@ -204,7 +204,7 @@
                         VerticalAlignment="Stretch" Name="border1" Grid.Row="0">
                 <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
-                    <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
+                    <telerik:RadChart x:Name="chMultiLineBenchmarkChart" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PlottedBenchmarkSeries, Mode=TwoWay}" IsHitTestVisible="True" >
                         <telerik:RadChart.DefaultView>
                             <telerik:ChartDefaultView ChartLegendPosition="Top">

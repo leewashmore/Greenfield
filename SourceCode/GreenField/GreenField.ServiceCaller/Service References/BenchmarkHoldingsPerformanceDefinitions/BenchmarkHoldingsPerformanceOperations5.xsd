@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/BenchmarkHoldingsPerformanceOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:complexType name="PeriodSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="PeriodEndDate" type="xs:dateTime" />
@@ -248,63 +247,45 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopBenchmarkSecuritiesData" nillable="true" type="tns:TopBenchmarkSecuritiesData" />
+  <xs:complexType name="ArrayOfMarketCapitalizationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMarketCapitalizationData" nillable="true" type="tns:ArrayOfMarketCapitalizationData" />
   <xs:complexType name="MarketCapitalizationData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BenchmarkLargeShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkMediumShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkMegaShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkMicroShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkSmallShare" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkWeightedAverage" type="xs:long" />
-      <xs:element minOccurs="0" name="BenchmarkWeightedMedian" type="xs:long" />
-      <xs:element minOccurs="0" name="LargeLowerLimit" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MediumLowerLimit" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MegaLowerLimit" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioLargeShare" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioMediumShare" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioMegaShare" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioMicroShare" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioSmallShare" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioWeightedAverage" type="xs:long" />
-      <xs:element minOccurs="0" name="PortfolioWeightedMedian" type="xs:long" />
-      <xs:element minOccurs="0" name="SmallLowerLimit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AsecSecShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BenchmarkSumLargeRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkSumMediumRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkSumMegaRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkSumMicroRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkSumSmallRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkSumUndefinedRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWtdAvg" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWtdMedian" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Benchmark_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LargeRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketCapitalInUSD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MediumRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MicroRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumLargeRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumMediumRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumMegaRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumMicroRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumSmallRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioSumUndefinedRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioWtdAvg" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioWtdMedian" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Portfolio_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityThemeCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SmallRange" type="xs:decimal" />
+      <xs:element minOccurs="0" name="UndefinedRange" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
-  <xs:complexType name="ArrayOfMarketPerformanceSnapshotData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfMarketPerformanceSnapshotData" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
-  <xs:complexType name="MarketPerformanceSnapshotData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="DateToDateReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="LastYearReturn" nillable="true" type="xs:double" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MarketSnapshotPreferenceInfo" nillable="true" type="q1:MarketSnapshotPreference" />
-      <xs:element minOccurs="0" name="MonthToDateReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="QuarterToDateReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="SecondLastYearReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="ThirdLastYearReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="WeekToDateReturn" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="YearToDateReturn" nillable="true" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
-  <xs:complexType name="ArrayOfPortfolioRiskReturnData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPortfolioRiskReturnData" nillable="true" type="tns:ArrayOfPortfolioRiskReturnData" />
-  <xs:complexType name="PortfolioRiskReturnData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BenchMarkValue" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DataPointName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioValue" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
   <xs:complexType name="ArrayOfHeatMapData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="HeatMapData" nillable="true" type="tns:HeatMapData" />
@@ -336,7 +317,7 @@
   <xs:element name="ArrayOfRelativePerformanceSectorData" nillable="true" type="tns:ArrayOfRelativePerformanceSectorData" />
   <xs:complexType name="RelativePerformanceSectorData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="SectorID" type="xs:int" />
+      <xs:element minOccurs="0" name="SectorID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SectorName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -349,11 +330,11 @@
   <xs:element name="ArrayOfRelativePerformanceActivePositionData" nillable="true" type="tns:ArrayOfRelativePerformanceActivePositionData" />
   <xs:complexType name="RelativePerformanceActivePositionData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Entity" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FundWeight" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="FundWeight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RelativePerformanceActivePositionData" nillable="true" type="tns:RelativePerformanceActivePositionData" />
@@ -365,8 +346,7 @@
   <xs:element name="ArrayOfRelativePerformanceSecurityData" nillable="true" type="tns:ArrayOfRelativePerformanceSecurityData" />
   <xs:complexType name="RelativePerformanceSecurityData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="SecurityActivePosition" type="xs:double" />
-      <xs:element minOccurs="0" name="SecurityAlpha" type="xs:double" />
+      <xs:element minOccurs="0" name="SecurityAlpha" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SecurityCountryID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecuritySectorName" nillable="true" type="xs:string" />
@@ -381,10 +361,10 @@
   <xs:element name="ArrayOfRelativePerformanceData" nillable="true" type="tns:ArrayOfRelativePerformanceData" />
   <xs:complexType name="RelativePerformanceData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="AggregateCountryActivePosition" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="AggregateCountryAlpha" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="AggregateCountryBenchmarkShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="AggregateCountryPortfolioShare" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="AggregateCountryActivePosition" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AggregateCountryAlpha" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AggregateCountryBenchmarkShare" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AggregateCountryPortfolioShare" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="CountryID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="RelativePerformanceCountrySpecificInfo" nillable="true" type="tns:ArrayOfRelativePerformanceCountrySpecificData" />
     </xs:sequence>
@@ -398,11 +378,11 @@
   <xs:element name="ArrayOfRelativePerformanceCountrySpecificData" nillable="true" type="tns:ArrayOfRelativePerformanceCountrySpecificData" />
   <xs:complexType name="RelativePerformanceCountrySpecificData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="Alpha" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:double" />
-      <xs:element minOccurs="0" name="SectorID" type="xs:int" />
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Alpha" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BenchmarkShare" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PortfolioShare" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SectorID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SectorName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -438,13 +418,14 @@
   <xs:element name="ArrayOfPerformanceGridData" nillable="true" type="tns:ArrayOfPerformanceGridData" />
   <xs:complexType name="PerformanceGridData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FIFTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="FIRST_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="TENTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="THIRD_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
+      <xs:element minOccurs="0" name="FIFTH_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FIRST_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TENTH_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="THIRD_YEAR" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
@@ -509,4 +490,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AttributionData" nillable="true" type="tns:AttributionData" />
+  <xs:complexType name="ArrayOfPortfolioRiskReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPortfolioRiskReturnData" nillable="true" type="tns:ArrayOfPortfolioRiskReturnData" />
+  <xs:complexType name="PortfolioRiskReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchMarkValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataPointName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioValue" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioRiskReturnData" nillable="true" type="tns:PortfolioRiskReturnData" />
 </xs:schema>

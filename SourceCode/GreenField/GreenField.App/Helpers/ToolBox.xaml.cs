@@ -17,7 +17,7 @@ namespace GreenField.App.Helpers
     public partial class ToolBox : UserControl
     {
         public ToolBox()
-        {
+        {            
             InitializeComponent();
         }
     }

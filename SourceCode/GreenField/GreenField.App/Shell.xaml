@@ -394,7 +394,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                    </Grid.ColumnDefinitions>                    
+                    
                     <helpers:ToolBox Grid.Column="0" x:Name="ctrToolBox" HorizontalAlignment="Left"/>
 
                     <TextBlock Grid.Column="1" Text="{Binding UserName}" HorizontalAlignment="Right" VerticalAlignment="Center"

@@ -15,7 +15,7 @@ using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Data;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.Views
 {

@@ -16,7 +16,7 @@ using GreenField.Common;
 using System.Linq;
 using System.Windows.Data;
 using System.ComponentModel;
-using GreenField.ServiceCaller.BenchmarkHoldingsPerformanceDefinitions;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -29,16 +29,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">List of EntitySelectionData object</param>
         public ChildViewModelInsertEntity(List<EntitySelectionData> result)
         {
-            EntitySelectionGroupInfoSource = result;
-            EntitySelectionGroupInfo = new CollectionViewSource();
-            EntitySelectionGroupInfo.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
-            EntitySelectionGroupInfo.SortDescriptions.Add(new SortDescription
-                    {
-                        PropertyName = "SortOrder",
-                        Direction = ListSortDirection.Ascending
-                    });
-            EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
-        } 
+            EntitySelectionInfoSource = result;
+            //EntitySelectionGroupInfo = new CollectionViewSource();
+            //EntitySelectionGroupInfo.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
+            //EntitySelectionGroupInfo.SortDescriptions.Add(new SortDescription
+            //        {
+            //            PropertyName = "SortOrder",
+            //            Direction = ListSortDirection.Ascending
+            //        });
+            //EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
+        }
         #endregion
 
         #region Properties
@@ -46,7 +46,51 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// DataSource for the Grouped Collection View
         /// </summary>
-        public List<EntitySelectionData> EntitySelectionGroupInfoSource { get; set; }
+        private List<EntitySelectionData> _entitySelectionInfoSource;
+        public List<EntitySelectionData> EntitySelectionInfoSource
+        {
+            get { return _entitySelectionInfoSource; }
+            set
+            {
+                _entitySelectionInfoSource = value;
+                EntitySelectionInfo = value.Where(record => record.Type == EntityType.SECURITY).ToList();
+            }
+        }
+
+
+        private List<EntitySelectionData> _entitySelectionInfo;
+        public List<EntitySelectionData> EntitySelectionInfo
+        {
+            get { return _entitySelectionInfo; }
+            set
+            {
+                _entitySelectionInfo = value;
+                RaisePropertyChanged(() => this.EntitySelectionInfo);
+                if (value != null)
+                {
+                    if (EntitySelectionEnteredText != String.Empty)
+                    {
+                        EntityFilterSelectionInfo = value
+                            .Where(record => record.ShortName.ToLower().Contains(EntitySelectionEnteredText.ToLower())
+                                || record.LongName.ToLower().Contains(EntitySelectionEnteredText.ToLower()))
+                            .ToList();
+                    }
+                    else
+                        EntityFilterSelectionInfo = value;
+                }
+            }
+        }
+
+        private List<EntitySelectionData> _entityFilterSelectionInfo;
+        public List<EntitySelectionData> EntityFilterSelectionInfo
+        {
+            get { return _entityFilterSelectionInfo; }
+            set
+            {
+                _entityFilterSelectionInfo = value;
+                RaisePropertyChanged(() => this.EntityFilterSelectionInfo);
+            }
+        }
 
         /// <summary>
         /// Grouped Collection View for Auto-Complete Box
@@ -65,7 +109,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Entered Text in the Auto-Complete Box - filters EntitySelectionGroupInfo
         /// </summary>
-        private string _entitySelectionEnteredText;
+        private string _entitySelectionEnteredText = String.Empty;
         public string EntitySelectionEnteredText
         {
             get { return _entitySelectionEnteredText; }
@@ -73,16 +117,29 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _entitySelectionEnteredText = value;
                 RaisePropertyChanged(() => this.EntitySelectionEnteredText);
-                if (EntitySelectionGroupInfoSource != null)
+                //if (EntitySelectionGroupInfoSource != null)
+                //{
+                //    if (value != String.Empty)
+                //    {
+                //        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource
+                //            .Where(record => record.ShortName.ToLower().Contains(value.ToLower())
+                //                || record.LongName.ToLower().Contains(value.ToLower()));
+                //    }
+                //    else
+                //        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
+                //}
+
+                if (EntitySelectionInfo != null)
                 {
-                    if (value != String.Empty)
+                    if (value != String.Empty && value != null)
                     {
-                        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource
+                        EntityFilterSelectionInfo = EntitySelectionInfo
                             .Where(record => record.ShortName.ToLower().Contains(value.ToLower())
-                                || record.LongName.ToLower().Contains(value.ToLower()));
+                                || record.LongName.ToLower().Contains(value.ToLower()))
+                            .ToList();
                     }
                     else
-                        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
+                        EntityFilterSelectionInfo = EntitySelectionInfo;
                 }
             }
         }
@@ -98,20 +155,81 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedEntity = value;
                 this.RaisePropertyChanged(() => this.SelectedEntity);
-                if (value.Type == EntityType.SECURITY || value.Type == EntityType.BENCHMARK)
+                if (value != null)
                 {
-                    ReturnTypeSelectionVisibility = Visibility.Visible;
-                }
-                else
-                {
-                    ReturnTypeSelectionVisibility = Visibility.Collapsed;
-                    SelectedMarketSnapshotPreference.EntityReturnType = null;
-                }
+                    if (value.Type == EntityType.SECURITY || value.Type == EntityType.BENCHMARK)
+                    {
+                        ReturnTypeSelectionVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ReturnTypeSelectionVisibility = Visibility.Collapsed;
+                        SelectedMarketSnapshotPreference.EntityReturnType = null;
+                    }
 
-                SelectedMarketSnapshotPreference.EntityName = value.LongName;
+                    SelectedMarketSnapshotPreference.EntityName = value.LongName;
+                    SelectedMarketSnapshotPreference.EntityType = value.Type; 
+                }
             }
         }
         #endregion
+
+        private bool? _securityToggleChecked = true;
+        public bool? SecurityToggleChecked
+        {
+            get { return _securityToggleChecked; }
+            set
+            {
+                _securityToggleChecked = value;
+                RaisePropertyChanged(() => this.SecurityToggleChecked);
+                if (value == true)
+                {
+                    EntitySelectionInfo = EntitySelectionInfoSource
+                        .Where(record => record.Type == EntityType.SECURITY)
+                        .ToList();
+                    BenchmarkToggleChecked = !value;
+                    CommodityToggleChecked = !value;
+                }
+            }
+        }
+
+        private bool? _benchmarkToggleChecked = false;
+        public bool? BenchmarkToggleChecked
+        {
+            get { return _benchmarkToggleChecked; }
+            set
+            {
+                _benchmarkToggleChecked = value;
+                RaisePropertyChanged(() => this.BenchmarkToggleChecked);
+                if (value == true)
+                {
+                    EntitySelectionInfo = EntitySelectionInfoSource
+                                .Where(record => record.Type == EntityType.INDEX)
+                                .ToList();
+                    SecurityToggleChecked = !value;
+                    CommodityToggleChecked = !value;
+                }
+            }
+        }
+
+        private bool? _commodityToggleChecked = false;
+        public bool? CommodityToggleChecked
+        {
+            get { return _commodityToggleChecked; }
+            set
+            {
+                _commodityToggleChecked = value;
+                RaisePropertyChanged(() => this.CommodityToggleChecked);
+                if (value == true)
+                {
+                    EntitySelectionInfo = EntitySelectionInfoSource
+                                .Where(record => record.Type == EntityType.COMMODITY)
+                                .ToList();
+                    SecurityToggleChecked = !value;
+                    BenchmarkToggleChecked = !value;
+                }
+            }
+        }
 
         #region Return Type Selection
         /// <summary>
@@ -181,13 +299,13 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_selectedMarketSnapshotPreference == null)
                 {
-                    _selectedMarketSnapshotPreference = new MarketSnapshotPreference();
+                    _selectedMarketSnapshotPreference = new MarketSnapshotPreference() { EntityReturnType = EntityReturnType.TotalReturnType };
                 }
                 return _selectedMarketSnapshotPreference;
             }
             set { _selectedMarketSnapshotPreference = value; }
         }
-        #endregion 
-        #endregion        
+        #endregion
+        #endregion
     }
 }
