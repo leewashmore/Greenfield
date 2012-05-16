@@ -1334,6 +1334,9 @@ namespace GreenField.Web.Services
 
                         break;
                     case GreenfieldConstants.SHOW_EVERYTHING:
+                        dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
 
                         break;
                     //default:
@@ -1417,8 +1420,13 @@ namespace GreenField.Web.Services
                         dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                         break;
-                    default:
+                    case GreenfieldConstants.SHOW_EVERYTHING:
+                        dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                            Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
+                            && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
                         break;
+                   
                 }
             }
             //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
