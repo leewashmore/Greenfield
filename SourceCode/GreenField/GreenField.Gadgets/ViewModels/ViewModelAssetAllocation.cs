@@ -185,6 +185,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+
         /// <summary>
         /// Callback Method for AssetAllocationData
         /// </summary>
@@ -214,6 +215,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
         #endregion
 
         #region EventUnsubscribe

@@ -59,7 +59,7 @@
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Left"/>
+                                                TextAlignment="Right"/>
                 <telerik:GridViewDataColumn Header="PORTFOLIO RETURN" 
                                                 DataMemberBinding="{Binding PORTFOLIO_RETURN}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

@@ -23,6 +23,7 @@ using GreenField.App.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
+using GreenField.ServiceCaller.ModelFXDefinitions;
 
 namespace GreenField.App.ViewModel
 {
@@ -471,6 +472,84 @@ namespace GreenField.App.ViewModel
         }
         #endregion
 
+        #region Country Selector
+        private List<CountrySelectionData> _countryTypeInfo;
+        public List<CountrySelectionData> CountryTypeInfo
+        {
+            get
+            {
+                //if (_countryTypeInfo == null)
+                //{
+                //    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+                //}
+                return _countryTypeInfo;
+
+            }
+            set
+            {
+                _countryTypeInfo = value;
+                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
+                RaisePropertyChanged(() => this.CountryTypeInfo);
+            }
+        }
+
+        private List<String> _countryName;
+        public List<String> CountryName
+        {
+            get
+            {
+                return _countryName;
+
+            }
+            set
+            {
+                _countryName = value;
+                RaisePropertyChanged(() => this.CountryName);
+            }
+        }
+
+        /// <summary>
+        /// Stores visibility property of the period selector
+        /// </summary>
+        private Visibility _countrySelectorVisibility = Visibility.Collapsed;
+        public Visibility CountrySelectorVisibility
+        {
+            get { return _countrySelectorVisibility; }
+            set
+            {
+                _countrySelectorVisibility = value;
+                if(value == Visibility.Visible)
+                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+                RaisePropertyChanged(() => this.CountrySelectorVisibility);
+
+            }
+        }
+
+        /// <summary>
+        /// String that contains the selected filter type
+        /// </summary>
+        private String _selectedCountryType;
+        public String SelectedCountryType
+        {
+            get
+            {
+                return _selectedCountryType;
+            }
+            set
+            {
+                _selectedCountryType = value;
+                RaisePropertyChanged(() => this.SelectedCountryType);
+
+                if (value != null)
+                {
+                    SelectorPayload.PeriodSelectionData = value;
+                    _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
+                }
+            }
+        }
+
+        #endregion
+
         #region Filter Selector
         public List<string> FilterTypeInfo
         {
@@ -727,11 +806,10 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-                if (value != null)
-                {
+               
                     _selectorPayload.IsExCashSecurityData = value;
                     _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
-                }
+               
             }
         }
     
@@ -739,6 +817,9 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Cash/NoCash Selector
+        /// <summary>
+        /// Strores market cap excluding cash securities checkbox visibility
+        /// </summary>
         private Visibility _mktCapExCashSelectorVisibility = Visibility.Collapsed;
         public Visibility MktCapExCashSelectorVisibility
         {
@@ -2399,7 +2480,7 @@ namespace GreenField.App.ViewModel
 
         /// <summary>
         /// GadgetTopBenchmarkSecuritiesCommand Execution Method - Add Gadget - TOP_BENCHMARK_SECURITIES
-        /// </summary>
+        /// </summary>F
         /// <param name="param">SenderInfo</param>
         private void GadgetTopBenchmarkSecuritiesCommandMethod(object param)
         {
@@ -2916,7 +2997,7 @@ namespace GreenField.App.ViewModel
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
-            //CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
+            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
             //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
@@ -2965,6 +3046,11 @@ namespace GreenField.App.ViewModel
             }
 
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
+        }
+
+        private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
+        {
+            CountryTypeInfo = result;
         }
         #endregion
 

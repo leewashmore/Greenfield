@@ -3827,6 +3827,171 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ChartExtensionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class ChartExtensionData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private decimal AdjustedDollarPriceField;
+        
+        private System.Nullable<decimal> AmountTradedField;
+        
+        private string CountryField;
+        
+        private System.Nullable<decimal> CountryReturnField;
+        
+        private decimal PriceField;
+        
+        private decimal PriceReturnField;
+        
+        private string SectorField;
+        
+        private System.Nullable<decimal> SectorReturnField;
+        
+        private string TickerField;
+        
+        private System.Nullable<System.DateTime> ToDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal AdjustedDollarPrice {
+            get {
+                return this.AdjustedDollarPriceField;
+            }
+            set {
+                if ((this.AdjustedDollarPriceField.Equals(value) != true)) {
+                    this.AdjustedDollarPriceField = value;
+                    this.RaisePropertyChanged("AdjustedDollarPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> AmountTraded {
+            get {
+                return this.AmountTradedField;
+            }
+            set {
+                if ((this.AmountTradedField.Equals(value) != true)) {
+                    this.AmountTradedField = value;
+                    this.RaisePropertyChanged("AmountTraded");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> CountryReturn {
+            get {
+                return this.CountryReturnField;
+            }
+            set {
+                if ((this.CountryReturnField.Equals(value) != true)) {
+                    this.CountryReturnField = value;
+                    this.RaisePropertyChanged("CountryReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal Price {
+            get {
+                return this.PriceField;
+            }
+            set {
+                if ((this.PriceField.Equals(value) != true)) {
+                    this.PriceField = value;
+                    this.RaisePropertyChanged("Price");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal PriceReturn {
+            get {
+                return this.PriceReturnField;
+            }
+            set {
+                if ((this.PriceReturnField.Equals(value) != true)) {
+                    this.PriceReturnField = value;
+                    this.RaisePropertyChanged("PriceReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Sector {
+            get {
+                return this.SectorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SectorField, value) != true)) {
+                    this.SectorField = value;
+                    this.RaisePropertyChanged("Sector");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SectorReturn {
+            get {
+                return this.SectorReturnField;
+            }
+            set {
+                if ((this.SectorReturnField.Equals(value) != true)) {
+                    this.SectorReturnField = value;
+                    this.RaisePropertyChanged("SectorReturn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Ticker {
+            get {
+                return this.TickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
+                    this.TickerField = value;
+                    this.RaisePropertyChanged("Ticker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ToDate {
+            get {
+                return this.ToDateField;
+            }
+            set {
+                if ((this.ToDateField.Equals(value) != true)) {
+                    this.ToDateField = value;
+                    this.RaisePropertyChanged("ToDate");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations")]
     public interface BenchmarkHoldingsOperations {
@@ -3903,7 +4068,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "sponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveBenchmarkChartReturnDataSe" +
             "rviceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkChartReturnData> EndRetrieveBenchmarkChartReturnData(System.IAsyncResult result);
         
@@ -4045,6 +4210,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         System.IAsyncResult BeginRetrieveRelativePerformanceData(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string period, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceData> EndRetrieveRelativePerformanceData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveChartExtensionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveChartExtensionDataResponse" +
+            "")]
+        System.IAsyncResult BeginRetrieveChartExtensionData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> EndRetrieveChartExtensionData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -4547,6 +4718,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveChartExtensionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveChartExtensionDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class BenchmarkHoldingsOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations>, GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations {
         
         private BeginOperationDelegate onBeginTempDelegate;
@@ -4711,6 +4901,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveRelativePerformanceDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveChartExtensionDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveChartExtensionDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveChartExtensionDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -4817,6 +5013,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         public event System.EventHandler<RetrieveRelativePerformanceSecurityDataCompletedEventArgs> RetrieveRelativePerformanceSecurityDataCompleted;
         
         public event System.EventHandler<RetrieveRelativePerformanceDataCompletedEventArgs> RetrieveRelativePerformanceDataCompleted;
+        
+        public event System.EventHandler<RetrieveChartExtensionDataCompletedEventArgs> RetrieveChartExtensionDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -5244,8 +5442,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveBenchmarkChartReturnData(objBenchmarkIdentifier, objEffectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveBenchmarkChartReturnData(objSelectedEntities, objStartDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5254,9 +5452,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveBenchmarkChartReturnData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData>)(inValues[0]));
-            System.DateTime objEffectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveBenchmarkChartReturnData(objBenchmarkIdentifier, objEffectiveDate, callback, asyncState);
+            System.Collections.Generic.Dictionary<string, string> objSelectedEntities = ((System.Collections.Generic.Dictionary<string, string>)(inValues[0]));
+            System.DateTime objStartDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveBenchmarkChartReturnData(objSelectedEntities, objStartDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveBenchmarkChartReturnData(System.IAsyncResult result) {
@@ -5272,11 +5470,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveBenchmarkChartReturnDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate) {
-            this.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate, null);
+        public void RetrieveBenchmarkChartReturnDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate) {
+            this.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities, objStartDate, null);
         }
         
-        public void RetrieveBenchmarkChartReturnDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, object userState) {
+        public void RetrieveBenchmarkChartReturnDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, object userState) {
             if ((this.onBeginRetrieveBenchmarkChartReturnDataDelegate == null)) {
                 this.onBeginRetrieveBenchmarkChartReturnDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveBenchmarkChartReturnData);
             }
@@ -5287,8 +5485,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 this.onRetrieveBenchmarkChartReturnDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveBenchmarkChartReturnDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveBenchmarkChartReturnDataDelegate, new object[] {
-                        objBenchmarkIdentifier,
-                        objEffectiveDate}, this.onEndRetrieveBenchmarkChartReturnDataDelegate, this.onRetrieveBenchmarkChartReturnDataCompletedDelegate, userState);
+                        objSelectedEntities,
+                        objStartDate}, this.onEndRetrieveBenchmarkChartReturnDataDelegate, this.onRetrieveBenchmarkChartReturnDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6145,6 +6343,54 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                         period}, this.onEndRetrieveRelativePerformanceDataDelegate, this.onRetrieveRelativePerformanceDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveChartExtensionData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveChartExtensionData(objSelectedEntities, objStartDate, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.EndRetrieveChartExtensionData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveChartExtensionData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveChartExtensionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.Dictionary<string, string> objSelectedEntities = ((System.Collections.Generic.Dictionary<string, string>)(inValues[0]));
+            System.DateTime objStartDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveChartExtensionData(objSelectedEntities, objStartDate, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveChartExtensionData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).EndRetrieveChartExtensionData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveChartExtensionDataCompleted(object state) {
+            if ((this.RetrieveChartExtensionDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveChartExtensionDataCompleted(this, new RetrieveChartExtensionDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveChartExtensionDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate) {
+            this.RetrieveChartExtensionDataAsync(objSelectedEntities, objStartDate, null);
+        }
+        
+        public void RetrieveChartExtensionDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, object userState) {
+            if ((this.onBeginRetrieveChartExtensionDataDelegate == null)) {
+                this.onBeginRetrieveChartExtensionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveChartExtensionData);
+            }
+            if ((this.onEndRetrieveChartExtensionDataDelegate == null)) {
+                this.onEndRetrieveChartExtensionDataDelegate = new EndOperationDelegate(this.OnEndRetrieveChartExtensionData);
+            }
+            if ((this.onRetrieveChartExtensionDataCompletedDelegate == null)) {
+                this.onRetrieveChartExtensionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveChartExtensionDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveChartExtensionDataDelegate, new object[] {
+                        objSelectedEntities,
+                        objStartDate}, this.onEndRetrieveChartExtensionDataDelegate, this.onRetrieveChartExtensionDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -6341,10 +6587,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData> objBenchmarkIdentifier, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveBenchmarkChartReturnData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
-                _args[0] = objBenchmarkIdentifier;
-                _args[1] = objEffectiveDate;
+                _args[0] = objSelectedEntities;
+                _args[1] = objStartDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveBenchmarkChartReturnData", _args, callback, asyncState);
                 return _result;
             }
@@ -6609,6 +6855,20 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceData> EndRetrieveRelativePerformanceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.RelativePerformanceData>)(base.EndInvoke("RetrieveRelativePerformanceData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveChartExtensionData(System.Collections.Generic.Dictionary<string, string> objSelectedEntities, System.DateTime objStartDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = objSelectedEntities;
+                _args[1] = objStartDate;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveChartExtensionData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> EndRetrieveChartExtensionData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData>)(base.EndInvoke("RetrieveChartExtensionData", _args, result)));
                 return _result;
             }
         }

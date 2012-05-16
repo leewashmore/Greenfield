@@ -6,65 +6,22 @@
     <edmx:StorageModels>
     <Schema Namespace="ResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ResearchModelStoreContainer">
-          <EntitySet Name="tblActual" EntityType="ResearchModel.Store.tblActual" store:Type="Tables" store:Schema="dbo" store:Name="tblActual">
+          <EntitySet Name="Country_Master" EntityType="ResearchModel.Store.Country_Master" store:Type="Tables" store:Schema="dbo" store:Name="Country_Master">
             <DefiningQuery>SELECT 
-      [tblActual].[XRef] AS [XRef], 
-      [tblActual].[PeriodType] AS [PeriodType], 
-      [tblActual].[EstimateType] AS [EstimateType], 
-      [tblActual].[fYearEnd] AS [fYearEnd], 
-      [tblActual].[fPeriodEnd] AS [fPeriodEnd], 
-      [tblActual].[PeriodEndDate] AS [PeriodEndDate], 
-      [tblActual].[Unit] AS [Unit], 
-      [tblActual].[ActualValue] AS [ActualValue], 
-      [tblActual].[AnnouncementDate] AS [AnnouncementDate], 
-      [tblActual].[UpdateDate] AS [UpdateDate], 
-      [tblActual].[Currency] AS [Currency]
-      FROM [dbo].[tblActual] AS [tblActual]</DefiningQuery>
+      [Country_Master].[COUNTRY_CODE] AS [COUNTRY_CODE], 
+      [Country_Master].[COUNTRY_NAME] AS [COUNTRY_NAME], 
+      [Country_Master].[CURRENCY_CODE] AS [CURRENCY_CODE], 
+      [Country_Master].[CURRENCY_NAME] AS [CURRENCY_NAME], 
+      [Country_Master].[MACRO_ECON_DATA_CURRENT] AS [MACRO_ECON_DATA_CURRENT], 
+      [Country_Master].[ASHEMM_PROPRIETARY_REGION_NAME] AS [ASHEMM_PROPRIETARY_REGION_NAME], 
+      [Country_Master].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE]
+      FROM [dbo].[Country_Master] AS [Country_Master]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblCompany" EntityType="ResearchModel.Store.tblCompany" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblCompanyInfo" EntityType="ResearchModel.Store.tblCompanyInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblCompanyIssue" EntityType="ResearchModel.Store.tblCompanyIssue" store:Type="Tables" store:Schema="dbo" store:Name="tblCompanyIssue">
-            <DefiningQuery>SELECT 
-      [tblCompanyIssue].[ReportNumber] AS [ReportNumber], 
-      [tblCompanyIssue].[IssueOrder] AS [IssueOrder], 
-      [tblCompanyIssue].[IssueType] AS [IssueType], 
-      [tblCompanyIssue].[IssueDesc] AS [IssueDesc], 
-      [tblCompanyIssue].[Name] AS [Name], 
-      [tblCompanyIssue].[Ticker] AS [Ticker], 
-      [tblCompanyIssue].[CUSIP] AS [CUSIP], 
-      [tblCompanyIssue].[MXSecurityID] AS [MXSecurityID], 
-      [tblCompanyIssue].[Valoren] AS [Valoren], 
-      [tblCompanyIssue].[ISIN] AS [ISIN], 
-      [tblCompanyIssue].[RIC] AS [RIC], 
-      [tblCompanyIssue].[SEDOL] AS [SEDOL], 
-      [tblCompanyIssue].[ExchangeCode] AS [ExchangeCode], 
-      [tblCompanyIssue].[Country] AS [Country], 
-      [tblCompanyIssue].[MostRecentSplit] AS [MostRecentSplit], 
-      [tblCompanyIssue].[MostRecentSplitDate] AS [MostRecentSplitDate], 
-      [tblCompanyIssue].[GlobalListingType] AS [GlobalListingType], 
-      [tblCompanyIssue].[SharesPerListing] AS [SharesPerListing], 
-      [tblCompanyIssue].[DisplayRIC] AS [DisplayRIC]
-      FROM [dbo].[tblCompanyIssue] AS [tblCompanyIssue]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="tblCompanySummary" EntityType="ResearchModel.Store.tblCompanySummary" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblCompanyURL" EntityType="ResearchModel.Store.tblCompanyURL" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblConsensusEstimate" EntityType="ResearchModel.Store.tblConsensusEstimate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblConsensusRecommendation" EntityType="ResearchModel.Store.tblConsensusRecommendation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblDashboardPreference" EntityType="ResearchModel.Store.tblDashboardPreference" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblDetailedEstimate" EntityType="ResearchModel.Store.tblDetailedEstimate" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblDetailedRecommendation" EntityType="ResearchModel.Store.tblDetailedRecommendation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblHoldingsData" EntityType="ResearchModel.Store.tblHoldingsData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotEntityPreference" EntityType="ResearchModel.Store.tblMarketSnapshotEntityPreference" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotGroupPreference" EntityType="ResearchModel.Store.tblMarketSnapshotGroupPreference" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotPreference" EntityType="ResearchModel.Store.tblMarketSnapshotPreference" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStatementRef" EntityType="ResearchModel.Store.tblStatementRef" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStd" EntityType="ResearchModel.Store.tblStd" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdCompanyInfo" EntityType="ResearchModel.Store.tblStdCompanyInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdInterim" EntityType="ResearchModel.Store.tblStdInterim" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdInterimCompanyInfo" EntityType="ResearchModel.Store.tblStdInterimCompanyInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdInterimIssue" EntityType="ResearchModel.Store.tblStdInterimIssue" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdInterimRef" EntityType="ResearchModel.Store.tblStdInterimRef" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblStdIssue" EntityType="ResearchModel.Store.tblStdIssue" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserDashboardPreferance" EntityType="ResearchModel.Store.UserDashboardPreferance" store:Type="Tables" store:Schema="dbo" store:Name="UserDashboardPreferance">
             <DefiningQuery>SELECT 
       [UserDashboardPreferance].[Id] AS [Id], 
@@ -78,194 +35,23 @@
           </AssociationSet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AshmoreEMMPOC.dbo.tblActual' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AshmoreEMMPOC.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="tblActual">
+        <EntityType Name="Country_Master">
           <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="fPeriodEnd" />
-            <PropertyRef Name="PeriodEndDate" />
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="COUNTRY_NAME" />
+            <PropertyRef Name="CURRENCY_CODE" />
+            <PropertyRef Name="CURRENCY_NAME" />
+            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
           </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
-          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
-          <Property Name="fPeriodEnd" Type="char" Nullable="false" MaxLength="6" />
-          <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="Unit" Type="varchar" MaxLength="2" />
-          <Property Name="ActualValue" Type="real" />
-          <Property Name="AnnouncementDate" Type="datetime" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="Currency" Type="varchar" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="tblCompany">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Addr1" Type="varchar" MaxLength="100" />
-          <Property Name="Addr2" Type="varchar" MaxLength="100" />
-          <Property Name="Addr3" Type="varchar" MaxLength="100" />
-          <Property Name="City" Type="varchar" MaxLength="60" />
-          <Property Name="State" Type="varchar" MaxLength="100" />
-          <Property Name="Zip" Type="varchar" MaxLength="50" />
-          <Property Name="ContactName" Type="varchar" MaxLength="100" />
-          <Property Name="ContactTitle" Type="varchar" MaxLength="100" />
-          <Property Name="Email" Type="varchar" MaxLength="250" />
-          <Property Name="MainPhone" Type="varchar" MaxLength="25" />
-          <Property Name="Fax" Type="varchar" MaxLength="25" />
-          <Property Name="ContactPhone" Type="varchar" MaxLength="25" />
-          <Property Name="PublicSince" Type="varchar" MaxLength="20" />
-          <Property Name="Employees" Type="int" />
-          <Property Name="EmployeeReportDate" Type="datetime" />
-          <Property Name="SharesOut" Type="real" />
-          <Property Name="FloatingShares" Type="real" />
-          <Property Name="ShareReportDate" Type="datetime" />
-          <Property Name="CommonShareholders" Type="int" />
-          <Property Name="ShareholdersReportDate" Type="datetime" />
-          <Property Name="IncorporatedIn" Type="varchar" MaxLength="20" />
-          <Property Name="Currency" Type="varchar" MaxLength="3" />
-          <Property Name="CoStatus" Type="bit" />
-          <Property Name="CoType" Type="varchar" MaxLength="3" />
-          <Property Name="MostRecentExchange" Type="real" />
-          <Property Name="MostRecentExchangeDate" Type="datetime" />
-          <Property Name="LatestAvailableAnnual" Type="datetime" />
-          <Property Name="LatestAvailableInterim" Type="datetime" />
-        </EntityType>
-        <EntityType Name="tblCompanyInfo">
-          <Key>
-            <PropertyRef Name="XRef" />
-          </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="ReportNumber" Type="varchar" MaxLength="5" />
-          <Property Name="Name" Type="varchar" MaxLength="80" />
-          <Property Name="Country" Type="char" MaxLength="3" />
-          <Property Name="Ticker" Type="varchar" MaxLength="15" />
-          <Property Name="CUSIP" Type="varchar" MaxLength="12" />
-          <Property Name="ISIN" Type="varchar" MaxLength="12" />
-          <Property Name="SEDOL" Type="varchar" MaxLength="12" />
-          <Property Name="VALOREN" Type="varchar" MaxLength="12" />
-          <Property Name="RIC" Type="varchar" MaxLength="21" />
-          <Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
-          <Property Name="RecentSplitDate" Type="datetime" />
-          <Property Name="RecentCapitalAdjDate" Type="datetime" />
-          <Property Name="CodeSector" Type="varchar" MaxLength="20" />
-          <Property Name="CodeIndustry" Type="varchar" MaxLength="20" />
-          <Property Name="CodePrimary" Type="varchar" MaxLength="20" />
-          <Property Name="RBSSEconomicSector" Type="varchar" MaxLength="10" />
-          <Property Name="RBSSBusinessSector" Type="varchar" MaxLength="10" />
-          <Property Name="RBSSIndustryGroup" Type="varchar" MaxLength="10" />
-          <Property Name="RBSSIndustry" Type="varchar" MaxLength="10" />
-          <Property Name="Consensus" Type="varchar" MaxLength="20" />
-          <Property Name="Estimate" Type="varchar" MaxLength="10" />
-          <Property Name="Earnings" Type="varchar" MaxLength="10" />
-          <Property Name="Periodicity" Type="varchar" MaxLength="2" />
-          <Property Name="GeneralNote" Type="varchar" MaxLength="1200" />
-          <Property Name="CurrentPeriod" Type="char" MaxLength="2" />
-          <Property Name="pEndDate" Type="smalldatetime" />
-          <Property Name="fYearEnd" Type="char" MaxLength="6" />
-          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
-          <Property Name="CurrentPrice" Type="real" />
-          <Property Name="CurrentPriceDate" Type="smalldatetime" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-          <Property Name="OutstandingShares" Type="decimal" />
-          <Property Name="Active" Type="bit" />
-        </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AshmoreEMMPOC.dbo.tblCompanyIssue' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <EntityType Name="tblCompanyIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueOrder" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="IssueOrder" Type="smallint" Nullable="false" />
-          <Property Name="IssueType" Type="char" MaxLength="1" />
-          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Ticker" Type="varchar" MaxLength="15" />
-          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
-          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
-          <Property Name="Valoren" Type="varchar" MaxLength="12" />
-          <Property Name="ISIN" Type="varchar" MaxLength="12" />
-          <Property Name="RIC" Type="varchar" MaxLength="20" />
-          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
-          <Property Name="ExchangeCode" Type="char" MaxLength="10" />
-          <Property Name="Country" Type="char" MaxLength="3" />
-          <Property Name="MostRecentSplit" Type="real" />
-          <Property Name="MostRecentSplitDate" Type="datetime" />
-          <Property Name="GlobalListingType" Type="varchar" MaxLength="5" />
-          <Property Name="SharesPerListing" Type="real" />
-          <Property Name="DisplayRIC" Type="nchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="tblCompanySummary">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="Category" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Category" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="Summary" Type="varchar" MaxLength="2000" />
-          <Property Name="LastModified" Type="datetime" />
-          <Property Name="FilingDate" Type="datetime" />
-          <Property Name="FilingType" Type="varchar" MaxLength="20" />
-        </EntityType>
-        <EntityType Name="tblCompanyURL">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="Category" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Category" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="URL" Type="varchar" MaxLength="225" />
-          <Property Name="LastModified" Type="datetime" />
-        </EntityType>
-        <EntityType Name="tblConsensusEstimate">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="PeriodEndDate" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="PeriodEndDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
-          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
-          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" />
-          <Property Name="Unit" Type="varchar" MaxLength="2" />
-          <Property Name="NumOfEsts" Type="int" />
-          <Property Name="High" Type="real" />
-          <Property Name="Low" Type="real" />
-          <Property Name="Mean" Type="real" />
-          <Property Name="StdDev" Type="real" />
-          <Property Name="Median" Type="real" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="tblConsensusRecommendation">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" />
-          <Property Name="MeanRating" Type="real" />
-          <Property Name="MeanLabel" Type="varchar" MaxLength="20" />
+          <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="COUNTRY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="CURRENCY_CODE" Type="char" Nullable="false" MaxLength="4" />
+          <Property Name="CURRENCY_NAME" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="MACRO_ECON_DATA_CURRENT" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_NAME" Type="varchar" MaxLength="20" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="tblDashboardPreference">
           <Key>
@@ -279,59 +65,6 @@
           <Property Name="GadgetState" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="GadgetPosition" Type="int" Nullable="false" />
           <Property Name="PreferenceGroupID" Type="varchar" Nullable="false" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="tblDetailedEstimate">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="PeriodEndDate" />
-            <PropertyRef Name="BrokerID" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="fYearEnd" Type="char" Nullable="false" MaxLength="6" />
-          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
-          <Property Name="PeriodEndDate" Type="datetime" Nullable="false" />
-          <Property Name="BrokerID" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="PeriodType" Type="varchar" Nullable="false" MaxLength="2" />
-          <Property Name="EstimateType" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" />
-          <Property Name="ConfirmationDate" Type="datetime" />
-          <Property Name="SuppressStartDate" Type="datetime" />
-          <Property Name="SuppressEndDate" Type="datetime" />
-          <Property Name="SuppressOriginalDate" Type="datetime" />
-          <Property Name="SuppressExpirationDate" Type="datetime" />
-          <Property Name="Unit" Type="varchar" MaxLength="2" />
-          <Property Name="Amount" Type="real" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="tblDetailedRecommendation">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="BrokerID" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="BrokerID" Type="varchar" Nullable="false" MaxLength="12" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" />
-          <Property Name="STDOpinionCode" Type="varchar" MaxLength="15" />
-          <Property Name="STDOpinion" Type="varchar" MaxLength="50" />
-          <Property Name="BrokerOpinionCode" Type="varchar" MaxLength="15" />
-          <Property Name="BrokerOpinion" Type="varchar" MaxLength="50" />
-          <Property Name="ConfirmationDate" Type="datetime" />
-          <Property Name="SuppressStartDate" Type="datetime" />
-          <Property Name="SuppressEndDate" Type="datetime" />
-          <Property Name="SuppressOriginalDate" Type="datetime" />
-          <Property Name="SuppressExpirationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblHoldingsData">
           <Key>
@@ -404,194 +137,6 @@
           <Property Name="SnapshotName" Type="nvarchar(max)" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
-        <EntityType Name="tblStatementRef">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="UpdateType" Type="varchar" MaxLength="10" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="CompleteStatement" Type="bit" />
-          <Property Name="PeriodLengthCode" Type="char" MaxLength="1" />
-          <Property Name="PeriodLength" Type="int" />
-          <Property Name="PeriodEndDate" Type="datetime" />
-          <Property Name="Source" Type="varchar" MaxLength="50" />
-          <Property Name="SourceDate" Type="datetime" />
-          <Property Name="ReportedAccountingStandardCode" Type="varchar" MaxLength="20" />
-          <Property Name="ReportedAccountingStandard" Type="varchar" MaxLength="100" />
-          <Property Name="STECFlag" Type="bit" />
-          <Property Name="AuditorCode" Type="varchar" MaxLength="50" />
-          <Property Name="AuditOpinion" Type="varchar" MaxLength="10" />
-          <Property Name="CurrencyConvertedTo" Type="char" MaxLength="3" />
-          <Property Name="CurrencyReported" Type="char" MaxLength="3" />
-          <Property Name="RepToConvExRate" Type="real" />
-          <Property Name="UnitConvertedTo" Type="char" MaxLength="3" />
-          <Property Name="UnitReported" Type="char" MaxLength="3" />
-          <Property Name="SystemDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="tblStd">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ReportYear" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="ReportYear" Type="int" Nullable="false" />
-          <Property Name="COA" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="Amount" Type="real" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblStdCompanyInfo">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
-          <Property Name="CoType" Type="char" MaxLength="3" />
-          <Property Name="IRSNo" Type="char" MaxLength="10" />
-          <Property Name="CIKNo" Type="char" MaxLength="10" />
-          <Property Name="LatestFinancialsAnnual" Type="datetime" />
-          <Property Name="LatestFinancialsInterim" Type="datetime" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-          <Property Name="CurrentExchangeRate" Type="real" />
-          <Property Name="CurrentExchangeRateDate" Type="datetime" />
-          <Property Name="AuditorCode" Type="varchar" MaxLength="10" />
-          <Property Name="AuditorName" Type="varchar" MaxLength="100" />
-          <Property Name="COAType" Type="char" MaxLength="3" />
-          <Property Name="BalanceSheetDisplayCode" Type="char" MaxLength="3" />
-          <Property Name="CashflowMethod" Type="char" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="tblStdInterim">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ReportYear" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="ReportYear" Type="int" Nullable="false" />
-          <Property Name="COA" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="Amount" Type="real" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblStdInterimCompanyInfo">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
-          <Property Name="CoType" Type="char" MaxLength="3" />
-          <Property Name="IRSNo" Type="char" MaxLength="10" />
-          <Property Name="CIKNo" Type="char" MaxLength="10" />
-          <Property Name="LatestFinancialsAnnual" Type="datetime" />
-          <Property Name="LatestFinancialsInterim" Type="datetime" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-          <Property Name="CurrentExchangeRate" Type="real" />
-          <Property Name="CurrentExchangeRateDate" Type="datetime" />
-          <Property Name="AuditorCode" Type="varchar" MaxLength="10" />
-          <Property Name="AuditorName" Type="varchar" MaxLength="100" />
-          <Property Name="COAType" Type="char" MaxLength="3" />
-          <Property Name="BalanceSheetDisplayCode" Type="char" MaxLength="3" />
-          <Property Name="CashflowMethod" Type="char" MaxLength="3" />
-        </EntityType>
-        <EntityType Name="tblStdInterimIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="IssueID" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="IssueType" Type="char" MaxLength="1" />
-          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Ticker" Type="varchar" MaxLength="15" />
-          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
-          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
-          <Property Name="Valoren" Type="varchar" MaxLength="12" />
-          <Property Name="ISIN" Type="varchar" MaxLength="12" />
-          <Property Name="RIC" Type="varchar" MaxLength="20" />
-          <Property Name="DisplayRIC" Type="varchar" MaxLength="20" />
-          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
-          <Property Name="Active" Type="bit" />
-          <Property Name="ListingType" Type="varchar" MaxLength="10" />
-          <Property Name="ExchangeCode" Type="varchar" MaxLength="50" />
-          <Property Name="Country" Type="char" MaxLength="3" />
-          <Property Name="Region" Type="char" MaxLength="2" />
-          <Property Name="MostRecentSplit" Type="real" />
-          <Property Name="MostRecentSplitDate" Type="datetime" />
-          <Property Name="ParCurrency" Type="char" MaxLength="3" />
-          <Property Name="ParValue" Type="real" />
-          <Property Name="SharesAuthorized" Type="real" />
-          <Property Name="SharesOut" Type="real" />
-          <Property Name="FloatingShares" Type="real" />
-          <Property Name="Votes" Type="real" />
-          <Property Name="ConversionFactor" Type="real" />
-        </EntityType>
-        <EntityType Name="tblStdInterimRef">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="RefNo" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="FiscalYear" Type="int" />
-          <Property Name="InterimNumber" Type="smallint" />
-          <Property Name="UpdateType" Type="varchar" MaxLength="10" />
-          <Property Name="UpdateDate" Type="datetime" />
-          <Property Name="CompleteStatement" Type="bit" />
-          <Property Name="PeriodLengthCode" Type="char" MaxLength="1" />
-          <Property Name="PeriodLength" Type="int" />
-          <Property Name="PeriodEndDate" Type="datetime" />
-          <Property Name="Source" Type="varchar" MaxLength="50" />
-          <Property Name="SourceDate" Type="datetime" />
-          <Property Name="ReportedAccountingStandardCode" Type="varchar" MaxLength="20" />
-          <Property Name="ReportedAccountingStandard" Type="varchar" MaxLength="100" />
-          <Property Name="STECFlag" Type="bit" />
-          <Property Name="CurrencyConvertedTo" Type="char" MaxLength="3" />
-          <Property Name="CurrencyReported" Type="char" MaxLength="3" />
-          <Property Name="RepToConvExRate" Type="real" />
-          <Property Name="UnitConvertedTo" Type="char" MaxLength="3" />
-          <Property Name="UnitReported" Type="char" MaxLength="3" />
-          <Property Name="SystemDate" Type="datetime" />
-        </EntityType>
-        <EntityType Name="tblStdIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="IssueID" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="IssueType" Type="char" MaxLength="1" />
-          <Property Name="IssueDesc" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Ticker" Type="varchar" MaxLength="15" />
-          <Property Name="CUSIP" Type="varchar" MaxLength="9" />
-          <Property Name="MXSecurityID" Type="varchar" MaxLength="12" />
-          <Property Name="Valoren" Type="varchar" MaxLength="12" />
-          <Property Name="ISIN" Type="varchar" MaxLength="12" />
-          <Property Name="RIC" Type="varchar" MaxLength="20" />
-          <Property Name="DisplayRIC" Type="varchar" MaxLength="20" />
-          <Property Name="SEDOL" Type="varchar" MaxLength="7" />
-          <Property Name="Active" Type="bit" />
-          <Property Name="ListingType" Type="varchar" MaxLength="10" />
-          <Property Name="ExchangeCode" Type="varchar" MaxLength="50" />
-          <Property Name="Country" Type="char" MaxLength="3" />
-          <Property Name="Region" Type="char" MaxLength="2" />
-          <Property Name="MostRecentSplit" Type="real" />
-          <Property Name="MostRecentSplitDate" Type="datetime" />
-          <Property Name="ParCurrency" Type="char" MaxLength="3" />
-          <Property Name="ParValue" Type="real" />
-          <Property Name="SharesAuthorized" Type="real" />
-          <Property Name="SharesOut" Type="real" />
-          <Property Name="FloatingShares" Type="real" />
-          <Property Name="Votes" Type="real" />
-          <Property Name="ConversionFactor" Type="real" />
-        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AshmoreEMMPOC.dbo.UserDashboardPreferance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -656,6 +201,12 @@
         <Function Name="GetMarketSnapshotSelectionData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveCTYSUMMARYDataReportPerCountry" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="country" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveEMSummaryDataReportPerCountry" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="country" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SetDashBoardPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="GadgetViewClassName" Type="varchar" Mode="In" />
@@ -695,24 +246,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ResearchModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="ResearchEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblActuals" EntityType="ResearchModel.tblActual" />
-          <EntitySet Name="tblCompanies" EntityType="ResearchModel.tblCompany" />
-          <EntitySet Name="tblCompanyInfoes" EntityType="ResearchModel.tblCompanyInfo" />
-          <EntitySet Name="tblCompanyIssues" EntityType="ResearchModel.tblCompanyIssue" />
-          <EntitySet Name="tblCompanySummaries" EntityType="ResearchModel.tblCompanySummary" />
-          <EntitySet Name="tblCompanyURLs" EntityType="ResearchModel.tblCompanyURL" />
-          <EntitySet Name="tblConsensusEstimates" EntityType="ResearchModel.tblConsensusEstimate" />
-          <EntitySet Name="tblConsensusRecommendations" EntityType="ResearchModel.tblConsensusRecommendation" />
-          <EntitySet Name="tblDetailedEstimates" EntityType="ResearchModel.tblDetailedEstimate" />
-          <EntitySet Name="tblDetailedRecommendations" EntityType="ResearchModel.tblDetailedRecommendation" />
-          <EntitySet Name="tblStatementRefs" EntityType="ResearchModel.tblStatementRef" />
-          <EntitySet Name="tblStds" EntityType="ResearchModel.tblStd" />
-          <EntitySet Name="tblStdCompanyInfoes" EntityType="ResearchModel.tblStdCompanyInfo" />
-          <EntitySet Name="tblStdInterims" EntityType="ResearchModel.tblStdInterim" />
-          <EntitySet Name="tblStdInterimCompanyInfoes" EntityType="ResearchModel.tblStdInterimCompanyInfo" />
-          <EntitySet Name="tblStdInterimIssues" EntityType="ResearchModel.tblStdInterimIssue" />
-          <EntitySet Name="tblStdInterimRefs" EntityType="ResearchModel.tblStdInterimRef" />
-          <EntitySet Name="tblStdIssues" EntityType="ResearchModel.tblStdIssue" />
           <FunctionImport Name="ConsensusEstimates" ReturnType="Collection(ResearchModel.ConsensusEstimates_Result)">
             <Parameter Name="Xref" Mode="In" Type="String" />
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -793,438 +326,20 @@
             <Parameter Name="entityOrder" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetMarketSnapshotSelectionData" ReturnType="Collection(ResearchModel.MarketSnapshotSelectionData)">
-            <Parameter Name="userId" Mode="In" Type="String" />
+          <Parameter Name="userId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
             <Parameter Name="userid" Mode="In" Type="String" />
             <Parameter Name="snapshotname" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Country_Master" EntityType="ResearchModel.Country_Master" />
+          <FunctionImport Name="RetrieveCTYSUMMARYDataReport" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
+            <Parameter Name="country" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveEMSummaryDataReportPerCountry" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
+            <Parameter Name="country" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="tblActual">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="fPeriodEnd" />
-            <PropertyRef Name="PeriodEndDate" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="fPeriodEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
-          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="ActualValue" Type="Single" />
-          <Property Name="AnnouncementDate" Type="DateTime" />
-          <Property Name="UpdateDate" Type="DateTime" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="tblCompany">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Addr1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Addr2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Addr3" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="City" Type="String" MaxLength="60" Unicode="false" FixedLength="false" />
-          <Property Name="State" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Zip" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="ContactName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="ContactTitle" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="Email" Type="String" MaxLength="250" Unicode="false" FixedLength="false" />
-          <Property Name="MainPhone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="Fax" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="ContactPhone" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
-          <Property Name="PublicSince" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Employees" Type="Int32" />
-          <Property Name="EmployeeReportDate" Type="DateTime" />
-          <Property Name="SharesOut" Type="Single" />
-          <Property Name="FloatingShares" Type="Single" />
-          <Property Name="ShareReportDate" Type="DateTime" />
-          <Property Name="CommonShareholders" Type="Int32" />
-          <Property Name="ShareholdersReportDate" Type="DateTime" />
-          <Property Name="IncorporatedIn" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
-          <Property Name="CoStatus" Type="Boolean" />
-          <Property Name="CoType" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
-          <Property Name="MostRecentExchange" Type="Single" />
-          <Property Name="MostRecentExchangeDate" Type="DateTime" />
-          <Property Name="LatestAvailableAnnual" Type="DateTime" />
-          <Property Name="LatestAvailableInterim" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="tblCompanyInfo">
-          <Key>
-            <PropertyRef Name="XRef" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="ReportNumber" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
-          <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="CUSIP" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="SEDOL" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="VALOREN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="RIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
-          <Property Name="DisplayRIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
-          <Property Name="RecentSplitDate" Type="DateTime" />
-          <Property Name="RecentCapitalAdjDate" Type="DateTime" />
-          <Property Name="CodeSector" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="CodeIndustry" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="CodePrimary" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="RBSSEconomicSector" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="RBSSBusinessSector" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="RBSSIndustryGroup" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="RBSSIndustry" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="Consensus" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="Estimate" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="Earnings" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="Periodicity" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="GeneralNote" Type="String" MaxLength="1200" Unicode="false" FixedLength="false" />
-          <Property Name="CurrentPeriod" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-          <Property Name="pEndDate" Type="DateTime" />
-          <Property Name="fYearEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="CurrentPrice" Type="Single" />
-          <Property Name="CurrentPriceDate" Type="DateTime" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="OutstandingShares" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Active" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="tblCompanyIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueOrder" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="IssueOrder" Type="Int16" Nullable="false" />
-          <Property Name="IssueType" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="IssueDesc" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="CUSIP" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="MXSecurityID" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="Valoren" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="RIC" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="SEDOL" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
-          <Property Name="ExchangeCode" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-          <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="MostRecentSplit" Type="Single" />
-          <Property Name="MostRecentSplitDate" Type="DateTime" />
-          <Property Name="GlobalListingType" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="SharesPerListing" Type="Single" />
-          <Property Name="DisplayRIC" Type="String" MaxLength="20" Unicode="true" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="tblCompanySummary">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="Category" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Summary" Type="String" MaxLength="2000" Unicode="false" FixedLength="false" />
-          <Property Name="LastModified" Type="DateTime" />
-          <Property Name="FilingDate" Type="DateTime" />
-          <Property Name="FilingType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="tblCompanyURL">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="Category" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="URL" Type="String" MaxLength="225" Unicode="false" FixedLength="false" />
-          <Property Name="LastModified" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="tblConsensusEstimate">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="PeriodEndDate" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
-          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" />
-          <Property Name="EndDate" Type="DateTime" />
-          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" />
-          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="NumOfEsts" Type="Int32" />
-          <Property Name="High" Type="Single" />
-          <Property Name="Low" Type="Single" />
-          <Property Name="Mean" Type="Single" />
-          <Property Name="StdDev" Type="Single" />
-          <Property Name="Median" Type="Single" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="tblConsensusRecommendation">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" />
-          <Property Name="EndDate" Type="DateTime" />
-          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" />
-          <Property Name="MeanRating" Type="Single" />
-          <Property Name="MeanLabel" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="tblDetailedEstimate">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="fYearEnd" />
-            <PropertyRef Name="PeriodEndDate" />
-            <PropertyRef Name="BrokerID" />
-            <PropertyRef Name="PeriodType" />
-            <PropertyRef Name="EstimateType" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
-          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
-          <Property Name="BrokerID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" />
-          <Property Name="EndDate" Type="DateTime" />
-          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" />
-          <Property Name="ConfirmationDate" Type="DateTime" />
-          <Property Name="SuppressStartDate" Type="DateTime" />
-          <Property Name="SuppressEndDate" Type="DateTime" />
-          <Property Name="SuppressOriginalDate" Type="DateTime" />
-          <Property Name="SuppressExpirationDate" Type="DateTime" />
-          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
-          <Property Name="Amount" Type="Single" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="tblDetailedRecommendation">
-          <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="BrokerID" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
-          </Key>
-          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="BrokerID" Type="String" Nullable="false" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="StartDate" Type="DateTime" Nullable="false" />
-          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="DateTime" />
-          <Property Name="STDOpinionCode" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="STDOpinion" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="BrokerOpinionCode" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="BrokerOpinion" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="ConfirmationDate" Type="DateTime" />
-          <Property Name="SuppressStartDate" Type="DateTime" />
-          <Property Name="SuppressEndDate" Type="DateTime" />
-          <Property Name="SuppressOriginalDate" Type="DateTime" />
-          <Property Name="SuppressExpirationDate" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="tblStatementRef">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="UpdateType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="UpdateDate" Type="DateTime" />
-          <Property Name="CompleteStatement" Type="Boolean" />
-          <Property Name="PeriodLengthCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="PeriodLength" Type="Int32" />
-          <Property Name="PeriodEndDate" Type="DateTime" />
-          <Property Name="Source" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="SourceDate" Type="DateTime" />
-          <Property Name="ReportedAccountingStandardCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="ReportedAccountingStandard" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="STECFlag" Type="Boolean" />
-          <Property Name="AuditorCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="AuditOpinion" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="CurrencyConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CurrencyReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="RepToConvExRate" Type="Single" />
-          <Property Name="UnitConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="UnitReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="SystemDate" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="tblStd">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ReportYear" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="ReportYear" Type="Int32" Nullable="false" />
-          <Property Name="COA" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="Amount" Type="Single" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblStdCompanyInfo">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="CoType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="IRSNo" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-          <Property Name="CIKNo" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-          <Property Name="LatestFinancialsAnnual" Type="DateTime" />
-          <Property Name="LatestFinancialsInterim" Type="DateTime" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CurrentExchangeRate" Type="Single" />
-          <Property Name="CurrentExchangeRateDate" Type="DateTime" />
-          <Property Name="AuditorCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="AuditorName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="COAType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="BalanceSheetDisplayCode" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CashflowMethod" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="tblStdInterim">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ReportYear" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="ReportYear" Type="Int32" Nullable="false" />
-          <Property Name="COA" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="Amount" Type="Single" Nullable="false" />
-        </EntityType>
-        <EntityType Name="tblStdInterimCompanyInfo">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="CoType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="IRSNo" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-          <Property Name="CIKNo" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-          <Property Name="LatestFinancialsAnnual" Type="DateTime" />
-          <Property Name="LatestFinancialsInterim" Type="DateTime" />
-          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CurrentExchangeRate" Type="Single" />
-          <Property Name="CurrentExchangeRateDate" Type="DateTime" />
-          <Property Name="AuditorCode" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="AuditorName" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="COAType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="BalanceSheetDisplayCode" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CashflowMethod" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="tblStdInterimIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="IssueID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="IssueType" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="IssueDesc" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="CUSIP" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="MXSecurityID" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="Valoren" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="RIC" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="DisplayRIC" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="SEDOL" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="ListingType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="ExchangeCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="Region" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-          <Property Name="MostRecentSplit" Type="Single" />
-          <Property Name="MostRecentSplitDate" Type="DateTime" />
-          <Property Name="ParCurrency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="ParValue" Type="Single" />
-          <Property Name="SharesAuthorized" Type="Single" />
-          <Property Name="SharesOut" Type="Single" />
-          <Property Name="FloatingShares" Type="Single" />
-          <Property Name="Votes" Type="Single" />
-          <Property Name="ConversionFactor" Type="Single" />
-        </EntityType>
-        <EntityType Name="tblStdInterimRef">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="RefNo" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="FiscalYear" Type="Int32" />
-          <Property Name="InterimNumber" Type="Int16" />
-          <Property Name="UpdateType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="UpdateDate" Type="DateTime" />
-          <Property Name="CompleteStatement" Type="Boolean" />
-          <Property Name="PeriodLengthCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="PeriodLength" Type="Int32" />
-          <Property Name="PeriodEndDate" Type="DateTime" />
-          <Property Name="Source" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="SourceDate" Type="DateTime" />
-          <Property Name="ReportedAccountingStandardCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="ReportedAccountingStandard" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="STECFlag" Type="Boolean" />
-          <Property Name="CurrencyConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="CurrencyReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="RepToConvExRate" Type="Single" />
-          <Property Name="UnitConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="UnitReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="SystemDate" Type="DateTime" />
-        </EntityType>
-        <EntityType Name="tblStdIssue">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="IssueID" />
-          </Key>
-          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-          <Property Name="IssueID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="IssueType" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
-          <Property Name="IssueDesc" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
-          <Property Name="CUSIP" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
-          <Property Name="MXSecurityID" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="Valoren" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
-          <Property Name="RIC" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="DisplayRIC" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-          <Property Name="SEDOL" Type="String" MaxLength="7" Unicode="false" FixedLength="false" />
-          <Property Name="Active" Type="Boolean" />
-          <Property Name="ListingType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Name="ExchangeCode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="Region" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
-          <Property Name="MostRecentSplit" Type="Single" />
-          <Property Name="MostRecentSplitDate" Type="DateTime" />
-          <Property Name="ParCurrency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
-          <Property Name="ParValue" Type="Single" />
-          <Property Name="SharesAuthorized" Type="Single" />
-          <Property Name="SharesOut" Type="Single" />
-          <Property Name="FloatingShares" Type="Single" />
-          <Property Name="Votes" Type="Single" />
-          <Property Name="ConversionFactor" Type="Single" />
-        </EntityType>
         <ComplexType Name="ConsensusEstimates_Result">
           <Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
           <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
@@ -1394,347 +509,75 @@
           <Property Type="String" Name="EntityReturnType" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EntityType" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="Country_Master">
+          <Key>
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="COUNTRY_NAME" />
+            <PropertyRef Name="CURRENCY_CODE" />
+            <PropertyRef Name="CURRENCY_NAME" />
+            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
+          </Key>
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CURRENCY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY_NAME" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="MacroDataCTY_Result" >
+          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" />
+          <Property Type="String" Name="CATEGORY_NAME" Nullable="false" />
+          <Property Type="String" Name="DISPLAY_TYPE" Nullable="false" />
+          <Property Type="String" Name="DESCRIPTION" Nullable="false" />
+          <Property Type="Int16" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="Decimal" Name="YEAR_1988" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1989" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1990" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1991" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1992" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1993" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1994" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1995" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1996" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1997" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1998" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1999" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2000" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2001" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2002" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2003" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2004" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2005" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2006" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2007" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2008" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2009" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2010" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2011" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2012" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2013" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2014" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2015" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2016" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2017" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2018" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2019" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2020" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2021" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2022" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2023" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2024" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_2025" Nullable="true" />
+          <Property Type="Decimal" Name="FIVE_YEAR_AVG" Nullable="true" />
+          <Property Type="Decimal" Name="YEAR_1987" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ResearchModelStoreContainer" CdmEntityContainer="ResearchEntities">
-          <EntitySetMapping Name="tblActuals"><EntityTypeMapping TypeName="ResearchModel.tblActual"><MappingFragment StoreEntitySet="tblActual">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-            <ScalarProperty Name="Unit" ColumnName="Unit" />
-            <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
-            <ScalarProperty Name="AnnouncementDate" ColumnName="AnnouncementDate" />
-            <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblCompanies"><EntityTypeMapping TypeName="ResearchModel.tblCompany"><MappingFragment StoreEntitySet="tblCompany">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Addr1" ColumnName="Addr1" />
-            <ScalarProperty Name="Addr2" ColumnName="Addr2" />
-            <ScalarProperty Name="Addr3" ColumnName="Addr3" />
-            <ScalarProperty Name="City" ColumnName="City" />
-            <ScalarProperty Name="State" ColumnName="State" />
-            <ScalarProperty Name="Zip" ColumnName="Zip" />
-            <ScalarProperty Name="ContactName" ColumnName="ContactName" />
-            <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
-            <ScalarProperty Name="Email" ColumnName="Email" />
-            <ScalarProperty Name="MainPhone" ColumnName="MainPhone" />
-            <ScalarProperty Name="Fax" ColumnName="Fax" />
-            <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
-            <ScalarProperty Name="PublicSince" ColumnName="PublicSince" />
-            <ScalarProperty Name="Employees" ColumnName="Employees" />
-            <ScalarProperty Name="EmployeeReportDate" ColumnName="EmployeeReportDate" />
-            <ScalarProperty Name="SharesOut" ColumnName="SharesOut" />
-            <ScalarProperty Name="FloatingShares" ColumnName="FloatingShares" />
-            <ScalarProperty Name="ShareReportDate" ColumnName="ShareReportDate" />
-            <ScalarProperty Name="CommonShareholders" ColumnName="CommonShareholders" />
-            <ScalarProperty Name="ShareholdersReportDate" ColumnName="ShareholdersReportDate" />
-            <ScalarProperty Name="IncorporatedIn" ColumnName="IncorporatedIn" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-            <ScalarProperty Name="CoStatus" ColumnName="CoStatus" />
-            <ScalarProperty Name="CoType" ColumnName="CoType" />
-            <ScalarProperty Name="MostRecentExchange" ColumnName="MostRecentExchange" />
-            <ScalarProperty Name="MostRecentExchangeDate" ColumnName="MostRecentExchangeDate" />
-            <ScalarProperty Name="LatestAvailableAnnual" ColumnName="LatestAvailableAnnual" />
-            <ScalarProperty Name="LatestAvailableInterim" ColumnName="LatestAvailableInterim" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblCompanyInfoes"><EntityTypeMapping TypeName="ResearchModel.tblCompanyInfo"><MappingFragment StoreEntitySet="tblCompanyInfo">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Country" ColumnName="Country" />
-            <ScalarProperty Name="Ticker" ColumnName="Ticker" />
-            <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-            <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-            <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-            <ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
-            <ScalarProperty Name="RIC" ColumnName="RIC" />
-            <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-            <ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
-            <ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
-            <ScalarProperty Name="CodeSector" ColumnName="CodeSector" />
-            <ScalarProperty Name="CodeIndustry" ColumnName="CodeIndustry" />
-            <ScalarProperty Name="CodePrimary" ColumnName="CodePrimary" />
-            <ScalarProperty Name="RBSSEconomicSector" ColumnName="RBSSEconomicSector" />
-            <ScalarProperty Name="RBSSBusinessSector" ColumnName="RBSSBusinessSector" />
-            <ScalarProperty Name="RBSSIndustryGroup" ColumnName="RBSSIndustryGroup" />
-            <ScalarProperty Name="RBSSIndustry" ColumnName="RBSSIndustry" />
-            <ScalarProperty Name="Consensus" ColumnName="Consensus" />
-            <ScalarProperty Name="Estimate" ColumnName="Estimate" />
-            <ScalarProperty Name="Earnings" ColumnName="Earnings" />
-            <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
-            <ScalarProperty Name="GeneralNote" ColumnName="GeneralNote" />
-            <ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
-            <ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
-            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-            <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
-            <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-            <ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
-            <ScalarProperty Name="Active" ColumnName="Active" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblCompanyIssues"><EntityTypeMapping TypeName="ResearchModel.tblCompanyIssue"><MappingFragment StoreEntitySet="tblCompanyIssue">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="IssueOrder" ColumnName="IssueOrder" />
-            <ScalarProperty Name="IssueType" ColumnName="IssueType" />
-            <ScalarProperty Name="IssueDesc" ColumnName="IssueDesc" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Ticker" ColumnName="Ticker" />
-            <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-            <ScalarProperty Name="MXSecurityID" ColumnName="MXSecurityID" />
-            <ScalarProperty Name="Valoren" ColumnName="Valoren" />
-            <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-            <ScalarProperty Name="RIC" ColumnName="RIC" />
-            <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-            <ScalarProperty Name="ExchangeCode" ColumnName="ExchangeCode" />
-            <ScalarProperty Name="Country" ColumnName="Country" />
-            <ScalarProperty Name="MostRecentSplit" ColumnName="MostRecentSplit" />
-            <ScalarProperty Name="MostRecentSplitDate" ColumnName="MostRecentSplitDate" />
-            <ScalarProperty Name="GlobalListingType" ColumnName="GlobalListingType" />
-            <ScalarProperty Name="SharesPerListing" ColumnName="SharesPerListing" />
-            <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblCompanySummaries"><EntityTypeMapping TypeName="ResearchModel.tblCompanySummary"><MappingFragment StoreEntitySet="tblCompanySummary">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Category" ColumnName="Category" />
-            <ScalarProperty Name="Summary" ColumnName="Summary" />
-            <ScalarProperty Name="LastModified" ColumnName="LastModified" />
-            <ScalarProperty Name="FilingDate" ColumnName="FilingDate" />
-            <ScalarProperty Name="FilingType" ColumnName="FilingType" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblCompanyURLs"><EntityTypeMapping TypeName="ResearchModel.tblCompanyURL"><MappingFragment StoreEntitySet="tblCompanyURL">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Category" ColumnName="Category" />
-            <ScalarProperty Name="URL" ColumnName="URL" />
-            <ScalarProperty Name="LastModified" ColumnName="LastModified" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblConsensusEstimates"><EntityTypeMapping TypeName="ResearchModel.tblConsensusEstimate"><MappingFragment StoreEntitySet="tblConsensusEstimate">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-            <ScalarProperty Name="Unit" ColumnName="Unit" />
-            <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
-            <ScalarProperty Name="High" ColumnName="High" />
-            <ScalarProperty Name="Low" ColumnName="Low" />
-            <ScalarProperty Name="Mean" ColumnName="Mean" />
-            <ScalarProperty Name="StdDev" ColumnName="StdDev" />
-            <ScalarProperty Name="Median" ColumnName="Median" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblConsensusRecommendations"><EntityTypeMapping TypeName="ResearchModel.tblConsensusRecommendation"><MappingFragment StoreEntitySet="tblConsensusRecommendation">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-            <ScalarProperty Name="MeanRating" ColumnName="MeanRating" />
-            <ScalarProperty Name="MeanLabel" ColumnName="MeanLabel" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblDetailedEstimates"><EntityTypeMapping TypeName="ResearchModel.tblDetailedEstimate"><MappingFragment StoreEntitySet="tblDetailedEstimate">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-            <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
-            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-            <ScalarProperty Name="ConfirmationDate" ColumnName="ConfirmationDate" />
-            <ScalarProperty Name="SuppressStartDate" ColumnName="SuppressStartDate" />
-            <ScalarProperty Name="SuppressEndDate" ColumnName="SuppressEndDate" />
-            <ScalarProperty Name="SuppressOriginalDate" ColumnName="SuppressOriginalDate" />
-            <ScalarProperty Name="SuppressExpirationDate" ColumnName="SuppressExpirationDate" />
-            <ScalarProperty Name="Unit" ColumnName="Unit" />
-            <ScalarProperty Name="Amount" ColumnName="Amount" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblDetailedRecommendations"><EntityTypeMapping TypeName="ResearchModel.tblDetailedRecommendation"><MappingFragment StoreEntitySet="tblDetailedRecommendation">
-            <ScalarProperty Name="XRef" ColumnName="XRef" />
-            <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
-            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-            <ScalarProperty Name="STDOpinionCode" ColumnName="STDOpinionCode" />
-            <ScalarProperty Name="STDOpinion" ColumnName="STDOpinion" />
-            <ScalarProperty Name="BrokerOpinionCode" ColumnName="BrokerOpinionCode" />
-            <ScalarProperty Name="BrokerOpinion" ColumnName="BrokerOpinion" />
-            <ScalarProperty Name="ConfirmationDate" ColumnName="ConfirmationDate" />
-            <ScalarProperty Name="SuppressStartDate" ColumnName="SuppressStartDate" />
-            <ScalarProperty Name="SuppressEndDate" ColumnName="SuppressEndDate" />
-            <ScalarProperty Name="SuppressOriginalDate" ColumnName="SuppressOriginalDate" />
-            <ScalarProperty Name="SuppressExpirationDate" ColumnName="SuppressExpirationDate" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStatementRefs"><EntityTypeMapping TypeName="ResearchModel.tblStatementRef"><MappingFragment StoreEntitySet="tblStatementRef">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-            <ScalarProperty Name="UpdateType" ColumnName="UpdateType" />
-            <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-            <ScalarProperty Name="CompleteStatement" ColumnName="CompleteStatement" />
-            <ScalarProperty Name="PeriodLengthCode" ColumnName="PeriodLengthCode" />
-            <ScalarProperty Name="PeriodLength" ColumnName="PeriodLength" />
-            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-            <ScalarProperty Name="Source" ColumnName="Source" />
-            <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
-            <ScalarProperty Name="ReportedAccountingStandardCode" ColumnName="ReportedAccountingStandardCode" />
-            <ScalarProperty Name="ReportedAccountingStandard" ColumnName="ReportedAccountingStandard" />
-            <ScalarProperty Name="STECFlag" ColumnName="STECFlag" />
-            <ScalarProperty Name="AuditorCode" ColumnName="AuditorCode" />
-            <ScalarProperty Name="AuditOpinion" ColumnName="AuditOpinion" />
-            <ScalarProperty Name="CurrencyConvertedTo" ColumnName="CurrencyConvertedTo" />
-            <ScalarProperty Name="CurrencyReported" ColumnName="CurrencyReported" />
-            <ScalarProperty Name="RepToConvExRate" ColumnName="RepToConvExRate" />
-            <ScalarProperty Name="UnitConvertedTo" ColumnName="UnitConvertedTo" />
-            <ScalarProperty Name="UnitReported" ColumnName="UnitReported" />
-            <ScalarProperty Name="SystemDate" ColumnName="SystemDate" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStds"><EntityTypeMapping TypeName="ResearchModel.tblStd"><MappingFragment StoreEntitySet="tblStd">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
-            <ScalarProperty Name="COA" ColumnName="COA" />
-            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-            <ScalarProperty Name="Amount" ColumnName="Amount" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdCompanyInfoes"><EntityTypeMapping TypeName="ResearchModel.tblStdCompanyInfo"><MappingFragment StoreEntitySet="tblStdCompanyInfo">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Active" ColumnName="Active" />
-            <ScalarProperty Name="CoType" ColumnName="CoType" />
-            <ScalarProperty Name="IRSNo" ColumnName="IRSNo" />
-            <ScalarProperty Name="CIKNo" ColumnName="CIKNo" />
-            <ScalarProperty Name="LatestFinancialsAnnual" ColumnName="LatestFinancialsAnnual" />
-            <ScalarProperty Name="LatestFinancialsInterim" ColumnName="LatestFinancialsInterim" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-            <ScalarProperty Name="CurrentExchangeRate" ColumnName="CurrentExchangeRate" />
-            <ScalarProperty Name="CurrentExchangeRateDate" ColumnName="CurrentExchangeRateDate" />
-            <ScalarProperty Name="AuditorCode" ColumnName="AuditorCode" />
-            <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
-            <ScalarProperty Name="COAType" ColumnName="COAType" />
-            <ScalarProperty Name="BalanceSheetDisplayCode" ColumnName="BalanceSheetDisplayCode" />
-            <ScalarProperty Name="CashflowMethod" ColumnName="CashflowMethod" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterims"><EntityTypeMapping TypeName="ResearchModel.tblStdInterim"><MappingFragment StoreEntitySet="tblStdInterim">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
-            <ScalarProperty Name="COA" ColumnName="COA" />
-            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-            <ScalarProperty Name="Amount" ColumnName="Amount" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterimCompanyInfoes"><EntityTypeMapping TypeName="ResearchModel.tblStdInterimCompanyInfo"><MappingFragment StoreEntitySet="tblStdInterimCompanyInfo">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Active" ColumnName="Active" />
-            <ScalarProperty Name="CoType" ColumnName="CoType" />
-            <ScalarProperty Name="IRSNo" ColumnName="IRSNo" />
-            <ScalarProperty Name="CIKNo" ColumnName="CIKNo" />
-            <ScalarProperty Name="LatestFinancialsAnnual" ColumnName="LatestFinancialsAnnual" />
-            <ScalarProperty Name="LatestFinancialsInterim" ColumnName="LatestFinancialsInterim" />
-            <ScalarProperty Name="Currency" ColumnName="Currency" />
-            <ScalarProperty Name="CurrentExchangeRate" ColumnName="CurrentExchangeRate" />
-            <ScalarProperty Name="CurrentExchangeRateDate" ColumnName="CurrentExchangeRateDate" />
-            <ScalarProperty Name="AuditorCode" ColumnName="AuditorCode" />
-            <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
-            <ScalarProperty Name="COAType" ColumnName="COAType" />
-            <ScalarProperty Name="BalanceSheetDisplayCode" ColumnName="BalanceSheetDisplayCode" />
-            <ScalarProperty Name="CashflowMethod" ColumnName="CashflowMethod" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterimIssues"><EntityTypeMapping TypeName="ResearchModel.tblStdInterimIssue"><MappingFragment StoreEntitySet="tblStdInterimIssue">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="IssueID" ColumnName="IssueID" />
-            <ScalarProperty Name="IssueType" ColumnName="IssueType" />
-            <ScalarProperty Name="IssueDesc" ColumnName="IssueDesc" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Ticker" ColumnName="Ticker" />
-            <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-            <ScalarProperty Name="MXSecurityID" ColumnName="MXSecurityID" />
-            <ScalarProperty Name="Valoren" ColumnName="Valoren" />
-            <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-            <ScalarProperty Name="RIC" ColumnName="RIC" />
-            <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-            <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-            <ScalarProperty Name="Active" ColumnName="Active" />
-            <ScalarProperty Name="ListingType" ColumnName="ListingType" />
-            <ScalarProperty Name="ExchangeCode" ColumnName="ExchangeCode" />
-            <ScalarProperty Name="Country" ColumnName="Country" />
-            <ScalarProperty Name="Region" ColumnName="Region" />
-            <ScalarProperty Name="MostRecentSplit" ColumnName="MostRecentSplit" />
-            <ScalarProperty Name="MostRecentSplitDate" ColumnName="MostRecentSplitDate" />
-            <ScalarProperty Name="ParCurrency" ColumnName="ParCurrency" />
-            <ScalarProperty Name="ParValue" ColumnName="ParValue" />
-            <ScalarProperty Name="SharesAuthorized" ColumnName="SharesAuthorized" />
-            <ScalarProperty Name="SharesOut" ColumnName="SharesOut" />
-            <ScalarProperty Name="FloatingShares" ColumnName="FloatingShares" />
-            <ScalarProperty Name="Votes" ColumnName="Votes" />
-            <ScalarProperty Name="ConversionFactor" ColumnName="ConversionFactor" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterimRefs"><EntityTypeMapping TypeName="ResearchModel.tblStdInterimRef"><MappingFragment StoreEntitySet="tblStdInterimRef">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-            <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
-            <ScalarProperty Name="InterimNumber" ColumnName="InterimNumber" />
-            <ScalarProperty Name="UpdateType" ColumnName="UpdateType" />
-            <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-            <ScalarProperty Name="CompleteStatement" ColumnName="CompleteStatement" />
-            <ScalarProperty Name="PeriodLengthCode" ColumnName="PeriodLengthCode" />
-            <ScalarProperty Name="PeriodLength" ColumnName="PeriodLength" />
-            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-            <ScalarProperty Name="Source" ColumnName="Source" />
-            <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
-            <ScalarProperty Name="ReportedAccountingStandardCode" ColumnName="ReportedAccountingStandardCode" />
-            <ScalarProperty Name="ReportedAccountingStandard" ColumnName="ReportedAccountingStandard" />
-            <ScalarProperty Name="STECFlag" ColumnName="STECFlag" />
-            <ScalarProperty Name="CurrencyConvertedTo" ColumnName="CurrencyConvertedTo" />
-            <ScalarProperty Name="CurrencyReported" ColumnName="CurrencyReported" />
-            <ScalarProperty Name="RepToConvExRate" ColumnName="RepToConvExRate" />
-            <ScalarProperty Name="UnitConvertedTo" ColumnName="UnitConvertedTo" />
-            <ScalarProperty Name="UnitReported" ColumnName="UnitReported" />
-            <ScalarProperty Name="SystemDate" ColumnName="SystemDate" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="tblStdIssues"><EntityTypeMapping TypeName="ResearchModel.tblStdIssue"><MappingFragment StoreEntitySet="tblStdIssue">
-            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-            <ScalarProperty Name="IssueID" ColumnName="IssueID" />
-            <ScalarProperty Name="IssueType" ColumnName="IssueType" />
-            <ScalarProperty Name="IssueDesc" ColumnName="IssueDesc" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Ticker" ColumnName="Ticker" />
-            <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-            <ScalarProperty Name="MXSecurityID" ColumnName="MXSecurityID" />
-            <ScalarProperty Name="Valoren" ColumnName="Valoren" />
-            <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-            <ScalarProperty Name="RIC" ColumnName="RIC" />
-            <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-            <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-            <ScalarProperty Name="Active" ColumnName="Active" />
-            <ScalarProperty Name="ListingType" ColumnName="ListingType" />
-            <ScalarProperty Name="ExchangeCode" ColumnName="ExchangeCode" />
-            <ScalarProperty Name="Country" ColumnName="Country" />
-            <ScalarProperty Name="Region" ColumnName="Region" />
-            <ScalarProperty Name="MostRecentSplit" ColumnName="MostRecentSplit" />
-            <ScalarProperty Name="MostRecentSplitDate" ColumnName="MostRecentSplitDate" />
-            <ScalarProperty Name="ParCurrency" ColumnName="ParCurrency" />
-            <ScalarProperty Name="ParValue" ColumnName="ParValue" />
-            <ScalarProperty Name="SharesAuthorized" ColumnName="SharesAuthorized" />
-            <ScalarProperty Name="SharesOut" ColumnName="SharesOut" />
-            <ScalarProperty Name="FloatingShares" ColumnName="FloatingShares" />
-            <ScalarProperty Name="Votes" ColumnName="Votes" />
-            <ScalarProperty Name="ConversionFactor" ColumnName="ConversionFactor" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ConsensusEstimates" FunctionName="ResearchModel.Store.ConsensusEstimates">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ResearchModel.ConsensusEstimates_Result">
@@ -1929,6 +772,121 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Country_Master">
+            <EntityTypeMapping TypeName="ResearchModel.Country_Master">
+              <MappingFragment StoreEntitySet="Country_Master">
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_NAME" ColumnName="ASHEMM_PROPRIETARY_REGION_NAME" />
+                <ScalarProperty Name="MACRO_ECON_DATA_CURRENT" ColumnName="MACRO_ECON_DATA_CURRENT" />
+                <ScalarProperty Name="CURRENCY_NAME" ColumnName="CURRENCY_NAME" />
+                <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCTYSUMMARYDataReport" FunctionName="ResearchModel.Store.RetrieveCTYSUMMARYDataReportPerCountry">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchModel.MacroDataCTY_Result">
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+                <ScalarProperty Name="DISPLAY_TYPE" ColumnName="DISPLAY_TYPE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="YEAR_1988" ColumnName="YEAR_1988" />
+                <ScalarProperty Name="YEAR_1989" ColumnName="YEAR_1989" />
+                <ScalarProperty Name="YEAR_1990" ColumnName="YEAR_1990" />
+                <ScalarProperty Name="YEAR_1991" ColumnName="YEAR_1991" />
+                <ScalarProperty Name="YEAR_1992" ColumnName="YEAR_1992" />
+                <ScalarProperty Name="YEAR_1993" ColumnName="YEAR_1993" />
+                <ScalarProperty Name="YEAR_1994" ColumnName="YEAR_1994" />
+                <ScalarProperty Name="YEAR_1995" ColumnName="YEAR_1995" />
+                <ScalarProperty Name="YEAR_1996" ColumnName="YEAR_1996" />
+                <ScalarProperty Name="YEAR_1997" ColumnName="YEAR_1997" />
+                <ScalarProperty Name="YEAR_1998" ColumnName="YEAR_1998" />
+                <ScalarProperty Name="YEAR_1999" ColumnName="YEAR_1999" />
+                <ScalarProperty Name="YEAR_2000" ColumnName="YEAR_2000" />
+                <ScalarProperty Name="YEAR_2001" ColumnName="YEAR_2001" />
+                <ScalarProperty Name="YEAR_2002" ColumnName="YEAR_2002" />
+                <ScalarProperty Name="YEAR_2003" ColumnName="YEAR_2003" />
+                <ScalarProperty Name="YEAR_2004" ColumnName="YEAR_2004" />
+                <ScalarProperty Name="YEAR_2005" ColumnName="YEAR_2005" />
+                <ScalarProperty Name="YEAR_2006" ColumnName="YEAR_2006" />
+                <ScalarProperty Name="YEAR_2007" ColumnName="YEAR_2007" />
+                <ScalarProperty Name="YEAR_2008" ColumnName="YEAR_2008" />
+                <ScalarProperty Name="YEAR_2009" ColumnName="YEAR_2009" />
+                <ScalarProperty Name="YEAR_2010" ColumnName="YEAR_2010" />
+                <ScalarProperty Name="YEAR_2011" ColumnName="YEAR_2011" />
+                <ScalarProperty Name="YEAR_2012" ColumnName="YEAR_2012" />
+                <ScalarProperty Name="YEAR_2013" ColumnName="YEAR_2013" />
+                <ScalarProperty Name="YEAR_2014" ColumnName="YEAR_2014" />
+                <ScalarProperty Name="YEAR_2015" ColumnName="YEAR_2015" />
+                <ScalarProperty Name="YEAR_2016" ColumnName="YEAR_2016" />
+                <ScalarProperty Name="YEAR_2017" ColumnName="YEAR_2017" />
+                <ScalarProperty Name="YEAR_2018" ColumnName="YEAR_2018" />
+                <ScalarProperty Name="YEAR_2019" ColumnName="YEAR_2019" />
+                <ScalarProperty Name="YEAR_2020" ColumnName="YEAR_2020" />
+                <ScalarProperty Name="YEAR_2021" ColumnName="YEAR_2021" />
+                <ScalarProperty Name="YEAR_2022" ColumnName="YEAR_2022" />
+                <ScalarProperty Name="YEAR_2023" ColumnName="YEAR_2023" />
+                <ScalarProperty Name="YEAR_2024" ColumnName="YEAR_2024" />
+                <ScalarProperty Name="YEAR_2025" ColumnName="YEAR_2025" />
+                <ScalarProperty Name="FIVE_YEAR_AVG" ColumnName="FIVE_YEAR_AVG" />
+                <ScalarProperty Name="YEAR_1987" ColumnName="YEAR_1987" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveEMSummaryDataReportPerCountry" FunctionName="ResearchModel.Store.RetrieveEMSummaryDataReportPerCountry">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchModel.MacroDataCTY_Result">
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+                <ScalarProperty Name="DISPLAY_TYPE" ColumnName="DISPLAY_TYPE" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="YEAR_1988" ColumnName="YEAR_1988" />
+                <ScalarProperty Name="YEAR_1989" ColumnName="YEAR_1989" />
+                <ScalarProperty Name="YEAR_1990" ColumnName="YEAR_1990" />
+                <ScalarProperty Name="YEAR_1991" ColumnName="YEAR_1991" />
+                <ScalarProperty Name="YEAR_1992" ColumnName="YEAR_1992" />
+                <ScalarProperty Name="YEAR_1993" ColumnName="YEAR_1993" />
+                <ScalarProperty Name="YEAR_1994" ColumnName="YEAR_1994" />
+                <ScalarProperty Name="YEAR_1995" ColumnName="YEAR_1995" />
+                <ScalarProperty Name="YEAR_1996" ColumnName="YEAR_1996" />
+                <ScalarProperty Name="YEAR_1997" ColumnName="YEAR_1997" />
+                <ScalarProperty Name="YEAR_1998" ColumnName="YEAR_1998" />
+                <ScalarProperty Name="YEAR_1999" ColumnName="YEAR_1999" />
+                <ScalarProperty Name="YEAR_2000" ColumnName="YEAR_2000" />
+                <ScalarProperty Name="YEAR_2001" ColumnName="YEAR_2001" />
+                <ScalarProperty Name="YEAR_2002" ColumnName="YEAR_2002" />
+                <ScalarProperty Name="YEAR_2003" ColumnName="YEAR_2003" />
+                <ScalarProperty Name="YEAR_2004" ColumnName="YEAR_2004" />
+                <ScalarProperty Name="YEAR_2005" ColumnName="YEAR_2005" />
+                <ScalarProperty Name="YEAR_2006" ColumnName="YEAR_2006" />
+                <ScalarProperty Name="YEAR_2007" ColumnName="YEAR_2007" />
+                <ScalarProperty Name="YEAR_2008" ColumnName="YEAR_2008" />
+                <ScalarProperty Name="YEAR_2009" ColumnName="YEAR_2009" />
+                <ScalarProperty Name="YEAR_2010" ColumnName="YEAR_2010" />
+                <ScalarProperty Name="YEAR_2011" ColumnName="YEAR_2011" />
+                <ScalarProperty Name="YEAR_2012" ColumnName="YEAR_2012" />
+                <ScalarProperty Name="YEAR_2013" ColumnName="YEAR_2013" />
+                <ScalarProperty Name="YEAR_2014" ColumnName="YEAR_2014" />
+                <ScalarProperty Name="YEAR_2015" ColumnName="YEAR_2015" />
+                <ScalarProperty Name="YEAR_2016" ColumnName="YEAR_2016" />
+                <ScalarProperty Name="YEAR_2017" ColumnName="YEAR_2017" />
+                <ScalarProperty Name="YEAR_2018" ColumnName="YEAR_2018" />
+                <ScalarProperty Name="YEAR_2019" ColumnName="YEAR_2019" />
+                <ScalarProperty Name="YEAR_2020" ColumnName="YEAR_2020" />
+                <ScalarProperty Name="YEAR_2021" ColumnName="YEAR_2021" />
+                <ScalarProperty Name="YEAR_2022" ColumnName="YEAR_2022" />
+                <ScalarProperty Name="YEAR_2023" ColumnName="YEAR_2023" />
+                <ScalarProperty Name="YEAR_2024" ColumnName="YEAR_2024" />
+                <ScalarProperty Name="YEAR_2025" ColumnName="YEAR_2025" />
+                <ScalarProperty Name="FIVE_YEAR_AVG" ColumnName="FIVE_YEAR_AVG" />
+                <ScalarProperty Name="YEAR_1987" ColumnName="YEAR_1987" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1950,34 +908,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="ResearchDataModel">
-        <EntityTypeShape EntityType="ResearchModel.tblActual" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblCompany" Width="1.5" PointX="2.75" PointY="0.75" Height="6.5955208333333335" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblCompanyInfo" Width="1.5" PointX="4.75" PointY="0.75" Height="7.5570279947916656" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblCompanyIssue" Width="1.5" PointX="6.75" PointY="0.75" Height="4.6725065104166656" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblCompanySummary" Width="1.5" PointX="6.75" PointY="6.75" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblCompanyURL" Width="1.5" PointX="8.75" PointY="0.75" Height="1.7879850260416665" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblConsensusEstimate" Width="1.5" PointX="0.75" PointY="8.75" Height="4.480205078125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblConsensusRecommendation" Width="1.5" PointX="8.75" PointY="3.75" Height="2.3648893229166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblDetailedEstimate" Width="1.5" PointX="8.75" PointY="7.75" Height="4.6725065104166674" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblDetailedRecommendation" Width="1.5" PointX="2.75" PointY="9.75" Height="3.7109993489583353" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStatementRef" Width="1.5" PointX="4.75" PointY="9.75" Height="5.0571093750000031" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStd" Width="1.5" PointX="10.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdCompanyInfo" Width="1.5" PointX="10.75" PointY="3.75" Height="4.0956022135416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdInterim" Width="1.5" PointX="10.75" PointY="8.75" Height="1.9802864583333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdInterimCompanyInfo" Width="1.5" PointX="10.75" PointY="11.75" Height="4.0956022135416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdInterimIssue" Width="1.5" PointX="12.75" PointY="0.75" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdInterimRef" Width="1.5" PointX="12.75" PointY="7.75" Height="5.0571093750000031" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.tblStdIssue" Width="1.5" PointX="6.75" PointY="13.75" Height="6.2109179687500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="13.375" PointY="13.75" Height="1.5956835937500031" />
-        <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="0.75" PointY="14.75" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="9.5" PointY="12.625" Height="1.5956835937500031" />
+        <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="6.25" PointY="12.625" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="15.375" PointY="3.75" Height="8.51853515625001" />
-        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.5" PointX="3.375" PointY="15.75" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.5" PointX="7.875" PointY="12.625" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotGroupPreference" Width="1.5" PointX="17.625" PointY="0.875" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotPreference" Width="1.5" PointX="15.375" PointY="0.875" Height="1.7879850260416674" />
         <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" >
           <ConnectorPoint PointX="16.875" PointY="1.7689925130208337" />
           <ConnectorPoint PointX="17.625" PointY="1.7689925130208337" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="ResearchModel.Country_Master" Width="1.5" PointX="11.125" PointY="12.75" Height="2.3648893229166674" />
         </Diagram>
     </Diagrams>
   </Designer>

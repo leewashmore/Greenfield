@@ -99,6 +99,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\ModelFXDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\PerformanceDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -135,6 +140,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ChartExtensionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.FilterSelectionData.datasource">
@@ -222,6 +230,25 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CountrySelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -270,10 +297,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
+    <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
@@ -378,6 +412,7 @@
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
+    <WCFMetadataStorage Include="Service References\ModelFXDefinitions\" />
     <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
@@ -391,6 +426,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

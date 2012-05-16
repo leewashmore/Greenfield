@@ -68,7 +68,11 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member to store info about including or excluding cash securities
         /// </summary>
         private bool _isExCashSecurity = false;
-        
+
+        /// <summary>
+        /// Private member to store market cap gadget visibilty
+        /// </summary>
+        private Visibility _marketCapGadgetVisibility = Visibility.Collapsed;
         #endregion
 
         #region Constructor
@@ -121,6 +125,24 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+       /// <summary>
+       /// Stores Market cap gadget visibility 
+       /// </summary>
+            
+        public Visibility MarketCapGadgetVisibility
+        {
+            get
+            {
+                return _marketCapGadgetVisibility; 
+            }
+            set
+            {
+                _marketCapGadgetVisibility = value;
+                RaisePropertyChanged(() => this.MarketCapGadgetVisibility);                
+            }
+        }
+        
         /// <summary>
         /// Portfolio selected by user
         /// </summary>       
@@ -325,6 +347,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (marketCapitalizationData != null && marketCapitalizationData.Count > 0)
                 {
+                    MarketCapGadgetVisibility = Visibility.Visible;
                     Logging.LogMethodParameter(_logger, methodNamespace, marketCapitalizationData, 1);
                     MarketCapitalizationInfo = marketCapitalizationData.FirstOrDefault();
                     this.RaisePropertyChanged(() => this.MarketCapitalizationInfo);
@@ -354,8 +377,12 @@ namespace GreenField.Gadgets.ViewModels
                     IsExCashSecurity = isExCashSec;
                         if (_effectiveDate != null && _portfolioSelectionData != null )//&& _mktCapDataFilter != null)
                     {
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
-                        if (MarketCapitalizationDataLoadEvent != null)
+                            if(_mktCapDataFilter != null)
+                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            else
+                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+
+                            if (MarketCapitalizationDataLoadEvent != null)
                             MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }                    
                 

@@ -10,7 +10,7 @@ using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
-
+using GreenField.ServiceCaller.ModelFXDefinitions;
 
 namespace GreenField.ServiceCaller
 {
@@ -973,13 +973,13 @@ namespace GreenField.ServiceCaller
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for multiLine Benchmark Chart
         /// </summary>
-        /// <param name="objBenchmarkIdentifier">Benchmark Identifier</param>
-        /// <param name="objEffectiveDate">Effective Date for which Data is Required</param>
+        /// <param name="objSelectedPortfolio">Benchmark Identifier</param>
+        /// <param name="objStartDate">Effective Date for which Data is Required</param>
         /// <param name="callback">Collection of Benchmark Return Data</param>
-        public void RetrieveBenchmarkChartReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkChartReturnData>> callback)
+        public void RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate, Action<List<BenchmarkChartReturnData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveBenchmarkChartReturnDataAsync(objBenchmarkIdentifier, objEffectiveDate);
+            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities, objStartDate);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1475,6 +1475,109 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Service Caller Method for Chart Extension Gadget
+        /// </summary>
+        /// <param name="objSelectedEntities">Collection of selected Portfolio and/or Securitie</param>
+        /// <param name="objEffectiveDate">Selected Date</param>
+        /// <param name="callback">Collection of Chart Extension Data</param>
+        public void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveChartExtensionDataAsync(objSelectedEntities, objEffectiveDate);
+            client.RetrieveChartExtensionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
+
+        public void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveCountrySelectionDataAsync();
+            client.RetrieveCountrySelectionDataCompleted += (se,e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };        
+        }
+
+        
+
         #endregion
+
+
+        public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveMacroDatabaseKeyAnnualReportDataAsync(countryName);
+            client.RetrieveMacroDatabaseKeyAnnualReportDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+
+        }
+
+
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName);
+            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
     }
 }

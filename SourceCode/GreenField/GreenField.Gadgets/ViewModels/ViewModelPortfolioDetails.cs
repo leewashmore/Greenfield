@@ -242,8 +242,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
-
         #endregion
 
         #region CallbackMethods
@@ -276,11 +274,10 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, GetBenchmarkData, callback);
         }
 
-        private void GroupedData()
-        {
-            //List<string> groupedColumnData = ReturnGroupedColumnData(GroupingColumn.ToLower());
-        }
-
+        /// <summary>
+        /// Helper methods to Re-Calculate Weights while Grouping
+        /// </summary>
+        /// <param name="objGroupingColumnName">Column on the basis of which Grouping is Done</param>
         private void ReturnGroupedColumnData(string objGroupingColumnName)
         {
             try
@@ -308,9 +305,12 @@ namespace GreenField.Gadgets.ViewModels
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
                                 {
-                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                    if (sumDirtyValuePC != 0)
+                                        data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    if (sumBenchmarkWeight != 0)
+                                        data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    if (sumAshEmmModelWeight != 0)
+                                        data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
                                 }
                             }
                             break;
@@ -335,9 +335,12 @@ namespace GreenField.Gadgets.ViewModels
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
                                 {
-                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                    if (sumDirtyValuePC != 0)
+                                        data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    if (sumBenchmarkWeight != 0)
+                                        data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    if (sumAshEmmModelWeight != 0)
+                                        data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
                                 }
                             }
                             break;
@@ -362,9 +365,12 @@ namespace GreenField.Gadgets.ViewModels
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
                                 {
-                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                    if (sumDirtyValuePC != 0)
+                                        data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    if (sumBenchmarkWeight != 0)
+                                        data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    if (sumAshEmmModelWeight != 0)
+                                        data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
                                 }
                             }
                             break;
@@ -389,9 +395,12 @@ namespace GreenField.Gadgets.ViewModels
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
                                 {
-                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                    if (sumDirtyValuePC != 0)
+                                        data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    if (sumBenchmarkWeight != 0)
+                                        data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    if (sumAshEmmModelWeight != 0)
+                                        data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
                                 }
                             }
                             break;
@@ -416,9 +425,12 @@ namespace GreenField.Gadgets.ViewModels
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
                                 {
-                                    data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
-                                    data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
-                                    data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+                                    if (sumDirtyValuePC != 0)
+                                        data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+                                    if (sumBenchmarkWeight != 0)
+                                        data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+                                    if (sumAshEmmModelWeight != 0)
+                                        data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
                                 }
                             }
                             break;
@@ -437,9 +449,9 @@ namespace GreenField.Gadgets.ViewModels
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                                
+
             }
         }
 

@@ -8,7 +8,7 @@
 
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
 
-        <Grid x:Name="LayoutRoot" Background="White">
+        <Grid x:Name="LayoutRoot" Background="White" Visibility="{Binding MarketCapGadgetVisibility, Mode=TwoWay}">
             <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto"/>
