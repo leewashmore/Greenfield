@@ -21,6 +21,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
         
                 <!--Security Selector-->
@@ -205,7 +206,7 @@
                     
 
                 <!--Country Selector-->
-                <!--<Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="4">
+                <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                 <telerik:RadComboBox x:Name="cbCountrySelector"
@@ -213,6 +214,7 @@
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
+                                         ItemsSource="{Binding CountryName}"
                                          CanAutocompleteSelectItems="True" 
                                          CanKeyboardNavigationSelectItems="False" 
                                          HorizontalAlignment="Left"
@@ -227,7 +229,7 @@
                     </telerik:RadComboBox.ItemsPanel>
                 </telerik:RadComboBox>
             </StackPanel>
-        </Grid>-->
+        </Grid>
 
                 <!--Sector Selector-->
                 <!--<Grid Margin="5,0,0,0" Visibility="{Binding SectorSelectorVisibility}" Grid.Column="5">

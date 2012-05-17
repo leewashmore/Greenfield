@@ -6,6 +6,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.ServiceCaller.ModelFXDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -128,7 +129,14 @@ namespace GreenField.ServiceCaller
 
         void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback);
 
+        void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback);
+
+        void RetrieveMacroDatabaseKeyAnnualReportData(String countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
+
+        void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
+        
         void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback);
+
 
         #endregion
 

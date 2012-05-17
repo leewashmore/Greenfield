@@ -10,7 +10,7 @@ using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
-
+using GreenField.ServiceCaller.ModelFXDefinitions;
 
 namespace GreenField.ServiceCaller
 {
@@ -1504,6 +1504,81 @@ namespace GreenField.ServiceCaller
             };
         }
 
+
+        public void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveCountrySelectionDataAsync();
+            client.RetrieveCountrySelectionDataCompleted += (se,e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };        
+        }
+
+        
+
         #endregion
+
+
+        public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveMacroDatabaseKeyAnnualReportDataAsync(countryName);
+            client.RetrieveMacroDatabaseKeyAnnualReportDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+
+        }
+
+
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName);
+            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
     }
 }

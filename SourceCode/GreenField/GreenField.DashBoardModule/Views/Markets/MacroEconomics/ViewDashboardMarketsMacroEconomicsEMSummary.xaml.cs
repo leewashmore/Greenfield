@@ -54,7 +54,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = new ViewMacroDBKeyAnnualReportEMSummary(new ViewModelMacroDBKeyAnnualReportEMSummary(param));
         }
     }
 }

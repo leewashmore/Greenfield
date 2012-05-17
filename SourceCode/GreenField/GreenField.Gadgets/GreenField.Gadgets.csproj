@@ -155,6 +155,8 @@
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
     <Compile Include="ViewModels\ViewModelIndexConstituents.cs" />
+    <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReport.cs" />
+    <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReportEMSummary.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
     <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
@@ -196,6 +198,9 @@
     </Compile>
     <Compile Include="Views\ViewMacroDBKeyAnnualReport.xaml.cs">
       <DependentUpon>ViewMacroDBKeyAnnualReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewMacroDBKeyAnnualReportEMSummary.xaml.cs">
+      <DependentUpon>ViewMacroDBKeyAnnualReportEMSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
@@ -315,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewMacroDBKeyAnnualReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewMacroDBKeyAnnualReportEMSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
