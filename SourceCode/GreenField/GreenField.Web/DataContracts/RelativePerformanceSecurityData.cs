@@ -19,6 +19,9 @@ namespace GreenField.Web.DataContracts
         public string SecuritySectorName { get; set; }
 
         [DataMember]
+        public decimal? SecurityMarketValue { get; set; }
+
+        [DataMember]
         public decimal? SecurityAlpha { get; set; }
     }
 }

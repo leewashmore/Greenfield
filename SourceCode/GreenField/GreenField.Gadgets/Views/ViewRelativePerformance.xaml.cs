@@ -32,6 +32,31 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewRelativePerformance : ViewBaseUserControl
     {
+        #region Fields
+        private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
+        PortfolioSelectionData _PortfolioSelectionData;
+        private DateTime? _effectiveDate;
+        private IEventAggregator _eventAggregator;
+        private IDBInteractivity _dbInteractivity;
+        private ILoggerFacade _logger; 
+        #endregion
+
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="DataContextSource"></param>
+        public ViewRelativePerformance(ViewModelRelativePerformance DataContextSource)
+        {
+            InitializeComponent();
+            this.DataContext = DataContextSource;
+            DataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
+            DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
+            DataContextSource.RelativePerformanceToggledSectorGridBuildEvent += new RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEvent);
+            this.DataContextRelativePerformance = DataContextSource;
+        } 
+        #endregion
+
         #region Properties
         /// <summary>
         /// property to set data context
@@ -41,24 +66,6 @@ namespace GreenField.Gadgets.Views
         {
             get { return _dataContextRelativePerformance; }
             set { _dataContextRelativePerformance = value; }
-        }
-
-        #endregion
-
-        private List<RelativePerformanceSectorData> _relativePerformanceSectorInfo;
-        PortfolioSelectionData _PortfolioSelectionData;
-        private DateTime? _effectiveDate;
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-
-        public ViewRelativePerformance(ViewModelRelativePerformance DataContextSource)
-        {
-            InitializeComponent();
-            this.DataContext = DataContextSource;
-            DataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
-            DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
-            this.DataContextRelativePerformance = DataContextSource;
         }
 
         private List<RelativePerformanceData> _relativePerformanceInfo;
@@ -73,6 +80,35 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private List<RelativePerformanceSecurityData> _relativePerformanceSecurityInfo;
+        public List<RelativePerformanceSecurityData> RelativePerformanceSecurityInfo
+        {
+            get { return _relativePerformanceSecurityInfo; }
+            set
+            {
+                _relativePerformanceSecurityInfo = value;
+               // this.dgSectorSecurityDetails.ItemsSource = value;
+            }
+        }
+       
+        #endregion
+
+        #region Event
+        /// <summary>
+        /// event to handle RadBusyIndicator
+        /// </summary>
+        /// <param name="e"></param>
+        void DataContextSourceRelativePerformanceLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+                this.gridBusyIndicator.IsBusy = true;
+            else
+                this.gridBusyIndicator.IsBusy = false;
+        }
+
+        #endregion
+
+        #region Event Handlers
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
             _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
@@ -114,7 +150,7 @@ namespace GreenField.Gadgets.Views
                 string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorAlphaValue.ToString()), 2).ToString();
                 decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
                 string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorActiviePositionValue.ToString()), 2).ToString();
-                
+
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                 {
                     AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
@@ -124,29 +160,65 @@ namespace GreenField.Gadgets.Views
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
                 dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
                 dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
-                
+
                 dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
             }
 
             RelativePerformanceInfo = e.RelativePerformanceInfo;
 
-            _PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
-            _effectiveDate = (this.DataContext as ViewModelRelativePerformance).EffectiveDate;
-            _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
+            //_PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
+            //_effectiveDate = (this.DataContext as ViewModelRelativePerformance).EffectiveDate;
+            //_dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
             _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
         }
 
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRelativePerformanceLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        void RelativePerformanceToggledSectorGridBuildEvent(RelativePerformanceToggledSectorGridBuildEventArgs e)
         {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
+            //Clear grid of previous sector info
+            for (int columnIndex = 1; columnIndex < this.dgSectorSecurityDetails.Columns.Count - 1; columnIndex++)
+            {
+                dgSectorSecurityDetails.Columns.RemoveAt(columnIndex);
+            }
+
+            int cIndex = 0;
+
+            foreach (string countryName in e.RelativePerformanceCountryNameInfo)
+            {
+                List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryID == countryName).Select(t => t.SecurityName).ToList();
+
+                Telerik.Windows.Controls.GridViewDataColumn dataColumn = new Telerik.Windows.Controls.GridViewDataColumn();
+                dataColumn.Header = countryName;
+                dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceSecurityInfo[" + countryName + "]");
+                //dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceSecurityData[" + cIndex + "]");
+
+                StringBuilder CellTemp = new StringBuilder();
+                CellTemp.Append("<DataTemplate ");
+                CellTemp.Append("xmlns='http://schemas.microsoft.com/winfx/");
+                CellTemp.Append("2006/xaml/presentation' ");
+                CellTemp.Append("xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml' ");
+
+                //Be sure to replace "YourNamespace" and "YourAssembly" with your app's 
+                //actual namespace and assembly here
+                CellTemp.Append("xmlns:local = 'clr-namespace:GreenField.Gadgets.Views");
+                CellTemp.Append(";assembly=GreenField.Gadgets'>");
+                CellTemp.Append("<StackPanel Orientation='Horizontal'>");
+                CellTemp.Append("<TextBlock ");
+                CellTemp.Append("Text = '{Binding RelativePerformanceSecurityInfo[" + countryName + "]}'/>");
+                //CellTemp.Append("Text = '{Binding RelativePerformanceSecurityData[" + cIndex + "].SecurityName}'/>");
+                CellTemp.Append("</StackPanel>");
+                CellTemp.Append("</DataTemplate>");
+
+                dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
+                dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCell"] as Style;
+                dgSectorSecurityDetails.Columns.Insert(cIndex++, dataColumn);
+            }
+
+            //RelativePerformanceSecurityInfo = e.RelativePerformanceSecurityInfo;
+
+            //_PortfolioSelectionData = (this.DataContext as ViewModelRelativePerformance)._PortfolioSelectionData;
+            //_effectiveDate = (this.DataContext as ViewModelRelativePerformance).EffectiveDate;
+            //_dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
+            _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
         }
 
         #endregion
@@ -238,37 +310,6 @@ namespace GreenField.Gadgets.Views
  
         }
 
-        private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {           
-            if (e.OriginalSource is TextBlock)
-            {
-                string sectorID = ((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName.ToString();
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
-                {
-                    SectorID = sectorID
-                });
-            }
-        }
-
-        private void CustomHeaderCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.OriginalSource is TextBlock)
-            {
-                string sectorID = (e.OriginalSource as TextBlock).Text.ToString();
-                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
-                {
-                    CountryID = null,
-                    SectorID = sectorID
-                });
-                btnExportExcel.Visibility = Visibility.Collapsed;
-                btnExportPDF.Visibility = Visibility.Collapsed;
-                btnPrint.Visibility = Visibility.Collapsed;
-                dgRelativePerformance.Visibility = Visibility.Collapsed;
-                btnToggle.Visibility = Visibility.Visible;
-                dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
-                dgSectorSecurityDetails.Visibility = Visibility.Visible;
-            }
-        }
 
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
@@ -323,6 +364,8 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
+        #region Helper Methods
+
         private void btn_ToggleClick(object sender, RoutedEventArgs e)
         {
             btnExportExcel.Visibility = Visibility.Visible;
@@ -333,6 +376,41 @@ namespace GreenField.Gadgets.Views
             dgSectorSecurityDetails.Visibility = Visibility.Collapsed;
             dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
         }
+
+        private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock)
+            {
+                string sectorID = ((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName.ToString();
+                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                {
+                    SectorID = sectorID
+                });
+            }
+        }
+
+        private void CustomHeaderCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is TextBlock)
+            {
+                string sectorID = (e.OriginalSource as TextBlock).Text.ToString();
+                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
+                {
+                    CountryID = null,
+                    SectorID = sectorID
+                });
+
+                btnExportExcel.Visibility = Visibility.Collapsed;
+                btnExportPDF.Visibility = Visibility.Collapsed;
+                btnPrint.Visibility = Visibility.Collapsed;
+                dgRelativePerformance.Visibility = Visibility.Collapsed;
+                btnToggle.Visibility = Visibility.Visible;
+                dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
+                dgSectorSecurityDetails.Visibility = Visibility.Visible;
+            }
+        }
+
+        #endregion
 
         //#region Export To Pdf Methods
 

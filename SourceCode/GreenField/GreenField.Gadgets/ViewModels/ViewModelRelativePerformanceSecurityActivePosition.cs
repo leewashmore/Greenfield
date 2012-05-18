@@ -29,26 +29,30 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
+        //Selection Data
        PortfolioSelectionData _PortfolioSelectionData;
        
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+       /// <param name="param">DashboardGadgetParam</param>
         public ViewModelRelativePerformanceSecurityActivePosition(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+           _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
            Period = param.DashboardGadgetPayload.PeriodSelectionData;
 
            if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
            {
                _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period,RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
-           }
-            
+           }            
             
             if (_eventAggregator != null)
             {
@@ -62,6 +66,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+        /// <summary>
+        /// Contains data to be displayed in the gadget
+        /// </summary>
         private ObservableCollection<RelativePerformanceActivePositionData> _relativePerformanceActivePositionInfo;
         public ObservableCollection<RelativePerformanceActivePositionData> RelativePerformanceActivePositionInfo
         {
@@ -76,6 +83,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Effective date selected
+        /// </summary>
         private DateTime? _effectiveDate;
         public DateTime? EffectiveDate
         {
@@ -90,6 +100,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Period selected
+        /// </summary>
         private string _period;
         public string Period
         {
@@ -108,13 +121,17 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Events
         /// <summary>
-        /// event to handle data retrieval progress indicator
+        /// event handling for data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler SecurityActivePositionDataLoadEvent;
 
         #endregion
 
         #region Event Handlers
+        /// <summary>
+        /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -147,6 +164,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'EffectiveDateSet'
+        /// </summary>
+        /// <param name="effectiveDate"></param>
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -178,6 +199,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'PeriodReferenceSetEvent'
+        /// </summary>
+        /// <param name="period"></param>
         public void HandlePeriodReferenceSet(string period)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -209,6 +234,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
+        /// </summary>
+        /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
         public void HandleRelativePerformanceGridClickEvent(RelativePerformanceGridCellData filter)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -240,6 +269,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
+        /// <summary>
+        /// Callback method for RetrieveRelativePerformanceSecurityActivePositionData Service call
+        /// </summary>
+        /// <param name="result">RelativePerformanceActivePositionData Collection</param>
         private void RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod(List<RelativePerformanceActivePositionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

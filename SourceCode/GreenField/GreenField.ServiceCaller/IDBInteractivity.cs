@@ -146,7 +146,5 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        
-
     }
 }

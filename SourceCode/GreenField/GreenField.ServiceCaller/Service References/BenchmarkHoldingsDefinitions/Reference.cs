@@ -3656,6 +3656,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private string SecurityCountryIDField;
         
+        private System.Nullable<decimal> SecurityMarketValueField;
+        
         private string SecurityNameField;
         
         private string SecuritySectorNameField;
@@ -3682,6 +3684,19 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 if ((object.ReferenceEquals(this.SecurityCountryIDField, value) != true)) {
                     this.SecurityCountryIDField = value;
                     this.RaisePropertyChanged("SecurityCountryID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SecurityMarketValue {
+            get {
+                return this.SecurityMarketValueField;
+            }
+            set {
+                if ((this.SecurityMarketValueField.Equals(value) != true)) {
+                    this.SecurityMarketValueField = value;
+                    this.RaisePropertyChanged("SecurityMarketValue");
                 }
             }
         }

@@ -132,6 +132,7 @@
     <Compile Include="Helpers\Grid Row Reordering Behavior\ReorderedEventArgs.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\ReorderingEventArgs.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\RowReorderBehavior.cs" />
+    <Compile Include="Helpers\GridRowColorSelector.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />

@@ -121,8 +121,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<SectorBreakdownData> result = new List<SectorBreakdownData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -131,7 +134,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<SectorBreakdownData> result = new List<SectorBreakdownData>();
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -204,8 +206,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -214,7 +219,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -289,16 +293,17 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<TopHoldingsData> result = new List<TopHoldingsData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                     throw new Exception();
-
-                List<TopHoldingsData> result = new List<TopHoldingsData>();
 
                 //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare
                 decimal sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS
@@ -373,9 +378,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -384,7 +391,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
                 GF_PORTFOLIO_HOLDINGS benchmarkRow = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -399,7 +405,7 @@ namespace GreenField.Web.Services
 
                 if (benchmarkId != null)
                 {
-                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = entity.GF_BENCHMARK_HOLDINGS
+                    List<GF_BENCHMARK_HOLDINGS> data = entity.GF_BENCHMARK_HOLDINGS
                         .Where(t => (t.BENCHMARK_ID == benchmarkId) && (t.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                     if (data != null)
@@ -517,6 +523,9 @@ namespace GreenField.Web.Services
 
                 //Arguement Null Case, return Empty Set
                 if ((objPortfolioIdentifier == null) || (effectiveDate == null))
+                    return result;
+
+                if (objPortfolioIdentifier.PortfolioId == null)
                     return result;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -1896,6 +1905,13 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
 
@@ -1942,6 +1958,13 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
@@ -2024,6 +2047,13 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
@@ -2111,6 +2141,13 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
@@ -2171,8 +2208,17 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_DAILY_ATTRIBUTION>s1 =  data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
 
                 List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
                 if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
@@ -2190,10 +2236,8 @@ namespace GreenField.Web.Services
                         SecurityName = row.SEC_NAME,
                         SecurityCountryID = row.COUNTRY,
                         SecuritySectorName = row.GICS_LVL1,
+                        SecurityMarketValue = row.POR_RC_MARKET_VALUE,
                         SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period)
-                        //SecurityActivePosition = (double)
-                        //(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
-                        //- row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100)
                     });
                 }
                 return result.OrderByDescending(e => e.SecurityAlpha).ToList();
@@ -2323,7 +2367,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate"></param>
         /// <param name="country"></param>
         /// <param name="sector"></param>
-        /// <returns></returns>
+        /// <returns>GF_PERF_DAILY_ATTRIBUTION Collection</returns>
         private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveRelativePerformanceDailyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -2377,7 +2421,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate"></param>
         /// <param name="country"></param>
         /// <param name="sector"></param>
-        /// <returns></returns>
+        /// <returns>GF_PERF_MONTHLY_ATTRIBUTION Collection</returns>
         private List<GF_PERF_MONTHLY_ATTRIBUTION> RetrieveRelativePerformanceMonthlyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;

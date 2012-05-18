@@ -472,6 +472,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="SecurityAlpha" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SecurityCountryID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityMarketValue" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecuritySectorName" nillable="true" type="xs:string" />
     </xs:sequence>

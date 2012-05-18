@@ -293,7 +293,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
-            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            DateTime effectiveDate = new DateTime(2012,1,31);
 
             instance.RetrieveTopHoldingsData(portfolio, effectiveDate, (List<TopHoldingsData> resultSet) =>
             {
@@ -442,6 +442,165 @@ namespace Greenfield.ServiceCaller.UnitTest
 
         #endregion
 
+        #region Region Breakdown Gadget
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "Region Breakdown Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// portfolioIdentifiers - Empty
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataPortfolioIdentifierEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        #endregion
+
+        #region Sector Breakdown Gadget
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "Sector Breakdown Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// portfolioIdentifiers - Empty
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataPortfolioIdentifierEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        #endregion
+
         #region AssetAllocationGadget
 
         /// <summary>
@@ -458,10 +617,10 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             instance.RetrieveAssetAllocationData(portfolio, effectiveDate, (List<AssetAllocationData> resultSet) =>
-                {
-                    Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
-                    EnqueueTestComplete();
-                });
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
+                EnqueueTestComplete();
+            });
         }
 
         /// <summary>

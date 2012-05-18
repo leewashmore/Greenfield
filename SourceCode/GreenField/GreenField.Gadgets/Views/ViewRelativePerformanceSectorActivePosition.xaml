@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
-        mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
         <helpers:PercentageValueConverter x:Key="PercentageValueConverter"/>
@@ -29,6 +29,7 @@
     </helpers:ViewBaseUserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="White">
         <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+            <!--Grid to display data-->
             <telerik:RadGridView Name="dgRelativePerformance" 
                                  AutoGenerateColumns="False" 
                                  IsFilteringAllowed="True" 
