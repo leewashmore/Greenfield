@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Common.Helper;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -54,7 +55,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = new ViewCommodityIndex(new ViewModelCommodityIndex(param));
         }
     }
 }

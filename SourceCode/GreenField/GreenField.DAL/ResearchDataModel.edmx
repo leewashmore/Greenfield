@@ -16,6 +16,7 @@
       [Country_Master].[ASHEMM_PROPRIETARY_REGION_NAME] AS [ASHEMM_PROPRIETARY_REGION_NAME], 
       [Country_Master].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE]
       FROM [dbo].[Country_Master] AS [Country_Master]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="tblDashboardPreference" EntityType="ResearchModel.Store.tblDashboardPreference" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblHoldingsData" EntityType="ResearchModel.Store.tblHoldingsData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotEntityPreference" EntityType="ResearchModel.Store.tblMarketSnapshotEntityPreference" store:Type="Tables" Schema="dbo" />
@@ -43,6 +44,7 @@
             <PropertyRef Name="CURRENCY_CODE" />
             <PropertyRef Name="CURRENCY_NAME" />
             <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
+          </Key>
           <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
           <Property Name="COUNTRY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
           <Property Name="CURRENCY_CODE" Type="char" Nullable="false" MaxLength="4" />
@@ -50,6 +52,7 @@
           <Property Name="MACRO_ECON_DATA_CURRENT" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="ASHEMM_PROPRIETARY_REGION_NAME" Type="varchar" MaxLength="20" />
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="tblDashboardPreference">
           <Key>
             <PropertyRef Name="PreferenceID" />
@@ -342,11 +345,12 @@
           </FunctionImport>
           <EntitySet Name="Country_Master" EntityType="ResearchModel.Country_Master" />
           <FunctionImport Name="RetrieveCTYSUMMARYDataReport" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
-            <Parameter Name="country" Mode="In" Type="String" />
+          <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveEMSummaryDataReportPerCountry" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
-            <Parameter Name="country" Mode="In" Type="String" />
+          <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetCOMMODITY_FORECASTS" ReturnType="Collection(ResearchModel.CommodityResult)" />
         </EntityContainer>
         <ComplexType Name="ConsensusEstimates_Result">
           <Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
@@ -580,12 +584,12 @@
           <Property Type="Decimal" Name="FIVE_YEAR_AVG" Nullable="true" />
           <Property Type="Decimal" Name="YEAR_1987" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="CommodityForecastsResult" >
-          <Property Type="String" Name="COMMODITY_ID" Nullable="false" />
-          <Property Type="Decimal" Name="CURRENT_YEAR_END" Nullable="false" />
-          <Property Type="Decimal" Name="NEXT_YEAR_END" Nullable="false" />
-          <Property Type="Decimal" Name="LONG_TERM" Nullable="false" />
-          <Property Type="DateTime" Name="LASTUPDATE" Nullable="false" />
+        <ComplexType Name="CommodityResult">
+          <Property Type="String" Name="COMMODITY_ID" Nullable="true" MaxLength="50" />
+          <Property Type="Single" Name="CURRENT_YEAR_END" Nullable="true" />
+          <Property Type="Single" Name="NEXT_YEAR_END" Nullable="true" />
+          <Property Type="Single" Name="LONG_TERM" Nullable="true" />
+          <Property Type="DateTime" Name="LASTUPDATE" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -902,9 +906,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-           <FunctionImportMapping FunctionImportName="GetCommodityData" FunctionName="ResearchModel.Store.GetCOMMODITY_FORECASTS">
+          <FunctionImportMapping FunctionImportName="GetCOMMODITY_FORECASTS" FunctionName="ResearchModel.Store.GetCOMMODITY_FORECASTS">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ResearchModel.CommodityForecastsResult">
+              <ComplexTypeMapping TypeName="ResearchModel.CommodityResult">
                 <ScalarProperty Name="COMMODITY_ID" ColumnName="COMMODITY_ID" />
                 <ScalarProperty Name="CURRENT_YEAR_END" ColumnName="CURRENT_YEAR_END" />
                 <ScalarProperty Name="NEXT_YEAR_END" ColumnName="NEXT_YEAR_END" />
@@ -913,7 +917,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

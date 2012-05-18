@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="GreenField.Web.ModelFXOperations" CodeBehind="ModelFXOperations.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GreenField.Web.Services.ModelFXOperations" CodeBehind="ModelFXOperations.svc.cs" %>

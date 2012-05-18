@@ -12,6 +12,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.ModelFXDefinitions;
 
 namespace GreenField.Common.Helper
 {
@@ -43,5 +44,7 @@ namespace GreenField.Common.Helper
         public String PeriodSelectionData { get; set; }
 
         public bool IsExCashSecurityData { get; set; }
+
+        
     }
 }

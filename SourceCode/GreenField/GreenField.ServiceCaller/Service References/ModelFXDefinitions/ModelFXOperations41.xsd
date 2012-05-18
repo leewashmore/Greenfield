@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:complexType name="ArrayOfCommodityResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommodityResult" nillable="true" type="tns:CommodityResult" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCommodityResult" nillable="true" type="tns:ArrayOfCommodityResult" />
+  <xs:complexType name="CommodityResult">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="COMMODITY_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CURRENT_YEAR_END" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="LASTUPDATE" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="LONG_TERM" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="NEXT_YEAR_END" nillable="true" type="xs:float" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="CommodityResult" nillable="true" type="tns:CommodityResult" />
+</xs:schema>

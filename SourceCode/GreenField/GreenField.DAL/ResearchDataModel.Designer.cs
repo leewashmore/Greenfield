@@ -864,14 +864,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectResult<CommodityForecastsResult> GetCommodityData()
-        {
-            return base.ExecuteFunction<CommodityForecastsResult>("GetCommodityData");
-        }
-
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="country">No Metadata Documentation available.</param>
         public ObjectResult<MacroDataCTY_Result> RetrieveCTYSUMMARYDataReport(global::System.String country)
         {
@@ -905,6 +897,14 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<MacroDataCTY_Result>("RetrieveEMSummaryDataReportPerCountry", countryParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<CommodityResult> GetCOMMODITY_FORECASTS()
+        {
+            return base.ExecuteFunction<CommodityResult>("GetCOMMODITY_FORECASTS");
         }
 
         #endregion
@@ -3098,6 +3098,139 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="CommodityResult")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class CommodityResult : ComplexObject
+    {
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COMMODITY_ID
+        {
+            get
+            {
+                return _COMMODITY_ID;
+            }
+            set
+            {
+                OnCOMMODITY_IDChanging(value);
+                ReportPropertyChanging("COMMODITY_ID");
+                _COMMODITY_ID = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COMMODITY_ID");
+                OnCOMMODITY_IDChanged();
+            }
+        }
+        private global::System.String _COMMODITY_ID;
+        partial void OnCOMMODITY_IDChanging(global::System.String value);
+        partial void OnCOMMODITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> CURRENT_YEAR_END
+        {
+            get
+            {
+                return _CURRENT_YEAR_END;
+            }
+            set
+            {
+                OnCURRENT_YEAR_ENDChanging(value);
+                ReportPropertyChanging("CURRENT_YEAR_END");
+                _CURRENT_YEAR_END = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CURRENT_YEAR_END");
+                OnCURRENT_YEAR_ENDChanged();
+            }
+        }
+        private Nullable<global::System.Single> _CURRENT_YEAR_END;
+        partial void OnCURRENT_YEAR_ENDChanging(Nullable<global::System.Single> value);
+        partial void OnCURRENT_YEAR_ENDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> NEXT_YEAR_END
+        {
+            get
+            {
+                return _NEXT_YEAR_END;
+            }
+            set
+            {
+                OnNEXT_YEAR_ENDChanging(value);
+                ReportPropertyChanging("NEXT_YEAR_END");
+                _NEXT_YEAR_END = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_YEAR_END");
+                OnNEXT_YEAR_ENDChanged();
+            }
+        }
+        private Nullable<global::System.Single> _NEXT_YEAR_END;
+        partial void OnNEXT_YEAR_ENDChanging(Nullable<global::System.Single> value);
+        partial void OnNEXT_YEAR_ENDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> LONG_TERM
+        {
+            get
+            {
+                return _LONG_TERM;
+            }
+            set
+            {
+                OnLONG_TERMChanging(value);
+                ReportPropertyChanging("LONG_TERM");
+                _LONG_TERM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LONG_TERM");
+                OnLONG_TERMChanged();
+            }
+        }
+        private Nullable<global::System.Single> _LONG_TERM;
+        partial void OnLONG_TERMChanging(Nullable<global::System.Single> value);
+        partial void OnLONG_TERMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LASTUPDATE
+        {
+            get
+            {
+                return _LASTUPDATE;
+            }
+            set
+            {
+                OnLASTUPDATEChanging(value);
+                ReportPropertyChanging("LASTUPDATE");
+                _LASTUPDATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LASTUPDATE");
+                OnLASTUPDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LASTUPDATE;
+        partial void OnLASTUPDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnLASTUPDATEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="ConsensusEstimates_Result")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -4391,161 +4524,6 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _YEAR_1997;
         partial void OnYEAR_1997Changing(Nullable<global::System.Decimal> value);
         partial void OnYEAR_1997Changed();
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ResearchModel", Name="CommodityForecastsResult")]
-    [DataContractAttribute(IsReference=true)]
-    [Serializable()]
-    public partial class CommodityForecastsResult : ComplexObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new CommodityForecastsResult object.
-        /// </summary>
-        /// <param name="cOMMODITY_ID">Initial value of the COMMODITY_ID property.</param>
-        /// <param name="cURRENT_YEAR_END">Initial value of the CURRENT_YEAR_END property.</param>
-        /// <param name="nEXT_YEAR_END">Initial value of the NEXT_YEAR_END property.</param>
-        /// <param name="lONG_TERM">Initial value of the LONG_TERM property.</param>
-        /// <param name="lASTUPDATE">Initial value of the LASTUPDATE property.</param>
-        public static CommodityForecastsResult CreateCommodityForecastsResult(global::System.String cOMMODITY_ID, global::System.Decimal cURRENT_YEAR_END, global::System.Decimal nEXT_YEAR_END, global::System.Decimal lONG_TERM, global::System.DateTime lASTUPDATE)
-        {
-            CommodityForecastsResult commodityForecastsResult = new CommodityForecastsResult();
-            commodityForecastsResult.COMMODITY_ID = cOMMODITY_ID;
-            commodityForecastsResult.CURRENT_YEAR_END = cURRENT_YEAR_END;
-            commodityForecastsResult.NEXT_YEAR_END = nEXT_YEAR_END;
-            commodityForecastsResult.LONG_TERM = lONG_TERM;
-            commodityForecastsResult.LASTUPDATE = lASTUPDATE;
-            return commodityForecastsResult;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String COMMODITY_ID
-        {
-            get
-            {
-                return _COMMODITY_ID;
-            }
-            set
-            {
-                OnCOMMODITY_IDChanging(value);
-                ReportPropertyChanging("COMMODITY_ID");
-                _COMMODITY_ID = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("COMMODITY_ID");
-                OnCOMMODITY_IDChanged();
-            }
-        }
-        private global::System.String _COMMODITY_ID;
-        partial void OnCOMMODITY_IDChanging(global::System.String value);
-        partial void OnCOMMODITY_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal CURRENT_YEAR_END
-        {
-            get
-            {
-                return _CURRENT_YEAR_END;
-            }
-            set
-            {
-                OnCURRENT_YEAR_ENDChanging(value);
-                ReportPropertyChanging("CURRENT_YEAR_END");
-                _CURRENT_YEAR_END = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CURRENT_YEAR_END");
-                OnCURRENT_YEAR_ENDChanged();
-            }
-        }
-        private global::System.Decimal _CURRENT_YEAR_END;
-        partial void OnCURRENT_YEAR_ENDChanging(global::System.Decimal value);
-        partial void OnCURRENT_YEAR_ENDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal NEXT_YEAR_END
-        {
-            get
-            {
-                return _NEXT_YEAR_END;
-            }
-            set
-            {
-                OnNEXT_YEAR_ENDChanging(value);
-                ReportPropertyChanging("NEXT_YEAR_END");
-                _NEXT_YEAR_END = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NEXT_YEAR_END");
-                OnNEXT_YEAR_ENDChanged();
-            }
-        }
-        private global::System.Decimal _NEXT_YEAR_END;
-        partial void OnNEXT_YEAR_ENDChanging(global::System.Decimal value);
-        partial void OnNEXT_YEAR_ENDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Decimal LONG_TERM
-        {
-            get
-            {
-                return _LONG_TERM;
-            }
-            set
-            {
-                OnLONG_TERMChanging(value);
-                ReportPropertyChanging("LONG_TERM");
-                _LONG_TERM = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LONG_TERM");
-                OnLONG_TERMChanged();
-            }
-        }
-        private global::System.Decimal _LONG_TERM;
-        partial void OnLONG_TERMChanging(global::System.Decimal value);
-        partial void OnLONG_TERMChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime LASTUPDATE
-        {
-            get
-            {
-                return _LASTUPDATE;
-            }
-            set
-            {
-                OnLASTUPDATEChanging(value);
-                ReportPropertyChanging("LASTUPDATE");
-                _LASTUPDATE = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LASTUPDATE");
-                OnLASTUPDATEChanged();
-            }
-        }
-        private global::System.DateTime _LASTUPDATE;
-        partial void OnLASTUPDATEChanging(global::System.DateTime value);
-        partial void OnLASTUPDATEChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

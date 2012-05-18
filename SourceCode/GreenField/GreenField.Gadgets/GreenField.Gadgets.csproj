@@ -150,6 +150,7 @@
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
+    <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />

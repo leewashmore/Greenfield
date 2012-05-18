@@ -6,6 +6,8 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportData_InputMessage">
@@ -35,6 +37,15 @@
   <wsdl:message name="ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveCommodityData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCommodityData" />
+  </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveCommodityData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCommodityDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveCommodityData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ModelFXOperations">
     <wsdl:operation name="RetrieveMacroDatabaseKeyAnnualReportData">
       <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportData" message="tns:ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportData_InputMessage" />
@@ -50,6 +61,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSummary" message="tns:ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryResponse" message="tns:ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryServiceFaultFault" name="ServiceFaultFault" message="tns:ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCommodityData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityData" message="tns:ModelFXOperations_RetrieveCommodityData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataResponse" message="tns:ModelFXOperations_RetrieveCommodityData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataServiceFaultFault" name="ServiceFaultFault" message="tns:ModelFXOperations_RetrieveCommodityData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ModelFXOperations" type="tns:ModelFXOperations">
@@ -80,6 +96,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummary">
       <soap:operation soapAction="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSummary" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCommodityData">
+      <soap:operation soapAction="http://tempuri.org/ModelFXOperations/RetrieveCommodityData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

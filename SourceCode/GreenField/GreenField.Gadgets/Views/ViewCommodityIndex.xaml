@@ -1,111 +1,52 @@
-﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewCommodityIndex"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewCommodityIndex"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
-    
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>                        
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.6*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.2*"/>
-        </Grid.ColumnDefinitions>
-        <Border x:Name="ComIndBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Commodity/Index" Margin="5,5,0,0"  HorizontalAlignment="Left" VerticalAlignment="Center"  Foreground="White" FontFamily="Arial" FontSize="7"  FontWeight="Bold" Height="15" />
-        </Border>
-        <Border x:Name="YTDBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="1">
-            <TextBlock Text="YTD" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <Border x:Name="FirstYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="2">
-            <TextBlock  Text="1 Year" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <Border x:Name="ThirdYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="3">
-            <TextBlock Text="3 Year" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <Border x:Name="CurrentPBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="4">
-            <TextBlock  Text="Current P" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <Border x:Name="FirstPriceBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="5">
-            <TextBlock Text="Price (20:" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <Border x:Name="SecondPriceBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="6">
-            <TextBlock  Text="Price (20:" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
-        </Border>
-        <!-- Gold-->
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" Text="Gold" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+            <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0">
+                <telerik:RadGridView Name="dgCommodity" AutoGenerateColumns="False" ItemsSource="{Binding CommodityData}" 
+                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
+                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
+                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgColCommodityID" Header="Commodity/Index" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding COMMODITY_ID}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColCURRENT_YEAR_END" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                Header="CURRENT_YEAR_END" 
+                                                DataMemberBinding="{Binding CURRENT_YEAR_END}" 
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColLASTUPDATE" Header="LASTUPDATE" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding LASTUPDATE}" 
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColLONG_TERM" Header="LONG_TERM" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding LONG_TERM}" 
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColNEXT_YEAR_END" Header="NEXT_YEAR_END" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding NEXT_YEAR_END}" 
+                                                Width="Auto" HeaderTextAlignment="Right"  CellStyle="{StaticResource GridViewCellStyle}" />
+                    </telerik:RadGridView.Columns>
 
-        <!-- Pulp-->
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,5,0,0" Text="Pulp" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-
-        <!--Silver -->
-        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Text="Silver" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-
-        <!--Steel -->
-        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0,5,0,0" Text="Steel" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-
-        <!--... -->
-        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0,5,0,0" Text="..." FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-
-        <!--... -->
-        <TextBlock Grid.Row="6" Grid.Column="0" Margin="0,5,0,0" Text="..." FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-
-        
+                </telerik:RadGridView>
+            </telerik:RadBusyIndicator>
+        </Border>
     </Grid>
-</UserControl>
+</helpers:ViewBaseUserControl>

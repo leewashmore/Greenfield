@@ -780,6 +780,111 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommodityResult", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class CommodityResult : GreenField.ServiceCaller.ModelFXDefinitions.ComplexObject {
+        
+        private string COMMODITY_IDField;
+        
+        private System.Nullable<float> CURRENT_YEAR_ENDField;
+        
+        private System.Nullable<System.DateTime> LASTUPDATEField;
+        
+        private System.Nullable<float> LONG_TERMField;
+        
+        private System.Nullable<float> NEXT_YEAR_ENDField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string COMMODITY_ID {
+            get {
+                return this.COMMODITY_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.COMMODITY_IDField, value) != true)) {
+                    this.COMMODITY_IDField = value;
+                    this.RaisePropertyChanged("COMMODITY_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> CURRENT_YEAR_END {
+            get {
+                return this.CURRENT_YEAR_ENDField;
+            }
+            set {
+                if ((this.CURRENT_YEAR_ENDField.Equals(value) != true)) {
+                    this.CURRENT_YEAR_ENDField = value;
+                    this.RaisePropertyChanged("CURRENT_YEAR_END");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LASTUPDATE {
+            get {
+                return this.LASTUPDATEField;
+            }
+            set {
+                if ((this.LASTUPDATEField.Equals(value) != true)) {
+                    this.LASTUPDATEField = value;
+                    this.RaisePropertyChanged("LASTUPDATE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> LONG_TERM {
+            get {
+                return this.LONG_TERMField;
+            }
+            set {
+                if ((this.LONG_TERMField.Equals(value) != true)) {
+                    this.LONG_TERMField = value;
+                    this.RaisePropertyChanged("LONG_TERM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> NEXT_YEAR_END {
+            get {
+                return this.NEXT_YEAR_ENDField;
+            }
+            set {
+                if ((this.NEXT_YEAR_ENDField.Equals(value) != true)) {
+                    this.NEXT_YEAR_ENDField = value;
+                    this.RaisePropertyChanged("NEXT_YEAR_END");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult))]
+    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult))]
+    public partial class ComplexObject : GreenField.ServiceCaller.ModelFXDefinitions.StructuralObject {
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ModelFXDefinitions.ModelFXOperations")]
     public interface ModelFXOperations {
@@ -807,6 +912,12 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         System.IAsyncResult BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData> EndRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityData", ReplyAction="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCommodityData(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> EndRetrieveCommodityData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -872,6 +983,25 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCommodityDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCommodityDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ModelFXOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations>, GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations {
         
         private BeginOperationDelegate onBeginRetrieveMacroDatabaseKeyAnnualReportDataDelegate;
@@ -891,6 +1021,12 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         private EndOperationDelegate onEndRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveCommodityDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCommodityDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCommodityDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -950,6 +1086,8 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         public event System.EventHandler<RetrieveCountrySelectionDataCompletedEventArgs> RetrieveCountrySelectionDataCompleted;
         
         public event System.EventHandler<RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedEventArgs> RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted;
+        
+        public event System.EventHandler<RetrieveCommodityDataCompletedEventArgs> RetrieveCommodityDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1091,6 +1229,50 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                         countryNameVal}, this.onEndRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate, this.onRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.BeginRetrieveCommodityData(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCommodityData(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommodityData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCommodityData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCommodityData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).BeginRetrieveCommodityData(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCommodityData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommodityData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCommodityDataCompleted(object state) {
+            if ((this.RetrieveCommodityDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCommodityDataCompleted(this, new RetrieveCommodityDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCommodityDataAsync() {
+            this.RetrieveCommodityDataAsync(null);
+        }
+        
+        public void RetrieveCommodityDataAsync(object userState) {
+            if ((this.onBeginRetrieveCommodityDataDelegate == null)) {
+                this.onBeginRetrieveCommodityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCommodityData);
+            }
+            if ((this.onEndRetrieveCommodityDataDelegate == null)) {
+                this.onEndRetrieveCommodityDataDelegate = new EndOperationDelegate(this.OnEndRetrieveCommodityData);
+            }
+            if ((this.onRetrieveCommodityDataCompletedDelegate == null)) {
+                this.onRetrieveCommodityDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCommodityDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCommodityDataDelegate, null, this.onEndRetrieveCommodityDataDelegate, this.onRetrieveCommodityDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1202,6 +1384,18 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData> EndRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData>)(base.EndInvoke("RetrieveMacroDatabaseKeyAnnualReportDataEMSummary", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveCommodityData(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCommodityData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> EndRetrieveCommodityData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult>)(base.EndInvoke("RetrieveCommodityData", _args, result)));
                 return _result;
             }
         }

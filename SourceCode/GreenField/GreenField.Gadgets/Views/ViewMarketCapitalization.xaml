@@ -38,13 +38,13 @@
         </Border>
             <!--Weighted Average-->
         <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" Text="Weighted Average" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioWtdAvg, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkWtdAvg, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioWtdAvg, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkWtdAvg, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Weighted Median-->
         <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,5,0,0" Text="Weighted Median" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioWtdMedian, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkWtdMedian, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioWtdMedian, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkWtdMedian, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Mega Bucket-->
         <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -52,8 +52,8 @@
             <TextBlock Text=" > " HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <TextBlock Text="{Binding MarketCapitalizationInfo.LargeRange, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </StackPanel>
-        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMegaRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMegaRange, Mode=TwoWay, StringFormat=\{0:n4\}% }" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMegaRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMegaRange, Mode=TwoWay, StringFormat=\{0:n1\}% }" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Large Bucket-->
         <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -62,8 +62,8 @@
             <TextBlock Text=" - " HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <TextBlock Text="{Binding MarketCapitalizationInfo.LargeRange}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </StackPanel>
-        <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumLargeRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumLargeRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumLargeRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumLargeRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Medium Bucket-->
         <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -72,8 +72,8 @@
             <TextBlock Text=" - " HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <TextBlock Text="{Binding MarketCapitalizationInfo.MediumRange, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </StackPanel>
-        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMediumRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMediumRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMediumRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMediumRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Small Bucket-->
         <StackPanel Grid.Row="6" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -82,8 +82,8 @@
             <TextBlock Text=" - " HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <TextBlock Text="{Binding MarketCapitalizationInfo.SmallRange}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </StackPanel>
-        <TextBlock Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumSmallRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumSmallRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumSmallRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumSmallRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Micro Bucket-->
         <StackPanel Grid.Row="7" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -91,8 +91,8 @@
             <TextBlock Text=" &lt; " HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
             <TextBlock Text="{Binding MarketCapitalizationInfo.MicroRange, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </StackPanel>
-        <TextBlock Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMicroRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMicroRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumMicroRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumMicroRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
 
         <!--Undefined Bucket-->
         <StackPanel Grid.Row="8" Grid.Column="0" Margin="0,5,0,0" Orientation="Horizontal">
@@ -100,8 +100,8 @@
             <!--<TextBlock Text=" &lt; " HorizontalAlignment="Left" VerticalAlignment="Center"/>-->
             <!--<TextBlock Text="{Binding MarketCapitalizationInfo.UndefinedRange}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>-->
         </StackPanel>
-        <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n4\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.PortfolioSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Margin="0,5,0,0" Text="{Binding MarketCapitalizationInfo.BenchmarkSumUndefinedRange, Mode=TwoWay, StringFormat=\{0:n1\}%}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
         </Grid>
     </telerik:RadBusyIndicator>
 </UserControl>

@@ -1313,7 +1313,7 @@ namespace GreenField.Web.Services
 
 
             //Applying filters
-            if (filterType != null && filterValue != null)
+            if (filterType != null )//&& filterValue != null)
             {
                 switch (filterType)
                 {
@@ -1400,7 +1400,7 @@ namespace GreenField.Web.Services
                 return null;
 
             //Applying filters
-            if (filterType != null && filterValue != null)
+            if (filterType != null )//&& filterValue != null)
             {
                 switch (filterType)
                 {
