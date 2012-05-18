@@ -146,11 +146,7 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        #region Slice 4 - FX
-
-        void RetrieveCommodityData(Action<List<CommodityResult>> callback);
-
-        #endregion
+        
 
     }
 }

@@ -595,7 +595,6 @@ namespace Greenfield.ServiceCaller.UnitTest
 
         #endregion
 
-
         #endregion
     }
 }
