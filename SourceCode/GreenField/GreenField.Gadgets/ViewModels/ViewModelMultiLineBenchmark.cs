@@ -56,38 +56,20 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
                 _periodSelectionData = param.DashboardGadgetPayload.PeriodSelectionData;
 
+                if (_eventAggregator != null)
+                    SubscribeEvents(_eventAggregator);
+
                 if ((_entitySelectionData != null) && (_periodSelectionData != null) && (_entitySelectionData.LongName != null))
                 {
                     Dictionary<string, string> objSelectedEntity = new Dictionary<string, string>();
                     objSelectedEntity.Add("SECURITY", _entitySelectionData.LongName);
                     if (_selectedPortfolio != null && _selectedPortfolio.PortfolioId != null)
                         objSelectedEntity.Add("PORTFOLIO", _selectedPortfolio.PortfolioId);
-                    StartDate = GetStartDate(_periodSelectionData);
-                    if (StartDate != null)
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+
+                    if (objSelectedEntity != null)
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, RetrieveBenchmarkChartDataCallBackMethod);
                 }
             }
-        }
-
-        #endregion
-
-        #region Events
-
-        public event DataRetrievalProgressIndicatorEventHandler MultiLineBenchmarkDataLoadedEvent;
-
-        #endregion
-
-        #region EventSubscribe
-
-        /// <summary>
-        /// Subscribing to Events
-        /// </summary>
-        /// <param name="_eventAggregator"></param>
-        public void SubscribeEvents(IEventAggregator _eventAggregator)
-        {
-            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
         }
 
         #endregion
@@ -101,10 +83,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_chartEntityList == null)
                     _chartEntityList = new ObservableCollection<BenchmarkSelectionData>();
-                if (_chartEntityList.Count >= 1)
-                    AddToChartVisibility = "Visible";
-                else
-                    AddToChartVisibility = "Collapsed";
                 return _chartEntityList;
             }
             set
@@ -171,22 +149,39 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected Period from the tool-bar
+        /// </summary>
+        private string _selectedPeriod;
+        public string SelectedPeriod
+        {
+            get
+            {
+                return _selectedPeriod;
+            }
+            set
+            {
+                _selectedPeriod = value;
+                this.RaisePropertyChanged(() => this.SelectedPeriod);
+            }
+        }
+
         #region ChartProperties
 
         /// <summary>
         /// Collection of Benchmark Data-Chart
         /// </summary>
-        private RangeObservableCollection<BenchmarkChartReturnData> _plottedBenchmarkSeries = new RangeObservableCollection<BenchmarkChartReturnData>();
-        public RangeObservableCollection<BenchmarkChartReturnData> PlottedBenchmarkSeries
+        private RangeObservableCollection<BenchmarkChartReturnData> _multiLineBenchmarkUIChartData = new RangeObservableCollection<BenchmarkChartReturnData>();
+        public RangeObservableCollection<BenchmarkChartReturnData> MultiLineBenchmarkUIChartData
         {
             get
             {
-                return _plottedBenchmarkSeries;
+                return _multiLineBenchmarkUIChartData;
             }
             set
             {
-                _plottedBenchmarkSeries = value;
-                this.RaisePropertyChanged(() => this.PlottedBenchmarkSeries);
+                _multiLineBenchmarkUIChartData = value;
+                this.RaisePropertyChanged(() => this.MultiLineBenchmarkUIChartData);
             }
         }
 
@@ -210,19 +205,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of Benchmark Data-Grid
         /// </summary>
-        private RangeObservableCollection<BenchmarkGridReturnData> _gridBenchmarkData;
-        public RangeObservableCollection<BenchmarkGridReturnData> GridBenchmarkData
+        private RangeObservableCollection<BenchmarkGridReturnData> _multiLineBenchmarkUIGridData;
+        public RangeObservableCollection<BenchmarkGridReturnData> MultiLineBenchmarUIGridData
         {
             get
             {
-                if (_gridBenchmarkData == null)
-                    _gridBenchmarkData = new RangeObservableCollection<BenchmarkGridReturnData>();
-                return _gridBenchmarkData;
+                if (_multiLineBenchmarkUIGridData == null)
+                    _multiLineBenchmarkUIGridData = new RangeObservableCollection<BenchmarkGridReturnData>();
+                return _multiLineBenchmarkUIGridData;
             }
             set
             {
-                _gridBenchmarkData = value;
-                this.RaisePropertyChanged(() => this.GridBenchmarkData);
+                _multiLineBenchmarkUIGridData = value;
+                this.RaisePropertyChanged(() => this.MultiLineBenchmarUIGridData);
             }
         }
 
@@ -274,161 +269,30 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region Time Range Properties
+        #endregion
 
-        /// <summary>
-        /// Chart Start Date
-        /// </summary>
-        private DateTime _startDate;
-        public DateTime StartDate
-        {
-            get
-            {
-                return _startDate;
-            }
-            set
-            {
-                _startDate = value;
-                this.RaisePropertyChanged(() => this.StartDate);
-            }
-        }
+        #region Events
+
+        public event DataRetrievalProgressIndicatorEventHandler MultiLineBenchmarkDataLoadedEvent;
 
         #endregion
 
-        #region Plotting Additional Series
+        #region EventSubscribe
 
         /// <summary>
-        /// Grouped Collection View for Auto-Complete Box
+        /// Subscribing to Events
         /// </summary>
-        private CollectionViewSource _benchmarkReference;
-        public CollectionViewSource BenchmarkReference
+        /// <param name="_eventAggregator"></param>
+        public void SubscribeEvents(IEventAggregator _eventAggregator)
         {
-            get
-            {
-                return _benchmarkReference;
-            }
-            set
-            {
-                _benchmarkReference = value;
-                RaisePropertyChanged(() => this.BenchmarkReference);
-            }
+            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
         }
-
-        /// <summary>
-        /// DataSource for the Grouped Collection View
-        /// </summary>
-        public ObservableCollection<BenchmarkSelectionData> BenchmarkReferenceSource { get; set; }
-
-        /// <summary>
-        /// Selected Entity
-        /// </summary>
-        private BenchmarkSelectionData _selectedBenchmarkReference = new BenchmarkSelectionData();
-        public BenchmarkSelectionData SelectedBenchmarkReference
-        {
-            get
-            {
-                return _selectedBenchmarkReference;
-            }
-            set
-            {
-                _selectedBenchmarkReference = value;
-                this.RaisePropertyChanged(() => this.SelectedBenchmarkReference);
-            }
-        }
-
-        /// <summary>
-        /// Search Mode Filter - Checked (StartsWith); Unchecked (Contains)
-        /// </summary>
-        private bool _searchFilterEnabled;
-        public bool SearchFilterEnabled
-        {
-            get { return _searchFilterEnabled; }
-            set
-            {
-                if (_searchFilterEnabled != value)
-                {
-                    _searchFilterEnabled = value;
-                    RaisePropertyChanged(() => SearchFilterEnabled);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Entered Text in the Auto-Complete Box - filters SeriesReferenceSource
-        /// </summary>
-        private string _benchmarkEnteredText;
-        public string BenchmarkEnteredText
-        {
-            get { return _benchmarkEnteredText; }
-            set
-            {
-                _benchmarkEnteredText = value;
-                RaisePropertyChanged(() => this.BenchmarkEnteredText);
-                if (value != null)
-                    BenchmarkReference.Source = SearchFilterEnabled == false
-                        ? BenchmarkReferenceSource.Where(o => o.Name.ToLower().Contains(value.ToLower()))
-                        : BenchmarkReferenceSource.Where(o => o.Name.ToLower().StartsWith(value.ToLower()));
-                else
-                    BenchmarkReference.Source = BenchmarkReferenceSource;
-                List<BenchmarkSelectionData> a = BenchmarkReferenceSource.ToList();
-            }
-        }
-
-        /// <summary>
-        /// Show/Hide Add to Chart Control
-        /// </summary>
-        private string _addToChartVisibility = "Collapsed";
-        public string AddToChartVisibility
-        {
-            get
-            {
-                return _addToChartVisibility;
-            }
-            set
-            {
-                _addToChartVisibility = value;
-                this.RaisePropertyChanged(() => this.AddToChartVisibility);
-            }
-        }
-
-        /// <summary>
-        /// Series to show List of Indices/BEnchmarks Added to chart
-        /// </summary>
-        private ObservableCollection<BenchmarkSelectionData> _comparisonSeries = new ObservableCollection<BenchmarkSelectionData>();
-        public ObservableCollection<BenchmarkSelectionData> ComparisonSeries
-        {
-            get
-            {
-                return _comparisonSeries;
-            }
-            set
-            {
-                _comparisonSeries = value;
-                this.RaisePropertyChanged(() => this.ComparisonSeries);
-            }
-        }
-
-
-        #endregion
 
         #endregion
 
         #region ICommand
-        /// <summary>
-        /// Add to chart method
-        /// </summary>
-        public ICommand AddCommand
-        {
-            get { return new DelegateCommand<object>(AddCommandMethod); }
-        }
-
-        /// <summary>
-        /// Delete Series from Chart
-        /// </summary>
-        public ICommand DeleteCommand
-        {
-            get { return new DelegateCommand<object>(DeleteCommandMethod); }
-        }
 
         /// <summary>
         /// Zoom-In Command Button
@@ -466,6 +330,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region EventHandlers
 
+        /// <summary>
+        /// Handle Security change Event
+        /// </summary>
+        /// <param name="entitySelectionData">Details of Selected Security</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -479,9 +347,10 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("SECURITY");
 
                     SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
-                    if (StartDate != null && SelectedEntities != null)
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY") && SelectedEntities.ContainsKey("PORTFOLIO"))
                     {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                        _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                         if (null != MultiLineBenchmarkDataLoadedEvent)
                             MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -499,6 +368,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Handle Portfolio Change Event
+        /// </summary>
+        /// <param name="portfolioSelectionData">Detail of Selected Portfolio</param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -512,9 +385,10 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
 
                     SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
-                    if (StartDate != null && SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY"))
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY") && SelectedEntities.ContainsKey("PORTFOLIO"))
                     {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
+                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                        _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
                         if (null != MultiLineBenchmarkDataLoadedEvent)
                             MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -533,7 +407,11 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public void HandleEffectiveDateSet(string periodSelectionData)
+        /// <summary>
+        /// Event handler to handle Period change Event
+        /// </summary>
+        /// <param name="periodSelectionData">Selected Period</param>
+        public void HandlePeriodReferenceSet(string periodSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -542,13 +420,13 @@ namespace GreenField.Gadgets.ViewModels
                 //ArgumentNullException
                 if (periodSelectionData != null)
                 {
-                    StartDate = GetStartDate(periodSelectionData);
-                    if (SelectedEntities.ContainsKey("SECURITY") && StartDate != null)
-                    {
-                        _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, StartDate, RetrieveBenchmarkChartDataCallBackMethod);
-                        if (null != MultiLineBenchmarkDataLoadedEvent)
-                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    }
+                    if (null != MultiLineBenchmarkDataLoadedEvent)
+                        MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+
+                    MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, periodSelectionData);
+
+                    if (null != MultiLineBenchmarkDataLoadedEvent)
+                        MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {
@@ -566,37 +444,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region ICommandMethods
-
-        /// <summary>
-        /// Add to Chart Command Method
-        /// </summary>
-        /// <param name="param"></param>
-        private void AddCommandMethod(object param)
-        {
-            if (SelectedBenchmarkReference != null)
-            {
-                if (!PlottedBenchmarkSeries.Any(t => t.InstrumentID == SelectedBenchmarkReference.InstrumentID))
-                {
-                    ChartEntityList.Add(SelectedBenchmarkReference);
-                    //_dbInteractivity.RetrieveBenchmarkChartReturnData(ChartEntityList.ToList(), Convert.ToDateTime(_effectiveDateSet), RetrieveBenchmarkChartDataCallBackMethod_BenchmarkReference);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Delete Series from Chart
-        /// </summary>
-        /// <param name="param"></param>
-        private void DeleteCommandMethod(object param)
-        {
-            BenchmarkSelectionData a = param as BenchmarkSelectionData;
-            List<BenchmarkChartReturnData> removeItem = new List<BenchmarkChartReturnData>();
-            removeItem = PlottedBenchmarkSeries.Where(w => w.InstrumentID == a.InstrumentID).ToList();
-            if (removeItem != null)
-                PlottedBenchmarkSeries.RemoveRange(removeItem);
-            ComparisonSeries.Remove(a);
-            ChartEntityList.Remove(a);
-        }
 
         /// <summary>
         /// Zoom In Command Method
@@ -650,41 +497,6 @@ namespace GreenField.Gadgets.ViewModels
         #region Callback Methods
 
         /// <summary>
-        /// Callback method for Benchmark Reference Service call - Updates AutoCompleteBox
-        /// </summary>
-        /// <param name="result">BenchmarkSelectionData Collection</param>
-        private void RetrieveBenchmarkSelectionDataCallBackMethod(List<BenchmarkSelectionData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    BenchmarkReference = new CollectionViewSource();
-                    BenchmarkReferenceSource = new ObservableCollection<BenchmarkSelectionData>(result);
-                    BenchmarkReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
-                    BenchmarkReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "Type",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    BenchmarkReference.Source = BenchmarkReferenceSource;
-                    List<BenchmarkSelectionData> a = BenchmarkReferenceSource.ToList();
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-        }
-
-        /// <summary>
         /// Callback method for Benchmark Reference Service call related to updated Time Range - Updates Chart
         /// </summary>
         /// <param name="result">PricingReferenceData collection</param>
@@ -697,13 +509,15 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    PlottedBenchmarkSeries.Clear();
-                    PlottedBenchmarkSeries.AddRange(result);
+                    MultiLineBenchmarkUIChartData.Clear();
+                    MultiLineBenchmarkUIChartData.AddRange(result);
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (null != MultiLineBenchmarkDataLoadedEvent)
+                    MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -725,13 +539,15 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    GridBenchmarkData.Clear();
-                    GridBenchmarkData.AddRange(result);
+                    MultiLineBenchmarUIGridData.Clear();
+                    MultiLineBenchmarUIGridData.AddRange(result);
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+                if (null != MultiLineBenchmarkDataLoadedEvent)
+                    MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
@@ -783,63 +599,89 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Helper method to calculate start date for the chart
+        /// Calculate Data according to the selected period
         /// </summary>
-        /// <param name="period">Period selected from toolbar</param>
-        /// <returns>startDate of type DateTime</returns>
-        public DateTime GetStartDate(string period)
+        /// <param name="plottedSeries">Currently plotted RangeObservableCollection of type BenchmarkChartReturnData</param>
+        /// <param name="periodType">Selected Period</param>
+        /// <returns>RangeObservableCollection of type BenchmarkChartReturnData</returns>
+        public RangeObservableCollection<BenchmarkChartReturnData> CalculateDataAccordingToPeriod(RangeObservableCollection<BenchmarkChartReturnData> plottedSeries, string periodType)
         {
-            DateTime startDate = DateTime.Today;
-
-            switch (period)
+            switch (periodType)
             {
                 case "1M":
                     {
-                        startDate = startDate.AddMonths(-1);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.OneM;
+                        }
                         break;
                     }
                 case "3M":
                     {
-                        startDate = startDate.AddMonths(-3);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.ThreeM;
+                        }
                         break;
                     }
                 case "6M":
                     {
-                        startDate = startDate.AddMonths(-6);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.SixM;
+                        }
                         break;
                     }
                 case "YTD":
                     {
-                        startDate = new DateTime(startDate.Year, 1, 1);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.YTD;
+                        }
                         break;
                     }
                 case "1Y":
                     {
-                        startDate = startDate.AddYears(-1);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.OneY;
+                        }
                         break;
                     }
                 case "3Y":
                     {
-                        startDate = startDate.AddYears(-3);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.ThreeY;
+                        }
                         break;
                     }
                 case "5Y":
                     {
-                        startDate = startDate.AddYears(-5);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.FiveY;
+                        }
                         break;
                     }
                 case "SI":
                     {
-                        startDate = new DateTime(2000, 1, 1);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.SI;
+                        }
                         break;
                     }
                 default:
                     {
-                        startDate = startDate.AddMonths(-1);
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.OneM;
+                        }
                         break;
                     }
             }
-            return startDate;
+            return plottedSeries;
         }
 
         #endregion

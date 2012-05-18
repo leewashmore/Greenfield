@@ -174,7 +174,11 @@ namespace GreenField.App.ViewModel
         private List<EntitySelectionData> _entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
-            get { return _entitySelectionInfo; }
+            get 
+            {
+                if (_entitySelectionInfo == null)
+                    _entitySelectionInfo = new List<EntitySelectionData>();
+                return _entitySelectionInfo; }
             set
             {
                 _entitySelectionInfo = value;

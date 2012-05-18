@@ -500,6 +500,13 @@ namespace GreenField.Web.Services
 
         #region Build2 Services
 
+        /// <summary>
+        /// Service to return data for PortfolioDetailsUI
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio IDentifier</param>
+        /// <param name="effectiveDate">Selected Date</param>
+        /// <param name="objGetBenchmark">bool to check whether to get Benchmark data or not</param>
+        /// <returns>List of type Portfolio Details Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool objGetBenchmark = false)
@@ -577,37 +584,50 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate)
+        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities)
         {
             try
             {
                 List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
-                if ((objSelectedEntities != null) && (objStartDate != null))
-                {
-                    Random random = new Random();
 
-                    for (int i = 0; i < 365; i++)
-                    {
-                        BenchmarkChartReturnData data = new BenchmarkChartReturnData();
-                        data.FromDate = DateTime.Now.AddDays(-182 + i);
-                        data.InstrumentID = 10020.ToString();
-                        data.IssueName = "MSCI Standard";
-                        data.Ticker = "MSCI";
-                        data.Type = "Benchmark";
-                        data.DailyReturn = random.Next(5, 40);
+                //Arguement null Exception
+                if (objSelectedEntities == null)
+                    return result;
+                if (!objSelectedEntities.ContainsKey("SECURITY") || (!objSelectedEntities.ContainsKey("PORTFOLIO")))
+                    return result;
 
-                        result.Add(data);
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
-                        data.FromDate = DateTime.Now.AddDays(-182 + i);
-                        data.InstrumentID = 10021.ToString();
-                        data.IssueName = "MSCI Brazil";
-                        data.Ticker = "MSCIB";
-                        data.DailyReturn = random.Next(5, 40);
-                        data.Type = "Benchmark";
-                        result.Add(data);
-                    }
+                string securityLongName = "";
+                string portfolioId = "";
+                DateTime startDate = DateTime.Today.AddYears(-1);
+                List<string> countryName;
 
-                }
+                if (objSelectedEntities.ContainsKey("SECURITY"))
+                    securityLongName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
+                if (objSelectedEntities.ContainsKey("PORTFOLIO"))
+                    portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
+
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+
+                if (countryName.Count != 1)
+                    throw new Exception("Single Security cannot have multiple countries");
+
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData = entity.GF_PERF_MONTHLY_ATTRIBUTION.
+                    Where(a => a.PORTFOLIO == portfolioId
+                        && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
+                        && a.TO_DATE >= startDate).ToList();
+
+                //Checking contents of Data fetched from Dimension
+                if (dimensionMonthlyPerfData == null || dimensionMonthlyPerfData.Count == 0)
+                    return result;
+
+                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionMonthlyPerfData);
+
+                if (result == null)
+                    throw new InvalidOperationException();
+
                 return result;
             }
 
@@ -627,40 +647,68 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate)
+        public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntities)
         {
             List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
             try
             {
-                if ((objBenchmarkIdentifier != null) && (objEffectiveDate != null))
-                {
-                    Random random = new Random();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
-                    BenchmarkGridReturnData data = new BenchmarkGridReturnData();
-                    data.InstrumentID = 10020.ToString();
-                    data.IssueName = "MSCI Standard";
-                    data.MTD = random.Next(10, 100) / 10;
-                    data.PreviousYearData = random.Next(10, 100) / 10;
-                    data.QTD = random.Next(10, 100) / 10;
-                    data.ThreePreviousYearData = random.Next(10, 100) / 10;
-                    data.Ticker = "MSCI";
-                    data.TwoPreviousYearData = random.Next(10, 100) / 10;
-                    data.YTD = random.Next(10, 100) / 10;
-                    data.Type = "Benchmark";
-                    result.Add(data);
+                #region CalculatingStartDate
 
-                    data.InstrumentID = 10021.ToString();
-                    data.IssueName = "MSCI Brazil";
-                    data.MTD = random.Next(10, 100) / 10;
-                    data.PreviousYearData = random.Next(10, 100) / 10;
-                    data.QTD = random.Next(10, 100) / 10;
-                    data.ThreePreviousYearData = random.Next(10, 100) / 10;
-                    data.Ticker = "MSCIB";
-                    data.TwoPreviousYearData = random.Next(10, 100) / 10;
-                    data.Type = "Benchmark";
-                    data.YTD = random.Next(10, 100) / 10;
-                    result.Add(data);
-                }
+                DateTime firstDayPreviousMonth;
+                DateTime firstDayCurrentMonth;
+                DateTime currentDate = DateTime.Today;
+
+                DateTime startDatePreviousYear = new DateTime(currentDate.Year - 1, 12, 1);
+                DateTime endDatePreviousYear = new DateTime(currentDate.Year - 1, 12, 31);
+
+                DateTime startDateTwoPreviousYear = new DateTime(currentDate.Year - 2, 12, 1);
+                DateTime endDateTwoPreviousYear = new DateTime(currentDate.Year - 2, 12, 31);
+
+                DateTime startDateThreePreviousYear = new DateTime(currentDate.Year - 3, 12, 1);
+                DateTime endDateThreePreviousYear = new DateTime(currentDate.Year - 3, 12, 31);
+
+                if (currentDate.Month == 1)
+                    firstDayPreviousMonth = new DateTime(currentDate.Year - 1, 12, 1);
+                else
+                    firstDayPreviousMonth = new DateTime(currentDate.Year, currentDate.Month - 1, 1);
+
+                firstDayCurrentMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
+
+                DateTime startDate = firstDayPreviousMonth;
+                DateTime endDate = firstDayCurrentMonth;
+
+                #endregion
+
+                string securityLongName = "";
+                string portfolioId = "";
+                List<string> countryName;
+
+
+                if (objSelectedEntities.ContainsKey("SECURITY"))
+                    securityLongName = (objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value);
+                if (objSelectedEntities.ContainsKey("PORTFOLIO"))
+                    portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
+
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+
+
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
+                    Where(a => a.PORTFOLIO.ToUpper() == portfolioId &&
+                        ((a.AGG_LVL_1_LONG_NAME.ToUpper() == securityLongName.ToUpper()) || 
+                        ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME.ToUpper() == countryName.First().ToUpper())))
+                        && ((a.TO_DATE > startDate && a.TO_DATE <= endDate) || (a.TO_DATE > startDatePreviousYear && a.TO_DATE <= endDatePreviousYear) || (a.TO_DATE > startDateTwoPreviousYear && a.TO_DATE <= endDateTwoPreviousYear) || (a.TO_DATE > startDateThreePreviousYear && a.TO_DATE <= endDateThreePreviousYear))).ToList();
+
+                if (dimensionPerfDailyData == null)
+                    throw new Exception("Service returned Null");
+
+                if (dimensionPerfDailyData.Count() != 0)
+                    result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkGridData(dimensionPerfDailyData);
+
+                if (result == null)
+                    throw new InvalidOperationException();
+
                 return result;
             }
             catch (Exception ex)
@@ -1426,7 +1474,7 @@ namespace GreenField.Web.Services
                             && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                         break;
-                   
+
                 }
             }
             //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
@@ -1567,13 +1615,14 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        #region Heat Map Operation Contract
+
         /// <summary>
         /// Retrieves Heat Map Data for a particular portfolio and date
         /// </summary>
         /// <param name="fundSelectionData">Contains Selected Fund Data</param>
         /// <param name="effectiveDate">Effectice date as selected by the user</param>
         /// <returns></returns>
-        #region Heat Map Operation Contract
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<HeatMapData> RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)

@@ -6,174 +6,193 @@ using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Class to Calculate Dates to Plot the chart according to the Interval Selected
+    /// </summary>
     public static class FrequencyCalculator
     {
+        /// <summary>
+        /// Method to calculate Dates on which the chart should be plotted 
+        /// </summary>
+        /// <param name="objEndDates">The dates for which data is present</param>
+        /// <param name="startDate">Start Date for the Chart</param>
+        /// <param name="endDate">End Date for the Chart</param>
+        /// <param name="FrequencyInterval">Selected Frequency Interval</param>
+        /// <returns>List of DateTime</returns>
         public static List<DateTime> RetrieveDatesAccordingToFrequency(List<DateTime> objEndDates, DateTime startDate, DateTime endDate, string FrequencyInterval)
         {
-            //List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
-            List<DateTime> EndDates = new List<DateTime>();
-            DateTime chartStartDate = startDate;
-            DateTime chartEndDate = endDate;
-            TimeSpan timeSpan = chartEndDate - chartStartDate;
-
-            switch (FrequencyInterval)
+            try
             {
-                case ("Weekly"):
-                    {
-                        #region CalculateWeeksBetweenDates
+                //List<PricingReferenceData> resultFrequency = new List<PricingReferenceData>();
+                List<DateTime> EndDates = new List<DateTime>();
+                DateTime chartStartDate = startDate;
+                DateTime chartEndDate = endDate;
+                TimeSpan timeSpan = chartEndDate - chartStartDate;
 
-                        int totalWeeks = timeSpan.Days / 7;
-
-                        #endregion
-
-                        #region calculating LastDayOfAllWeeks
-
-                        DateTime endDay = (chartStartDate.AddDays(5 - (int)chartStartDate.DayOfWeek));
-                        GetEndDatesForEachWeek(endDay, totalWeeks, ref EndDates);
-                        #endregion
-                        break;
-                    }
-
-                case ("Monthly"):
-                    {
-                        #region CalculateMonthsBetweenDates
-
-                        int totalMonths = ((chartEndDate.Year - chartStartDate.Year) * 12) + chartEndDate.Month - chartStartDate.Month;
-                        int totalYear = (chartEndDate.Year - chartStartDate.Year);
-
-                        #endregion
-
-                        #region calculating LastDayOfAllMonths
-
-                        int month = chartStartDate.Month;
-                        int year = chartStartDate.Year;
-
-                        int monthsLeftInCurrentYear = 12 - month;
-
-                        for (int i = 0; i <= monthsLeftInCurrentYear; i++)
+                switch (FrequencyInterval)
+                {
+                    case ("Weekly"):
                         {
-                            GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
+                            #region CalculateWeeksBetweenDates
+
+                            int totalWeeks = timeSpan.Days / 7;
+
+                            #endregion
+
+                            #region calculating LastDayOfAllWeeks
+
+                            DateTime endDay = (chartStartDate.AddDays(5 - (int)chartStartDate.DayOfWeek));
+                            GetEndDatesForEachWeek(endDay, totalWeeks, ref EndDates);
+                            #endregion
+                            break;
                         }
 
-                        for (int i = 0; i < totalYear - 1; i++)
+                    case ("Monthly"):
                         {
-                            month = 1;
-                            year++;
+                            #region CalculateMonthsBetweenDates
 
-                            while (month <= 12)
+                            int totalMonths = ((chartEndDate.Year - chartStartDate.Year) * 12) + chartEndDate.Month - chartStartDate.Month;
+                            int totalYear = (chartEndDate.Year - chartStartDate.Year);
+
+                            #endregion
+
+                            #region calculating LastDayOfAllMonths
+
+                            int month = chartStartDate.Month;
+                            int year = chartStartDate.Year;
+
+                            int monthsLeftInCurrentYear = 12 - month;
+
+                            for (int i = 0; i <= monthsLeftInCurrentYear; i++)
                             {
                                 GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
                             }
-                        }
 
-                        int totalMonthsLeft = totalMonths - monthsLeftInCurrentYear - 12 * (totalYear - 1);
-
-                        if (totalMonthsLeft > 0)
-                        {
-                            for (int i = 0; i < 1; i++)
+                            for (int i = 0; i < totalYear - 1; i++)
                             {
-                                year++;
                                 month = 1;
-                                while (month <= totalMonthsLeft)
+                                year++;
+
+                                while (month <= 12)
                                 {
                                     GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
                                 }
-
                             }
+
+                            int totalMonthsLeft = totalMonths - monthsLeftInCurrentYear - 12 * (totalYear - 1);
+
+                            if (totalMonthsLeft > 0)
+                            {
+                                for (int i = 0; i < 1; i++)
+                                {
+                                    year++;
+                                    month = 1;
+                                    while (month <= totalMonthsLeft)
+                                    {
+                                        GetEndDatesForEachMonth(ref year, ref month, ref EndDates);
+                                    }
+
+                                }
+                            }
+
+                            #endregion
+                            break;
                         }
 
-                        #endregion
-                        break;
-                    }
-
-                case ("Quarterly"):
-                    {
-                        int startDateQuarter = GetQuarter(startDate.Month);
-                        DateTime lastDate = startDate;
-
-                        #region CalculateQuartersBetweenDates
-
-                        int totalMonths = ((chartEndDate.Year - chartStartDate.Year) * 12) + chartEndDate.Month - chartStartDate.Month;
-
-                        #endregion
-
-                        #region CalculatingQuarters
-
-                        switch (startDateQuarter)
+                    case ("Quarterly"):
                         {
-                            case (1):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 3, 31);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
-                            case (2):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 6, 30);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
-                            case (3):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 9, 30);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
+                            int startDateQuarter = GetQuarter(startDate.Month);
+                            DateTime lastDate = startDate;
 
-                            case (4):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                                    GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
+                            #region CalculateQuartersBetweenDates
+
+                            int totalMonths = ((chartEndDate.Year - chartStartDate.Year) * 12) + chartEndDate.Month - chartStartDate.Month;
+
+                            #endregion
+
+                            #region CalculatingQuarters
+
+                            switch (startDateQuarter)
+                            {
+                                case (1):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 3, 31);
+                                        GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+                                case (2):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 6, 30);
+                                        GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+                                case (3):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 9, 30);
+                                        GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+
+                                case (4):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 12, 31);
+                                        GetEndDatesForEachQuarter(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+                            }
+
+                            #endregion
+
+                            break;
                         }
 
-                        #endregion
-
-                        break;
-                    }
-
-                case ("Half-Yearly"):
-                    {
-                        int startDateSemiAnnually = GetHalfYearly(startDate.Month);
-                        DateTime lastDate = startDate;
-
-                        switch (startDateSemiAnnually)
+                    case ("Half-Yearly"):
                         {
-                            case (1):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 6, 30);
-                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
+                            int startDateSemiAnnually = GetHalfYearly(startDate.Month);
+                            DateTime lastDate = startDate;
 
-                            case (2):
-                                {
-                                    lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                                    GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
-                                    break;
-                                }
+                            switch (startDateSemiAnnually)
+                            {
+                                case (1):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 6, 30);
+                                        GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+
+                                case (2):
+                                    {
+                                        lastDate = new DateTime(chartStartDate.Year, 12, 31);
+                                        GetEndDatesForEachHalfYear(lastDate, chartEndDate, ref EndDates);
+                                        break;
+                                    }
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
+                    case ("Yearly"):
+                        {
+                            int totalYearBetweenDates = chartEndDate.Year - chartStartDate.Year;
+                            DateTime lastDate = new DateTime(chartStartDate.Year, 12, 31);
+                            GetEndDatesForEachYear(lastDate, chartEndDate, ref EndDates);
+                            break;
+                        }
 
-                case ("Yearly"):
-                    {
-                        int totalYearBetweenDates = chartEndDate.Year - chartStartDate.Year;
-                        DateTime lastDate = new DateTime(chartStartDate.Year, 12, 31);
-                        GetEndDatesForEachYear(lastDate, chartEndDate, ref EndDates);
-                        break;
-                    }
+                    default:
+                        {
+                            return objEndDates;
+                        }
+                }
 
-                default:
-                    {
-                        return objEndDates;
-                    }
+
+                return EndDates;
             }
-
-
-            return EndDates;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         #region HelperMethods

@@ -11,6 +11,7 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
 using Telerik.Windows.Controls.Charting;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -73,7 +74,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Dictionary<string, string> objDictionary = new Dictionary<string, string>();
                 objDictionary.Add("SECURITY", _entitySelectionData.LongName);
-                DateTime startDate = GetStartDate(_period);
+                DateTime startDate = DateTime.Today.AddYears(-1);
                 _dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
             }
 
@@ -142,7 +143,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Details of Selected Date
         /// </summary>
-        private DateTime? _selectedStartDate;
+        private DateTime? _selectedStartDate = DateTime.Today.AddYears(-1);
         public DateTime? SelectedStartDate
         {
             get
@@ -185,6 +186,45 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 this._chartArea = value;
+            }
+        }
+
+        /// <summary>
+        /// Collection of Time Range Options
+        /// </summary>
+        public ObservableCollection<String> TimeRange
+        {
+            get
+            {
+                return new ObservableCollection<string> { "1-Month", "2-Months", "3-Months", "6-Months", "YTD", "1-Year", "2-Years", 
+                    "3-Years", "4-Years", "5-Years", "10-Years" };
+            }
+        }
+
+        /// <summary>
+        /// Selection Time Range option
+        /// </summary>
+        private string _selectedTimeRange = "1-Year";
+        public string SelectedTimeRange
+        {
+            get
+            {
+                return _selectedTimeRange;
+            }
+            set
+            {
+                _selectedTimeRange = value;
+                GetPeriod();
+                if (SelectedEntities != null && SelectedStartDate != null)
+                {
+                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY"))
+                    {
+                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        if (null != ChartExtensionDataLoadedEvent)
+                            ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                }
+                this.RaisePropertyChanged(() => this.SelectedTimeRange);
             }
         }
 
@@ -387,15 +427,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (period != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
-                    SelectedStartDate = GetStartDate(period);
 
                     if (SelectedEntities != null)
                     {
                         if (SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null)
                         {
-                            _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
-                            if (null != ChartExtensionDataLoadedEvent)
-                                ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            //Waiting for calculations for Country/Sector Returns
                         }
                     }
                 }
@@ -412,6 +449,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Binding zoom commands to Chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
@@ -457,65 +499,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region HelperMethods
 
-        /// <summary>
-        /// Helper method to calculate start date for the chart
-        /// </summary>
-        /// <param name="period">Period selected from toolbar</param>
-        /// <returns>startDate of type DateTime</returns>
-        public DateTime GetStartDate(string period)
-        {
-            DateTime startDate = DateTime.Today;
 
-            switch (period)
-            {
-                case "1M":
-                    {
-                        startDate = startDate.AddMonths(-1);
-                        break;
-                    }
-                case "3M":
-                    {
-                        startDate = startDate.AddMonths(-3);
-                        break;
-                    }
-                case "6M":
-                    {
-                        startDate = startDate.AddMonths(-6);
-                        break;
-                    }
-                case "YTD":
-                    {
-                        startDate = new DateTime(startDate.Year, 1, 1);
-                        break;
-                    }
-                case "1Y":
-                    {
-                        startDate = startDate.AddYears(-1);
-                        break;
-                    }
-                case "3Y":
-                    {
-                        startDate = startDate.AddYears(-3);
-                        break;
-                    }
-                case "5Y":
-                    {
-                        startDate = startDate.AddYears(-5);
-                        break;
-                    }
-                case "SI":
-                    {
-                        startDate = new DateTime(2000, 1, 1);
-                        break;
-                    }
-                default:
-                    {
-                        startDate = startDate.AddMonths(-1);
-                        break;
-                    }
-            }
-            return startDate;
-        }
 
         /// <summary>
         /// Zoom In Algo
@@ -555,6 +539,56 @@ namespace GreenField.Gadgets.ViewModels
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
         }
 
+        /// <summary>
+        /// Get Period for Pricing Reference Data retrieval
+        /// </summary>
+        /// <param name="startDate">Data lower limit</param>
+        /// <param name="endDate">Data upper limit</param>
+        private void GetPeriod()
+        {
+            switch (SelectedTimeRange)
+            {
+                case "1-Month":
+                    SelectedStartDate = DateTime.Today.AddMonths(-1);
+                    break;
+                case "2-Months":
+                    SelectedStartDate = DateTime.Today.AddMonths(-2);
+                    break;
+                case "3-Months":
+                    SelectedStartDate = DateTime.Today.AddMonths(-3);
+                    break;
+                case "6-Months":
+                    SelectedStartDate = DateTime.Today.AddMonths(-6);
+                    break;
+                case "9-Months":
+                    SelectedStartDate = DateTime.Today.AddMonths(-9);
+                    break;
+                case "1-Year":
+                    SelectedStartDate = DateTime.Today.AddMonths(-12);
+                    break;
+                case "2-Years":
+                    SelectedStartDate = DateTime.Today.AddMonths(-24);
+                    break;
+                case "3-Years":
+                    SelectedStartDate = DateTime.Today.AddMonths(-36);
+                    break;
+                case "4-Years":
+                    SelectedStartDate = DateTime.Today.AddMonths(-48);
+                    break;
+                case "5-Years":
+                    SelectedStartDate = DateTime.Today.AddMonths(-60);
+                    break;
+                case "10-Years":
+                    SelectedStartDate = DateTime.Today.AddMonths(-120);
+                    break;
+                case "YTD":
+                    SelectedStartDate = new DateTime((int)(DateTime.Today.Year), 1, 1);
+                    break;
+                default:
+                    SelectedStartDate = DateTime.Today.AddMonths(-12);
+                    break;
+            }
+        }
 
         #endregion
 

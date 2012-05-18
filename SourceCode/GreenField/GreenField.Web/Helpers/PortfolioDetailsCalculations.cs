@@ -11,6 +11,11 @@ namespace GreenField.Web.Helpers
     /// </summary>
     public static class PortfolioDetailsCalculations
     {
+        /// <summary>
+        /// Method to calculate the Portfolio Weight & ActivePosition
+        /// </summary>
+        /// <param name="portfolioDetailsData">Collection of PortfolioDetailsData</param>
+        /// <returns>List of PortfolioDetailsData</returns>
         public static List<PortfolioDetailsData> CalculatePortfolioDetails(List<PortfolioDetailsData> portfolioDetailsData)
         {
             if (portfolioDetailsData == null)

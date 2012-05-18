@@ -15,6 +15,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Web.Services
 {
@@ -36,7 +37,6 @@ namespace GreenField.Web.Services
                 return dimensionEntity;
             }
         }
-
 
         public ResourceManager ServiceFaultResourceManager
         {
@@ -146,10 +146,13 @@ namespace GreenField.Web.Services
         /// <returns>List of PricingReferenceData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PricingReferenceData> RetrievePricingReferenceData(List<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
+        public List<PricingReferenceData> RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
         {
             try
             {
+                if (entityIdentifiers == null || frequencyDuration == null)
+                    return new List<PricingReferenceData>();
+
                 decimal objAdjustedDollarPrice = 0;
                 decimal objPreviousDailySpotFx = 0;
                 decimal objIndexedPrice = 0;
@@ -162,7 +165,7 @@ namespace GreenField.Web.Services
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
                 DateTime endDate = Convert.ToDateTime(endDateTime);
-
+                
                 //List Containing the names of Securities/Commodities/Indexes to be added
                 List<string> entityNames = (from p in entityIdentifiers
                                             select p.InstrumentID).ToList();
@@ -677,9 +680,5 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-
-
-
     }
 }
-

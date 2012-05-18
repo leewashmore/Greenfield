@@ -790,7 +790,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             "ceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityReferenceData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityOverviewData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveSecurityOverviewDataRespon" +
             "se")]
@@ -804,9 +804,9 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             "se")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrievePricingReferenceDataServic" +
             "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataRespons" +
             "e")]
@@ -814,7 +814,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveEntitySelectionData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataResp" +
             "onse")]
@@ -822,7 +822,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveUnrealizedGainLossData(GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -840,10 +840,10 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData>)(this.results[0]));
             }
         }
     }
@@ -878,10 +878,10 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData>)(this.results[0]));
             }
         }
     }
@@ -897,10 +897,10 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(this.results[0]));
             }
         }
     }
@@ -916,10 +916,10 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData>)(this.results[0]));
             }
         }
     }
@@ -1031,7 +1031,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityReferenceData(result);
         }
         
@@ -1040,7 +1040,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityReferenceData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveSecurityReferenceData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveSecurityReferenceData(result);
             return new object[] {
                     retVal};
         }
@@ -1116,17 +1116,17 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrievePricingReferenceData(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrievePricingReferenceData(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrievePricingReferenceData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrievePricingReferenceData(System.IAsyncResult result) {
             return base.Channel.EndRetrievePricingReferenceData(result);
         }
         
         private System.IAsyncResult OnBeginRetrievePricingReferenceData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers = ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(inValues[0]));
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(inValues[0]));
             System.DateTime startDateTime = ((System.DateTime)(inValues[1]));
             System.DateTime endDateTime = ((System.DateTime)(inValues[2]));
             bool totalReturnCheck = ((bool)(inValues[3]));
@@ -1135,7 +1135,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         private object[] OnEndRetrievePricingReferenceData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrievePricingReferenceData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrievePricingReferenceData(result);
             return new object[] {
                     retVal};
         }
@@ -1147,11 +1147,11 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             }
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration) {
+        public void RetrievePricingReferenceDataAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration) {
             this.RetrievePricingReferenceDataAsync(entityIdentifiers, startDateTime, endDateTime, totalReturnCheck, frequencyDuration, null);
         }
         
-        public void RetrievePricingReferenceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, object userState) {
+        public void RetrievePricingReferenceDataAsync(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, object userState) {
             if ((this.onBeginRetrievePricingReferenceDataDelegate == null)) {
                 this.onBeginRetrievePricingReferenceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePricingReferenceData);
             }
@@ -1175,7 +1175,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveEntitySelectionData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveEntitySelectionData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveEntitySelectionData(result);
         }
         
@@ -1184,7 +1184,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         private object[] OnEndRetrieveEntitySelectionData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveEntitySelectionData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveEntitySelectionData(result);
             return new object[] {
                     retVal};
         }
@@ -1219,7 +1219,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveUnrealizedGainLossData(result);
         }
         
@@ -1232,7 +1232,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         private object[] OnEndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveUnrealizedGainLossData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveUnrealizedGainLossData(result);
             return new object[] {
                     retVal};
         }
@@ -1347,9 +1347,9 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> EndRetrieveSecurityReferenceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData>)(base.EndInvoke("RetrieveSecurityReferenceData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityOverviewData>)(base.EndInvoke("RetrieveSecurityReferenceData", _args, result)));
                 return _result;
             }
             
@@ -1366,7 +1366,7 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrievePricingReferenceData(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> entityIdentifiers, System.DateTime startDateTime, System.DateTime endDateTime, bool totalReturnCheck, string frequencyDuration, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[5];
                 _args[0] = entityIdentifiers;
                 _args[1] = startDateTime;
@@ -1377,9 +1377,9 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> EndRetrievePricingReferenceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData>)(base.EndInvoke("RetrievePricingReferenceData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.PricingReferenceData>)(base.EndInvoke("RetrievePricingReferenceData", _args, result)));
                 return _result;
             }
             
@@ -1389,9 +1389,9 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(base.EndInvoke("RetrieveEntitySelectionData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData>)(base.EndInvoke("RetrieveEntitySelectionData", _args, result)));
                 return _result;
             }
             
@@ -1405,9 +1405,9 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> EndRetrieveUnrealizedGainLossData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData>)(base.EndInvoke("RetrieveUnrealizedGainLossData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.SecurityReferenceDefinitions.UnrealizedGainLossData>)(base.EndInvoke("RetrieveUnrealizedGainLossData", _args, result)));
                 return _result;
             }
         }

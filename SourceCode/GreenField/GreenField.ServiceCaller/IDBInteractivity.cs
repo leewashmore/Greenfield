@@ -96,7 +96,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
 
-        void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<RelativePerformanceData>> callback);
+        void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<RelativePerformanceData>> callback);
 
         void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback);
 
@@ -118,9 +118,9 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
-        void RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntites, DateTime objStartDate, Action<List<BenchmarkChartReturnData>> callback);
+        void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkChartReturnData>> callback);
 
-        void RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate, Action<List<BenchmarkGridReturnData>> callback);
+        void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback);
 
 
         #endregion
@@ -137,6 +137,12 @@ namespace GreenField.ServiceCaller
         
         void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback);
 
+
+        #endregion
+
+        #region Slice 4 - FX
+
+        void RetrieveCommodityData(Action<List<CommodityResult>> callback);
 
         #endregion
 

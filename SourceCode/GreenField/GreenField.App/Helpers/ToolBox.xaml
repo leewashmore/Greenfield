@@ -68,7 +68,9 @@
                 <!--Portfolio Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" 
+                                   FontFamily="Arial" FontWeight="Bold"/>
+                        
                         <telerik:RadComboBox x:Name="cbPortfolioSelector"
                                          ItemsSource="{Binding PortfolioSelectorInfo}"
                                          SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
@@ -95,6 +97,7 @@
                                 </ItemsPanelTemplate>
                             </telerik:RadComboBox.ItemsPanel>
                         </telerik:RadComboBox>
+                    
                     </StackPanel>
                 </Grid>
 

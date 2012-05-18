@@ -8,7 +8,7 @@
                              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
                              xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
                              mc:Ignorable="d"
-                             d:DesignHeight="300" d:DesignWidth="400">
+                             d:DesignHeight="300" d:DesignWidth="400" >
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
@@ -24,13 +24,38 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
+        <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
+                             telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left" Grid.Row="1">
+            <telerik:RadExpander.Header>
+                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+            </telerik:RadExpander.Header>
+            <telerik:RadExpander.Content>
+                <Grid >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
+                                         HorizontalAlignment="Stretch" 
+                                         ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
+                </Grid>
+            </telerik:RadExpander.Content>
+        </telerik:RadExpander>
+
+        
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
             <TextBlock Text="Chart Extension" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
         </Grid>
 
         <!--Export Controls-->
-        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -57,7 +82,7 @@
                 <Image Source="../Images/Print.png" />
             </Button>
         </Grid>
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0">
+        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -75,7 +100,7 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
@@ -112,7 +137,7 @@
                 </telerik:RadBusyIndicator>
             </Grid>
 
-            <Grid x:Name="grdRadChart">
+            <Grid x:Name="grdRadChart" Grid.Column="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 

@@ -38,11 +38,11 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -62,7 +62,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 400,
-                Content = null
+                Content = new ViewMultiLineBenchmark(new ViewModelMultiLineBenchmark(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
@@ -71,7 +71,7 @@ namespace GreenField.DashboardModule.Views
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(param))
             });
-                        
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 400,
@@ -84,7 +84,7 @@ namespace GreenField.DashboardModule.Views
                 RestoredHeight = 400,
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewHoldingsPieChartRegion(new ViewModelHoldingsPieChartRegion(param))
-            });            
+            });
         }
     }
 }

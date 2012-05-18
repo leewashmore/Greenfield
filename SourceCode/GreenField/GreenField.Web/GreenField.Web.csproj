@@ -60,8 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
-    <Content Include="ClientBin\GreenField.App.xap" />
-    <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
@@ -139,6 +137,7 @@
     <Compile Include="Helpers\GreenfieldConstants.cs" />
     <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
     <Compile Include="Helpers\ChartExtensionCalculations.cs" />
+    <Compile Include="Helpers\MultiLineBenchmarkUICalculations.cs" />
     <Compile Include="Helpers\PortfolioDetailsCalculations.cs" />
     <Compile Include="Helpers\Service Faults\FaultDescriptions.Designer.cs" />
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />
@@ -201,6 +200,9 @@
     <ServiceReferenceMetadataStorage Include="Service References\DimensionEntitiesService\">
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientBin\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

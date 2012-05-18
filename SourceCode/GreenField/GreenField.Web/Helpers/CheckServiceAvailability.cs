@@ -7,10 +7,17 @@ using System.Configuration;
 
 namespace GreenField.Web.Helpers
 {
+    /// <summary>
+    /// Class for checking availability of O-Data Services
+    /// </summary>
     public static class CheckServiceAvailability
     {
         #region ServiceAvailability
 
+        /// <summary>
+        /// Method to Check Availability of WCF O Data Service
+        /// </summary>
+        /// <returns>returns True if Service is Up, else False</returns>
         public static bool ServiceAvailability()
         {
             bool isServiceUp = true;
