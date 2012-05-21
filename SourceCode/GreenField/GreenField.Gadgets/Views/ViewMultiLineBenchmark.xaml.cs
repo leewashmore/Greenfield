@@ -65,6 +65,8 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextMultilineBenchmark = dataContextSource;
+            dataContextSource.ChartAreaMultiLineBenchmark = this.chMultiLineBenchmarkChart.DefaultView.ChartArea;
+            this.chMultiLineBenchmarkChart.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.MultiLineBenchmarkDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_MultiLineBenchmarkDataLoadedEvent);
             AddGridHeader();
         }

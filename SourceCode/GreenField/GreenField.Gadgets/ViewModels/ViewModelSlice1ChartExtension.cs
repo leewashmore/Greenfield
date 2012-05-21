@@ -12,6 +12,7 @@ using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
 using Telerik.Windows.Controls.Charting;
 using System.Collections.ObjectModel;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.ViewModels
 {

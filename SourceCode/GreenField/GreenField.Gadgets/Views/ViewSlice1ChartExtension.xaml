@@ -88,15 +88,15 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="btnZoomIn" Grid.Column="0"  Height="15" Width="15" HorizontalAlignment="Right" 
+            <telerik:RadButton x:Name="btnZoomIn" Grid.Column="0"  Height="15" Width="15" HorizontalAlignment="Right" 
                                Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In" >
                 <Image Source="../Images/zoom_in.png"  />
-            </Button>
+            </telerik:RadButton>
 
-            <Button x:Name="btnZoomOut" Grid.Column="1"  Height="15" Width="15" HorizontalAlignment="Right" 
+            <telerik:RadButton x:Name="btnZoomOut" Grid.Column="1"  Height="15" Width="15" HorizontalAlignment="Right" 
                                        Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
                 <Image Source="../Images/zoom_out.png"  />
-            </Button>
+            </telerik:RadButton>
 
         </Grid>
 
@@ -224,7 +224,7 @@
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                     ItemToolTipFormat="Security: #Ticker, Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                     ItemToolTipFormat="Security: #Ticker, Units Traded : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping DataPointMember="YValue" FieldName="AmountTraded" />
                                     <telerik:ItemMapping DataPointMember="XValue" FieldName="ToDate" />

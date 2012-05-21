@@ -10,11 +10,12 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Controls;
 
 
 namespace GreenField.Gadgets.ViewModels
@@ -185,17 +186,28 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ChartArea _chartAreaPricing;
-        public ChartArea ChartAreaPricing
+        private ChartArea _chartAreaMultiLineBenchmark;
+        public ChartArea ChartAreaMultiLineBenchmark
         {
             get
             {
-                return this._chartAreaPricing;
+                return this._chartAreaMultiLineBenchmark;
             }
             set
             {
-                this._chartAreaPricing = value;
+                this._chartAreaMultiLineBenchmark = value;
             }
+        }
+
+        /// <summary>
+        /// Data Context Source for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        {
+            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
         #endregion
@@ -451,7 +463,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public void ZoomInCommandMethod(object parameter)
         {
-            ZoomIn(this.ChartAreaPricing);
+            ZoomIn(this.ChartAreaMultiLineBenchmark);
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
@@ -462,11 +474,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public bool ZoomInCommandValidation(object parameter)
         {
-            if (this.ChartAreaPricing == null)
+            if (this.ChartAreaMultiLineBenchmark == null)
                 return false;
 
             return
-                this.ChartAreaPricing.ZoomScrollSettingsX.Range > this.ChartAreaPricing.ZoomScrollSettingsX.MinZoomRange;
+                this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range > this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.MinZoomRange;
         }
 
         /// <summary>
@@ -475,7 +487,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public void ZoomOutCommandMethod(object parameter)
         {
-            ZoomOut(this.ChartAreaPricing);
+            ZoomOut(this.ChartAreaMultiLineBenchmark);
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
@@ -486,10 +498,10 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="parameter"></param>
         public bool ZoomOutCommandValidation(object parameter)
         {
-            if (this.ChartAreaPricing == null)
+            if (this.ChartAreaMultiLineBenchmark == null)
                 return false;
 
-            return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d;
+            return this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range < 1d;
         }
 
         #endregion
@@ -596,6 +608,20 @@ namespace GreenField.Gadgets.ViewModels
             chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
             chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+
+        /// <summary>
+        /// Validation Method for Zoom Out button
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>boolean value</returns>
+        public bool CanZoomOut(object parameter)
+        {
+            if (this.ChartAreaMultiLineBenchmark == null)
+                return false;
+
+            return this.ChartAreaMultiLineBenchmark.ZoomScrollSettingsX.Range < 1d;
         }
 
         /// <summary>
