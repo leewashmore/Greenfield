@@ -940,7 +940,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">collection of Portfolio Details Data</param>
         public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
@@ -977,7 +977,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">Collection of Benchmark Return Data</param>
         public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
             client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
             {
@@ -1008,7 +1008,7 @@ namespace GreenField.ServiceCaller
 
         public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
             client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
             {
@@ -1482,7 +1482,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">Collection of Chart Extension Data</param>
         public void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveChartExtensionDataAsync(objSelectedEntities, objEffectiveDate);
             client.RetrieveChartExtensionDataCompleted += (se, e) =>
             {
@@ -1531,7 +1531,6 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-
         public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
@@ -1555,7 +1554,6 @@ namespace GreenField.ServiceCaller
             };
 
         }
-
 
         public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {

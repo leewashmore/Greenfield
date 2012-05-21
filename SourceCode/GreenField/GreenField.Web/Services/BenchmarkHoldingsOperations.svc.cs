@@ -506,151 +506,85 @@ namespace GreenField.Web.Services
 
         #region Build2 Services
 
+        /// <summary>
+        /// Service to return data for PortfolioDetailsUI
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio IDentifier</param>
+        /// <param name="effectiveDate">Selected Date</param>
+        /// <param name="objGetBenchmark">bool to check whether to get Benchmark data or not</param>
+        /// <returns>List of type Portfolio Details Data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool objGetBenchmark = false)
+        {
+            try
+            {
+                List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+
+                //Arguement Null Case, return Empty Set
+                if ((objPortfolioIdentifier == null) || (effectiveDate == null))
+                    return result;
+
+                if (objPortfolioIdentifier.PortfolioId == null)
+                    return result;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData =
+                    entity.GF_PORTFOLIO_HOLDINGS
+                    .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+
+                //If Service returned empty set
+                if (dimensionPortfolioHoldingsData.Count == 0)
+                    return result;
+
+                //Retrieve the Id of benchmark associated with the Portfolio
+                List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                //If the DataBase doesn't return a single Benchmark for a Portfolio
+                if (benchmarkId.Count != 1)
+                    throw new InvalidOperationException();
+
+                List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                List<GF_BENCHMARK_HOLDINGS> asb = dimensionBenchmarkHoldingsData.OrderBy(a => a.ISSUE_NAME).ToList();
+
+
+                foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
+                {
+                    PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
+                    portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+                    portfolioResult.IssueName = item.ISSUE_NAME;
+                    portfolioResult.Ticker = item.TICKER;
+                    portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+                    portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+                    portfolioResult.SectorName = item.GICS_SECTOR_NAME;
+                    portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
+                    portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+                    portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+                    portfolioResult.SecurityType = item.SECURITY_TYPE;
+                    portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
+                    portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
+                    portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                    result.Add(portfolioResult);
+                }
+
+                result = PortfolioDetailsCalculations.CalculatePortfolioDetails(result);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+                //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         
-
-        /// <summary>
-        /// Method to retrieve data in Benchmark Chart
-        /// </summary>
-        /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objStartDate"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities)
-        {
-            try
-            {
-                List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
-
-                //Arguement null Exception
-                if (objSelectedEntities == null)
-                    return result;
-                if (!objSelectedEntities.ContainsKey("SECURITY") || (!objSelectedEntities.ContainsKey("PORTFOLIO")))
-                    return result;
-
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-
-                string securityLongName = "";
-                string portfolioId = "";
-                DateTime startDate = DateTime.Today.AddYears(-1);
-                List<string> countryName;
-
-                if (objSelectedEntities.ContainsKey("SECURITY"))
-                    securityLongName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
-                if (objSelectedEntities.ContainsKey("PORTFOLIO"))
-                    portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
-
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
-
-                if (countryName.Count != 1)
-                    throw new Exception("Single Security cannot have multiple countries");
-
-
-                List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData = entity.GF_PERF_MONTHLY_ATTRIBUTION.
-                    Where(a => a.PORTFOLIO == portfolioId
-                        && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
-                        && a.TO_DATE >= startDate).ToList();
-
-                //Checking contents of Data fetched from Dimension
-                if (dimensionMonthlyPerfData == null || dimensionMonthlyPerfData.Count == 0)
-                    return result;
-
-                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionMonthlyPerfData);
-
-                if (result == null)
-                    throw new InvalidOperationException();
-
-                return result;
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
-        /// <summary>
-        /// Method to retrieve data in Benchmark Grid
-        /// </summary>
-        /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objEffectiveDate"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntities)
-        {
-            List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
-            try
-            {
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-
-                #region CalculatingStartDate
-
-                DateTime firstDayPreviousMonth;
-                DateTime firstDayCurrentMonth;
-                DateTime currentDate = DateTime.Today;
-
-                DateTime startDatePreviousYear = new DateTime(currentDate.Year - 1, 12, 1);
-                DateTime endDatePreviousYear = new DateTime(currentDate.Year - 1, 12, 31);
-
-                DateTime startDateTwoPreviousYear = new DateTime(currentDate.Year - 2, 12, 1);
-                DateTime endDateTwoPreviousYear = new DateTime(currentDate.Year - 2, 12, 31);
-
-                DateTime startDateThreePreviousYear = new DateTime(currentDate.Year - 3, 12, 1);
-                DateTime endDateThreePreviousYear = new DateTime(currentDate.Year - 3, 12, 31);
-
-                if (currentDate.Month == 1)
-                    firstDayPreviousMonth = new DateTime(currentDate.Year - 1, 12, 1);
-                else
-                    firstDayPreviousMonth = new DateTime(currentDate.Year, currentDate.Month - 1, 1);
-
-                firstDayCurrentMonth = new DateTime(currentDate.Year, currentDate.Month, 1);
-
-                DateTime startDate = firstDayPreviousMonth;
-                DateTime endDate = firstDayCurrentMonth;
-
-                #endregion
-
-                string securityLongName = "";
-                string portfolioId = "";
-                List<string> countryName;
-
-
-                if (objSelectedEntities.ContainsKey("SECURITY"))
-                    securityLongName = (objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value);
-                if (objSelectedEntities.ContainsKey("PORTFOLIO"))
-                    portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
-
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
-
-
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
-                    Where(a => a.PORTFOLIO.ToUpper() == portfolioId &&
-                        ((a.AGG_LVL_1_LONG_NAME.ToUpper() == securityLongName.ToUpper()) || 
-                        ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME.ToUpper() == countryName.First().ToUpper())))
-                        && ((a.TO_DATE > startDate && a.TO_DATE <= endDate) || (a.TO_DATE > startDatePreviousYear && a.TO_DATE <= endDatePreviousYear) || (a.TO_DATE > startDateTwoPreviousYear && a.TO_DATE <= endDateTwoPreviousYear) || (a.TO_DATE > startDateThreePreviousYear && a.TO_DATE <= endDateThreePreviousYear))).ToList();
-
-                if (dimensionPerfDailyData == null)
-                    throw new Exception("Service returned Null");
-
-                if (dimensionPerfDailyData.Count() != 0)
-                    result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkGridData(dimensionPerfDailyData);
-
-                if (result == null)
-                    throw new InvalidOperationException();
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
         /// <summary>
         /// Method to Retreive Asset Allocation Data
         /// </summary>
@@ -2561,73 +2495,7 @@ namespace GreenField.Web.Services
 
         #region Performance Services
 
-        /// <summary>
-        /// Service for Chart Extension Data
-        /// </summary>
-        /// <param name="objSelectedSecurity">Selected Security</param>
-        /// <param name="objSelectedPortfolio">Selected Portfolio</param>
-        /// <param name="objStartDate">start Date for the Chart</param>
-        /// <returns>Collection of Chart Extension Data</returns>
-        [OperationContract]
-        public List<ChartExtensionData> RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objStartDate)
-        {
-            //Arguement null check
-            if (objSelectedEntities == null || objStartDate == null)
-                return new List<ChartExtensionData>();
-            List<ChartExtensionData> result = new List<ChartExtensionData>();
-
-
-            string longName = "";
-            string portfolioID = "";
-
-            //Create new Entity for service
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-
-            bool isServiceUp;
-            if (objSelectedEntities.ContainsKey("SECURITY"))
-                longName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
-            else
-                return new List<ChartExtensionData>();
-
-            if (objSelectedEntities.ContainsKey("PORTFOLIO"))
-                portfolioID = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
-
-
-
-            if (longName != null && longName != "")
-            {
-                #region ServiceAvailabilityChecker
-
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
-
-                #endregion
-
-                List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
-                    Where(a => (a.ISSUE_NAME == longName) && (a.FROMDATE >= objStartDate.Date)).OrderByDescending(a => a.FROMDATE).ToList();
-                result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
-            }
-
-            if (portfolioID != null && portfolioID != "")
-            {
-
-                #region ServiceAvailabilityChecker
-
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
-
-                #endregion
-
-                List<GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
-                    Where(a => ((a.TRANSACTION_CODE.ToUpper() == "BUY") || (a.TRANSACTION_CODE.ToUpper() == "SELL")) && (a.PORTFOLIO_ID == portfolioID)
-                        && (a.SEC_NAME == longName) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
-                result = ChartExtensionCalculations.CalculateTransactionValues(dimensionTransactionData, result);
-            }
-
-            return result;
-        }
+        
 
         #endregion
 

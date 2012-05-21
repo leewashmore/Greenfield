@@ -56,7 +56,6 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DataContracts\AssetAllocationData.cs" />
     <Compile Include="DataContracts\AttributionData.cs" />
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />

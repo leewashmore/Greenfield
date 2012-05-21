@@ -165,9 +165,6 @@
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
