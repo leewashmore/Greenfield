@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GreenField.Web.DimensionEntitiesService;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 
 namespace GreenField.Web.Helpers
 {

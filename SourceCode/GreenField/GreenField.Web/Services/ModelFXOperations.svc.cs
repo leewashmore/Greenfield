@@ -9,7 +9,7 @@ using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using System.Data;
 using System.Data.SqlClient;

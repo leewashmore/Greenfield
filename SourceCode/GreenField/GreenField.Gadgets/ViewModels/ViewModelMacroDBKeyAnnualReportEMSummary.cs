@@ -15,6 +15,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using System.Collections.Generic;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

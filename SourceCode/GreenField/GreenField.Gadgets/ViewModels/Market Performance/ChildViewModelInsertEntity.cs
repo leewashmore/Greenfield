@@ -17,6 +17,7 @@ using System.Linq;
 using System.Windows.Data;
 using System.ComponentModel;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

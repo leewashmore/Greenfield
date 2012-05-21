@@ -16,6 +16,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using System.Collections.Generic;
 using GreenField.Common.Helper;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

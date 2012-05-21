@@ -14,6 +14,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 
 namespace GreenField.Common

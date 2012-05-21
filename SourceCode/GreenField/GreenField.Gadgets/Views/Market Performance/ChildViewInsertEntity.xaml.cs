@@ -14,6 +14,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {

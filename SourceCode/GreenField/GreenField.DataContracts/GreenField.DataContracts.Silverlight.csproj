@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.DataContracts</RootNamespace>
+    <AssemblyName>GreenField.DataContracts</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="DataContracts\AssetAllocationData.cs" />
+    <Compile Include="DataContracts\AttributionData.cs" />
+    <Compile Include="DataContracts\BenchmarkReturnData.cs" />
+    <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
+    <Compile Include="DataContracts\ChartExtensionData.cs" />
+    <Compile Include="DataContracts\CountrySelectionData.cs" />
+    <Compile Include="DataContracts\EntitySelectionData.cs" />
+    <Compile Include="DataContracts\Enumerations.cs" />
+    <Compile Include="DataContracts\FilterSelectionData.cs" />
+    <Compile Include="DataContracts\HeatMapData.cs" />
+    <Compile Include="DataContracts\HoldingsData.cs" />
+    <Compile Include="DataContracts\HoldingsPercentageData.cs" />
+    <Compile Include="DataContracts\IndexConstituentsData.cs" />
+    <Compile Include="DataContracts\MacroDatabaseKeyAnnualReportData.cs" />
+    <Compile Include="DataContracts\MarketCapitalizationData.cs" />
+    <Compile Include="DataContracts\MembershipUserInfo.cs" />
+    <Compile Include="DataContracts\PerformanceData.cs" />
+    <Compile Include="DataContracts\PerformanceGraphData.cs" />
+    <Compile Include="DataContracts\PerformanceGridData.cs" />
+    <Compile Include="DataContracts\PeriodSelectionData.cs" />
+    <Compile Include="DataContracts\PortfolioDetailsData.cs" />
+    <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
+    <Compile Include="DataContracts\PortfolioSelectionData.cs" />
+    <Compile Include="DataContracts\PricingReferenceData.cs" />
+    <Compile Include="DataContracts\ReferenceData.cs" />
+    <Compile Include="DataContracts\RegionBreakdownData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceActivePositionData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
+    <Compile Include="DataContracts\RelativePerformanceUIData.cs" />
+    <Compile Include="DataContracts\SectorBreakdownData.cs" />
+    <Compile Include="DataContracts\SecurityOverviewData.cs" />
+    <Compile Include="DataContracts\Session.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
+    <Compile Include="DataContracts\TopHoldingsData.cs" />
+    <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -13,6 +13,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Common.Helper
 {

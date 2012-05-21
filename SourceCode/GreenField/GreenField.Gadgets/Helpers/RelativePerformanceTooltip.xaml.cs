@@ -14,6 +14,7 @@ using GreenField.ServiceCaller;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Helpers
 {

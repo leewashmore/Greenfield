@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using GreenField.DAL;
 using System.Data;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using System.Data.SqlClient;
 using System.ServiceModel.Activation;
 using GreenField.Web.Helpers;

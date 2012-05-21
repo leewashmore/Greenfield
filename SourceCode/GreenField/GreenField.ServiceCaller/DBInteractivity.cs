@@ -10,6 +10,7 @@ using System.Windows;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
+using GreenField.DataContracts;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 
 namespace GreenField.ServiceCaller
@@ -939,7 +940,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">collection of Portfolio Details Data</param>
         public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
@@ -1603,6 +1604,34 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
+        #endregion
+
+
+        #region test
+
+        public void test(PortfolioSelectionData p, EntitySelectionData e1, Action<EntitySelectionData> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.TestServiceAsync(p, e1);
+            client.TestServiceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
+
         #endregion
     }
 }

@@ -22,6 +22,7 @@ using GreenField.ServiceCaller.LoginDefinitions;
 using GreenField.ServiceCaller.SessionDefinitions;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.DataContracts;
 
 namespace GreenField.LoginModule.ViewModel
 {
@@ -720,7 +721,7 @@ namespace GreenField.LoginModule.ViewModel
                 Session sessionVariable = new Session
                     {
                         UserName = LoginIdText,
-                        Roles = UserRoles.ToArray()
+                        Roles=UserRoles
                     };
 
                 _manageSessions.SetSession(sessionVariable, (result) =>

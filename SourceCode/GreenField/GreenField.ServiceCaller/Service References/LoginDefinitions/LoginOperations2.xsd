@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
   <xs:import schemaLocation="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="ValidateUser">
     <xs:complexType>
@@ -70,7 +70,7 @@
   <xs:element name="UpdateApprovalForUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="membershipUserInfo" nillable="true" type="q1:MembershipUserInfo" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="membershipUserInfo" nillable="true" type="q1:MembershipUserInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -84,7 +84,7 @@
   <xs:element name="UpdateApprovalForUsers">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="users" nillable="true" type="q2:ArrayOfMembershipUserInfo" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="users" nillable="true" type="q2:ArrayOfMembershipUserInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -134,7 +134,7 @@
   <xs:element name="GetUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="GetUserResult" nillable="true" type="q4:MembershipUserInfo" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetUserResult" nillable="true" type="q4:MembershipUserInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -146,7 +146,7 @@
   <xs:element name="GetAllUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q5:ArrayOfMembershipUserInfo" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q5:ArrayOfMembershipUserInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

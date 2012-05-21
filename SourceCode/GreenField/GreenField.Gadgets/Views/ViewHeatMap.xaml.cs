@@ -15,6 +15,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {

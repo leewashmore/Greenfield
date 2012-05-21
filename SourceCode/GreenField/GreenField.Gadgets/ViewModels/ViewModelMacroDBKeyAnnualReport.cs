@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

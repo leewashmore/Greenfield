@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using GreenField.DataContracts;
 
 namespace Greenfield.ServiceCaller.UnitTest
 {

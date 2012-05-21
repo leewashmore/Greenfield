@@ -5,7 +5,7 @@ using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
 using System;
 using System.Configuration;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using System.Collections.Generic;
 using GreenField.Web.Helpers;
 using System.Linq;
@@ -506,84 +506,7 @@ namespace GreenField.Web.Services
 
         #region Build2 Services
 
-        /// <summary>
-        /// Service to return data for PortfolioDetailsUI
-        /// </summary>
-        /// <param name="objPortfolioIdentifier">Portfolio IDentifier</param>
-        /// <param name="effectiveDate">Selected Date</param>
-        /// <param name="objGetBenchmark">bool to check whether to get Benchmark data or not</param>
-        /// <returns>List of type Portfolio Details Data</returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool objGetBenchmark = false)
-        {
-            try
-            {
-                List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
-
-                //Arguement Null Case, return Empty Set
-                if ((objPortfolioIdentifier == null) || (effectiveDate == null))
-                    return result;
-
-                if (objPortfolioIdentifier.PortfolioId == null)
-                    return result;
-
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData =
-                    entity.GF_PORTFOLIO_HOLDINGS
-                    .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-
-                //If Service returned empty set
-                if (dimensionPortfolioHoldingsData.Count == 0)
-                    return result;
-
-                //Retrieve the Id of benchmark associated with the Portfolio
-                List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
-
-                //If the DataBase doesn't return a single Benchmark for a Portfolio
-                if (benchmarkId.Count != 1)
-                    throw new InvalidOperationException();
-
-                List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                List<GF_BENCHMARK_HOLDINGS> asb = dimensionBenchmarkHoldingsData.OrderBy(a => a.ISSUE_NAME).ToList();
-
-
-                foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
-                {
-                    PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
-                    portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
-                    portfolioResult.IssueName = item.ISSUE_NAME;
-                    portfolioResult.Ticker = item.TICKER;
-                    portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
-                    portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
-                    portfolioResult.SectorName = item.GICS_SECTOR_NAME;
-                    portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
-                    portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
-                    portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
-                    portfolioResult.SecurityType = item.SECURITY_TYPE;
-                    portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
-                    portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                    portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
-                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                                Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
-                    portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
-                    result.Add(portfolioResult);
-                }
-
-                result = PortfolioDetailsCalculations.CalculatePortfolioDetails(result);
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                return null;
-                //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        
 
         /// <summary>
         /// Method to retrieve data in Benchmark Chart

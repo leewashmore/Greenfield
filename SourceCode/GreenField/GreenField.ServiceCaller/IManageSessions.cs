@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SessionDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.ServiceCaller
 {

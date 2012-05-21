@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.ModelFXDefinitions;
-
+using GreenField.DataContracts;
 
 namespace GreenField.ServiceCaller
 {

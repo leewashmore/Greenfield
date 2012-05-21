@@ -8,7 +8,7 @@ using GreenField.DAL;
 using System.ServiceModel.Activation;
 using GreenField.Web.Services;
 using System.Collections.ObjectModel;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using System.Data.Objects;
 using GreenField.Web.Helpers.Service_Faults;

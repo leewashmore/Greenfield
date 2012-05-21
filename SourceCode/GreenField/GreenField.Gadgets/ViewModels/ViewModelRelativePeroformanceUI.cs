@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.ObjectModel;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

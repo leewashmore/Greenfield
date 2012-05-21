@@ -27,6 +27,7 @@ using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
 using System.IO;
 using System.Collections;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {

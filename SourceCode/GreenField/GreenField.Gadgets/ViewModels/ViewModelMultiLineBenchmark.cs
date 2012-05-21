@@ -16,6 +16,7 @@ using Telerik.Windows.Controls.Charting;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
+using GreenField.DataContracts;
 
 
 namespace GreenField.Gadgets.ViewModels

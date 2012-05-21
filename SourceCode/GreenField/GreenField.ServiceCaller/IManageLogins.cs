@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using GreenField.ServiceCaller.LoginDefinitions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using GreenField.DataContracts;
 
 
 namespace GreenField.ServiceCaller

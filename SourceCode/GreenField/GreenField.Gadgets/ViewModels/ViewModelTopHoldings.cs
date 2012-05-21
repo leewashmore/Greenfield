@@ -20,6 +20,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using Microsoft.Practices.Prism.Commands;
 using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Regions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
