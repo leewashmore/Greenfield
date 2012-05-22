@@ -19,6 +19,7 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotPreference), "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), true)]
+[assembly: EdmRelationshipAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.tblMarketSnapshotGroupPreference), "tblMarketSnapshotEntityPreference", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.tblMarketSnapshotEntityPreference), true)]
 
 #endregion
 
@@ -883,8 +884,16 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectResult<CommodityResult> GetCOMMODITY_FORECASTS()
+        {
+            return base.ExecuteFunction<CommodityResult>("GetCOMMODITY_FORECASTS");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         /// <param name="country">No Metadata Documentation available.</param>
-        public ObjectResult<MacroDataCTY_Result> RetrieveEMSummaryDataReportPerCountry(global::System.String country)
+        public ObjectResult<MacroDataCTY_Result> RetrieveEMSummaryDataReportCountry(global::System.String country)
         {
             ObjectParameter countryParameter;
             if (country != null)
@@ -896,15 +905,7 @@ namespace GreenField.DAL
                 countryParameter = new ObjectParameter("country", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<MacroDataCTY_Result>("RetrieveEMSummaryDataReportPerCountry", countryParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectResult<CommodityResult> GetCOMMODITY_FORECASTS()
-        {
-            return base.ExecuteFunction<CommodityResult>("GetCOMMODITY_FORECASTS");
+            return base.ExecuteFunction<MacroDataCTY_Result>("RetrieveEMSummaryDataReportCountry", countryParameter);
         }
 
         #endregion
@@ -2521,6 +2522,47 @@ namespace GreenField.DAL
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference")]
+        public tblMarketSnapshotGroupPreference tblMarketSnapshotGroupPreference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferenceReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblMarketSnapshotGroupPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotGroupPreference", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>
@@ -2664,6 +2706,28 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<tblMarketSnapshotPreference>("ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference", "tblMarketSnapshotPreference", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ResearchModel", "FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference")]
+        public EntityCollection<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<tblMarketSnapshotEntityPreference>("ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference", "tblMarketSnapshotEntityPreference", value);
                 }
             }
         }

@@ -11,15 +11,122 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
+using Telerik.Windows.Data;
+using System.ComponentModel;
+using Telerik.Windows.Controls;
+using System.Windows.Data;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewMacroDBKeyAnnualReportEMSummary : ViewBaseUserControl
     {
+        private List<MacroDatabaseKeyAnnualReportData> _macroInfo;
+        private int _currentYear;
         public ViewMacroDBKeyAnnualReportEMSummary(ViewModelMacroDBKeyAnnualReportEMSummary dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            dataContextSource.RetrieveMacroEMSummaryDataCompletedEvent += new Common.RetrieveMacroCountrySummaryDataCompleteEventHandler(dataContextSource_RetrieveMacroDataCompletedEvent);
+            dataContextSource.macroDBKeyAnnualReportEMSummaryDataLoadedEvent +=
+           new DataRetrievalProgressIndicatorEventHandler(dataContextSource_macroDBKeyAnnualReportEMSummaryDataLoadedEvent);
+
+        }
+
+         /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void dataContextSource_macroDBKeyAnnualReportEMSummaryDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;         
+            }
+            else
+            { 
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
+
+        public void dataContextSource_RetrieveMacroDataCompletedEvent(Common.RetrieveMacroCountrySummaryDataCompleteEventArgs e)
+        {
+            _macroInfo = e.MacroInfo;
+            this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).FiveYearMacroCountryData;
+            this.dgMacroDBKeyReport.Columns.Clear();
+            this.dgMacroDBKeyReport.GroupDescriptors.Clear();
+            this.dgMacroDBKeyReport.SortDescriptors.Clear();
+            _currentYear = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).CurrentYear;
+            if (_macroInfo != null)
+            {
+
+
+
+                //            <helpers:ViewBaseUserControl.Resources>
+                //    <ResourceDictionary>
+                //        <ResourceDictionary.MergedDictionaries>
+                //            <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                //        </ResourceDictionary.MergedDictionaries>
+                //    </ResourceDictionary>
+                //</helpers:ViewBaseUserControl.Resources>
+                //ViewBaseUserControl v = new ViewBaseUserControl();
+
+                //ResourceDictionary r = new ResourceDictionary();
+                //r.Source = new Uri("/GreenField.Gadgets;component/Assets/Styles.xaml");
+                //r.MergedDictionaries.Add(r);
+                //v.Resources.Add(
+
+
+                //Telerik.Windows.Controls.GridView.GridViewHeaderCell.BackgroundProperty.
+
+                //GridViewHeaderCell.BackgroundProperty  = 
+                GroupDescriptor descriptor = new GroupDescriptor();
+                descriptor.Member = "CATEGORY_NAME";
+                descriptor.SortDirection = ListSortDirection.Ascending;
+                this.dgMacroDBKeyReport.GroupDescriptors.Add(descriptor);
+                SortDescriptor sdescriptor = new SortDescriptor();
+                sdescriptor.Member = "SORT_ORDER";
+                sdescriptor.SortDirection = ListSortDirection.Ascending;
+                this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
+                GridViewDataColumn column = new GridViewDataColumn();
+                column.DataMemberBinding = new Binding("DESCRIPTION");
+                column.Header = "DESCRIPTION";
+                column.UniqueName = "MyColumn";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column);
+                GridViewDataColumn column1 = new GridViewDataColumn();
+                column1.DataMemberBinding = new Binding("YEAR_ONE");
+                column1.Header = _currentYear.ToString();
+                column1.UniqueName = "MyColumn1";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column1);
+                GridViewDataColumn column2 = new GridViewDataColumn();
+                column2.DataMemberBinding = new Binding("YEAR_TWO");
+                column2.Header = (_currentYear + 1).ToString();
+                column2.UniqueName = "MyColumn2";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column2);
+                GridViewDataColumn column3 = new GridViewDataColumn();
+                column3.DataMemberBinding = new Binding("YEAR_THREE");
+                column3.Header = (_currentYear + 2).ToString();
+                column3.UniqueName = "MyColumn3";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column3);
+                GridViewDataColumn column4 = new GridViewDataColumn();
+                column4.DataMemberBinding = new Binding("YEAR_FOUR");
+                column4.Header = (_currentYear + 3).ToString();
+                column4.UniqueName = "MyColumn4";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column4);
+                GridViewDataColumn column5 = new GridViewDataColumn();
+                column5.DataMemberBinding = new Binding("YEAR_FIVE");
+                column5.Header = (_currentYear + 4).ToString();
+                column5.UniqueName = "MyColumn5";
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                this.dgMacroDBKeyReport.Columns.Add(column5);
+
+            }
         }
     }
 }

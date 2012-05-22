@@ -64,6 +64,8 @@ namespace GreenField.Gadgets.Views
             if (_macroInfo != null)
             {
 
+
+
     //            <helpers:ViewBaseUserControl.Resources>
     //    <ResourceDictionary>
     //        <ResourceDictionary.MergedDictionaries>

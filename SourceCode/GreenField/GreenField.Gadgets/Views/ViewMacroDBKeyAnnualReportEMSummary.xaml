@@ -17,12 +17,24 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <telerik:RadButton x:Name="btnMoveRight" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
+                                       Margin="5,0,0,0"  ToolTipService.ToolTip="Move Right One Year"  Command="{Binding MoveRightCommand}">
+            <Image Source="../Images/AddToChart.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </telerik:RadButton>
+        <telerik:RadButton x:Name="btnMoveLeft" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
+                                       Margin="5,0,20,0"  ToolTipService.ToolTip="Move Left One Year"  Command="{Binding MoveLeftCommand}">
+            <Image Source="../Images/LeftArrow.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </telerik:RadButton>
+        <Grid Grid.Row="1">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
+            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadGridView Name="dgMacroDBKeyReport" 
-                                     AutoGenerateColumns="False" 
-                                     ItemsSource="{Binding MacroCountryData}" 
+                                     AutoGenerateColumns="False"                                     
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
@@ -38,7 +50,7 @@
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      AutoExpandGroups="True">
-                    <telerik:RadGridView.GroupDescriptors >
+                    <!--<telerik:RadGridView.GroupDescriptors >
                         <telerik:GroupDescriptor Member="CATEGORY_NAME" 
                                                  SortDirection="Ascending" />
                     </telerik:RadGridView.GroupDescriptors>
@@ -60,9 +72,10 @@
                                                     Width="Auto" HeaderTextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-                    </telerik:RadGridView.Columns>
+                    </telerik:RadGridView.Columns>-->
                 </telerik:RadGridView>
-            </telerik:RadBusyIndicator>
-        </Border>
+            </Border>
+        </telerik:RadBusyIndicator>
+        </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>

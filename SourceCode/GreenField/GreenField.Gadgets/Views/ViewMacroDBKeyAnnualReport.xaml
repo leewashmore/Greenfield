@@ -21,8 +21,6 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
-
         <telerik:RadButton x:Name="btnMoveRight" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
                                        Margin="5,0,0,0"  ToolTipService.ToolTip="Move Right One Year"  Command="{Binding MoveRightCommand}">
             <Image Source="../Images/AddToChart.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -104,12 +102,10 @@
                                                     Width="Auto" HeaderTextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-                    </telerik:RadGridView.Columns>-->
-                    
+                    </telerik:RadGridView.Columns>-->                    
                 </telerik:RadGridView>
                 </Border>
             </telerik:RadBusyIndicator>
-            </Grid>
-        
+            </Grid>        
     </Grid>
 </helpers:ViewBaseUserControl>

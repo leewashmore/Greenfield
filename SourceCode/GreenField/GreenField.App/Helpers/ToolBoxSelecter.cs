@@ -87,7 +87,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_EM_SUMMARY:
-                    UpdateToolBoxItemVisibility();
+                    UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);

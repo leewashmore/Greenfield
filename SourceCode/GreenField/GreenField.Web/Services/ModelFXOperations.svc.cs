@@ -158,12 +158,14 @@ namespace GreenField.Web.Services
                 //if (!isServiceUp)
                 //    throw new Exception();
 
-                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
+                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
                 //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
                 DimensionEntitiesService.Entities entity = DimensionEntity;              
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
                 result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", countryNameVal).ToList();
+                if (result.Count == 0 || result == null)
+                    return result;
                 //foreach (var i in myList)
                 //{
                 //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
