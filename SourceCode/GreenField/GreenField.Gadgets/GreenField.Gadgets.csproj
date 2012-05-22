@@ -141,6 +141,7 @@
       <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
+    <Compile Include="Models\FiveYearDataModels.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
@@ -467,6 +468,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ToggleIcon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LeftArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -187,7 +187,7 @@
                                          SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
                                          FontSize="7"
                                          FontFamily="Arial" 
-                                             Width="auto" 
+                                         Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 
@@ -212,20 +212,22 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                <telerik:RadComboBox x:Name="cbCountrySelector"
+                        <telerik:RadComboBox x:Name="cbCountrySelector"
                                          EmptyText="Search Country..." 
+                                         SelectedValue="{Binding CountryCode,Mode=TwoWay}"
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
-                                         ItemsSource="{Binding CountryName}"
+                                         ItemsSource="{Binding CountryName}"                                        
                                          CanAutocompleteSelectItems="True" 
+                                         TextOptions.TextHintingMode="Fixed"
                                          CanKeyboardNavigationSelectItems="False" 
                                          HorizontalAlignment="Left"
                                          OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"
-                                         TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False">
-                    <telerik:RadComboBox.ItemsPanel>
+                                         StaysOpenOnEdit="True"                                        
+                                         IsTextSearchEnabled="False"    
+                                     >
+                            <telerik:RadComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>

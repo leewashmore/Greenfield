@@ -20,14 +20,47 @@
         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
-                <telerik:RadGridView Name="dgMacroDBKeyReport" AutoGenerateColumns="True" ItemsSource="{Binding MacroCountryData}" 
-                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
-                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"
+                <telerik:RadGridView Name="dgMacroDBKeyReport" 
+                                     AutoGenerateColumns="False" 
+                                     ItemsSource="{Binding MacroCountryData}" 
+                                     CanUserSelect="False" 
+                                     CanUserReorderColumns="False" 
+                                     CanUserInsertRows="False" 
+                                     telerik:StyleManager.Theme="Metro"
+                                     CanUserDeleteRows="False" 
+                                     IsReadOnly="True" 
+                                     CanUserSortColumns="False" 
+                                     ScrollMode="Deferred"
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" UseLayoutRounding="True"
+                                     FontFamily="Arial" FontSize="7" 
+                                     GroupPanelBackground="#9F1D21"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
-
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     AutoExpandGroups="True">
+                    <telerik:RadGridView.GroupDescriptors >
+                        <telerik:GroupDescriptor Member="CATEGORY_NAME" 
+                                                 SortDirection="Ascending" />
+                    </telerik:RadGridView.GroupDescriptors>
+                    <telerik:RadGridView.SortDescriptors>
+                        <telerik:SortDescriptor Member="SORT_ORDER"
+                                                SortDirection="Ascending" />
+                    </telerik:RadGridView.SortDescriptors>
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgcDescription" 
+                                                    Header="DESCRIPTION" 
+                                                    IsFilterable="False" 
+                                                    DataMemberBinding="{Binding DESCRIPTION}" 
+                                                    Width="*"
+                                                    HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
+                        <telerik:GridViewDataColumn x:Name="dgcYear" 
+                                                    Header="1988" 
+                                                    DataMemberBinding="{Binding YEAR_1988}" 
+                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+                    </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>
         </Border>

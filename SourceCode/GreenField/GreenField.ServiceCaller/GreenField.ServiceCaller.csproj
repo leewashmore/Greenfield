@@ -158,18 +158,12 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.TopBenchmarkSecuritiesData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.TopHoldingsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.UnrealizedGainLossData.datasource" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations4.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
     <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />
@@ -198,24 +192,12 @@
     <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations5.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
+    <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -226,62 +208,10 @@
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
-    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
-    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
     <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
     <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
     <None Include="Service References\PerformanceDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
-    <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\ModelFXDefinitions\configuration.svcinfo" />
-    <None Include="Service References\ModelFXDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -299,9 +229,20 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig">
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
     <None Include="Service References\DashboardDefinitions\DashboardOperations.xsd">
       <SubType>Designer</SubType>
@@ -347,6 +288,63 @@
     <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SessionDefinitions\SessionOperations.wsdl" />
     <None Include="Service References\SessionDefinitions\SessionOperations.xsd">
       <SubType>Designer</SubType>
@@ -365,6 +363,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
@@ -373,12 +377,6 @@
     <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
-      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
-      <Name>GreenField.DataContracts.Silverlight</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

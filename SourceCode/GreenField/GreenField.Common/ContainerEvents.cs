@@ -17,6 +17,7 @@ using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
 
 namespace GreenField.Common
@@ -34,6 +35,8 @@ namespace GreenField.Common
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 
     public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
+
+    public class CountrySelectionSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 

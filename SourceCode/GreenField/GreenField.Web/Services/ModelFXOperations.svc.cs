@@ -67,7 +67,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", "AR").ToList();
+                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();
                 //foreach (var i in myList)
                 //{
                 //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
@@ -163,7 +163,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;              
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", "AR").ToList();
+                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", countryNameVal).ToList();
                 //foreach (var i in myList)
                 //{
                 //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
