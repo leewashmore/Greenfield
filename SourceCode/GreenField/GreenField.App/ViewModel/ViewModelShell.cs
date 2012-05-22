@@ -580,6 +580,7 @@ namespace GreenField.App.ViewModel
                         FilterSelectionData filterSelData = new FilterSelectionData();
                         filterSelData.Filtertype = value;
                         filterSelData.FilterValues = string.Empty;
+                        SelectedFilterValueInfo = null;
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);

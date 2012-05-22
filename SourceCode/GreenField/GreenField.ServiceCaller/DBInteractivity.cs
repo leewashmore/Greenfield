@@ -1583,7 +1583,7 @@ namespace GreenField.ServiceCaller
 
         #region Slice 4 - FX
 
-        public void RetrieveCommodityData(Action<List<CommodityResult>> callback)
+        public void RetrieveCommodityData(Action<List<FXCommodityData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveCommodityDataAsync();

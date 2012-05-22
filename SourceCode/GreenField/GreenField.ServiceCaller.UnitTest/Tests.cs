@@ -434,7 +434,94 @@ namespace Greenfield.ServiceCaller.UnitTest
 
         #endregion
 
+        #region MarketCapitalization Gadget
 
+        /// <summary>
+        /// RetrieveMarketCapitalizationData test method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMarketCapitalizationDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 2012");
+            string filterType = null;
+            string filterValue = null;
+            bool isExCash = false;
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "Market Capitalization Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketCapitalizationData Test Method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMarketCapitalizationDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = Convert.ToDateTime("01/31/001");
+            string filterType = null;
+            string filterValue = null;
+            bool isExCash = false;
+
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+        /// <summary>
+        /// RetrieveMarketCapitalizationData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMarketCapitalizationDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = Convert.ToDateTime("01/31/2012");
+            string filterType = null;
+            string filterValue = null;
+            bool isExCash = false;
+
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketCapitalizationData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// portfolioIdentifiers - Empty
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveMarketCapitalizationDataPortfolioIdentifierEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = Convert.ToDateTime("01/31/2012");
+            string filterType = null;
+            string filterValue = null;
+            bool isExCash = false;
+
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+        #endregion
 
         #endregion
     }

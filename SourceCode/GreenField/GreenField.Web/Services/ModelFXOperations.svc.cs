@@ -230,7 +230,8 @@ namespace GreenField.Web.Services
         /// <returns>Commodity Result</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<CommodityResult> RetrieveCommodityData()
+        //TODO Seema: Add Input Param Country
+        public List<FXCommodityData> RetrieveCommodityData()//CountrySelectionData selectedCountry)
         {
             try
             {
@@ -240,13 +241,38 @@ namespace GreenField.Web.Services
                 //if (!isServiceUp)
                 //    throw new Exception();
 
-                List<CommodityResult> result = new List<CommodityResult>();
-                //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
+                List<CommodityResult> resultDB = new List<CommodityResult>();
+                List<FXCommodityData> result = new List<FXCommodityData>();
+                FXCommodityData commodityData = new FXCommodityData();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
+
+                if (entity.GF_PRICING_BASEVIEW == null && entity.GF_PRICING_BASEVIEW.Count() == 0)
+                return null;
+
+                
+
+                
                 ResearchEntities research = new ResearchEntities();
-                //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
                
+                //TODO Seema: Input Parameter has to be added - Country
+                //Retrieving data from database
+                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
+
+                for (int _index = 0; _index < resultDB.Count; _index++)
+                {
+                    commodityData.CommodityID = resultDB[_index].COMMODITY_ID;
+                    commodityData.CurrentYearEnd = Convert.ToDecimal(resultDB[_index].CURRENT_YEAR_END);
+                    commodityData.LastUpdate = Convert.ToDecimal(resultDB[_index].LASTUPDATE);
+                    commodityData.LongTerm = Convert.ToDecimal(resultDB[_index].LONG_TERM);
+                    commodityData.NextYearEnd = Convert.ToDecimal(resultDB[_index].NEXT_YEAR_END);
+                    result.Add(commodityData);
+                }
+                //TODO Seema: Input Parameter has to be added - Country
+                //Retrieving Data from WCF svc
+                dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
+                
                 return result;
             }
             catch (Exception ex)

@@ -69,4 +69,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CountrySelectionData" nillable="true" type="tns:CountrySelectionData" />
+  <xs:complexType name="ArrayOfFXCommodityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFXCommodityData" nillable="true" type="tns:ArrayOfFXCommodityData" />
+  <xs:complexType name="FXCommodityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="COMMODITY_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CURRENT_YEAR_END" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LASTUPDATE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LONG_TERM" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NEXT_YEAR_END" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Year1" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Year3" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />
 </xs:schema>

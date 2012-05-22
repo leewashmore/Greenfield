@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
-  <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:element name="RetrieveMacroDatabaseKeyAnnualReportData">
     <xs:complexType>
       <xs:sequence>
@@ -50,7 +49,7 @@
   <xs:element name="RetrieveCommodityDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCommodityDataResult" nillable="true" type="q4:ArrayOfCommodityResult" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="RetrieveCommodityDataResult" nillable="true" type="q4:ArrayOfFXCommodityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

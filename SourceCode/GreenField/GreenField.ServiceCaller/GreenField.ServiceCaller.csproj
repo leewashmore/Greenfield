@@ -230,10 +230,10 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult.datasource">
+    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CountrySelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CountrySelectionData.datasource">
+    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.MacroDatabaseKeyAnnualReportData.datasource">
@@ -250,12 +250,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations41.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
