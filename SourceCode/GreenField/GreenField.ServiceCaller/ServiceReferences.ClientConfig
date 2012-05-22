@@ -1,0 +1,75 @@
+﻿<configuration>
+  <system.serviceModel>
+    <bindings>
+      <basicHttpBinding>
+        <binding name="BenchmarkHoldingsOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="DashboardOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="LoggingOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="LoginOperations" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+          <security mode="None" />
+        </binding>
+        <binding name="BasicHttpBinding_ModelFXOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="PerformanceOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="SecurityReferenceOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+        <binding name="SessionOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00"
+                 receiveTimeout="00:10:00">
+          <security mode="None" />
+        </binding>
+      </basicHttpBinding>
+    </bindings>
+    <client>
+      <endpoint address="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsOperations"
+        contract="BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations"
+        name="BenchmarkHoldingsOperations" />
+      <endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="DashboardOperations"
+        contract="DashboardDefinitions.DashboardOperations" name="DashboardOperations" />
+      <endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="LoggingOperations"
+        contract="LoggingDefinitions.LoggingOperations" name="LoggingOperations" />
+      <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="LoginOperations"
+        contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+      <endpoint address="http://localhost:59430/Services/ModelFXOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ModelFXOperations"
+        contract="ModelFXDefinitions.ModelFXOperations" name="BasicHttpBinding_ModelFXOperations" />
+      <endpoint address="http://localhost:59430/Services/PerformanceOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
+        contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
+      <endpoint address="http://localhost:59430/Services/SecurityReferenceOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="SecurityReferenceOperations"
+        contract="SecurityReferenceDefinitions.SecurityReferenceOperations"
+        name="SecurityReferenceOperations" />
+      <endpoint address="http://localhost:59430/Services/SessionOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="SessionOperations"
+        contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
+    </client>
+
+  </system.serviceModel>
+</configuration>
