@@ -243,7 +243,7 @@ namespace GreenField.Web.Services
 
                 List<CommodityResult> resultDB = new List<CommodityResult>();
                 List<FXCommodityData> result = new List<FXCommodityData>();
-                FXCommodityData commodityData = new FXCommodityData();
+                
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
@@ -262,16 +262,21 @@ namespace GreenField.Web.Services
 
                 for (int _index = 0; _index < resultDB.Count; _index++)
                 {
+                    FXCommodityData commodityData = new FXCommodityData();
                     commodityData.CommodityID = resultDB[_index].COMMODITY_ID;
                     commodityData.CurrentYearEnd = Convert.ToDecimal(resultDB[_index].CURRENT_YEAR_END);
-                    commodityData.LastUpdate = Convert.ToDecimal(resultDB[_index].LASTUPDATE);
+                    //commodityData.LastUpdate = Convert.ToDateTime(resultDB[_index].LASTUPDATE);
                     commodityData.LongTerm = Convert.ToDecimal(resultDB[_index].LONG_TERM);
                     commodityData.NextYearEnd = Convert.ToDecimal(resultDB[_index].NEXT_YEAR_END);
                     result.Add(commodityData);
                 }
                 //TODO Seema: Input Parameter has to be added - Country
                 //Retrieving Data from WCF svc
-                dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
+                // dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
+                ////var res = from p in entity.GF_PRICING_BASEVIEW
+                //          where p.FROMDATE == Convert.ToDateTime("05/18/2012") //&& p.INSTRUMENT_ID == Convert.ToString("299")
+                //          select p;
+                ////dimSvcPricingViewData = res.ToList();
                 
                 return result;
             }

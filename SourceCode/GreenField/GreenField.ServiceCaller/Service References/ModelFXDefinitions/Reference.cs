@@ -785,15 +785,13 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="FXCommodityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class FXCommodityData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string COMMODITY_IDField;
+        private string CommodityIDField;
         
-        private System.Nullable<decimal> CURRENT_YEAR_ENDField;
+        private System.Nullable<decimal> CurrentYearEndField;
         
-        private System.Nullable<decimal> LASTUPDATEField;
+        private System.Nullable<decimal> LongTermField;
         
-        private System.Nullable<decimal> LONG_TERMField;
-        
-        private System.Nullable<decimal> NEXT_YEAR_ENDField;
+        private System.Nullable<decimal> NextYearEndField;
         
         private System.Nullable<decimal> YTDField;
         
@@ -802,66 +800,53 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         private System.Nullable<decimal> Year3Field;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string COMMODITY_ID {
+        public string CommodityID {
             get {
-                return this.COMMODITY_IDField;
+                return this.CommodityIDField;
             }
             set {
-                if ((object.ReferenceEquals(this.COMMODITY_IDField, value) != true)) {
-                    this.COMMODITY_IDField = value;
-                    this.RaisePropertyChanged("COMMODITY_ID");
+                if ((object.ReferenceEquals(this.CommodityIDField, value) != true)) {
+                    this.CommodityIDField = value;
+                    this.RaisePropertyChanged("CommodityID");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> CURRENT_YEAR_END {
+        public System.Nullable<decimal> CurrentYearEnd {
             get {
-                return this.CURRENT_YEAR_ENDField;
+                return this.CurrentYearEndField;
             }
             set {
-                if ((this.CURRENT_YEAR_ENDField.Equals(value) != true)) {
-                    this.CURRENT_YEAR_ENDField = value;
-                    this.RaisePropertyChanged("CURRENT_YEAR_END");
+                if ((this.CurrentYearEndField.Equals(value) != true)) {
+                    this.CurrentYearEndField = value;
+                    this.RaisePropertyChanged("CurrentYearEnd");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> LASTUPDATE {
+        public System.Nullable<decimal> LongTerm {
             get {
-                return this.LASTUPDATEField;
+                return this.LongTermField;
             }
             set {
-                if ((this.LASTUPDATEField.Equals(value) != true)) {
-                    this.LASTUPDATEField = value;
-                    this.RaisePropertyChanged("LASTUPDATE");
+                if ((this.LongTermField.Equals(value) != true)) {
+                    this.LongTermField = value;
+                    this.RaisePropertyChanged("LongTerm");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> LONG_TERM {
+        public System.Nullable<decimal> NextYearEnd {
             get {
-                return this.LONG_TERMField;
+                return this.NextYearEndField;
             }
             set {
-                if ((this.LONG_TERMField.Equals(value) != true)) {
-                    this.LONG_TERMField = value;
-                    this.RaisePropertyChanged("LONG_TERM");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> NEXT_YEAR_END {
-            get {
-                return this.NEXT_YEAR_ENDField;
-            }
-            set {
-                if ((this.NEXT_YEAR_ENDField.Equals(value) != true)) {
-                    this.NEXT_YEAR_ENDField = value;
-                    this.RaisePropertyChanged("NEXT_YEAR_END");
+                if ((this.NextYearEndField.Equals(value) != true)) {
+                    this.NextYearEndField = value;
+                    this.RaisePropertyChanged("NextYearEnd");
                 }
             }
         }

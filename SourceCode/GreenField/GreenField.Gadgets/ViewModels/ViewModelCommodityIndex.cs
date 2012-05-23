@@ -51,8 +51,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-
+            _logger = param.LoggerFacade;            
             _dbInteractivity.RetrieveCommodityData(RetrieveCommodityDataCallbackMethod);
         }
         #endregion
@@ -99,6 +98,8 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CommodityData = result;
                     this.RaisePropertyChanged(() => this.CommodityData);
+                    if (CommodityDataLoadEvent != null)
+                        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {

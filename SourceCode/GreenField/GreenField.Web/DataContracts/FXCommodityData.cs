@@ -23,8 +23,8 @@ namespace GreenField.Web.DataContracts
         [DataMember]
         public decimal? LongTerm { get; set; }
         
-        [DataMember]
-        public decimal? LastUpdate { get; set; }
+        //[DataMember]
+        //public DateTime LastUpdate { get; set; }
 
         //[DataMember]
         //public decimal? GPToday { get; set; }
