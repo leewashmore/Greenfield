@@ -134,16 +134,15 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
-        /// Retrieving the Pricing Reference Data for selected Entity.
-        /// </summary>
-        /// <param name="entityIdentifiers"></param>
-        /// <param name="startDateTime"></param>
-        /// <param name="endDateTime"></param>
-        /// <param name="totalReturnCheck"></param>
-        /// <param name="frequencyDuration"></param>
-        /// <param name="chartEntityTypes"></param>
-        /// <returns>List of PricingReferenceData</returns>
+       /// <summary>
+        /// Retrieving the Pricing Reference Data for selected Entity for the gadget ClosingPriceChart.
+       /// </summary>
+       /// <param name="entityIdentifiers">Selected Security/Commodity/Index</param>
+       /// <param name="startDateTime">start time for the chart</param>
+       /// <param name="endDateTime">end time for the chart</param>
+       /// <param name="totalReturnCheck">Check to include TotalPriceReturn or TotalGrossReturn</param>
+       /// <param name="frequencyDuration">Frequency Duration </param>
+       /// <returns>List of Pricing Reference Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<PricingReferenceData> RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
