@@ -694,10 +694,17 @@ namespace GreenField.Web.Services
 
             try
             {
-
+                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();             
                 if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                    return result;
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+               
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -904,9 +911,17 @@ namespace GreenField.Web.Services
         {
             try
             {
-                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
                 List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
+                    return result;
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+              
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -1581,9 +1596,17 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
-            if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
             List<PerformanceGridData> result = new List<PerformanceGridData>();
+            if (portfolioSelectionData == null || effectiveDate == null)
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+                throw new Exception();
+
+           
             DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             if (performanceData == null)
                 return result;
@@ -1636,9 +1659,17 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<AttributionData> RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
+             List<AttributionData> result = new List<AttributionData>();
             if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-            List<AttributionData> result = new List<AttributionData>();
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+
+                throw new Exception();
+          
             List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;
@@ -1722,6 +1753,14 @@ namespace GreenField.Web.Services
         {
             if (portfolioSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+                throw new Exception();
+
             List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
             List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (riskReturnData == null)
