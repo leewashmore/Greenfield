@@ -28,7 +28,7 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgPerformanceGrid" AutoGenerateColumns="False"
-                                 ItemsSource="{Binding PerformanceGridInfo, Mode=TwoWay}"
+                                 ItemsSource="{Binding PerformanceGridInfo}"
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
