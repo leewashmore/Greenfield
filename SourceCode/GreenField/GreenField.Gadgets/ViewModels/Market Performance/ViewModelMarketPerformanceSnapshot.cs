@@ -23,6 +23,7 @@ using GreenField.ServiceCaller.SessionDefinitions;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.Gadgets.Models;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

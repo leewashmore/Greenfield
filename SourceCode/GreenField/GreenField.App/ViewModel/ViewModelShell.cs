@@ -24,6 +24,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.App.ViewModel
 {
@@ -174,7 +175,11 @@ namespace GreenField.App.ViewModel
         private List<EntitySelectionData> _entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
-            get { return _entitySelectionInfo; }
+            get 
+            {
+                if (_entitySelectionInfo == null)
+                    _entitySelectionInfo = new List<EntitySelectionData>();
+                return _entitySelectionInfo; }
             set
             {
                 _entitySelectionInfo = value;
@@ -478,17 +483,14 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                //if (_countryTypeInfo == null)
-                //{
-                //    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
-                //}
+               
                 return _countryTypeInfo;
 
             }
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.Select(t => t.CountryName).Distinct().ToList();               
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -505,11 +507,43 @@ namespace GreenField.App.ViewModel
             {
                 _countryName = value;
                 RaisePropertyChanged(() => this.CountryName);
+
+            }
+        }
+       
+        private String _countryCode;
+        public String CountryCode
+        {
+            get
+            {
+                return _countryCode;
+
+            }
+            set
+            {
+                _countryCode = value;
+                RaisePropertyChanged(() => this.CountryCode);
+                if (value != null)
+                {
+                    for (int i = 0; i < CountryTypeInfo.Count; i++)
+                    {
+                        if (CountryTypeInfo[i].CountryName == value)
+                        {
+                            SelectorPayload.CountrySelectionData = CountryTypeInfo[i].CountryCode;
+                            _eventAggregator.GetEvent<CountrySelectionSetEvent>().Publish(SelectorPayload.CountrySelectionData);
+
+                        }
+                    }
+                }
+
             }
         }
 
+         
+
+
         /// <summary>
-        /// Stores visibility property of the period selector
+        /// Stores visibility property of the country selector
         /// </summary>
         private Visibility _countrySelectorVisibility = Visibility.Collapsed;
         public Visibility CountrySelectorVisibility
@@ -518,33 +552,10 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countrySelectorVisibility = value;
-                if(value == Visibility.Visible)
-                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
-
-            }
-        }
-
-        /// <summary>
-        /// String that contains the selected filter type
-        /// </summary>
-        private String _selectedCountryType;
-        public String SelectedCountryType
-        {
-            get
-            {
-                return _selectedCountryType;
-            }
-            set
-            {
-                _selectedCountryType = value;
-                RaisePropertyChanged(() => this.SelectedCountryType);
-
-                if (value != null)
-                {
-                    SelectorPayload.PeriodSelectionData = value;
-                    _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
-                }
+                if (value == Visibility.Visible && CountryTypeInfo == null)
+                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+             
             }
         }
 
@@ -3051,7 +3062,28 @@ namespace GreenField.App.ViewModel
 
         private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
         {
-            CountryTypeInfo = result;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    CountryTypeInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
 

@@ -95,7 +95,7 @@ namespace GreenField.Gadgets.Views
 
         #region Events
 
-        
+
 
         #endregion
 
@@ -172,5 +172,6 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
     }
 }

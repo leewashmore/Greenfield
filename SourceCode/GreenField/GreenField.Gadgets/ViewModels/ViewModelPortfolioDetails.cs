@@ -20,6 +20,7 @@ using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 using System.Linq;
+using GreenField.DataContracts;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels

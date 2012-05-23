@@ -67,8 +67,8 @@
             <Setter Property="Height" Value="15"/>
         </Style>
     </helpers:ViewBaseUserControl.Resources>
-
-    <Grid x:Name="LayoutRoot" Background="White">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -127,7 +127,7 @@
                 </telerik:RadGridView.Columns>                
             </telerik:RadGridView>
 
-            <telerik:RadGridView x:Name="dgSectorSecurityDetails" 
+                <telerik:RadGridView x:Name="dgSectorSecurityDetails" 
                                  AutoGenerateColumns="False"
                                  CanUserDeleteRows="False"
                                  CanUserInsertRows="False"
@@ -153,7 +153,6 @@
                                                         DataMemberBinding="{Binding SecurityName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
-            <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 
                 <telerik:RadGridView Name="dgRelativePerformance" 
                                      AutoGenerateColumns="False" 
@@ -231,8 +230,7 @@
                     </telerik:RadGridView.Columns>
                 
                 </telerik:RadGridView>
-            </telerik:RadBusyIndicator>
         </Grid>
-
     </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

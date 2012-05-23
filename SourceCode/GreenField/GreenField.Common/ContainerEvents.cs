@@ -17,6 +17,8 @@ using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Common
 {
@@ -26,13 +28,15 @@ namespace GreenField.Common
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
 
-    public class SecurityReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> { }
+    public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
-    public class PortfolioReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData> { }
+    public class PortfolioReferenceSetEvent : CompositePresentationEvent<PortfolioSelectionData> { }
 
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 
     public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
+
+    public class CountrySelectionSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 

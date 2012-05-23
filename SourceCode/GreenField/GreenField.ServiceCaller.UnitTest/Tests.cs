@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
+using GreenField.DataContracts;
 
 namespace Greenfield.ServiceCaller.UnitTest
 {
@@ -43,7 +44,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.IsNotNull(resultSet, "Security data for Selected Ticker not returned");
                 EnqueueTestComplete();
             });
-        } 
+        }
         #endregion
 
         #region ToolBox Selectors
@@ -61,10 +62,11 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
 
-        } 
+        }
         #endregion
 
         #region Closing/Gross Price Chart
+
         /// <summary>
         /// RetrievePricingReferenceData Test Method - Sample Data
         /// entityIdentifiers - Instrument ID - BRPETROBRE
@@ -75,6 +77,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         /// </summary>
         [TestMethod]
         [Asynchronous]
+        [Tag("Pricing")]
         public void RetrievePricingReferenceDataTestMethod()
         {
             DBInteractivity instance = new DBInteractivity();
@@ -103,6 +106,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         /// </summary>
         [TestMethod]
         [Asynchronous]
+        [Tag("Pricing")]
         public void RetrievePricingReferenceDataEntityIdentifiersNullTestMethod()
         {
             DBInteractivity instance = new DBInteractivity();
@@ -130,6 +134,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         /// </summary>
         [TestMethod]
         [Asynchronous]
+        [Tag("Pricing")]
         public void RetrievePricingReferenceDataEntityIdentifiersEmptyTestMethod()
         {
             DBInteractivity instance = new DBInteractivity();
@@ -157,6 +162,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         /// </summary>
         [TestMethod]
         [Asynchronous]
+        [Tag("Pricing")]
         public void RetrievePricingReferenceDataSelectionDatesOrderedTestMethod()
         {
             DBInteractivity instance = new DBInteractivity();
@@ -172,7 +178,8 @@ namespace Greenfield.ServiceCaller.UnitTest
                 Assert.AreEqual<int>(0, result.Count, "Pricing Reference Data Should Be Empty");
                 EnqueueTestComplete();
             });
-        } 
+        }
+
         #endregion
 
         #region Unrealized Gain Loss Chart
@@ -271,8 +278,9 @@ namespace Greenfield.ServiceCaller.UnitTest
                     Assert.AreEqual<int>(0, resultSet.Count, "Unrealized Gain-Loss Data Should Be Empty");
                     EnqueueTestComplete();
                 });
-        } 
+        }
         #endregion
+
         #region Build 2
 
         #region Top 10 Holdings Gadget
@@ -286,7 +294,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
-            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 2012");
+            DateTime effectiveDate = new DateTime(2012,1,31);
 
             instance.RetrieveTopHoldingsData(portfolio, effectiveDate, (List<TopHoldingsData> resultSet) =>
             {
@@ -304,7 +312,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
-            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 0001");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveTopHoldingsData(portfolio, effectiveDate, (List<TopHoldingsData> resultSet) =>
             {
@@ -324,7 +332,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = null;
-            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveTopHoldingsData(portfolio, effectiveDate, (List<TopHoldingsData> resultSet) =>
             {
@@ -344,14 +352,15 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
-            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveTopHoldingsData(portfolio, effectiveDate, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
             });
-        }  
+        }
+
         #endregion
 
         #region Index Constituent Export Gadget
@@ -365,7 +374,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
-            DateTime effectiveDate = Convert.ToDateTime("01/31/2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, (List<IndexConstituentsData> resultSet) =>
                 {
@@ -383,7 +392,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
-            DateTime effectiveDate = Convert.ToDateTime("01/31/001");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, (List<IndexConstituentsData> resultSet) =>
             {
@@ -403,7 +412,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = null;
-            DateTime effectiveDate = Convert.ToDateTime("01/31/2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, (List<IndexConstituentsData> resultSet) =>
             {
@@ -423,7 +432,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
-            DateTime effectiveDate = Convert.ToDateTime("01/31/2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
 
             instance.RetrieveIndexConstituentsData(portfolio, effectiveDate, (List<IndexConstituentsData> resultSet) =>
             {
@@ -469,13 +478,114 @@ namespace Greenfield.ServiceCaller.UnitTest
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
-
             instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
             {
-                Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
+                Assert.IsNotNull(resultSet, "Market Capitalization Data Not Available");
                 EnqueueTestComplete();
             });
         }
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveRegionBreakdownData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// portfolioIdentifiers - Empty
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveRegionBreakdownDataPortfolioIdentifierEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, (List<RegionBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        #endregion
+
+        #region Sector Breakdown Gadget
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "Sector Breakdown Data Not Available");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveSectorBreakdownData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        public void RetrieveSectorBreakdownDataPortfolioIdentifierNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, (List<SectorBreakdownData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+            
+        
         /// <summary>
         /// RetrieveMarketCapitalizationData Test Method - portfolioIdentifiers as null - should return an empty result set
         /// portfolioIdentifiers - null
@@ -521,6 +631,158 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
+        #endregion
+        #region AssetAllocationGadget
+
+        /// <summary>
+        /// RetrieveAssetAllocationData Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrieveAssetAllocationDataPortfolioIdentifierNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, (List<AssetAllocationData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrievePortfolioDetails Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrieveAssetAllocationDataPortfolioIdentifierEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, (List<AssetAllocationData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+
+        /// <summary>
+        /// RetrieveAssetAllocationData Test Method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrieveAssetAllocationDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, (List<AssetAllocationData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "Asset Allocation Data should not be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+
+        /// <summary>
+        /// RetrieveAssetAllocationData Test Method  - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrieveAssetAllocationDataNotAvailableTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, (List<AssetAllocationData> resultSet) =>
+            {
+                Assert.AreEqual(0, resultSet.Count, "Asset Allocation Data Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+
+        #endregion
+
+        #region PortfolioDetailsUI Gadget
+
+        /// <summary>
+        /// RetrievePortfolioDetails Test Method - portfolioIdentifiers as null - should return an empty result set
+        /// portfolioIdentifiers - null
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// bool getBenchmark=false
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrievePortfolioDetailsDataPortfolioIdentifierNull()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = null;
+            bool getBenchmark = false;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrievePortfolioDetails Test Method - portfolioIdentifiers as empty - should return an empty result set
+        /// portfolioIdentifiers - empty
+        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        /// bool getBenchmark=false
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrievePortfolioDetailsDataPortfolioIdentifierEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            bool getBenchmark = false;
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrievePortfolioDetailsData Test Method  - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Asset")]
+        public void RetrievePortfolioDetailsDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool getBenchamrk = false;
+
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
+            {
+                Assert.AreEqual(0, resultSet.Count, "Portfolio Details Data Should Be Empty");
+                EnqueueTestComplete();
+            });
+        }
+
         #endregion
 
         #endregion

@@ -6,17 +6,14 @@ using System.Runtime.Serialization;
 
 namespace GreenField.Web.DataContracts
 {
+    /// <summary>
+    /// Data Contract for MultiLineBenchmark UI Chart
+    /// </summary>
     [DataContract]
     public class BenchmarkChartReturnData
     {
         [DataMember]
-        public string InstrumentID { get; set; }
-
-        [DataMember]
-        public string Ticker { get; set; }
-
-        [DataMember]
-        public string IssueName { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public string Type { get; set; }
@@ -25,21 +22,50 @@ namespace GreenField.Web.DataContracts
         public DateTime FromDate { get; set; }
 
         [DataMember]
-        public decimal DailyReturn { get; set; }
+        public decimal OneM { get; set; }
 
+        [DataMember]
+        public decimal ThreeM { get; set; }
+
+        [DataMember]
+        public decimal SixM { get; set; }
+
+        [DataMember]
+        public decimal YTD { get; set; }
+
+        [DataMember]
+        public decimal OneY { get; set; }
+
+        [DataMember]
+        public decimal ThreeY { get; set; }
+
+        [DataMember]
+        public decimal FiveY { get; set; }
+
+        [DataMember]
+        public decimal SI { get; set; }
+
+        [DataMember]
+        public decimal PreviousYearData { get; set; }
+
+        [DataMember]
+        public decimal TwoPreviousYearData { get; set; }
+
+        [DataMember]
+        public decimal ThreePreviousYearData { get; set; }
+
+        [DataMember]
+        public decimal IndexedValue { get; set; }
     }
 
+    /// <summary>
+    /// Data Contract for MultiLineBenchmark UI Grid
+    /// </summary>
     [DataContract]
     public class BenchmarkGridReturnData
     {
         [DataMember]
-        public string InstrumentID { get; set; }
-
-        [DataMember]
-        public string Ticker { get; set; }
-
-        [DataMember]
-        public string IssueName { get; set; }
+        public string Name { get; set; }
 
         [DataMember]
         public string Type { get; set; }
@@ -54,12 +80,12 @@ namespace GreenField.Web.DataContracts
         public decimal YTD { get; set; }
 
         [DataMember]
-        public decimal PreviousYearData { get; set; }
+        public decimal PreviousYearReturn { get; set; }
 
         [DataMember]
-        public decimal TwoPreviousYearData { get; set; }
+        public decimal TwoPreviousYearReturn { get; set; }
 
         [DataMember]
-        public decimal ThreePreviousYearData { get; set; }
+        public decimal ThreePreviousYearReturn { get; set; }
     }
 }

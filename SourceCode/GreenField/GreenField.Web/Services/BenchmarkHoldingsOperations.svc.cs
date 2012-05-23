@@ -5,7 +5,7 @@ using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
 using System;
 using System.Configuration;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using System.Collections.Generic;
 using GreenField.Web.Helpers;
 using System.Linq;
@@ -121,8 +121,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<SectorBreakdownData> result = new List<SectorBreakdownData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -131,7 +134,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<SectorBreakdownData> result = new List<SectorBreakdownData>();
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -204,8 +206,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -214,7 +219,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<RegionBreakdownData> result = new List<RegionBreakdownData>();
 
                 List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -289,16 +293,17 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<TopHoldingsData> result = new List<TopHoldingsData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
                     throw new Exception();
-
-                List<TopHoldingsData> result = new List<TopHoldingsData>();
 
                 //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare
                 decimal sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS
@@ -373,9 +378,11 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -384,7 +391,6 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
                 GF_PORTFOLIO_HOLDINGS benchmarkRow = DimensionEntity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
@@ -399,7 +405,7 @@ namespace GreenField.Web.Services
 
                 if (benchmarkId != null)
                 {
-                    List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> data = entity.GF_BENCHMARK_HOLDINGS
+                    List<GF_BENCHMARK_HOLDINGS> data = entity.GF_BENCHMARK_HOLDINGS
                         .Where(t => (t.BENCHMARK_ID == benchmarkId) && (t.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                     if (data != null)
@@ -500,6 +506,13 @@ namespace GreenField.Web.Services
 
         #region Build2 Services
 
+        /// <summary>
+        /// Service to return data for PortfolioDetailsUI
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio IDentifier</param>
+        /// <param name="effectiveDate">Selected Date</param>
+        /// <param name="objGetBenchmark">bool to check whether to get Benchmark data or not</param>
+        /// <returns>List of type Portfolio Details Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool objGetBenchmark = false)
@@ -510,6 +523,9 @@ namespace GreenField.Web.Services
 
                 //Arguement Null Case, return Empty Set
                 if ((objPortfolioIdentifier == null) || (effectiveDate == null))
+                    return result;
+
+                if (objPortfolioIdentifier.PortfolioId == null)
                     return result;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -568,109 +584,7 @@ namespace GreenField.Web.Services
                 //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-        /// <summary>
-        /// Method to retrieve data in Benchmark Chart
-        /// </summary>
-        /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objStartDate"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkChartReturnData> RetrieveBenchmarkChartReturnData(Dictionary<string,string> objSelectedEntities, DateTime objStartDate)
-        {
-            try
-            {
-                List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
-                if ((objSelectedEntities != null) && (objStartDate != null))
-                {
-                    Random random = new Random();
-
-                    for (int i = 0; i < 365; i++)
-                    {
-                        BenchmarkChartReturnData data = new BenchmarkChartReturnData();
-                        data.FromDate = DateTime.Now.AddDays(-182 + i);
-                        data.InstrumentID = 10020.ToString();
-                        data.IssueName = "MSCI Standard";
-                        data.Ticker = "MSCI";
-                        data.Type = "Benchmark";
-                        data.DailyReturn = random.Next(5, 40);
-
-                        result.Add(data);
-
-                        data.FromDate = DateTime.Now.AddDays(-182 + i);
-                        data.InstrumentID = 10021.ToString();
-                        data.IssueName = "MSCI Brazil";
-                        data.Ticker = "MSCIB";
-                        data.DailyReturn = random.Next(5, 40);
-                        data.Type = "Benchmark";
-                        result.Add(data);
-                    }
-
-                }
-                return result;
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
-        /// <summary>
-        /// Method to retrieve data in Benchmark Grid
-        /// </summary>
-        /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objEffectiveDate"></param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(List<BenchmarkSelectionData> objBenchmarkIdentifier, DateTime objEffectiveDate)
-        {
-            List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
-            try
-            {
-                if ((objBenchmarkIdentifier != null) && (objEffectiveDate != null))
-                {
-                    Random random = new Random();
-
-                    BenchmarkGridReturnData data = new BenchmarkGridReturnData();
-                    data.InstrumentID = 10020.ToString();
-                    data.IssueName = "MSCI Standard";
-                    data.MTD = random.Next(10, 100) / 10;
-                    data.PreviousYearData = random.Next(10, 100) / 10;
-                    data.QTD = random.Next(10, 100) / 10;
-                    data.ThreePreviousYearData = random.Next(10, 100) / 10;
-                    data.Ticker = "MSCI";
-                    data.TwoPreviousYearData = random.Next(10, 100) / 10;
-                    data.YTD = random.Next(10, 100) / 10;
-                    data.Type = "Benchmark";
-                    result.Add(data);
-
-                    data.InstrumentID = 10021.ToString();
-                    data.IssueName = "MSCI Brazil";
-                    data.MTD = random.Next(10, 100) / 10;
-                    data.PreviousYearData = random.Next(10, 100) / 10;
-                    data.QTD = random.Next(10, 100) / 10;
-                    data.ThreePreviousYearData = random.Next(10, 100) / 10;
-                    data.Ticker = "MSCIB";
-                    data.TwoPreviousYearData = random.Next(10, 100) / 10;
-                    data.Type = "Benchmark";
-                    data.YTD = random.Next(10, 100) / 10;
-                    result.Add(data);
-                }
-                return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
+        
         /// <summary>
         /// Method to Retreive Asset Allocation Data
         /// </summary>
@@ -1426,7 +1340,7 @@ namespace GreenField.Web.Services
                             && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                         break;
-                   
+
                 }
             }
             //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
@@ -1567,13 +1481,14 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        #region Heat Map Operation Contract
+
         /// <summary>
         /// Retrieves Heat Map Data for a particular portfolio and date
         /// </summary>
         /// <param name="fundSelectionData">Contains Selected Fund Data</param>
         /// <param name="effectiveDate">Effectice date as selected by the user</param>
         /// <returns></returns>
-        #region Heat Map Operation Contract
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<HeatMapData> RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)
@@ -1847,6 +1762,13 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
 
@@ -1893,6 +1815,13 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
@@ -1975,6 +1904,13 @@ namespace GreenField.Web.Services
             {
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
@@ -2062,6 +1998,13 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
@@ -2122,8 +2065,17 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_DAILY_ATTRIBUTION>s1 =  data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
 
                 List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
                 if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
@@ -2141,10 +2093,8 @@ namespace GreenField.Web.Services
                         SecurityName = row.SEC_NAME,
                         SecurityCountryID = row.COUNTRY,
                         SecuritySectorName = row.GICS_LVL1,
+                        SecurityMarketValue = row.POR_RC_MARKET_VALUE,
                         SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period)
-                        //SecurityActivePosition = (double)
-                        //(row.Field<Single?>("PORTFOLIO_WEIGHT") == null ? 0 : row.Field<Single?>("PORTFOLIO_WEIGHT") * 100
-                        //- row.Field<Single?>("BENCHMARK_WEIGHT") == null ? 0 : row.Field<Single?>("BENCHMARK_WEIGHT") * 100)
                     });
                 }
                 return result.OrderByDescending(e => e.SecurityAlpha).ToList();
@@ -2274,7 +2224,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate"></param>
         /// <param name="country"></param>
         /// <param name="sector"></param>
-        /// <returns></returns>
+        /// <returns>GF_PERF_DAILY_ATTRIBUTION Collection</returns>
         private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveRelativePerformanceDailyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -2328,7 +2278,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate"></param>
         /// <param name="country"></param>
         /// <param name="sector"></param>
-        /// <returns></returns>
+        /// <returns>GF_PERF_MONTHLY_ATTRIBUTION Collection</returns>
         private List<GF_PERF_MONTHLY_ATTRIBUTION> RetrieveRelativePerformanceMonthlyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
@@ -2545,73 +2495,7 @@ namespace GreenField.Web.Services
 
         #region Performance Services
 
-        /// <summary>
-        /// Service for Chart Extension Data
-        /// </summary>
-        /// <param name="objSelectedSecurity">Selected Security</param>
-        /// <param name="objSelectedPortfolio">Selected Portfolio</param>
-        /// <param name="objStartDate">start Date for the Chart</param>
-        /// <returns>Collection of Chart Extension Data</returns>
-        [OperationContract]
-        public List<ChartExtensionData> RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objStartDate)
-        {
-            //Arguement null check
-            if (objSelectedEntities == null || objStartDate == null)
-                return new List<ChartExtensionData>();
-            List<ChartExtensionData> result = new List<ChartExtensionData>();
-
-
-            string longName = "";
-            string portfolioID = "";
-
-            //Create new Entity for service
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-
-            bool isServiceUp;
-            if (objSelectedEntities.ContainsKey("SECURITY"))
-                longName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
-            else
-                return new List<ChartExtensionData>();
-
-            if (objSelectedEntities.ContainsKey("PORTFOLIO"))
-                portfolioID = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
-
-
-
-            if (longName != null && longName != "")
-            {
-                #region ServiceAvailabilityChecker
-
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
-
-                #endregion
-
-                List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
-                    Where(a => (a.ISSUE_NAME == longName) && (a.FROMDATE >= objStartDate.Date)).OrderByDescending(a => a.FROMDATE).ToList();
-                result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
-            }
-
-            if (portfolioID != null && portfolioID != "")
-            {
-
-                #region ServiceAvailabilityChecker
-
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
-
-                #endregion
-
-                List<GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
-                    Where(a => ((a.TRANSACTION_CODE.ToUpper() == "BUY") || (a.TRANSACTION_CODE.ToUpper() == "SELL")) && (a.PORTFOLIO_ID == portfolioID)
-                        && (a.SEC_NAME == longName) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
-                result = ChartExtensionCalculations.CalculateTransactionValues(dimensionTransactionData, result);
-            }
-
-            return result;
-        }
+        
 
         #endregion
 

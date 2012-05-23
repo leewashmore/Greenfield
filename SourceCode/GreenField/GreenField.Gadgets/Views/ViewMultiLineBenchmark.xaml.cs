@@ -16,6 +16,9 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code-Behind for Multi-LineBenchmark UI
+    /// </summary>
     public partial class ViewMultiLineBenchmark : ViewBaseUserControl
     {
         #region Variables
@@ -33,6 +36,9 @@ namespace GreenField.Gadgets.Views
 
         #region PropertyDeclaration
 
+        /// <summary>
+        /// Property of type View-Model
+        /// </summary>
         private ViewModelMultiLineBenchmark _dataContextMultilineBenchmark;
         public ViewModelMultiLineBenchmark DataContextMultilineBenchmark
         {
@@ -46,16 +52,26 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Constructor that initialises the class
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewMultiLineBenchmark(ViewModelMultiLineBenchmark dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextMultilineBenchmark = dataContextSource;
+            dataContextSource.ChartAreaMultiLineBenchmark = this.chMultiLineBenchmarkChart.DefaultView.ChartArea;
+            this.chMultiLineBenchmarkChart.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.MultiLineBenchmarkDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_MultiLineBenchmarkDataLoadedEvent);
+            AddGridHeader();
         }
+        
+        #endregion
 
         #region ProgressIndicator
 
@@ -116,10 +132,28 @@ namespace GreenField.Gadgets.Views
 
         #region EventsUnSubscribe
 
+        /// <summary>
+        /// Disposing off events and Event Handlers
+        /// </summary>
         public override void Dispose()
         {
 
         } 
+
+        #endregion
+
+        #region HelperMethods
+
+        /// <summary>
+        /// Dynamically setting GridColumn Headers
+        /// </summary>
+        private void AddGridHeader()
+        {
+            dgBenchmarkUI.Columns[4].Header = DateTime.Today.Year.ToString();
+            dgBenchmarkUI.Columns[5].Header = DateTime.Today.AddYears(-1).Year.ToString();
+            dgBenchmarkUI.Columns[6].Header = DateTime.Today.AddYears(-2).Year.ToString();
+
+        }
 
         #endregion
     }

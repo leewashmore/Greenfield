@@ -25,8 +25,8 @@
     <script type="text/C#" runat="server">
         protected void Page_Load(object sender, EventArgs e)
         {
-            GreenField.Web.DataContracts.Session session =
-                (GreenField.Web.DataContracts.Session)HttpContext.Current.Session["Session"];
+            GreenField.DataContracts.Session session =
+                (GreenField.DataContracts.Session)HttpContext.Current.Session["Session"];
             if (null == session)
                 Response.Redirect("Login.aspx");
         }

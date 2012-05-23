@@ -190,7 +190,7 @@ namespace GreenField.Common
         #endregion
 
         #region Benchmark Summary
-        public static string BENCHMARKS_MULTILINE_BENCHMARK = "Multi-line Benchmarks UI Component Benchmarks 4.2.1.1";
+        public static string BENCHMARKS_MULTILINE_BENCHMARK = "Multi-line Benchmarks UI Component";
         public static string BENCHMARK_TOP_TEN_CONSTITUENTS = "Top Benchmark Securities";
         public static string BENCHMARK_HOLDINGS_SECTOR_PIECHART = "Holdings PieChart For Sector";
         public static string BENCHMARK_HOLDINGS_REGION_PIECHART = "Holdings PieChart For Region";

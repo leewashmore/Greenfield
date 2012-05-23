@@ -16,6 +16,8 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -36,7 +38,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Instance of Service Caller Class
         /// </summary>
         private IDBInteractivity _dbInteractivity;
-        
+
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
@@ -46,7 +48,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Details of Selected Portfolio
         /// </summary>
         private PortfolioSelectionData _portfolioSelectionData;
-        
+
         /// <summary>
         /// Selected Date
         /// </summary>
@@ -55,6 +57,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Constructor of the View Model
         /// </summary>
@@ -78,6 +81,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         }
+
         #endregion
 
         #region PropertiesDeclaration
@@ -87,10 +91,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of AssetAllocationData bound to the DataGrid
         /// </summary>
-        private List<AssetAllocationData> _assetAllocationData;
-        public List<AssetAllocationData> AssetAllocationData
+        private RangeObservableCollection<AssetAllocationData> _assetAllocationData;
+        public RangeObservableCollection<AssetAllocationData> AssetAllocationData
         {
-            get { return _assetAllocationData; }
+            get
+            {
+                if (_assetAllocationData == null)
+                    _assetAllocationData = new RangeObservableCollection<AssetAllocationData>();
+                return _assetAllocationData;
+            }
             set
             {
                 if (_assetAllocationData != value)
@@ -106,6 +115,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Events
 
+        /// <summary>
+        /// Data Retrieval Progress Indicator
+        /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler AssetAllocationDataLoadedEvent;
 
         #endregion
@@ -199,7 +211,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (assetAllocationData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, assetAllocationData, 1);
-                    AssetAllocationData = assetAllocationData;
+                    AssetAllocationData.Clear();
+                    AssetAllocationData.AddRange(assetAllocationData);
                 }
                 else
                 {

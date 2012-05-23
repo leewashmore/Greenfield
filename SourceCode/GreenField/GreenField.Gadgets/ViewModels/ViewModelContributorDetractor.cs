@@ -18,6 +18,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -33,10 +34,11 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+       
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
-       PortfolioSelectionData _PortfolioSelectionData;
+        PortfolioSelectionData _PortfolioSelectionData;
         #endregion
 
         #region Constructor
@@ -72,7 +74,9 @@ namespace GreenField.Gadgets.ViewModels
         #region Properties
         
         #region UI Fields
-
+        /// <summary>
+        /// Effective date selected
+        /// </summary>
         private DateTime? _effectiveDate;
         public DateTime? EffectiveDate
         {
@@ -87,6 +91,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Period selected
+        /// </summary>
         private string _period;
         public string Period
         {
@@ -119,13 +126,12 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         
-        #endregion 
-   
+        #endregion    
         #endregion
 
         #region Events
         /// <summary>
-        /// event to handle data retrieval progress indicator
+        /// event handling for data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler ContributorDetractorDataLoadEvent;
 
@@ -202,6 +208,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to subscribed event 'PeriodReferenceSetEvent'
+        /// </summary>
+        /// <param name="period"></param>
         public void HandlePeriodReferenceSet(string period)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -310,7 +320,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
             _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickevent);
         }
-
         #endregion
 
     }

@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.LoginDefinitions;
 using System.Reflection;
 using System.ServiceModel;
+using GreenField.DataContracts;
 
 namespace GreenField.ServiceCaller
 {

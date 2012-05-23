@@ -14,6 +14,7 @@ using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Linq;
 using System.IO;
 using GreenField.ServiceCaller.SessionDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Common
 {

@@ -14,6 +14,8 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 
 namespace GreenField.Common
@@ -74,10 +76,23 @@ namespace GreenField.Common
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
 
+    public delegate void RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEventArgs e);
+    public class RelativePerformanceToggledSectorGridBuildEventArgs : EventArgs
+    {
+        public List<RelativePerformanceSecurityData> RelativePerformanceSecurityInfo { get; set; }
+        public List<string> RelativePerformanceCountryNameInfo { get; set; }
+    }
+
     public delegate void RetrieveHeatMapDataCompleteEventHandler(RetrieveHeatMapDataCompleteEventArgs e);
     public class RetrieveHeatMapDataCompleteEventArgs : EventArgs
     {
         public List<HeatMapData> HeatMapInfo { get; set; }
+    }
+
+    public delegate void RetrieveMacroCountrySummaryDataCompleteEventHandler(RetrieveMacroCountrySummaryDataCompleteEventArgs e);
+    public class RetrieveMacroCountrySummaryDataCompleteEventArgs : EventArgs
+    {
+        public List<MacroDatabaseKeyAnnualReportData> MacroInfo { get; set; }
     }
 
     public class RelativePerformanceGridCellData

@@ -29,6 +29,10 @@
       [UserDashboardPreferance].[UserPref] AS [UserPref]
       FROM [dbo].[UserDashboardPreferance] AS [UserDashboardPreferance]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.Store.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
+            <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreference" />
+            <End Role="tblMarketSnapshotEntityPreference" EntitySet="tblMarketSnapshotEntityPreference" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" Association="ResearchModel.Store.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
             <End Role="tblMarketSnapshotPreference" EntitySet="tblMarketSnapshotPreference" />
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreference" />
@@ -149,6 +153,20 @@
           <Property Name="UserId" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="UserPref" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
+          <End Role="tblMarketSnapshotGroupPreference" Type="ResearchModel.Store.tblMarketSnapshotGroupPreference" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblMarketSnapshotEntityPreference" Type="ResearchModel.Store.tblMarketSnapshotEntityPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMarketSnapshotGroupPreference">
+              <PropertyRef Name="GroupPreferenceId" />
+            </Principal>
+            <Dependent Role="tblMarketSnapshotEntityPreference">
+              <PropertyRef Name="GroupPreferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference">
           <End Role="tblMarketSnapshotPreference" Type="ResearchModel.Store.tblMarketSnapshotPreference" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -242,16 +260,6 @@
           <Parameter Name="snapshotname" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="snapshotpreferenceid" Type="int" Mode="In" />
         </Function>
-        <!--Errors Found During Generation:
-      warning 6013: The table/view 'AshmoreEMMPOC.dbo.COMMODITY_FORECASTS' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="COMMODITY_FORECASTS">
-        <Property Name="COMMODITY_ID" Type="nvarchar" MaxLength="50" />
-        <Property Name="CURRENT_YEAR_END" Type="real" />
-        <Property Name="NEXT_YEAR_END" Type="real" />
-        <Property Name="LONG_TERM" Type="real" />
-        <Property Name="LASTUPDATE" Type="datetime" />
-      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -347,10 +355,14 @@
           <FunctionImport Name="RetrieveCTYSUMMARYDataReport" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
           <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveEMSummaryDataReportPerCountry" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
-          <Parameter Name="country" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetCOMMODITY_FORECASTS" ReturnType="Collection(ResearchModel.CommodityResult)" />
+          <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
+            <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
+            <End Role="tblMarketSnapshotEntityPreference" EntitySet="tblMarketSnapshotEntityPreferences" />
+          </AssociationSet>
+          <FunctionImport Name="RetrieveEMSummaryDataReportCountry" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
+            <Parameter Name="country" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ConsensusEstimates_Result">
           <Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
@@ -481,6 +493,7 @@
           <Property Type="String" Name="EntityReturnType" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="EntityOrder" Nullable="false" />
           <Property Type="String" Name="EntityType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblMarketSnapshotGroupPreference" Relationship="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" FromRole="tblMarketSnapshotEntityPreference" ToRole="tblMarketSnapshotGroupPreference" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotGroupPreference">
           <Key>
@@ -490,6 +503,7 @@
           <Property Type="Int32" Name="SnapshotPreferenceId" Nullable="false" />
           <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblMarketSnapshotPreference" Relationship="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" FromRole="tblMarketSnapshotGroupPreference" ToRole="tblMarketSnapshotPreference" />
+          <NavigationProperty Name="tblMarketSnapshotEntityPreference" Relationship="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" FromRole="tblMarketSnapshotGroupPreference" ToRole="tblMarketSnapshotEntityPreference" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotPreference">
           <Key>
@@ -591,6 +605,18 @@
           <Property Type="Single" Name="LONG_TERM" Nullable="true" />
           <Property Type="DateTime" Name="LASTUPDATE" Nullable="true" Precision="23" />
         </ComplexType>
+        <Association Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
+          <End Type="ResearchModel.tblMarketSnapshotGroupPreference" Role="tblMarketSnapshotGroupPreference" Multiplicity="1" />
+          <End Type="ResearchModel.tblMarketSnapshotEntityPreference" Role="tblMarketSnapshotEntityPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMarketSnapshotGroupPreference">
+              <PropertyRef Name="GroupPreferenceId" />
+            </Principal>
+            <Dependent Role="tblMarketSnapshotEntityPreference">
+              <PropertyRef Name="GroupPreferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -855,7 +881,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveEMSummaryDataReportPerCountry" FunctionName="ResearchModel.Store.RetrieveEMSummaryDataReportPerCountry">
+          <FunctionImportMapping FunctionImportName="GetCOMMODITY_FORECASTS" FunctionName="ResearchModel.Store.GetCOMMODITY_FORECASTS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchModel.CommodityResult">
+                <ScalarProperty Name="COMMODITY_ID" ColumnName="COMMODITY_ID" />
+                <ScalarProperty Name="CURRENT_YEAR_END" ColumnName="CURRENT_YEAR_END" />
+                <ScalarProperty Name="NEXT_YEAR_END" ColumnName="NEXT_YEAR_END" />
+                <ScalarProperty Name="LONG_TERM" ColumnName="LONG_TERM" />
+                <ScalarProperty Name="LASTUPDATE" ColumnName="LASTUPDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveEMSummaryDataReportCountry" FunctionName="ResearchModel.Store.RetrieveEMSummaryDataReportPerCountry">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ResearchModel.MacroDataCTY_Result">
                 <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
@@ -906,17 +943,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCOMMODITY_FORECASTS" FunctionName="ResearchModel.Store.GetCOMMODITY_FORECASTS">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ResearchModel.CommodityResult">
-                <ScalarProperty Name="COMMODITY_ID" ColumnName="COMMODITY_ID" />
-                <ScalarProperty Name="CURRENT_YEAR_END" ColumnName="CURRENT_YEAR_END" />
-                <ScalarProperty Name="NEXT_YEAR_END" ColumnName="NEXT_YEAR_END" />
-                <ScalarProperty Name="LONG_TERM" ColumnName="LONG_TERM" />
-                <ScalarProperty Name="LASTUPDATE" ColumnName="LASTUPDATE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -949,6 +975,11 @@
           <ConnectorPoint PointX="17.625" PointY="1.7689925130208337" />
         </AssociationConnector>
         <EntityTypeShape EntityType="ResearchModel.Country_Master" Width="1.5" PointX="11.125" PointY="12.75" Height="2.3648893229166674" />
+        <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" >
+          <ConnectorPoint PointX="17.625" PointY="2.7903857421875005" />
+          <ConnectorPoint PointX="8.625" PointY="2.7903857421875005" />
+          <ConnectorPoint PointX="8.625" PointY="12.625" />
+        </AssociationConnector>
         </Diagram>
     </Diagrams>
   </Designer>

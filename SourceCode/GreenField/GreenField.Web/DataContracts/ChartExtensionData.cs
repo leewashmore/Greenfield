@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 namespace GreenField.Web.DataContracts
 {
+    /// <summary>
+    /// DataContract class for ChartExtension Gadget, Holdings 4.4.1
+    /// </summary>
     [DataContract]
     public class ChartExtensionData
     {

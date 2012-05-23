@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="022295ac-a336-46f4-81b3-18ac4932ee56" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7af51f17-7354-4d80-a7f7-69c7840683f8" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
   <MetadataSources>
     <MetadataSource Address="http://172.16.1.137:7000/GreenFieldOData/wcfdataservice.svc/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="b5a8c48c-d263-4863-b71e-04be9b003bf7" SourceId="1" SourceUrl="http://172.16.1.137:7000/GreenFieldOData/wcfdataservice.svc/" />
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="9d7e9a16-2224-44e1-97f6-fbcfa74dd810" SourceId="1" SourceUrl="http://172.16.1.137:7000/GreenFieldOData/wcfdataservice.svc/" />
   </Metadata>
   <Extensions />
 </ReferenceGroup>

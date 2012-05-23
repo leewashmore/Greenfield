@@ -10,6 +10,20 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
+        <!--GridViewRowStyle-->
+        <helpers:GridRowColorSelector x:Key="GridRowMarkerStyle">
+            <helpers:GridRowColorSelector.PositionHeld>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="Black"/>
+                </Style>
+            </helpers:GridRowColorSelector.PositionHeld>
+            <helpers:GridRowColorSelector.PositionNotHeld>
+                <Style TargetType="telerik:GridViewRow">
+                    <Setter Property="Background" Value="Red"/>
+                </Style>
+            </helpers:GridRowColorSelector.PositionNotHeld>
+        </helpers:GridRowColorSelector>
+        
         <!--GridViewHeaderRowStyle-->
             <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
                 <Setter Property="Height" Value="12"/>
@@ -22,10 +36,6 @@
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Height" Value="12"/>
                 <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            </Style>
-            <!--GridViewRowStyle-->
-            <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-                <Setter Property="Height" Value="15"/>
             </Style>
     </helpers:ViewBaseUserControl.Resources>
     
@@ -46,10 +56,8 @@
                                      CanUserSortColumns="False"
                                      RowIndicatorVisibility="Collapsed" 
                                      ItemsSource="{Binding ContributorDetractorInfo}"
-                                     AlternationCount="2" 
-                                     AlternateRowBackground="Wheat"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}">
+                                     RowStyleSelector="{StaticResource GridRowMarkerStyle}" RowHeight="15" Foreground="White">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryID}" Width="Auto" TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
                         <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto" TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>

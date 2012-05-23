@@ -9,13 +9,14 @@ using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 using GreenField.DAL;
 using System.Collections;
 using System.Data.Common;
+using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -67,7 +68,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", "AR").ToList();
+                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();
                 //foreach (var i in myList)
                 //{
                 //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
@@ -158,12 +159,14 @@ namespace GreenField.Web.Services
                 //if (!isServiceUp)
                 //    throw new Exception();
 
-                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
+                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
                 //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
                 DimensionEntitiesService.Entities entity = DimensionEntity;              
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", "AR").ToList();
+                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", countryNameVal).ToList();
+                if (result.Count == 0 || result == null)
+                    return result;
                 //foreach (var i in myList)
                 //{
                 //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
