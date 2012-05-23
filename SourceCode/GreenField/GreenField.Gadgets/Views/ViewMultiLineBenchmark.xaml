@@ -13,43 +13,11 @@
              d:DesignHeight="300" d:DesignWidth="400">
 
     <my:ViewBaseUserControl.Resources>
-        <helpers:DataContextProxy x:Key="DataContextProxy"/>
-        <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
-        <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
-            <helpers:ItemStyleSelector.GroupStyle>
-                <Style TargetType="ContentControl">
-                    <Setter Property="IsEnabled" Value="False" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </helpers:ItemStyleSelector.GroupStyle>
-            <helpers:ItemStyleSelector.ItemStyle>
-                <Style TargetType="ContentControl">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock FontWeight="Bold" Text="{Binding Name}" />
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="(" />
-                                        <TextBlock Text="{Binding Ticker}" />
-                                        <TextBlock Text=")" />
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </helpers:ItemStyleSelector.ItemStyle>
-        </helpers:ItemStyleSelector>
-
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </my:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -57,7 +25,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock Text="Multi Line Benchmark UI" Grid.Row="0" HorizontalAlignment="Center"/>
 
         <Grid HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Row="0">
@@ -70,7 +38,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-                        
+
             <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="15" Width="15" 
                                        HorizontalAlignment="Center" Click="btnExportExcel_Click"
                                        VerticalAlignment="Center" Margin="5,0,0,0"  
@@ -91,7 +59,7 @@
             </telerik:RadButton>
         </Grid>
 
-        
+
         <Grid Grid.Row="1" x:Name="grdChart">
             <Grid.RowDefinitions>
                 <RowDefinition Height="7*"/>
@@ -161,25 +129,36 @@
             </Border>
 
             <telerik:RadGridView Grid.Row="1" x:Name="dgBenchmarkUI" AutoGenerateColumns="False"
-                                    ItemsSource="{Binding MultiLineBenchmarUIGridData}"  CanUserSelect="True" CanUserReorderColumns="False" 
-                                    SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
-                                    CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" ScrollMode="RealTime" 
-                                    RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                    UseLayoutRounding="True" telerik:StyleManager.Theme="Metro">
+                                 ItemsSource="{Binding MultiLineBenchmarUIGridData}"  CanUserSelect="True" 
+                                 CanUserReorderColumns="False" 
+                                 SelectionMode ="Single" SelectionUnit="FullRow" 
+                                 CanUserInsertRows="False" AlternationCount="2"
+                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" 
+                                 ScrollMode="RealTime" AlternateRowBackground="Wheat"
+                                 RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" 
+                                 ColumnWidth="*" 
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 >
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"/>
-                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n2}"/>
-                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n2}"/>
-                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n2}"/>
+                    <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n2}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n2}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n2}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                     <telerik:GridViewDataColumn Header="{Binding PreviousYearDataColumnHeader, Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding PreviousYearData}" x:Name="previousYearColumn"
-                                                DataFormatString="{}{0:n2}"/>
+                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                     <telerik:GridViewDataColumn Header="{Binding TwoPreviousYearDataColumnHeader,Mode=TwoWay}"
                                                 DataMemberBinding="{Binding TwoPreviousYearData}" x:Name="twoPreviousYearColumn"
-                                                DataFormatString="{}{0:n2}"/>
+                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                     <telerik:GridViewDataColumn Header="{Binding ThreePreviousYearDataColumnHeader,Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding ThreePreviousYearData}" x:Name="threePreviousYearColumn"
-                                                DataFormatString="{}{0:n2}"/>
+                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Grid>

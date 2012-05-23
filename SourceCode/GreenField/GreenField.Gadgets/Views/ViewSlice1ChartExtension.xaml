@@ -118,7 +118,9 @@
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True">
+                                         EnableColumnVirtualization="True"
+                                         ColumnWidth="*"
+                                         AlternationCount="2">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
