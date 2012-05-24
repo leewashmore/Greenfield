@@ -95,7 +95,6 @@
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\FXCommodityData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
