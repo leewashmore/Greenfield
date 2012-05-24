@@ -2155,9 +2155,6 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
-
-
-
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, null, null);
 
@@ -2208,8 +2205,8 @@ namespace GreenField.Web.Services
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = aggPortfolioShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100;
-                            aggBenchmarkShare = aggBenchmarkShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100;
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period)) * 100;
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period)) * 100;
                             aggAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period);
 
                         }
@@ -2241,8 +2238,6 @@ namespace GreenField.Web.Services
                             AggregateCountryActivePosition = aggcsPortfolioShare - aggcsBenchmarkShare,
                         });
                     }
-
-
                 }
 
                 return result;

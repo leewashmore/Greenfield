@@ -367,13 +367,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     SecurityDetails = new ObservableCollection<RelativePerformanceSecurityData>(result);
 
-
-
-                    //RelativePerformanceToggledSectorGridBuildEvent.Invoke(new RelativePerformanceToggledSectorGridBuildEventArgs()
-                    //{
-                    //    RelativePerformanceCountryNameInfo = SecurityDetails.Select(r => r.SecurityCountryID).Distinct().ToList(),
-                    //    RelativePerformanceSecurityInfo = SecurityDetails.ToList()
-                    //});
+                    RelativePerformanceToggledSectorGridBuildEvent.Invoke(new RelativePerformanceToggledSectorGridBuildEventArgs()
+                    {
+                        RelativePerformanceCountryNameInfo = SecurityDetails.Select(r => r.SecurityCountryID).Distinct().ToList(),
+                        RelativePerformanceSecurityInfo = SecurityDetails.ToList()
+                    });
                 }
                 else
                 {

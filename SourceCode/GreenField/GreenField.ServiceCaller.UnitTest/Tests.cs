@@ -632,6 +632,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
         #endregion
+        
         #region AssetAllocationGadget
 
         /// <summary>
@@ -1144,7 +1145,6 @@ namespace Greenfield.ServiceCaller.UnitTest
         #endregion
 
         #endregion
-
 
         #region HoldingsPieChartforSector Gadget
 
