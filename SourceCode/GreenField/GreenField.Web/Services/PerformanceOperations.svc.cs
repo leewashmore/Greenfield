@@ -17,7 +17,7 @@ using GreenField.Web.DataContracts;
 namespace GreenField.Web.Services
 {
     /// <summary>
-    /// Service for Performance Operations
+    /// Service class for Performance Operations
     /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
@@ -56,7 +56,7 @@ namespace GreenField.Web.Services
         {
             //Null Arguement Check
             if ((objSelectedEntity == null) || (objEffectiveDate == null) || (objSelectedEntity.Count == 0))
-                throw new Exception();
+                return new List<RelativePerformanceUIData>();
 
             //If dictionary object doesn't contains Security/Portfolio data, return empty set
             if (!objSelectedEntity.ContainsKey("SECURITY") || !objSelectedEntity.ContainsKey("PORTFOLIO"))
@@ -76,8 +76,6 @@ namespace GreenField.Web.Services
             List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
             return result;
         }
-
-        
 
         /// <summary>
         /// Method to retrieve data in Benchmark Chart
@@ -113,8 +111,10 @@ namespace GreenField.Web.Services
 
                 countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
 
+
+                //Need to show a message here
                 if (countryName.Count != 1)
-                    throw new Exception("Single Security cannot have multiple countries");
+                    return result;
 
 
                 List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData = entity.GF_PERF_MONTHLY_ATTRIBUTION.
@@ -143,11 +143,10 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Method to retrieve data in Benchmark Grid
+        /// Method to retrieve data in Multi-Line Benchmark UI Grid
         /// </summary>
-        /// <param name="objBenchmarkIdentifier"></param>
-        /// <param name="objEffectiveDate"></param>
-        /// <returns></returns>
+        /// <param name="objSelectedEntities"> Selected Security & Portfolio</param>
+        /// <returns>List of BenchmarkGridReturnData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntities)
@@ -156,6 +155,12 @@ namespace GreenField.Web.Services
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                if (objSelectedEntities == null)
+                    return result;
+                if (!objSelectedEntities.ContainsKey("SECURITY") || (!objSelectedEntities.ContainsKey("PORTFOLIO")))
+                    return result;
+
 
                 #region CalculatingStartDate
 
@@ -195,6 +200,13 @@ namespace GreenField.Web.Services
                     portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
 
                 countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+
+                //Need to show a message here.
+                if (countryName == null)
+                    return result;
+                //Need to show a message here
+                if (countryName.Count != 1)
+                    return result;
 
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
@@ -313,7 +325,7 @@ namespace GreenField.Web.Services
                 List<MarketSnapshotSelectionData> userPreference = (entity.GetMarketSnapshotSelectionData(userName))
                     .OrderBy(record => record.SnapshotName)
                     .ToList<MarketSnapshotSelectionData>();
-                
+
                 return userPreference;
             }
             catch (Exception ex)
@@ -775,16 +787,6 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
-
-
-       
-
-        [OperationContract]
-        public EntitySelectionData TestService(PortfolioSelectionData obj, EntitySelectionData obje)
-        {
-            EntitySelectionData r = new EntitySelectionData();
-            return r;
-        }
 
     }
 }

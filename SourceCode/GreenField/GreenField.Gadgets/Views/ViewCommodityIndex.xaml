@@ -29,20 +29,23 @@
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgColCommodityID" Header="Commodity/Index" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding COMMODITY_ID}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                DataMemberBinding="{Binding CommodityID}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColYTD" Header="YTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    DataMemberBinding="{Binding YTD}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColYear1" Header="1 Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    DataMemberBinding="{Binding Year1}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgColYear3" Header="3 Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    DataMemberBinding="{Binding Year3}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgColCURRENT_YEAR_END" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Header="CURRENT_YEAR_END" 
-                                                DataMemberBinding="{Binding CURRENT_YEAR_END}" 
+                                                Header="Current P" 
+                                                DataMemberBinding="{Binding CurrentYearEnd}" 
                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgColLASTUPDATE" Header="LASTUPDATE" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding LASTUPDATE}" 
+                        <telerik:GridViewDataColumn x:Name="dgColLASTUPDATE" Header="Price(20:" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding NextYearEnd}" 
                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgColLONG_TERM" Header="LONG_TERM" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding LONG_TERM}" 
-                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgColNEXT_YEAR_END" Header="NEXT_YEAR_END" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding NEXT_YEAR_END}" 
-                                                Width="Auto" HeaderTextAlignment="Right"  CellStyle="{StaticResource GridViewCellStyle}" />
+                        <telerik:GridViewDataColumn x:Name="dgColLONG_TERM" Header="Price(20:" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                DataMemberBinding="{Binding LongTerm}" 
+                                                Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>                       
                     </telerik:RadGridView.Columns>
 
                 </telerik:RadGridView>

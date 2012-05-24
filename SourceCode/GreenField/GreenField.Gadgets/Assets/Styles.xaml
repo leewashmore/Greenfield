@@ -28,6 +28,11 @@
         <Setter Property="Height" Value="15"/>
     </Style>
 
+    
+    <Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
+        <Setter Property="Background" Value="#9F1D21"/>
+    </Style>
+    <!--Grid Styles End-->
 
     <!--GridViewHeaderHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
@@ -36,10 +41,12 @@
         <Setter Property="MaxHeight" Value="15"/>
     </Style>
 
+
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
         <Setter Property="Height" Value="10"/>
         <Setter Property="FontSize" Value="7"/>
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="#9F1D21"/>
     </Style>
    

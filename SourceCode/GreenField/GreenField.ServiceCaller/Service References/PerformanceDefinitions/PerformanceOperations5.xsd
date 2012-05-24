@@ -244,19 +244,4 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="TestService">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="obj" nillable="true" type="q24:PortfolioSelectionData" />
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="obje" nillable="true" type="q25:EntitySelectionData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="TestServiceResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="TestServiceResult" nillable="true" type="q26:EntitySelectionData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

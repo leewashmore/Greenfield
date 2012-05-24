@@ -95,9 +95,8 @@
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="DataContracts\FXCommodityData.cs" />
+    <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
@@ -178,6 +177,7 @@
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

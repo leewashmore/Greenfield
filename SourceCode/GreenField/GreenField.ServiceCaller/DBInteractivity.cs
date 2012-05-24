@@ -300,6 +300,12 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Service Caller method for AssetAllocation gadget
+        /// </summary>
+        /// <param name="fundSelectionData">Selected Portfolio</param>
+        /// <param name="effectiveDate">selected Date</param>
+        /// <param name="callback">List of AssetAllocationData</param>
         public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
@@ -800,8 +806,6 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-
-
         /// <summary>
         /// Retrieves filter values for a selected filter type by calling the service
         /// </summary>
@@ -936,7 +940,7 @@ namespace GreenField.ServiceCaller
         /// Service caller method to retrieve PortfolioDetails Data
         /// </summary>
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
-        /// <param name="objSelectedDate">Date for which data is required</param>
+        /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
         public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
@@ -970,11 +974,10 @@ namespace GreenField.ServiceCaller
         }
 
         /// <summary>
-        /// Service caller method to retrieve Benchmark Return Data for multiLine Benchmark Chart
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
         /// </summary>
-        /// <param name="objSelectedPortfolio">Benchmark Identifier</param>
-        /// <param name="objStartDate">Effective Date for which Data is Required</param>
-        /// <param name="callback">Collection of Benchmark Return Data</param>
+        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkChartReturnData</param>
         public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
@@ -1006,6 +1009,11 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
+        /// </summary>
+        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkGridReturnData</param>
         public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
@@ -1527,8 +1535,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-
-
         #endregion
 
         public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
@@ -1580,7 +1586,7 @@ namespace GreenField.ServiceCaller
 
         #region Slice 4 - FX
 
-        public void RetrieveCommodityData(Action<List<CommodityResult>> callback)
+        public void RetrieveCommodityData(Action<List<FXCommodityData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveCommodityDataAsync();
@@ -1602,34 +1608,10 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-        #endregion
 
 
-        #region test
-
-        public void test(PortfolioSelectionData p, EntitySelectionData e1, Action<EntitySelectionData> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.TestServiceAsync(p, e1);
-            client.TestServiceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result);
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-            };
-        }
 
         #endregion
+
     }
 }

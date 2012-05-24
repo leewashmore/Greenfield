@@ -16,6 +16,7 @@ using System.Data.SqlClient;
 using GreenField.DAL;
 using System.Collections;
 using System.Data.Common;
+using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -232,7 +233,8 @@ namespace GreenField.Web.Services
         /// <returns>Commodity Result</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<CommodityResult> RetrieveCommodityData()
+        //TODO Seema: Add Input Param Country
+        public List<FXCommodityData> RetrieveCommodityData()//CountrySelectionData selectedCountry)
         {
             try
             {
@@ -242,13 +244,43 @@ namespace GreenField.Web.Services
                 //if (!isServiceUp)
                 //    throw new Exception();
 
-                List<CommodityResult> result = new List<CommodityResult>();
-                //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
+                List<CommodityResult> resultDB = new List<CommodityResult>();
+                List<FXCommodityData> result = new List<FXCommodityData>();
+                
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
+
+                if (entity.GF_PRICING_BASEVIEW == null && entity.GF_PRICING_BASEVIEW.Count() == 0)
+                return null;
+
+                
+
+                
                 ResearchEntities research = new ResearchEntities();
-                //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
                
+                //TODO Seema: Input Parameter has to be added - Country
+                //Retrieving data from database
+                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
+
+                for (int _index = 0; _index < resultDB.Count; _index++)
+                {
+                    FXCommodityData commodityData = new FXCommodityData();
+                    commodityData.CommodityID = resultDB[_index].COMMODITY_ID;
+                    commodityData.CurrentYearEnd = Convert.ToDecimal(resultDB[_index].CURRENT_YEAR_END);
+                    //commodityData.LastUpdate = Convert.ToDateTime(resultDB[_index].LASTUPDATE);
+                    commodityData.LongTerm = Convert.ToDecimal(resultDB[_index].LONG_TERM);
+                    commodityData.NextYearEnd = Convert.ToDecimal(resultDB[_index].NEXT_YEAR_END);
+                    result.Add(commodityData);
+                }
+                //TODO Seema: Input Parameter has to be added - Country
+                //Retrieving Data from WCF svc
+                // dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
+                ////var res = from p in entity.GF_PRICING_BASEVIEW
+                //          where p.FROMDATE == Convert.ToDateTime("05/18/2012") //&& p.INSTRUMENT_ID == Convert.ToString("299")
+                //          select p;
+                ////dimSvcPricingViewData = res.ToList();
+                
                 return result;
             }
             catch (Exception ex)

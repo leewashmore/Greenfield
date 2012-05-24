@@ -105,12 +105,20 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
                     <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False"
-                                    ItemsSource="{Binding ChartExtensionData}"  CanUserSelect="True" CanUserReorderColumns="False" 
-                                    SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
-                                    CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
-                                    CanUserSortColumns="True" ScrollMode="Deferred" 
-                                    RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                    UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" >
+                                         ItemsSource="{Binding ChartExtensionData}"  CanUserSelect="True" CanUserReorderColumns="False" 
+                                         SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
+                                         CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
+                                         CanUserSortColumns="True" ScrollMode="Deferred" 
+                                         RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
+                                         UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
+                                         AlternateRowBackground="Wheat"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelBackground="#9F1D21"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         EnableRowVirtualization="True"
+                                         EnableColumnVirtualization="True">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>

@@ -44,7 +44,8 @@ namespace GreenField.Gadgets.Views
             if (e.ShowBusy)
             {
                
-                this.busyIndicatorGrid.IsBusy = true;            }
+                this.busyIndicatorGrid.IsBusy = true;         
+            }
             else
             {
                 this.busyIndicatorGrid.IsBusy = false;

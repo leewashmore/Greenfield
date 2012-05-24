@@ -47,91 +47,113 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CommodityResult", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class CommodityResult : GreenField.ServiceCaller.ModelFXDefinitions.ComplexObject {
+    [System.Runtime.Serialization.DataContractAttribute(Name="FXCommodityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class FXCommodityData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string COMMODITY_IDField;
+        private string CommodityIDField;
         
-        private System.Nullable<float> CURRENT_YEAR_ENDField;
+        private System.Nullable<decimal> CurrentYearEndField;
         
-        private System.Nullable<System.DateTime> LASTUPDATEField;
+        private System.Nullable<decimal> LongTermField;
         
-        private System.Nullable<float> LONG_TERMField;
+        private System.Nullable<decimal> NextYearEndField;
         
-        private System.Nullable<float> NEXT_YEAR_ENDField;
+        private System.Nullable<decimal> YTDField;
+        
+        private System.Nullable<decimal> Year1Field;
+        
+        private System.Nullable<decimal> Year3Field;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string COMMODITY_ID {
+        public string CommodityID {
             get {
-                return this.COMMODITY_IDField;
+                return this.CommodityIDField;
             }
             set {
-                if ((object.ReferenceEquals(this.COMMODITY_IDField, value) != true)) {
-                    this.COMMODITY_IDField = value;
-                    this.RaisePropertyChanged("COMMODITY_ID");
+                if ((object.ReferenceEquals(this.CommodityIDField, value) != true)) {
+                    this.CommodityIDField = value;
+                    this.RaisePropertyChanged("CommodityID");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> CURRENT_YEAR_END {
+        public System.Nullable<decimal> CurrentYearEnd {
             get {
-                return this.CURRENT_YEAR_ENDField;
+                return this.CurrentYearEndField;
             }
             set {
-                if ((this.CURRENT_YEAR_ENDField.Equals(value) != true)) {
-                    this.CURRENT_YEAR_ENDField = value;
-                    this.RaisePropertyChanged("CURRENT_YEAR_END");
+                if ((this.CurrentYearEndField.Equals(value) != true)) {
+                    this.CurrentYearEndField = value;
+                    this.RaisePropertyChanged("CurrentYearEnd");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> LASTUPDATE {
+        public System.Nullable<decimal> LongTerm {
             get {
-                return this.LASTUPDATEField;
+                return this.LongTermField;
             }
             set {
-                if ((this.LASTUPDATEField.Equals(value) != true)) {
-                    this.LASTUPDATEField = value;
-                    this.RaisePropertyChanged("LASTUPDATE");
+                if ((this.LongTermField.Equals(value) != true)) {
+                    this.LongTermField = value;
+                    this.RaisePropertyChanged("LongTerm");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> LONG_TERM {
+        public System.Nullable<decimal> NextYearEnd {
             get {
-                return this.LONG_TERMField;
+                return this.NextYearEndField;
             }
             set {
-                if ((this.LONG_TERMField.Equals(value) != true)) {
-                    this.LONG_TERMField = value;
-                    this.RaisePropertyChanged("LONG_TERM");
+                if ((this.NextYearEndField.Equals(value) != true)) {
+                    this.NextYearEndField = value;
+                    this.RaisePropertyChanged("NextYearEnd");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> NEXT_YEAR_END {
+        public System.Nullable<decimal> YTD {
             get {
-                return this.NEXT_YEAR_ENDField;
+                return this.YTDField;
             }
             set {
-                if ((this.NEXT_YEAR_ENDField.Equals(value) != true)) {
-                    this.NEXT_YEAR_ENDField = value;
-                    this.RaisePropertyChanged("NEXT_YEAR_END");
+                if ((this.YTDField.Equals(value) != true)) {
+                    this.YTDField = value;
+                    this.RaisePropertyChanged("YTD");
                 }
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ComplexObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult))]
-    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> Year1 {
+            get {
+                return this.Year1Field;
+            }
+            set {
+                if ((this.Year1Field.Equals(value) != true)) {
+                    this.Year1Field = value;
+                    this.RaisePropertyChanged("Year1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> Year3 {
+            get {
+                return this.Year3Field;
+            }
+            set {
+                if ((this.Year3Field.Equals(value) != true)) {
+                    this.Year3Field = value;
+                    this.RaisePropertyChanged("Year3");
+                }
+            }
+        }
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
@@ -141,13 +163,6 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult))]
-    public partial class ComplexObject : GreenField.ServiceCaller.ModelFXDefinitions.StructuralObject {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -182,7 +197,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCommodityData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> EndRetrieveCommodityData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -257,10 +272,10 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(this.results[0]));
             }
         }
     }
@@ -500,7 +515,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommodityData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommodityData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCommodityData(result);
         }
         
@@ -509,7 +524,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         private object[] OnEndRetrieveCommodityData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommodityData(result);
+            System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommodityData(result);
             return new object[] {
                     retVal};
         }
@@ -658,9 +673,9 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> EndRetrieveCommodityData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult>)(base.EndInvoke("RetrieveCommodityData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(base.EndInvoke("RetrieveCommodityData", _args, result)));
                 return _result;
             }
         }

@@ -488,11 +488,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         System.IAsyncResult BeginRemoveMarketSnapshotPreference(string userName, string snapshotName, System.AsyncCallback callback, object asyncState);
         
         bool EndRemoveMarketSnapshotPreference(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/TestService", ReplyAction="http://tempuri.org/PerformanceOperations/TestServiceResponse")]
-        System.IAsyncResult BeginTestService(GreenField.DataContracts.PortfolioSelectionData obj, GreenField.DataContracts.EntitySelectionData obje, System.AsyncCallback callback, object asyncState);
-        
-        GreenField.DataContracts.EntitySelectionData EndTestService(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -805,25 +800,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class TestServiceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public TestServiceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public GreenField.DataContracts.EntitySelectionData Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((GreenField.DataContracts.EntitySelectionData)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class PerformanceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations>, GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations {
         
         private BeginOperationDelegate onBeginRetrieveRelativePerformanceUIDataDelegate;
@@ -922,12 +898,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRemoveMarketSnapshotPreferenceCompletedDelegate;
         
-        private BeginOperationDelegate onBeginTestServiceDelegate;
-        
-        private EndOperationDelegate onEndTestServiceDelegate;
-        
-        private System.Threading.SendOrPostCallback onTestServiceCompletedDelegate;
-        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1012,8 +982,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         public event System.EventHandler<SaveAsMarketSnapshotPreferenceCompletedEventArgs> SaveAsMarketSnapshotPreferenceCompleted;
         
         public event System.EventHandler<RemoveMarketSnapshotPreferenceCompletedEventArgs> RemoveMarketSnapshotPreferenceCompleted;
-        
-        public event System.EventHandler<TestServiceCompletedEventArgs> TestServiceCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1787,54 +1755,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                         snapshotName}, this.onEndRemoveMarketSnapshotPreferenceDelegate, this.onRemoveMarketSnapshotPreferenceCompletedDelegate, userState);
         }
         
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginTestService(GreenField.DataContracts.PortfolioSelectionData obj, GreenField.DataContracts.EntitySelectionData obje, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginTestService(obj, obje, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.DataContracts.EntitySelectionData GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndTestService(System.IAsyncResult result) {
-            return base.Channel.EndTestService(result);
-        }
-        
-        private System.IAsyncResult OnBeginTestService(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.DataContracts.PortfolioSelectionData obj = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
-            GreenField.DataContracts.EntitySelectionData obje = ((GreenField.DataContracts.EntitySelectionData)(inValues[1]));
-            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginTestService(obj, obje, callback, asyncState);
-        }
-        
-        private object[] OnEndTestService(System.IAsyncResult result) {
-            GreenField.DataContracts.EntitySelectionData retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndTestService(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnTestServiceCompleted(object state) {
-            if ((this.TestServiceCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.TestServiceCompleted(this, new TestServiceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void TestServiceAsync(GreenField.DataContracts.PortfolioSelectionData obj, GreenField.DataContracts.EntitySelectionData obje) {
-            this.TestServiceAsync(obj, obje, null);
-        }
-        
-        public void TestServiceAsync(GreenField.DataContracts.PortfolioSelectionData obj, GreenField.DataContracts.EntitySelectionData obje, object userState) {
-            if ((this.onBeginTestServiceDelegate == null)) {
-                this.onBeginTestServiceDelegate = new BeginOperationDelegate(this.OnBeginTestService);
-            }
-            if ((this.onEndTestServiceDelegate == null)) {
-                this.onEndTestServiceDelegate = new EndOperationDelegate(this.OnEndTestService);
-            }
-            if ((this.onTestServiceCompletedDelegate == null)) {
-                this.onTestServiceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnTestServiceCompleted);
-            }
-            base.InvokeAsync(this.onBeginTestServiceDelegate, new object[] {
-                        obj,
-                        obje}, this.onEndTestServiceDelegate, this.onTestServiceCompletedDelegate, userState);
-        }
-        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -2132,20 +2052,6 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             public bool EndRemoveMarketSnapshotPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("RemoveMarketSnapshotPreference", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginTestService(GreenField.DataContracts.PortfolioSelectionData obj, GreenField.DataContracts.EntitySelectionData obje, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
-                _args[0] = obj;
-                _args[1] = obje;
-                System.IAsyncResult _result = base.BeginInvoke("TestService", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public GreenField.DataContracts.EntitySelectionData EndTestService(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                GreenField.DataContracts.EntitySelectionData _result = ((GreenField.DataContracts.EntitySelectionData)(base.EndInvoke("TestService", _args, result)));
                 return _result;
             }
         }

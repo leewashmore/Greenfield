@@ -77,10 +77,11 @@
                             </telerik:RadChart.SeriesMappings>
                         </telerik:RadChart>
                     </Border>
-                    </telerik:RadBusyIndicator>
+                    </telerik:RadBusyIndicator>                   
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-                        <telerik:RadGridView Name="dgHoldingsPercentageSector" AutoGenerateColumns="False" Visibility="Collapsed"
-                                     ItemsSource="{Binding HoldingsPercentageInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
+                        <telerik:RadGridView Name="dgHoldingsPercentageSector" AutoGenerateColumns="False" Visibility="Collapsed" 
+                                     ItemsSource="{Binding HoldingsPercentageInfo}"
+                                     CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 

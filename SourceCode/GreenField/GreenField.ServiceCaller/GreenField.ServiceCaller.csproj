@@ -189,7 +189,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.CommodityResult.datasource">
+    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
@@ -302,9 +302,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />

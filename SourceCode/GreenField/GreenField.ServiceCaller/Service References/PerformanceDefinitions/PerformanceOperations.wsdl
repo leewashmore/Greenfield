@@ -150,12 +150,6 @@
   <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="PerformanceOperations_TestService_InputMessage">
-    <wsdl:part name="parameters" element="tns:TestService" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_TestService_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TestServiceResponse" />
-  </wsdl:message>
   <wsdl:portType name="PerformanceOperations">
     <wsdl:operation name="RetrieveRelativePerformanceUIData">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIData" message="tns:PerformanceOperations_RetrieveRelativePerformanceUIData_InputMessage" />
@@ -234,10 +228,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="TestService">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/TestService" message="tns:PerformanceOperations_TestService_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/TestServiceResponse" message="tns:PerformanceOperations_TestService_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PerformanceOperations" type="tns:PerformanceOperations">
@@ -427,15 +417,6 @@
       <wsdl:fault name="ServiceFaultFault">
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="TestService">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/TestService" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="PerformanceOperations">

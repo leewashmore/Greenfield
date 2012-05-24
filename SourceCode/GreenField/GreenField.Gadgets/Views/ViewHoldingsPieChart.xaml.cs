@@ -26,8 +26,8 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string HOLDINGS_PIE_CHART_SECTOR = "Holdings Pie Chart for Sector";
-            public const string HOLDINGS_PIE_GRID_SECTOR = "Holdings Pie Grid for Sector";
+            public const string HOLDINGS_PIE_CHART = "Holdings Pie Chart for Sector";
+            public const string HOLDINGS_PIE_GRID = "Holdings Pie Grid for Sector";
         }
 
         #region Constructor
@@ -44,7 +44,7 @@ namespace GreenField.Gadgets.Views
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_holdingsPieChartDataLoadedEvent);
             this.crtHoldingsPercentageSector.Visibility = Visibility.Visible;
             this.dgHoldingsPercentageSector.Visibility = Visibility.Collapsed;
-            
+            //this.dgHoldingsPercentageSector.ItemsSource = ((ViewModelHoldingsPieChart)this.DataContext).HoldingsPercentageInfo;
         }
         #endregion
 
@@ -98,8 +98,8 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART_SECTOR, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID_SECTOR, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
