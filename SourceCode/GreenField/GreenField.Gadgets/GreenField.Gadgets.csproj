@@ -143,7 +143,6 @@
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
-    <Compile Include="Models\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

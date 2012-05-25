@@ -27,7 +27,8 @@ namespace GreenField.Gadgets.Views
         {
             if (! _marketSnapshotSelectionInfo.Where(record=>record.SnapshotName == this.tbSnapshotName.Text).Count().Equals(0))
             {
-                MessageBox.Show("Snapshot by the name of " + this.tbSnapshotName.Text + " already exists. Provide an alternate name");
+                this.txtMessage.Text = "*Snapshot by the name of " + this.tbSnapshotName.Text + " already exists. Provide an alternate name";
+                this.txtMessage.Visibility = System.Windows.Visibility.Visible;
                 return;
             }
 
@@ -41,6 +42,7 @@ namespace GreenField.Gadgets.Views
 
         private void tbSnapshotName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
             this.OKButton.IsEnabled = this.tbSnapshotName.Text.Count() > 0;
         }
     }

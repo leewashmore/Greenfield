@@ -208,6 +208,9 @@
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
     <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
     <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />

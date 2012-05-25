@@ -98,7 +98,7 @@ namespace GreenField.ServiceCaller
         /// <param name="snapshotName">Snapshot name</param>
         /// <param name="snapshotPreference">Snapshot preference details</param>
         /// <param name="callback">Callback Method that takes List of MarketSnapshotSelectionData as it's argument</param>
-        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback);
+        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference, Action<PopulatedMarketPerformanceSnapshotData> callback);
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
