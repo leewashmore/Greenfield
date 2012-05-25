@@ -56,7 +56,7 @@ namespace GreenField.Gadgets.Views
         public void dataContextSource_RetrieveMacroDataCompletedEvent(Common.RetrieveMacroCountrySummaryDataCompleteEventArgs e)
         {            
             _macroInfo = e.MacroInfo;
-            this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).FiveYearMacroCountryData;
+            this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).FiveYearMacroCountryData;                      
             this.dgMacroDBKeyReport.Columns.Clear();
             this.dgMacroDBKeyReport.GroupDescriptors.Clear();
             this.dgMacroDBKeyReport.SortDescriptors.Clear();
@@ -91,7 +91,10 @@ namespace GreenField.Gadgets.Views
                 SortDescriptor sdescriptor = new SortDescriptor();
                 sdescriptor.Member = "SORT_ORDER";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
-                this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);              
+                this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
+
+                
+                                
                 GridViewDataColumn column = new GridViewDataColumn();
                 column.DataMemberBinding = new Binding("DESCRIPTION");
                 column.Header = "DESCRIPTION";
@@ -128,6 +131,9 @@ namespace GreenField.Gadgets.Views
                 column5.UniqueName = "MyColumn5";
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
                 this.dgMacroDBKeyReport.Columns.Add(column5);
+
+                
+
 
             }
         }

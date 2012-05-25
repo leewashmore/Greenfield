@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfRelativePerformanceUIData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RelativePerformanceUIData" nillable="true" type="tns:RelativePerformanceUIData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRelativePerformanceUIData" nillable="true" type="tns:ArrayOfRelativePerformanceUIData" />
+  <xs:complexType name="RelativePerformanceUIData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FiveYearReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTDReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneYearReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTDReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreeYearReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTDReturn" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RelativePerformanceUIData" nillable="true" type="tns:RelativePerformanceUIData" />
+  <xs:complexType name="ArrayOfBenchmarkChartReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BenchmarkChartReturnData" nillable="true" type="tns:BenchmarkChartReturnData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBenchmarkChartReturnData" nillable="true" type="tns:ArrayOfBenchmarkChartReturnData" />
+  <xs:complexType name="BenchmarkChartReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FiveY" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IndexedValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OneM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneY" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PreviousYearData" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SI" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SixM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreeM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreePreviousYearData" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreeY" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TwoPreviousYearData" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YTD" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BenchmarkChartReturnData" nillable="true" type="tns:BenchmarkChartReturnData" />
+  <xs:complexType name="ArrayOfBenchmarkGridReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BenchmarkGridReturnData" nillable="true" type="tns:BenchmarkGridReturnData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBenchmarkGridReturnData" nillable="true" type="tns:ArrayOfBenchmarkGridReturnData" />
+  <xs:complexType name="BenchmarkGridReturnData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PreviousYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreePreviousYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TwoPreviousYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YTD" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BenchmarkGridReturnData" nillable="true" type="tns:BenchmarkGridReturnData" />
+  <xs:complexType name="ArrayOfChartExtensionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChartExtensionData" nillable="true" type="tns:ArrayOfChartExtensionData" />
+  <xs:complexType name="ChartExtensionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdjustedDollarPrice" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountTraded" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Price" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PriceReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToDate" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
+</xs:schema>

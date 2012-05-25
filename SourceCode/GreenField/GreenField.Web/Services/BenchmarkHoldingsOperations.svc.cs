@@ -1751,8 +1751,9 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
+            List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
             if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                return result;
 
             //checking if the service is down
             bool isServiceUp;
@@ -1761,7 +1762,7 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
                 throw new Exception();
 
-            List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
+          
             List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (riskReturnData == null)
                 return result;
@@ -1769,20 +1770,59 @@ namespace GreenField.Web.Services
             {
                 PortfolioRiskReturnData entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Alpha";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Beta";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_BETA)).FirstOrDefault();
+
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Information Ratio";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue1 =(riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_INFORMATION)).FirstOrDefault();
                 result.Add(entry);
-                return result;
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Sharpe Ratio";
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                result.Add(entry);
+                return result;               
+
             }
             catch (Exception ex)
             {

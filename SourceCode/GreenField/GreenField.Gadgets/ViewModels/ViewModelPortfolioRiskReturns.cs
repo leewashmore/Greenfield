@@ -19,6 +19,7 @@ using GreenField.Common.Helper;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -65,13 +66,15 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;           
+            _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);             
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
             }
 
             if (_effectiveDate != null && _PortfolioSelectionData != null )
@@ -83,8 +86,8 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
-        private ObservableCollection<PortfolioRiskReturnData> _portfolioRiskReturnInfo;
-        public ObservableCollection<PortfolioRiskReturnData> PortfolioRiskReturnInfo
+        private List<PortfolioRiskReturnData> _portfolioRiskReturnInfo;
+        public List<PortfolioRiskReturnData> PortfolioRiskReturnInfo
         {
             get
             {                
@@ -94,6 +97,194 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _portfolioRiskReturnInfo = value;
                 RaisePropertyChanged(() => this.PortfolioRiskReturnInfo);
+            }
+        }
+
+         private List<PerformancePeriodData> _portfolioRiskReturnPeriodInfo;
+        public List<PerformancePeriodData> PortfolioRiskReturnPeriodInfo
+        {
+            get
+            {                
+                return _portfolioRiskReturnPeriodInfo;
+            }
+            set
+            {
+                _portfolioRiskReturnPeriodInfo = value;
+                RaisePropertyChanged(() => this.PortfolioRiskReturnPeriodInfo);
+            }
+        }
+
+
+        /// <summary>
+        /// The Period selected by the user.
+        /// </summary>
+        private String _selectedPeriod;
+        public String SelectedPeriod
+        {
+            get
+            {
+                return _selectedPeriod;
+            }
+            set
+            {
+                _selectedPeriod = value;
+                RaisePropertyChanged(() => this.SelectedPeriod);
+                if (PortfolioRiskReturnInfo != null)
+                {
+                    switch (value)
+                    {
+                        case "1Y":
+
+                                List<PerformancePeriodData> result = new List<PerformancePeriodData>();                            
+                                PerformancePeriodData entry = new PerformancePeriodData();                                
+                                entry.DataPointName = PortfolioRiskReturnInfo[0].DataPointName;
+                                entry.BenchmarkValue = PortfolioRiskReturnInfo[0].BenchMarkValue1;
+                                entry.PortfolioValue = PortfolioRiskReturnInfo[0].PortfolioValue1;
+                                result.Add(entry);
+                                entry = new PerformancePeriodData();
+                                entry.DataPointName = PortfolioRiskReturnInfo[1].DataPointName;
+                                entry.BenchmarkValue = PortfolioRiskReturnInfo[1].BenchMarkValue1;
+                                entry.PortfolioValue = PortfolioRiskReturnInfo[1].PortfolioValue1;
+                                result.Add(entry);
+                                entry = new PerformancePeriodData();
+                                entry.DataPointName = PortfolioRiskReturnInfo[2].DataPointName;
+                                entry.BenchmarkValue = PortfolioRiskReturnInfo[2].BenchMarkValue1;
+                                entry.PortfolioValue = PortfolioRiskReturnInfo[2].PortfolioValue1;
+                                result.Add(entry);
+                                entry = new PerformancePeriodData();
+                                entry.DataPointName = PortfolioRiskReturnInfo[3].DataPointName;
+                                entry.BenchmarkValue = PortfolioRiskReturnInfo[3].BenchMarkValue1;
+                                entry.PortfolioValue = PortfolioRiskReturnInfo[3].PortfolioValue1;
+                                result.Add(entry);
+                            
+                            PortfolioRiskReturnPeriodInfo = result;
+                            if (null != portfolioRiskReturnDataLoadedEvent)
+                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                            break;
+                        case "3Y":
+                                List<PerformancePeriodData> result1 = new List<PerformancePeriodData>();                            
+                                PerformancePeriodData entry1 = new PerformancePeriodData();
+                                entry1.DataPointName = PortfolioRiskReturnInfo[0].DataPointName;
+                                entry1.BenchmarkValue = PortfolioRiskReturnInfo[0].BenchMarkValue2;
+                                entry1.PortfolioValue = PortfolioRiskReturnInfo[0].PortfolioValue2;
+                                result1.Add(entry1);
+                                entry1 = new PerformancePeriodData();
+                                entry1.DataPointName = PortfolioRiskReturnInfo[1].DataPointName;
+                                entry1.BenchmarkValue = PortfolioRiskReturnInfo[1].BenchMarkValue2;
+                                entry1.PortfolioValue = PortfolioRiskReturnInfo[1].PortfolioValue2;
+                                result1.Add(entry1);
+                                entry1 = new PerformancePeriodData();
+                                entry1.DataPointName = PortfolioRiskReturnInfo[2].DataPointName;
+                                entry1.BenchmarkValue = PortfolioRiskReturnInfo[2].BenchMarkValue2;
+                                entry1.PortfolioValue = PortfolioRiskReturnInfo[2].PortfolioValue2;
+                                result1.Add(entry1);
+                                entry1 = new PerformancePeriodData();
+                                entry1.DataPointName = PortfolioRiskReturnInfo[3].DataPointName;
+                                entry1.BenchmarkValue = PortfolioRiskReturnInfo[3].BenchMarkValue2;
+                                entry1.PortfolioValue = PortfolioRiskReturnInfo[3].PortfolioValue2;
+                                result1.Add(entry1);
+
+                                PortfolioRiskReturnPeriodInfo = result1;
+                                if (null != portfolioRiskReturnDataLoadedEvent)
+                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                            break;
+
+                        case "5Y" : 
+
+                                List<PerformancePeriodData> result2 = new List<PerformancePeriodData>();                            
+                                PerformancePeriodData entry2 = new PerformancePeriodData();
+                                entry2.DataPointName = PortfolioRiskReturnInfo[0].DataPointName;
+                                entry2.BenchmarkValue = PortfolioRiskReturnInfo[0].BenchMarkValue3;
+                                entry2.PortfolioValue = PortfolioRiskReturnInfo[0].PortfolioValue3;
+                                result2.Add(entry2);
+                                entry2 = new PerformancePeriodData();
+                                entry2.DataPointName = PortfolioRiskReturnInfo[1].DataPointName;
+                                entry2.BenchmarkValue = PortfolioRiskReturnInfo[1].BenchMarkValue3;
+                                entry2.PortfolioValue = PortfolioRiskReturnInfo[1].PortfolioValue3;
+                                result2.Add(entry2);
+                                entry2 = new PerformancePeriodData();
+                                entry2.DataPointName = PortfolioRiskReturnInfo[2].DataPointName;
+                                entry2.BenchmarkValue = PortfolioRiskReturnInfo[2].BenchMarkValue3;
+                                entry2.PortfolioValue = PortfolioRiskReturnInfo[2].PortfolioValue3;
+                                result2.Add(entry2);
+                                entry2 = new PerformancePeriodData();
+                                entry2.DataPointName = PortfolioRiskReturnInfo[3].DataPointName;
+                                entry2.BenchmarkValue = PortfolioRiskReturnInfo[3].BenchMarkValue3;
+                                entry2.PortfolioValue = PortfolioRiskReturnInfo[3].PortfolioValue3;
+                                result2.Add(entry2);
+
+                                PortfolioRiskReturnPeriodInfo = result2;
+                                if (null != portfolioRiskReturnDataLoadedEvent)
+                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
+
+                        case "10Y":
+
+                                List<PerformancePeriodData> result3 = new List<PerformancePeriodData>();
+                                PerformancePeriodData entry3 = new PerformancePeriodData();
+                                entry3.DataPointName = PortfolioRiskReturnInfo[0].DataPointName;
+                                entry3.BenchmarkValue = PortfolioRiskReturnInfo[0].BenchMarkValue4;
+                                entry3.PortfolioValue = PortfolioRiskReturnInfo[0].PortfolioValue4;
+                                result3.Add(entry3);
+                                entry3 = new PerformancePeriodData();
+                                entry3.DataPointName = PortfolioRiskReturnInfo[1].DataPointName;
+                                entry3.BenchmarkValue = PortfolioRiskReturnInfo[1].BenchMarkValue4;
+                                entry3.PortfolioValue = PortfolioRiskReturnInfo[1].PortfolioValue4;
+                                result3.Add(entry3);
+                                entry3 = new PerformancePeriodData();
+                                entry3.DataPointName = PortfolioRiskReturnInfo[2].DataPointName;
+                                entry3.BenchmarkValue = PortfolioRiskReturnInfo[2].BenchMarkValue4;
+                                entry3.PortfolioValue = PortfolioRiskReturnInfo[2].PortfolioValue4;
+                                result3.Add(entry3);
+                                entry3 = new PerformancePeriodData();
+                                entry3.DataPointName = PortfolioRiskReturnInfo[3].DataPointName;
+                                entry3.BenchmarkValue = PortfolioRiskReturnInfo[3].BenchMarkValue4;
+                                entry3.PortfolioValue = PortfolioRiskReturnInfo[3].PortfolioValue4;
+                                result3.Add(entry3);
+
+                                PortfolioRiskReturnPeriodInfo = result3;
+                                if (null != portfolioRiskReturnDataLoadedEvent)
+                                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
+                        case "SI":
+
+                                List<PerformancePeriodData> result4 = new List<PerformancePeriodData>();
+                                PerformancePeriodData entry4 = new PerformancePeriodData();
+                                entry4.DataPointName = PortfolioRiskReturnInfo[0].DataPointName;
+                                entry4.BenchmarkValue = PortfolioRiskReturnInfo[0].BenchMarkValue5;
+                                entry4.PortfolioValue = PortfolioRiskReturnInfo[0].PortfolioValue5;
+                                result4.Add(entry4);
+                                entry4 = new PerformancePeriodData();
+                                entry4.DataPointName = PortfolioRiskReturnInfo[1].DataPointName;
+                                entry4.BenchmarkValue = PortfolioRiskReturnInfo[1].BenchMarkValue4;
+                                entry4.PortfolioValue = PortfolioRiskReturnInfo[1].PortfolioValue4;
+                                result4.Add(entry4);
+                                entry4 = new PerformancePeriodData();
+                                entry4.DataPointName = PortfolioRiskReturnInfo[2].DataPointName;
+                                entry4.BenchmarkValue = PortfolioRiskReturnInfo[2].BenchMarkValue4;
+                                entry4.PortfolioValue = PortfolioRiskReturnInfo[2].PortfolioValue4;
+                                result4.Add(entry4);
+                                entry4 = new PerformancePeriodData();
+                                entry4.DataPointName = PortfolioRiskReturnInfo[3].DataPointName;
+                                entry4.BenchmarkValue = PortfolioRiskReturnInfo[3].BenchMarkValue4;
+                                entry4.PortfolioValue = PortfolioRiskReturnInfo[3].PortfolioValue4;
+                                result4.Add(entry4);
+
+                                PortfolioRiskReturnPeriodInfo = result4;
+                                if (null != portfolioRiskReturnDataLoadedEvent)
+                                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
+
+                        default:
+                                List<PerformancePeriodData> result5 = new List<PerformancePeriodData>();
+                                PortfolioRiskReturnPeriodInfo = result5;
+                                if (null != portfolioRiskReturnDataLoadedEvent)
+                                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
+
+                    }
+
+                }
             }
         }
         #endregion
@@ -192,7 +383,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    PortfolioRiskReturnInfo = new ObservableCollection<PortfolioRiskReturnData>(result);
+                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
                     if (null != portfolioRiskReturnDataLoadedEvent)
                     portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
@@ -209,6 +400,41 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Period
+        /// </summary>
+        /// <param name="selectedPeriodType">Period selected by the user</param>
+        public void HandlePeriodReferenceSet(String selectedPeriodType)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (selectedPeriodType != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
+                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                        if (null != portfolioRiskReturnDataLoadedEvent)
+                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    SelectedPeriod = selectedPeriodType;
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
         #endregion 
       
         #region EventUnSubscribe

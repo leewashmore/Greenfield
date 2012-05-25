@@ -28,7 +28,7 @@
         <Setter Property="Height" Value="15"/>
     </Style>
 
-    
+
     <Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
         <Setter Property="Background" Value="#9F1D21"/>
     </Style>
@@ -49,7 +49,7 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="#9F1D21"/>
     </Style>
-   
+
     <!--Chart Item Label Style-->
     <Style x:Key="ItemLabelStyle"
        TargetType="TextBlock">

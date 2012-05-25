@@ -261,7 +261,7 @@ namespace GreenField.Web.Services
                
                 //TODO Seema: Input Parameter has to be added - Country
                 //Retrieving data from database
-                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
+                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS ZINC").ToList();
 
                 for (int _index = 0; _index < resultDB.Count; _index++)
                 {
