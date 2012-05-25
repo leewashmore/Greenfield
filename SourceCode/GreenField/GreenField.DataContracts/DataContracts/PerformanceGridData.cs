@@ -10,27 +10,27 @@ namespace GreenField.DataContracts
     public class PerformanceGridData
     {
         [DataMember]
-        public String Name;
+        public String Name {get;set;}
 
         [DataMember]
-        public Decimal? MTD;
+        public Decimal? MTD { get; set; }
 
         [DataMember]
-        public Decimal? QTD;
+        public Decimal? QTD { get; set; }
 
         [DataMember]
-        public Decimal? YTD;
+        public Decimal? YTD { get; set; }
 
         [DataMember]
-        public Decimal? FIRST_YEAR;
+        public Decimal? FIRST_YEAR { get; set; }
 
         [DataMember]
-        public Decimal? THIRD_YEAR;
+        public Decimal? THIRD_YEAR { get; set; }
 
         [DataMember]
-        public Decimal? FIFTH_YEAR;
+        public Decimal? FIFTH_YEAR { get; set; }
 
         [DataMember]
-        public Decimal? TENTH_YEAR;
+        public Decimal? TENTH_YEAR { get; set; }
     }
 }

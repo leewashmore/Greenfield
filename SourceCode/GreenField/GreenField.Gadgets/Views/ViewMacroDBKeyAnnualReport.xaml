@@ -8,7 +8,7 @@
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-        <helpers:ViewBaseUserControl.Resources>
+    <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
@@ -53,8 +53,10 @@
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"                                         
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupPanelBackground="#9F1D21"
-                                         AutoExpandGroups="True">
-                    <!--<telerik:RadGridView.GroupDescriptors >
+                                         AutoExpandGroups="True"
+                                          >
+                       
+                        <!--<telerik:RadGridView.GroupDescriptors >
                         <telerik:GroupDescriptor Member="CATEGORY_NAME" 
                                                  SortDirection="Ascending" />
                     </telerik:RadGridView.GroupDescriptors>
@@ -62,7 +64,7 @@
                         <telerik:SortDescriptor Member="SORT_ORDER"
                                                 SortDirection="Ascending" />
                     </telerik:RadGridView.SortDescriptors>-->
-                    <!--<telerik:RadGridView.Columns>
+                        <!--<telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcDescription" 
                                                     Header="DESCRIPTION" 
                                                     IsFilterable="False" 
@@ -102,10 +104,10 @@
                                                     Width="Auto" HeaderTextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-                    </telerik:RadGridView.Columns>-->                    
-                </telerik:RadGridView>
+                    </telerik:RadGridView.Columns>-->
+                    </telerik:RadGridView>
                 </Border>
             </telerik:RadBusyIndicator>
-            </Grid>        
+        </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>

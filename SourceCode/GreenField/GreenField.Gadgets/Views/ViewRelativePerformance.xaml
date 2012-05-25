@@ -1,4 +1,4 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewRelativePerformance"
+﻿<helpers:ViewBaseUserControl xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"  x:Class="GreenField.Gadgets.Views.ViewRelativePerformance"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -76,7 +76,7 @@
         </Grid.RowDefinitions>
         <!--Header Row-->
         <Grid Grid.Row="0">
-            <TextBlock Text="Relative Performance" FontWeight="Bold" HorizontalAlignment="Center"/>
+            <TextBlock Text="Excess Contribution" FontWeight="Bold" HorizontalAlignment="Center"/>
         </Grid>
 
             <!--Export Row-->
@@ -127,33 +127,10 @@
                 </telerik:RadGridView.Columns>                
             </telerik:RadGridView>
 
-                <telerik:RadGridView x:Name="dgSectorSecurityDetails" 
-                                 AutoGenerateColumns="False"
-                                 CanUserDeleteRows="False"
-                                 CanUserInsertRows="False"
-                                 ShowColumnFooters="False"
-                                 ShowGroupPanel="False"
-                                 ScrollMode="RealTime"
-                                 telerik:StyleManager.Theme="Metro"
-                                 CanUserReorderColumns="False"
-                                 RowIndicatorVisibility="Collapsed"
-                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 IsReadOnly="True"
-                                 AlternationCount="2" 
-                                 AlternateRowBackground="Wheat"
-                                 RowStyle="{StaticResource GridViewRowStyle}"
-                                 Visibility="Collapsed"
-                                 ItemsSource="{Binding SecurityDetails}">
-                <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn x:Name="dgcSector" Header="Sector" IsFilterable="False" Width="auto" HeaderTextAlignment="Left"
-                                                        DataMemberBinding="{Binding SecuritySectorName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                    <telerik:GridViewDataColumn x:Name="dgcSectorCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left"
-                                                        DataMemberBinding="{Binding SecurityCountryID}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                    <telerik:GridViewDataColumn x:Name="dgcSectorSecurity" Header="Security" IsFilterable="False" Width="*" HeaderTextAlignment="Left"
-                                                        DataMemberBinding="{Binding SecurityName}" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
-                
+                <Border x:Name="brdSectorSecurityDetails" Visibility="Collapsed" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                    <toolkit:DockPanel x:Name="outerPanel" telerik:StyleManager.Theme="Metro" ScrollViewer.HorizontalScrollBarVisibility ="Visible"/>
+                </Border>
+            
                 <telerik:RadGridView Name="dgRelativePerformance" 
                                      AutoGenerateColumns="False" 
                                      IsFilteringAllowed="True" 

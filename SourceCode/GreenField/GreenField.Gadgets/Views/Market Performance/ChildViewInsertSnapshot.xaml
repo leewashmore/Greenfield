@@ -3,7 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" Title="Save as" FontSize="8" FontFamily="Arial"
-           Width="400" Height="85">
+           Width="400" Height="Auto">
     <Grid x:Name="LayoutRoot" Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"  />
