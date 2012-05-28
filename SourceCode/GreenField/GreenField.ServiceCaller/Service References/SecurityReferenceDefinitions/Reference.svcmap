@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="236856a2-c62d-4b39-8e42-20c8c8999dd3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/SecurityReferenceOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SecurityReferenceOperations.disco" MetadataType="Disco" ID="0885002d-8239-434c-98e1-49f6f2878e4d" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?disco" />
+    <MetadataFile FileName="SecurityReferenceOperations.xsd" MetadataType="Schema" ID="7e9fc9f3-824a-4428-81d8-10775cc0b165" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="SecurityReferenceOperations1.xsd" MetadataType="Schema" ID="3b9135f4-58a7-4434-981d-5c9c28e634e1" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="SecurityReferenceOperations2.xsd" MetadataType="Schema" ID="040e8f59-8c26-4123-8b9d-1332b52afe45" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="SecurityReferenceOperations.wsdl" MetadataType="Wsdl" ID="ff1f9c1b-b33d-4e24-84d1-e47f7e5a9a2a" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?wsdl" />
+    <MetadataFile FileName="SecurityReferenceOperations3.xsd" MetadataType="Schema" ID="8535b708-cc71-49ab-8e23-8d22c3ff3892" SourceId="1" SourceUrl="http://localhost:59430/Services/SecurityReferenceOperations.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
