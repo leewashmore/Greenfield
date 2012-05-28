@@ -20,6 +20,7 @@ using Microsoft.Practices.Prism.Commands;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

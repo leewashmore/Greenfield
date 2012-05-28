@@ -16,6 +16,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using System.Collections.Generic;
 using GreenField.Common.Helper;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -39,7 +40,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member object of CommodityResult for Commodity
         /// </summary>
-        private List<CommodityResult> _commodityData;
+        private List<FXCommodityData> _commodityData;
 
         #endregion
         #region Constructor
@@ -51,8 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-
+            _logger = param.LoggerFacade;            
             _dbInteractivity.RetrieveCommodityData(RetrieveCommodityDataCallbackMethod);
         }
         #endregion
@@ -61,7 +61,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Commodity Data
         /// </summary>
-        public List<CommodityResult> CommodityData
+        public List<FXCommodityData> CommodityData
         {
             get
             {                            
@@ -87,7 +87,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method that assigns value to the Commodity property
         /// </summary>
         /// <param name="result">contains the Commodity data </param>
-        public void RetrieveCommodityDataCallbackMethod(List<CommodityResult> result)
+        public void RetrieveCommodityDataCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -99,6 +99,8 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CommodityData = result;
                     this.RaisePropertyChanged(() => this.CommodityData);
+                    if (CommodityDataLoadEvent != null)
+                        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
                 else
                 {

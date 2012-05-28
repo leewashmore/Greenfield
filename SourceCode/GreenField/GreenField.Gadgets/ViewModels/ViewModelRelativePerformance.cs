@@ -19,6 +19,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.ObjectModel;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -148,17 +149,17 @@ namespace GreenField.Gadgets.ViewModels
         /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
         /// </summary>
         /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _PortfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && _period != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSectorData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRelativePerformanceSectorDataCallbackMethod);
@@ -263,9 +264,9 @@ namespace GreenField.Gadgets.ViewModels
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
                         if(relativePerformanceGridCellData.SectorID == null)
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
                         else if(relativePerformanceGridCellData.CountryID == null)
-                            _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                            _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
                         if (RelativePerformanceDataLoadEvent != null)
                             RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -356,7 +357,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method for RetrieveRelativePerformanceSecurityData Service call
         /// </summary>
         /// <param name="result">RelativePerformanceSecurityData Collection</param>
-        public void RetrieveRelativePerformanceSecurityDataCallBackMethod(List<RelativePerformanceSecurityData> result)
+        public void RetrieveRelativePerformanceSecurityDataCallbackMethod(List<RelativePerformanceSecurityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -366,13 +367,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     SecurityDetails = new ObservableCollection<RelativePerformanceSecurityData>(result);
 
-
-
-                    //RelativePerformanceToggledSectorGridBuildEvent.Invoke(new RelativePerformanceToggledSectorGridBuildEventArgs()
-                    //{
-                    //    RelativePerformanceCountryNameInfo = SecurityDetails.Select(r => r.SecurityCountryID).Distinct().ToList(),
-                    //    RelativePerformanceSecurityInfo = SecurityDetails.ToList()
-                    //});
+                    RelativePerformanceToggledSectorGridBuildEvent.Invoke(new RelativePerformanceToggledSectorGridBuildEventArgs()
+                    {
+                        RelativePerformanceCountryNameInfo = SecurityDetails.Select(r => r.SecurityCountryId).Distinct().ToList(),
+                        RelativePerformanceSecurityInfo = SecurityDetails.ToList()
+                    });
                 }
                 else
                 {

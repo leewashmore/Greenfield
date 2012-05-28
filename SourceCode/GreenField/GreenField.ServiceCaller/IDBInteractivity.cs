@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 
 namespace GreenField.ServiceCaller
@@ -17,6 +18,7 @@ namespace GreenField.ServiceCaller
     public interface IDBInteractivity
     {
         #region Build1
+
         void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
         void RetrieveSecurityOverviewData(EntitySelectionData entitySelectionData, Action<SecurityOverviewData> callback);
@@ -37,6 +39,12 @@ namespace GreenField.ServiceCaller
 
         void RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback);
 
+        /// <summary>
+        /// Service Caller method for AssetAllocation gadget
+        /// </summary>
+        /// <param name="fundSelectionData">Selected Portfolio</param>
+        /// <param name="effectiveDate">selected Date</param>
+        /// <param name="callback">List of AssetAllocationData</param>
         void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback);
 
         void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback);
@@ -90,7 +98,7 @@ namespace GreenField.ServiceCaller
         /// <param name="snapshotName">Snapshot name</param>
         /// <param name="snapshotPreference">Snapshot preference details</param>
         /// <param name="callback">Callback Method that takes List of MarketSnapshotSelectionData as it's argument</param>
-        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback);
+        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference, Action<PopulatedMarketPerformanceSnapshotData> callback);
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
@@ -116,10 +124,26 @@ namespace GreenField.ServiceCaller
 
         void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback);
 
+        /// <summary>
+        /// Service caller method to retrieve PortfolioDetails Data
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
+        /// <param name="objSelectedDate">Selected Date</param>
+        /// <param name="callback">collection of Portfolio Details Data</param>
         void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
+        /// </summary>
+        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkChartReturnData</param>
         void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkChartReturnData>> callback);
 
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
+        /// </summary>
+        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkGridReturnData</param>
         void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback);
 
 
@@ -142,7 +166,7 @@ namespace GreenField.ServiceCaller
 
         #region Slice 4 - FX
 
-        void RetrieveCommodityData(Action<List<CommodityResult>> callback);
+        void RetrieveCommodityData(Action<List<FXCommodityData>> callback);
 
         #endregion
 

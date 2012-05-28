@@ -9,6 +9,7 @@ using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Documents.FormatProviders.Pdf;
 using Telerik.Windows.Data;
 using System.Collections;
+using GreenField.DataContracts;
 
 #if !SILVERLIGHT
 using Microsoft.Win32;

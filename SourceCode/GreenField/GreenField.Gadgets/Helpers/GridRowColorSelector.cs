@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Helpers
 {

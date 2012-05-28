@@ -20,8 +20,7 @@ namespace GreenField.Gadgets.Views
         public ViewCommodityIndex(ViewModelCommodityIndex dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = dataContextSource;
-            //if(dataContextSource.CommodityDataLoadEvent != null)
+            this.DataContext = dataContextSource;            
             dataContextSource.CommodityDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceCommodityLoadEvent);
 
         }

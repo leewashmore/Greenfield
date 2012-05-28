@@ -137,17 +137,16 @@
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
-    <Compile Include="Helpers\RelativePerformanceTooltip.xaml.cs">
-      <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
+    <Compile Include="Models\FiveYearDataModels.cs" />
+    <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
-    <Compile Include="Models\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
+    <Compile Include="ViewModels\PortfolioPeriodData.cs" />
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
@@ -286,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Helpers\ChildExportOptions.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Helpers\RelativePerformanceTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -435,6 +430,10 @@
       <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
       <Name>GreenField.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
       <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
       <Name>GreenField.ServiceCaller</Name>
@@ -463,6 +462,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ToggleIcon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\LeftArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

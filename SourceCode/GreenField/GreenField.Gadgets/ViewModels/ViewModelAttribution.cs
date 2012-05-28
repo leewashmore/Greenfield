@@ -17,6 +17,7 @@ using GreenField.Common;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.Models;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -266,6 +267,12 @@ namespace GreenField.Gadgets.ViewModels
                                       resultSI.Add(entry);
                                     }
                                  PeriodAttributionInfo = resultSI;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
+                            default:
+                                List<PeriodAttributeData> result10Y = new List<PeriodAttributeData>();
+                                PeriodAttributionInfo = result10Y;
                                  if (null != attributionDataLoadedEvent)
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;

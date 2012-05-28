@@ -19,6 +19,7 @@ using System.Linq;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
+using GreenField.DataContracts;
 
 namespace GreenField.AdministrationModule.ViewModels
 {

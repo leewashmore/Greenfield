@@ -17,6 +17,9 @@ using GreenField.Common.Helper;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.Common
 {
@@ -26,13 +29,15 @@ namespace GreenField.Common
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }
 
-    public class SecurityReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.SecurityReferenceDefinitions.EntitySelectionData> { }
+    public class SecurityReferenceSetEvent : CompositePresentationEvent<EntitySelectionData> { }
 
-    public class PortfolioReferenceSetEvent : CompositePresentationEvent<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.PortfolioSelectionData> { }
+    public class PortfolioReferenceSetEvent : CompositePresentationEvent<PortfolioSelectionData> { }
 
     public class EffectiveDateReferenceSetEvent : CompositePresentationEvent<DateTime> { }
 
     public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
+
+    public class CountrySelectionSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }
 
@@ -69,7 +74,8 @@ namespace GreenField.Common
         public IDBInteractivity DBInteractivity { get; set; }
         public IManageSessions ManageSessions { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
-        public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
+        public DashboardGadgetPayload DashboardGadgetPayload { get; set; }
+        public IRegionManager RegionManager { get; set; }
     }
 
     /// <summary>

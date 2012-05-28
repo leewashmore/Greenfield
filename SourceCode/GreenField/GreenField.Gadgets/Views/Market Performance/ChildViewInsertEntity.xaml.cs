@@ -14,6 +14,7 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
@@ -50,8 +51,9 @@ namespace GreenField.Gadgets.Views
             {
                 if (_groupNames.Contains(InsertedMarketSnapshotPreference.GroupName))
                 {
-                    MessageBox.Show("Group name '" + InsertedMarketSnapshotPreference.GroupName
-                        + "' is already present in this snapshot. Please input a different group name");
+                    this.txtMessage.Text = "*Group name '" + InsertedMarketSnapshotPreference.GroupName
+                        + "' is already present in this snapshot. Please input a different group name";
+                    this.txtMessage.Visibility = System.Windows.Visibility.Visible;
                     return;
                 } 
             }
@@ -66,6 +68,7 @@ namespace GreenField.Gadgets.Views
 
         private void txtGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         }
 

@@ -16,6 +16,7 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

@@ -6,7 +6,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Web.Security;
 using System.ServiceModel.Activation;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;
 using System.Resources;
@@ -556,12 +556,12 @@ namespace GreenField.Web.Services
                 Comment = user.Comment,
                 CreateDate = user.CreationDate,
                 LastActivityDate = user.LastActivityDate,
-                LastLockOutDate = user.LastLockoutDate,
+                LastLockoutDate = user.LastLockoutDate,
                 LastLogInDate = user.LastLoginDate,
                 ProviderUserKey = user.ProviderUserKey.ToString(),
                 ProviderName = user.ProviderName,
                 PasswordQuestion = user.PasswordQuestion,
-                LastPassWordChangedDate = user.LastPasswordChangedDate
+                LastPasswordChangedDate = user.LastPasswordChangedDate
             };
         }
         #endregion

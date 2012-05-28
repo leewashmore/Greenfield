@@ -18,6 +18,7 @@ using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using System.ComponentModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

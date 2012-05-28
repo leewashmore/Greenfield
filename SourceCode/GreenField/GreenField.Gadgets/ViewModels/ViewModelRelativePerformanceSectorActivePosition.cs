@@ -18,6 +18,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -131,17 +132,17 @@ namespace GreenField.Gadgets.ViewModels
         /// Event Handler to subscribed event 'PortfolioReferenceSetEvent'
         /// </summary>
         /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _PortfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);

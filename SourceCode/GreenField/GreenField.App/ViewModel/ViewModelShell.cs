@@ -24,6 +24,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.App.ViewModel
 {
@@ -431,7 +432,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "1M", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "SI" };
+                return new List<String> { "1M", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "SI","10Y" };
             }
         }
 
@@ -482,17 +483,14 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                //if (_countryTypeInfo == null)
-                //{
-                //    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
-                //}
+               
                 return _countryTypeInfo;
 
             }
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.Select(t => t.CountryName).Distinct().ToList();               
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -509,11 +507,43 @@ namespace GreenField.App.ViewModel
             {
                 _countryName = value;
                 RaisePropertyChanged(() => this.CountryName);
+
+            }
+        }
+       
+        private String _countryCode;
+        public String CountryCode
+        {
+            get
+            {
+                return _countryCode;
+
+            }
+            set
+            {
+                _countryCode = value;
+                RaisePropertyChanged(() => this.CountryCode);
+                if (value != null)
+                {
+                    for (int i = 0; i < CountryTypeInfo.Count; i++)
+                    {
+                        if (CountryTypeInfo[i].CountryName == value)
+                        {
+                            SelectorPayload.CountrySelectionData = CountryTypeInfo[i].CountryCode;
+                            _eventAggregator.GetEvent<CountrySelectionSetEvent>().Publish(SelectorPayload.CountrySelectionData);
+
+                        }
+                    }
+                }
+
             }
         }
 
+         
+
+
         /// <summary>
-        /// Stores visibility property of the period selector
+        /// Stores visibility property of the country selector
         /// </summary>
         private Visibility _countrySelectorVisibility = Visibility.Collapsed;
         public Visibility CountrySelectorVisibility
@@ -522,33 +552,10 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countrySelectorVisibility = value;
-                if(value == Visibility.Visible)
-                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
-
-            }
-        }
-
-        /// <summary>
-        /// String that contains the selected filter type
-        /// </summary>
-        private String _selectedCountryType;
-        public String SelectedCountryType
-        {
-            get
-            {
-                return _selectedCountryType;
-            }
-            set
-            {
-                _selectedCountryType = value;
-                RaisePropertyChanged(() => this.SelectedCountryType);
-
-                if (value != null)
-                {
-                    SelectorPayload.PeriodSelectionData = value;
-                    _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Publish(value);
-                }
+                if (value == Visibility.Visible && CountryTypeInfo == null)
+                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+             
             }
         }
 
@@ -584,6 +591,7 @@ namespace GreenField.App.ViewModel
                         FilterSelectionData filterSelData = new FilterSelectionData();
                         filterSelData.Filtertype = value;
                         filterSelData.FilterValues = string.Empty;
+                        SelectedFilterValueInfo = null;
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
@@ -2978,7 +2986,8 @@ namespace GreenField.App.ViewModel
                         DBInteractivity = _dbInteractivity,
                         EventAggregator = _eventAggregator,
                         LoggerFacade = _logger,
-                        DashboardGadgetPayload = SelectorPayload
+                        DashboardGadgetPayload = SelectorPayload,
+                        RegionManager = _regionManager
                     };
             }
             catch (Exception ex)
@@ -3054,7 +3063,28 @@ namespace GreenField.App.ViewModel
 
         private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
         {
-            CountryTypeInfo = result;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    CountryTypeInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
 

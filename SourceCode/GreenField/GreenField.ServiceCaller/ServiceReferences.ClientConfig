@@ -2,62 +2,40 @@
 	<system.serviceModel>
 		<bindings>
 			<basicHttpBinding>
-				<binding name="BasicHttpBinding_SessionOperations" closeTimeout="00:10:00"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+				<binding name="BenchmarkHoldingsOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_LoginOperations" closeTimeout="00:10:00"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+				<binding name="DashboardOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_SecurityReferenceOperations"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+				<binding name="LoggingOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
 					<security mode="None" />
 				</binding>
-				<binding name="BenchmarkHoldingsOperations" closeTimeout="00:10:00"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="DashboardOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="LoggingOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="LoginOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="PerformanceOperations" closeTimeout="00:10:00"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="SecurityReferenceOperations" closeTimeout="00:10:00"
-				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="SessionOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
-				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
+				<binding name="LoginOperations" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
 					<security mode="None" />
 				</binding>
 				<binding name="BasicHttpBinding_ModelFXOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
+					<security mode="None" />
+				</binding>
+				<binding name="PerformanceOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
+					<security mode="None" />
+				</binding>
+				<binding name="SecurityReferenceOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
+					<security mode="None" />
+				</binding>
+				<binding name="SessionOperations" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" sendTimeout="00:10:00" receiveTimeout="00:10:00">
 					<security mode="None" />
 				</binding>
 			</basicHttpBinding>
 		</bindings>
+
 		<client>
 			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsOperations"
@@ -72,6 +50,9 @@
 			<endpoint address="http://localhost:59430/Services/LoginOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="LoginOperations"
 			 contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+			<endpoint address="http://localhost:59430/Services/ModelFXOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ModelFXOperations"
+			 contract="ModelFXDefinitions.ModelFXOperations" name="BasicHttpBinding_ModelFXOperations" />
 			<endpoint address="http://localhost:59430/Services/PerformanceOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
 			 contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
@@ -82,9 +63,6 @@
 			<endpoint address="http://localhost:59430/Services/SessionOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="SessionOperations"
 			 contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
-			<endpoint address="http://localhost:59430/Services/ModelFXOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ModelFXOperations"
-			 contract="ModelFXDefinitions.ModelFXOperations" name="BasicHttpBinding_ModelFXOperations" />
 		</client>
 
 	</system.serviceModel>

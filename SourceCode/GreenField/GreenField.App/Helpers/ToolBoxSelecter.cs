@@ -87,7 +87,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_EM_SUMMARY:
-                    UpdateToolBoxItemVisibility();
+                    UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
@@ -97,7 +97,7 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , filterSelectorVisibility: Visibility.Visible, mktCapSelectorVisibility: Visibility.Visible);
+                        , filterSelectorVisibility: Visibility.Visible, mktCapSelectorVisibility: Visibility.Visible,periodSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible

@@ -13,6 +13,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Common.Helper
 {
@@ -40,6 +41,8 @@ namespace GreenField.Common.Helper
         public MarketSnapshotSelectionData MarketSnapshotSelectionData { get; set; }
 
         public FilterSelectionData FilterSelectionData { get; set; }
+
+        public String CountrySelectionData { get; set; }
 
         public String PeriodSelectionData { get; set; }
 

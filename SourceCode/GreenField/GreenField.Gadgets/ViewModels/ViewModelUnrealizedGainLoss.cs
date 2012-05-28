@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Input;
 using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {

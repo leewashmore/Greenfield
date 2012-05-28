@@ -16,6 +16,7 @@ using GreenField.Common;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -89,12 +90,10 @@ namespace GreenField.Gadgets.ViewModels
         /// Collection binded to the Grid
         /// </summary>
         private List<PerformanceGridData> _performanceGridInfo;
-        public List<PerformanceGridData> PerformanceGridInfo
+        public List<PerformanceGridData> PerformanceInfo
         {
             get
             {
-                if (_performanceGridInfo == null)
-                    _performanceGridInfo = new List<PerformanceGridData>();
                 return _performanceGridInfo;
             }
             set
@@ -102,10 +101,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (_performanceGridInfo != value)
                 {
                     _performanceGridInfo = value;
-                    RaisePropertyChanged(() => this.PerformanceGridInfo);
+                    RaisePropertyChanged(() => this.PerformanceInfo);
                 }
             }
         }
+
+
 
         #endregion
         #endregion
@@ -201,9 +202,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    PerformanceGridInfo = result;
-                    //if (result != null && result.Count > 0)
-                        //PlottedSecurityName = result[0].IssueName.ToString();
+                    PerformanceInfo = result;                  
                         if (null != performanceGridDataLoadedEvent)
                             performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

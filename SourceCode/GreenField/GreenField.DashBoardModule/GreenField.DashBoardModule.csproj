@@ -234,6 +234,10 @@
       <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
       <Name>GreenField.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GreenField.Gadgets\GreenField.Gadgets.csproj">
       <Project>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</Project>
       <Name>GreenField.Gadgets</Name>

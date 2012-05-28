@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.ServiceModel.Activation;
-using GreenField.Web.DataContracts;
+using GreenField.DataContracts;
 using System.Web;
 using GreenField.Web.Helpers;
 using GreenField.Web.Helpers.Service_Faults;

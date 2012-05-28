@@ -12,6 +12,7 @@ using System.Reflection;
 using GreenField.DashboardModule.Helpers;
 using GreenField.Common;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.DataContracts;
 
 namespace GreenField.DashBoardModule.Helpers
 {

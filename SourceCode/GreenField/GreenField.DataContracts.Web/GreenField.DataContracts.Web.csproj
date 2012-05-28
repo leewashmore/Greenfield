@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4C6E427B-F6A3-408F-A50C-0B2C586D65EB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.DataContracts</RootNamespace>
+    <AssemblyName>GreenField.DataContracts.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\AssetAllocationData.cs">
+      <Link>DataContracts\AssetAllocationData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\AttributionData.cs">
+      <Link>DataContracts\AttributionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\BenchmarkReturnData.cs">
+      <Link>DataContracts\BenchmarkReturnData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\BenchmarkSelectionData.cs">
+      <Link>DataContracts\BenchmarkSelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ChartExtensionData.cs">
+      <Link>DataContracts\ChartExtensionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\CountrySelectionData.cs">
+      <Link>DataContracts\CountrySelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\EntitySelectionData.cs">
+      <Link>DataContracts\EntitySelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\Enumerations.cs">
+      <Link>DataContracts\Enumerations.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\FilterSelectionData.cs">
+      <Link>DataContracts\FilterSelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\HeatMapData.cs">
+      <Link>DataContracts\HeatMapData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\HoldingsData.cs">
+      <Link>DataContracts\HoldingsData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\HoldingsPercentageData.cs">
+      <Link>DataContracts\HoldingsPercentageData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\IndexConstituentsData.cs">
+      <Link>DataContracts\IndexConstituentsData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\MacroDatabaseKeyAnnualReportData.cs">
+      <Link>DataContracts\MacroDatabaseKeyAnnualReportData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\MarketCapitalizationData.cs">
+      <Link>DataContracts\MarketCapitalizationData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\MembershipUserInfo.cs">
+      <Link>DataContracts\MembershipUserInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PerformanceData.cs">
+      <Link>DataContracts\PerformanceData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PerformanceGraphData.cs">
+      <Link>DataContracts\PerformanceGraphData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PerformanceGridData.cs">
+      <Link>DataContracts\PerformanceGridData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PeriodSelectionData.cs">
+      <Link>DataContracts\PeriodSelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PortfolioDetailsData.cs">
+      <Link>DataContracts\PortfolioDetailsData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PortfolioRiskReturnData.cs">
+      <Link>DataContracts\PortfolioRiskReturnData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PortfolioSelectionData.cs">
+      <Link>DataContracts\PortfolioSelectionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\PricingReferenceData.cs">
+      <Link>DataContracts\PricingReferenceData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ReferenceData.cs">
+      <Link>DataContracts\ReferenceData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RegionBreakdownData.cs">
+      <Link>DataContracts\RegionBreakdownData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RelativePerformanceActivePositionData.cs">
+      <Link>DataContracts\RelativePerformanceActivePositionData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RelativePerformanceData.cs">
+      <Link>DataContracts\RelativePerformanceData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RelativePerformanceSecurityData.cs">
+      <Link>DataContracts\RelativePerformanceSecurityData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RelativePerformanceUIData.cs">
+      <Link>DataContracts\RelativePerformanceUIData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\SectorBreakdownData.cs">
+      <Link>DataContracts\SectorBreakdownData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\SecurityOverviewData.cs">
+      <Link>DataContracts\SecurityOverviewData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\Session.cs">
+      <Link>DataContracts\Session.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\TopBenchmarkSecuritiesData.cs">
+      <Link>DataContracts\TopBenchmarkSecuritiesData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\TopHoldingsData.cs">
+      <Link>DataContracts\TopHoldingsData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\UnrealizedGainLossData.cs">
+      <Link>DataContracts\UnrealizedGainLossData.cs</Link>
+    </Compile>
+    <Compile Include="DataContracts\FXCommodityData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

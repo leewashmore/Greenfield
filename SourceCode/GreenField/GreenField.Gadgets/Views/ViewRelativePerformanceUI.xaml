@@ -64,7 +64,8 @@
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                  FontFamily="Arial" FontSize="7" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
+                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                 AlternateRowBackground="#d8d5d4">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn  Header="Name" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding EntityName}" Width="*" HeaderTextAlignment="Left" 
