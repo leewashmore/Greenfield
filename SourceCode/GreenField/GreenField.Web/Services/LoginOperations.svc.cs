@@ -556,12 +556,12 @@ namespace GreenField.Web.Services
                 Comment = user.Comment,
                 CreateDate = user.CreationDate,
                 LastActivityDate = user.LastActivityDate,
-                LastLockOutDate = user.LastLockoutDate,
+                LastLockoutDate = user.LastLockoutDate,
                 LastLogInDate = user.LastLoginDate,
                 ProviderUserKey = user.ProviderUserKey.ToString(),
                 ProviderName = user.ProviderName,
                 PasswordQuestion = user.PasswordQuestion,
-                LastPassWordChangedDate = user.LastPasswordChangedDate
+                LastPasswordChangedDate = user.LastPasswordChangedDate
             };
         }
         #endregion

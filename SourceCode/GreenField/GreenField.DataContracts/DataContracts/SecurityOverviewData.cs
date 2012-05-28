@@ -34,7 +34,7 @@ namespace GreenField.DataContracts
         public String Currency { get; set; }
 
         [DataMember]
-        public String FiscalYearEnd { get; set; }
+        public String FiscalYearend { get; set; }
 
         [DataMember]
         public String Website { get; set; }

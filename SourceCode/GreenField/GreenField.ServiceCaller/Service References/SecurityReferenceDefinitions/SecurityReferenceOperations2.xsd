@@ -11,7 +11,7 @@
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FiscalYearEnd" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FiscalYearend" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PrimaryAnalyst" nillable="true" type="xs:string" />

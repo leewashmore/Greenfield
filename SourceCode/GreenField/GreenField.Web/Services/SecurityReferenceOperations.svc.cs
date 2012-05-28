@@ -72,7 +72,7 @@ namespace GreenField.Web.Services
                         SubIndustry = record.GICS_SUB_INDUSTRY_NAME,
                         PrimaryAnalyst = record.ASHMOREEMM_PRIMARY_ANALYST,
                         Currency = record.TRADING_CURRENCY,
-                        FiscalYearEnd = record.FISCAL_YEAR_END,
+                        FiscalYearend = record.FISCAL_YEAR_END,
                         Website = record.WEBSITE,
                         Description = record.BLOOMBERG_DESCRIPTION
                     });
@@ -129,7 +129,7 @@ namespace GreenField.Web.Services
                     SubIndustry = data.GICS_SUB_INDUSTRY_NAME,
                     PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST,
                     Currency = data.TRADING_CURRENCY,
-                    FiscalYearEnd = data.FISCAL_YEAR_END,
+                    FiscalYearend = data.FISCAL_YEAR_END,
                     Website = data.WEBSITE,
                     Description = data.BLOOMBERG_DESCRIPTION
                 };

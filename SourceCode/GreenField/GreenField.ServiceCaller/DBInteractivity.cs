@@ -201,7 +201,7 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        #region Build2 Interaction Methods
+        #region Build2 
 
         public void RetrievePortfolioSelectionData(Action<List<PortfolioSelectionData>> callback)
         {
@@ -234,6 +234,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #region Slice 2
         public void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
@@ -264,38 +265,6 @@ namespace GreenField.ServiceCaller
                         if (callback != null)
                             callback(null);
                     }
-                }
-            };
-        }
-
-        /// <summary>
-        /// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
-        /// <param name="effectiveDate">Effective date as selected by the user</param>
-        /// <param name="filterType">The filter type selected by the user</param>
-        /// <param name="filterValue">The filter value selected by the user</param>
-        /// <param name="callback"></param>  
-        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
-            client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
                 }
             };
         }
@@ -485,6 +454,382 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Method that calls the  RetrieveHoldingsPercentageDataForRegion method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        /// <param name="effectiveDate">Effective date as selected by the user</param>
+        /// <param name="filterType">The filter type selected by the user</param>
+        /// <param name="filterValue">The filter value selected by the user</param>
+        /// <param name="callback"></param>   
+        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
+            client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the  RetrieveHoldingsPercentageData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        /// <param name="effectiveDate">Effective date as selected by the user</param>
+        /// <param name="filterType">The filter type selected by the user</param>
+        /// <param name="filterValue">The filter value selected by the user</param>
+        /// <param name="callback"></param>  
+        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
+            client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+       
+        #endregion
+
+        /// <summary>
+        /// Retrieves filter values for a selected filter type by calling the service
+        /// </summary>
+        /// <param name="filterType">Filter Type selected by the user</param>
+        /// <param name="effectiveDate">Effected Date selected by the user</param>
+        /// <param name="callback">callback method</param>
+        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveFilterSelectionDataAsync(effectiveDate);
+            client.RetrieveFilterSelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+       
+        /// <summary>
+        /// Service caller method to retrieve PortfolioDetails Data
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
+        /// <param name="objSelectedDate">Selected Date</param>
+        /// <param name="callback">collection of Portfolio Details Data</param>
+        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
+            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
+        /// </summary>
+        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkChartReturnData</param>
+        public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
+            client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
+        /// </summary>
+        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkGridReturnData</param>
+        public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
+            client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        #region Interaction Method for Attribution Gadget
+        /// <summary>
+        /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
+        /// <param name="effectiveDate">Contains the selected effective date</param>
+        /// <param name="callback">callback</param>
+        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveAttributionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+        #endregion
+
+        #region Interaction Methods for Benchmark
+        /// <summary>
+        /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+        /// <param name="callback">callback</param>
+        public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">object containing Fund Selection Data</param>
+        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+        /// <param name="callback">callback</param>
+        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
+            client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+              
+        #endregion
+
+        #region Interaction Method for Heat Map
+
+        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
+            client.RetrieveHeatMapDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        #endregion
+
+        #region Slice3
         #region Market Performance Gadget
         /// <summary>
         /// service call method for retrieving list of market performance snapshots for a user
@@ -807,653 +1152,6 @@ namespace GreenField.ServiceCaller
         #endregion
 
         /// <summary>
-        /// Retrieves filter values for a selected filter type by calling the service
-        /// </summary>
-        /// <param name="filterType">Filter Type selected by the user</param>
-        /// <param name="effectiveDate">Effected Date selected by the user</param>
-        /// <param name="callback">callback method</param>
-        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveFilterSelectionDataAsync(effectiveDate);
-            client.RetrieveFilterSelectionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (e.Result != null)
-                    {
-                        callback(e.Result.ToList());
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RetrieveRelativePerformanceData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String period, Action<List<RelativePerformanceData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-
-            client.RetrieveRelativePerformanceDataAsync(portfolioSelectionData, effectiveDate, period);
-            client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, effectiveDate);
-            client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, string sectorID = null)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRelativePerformanceSecurityDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
-            client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #region Build2
-
-        /// <summary>
-        /// Service caller method to retrieve PortfolioDetails Data
-        /// </summary>
-        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
-        /// <param name="objSelectedDate">Selected Date</param>
-        /// <param name="callback">collection of Portfolio Details Data</param>
-        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
-            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
-        /// </summary>
-        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
-        /// <param name="callback">List of BenchmarkChartReturnData</param>
-        public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
-            client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
-        /// </summary>
-        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
-        /// <param name="callback">List of BenchmarkGridReturnData</param>
-        public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
-            client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #endregion
-
-        #region Interaction Method for Performance Graph Gadget
-        /// <summary>
-        /// Method that calls the RetrievePerformanceGraphData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="name">Name of the fund</param>
-        /// <param name="callback"></param>
-        public void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePerformanceGraphDataAsync(name);
-            client.RetrievePerformanceGraphDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #endregion
-
-        #region Interaction Method for Attribution Gadget
-        /// <summary>
-        /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
-        /// <param name="effectiveDate">Contains the selected effective date</param>
-        /// <param name="callback">callback</param>
-        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
-            client.RetrieveAttributionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        #endregion
-
-        #region Interaction Methods for Holdings Pie Chart
-
-        /// <summary>
-        /// Method that calls the  RetrieveHoldingsPercentageDataForRegion method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
-        /// <param name="effectiveDate">Effective date as selected by the user</param>
-        /// <param name="filterType">The filter type selected by the user</param>
-        /// <param name="filterValue">The filter value selected by the user</param>
-        /// <param name="callback"></param>   
-        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
-            client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Method that calls the  RetrieveHoldingsPercentageData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
-        /// <param name="effectiveDate">Effective date as selected by the user</param>
-        /// <param name="filterType">The filter type selected by the user</param>
-        /// <param name="filterValue">The filter value selected by the user</param>
-        /// <param name="callback"></param>  
-        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
-            client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        #endregion
-
-        #region Interaction Method for Performance Grid Gadget
-        /// <summary>
-        /// Method that calls the RetrievePerformanceGridData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="name">Name of the fund</param>
-        /// <param name="callback"></param>
-        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate);
-            client.RetrievePerformanceGridDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        #endregion
-
-        #region Interaction Methods for Benchmark
-        /// <summary>
-        /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
-        /// <param name="effectiveDate">Effective Date selected by the user</param>
-        /// <param name="callback">callback</param>
-        public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
-            client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="fundSelectionData">object containing Fund Selection Data</param>
-        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
-        /// <param name="effectiveDate">Effective Date selected by the user</param>
-        /// <param name="callback">callback</param>
-        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
-            client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        public void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRelativePerformanceCountryActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
-            client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRelativePerformanceSectorActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
-            client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
-            client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #endregion
-
-        #region Interaction Method for Heat Map
-
-        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
-            client.RetrieveHeatMapDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Slice3 Interaction Methods
-
-        /// <summary>
         /// Service Caller Method for Relative Performance UI Data
         /// </summary>
         /// <param name="objSelectedEntity">Data of Selected Entities</param>
@@ -1511,7 +1209,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-
         public void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
@@ -1535,7 +1232,324 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void RetrieveRelativePerformanceData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String period, Action<List<RelativePerformanceData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+
+            client.RetrieveRelativePerformanceDataAsync(portfolioSelectionData, effectiveDate, period);
+            client.RetrieveRelativePerformanceDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRelativePerformanceSectorData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<RelativePerformanceSectorData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceSectorDataAsync(fundSelectionData, effectiveDate);
+            client.RetrieveRelativePerformanceSectorDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceSecurityData>> callback, string countryID = null, string sectorID = null)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceSecurityDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
+            client.RetrieveRelativePerformanceSecurityDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceCountryActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
+            client.RetrieveRelativePerformanceCountryActivePositionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceSectorActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
+            client.RetrieveRelativePerformanceSectorActivePositionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveRelativePerformanceSecurityActivePositionDataAsync(portfolioSelectionData, effectiveDate, period, countryID, sectorID);
+            client.RetrieveRelativePerformanceSecurityActivePositionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        /// <param name="effectiveDate">Effective date as selected by the user</param>
+        /// <param name="filterType">The filter type selected by the user</param>
+        /// <param name="filterValue">The filter value selected by the user</param>
+        /// <param name="callback"></param>  
+        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+            client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the RetrievePerformanceGraphData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="name">Name of the fund</param>
+        /// <param name="callback"></param>
+        public void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePerformanceGraphDataAsync(name);
+            client.RetrievePerformanceGraphDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the RetrievePerformanceGridData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="name">Name of the fund</param>
+        /// <param name="callback"></param>
+        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrievePerformanceGridDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
         #endregion
+
+        #endregion
+
+        #region Slice 4 - FX
+
+        public void RetrieveCommodityData(Action<List<FXCommodityData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveCommodityDataAsync();
+            client.RetrieveCommodityDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
 
         public void RetrieveMacroDatabaseKeyAnnualReportData(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {
@@ -1583,33 +1597,6 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-
-        #region Slice 4 - FX
-
-        public void RetrieveCommodityData(Action<List<FXCommodityData>> callback)
-        {
-            ModelFXOperationsClient client = new ModelFXOperationsClient();
-            client.RetrieveCommodityDataAsync();
-            client.RetrieveCommodityDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-            };
-        }
-
-
 
         #endregion
 

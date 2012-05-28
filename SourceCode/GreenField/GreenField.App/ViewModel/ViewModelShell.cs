@@ -2986,7 +2986,8 @@ namespace GreenField.App.ViewModel
                         DBInteractivity = _dbInteractivity,
                         EventAggregator = _eventAggregator,
                         LoggerFacade = _logger,
-                        DashboardGadgetPayload = SelectorPayload
+                        DashboardGadgetPayload = SelectorPayload,
+                        RegionManager = _regionManager
                     };
             }
             catch (Exception ex)

@@ -137,9 +137,6 @@
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
-    <Compile Include="Helpers\RelativePerformanceTooltip.xaml.cs">
-      <DependentUpon>RelativePerformanceTooltip.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
@@ -288,10 +285,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Helpers\ChildExportOptions.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Helpers\RelativePerformanceTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

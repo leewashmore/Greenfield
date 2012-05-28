@@ -47,15 +47,15 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="DataContextSource"></param>
-        public ViewRelativePerformance(ViewModelRelativePerformance DataContextSource)
+        /// <param name="dataContextSource"></param>
+        public ViewRelativePerformance(ViewModelRelativePerformance dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
-            DataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
-            DataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
-            DataContextSource.RelativePerformanceToggledSectorGridBuildEvent += new RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEvent);
-            this.DataContextRelativePerformance = DataContextSource;
+            this.DataContext = dataContextSource;
+            dataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
+            dataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
+            dataContextSource.RelativePerformanceToggledSectorGridBuildEvent += new RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEvent);
+            this.DataContextRelativePerformance = dataContextSource;
         } 
         #endregion
 
@@ -166,7 +166,7 @@ namespace GreenField.Gadgets.Views
 
                 _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
                 {
-                    CountryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID,
+                    CountryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryId,
                     SectorID = null,
                 });
                 return;
@@ -180,11 +180,11 @@ namespace GreenField.Gadgets.Views
             }
 
             //Catching cells clicked in sector columns
-            string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryID;
+            string countryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryId;
             string sectorID = null;
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
             {
-                sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] as RelativePerformanceCountrySpecificData).SectorID;
+                sectorID = ((e.AddedCells[0].Item as RelativePerformanceData).RelativePerformanceCountrySpecificInfo[e.AddedCells[0].Column.DisplayIndex - 1] as RelativePerformanceCountrySpecificData).SectorId;
             }
 
             _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
@@ -241,7 +241,7 @@ namespace GreenField.Gadgets.Views
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                 {
                     AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
-                    FunctionName = sectorData.SectorID.ToString()
+                    FunctionName = sectorData.SectorId.ToString()
                 };
 
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
@@ -281,7 +281,7 @@ namespace GreenField.Gadgets.Views
                 foreach (string countryName in e.RelativePerformanceCountryNameInfo)
                 {
                     int securityNum = 1;
-                    List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryID == countryName).Select(t => t.SecurityName).ToList();
+                    List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
                     TextBox txtHeader = new TextBox() { Text = countryName, FontWeight = FontWeights.ExtraBold, IsReadOnly = true,
                                                         Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
                                                         Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255))};
@@ -335,7 +335,7 @@ namespace GreenField.Gadgets.Views
                     int columnIndex = (e.Context as GridViewDataColumn).DisplayIndex;
                     if (columnIndex == 0)
                     {
-                        return value.CountryID;
+                        return value.CountryId;
                     }
                     else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)
                     {
@@ -363,13 +363,12 @@ namespace GreenField.Gadgets.Views
 
         #region Helper Methods
 
-
         public int GetMaxRows(RelativePerformanceToggledSectorGridBuildEventArgs e)
         {
             int counter = 0;
             foreach (string countryName in e.RelativePerformanceCountryNameInfo)
             {
-                List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryID == countryName).Select(t => t.SecurityName).ToList();
+                List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
                 if (counter < s1.Count())
                     counter = s1.Count();
             }

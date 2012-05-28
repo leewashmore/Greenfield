@@ -19,6 +19,7 @@ using GreenField.Common;
 using GreenField.DashBoardModule.Helpers;
 using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -29,18 +30,19 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+        private IRegionManager _regionManager;
         #endregion
 
         [ImportingConstructor]
         public ViewDashboardPortfolioSnapshot(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+            IDBInteractivity dbInteractivity,IRegionManager regionManager)
         {
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
-
+            _regionManager = regionManager;
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
         }
@@ -55,7 +57,8 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                RegionManager = _regionManager
             };
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

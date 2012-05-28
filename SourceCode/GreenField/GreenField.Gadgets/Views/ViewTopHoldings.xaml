@@ -26,7 +26,6 @@
                 <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
                 </StackPanel>
             </Grid>
-        <!--Click="btn_DetailsClick"-->
         <Grid Grid.Row="1">
             <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 <!--grid containing data for the gadget-->

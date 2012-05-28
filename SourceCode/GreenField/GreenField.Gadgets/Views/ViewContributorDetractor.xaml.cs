@@ -30,12 +30,12 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Constructor
-        public ViewContributorDetractor(ViewModelContributorDetractor DataContextSource)
+        public ViewContributorDetractor(ViewModelContributorDetractor dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
-            DataContextSource.ContributorDetractorDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceContributorDetractorLoadEvent);
-            this.DataContextContributorDetractor = DataContextSource;
+            this.DataContext = dataContextSource;
+            dataContextSource.ContributorDetractorDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceContributorDetractorLoadEvent);
+            this.DataContextContributorDetractor = dataContextSource;
         } 
         #endregion
 
