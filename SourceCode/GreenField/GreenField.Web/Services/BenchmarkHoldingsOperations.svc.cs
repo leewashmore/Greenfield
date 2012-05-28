@@ -695,10 +695,17 @@ namespace GreenField.Web.Services
 
             try
             {
-
+                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();             
                 if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-                List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                    return result;
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+               
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -905,9 +912,17 @@ namespace GreenField.Web.Services
         {
             try
             {
-                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
                 List<HoldingsPercentageData> result = new List<HoldingsPercentageData>();
+                if (portfolioSelectionData == null || effectiveDate == null || filterType == null || filterValue == null)
+                    return result;
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+              
                 HoldingsPercentageData entry = new HoldingsPercentageData();
                 decimal? sumForBenchmarks = 0;
                 decimal? sumForPortfolios = 0;
@@ -1498,7 +1513,7 @@ namespace GreenField.Web.Services
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
             List<HeatMapData> result = new List<HeatMapData>();
-            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
             if (data == null || data.Count == 0)
                 return result;
             for (int i = 0; i < data.Count; i++)
@@ -1582,9 +1597,17 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
-            if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
             List<PerformanceGridData> result = new List<PerformanceGridData>();
+            if (portfolioSelectionData == null || effectiveDate == null)
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+                throw new Exception();
+
+           
             DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             if (performanceData == null)
                 return result;
@@ -1637,9 +1660,17 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<AttributionData> RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
+             List<AttributionData> result = new List<AttributionData>();
             if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
-            List<AttributionData> result = new List<AttributionData>();
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+
+                throw new Exception();
+          
             List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;
@@ -1721,9 +1752,18 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<PortfolioRiskReturnData> RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
-            if (portfolioSelectionData == null || effectiveDate == null)
-                throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
             List<PortfolioRiskReturnData> result = new List<PortfolioRiskReturnData>();
+            if (portfolioSelectionData == null || effectiveDate == null)
+                return result;
+
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+                throw new Exception();
+
+          
             List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (riskReturnData == null)
                 return result;
@@ -1731,20 +1771,59 @@ namespace GreenField.Web.Services
             {
                 PortfolioRiskReturnData entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Alpha";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_ALPHA).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Beta";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_BETA).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_BETA)).FirstOrDefault();
+
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Information Ratio";
-                entry.BenchMarkValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Benchmark1" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
-                entry.PortfolioValue = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net").Select(t => t.RC_INFORMATION).FirstOrDefault());
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue1 =(riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_INFORMATION)).FirstOrDefault();
                 result.Add(entry);
-                return result;
+                entry = new PortfolioRiskReturnData();
+                entry.DataPointName = "Sharpe Ratio";
+                entry.BenchMarkValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.BenchMarkValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE.StartsWith("Benchmark") && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue1 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "01 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "03 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "05 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "10 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Net" && t.YEAR == "Since Incep").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                result.Add(entry);
+                return result;               
+
             }
             catch (Exception ex)
             {
@@ -2117,9 +2196,6 @@ namespace GreenField.Web.Services
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
-
-
-
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, null, null);
 
@@ -2170,8 +2246,8 @@ namespace GreenField.Web.Services
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = aggPortfolioShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100;
-                            aggBenchmarkShare = aggBenchmarkShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100;
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period)) * 100;
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period)) * 100;
                             aggAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period);
 
                         }
@@ -2203,8 +2279,6 @@ namespace GreenField.Web.Services
                             AggregateCountryActivePosition = aggcsPortfolioShare - aggcsBenchmarkShare,
                         });
                     }
-
-
                 }
 
                 return result;

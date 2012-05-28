@@ -142,13 +142,14 @@
     </Compile>
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
+    <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
-    <Compile Include="Models\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
+    <Compile Include="ViewModels\PortfolioPeriodData.cs" />
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />

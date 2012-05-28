@@ -23,7 +23,7 @@
             <TextBlock Grid.Row="0" Text="Portfolio Risk Return" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Height="40"/>
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <telerik:RadGridView Grid.Row="1" Name="dgPortfolioRiskReturn"  AutoGenerateColumns="False" 
-                                     ItemsSource="{Binding PortfolioRiskReturnInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
+                                     ItemsSource="{Binding PortfolioRiskReturnPeriodInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
                                      CanUserSortColumns="True" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
@@ -51,7 +51,7 @@
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="dgBenchMarkValue" 
                                                  Header="BenchMark" 
-                                                 DataMemberBinding="{Binding BenchMarkValue}" 
+                                                 DataMemberBinding="{Binding BenchmarkValue}" 
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                  Width="*"   
                                                  HeaderTextAlignment="Left"

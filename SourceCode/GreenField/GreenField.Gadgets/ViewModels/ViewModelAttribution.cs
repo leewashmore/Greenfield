@@ -270,6 +270,12 @@ namespace GreenField.Gadgets.ViewModels
                                  if (null != attributionDataLoadedEvent)
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
+                            default:
+                                List<PeriodAttributeData> result10Y = new List<PeriodAttributeData>();
+                                PeriodAttributionInfo = result10Y;
+                                 if (null != attributionDataLoadedEvent)
+                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
                         }
 
                     }

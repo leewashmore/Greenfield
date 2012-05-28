@@ -757,7 +757,7 @@ namespace GreenField.ServiceCaller
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
         public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
-            , List<MarketSnapshotPreference> snapshotPreference, Action<MarketSnapshotSelectionData> callback)
+            , List<MarketSnapshotPreference> snapshotPreference, Action<PopulatedMarketPerformanceSnapshotData> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, snapshotPreference);

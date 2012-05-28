@@ -83,7 +83,7 @@ namespace GreenField.Gadgets.Views
                 return;
 
             _macroInfo = e.MacroInfo;
-            this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).FiveYearMacroCountryData;
+            this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).FiveYearMacroCountryData;                      
             this.dgMacroDBKeyReport.GroupDescriptors.Clear();
             this.dgMacroDBKeyReport.SortDescriptors.Clear();
             _currentYear = ((ViewModelMacroDBKeyAnnualReport)this.DataContext).CurrentYear;
@@ -97,7 +97,13 @@ namespace GreenField.Gadgets.Views
                 sdescriptor.Member = "SORT_ORDER";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
+
+                
+                                
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+
+                
+
 
                 dgMacroDBKeyReport.Columns[2].Header = _currentYear.ToString();
                 dgMacroDBKeyReport.Columns[3].Header = (_currentYear + 1).ToString();

@@ -639,7 +639,9 @@ namespace GreenField.Web.Services
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId);
+                int? affectedRows = entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId).FirstOrDefault();
+                if (affectedRows == null || affectedRows == 0)
+                    return false;
                 return true;
             }
 
@@ -723,11 +725,14 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public MarketSnapshotSelectionData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
+        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
+                PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
+                
+
                 Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
                 if (snapshotID == null)
                     return null;
@@ -752,10 +757,16 @@ namespace GreenField.Web.Services
                         preference.EntityType, preference.EntityOrder);
                 }
 
-                MarketSnapshotSelectionData result = (entity.GetMarketSnapshotSelectionData(userName))
+                MarketSnapshotSelectionData marketSnapshotSelectionData = (entity.GetMarketSnapshotSelectionData(userName))
                     .ToList<MarketSnapshotSelectionData>()
                     .Where(record => record.SnapshotName == snapshotName)
                     .FirstOrDefault();
+
+                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(userName, snapshotName);
+                List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
+                
+                result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
+                result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData;
                 return result;
             }
 
