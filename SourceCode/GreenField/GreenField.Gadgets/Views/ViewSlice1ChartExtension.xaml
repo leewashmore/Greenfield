@@ -30,10 +30,51 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
-                             telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left" Grid.Row="1">
+        <telerik:RadExpander Grid.Column="0" Grid.Row="1" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
+                             telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left" >
             <telerik:RadExpander.Header>
-                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                    <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
+                    <!--Export Controls-->
+                    <Button Height="15" Width="15" Grid.Column="2"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click" >
+                        <Image Source="../Images/ExportExcel.png" />
+                    </Button>
+                    <Button Height="15" Width="15" Grid.Column="3"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="btnFlip"
+                        Margin="5,0,0,0" Click="btnFlip_Click">
+                        <Image Source="../Images/flipIcon.jpg" />
+                    </Button>
+                    <Button Height="15" Width="15" Grid.Column="4"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="btnPrint"
+                        Margin="5,0,0,0" >
+                        <Image Source="../Images/Print.png" />
+                    </Button>
+                    <!--Zoom Controls-->
+                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="15" Width="15" HorizontalAlignment="Center" 
+                               Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In" >
+                        <Image Source="../Images/zoom_in.png"  />
+                    </telerik:RadButton>
+
+                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="15" Width="15" HorizontalAlignment="Center" 
+                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
+                        <Image Source="../Images/zoom_out.png"  />
+                    </telerik:RadButton>
+                </Grid>
             </telerik:RadExpander.Header>
             <telerik:RadExpander.Content>
                 <Grid >
@@ -52,54 +93,8 @@
         
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
             <TextBlock Text="Chart Extension" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
-        </Grid>
-
-        <!--Export Controls-->
-        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Height="15" Width="15" Grid.Column="1"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click" >
-                <Image Source="../Images/ExportExcel.png" />
-            </Button>
-            <Button Height="15" Width="15" Grid.Column="2"
-                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnFlip"
-                        Margin="5,0,0,0" Click="btnFlip_Click">
-                <Image Source="../Images/flipIcon.jpg" />
-            </Button>
-            <Button Height="15" Width="15" Grid.Column="3"
-                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
-                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
-                        Margin="5,0,0,0" >
-                <Image Source="../Images/Print.png" />
-            </Button>
-        </Grid>
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <telerik:RadButton x:Name="btnZoomIn" Grid.Column="0"  Height="15" Width="15" HorizontalAlignment="Right" 
-                               Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In" >
-                <Image Source="../Images/zoom_in.png"  />
-            </telerik:RadButton>
-
-            <telerik:RadButton x:Name="btnZoomOut" Grid.Column="1"  Height="15" Width="15" HorizontalAlignment="Right" 
-                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
-                <Image Source="../Images/zoom_out.png"  />
-            </telerik:RadButton>
-
-        </Grid>
-
+        </Grid>     
+        
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
@@ -111,7 +106,7 @@
                                          CanUserSortColumns="True" ScrollMode="Deferred" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
-                                         AlternateRowBackground="Wheat"
+                                         AlternateRowBackground="#d8d5d4"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#9F1D21"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
@@ -123,23 +118,31 @@
                                          AlternationCount="2">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Country}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding ToDate, StringFormat=d}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Price" DataMemberBinding="{Binding Price, StringFormat=c}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding PriceReturn}" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Amount Traded" DataMemberBinding="{Binding AmountTraded}" 
-                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Sector Return" DataMemberBinding="{Binding SectorReturn}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Country Return" DataMemberBinding="{Binding CountryReturn }" 
-                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Sector" 
-                                                        DataMemberBinding="{Binding Sector}"
+                                                        DataMemberBinding="{Binding Sector}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         </telerik:RadGridView.Columns>
 
@@ -152,7 +155,7 @@
                         VerticalAlignment="Stretch" Name="border1">
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
-                        <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" 
+                        <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
                                           ItemsSource="{Binding ChartExtensionData, Mode=TwoWay}" IsHitTestVisible="True" >
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>

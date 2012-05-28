@@ -80,13 +80,16 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
+                if (macroCountryData == null)
+                    macroCountryData = new List<MacroDatabaseKeyAnnualReportData>();
                 return macroCountryData;
             }
             set
             {
                 macroCountryData = value;
-                //today =  System.DateTime.Now.Year;               
-                AddDataToFiveYearModels(CurrentYear);
+                //today =  System.DateTime.Now.Year;  
+                if (macroCountryData != null)
+                    AddDataToFiveYearModels(CurrentYear);
                 RaisePropertyChanged(() => this.MacroCountryData);
 
 
@@ -123,7 +126,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                
+
                 return fiveYearMacroCountryData;
             }
             set
@@ -136,23 +139,39 @@ namespace GreenField.Gadgets.ViewModels
         private int _currentYear = System.DateTime.Now.Year;
         public int CurrentYear
         {
-            get 
-            
+            get
             {
                 return _currentYear;
             }
 
-            set 
+            set
             {
                 _currentYear = value;
-                AddDataToFiveYearModels(value);
+                if (macroCountryData != null)
+                    AddDataToFiveYearModels(value);
                 RetrieveMacroDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = MacroCountryData });
                 RaisePropertyChanged(() => this.CurrentYear);
             }
         }
 
         #region ICommand
-        
+
+        public ICommand LeftNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveLeftCommandMethod);
+            }
+        }
+
+        public ICommand RightNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveRightCommandMethod);
+            }
+        }
+
 
         public ICommand MoveRightCommand
         {
@@ -167,12 +186,12 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        private void MoveRightCommandMethod(object param)
+        public void MoveRightCommandMethod(object param)
         {
             CurrentYear = CurrentYear + 1;
         }
 
-        private void MoveLeftCommandMethod(object param)
+        public void MoveLeftCommandMethod(object param)
         {
             CurrentYear = CurrentYear - 1;
         }
@@ -200,7 +219,7 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroDataCompletedEvent;    
+        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroDataCompletedEvent;
 
 
         public void HandleCountryReferenceSetEvent(String CountryData)
@@ -217,8 +236,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_countryCode != null)
                     {
-                        if(null != macroDBKeyAnnualReportCountryDataLoadedEvent)
-                         macroDBKeyAnnualReportCountryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        if (null != macroDBKeyAnnualReportCountryDataLoadedEvent)
+                            macroDBKeyAnnualReportCountryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportData(_countryCode, RetrieveMacroEconomicDataCallbackMethod);
                     }
                 }
@@ -237,13 +256,13 @@ namespace GreenField.Gadgets.ViewModels
 
         public static T GetProperty<T>(MacroDatabaseKeyAnnualReportData m, string propertyName)
         {
-            var theProperty = m.GetType().GetProperty(propertyName);            
+            var theProperty = m.GetType().GetProperty(propertyName);
             if (theProperty == null)
-                throw new ArgumentException("object does not have an " + propertyName + " property", "m"); 
-            if (theProperty.PropertyType.FullName != typeof(T).FullName)             
+                throw new ArgumentException("object does not have an " + propertyName + " property", "m");
+            if (theProperty.PropertyType.FullName != typeof(T).FullName)
                 throw new ArgumentException("object has an Id property, but it is not of type " + typeof(T).FullName, "m");
-            return (T)theProperty.GetValue(m, null); 
-        } 
+            return (T)theProperty.GetValue(m, null);
+        }
 
     }
 }

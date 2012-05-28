@@ -134,7 +134,7 @@
                                  SelectionMode ="Single" SelectionUnit="FullRow" 
                                  CanUserInsertRows="False" AlternationCount="2"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" 
-                                 ScrollMode="RealTime" AlternateRowBackground="Wheat"
+                                 ScrollMode="RealTime" AlternateRowBackground="#d8d5d4"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" 

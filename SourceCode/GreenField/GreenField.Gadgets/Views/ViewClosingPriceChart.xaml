@@ -427,7 +427,7 @@
                                          CanUserSortColumns="True" ScrollMode="Deferred" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7"
-                                         AlternateRowBackground="Wheat" GroupPanelBackground="#9F1D21"
+                                         AlternateRowBackground="#d8d5d4" GroupPanelBackground="#9F1D21"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ColumnWidth="*" FontFamily="Arial"

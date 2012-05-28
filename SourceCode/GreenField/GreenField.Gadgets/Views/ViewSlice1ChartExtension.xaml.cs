@@ -67,6 +67,9 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartExtensionDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ChartExtensionDataLoadedEvent);
             dataContextSource.ChartArea = this.chChartExtension.DefaultView.ChartArea;
             this.chChartExtension.DataBound += dataContextSource.ChartDataBound;
+            this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            
         }
 
         #endregion

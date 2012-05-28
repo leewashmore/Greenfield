@@ -21,23 +21,23 @@
         <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderThickness="0.25" BorderBrush="Gray">
                 <telerik:RadTileView x:Name="rtvDashboard"
-                                 Background="White"
-                                 ColumnsCount="2"  
+                                     Background="White"
+                                     ColumnsCount="2"  
                                      RowHeight="400"
-                                 MinimizedItemsPosition="Right" 
-                                 IsDockingEnabled="False"
-                                 IsVirtualizing="True"
-                                 IsItemDraggingEnabled="True"
-                                 ScrollBarVisibility="Visible" 
-                                 MinimizedRowHeight="200"
-                                 MinimizedColumnWidth="200"
-                                 IsItemsAnimationEnabled="True"
-                                 ReorderingDuration="0:0:0.5"
-                                 PreservePositionWhenMaximized="True"
-                                 IsAutoScrollingEnabled="True" 
-                                 HorizontalAlignment="Left"
-                                 VerticalAlignment="Top"                                 
-                                 ColumnWidth="*" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                     MinimizedItemsPosition="Right" 
+                                     IsDockingEnabled="False"
+                                     IsVirtualizing="True"
+                                     IsItemDraggingEnabled="True"
+                                     ScrollBarVisibility="Visible" 
+                                     MinimizedRowHeight="200"
+                                     MinimizedColumnWidth="200"
+                                     IsItemsAnimationEnabled="True"
+                                     ReorderingDuration="0:0:0.5"
+                                     PreservePositionWhenMaximized="True"
+                                     IsAutoScrollingEnabled="True" 
+                                     HorizontalAlignment="Left" telerik:TileViewPanel.IsRowsShrinkEnabled="True" telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
+                                     VerticalAlignment="Top"                                 
+                                     ColumnWidth="*" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>

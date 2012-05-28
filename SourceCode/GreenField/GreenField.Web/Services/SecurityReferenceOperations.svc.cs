@@ -98,7 +98,17 @@ namespace GreenField.Web.Services
         {
             try
             {
+                if (entitySelectionData == null)
+                    return new SecurityOverviewData();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
@@ -134,15 +144,15 @@ namespace GreenField.Web.Services
             }
         }
 
-       /// <summary>
+        /// <summary>
         /// Retrieving the Pricing Reference Data for selected Entity for the gadget ClosingPriceChart.
-       /// </summary>
-       /// <param name="entityIdentifiers">Selected Security/Commodity/Index</param>
-       /// <param name="startDateTime">start time for the chart</param>
-       /// <param name="endDateTime">end time for the chart</param>
-       /// <param name="totalReturnCheck">Check to include TotalPriceReturn or TotalGrossReturn</param>
-       /// <param name="frequencyDuration">Frequency Duration </param>
-       /// <returns>List of Pricing Reference Data</returns>
+        /// </summary>
+        /// <param name="entityIdentifiers">Selected Security/Commodity/Index</param>
+        /// <param name="startDateTime">start time for the chart</param>
+        /// <param name="endDateTime">end time for the chart</param>
+        /// <param name="totalReturnCheck">Check to include TotalPriceReturn or TotalGrossReturn</param>
+        /// <param name="frequencyDuration">Frequency Duration </param>
+        /// <returns>List of Pricing Reference Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<PricingReferenceData> RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyDuration)
@@ -164,7 +174,7 @@ namespace GreenField.Web.Services
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
                 DateTime endDate = Convert.ToDateTime(endDateTime);
-                
+
                 //List Containing the names of Securities/Commodities/Indexes to be added
                 List<string> entityNames = (from p in entityIdentifiers
                                             select p.InstrumentID).ToList();
@@ -419,11 +429,11 @@ namespace GreenField.Web.Services
                         {
 
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
-                            ShortName = record.SHORT_NAME == null ? "{Unspecified}" : ( record.SHORT_NAME.Trim().Equals(String.Empty) ? "{Unspecified}" : record.SHORT_NAME ),
+                            ShortName = record.SHORT_NAME == null ? "{Unspecified}" : (record.SHORT_NAME.Trim().Equals(String.Empty) ? "{Unspecified}" : record.SHORT_NAME),
                             LongName = record.LONG_NAME,
                             InstrumentID = record.INSTRUMENT_ID,
                             Type = record.TYPE,
-                            SecurityType = record.SECURITY_TYPE == null ? "{Unspecified}" : ( record.SECURITY_TYPE.Trim().Equals(String.Empty) ? "{Unspecified}" : record.SECURITY_TYPE )
+                            SecurityType = record.SECURITY_TYPE == null ? "{Unspecified}" : (record.SECURITY_TYPE.Trim().Equals(String.Empty) ? "{Unspecified}" : record.SECURITY_TYPE)
                         });
                     }
                 }

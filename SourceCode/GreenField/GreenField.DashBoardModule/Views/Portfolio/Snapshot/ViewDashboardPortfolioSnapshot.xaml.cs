@@ -67,7 +67,7 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                RestoredHeight = 50,
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUE_GROWTH, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = null
             });
@@ -81,7 +81,7 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                RestoredHeight = 50,
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = null
             });

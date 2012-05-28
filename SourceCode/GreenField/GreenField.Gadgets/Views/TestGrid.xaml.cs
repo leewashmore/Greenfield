@@ -9,18 +9,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.App.ViewModel;
 
-namespace GreenField.App.Helpers
+namespace GreenField.Gadgets.Views
 {
-    public partial class ToolBox : UserControl
+    public partial class TestGrid : UserControl
     {
-        public ToolBox()
-        {            
+        public TestGrid()
+        {
             InitializeComponent();
         }
 
-        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

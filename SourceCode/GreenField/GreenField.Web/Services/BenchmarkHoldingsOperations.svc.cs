@@ -20,6 +20,7 @@ using System.Data.Objects;
 namespace GreenField.Web.Services
 {
     [ServiceContract]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class BenchmarkHoldingsOperations
     {
@@ -58,7 +59,7 @@ namespace GreenField.Web.Services
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception();
+                    throw new Exception("Services are not available");
 
                 List<PortfolioSelectionData> result = new List<PortfolioSelectionData>();
 
@@ -584,7 +585,7 @@ namespace GreenField.Web.Services
                 //throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-        
+
         /// <summary>
         /// Method to Retreive Asset Allocation Data
         /// </summary>
@@ -1227,7 +1228,7 @@ namespace GreenField.Web.Services
 
 
             //Applying filters
-            if (filterType != null )//&& filterValue != null)
+            if (filterType != null)//&& filterValue != null)
             {
                 switch (filterType)
                 {
@@ -1314,7 +1315,7 @@ namespace GreenField.Web.Services
                 return null;
 
             //Applying filters
-            if (filterType != null )//&& filterValue != null)
+            if (filterType != null)//&& filterValue != null)
             {
                 switch (filterType)
                 {
@@ -2075,7 +2076,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_DAILY_ATTRIBUTION>s1 =  data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
+                List<GF_PERF_DAILY_ATTRIBUTION> s1 = data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
 
                 List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
                 if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
@@ -2495,7 +2496,7 @@ namespace GreenField.Web.Services
 
         #region Performance Services
 
-        
+
 
         #endregion
 
