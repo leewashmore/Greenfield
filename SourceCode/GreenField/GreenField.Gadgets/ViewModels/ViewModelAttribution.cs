@@ -130,14 +130,14 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> result = new List<PeriodAttributeData>();                                    
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_1M;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_1M;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_1M;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_1M;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_1M;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_1M;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt1m;
+                                    entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt1m;
+                                    entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn1m;
+                                    entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn1m;
+                                    entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc1m;
+                                    entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec1m;
                                       result.Add(entry);
                                     }
                                 PeriodAttributionInfo = result;
@@ -148,14 +148,14 @@ namespace GreenField.Gadgets.ViewModels
                                  List<PeriodAttributeData> result3M = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_3M;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_3M;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_3M;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_3M;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_3M;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_3M;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt3m;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt3m;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn3m;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn3m;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc3m;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec3m;
                                       result3M.Add(entry);
                                     }
                                 PeriodAttributionInfo = result3M;
@@ -166,14 +166,14 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> result6M = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_6M;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_6M;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_6M;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_6M;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_6M;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_6M;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt6m;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt6m;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn6m;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn6m;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc6m;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec6m;
                                       result6M.Add(entry);
                                     }
                                   PeriodAttributionInfo = result6M;
@@ -184,14 +184,14 @@ namespace GreenField.Gadgets.ViewModels
                                  List<PeriodAttributeData> resultYTD = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_YTD;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_YTD;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_YTD;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_YTD;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_YTD;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_YTD;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgtYtd;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtnYtd;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtnYtd;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAllocYtd;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelecYtd;
                                       resultYTD.Add(entry);
                                     }
                                  PeriodAttributionInfo = resultYTD;
@@ -202,14 +202,14 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> result1Y = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_1Y;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_1Y;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_1Y;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_1Y;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_1Y;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_1Y;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt1y;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt1y;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn1y;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn1y;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc1y;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec1y;
                                       result1Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result1Y;
@@ -220,14 +220,14 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> result3Y = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_3Y;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_3Y;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_3Y;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_3Y;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_3Y;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_3Y;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt3y;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt3y;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn3y;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn3y;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc3y;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec3y;
                                       result3Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result3Y;
@@ -238,14 +238,14 @@ namespace GreenField.Gadgets.ViewModels
                                   List<PeriodAttributeData> result5Y = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_5Y;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_5Y;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_5Y;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_5Y;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_5Y;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_5Y;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].PorRcAvgWgt5y;
+                                    entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgt5y;
+                                    entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtn5y;
+                                    entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtn5y;
+                                    entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAlloc5y;
+                                    entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelec5y;
                                       result5Y.Add(entry);
                                     }
                                  PeriodAttributionInfo = result5Y;
@@ -256,14 +256,14 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> resultSI = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
-                                      entry.COUNTRY= AttributionDataInfo[i].COUNTRY;
-                                      entry.COUNTRY_NAME = AttributionDataInfo[i].COUNTRY_NAME;
-                                      entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].BM1_RC_AVG_WGT_SI;
-                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].POR_RC_AVG_WGT_SI;
-                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].F_POR_ASH_RC_CTN_SI;
-                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].F_BM1_ASH_RC_CTN_SI;
-                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].F_BM1_ASH_ASSET_ALLOC_SI;
-                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].F_BM1_ASH_SEC_SELEC_SI;
+                                    entry.COUNTRY = AttributionDataInfo[i].Country;
+                                    entry.COUNTRY_NAME = AttributionDataInfo[i].CountryName;
+                                    entry.BENCHMARK_WEIGHT = AttributionDataInfo[i].Bm1RcAvgWgtSi;
+                                      entry.PORTFOLIO_WEIGHT = AttributionDataInfo[i].PorRcAvgWgtSi;
+                                      entry.PORTFOLIO_RETURN = AttributionDataInfo[i].FPorAshRcCtnSi;
+                                      entry.BENCHMARK_RETURN = AttributionDataInfo[i].FBm1AshRcCtnSi;
+                                      entry.ASSET_ALLOCATION = AttributionDataInfo[i].FBm1AshAssetAllocSi;
+                                      entry.STOCK_SELECTION_TOTAL = AttributionDataInfo[i].FBm1AshSecSelecSi;
                                       resultSI.Add(entry);
                                     }
                                  PeriodAttributionInfo = resultSI;

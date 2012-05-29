@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -231,9 +232,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>
