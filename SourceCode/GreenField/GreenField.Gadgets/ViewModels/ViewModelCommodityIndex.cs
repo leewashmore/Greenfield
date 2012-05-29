@@ -21,7 +21,7 @@ using GreenField.DataContracts;
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelCommodityIndex : NotificationObject
-    { 
+    {
         #region Fields
 
         /// <summary>
@@ -38,9 +38,13 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private ILoggerFacade _logger;
         /// <summary>
-        /// Private member object of CommodityResult for Commodity
+        /// Private member object of FXCommodityData for Commodity
         /// </summary>
         private List<FXCommodityData> _commodityData;
+        /// <summary>
+        /// Private member stores selected commodity ID
+        /// </summary>
+        private String _commodityID;
 
         #endregion
         #region Constructor
@@ -52,8 +56,12 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;            
-            _dbInteractivity.RetrieveCommodityData(RetrieveCommodityDataCallbackMethod);
+            _logger = param.LoggerFacade;
+            _commodityID = param.DashboardGadgetPayload.CommoditySelectedVal;
+            if (_eventAggregator != null)
+                _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Subscribe(HandleCommodityReferenceSet);
+            if(_commodityID != null)
+                _dbInteractivity.RetrieveCommoditySelectionData(RetrieveCommodityDataCallbackMethod);
         }
         #endregion
 
@@ -64,7 +72,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<FXCommodityData> CommodityData
         {
             get
-            {                            
+            {
                 return _commodityData;
             }
             set
@@ -80,6 +88,40 @@ namespace GreenField.Gadgets.ViewModels
         /// event to handle data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler CommodityDataLoadEvent;
+
+        #region EventHandler
+        public void HandleCommodityReferenceSet(String commodityID)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (commodityID != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, commodityID, 1);
+                    _commodityID = commodityID;
+
+                    if (_commodityID != null)
+                    {
+                        if (CommodityDataLoadEvent != null)
+                            CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
 
         #endregion
         #region Callback Method
@@ -106,7 +148,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -116,6 +158,5 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
-
     }
 }
