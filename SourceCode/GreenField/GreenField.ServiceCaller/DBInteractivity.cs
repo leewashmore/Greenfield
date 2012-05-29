@@ -1586,10 +1586,33 @@ namespace GreenField.ServiceCaller
 
         #region Slice 4 - FX
 
-        public void RetrieveCommodityData(Action<List<FXCommodityData>> callback)
+        public void RetrieveCommoditySelectionData(Action<List<FXCommodityData>> callback)
+        {
+             ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveCommoditySelectionDataAsync();
+            client.RetrieveCommoditySelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+            };
+        }
+        
+        public void RetrieveCommodityData(string commodityID, Action<List<FXCommodityData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
-            client.RetrieveCommodityDataAsync();
+            client.RetrieveCommodityDataAsync(commodityID);
             client.RetrieveCommodityDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1608,8 +1631,6 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
-
-
 
         #endregion
 
