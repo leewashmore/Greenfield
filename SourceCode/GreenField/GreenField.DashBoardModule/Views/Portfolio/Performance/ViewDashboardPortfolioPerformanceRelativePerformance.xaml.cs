@@ -61,34 +61,34 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_RELATIVE_PERFORMANCE, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 400,
+                
                 Content = new ViewRelativePerformance(new ViewModelRelativePerformance(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_COUNTRY_ACTIVE_POSITION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewRelativePerformanceCountryActivePosition(new ViewModelRelativePerformanceCountryActivePosition(param))
             });
                         
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_SECURITY_ACTIVE_POSITION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewRelativePerformanceSectorActivePosition(new ViewModelRelativePerformanceSectorActivePosition(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewRelativePerformanceSecurityActivePosition(new ViewModelRelativePerformanceSecurityActivePosition(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_CONTRIBUTOR_DETRACTOR, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewContributorDetractor(new ViewModelContributorDetractor(param))
             });

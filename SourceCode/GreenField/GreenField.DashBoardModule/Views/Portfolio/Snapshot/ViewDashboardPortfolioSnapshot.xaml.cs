@@ -64,27 +64,27 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 400,
+                
                 Content = new ViewTopHoldings(new ViewModelTopHoldings(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUE_GROWTH, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_REGION_BREAKDOWN, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewRegionBreakdown(new ViewModelRegionBreakdown(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = null
             });
@@ -92,27 +92,27 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_SECTOR_BREAKDOWN, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 400,
+                 
                 Content = new ViewSectorBreakdown(new ViewModelSectorBreakdown(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_RISK_RETURN, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewPortfolioRiskReturns(new ViewModelPortfolioRiskReturns(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_ASSET_ALLOCATION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewAssetAllocation(new ViewModelAssetAllocation(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 Content = new ViewMarketCapitalization(new ViewModelMarketCapitalization(param))
             });

@@ -219,7 +219,7 @@ namespace GreenField.Gadgets.ViewModels
                 GetPeriod();
                 if (SelectedEntities != null && SelectedStartDate != null)
                 {
-                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY"))
+                    if ((SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY")) || (SelectedEntities.ContainsKey("SECURITY")))
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         if (null != ChartExtensionDataLoadedEvent)

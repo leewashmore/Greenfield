@@ -29,11 +29,11 @@
             <TextBlock Foreground="White" FontFamily="Arial" FontSize="7"  FontWeight="Bold" Height="15" />
         </Border>
         <Border x:Name="PortfolioBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="1">
-            <TextBlock Text="Portfolio" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
+            <TextBlock Text="Portfolio" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
         </Border>
         <Border x:Name="BenchmarkBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="2">
-            <TextBlock  Text="Benchmark" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
+            <TextBlock  Text="Benchmark" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center"
                     Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
         </Border>
             <!--Weighted Average-->

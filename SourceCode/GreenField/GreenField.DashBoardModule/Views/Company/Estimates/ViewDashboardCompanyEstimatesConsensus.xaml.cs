@@ -60,35 +60,35 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_RECOMMENDATION,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 50,
+                 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_VALUATIONS,
                 Content = null
             });

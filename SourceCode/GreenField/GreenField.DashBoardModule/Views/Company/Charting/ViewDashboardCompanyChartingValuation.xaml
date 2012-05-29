@@ -23,7 +23,7 @@
                 <telerik:RadTileView x:Name="rtvDashboard"
                                      Background="White"
                                      ColumnsCount="2"  
-                                     RowHeight="400"
+                                     RowHeight="Auto"
                                      MinimizedItemsPosition="Right" 
                                      IsDockingEnabled="False"
                                      IsVirtualizing="True"

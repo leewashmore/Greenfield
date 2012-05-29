@@ -23,7 +23,7 @@
                 <telerik:RadTileView x:Name="rtvDashboard"
                                      Background="White"
                                      ColumnsCount="1"  
-                                     RowHeight="400"
+                                     RowHeight="Auto"
                                      MinimizedItemsPosition="Right" 
                                      IsDockingEnabled="False"
                                      IsVirtualizing="True"
@@ -37,7 +37,8 @@
                                      IsAutoScrollingEnabled="True" 
                                      HorizontalAlignment="Left"
                                      VerticalAlignment="Top"       
-                                     telerik:TileViewPanel.IsRowsShrinkEnabled="True" telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
+                                     telerik:TileViewPanel.IsRowsShrinkEnabled="True" 
+                                     telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
                                      ColumnWidth="*" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 </telerik:RadTileView>
             </Border>

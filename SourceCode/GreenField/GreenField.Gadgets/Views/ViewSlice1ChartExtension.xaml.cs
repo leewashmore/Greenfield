@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Controls;
 using GreenField.Common;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
@@ -67,9 +68,7 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartExtensionDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ChartExtensionDataLoadedEvent);
             dataContextSource.ChartArea = this.chChartExtension.DefaultView.ChartArea;
             this.chChartExtension.DataBound += dataContextSource.ChartDataBound;
-            this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            
+            this.ApplyChartStyles();
         }
 
         #endregion
@@ -176,5 +175,177 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Helpers
+
+        private void ApplyChartStyles()
+        {
+            this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
+            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.5;
+            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0;
+        }
+
+        #endregion
+
+        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string timeInterval = Convert.ToString(cmbTime.SelectedValue);
+            switch (timeInterval)
+            {
+                case ("1-Month"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 5;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 1;
+
+                        break;
+                    }
+                case ("2-Months"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 7;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 1;
+
+                        break;
+                    }
+                case ("3-Months"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 1;
+
+                        break;
+                    }
+                case ("6-Months"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 6;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 1;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.5;
+
+                        break;
+                    }
+                case ("YTD"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 1;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.5;
+
+                        break;
+                    }
+                case ("1-Year"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 10;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.5;
+                        break;
+                    }
+                case ("2-Years"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 20;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.25;
+
+                        break;
+                    }
+                case ("3-Years"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 30;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.2;
+
+                        break;
+                    }
+                case ("4-Years"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        // this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 40;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.2;
+
+                        break;
+                    }
+                case ("5-Years"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 50;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.2;
+
+                        break;
+                    }
+                case ("10-Years"):
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
+                        //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 100;
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
+                        this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0.1;
+
+                        break;
+                    }
+                default:
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
+                        this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
+                        break;
+                    }
+            }
+        }
+
+        private void chChartExtension_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
+        {
+            if (this.DataContext as ViewModelSlice1ChartExtension != null)
+            {
+                if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData != null)
+                {
+                    int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData.Count;
+                    if (dataCount != 0)
+                    {
+                        this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
+                    }
+                }
+            }
+        }
     }
 }
