@@ -24,7 +24,8 @@ namespace GreenField.App.Helpers
         INDUSTRY_SELECTOR,
         REGION_SELECTOR,
         FILTER_SELECTOR,
-        MKT_CAP_SELECTOR
+        MKT_CAP_SELECTOR,
+        COMMODITY_SELECTOR
     }
 
     public static class ToolBoxItemVisibility
@@ -40,6 +41,7 @@ namespace GreenField.App.Helpers
         public static Visibility REGION_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility FILTER_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility MKT_CAP_VISIBILITY = Visibility.Collapsed;
+        public static Visibility COMMODITY_SELECTOR_VISIBILTY = Visibility.Collapsed;
     }
 
     public static class ToolBoxSelecter
@@ -57,6 +59,7 @@ namespace GreenField.App.Helpers
                 Visibility regionSelectorVisibility = Visibility.Collapsed,
                 Visibility filterSelectorVisibility = Visibility.Collapsed,
                 Visibility mktCapSelectorVisibility = Visibility.Collapsed,
+                Visibility commoditySelectorVisibility = Visibility.Collapsed,
                 bool allVisible = false
             )
         {
@@ -71,6 +74,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : regionSelectorVisibility;
             ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : filterSelectorVisibility;
             ToolBoxItemVisibility.MKT_CAP_VISIBILITY = allVisible ? Visibility.Visible : mktCapSelectorVisibility;
+            ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY = allVisible ? Visibility.Visible : commoditySelectorVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -93,7 +97,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_COMMODITIES_SUMMARY:
-                    UpdateToolBoxItemVisibility();
+                    UpdateToolBoxItemVisibility(commoditySelectorVisibility:Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
@@ -236,7 +240,7 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.MKT_CAP:
                     UpdateToolBoxItemVisibility();
-                    break;
+                    break;                
                 default:
                     break;
             }
