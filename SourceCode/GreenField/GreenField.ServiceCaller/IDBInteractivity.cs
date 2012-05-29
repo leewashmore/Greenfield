@@ -166,7 +166,9 @@ namespace GreenField.ServiceCaller
 
         #region Slice 4 - FX
 
-        void RetrieveCommodityData(Action<List<FXCommodityData>> callback);
+        void RetrieveCommoditySelectionData(Action<List<FXCommodityData>> callback);
+
+        void RetrieveCommodityData(String commodityID, Action<List<FXCommodityData>> callback);
 
         #endregion
 
