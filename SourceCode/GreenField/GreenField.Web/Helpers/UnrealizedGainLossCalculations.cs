@@ -165,41 +165,41 @@ public static class UnrealizedGainLossCalculations
     /// <summary>
     /// Method that calculates the Cost for a selected security
     /// </summary>
-    /// <param name="ninetyDayWtResult">Contains the Calculated Ninety Day Average Weight of the security</param>
+    /// <param name="ninetyDayWTResult">Contains the Calculated Ninety Day Average Weight of the security</param>
     /// <param name="noOfRows">No. of records</param>
     /// <returns>ninetyDayWtResult</returns>
-    public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWtResult)
+    public static List<UnrealizedGainLossData> CalculateCost(List<UnrealizedGainLossData> ninetyDayWTResult)
     {
-        if (ninetyDayWtResult == null)
+        if (ninetyDayWTResult == null)
             throw new ArgumentNullException();
 
-        if (ninetyDayWtResult.Count.Equals(0))
+        if (ninetyDayWTResult.Count.Equals(0))
             return new List<UnrealizedGainLossData>();
 
-        if (ninetyDayWtResult.Count < 90)
+        if (ninetyDayWTResult.Count < 90)
             throw new InvalidOperationException("Service returned incomplete data. Operation could not be completed");
 
-        decimal? lastRecordNinetyDayWtAvg = ninetyDayWtResult[89].NinetyDayWtAvg;
+        decimal? lastRecordNinetyDayWtAvg = ninetyDayWTResult[89].NinetyDayWtAvg;
 
         if (lastRecordNinetyDayWtAvg == null || lastRecordNinetyDayWtAvg == 0)
             throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
 
         for (int i = 0; i < 90; i++)
         {
-            ninetyDayWtResult[i].Cost = (ninetyDayWtResult[i].AdjustedPrice * ninetyDayWtResult[i].Volume) / ninetyDayWtResult[89].NinetyDayWtAvg;
+            ninetyDayWTResult[i].Cost = (ninetyDayWTResult[i].AdjustedPrice * ninetyDayWTResult[i].Volume) / ninetyDayWTResult[89].NinetyDayWtAvg;
         }
 
-        for (int i = 90; i < ninetyDayWtResult.Count; i++)
+        for (int i = 90; i < ninetyDayWTResult.Count; i++)
         {
-            decimal? recordNinetyDayWtAvg = ninetyDayWtResult[i].NinetyDayWtAvg;
+            decimal? recordNinetyDayWtAvg = ninetyDayWTResult[i].NinetyDayWtAvg;
 
             if (recordNinetyDayWtAvg == null || recordNinetyDayWtAvg == 0)
                 throw new InvalidOperationException("Service returned invalid data. Operation could not be completed");
 
-            ninetyDayWtResult[i].Cost = (ninetyDayWtResult[i].AdjustedPrice * ninetyDayWtResult[i].Volume) / ninetyDayWtResult[i].NinetyDayWtAvg;
+            ninetyDayWTResult[i].Cost = (ninetyDayWTResult[i].AdjustedPrice * ninetyDayWTResult[i].Volume) / ninetyDayWTResult[i].NinetyDayWtAvg;
         }
 
-        return ninetyDayWtResult;
+        return ninetyDayWTResult;
     }
 
     /// <summary>

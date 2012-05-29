@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
             {
-                _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallBackMethod);
+                _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -66,7 +66,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickevent);
+                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }           
         } 
         #endregion
@@ -142,21 +142,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event Handler to subscribed event 'FundReferenceSetEvent'
         /// </summary>
-        /// <param name="PortfolioSelectionData">PortfolioSelectionData</param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _PortfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallBackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallbackMethod);
                         if (ContributorDetractorDataLoadEvent != null)
                             ContributorDetractorDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -190,7 +190,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallBackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallbackMethod);
                         if (ContributorDetractorDataLoadEvent != null)
                             ContributorDetractorDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -224,7 +224,7 @@ namespace GreenField.Gadgets.ViewModels
                     Period = period;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallBackMethod);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallbackMethod);
                         if (ContributorDetractorDataLoadEvent != null)
                             ContributorDetractorDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -246,7 +246,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
         /// </summary>
         /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
-        public void HandleRelativePerformanceGridClickevent(RelativePerformanceGridCellData relativePerformanceGridCellData)
+        public void HandleRelativePerformanceGridClickEvent(RelativePerformanceGridCellData relativePerformanceGridCellData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -257,7 +257,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, relativePerformanceGridCellData, 1);
                     if (EffectiveDate != null && _PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallBackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
                         if (ContributorDetractorDataLoadEvent != null)
                             ContributorDetractorDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -283,7 +283,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method for RetrieveRelativePerformanceSecurityData Service call
         /// </summary>
         /// <param name="result">RelativePerformanceSecurityData Collection</param>
-        public void RetrieveRelativePerformanceSecurityDataCallBackMethod(List<RelativePerformanceSecurityData> result)
+        public void RetrieveRelativePerformanceSecurityDataCallbackMethod(List<RelativePerformanceSecurityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -318,7 +318,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
-            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickevent);
+            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickEvent);
         }
         #endregion
 

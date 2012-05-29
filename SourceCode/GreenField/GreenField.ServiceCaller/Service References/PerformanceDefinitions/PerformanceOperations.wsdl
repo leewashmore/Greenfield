@@ -150,6 +150,60 @@
   <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q17:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q20:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="PerformanceOperations">
     <wsdl:operation name="RetrieveRelativePerformanceUIData">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIData" message="tns:PerformanceOperations_RetrieveRelativePerformanceUIData_InputMessage" />
@@ -228,6 +282,36 @@
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSectorData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorData" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceData" message="tns:PerformanceOperations_RetrieveRelativePerformanceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceCountryActivePositionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceCountryActivePositionData" message="tns:PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceCountryActivePositionDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceCountryActivePositionDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSectorActivePositionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorActivePositionData" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorActivePositionDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorActivePositionDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityActivePositionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityActivePositionData" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityActivePositionDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityActivePositionDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityData" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityDataResponse" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveRelativePerformanceSecurityData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PerformanceOperations" type="tns:PerformanceOperations">
@@ -408,6 +492,78 @@
     </wsdl:operation>
     <wsdl:operation name="RemoveMarketSnapshotPreference">
       <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSectorData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceCountryActivePositionData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceCountryActivePositionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSectorActivePositionData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSectorActivePositionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityActivePositionData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityActivePositionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRelativePerformanceSecurityData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceSecurityData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -44,7 +44,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member stores selected commodity ID
         /// </summary>
-        private String _commodityID;
+        private string _commodityID;
 
         #endregion
         #region Constructor
@@ -90,7 +90,7 @@ namespace GreenField.Gadgets.ViewModels
         public event DataRetrievalProgressIndicatorEventHandler CommodityDataLoadEvent;
 
         #region EventHandler
-        public void HandleCommodityReferenceSet(String commodityID)
+        public void HandleCommodityReferenceSet(string commodityID)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

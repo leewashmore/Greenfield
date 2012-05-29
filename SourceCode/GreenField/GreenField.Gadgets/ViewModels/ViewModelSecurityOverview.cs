@@ -196,17 +196,17 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// FiscalYearEnd Property
+        /// FiscalYearend Property
         /// </summary>
         private string _fiscalYearEnd;
-        public string FiscalYearEnd
+        public string FiscalYearend
         {
             get { return _fiscalYearEnd; }
             set
             {
                 if (_fiscalYearEnd != value)
                     _fiscalYearEnd = value;
-                RaisePropertyChanged(() => this.FiscalYearEnd);
+                RaisePropertyChanged(() => this.FiscalYearend);
             }
         }
 
@@ -305,7 +305,7 @@ namespace GreenField.Gadgets.ViewModels
                     this.SubIndustry = securityOverviewData.SubIndustry;
                     this.PrimaryAnalyst = securityOverviewData.PrimaryAnalyst;
                     this.Currency = securityOverviewData.Currency;
-                    this.FiscalYearEnd = securityOverviewData.FiscalYearEnd;
+                    this.FiscalYearend = securityOverviewData.FiscalYearend;
                     this.Website = securityOverviewData.Website;
                     this.Description = securityOverviewData.Description;
                 }

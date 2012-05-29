@@ -10,33 +10,27 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
-        <!--GridViewRowStyle-->
-        <helpers:GridRowColorSelector x:Key="GridRowMarkerStyle">
-            <helpers:GridRowColorSelector.PositionHeld>
-                <Style TargetType="telerik:GridViewRow">
-                    <Setter Property="Background" Value="Black"/>
-                </Style>
-            </helpers:GridRowColorSelector.PositionHeld>
-            <helpers:GridRowColorSelector.PositionNotHeld>
-                <Style TargetType="telerik:GridViewRow">
-                    <Setter Property="Background" Value="Red"/>
-                </Style>
-            </helpers:GridRowColorSelector.PositionNotHeld>
-        </helpers:GridRowColorSelector>
-        
-        <!--GridViewHeaderRowStyle-->
-            <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
-                <Setter Property="Height" Value="12"/>
-                <Setter Property="Background" Value="#9F1D21"/>
-                <Setter Property="MaxHeight" Value="12"/>
-            </Style>
-            <!--GridViewHeaderCellStyle-->
-            <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCell">
-                <Setter Property="Background" Value="#9F1D21" />
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="Height" Value="12"/>
-                <Setter Property="HorizontalContentAlignment" Value="Right"/>
-            </Style>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <!--GridViewRowStyle-->
+                    <helpers:GridRowColorSelector x:Key="GridRowMarkerStyle">
+                        <helpers:GridRowColorSelector.PositionHeld>
+                            <Style TargetType="telerik:GridViewRow">
+                                <Setter Property="Background" Value="Black"/>
+                            </Style>
+                        </helpers:GridRowColorSelector.PositionHeld>
+                        <helpers:GridRowColorSelector.PositionNotHeld>
+                            <Style TargetType="telerik:GridViewRow">
+                                <Setter Property="Background" Value="Red"/>
+                            </Style>
+                        </helpers:GridRowColorSelector.PositionNotHeld>
+                    </helpers:GridRowColorSelector>                   
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
     
     <Grid x:Name="LayoutRoot" Background="White">
@@ -59,10 +53,14 @@
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      RowStyleSelector="{StaticResource GridRowMarkerStyle}" RowHeight="15" Foreground="White">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryID}" Width="Auto" TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                        <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto" TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                        <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha}" Width="*" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                        <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                        <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryID}" Width="Auto" 
+                                                    TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto" TextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha}" Width="*" TextAlignment="Right" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto" TextAlignment="Right" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>

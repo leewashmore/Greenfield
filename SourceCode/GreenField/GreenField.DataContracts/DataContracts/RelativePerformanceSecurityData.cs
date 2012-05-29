@@ -13,7 +13,7 @@ namespace GreenField.DataContracts
         public string SecurityName { get; set; }
 
         [DataMember]
-        public string SecurityCountryID { get; set; }
+        public string SecurityCountryId { get; set; }
 
         [DataMember]
         public string SecuritySectorName { get; set; }

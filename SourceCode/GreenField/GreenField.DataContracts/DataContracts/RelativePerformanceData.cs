@@ -10,7 +10,7 @@ namespace GreenField.DataContracts
     public class RelativePerformanceData
     {
         [DataMember]
-        public string CountryID { get; set; }
+        public string CountryId { get; set; }
 
         [DataMember]
         public List<RelativePerformanceCountrySpecificData> RelativePerformanceCountrySpecificInfo { get; set; }
@@ -32,7 +32,7 @@ namespace GreenField.DataContracts
     public class RelativePerformanceCountrySpecificData
     {
         [DataMember]
-        public string SectorID { get; set; }
+        public string SectorId { get; set; }
 
         [DataMember]
         public string SectorName { get; set; }
@@ -54,7 +54,7 @@ namespace GreenField.DataContracts
     public class RelativePerformanceSectorData : IEquatable<RelativePerformanceSectorData>
     {
         [DataMember]
-        public string SectorID { get; set; }
+        public string SectorId { get; set; }
 
         [DataMember]
         public string SectorName { get; set; }
@@ -63,14 +63,14 @@ namespace GreenField.DataContracts
         {
             if (Object.ReferenceEquals(other, null)) return false;
             if (Object.ReferenceEquals(this, other)) return true;
-            return SectorID.Equals(other.SectorID) && SectorName.Equals(other.SectorName);
+            return SectorId.Equals(other.SectorId) && SectorName.Equals(other.SectorName);
         }
 
         public override int GetHashCode()
         {
 
             //Get hash code for the Name field if it is not null.
-            int hashProductName = SectorID.GetHashCode();
+            int hashProductName = SectorId.GetHashCode();
 
             //Get hash code for the Code field.
             int hashProductCode = SectorName.GetHashCode();

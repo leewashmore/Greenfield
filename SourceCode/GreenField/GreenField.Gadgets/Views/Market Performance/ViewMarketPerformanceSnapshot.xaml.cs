@@ -173,7 +173,7 @@ namespace GreenField.Gadgets.Views
             #endregion
         
             this.radGridSnapshot.Rebind();
-            //_dataContextSource.abc();
+            _dataContextSource.abc();
 
         }
 

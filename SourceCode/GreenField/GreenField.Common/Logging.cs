@@ -89,6 +89,21 @@ namespace GreenField.Common
                 logger.Log("User : [(" + userName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
             }
         }
+
+        public static void LogMethodParameterFalse(ILoggerFacade logger, object methodName, int index, string userName = "")
+        {
+            if (userName == "")
+            {
+                if (logger != null && SessionManager.SESSION != null)
+                {
+                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(False)]", Category.Debug, Priority.None);
+                }
+            }
+            else
+            {
+                logger.Log("User : [(" + userName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(False)]", Category.Debug, Priority.None);
+            }
+        }
         #endregion
 
         #region Exceptions

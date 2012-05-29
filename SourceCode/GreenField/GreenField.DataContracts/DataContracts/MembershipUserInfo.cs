@@ -34,7 +34,7 @@ namespace GreenField.DataContracts
         public DateTime LastActivityDate { get; set; }
 
         [DataMemberAttribute(Name = "LastLockOutDate", IsRequired = false)]
-        public DateTime LastLockOutDate { get; set; }
+        public DateTime LastLockoutDate { get; set; }
 
         [DataMemberAttribute(Name = "LastLogInDate", IsRequired = false)]
         public DateTime LastLogInDate { get; set; }
@@ -49,7 +49,7 @@ namespace GreenField.DataContracts
         public string PasswordQuestion { get; set; }
 
         [DataMemberAttribute(Name = "LastPassWordChangedDate", IsRequired = false)]
-        public DateTime LastPassWordChangedDate { get; set; }
+        public DateTime LastPasswordChangedDate { get; set; }
 
 
     }

@@ -9,22 +9,19 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewTopContributor : ViewBaseUserControl
+    public partial class TestGrid : UserControl
     {
-        public ViewTopContributor(ViewModelTopContributor DataContextSource)
+        public TestGrid()
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;
         }
 
-        public override void Dispose()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

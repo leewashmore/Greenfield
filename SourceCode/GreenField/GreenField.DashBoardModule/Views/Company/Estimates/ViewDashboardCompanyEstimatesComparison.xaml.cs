@@ -60,14 +60,14 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                RestoredHeight = 50,
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_COMPARISON_CHART,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                RestoredHeight = 400,
+                RestoredHeight = 50,
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_ESTIMATES_SUMMARY,
                 Content = null
             });

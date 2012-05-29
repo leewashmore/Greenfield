@@ -36,8 +36,9 @@
                                      PreservePositionWhenMaximized="True"
                                      IsAutoScrollingEnabled="True" 
                                      HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"                                 
- HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                                     VerticalAlignment="Top"      
+                                     telerik:TileViewPanel.IsRowsShrinkEnabled="True" telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
+                                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
                                      ColumnWidth="*">
                 </telerik:RadTileView>
             </Border>

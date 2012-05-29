@@ -19,6 +19,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.Collections.Generic;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
+using Microsoft.Practices.Prism.Regions;
 
 namespace GreenField.Common
 {
@@ -58,7 +59,7 @@ namespace GreenField.Common
 
     public class ExCashSecuritySetEvent : CompositePresentationEvent<bool> { }
 
-    public class CommoditySelectionSetEvent : CompositePresentationEvent<String> { }
+    public class CommoditySelectionSetEvent : CompositePresentationEvent<string> { }
 
     public class DashboardTileViewItemInfo
     {
@@ -75,7 +76,8 @@ namespace GreenField.Common
         public IDBInteractivity DBInteractivity { get; set; }
         public IManageSessions ManageSessions { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
-        public DashboardGadgetPayload DashboardGadgetPayload { get; set; }        
+        public DashboardGadgetPayload DashboardGadgetPayload { get; set; }
+        public IRegionManager RegionManager { get; set; }
     }
 
     /// <summary>

@@ -26,6 +26,7 @@
         <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
             <Setter Property="Height" Value="12"/>
             <Setter Property="HorizontalContentAlignment" Value="Right"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
         </Style>
 
         <!--GridViewHeaderRowStyle-->
@@ -119,14 +120,15 @@
                                          ColumnWidth="*"
                                          FontFamily="Arial"
                                          FontSize="7"
-                                         AlternateRowBackground="Wheat"
+                                         AlternateRowBackground="#d8d5d4"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#9F1D21"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True">
+                                         EnableColumnVirtualization="True"
+                                         AlternationCount="2">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCell}" 

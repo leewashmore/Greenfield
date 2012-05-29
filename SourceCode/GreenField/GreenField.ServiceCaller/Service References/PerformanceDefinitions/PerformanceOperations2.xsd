@@ -21,4 +21,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
+  <xs:complexType name="PopulatedMarketPerformanceSnapshotData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MarketPerformanceSnapshotInfo" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MarketSnapshotSelectionInfo" nillable="true" type="q2:MarketSnapshotSelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PopulatedMarketPerformanceSnapshotData" nillable="true" type="tns:PopulatedMarketPerformanceSnapshotData" />
 </xs:schema>

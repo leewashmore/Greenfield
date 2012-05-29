@@ -639,7 +639,9 @@ namespace GreenField.Web.Services
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId);
+                int? affectedRows = entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId).FirstOrDefault();
+                if (affectedRows == null || affectedRows == 0)
+                    return false;
                 return true;
             }
 
@@ -723,11 +725,14 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public MarketSnapshotSelectionData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
+        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
+                PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
+                
+
                 Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
                 if (snapshotID == null)
                     return null;
@@ -752,10 +757,16 @@ namespace GreenField.Web.Services
                         preference.EntityType, preference.EntityOrder);
                 }
 
-                MarketSnapshotSelectionData result = (entity.GetMarketSnapshotSelectionData(userName))
+                MarketSnapshotSelectionData marketSnapshotSelectionData = (entity.GetMarketSnapshotSelectionData(userName))
                     .ToList<MarketSnapshotSelectionData>()
                     .Where(record => record.SnapshotName == snapshotName)
                     .FirstOrDefault();
+
+                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(userName, snapshotName);
+                List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
+                
+                result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
+                result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData;
                 return result;
             }
 
@@ -786,6 +797,755 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+        #endregion
+
+        #region Relative Performance Gadgets
+        /// <summary>
+        /// Retrieves list of sector information for a particular composite/fund and effective date.
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <returns>List of RelativePerformanceSectorData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceSectorData> RetrieveRelativePerformanceSectorData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
+
+                List<GF_PERF_DAILY_ATTRIBUTION> data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t =>
+                                                                                        t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                                        t.NODE_NAME == "Security ID" &&
+                                                                                        t.POR_RC_MARKET_VALUE != 0 &&
+                                                                                        t.COUNTRY != null &&
+                                                                                        t.GICS_LVL1 != null).ToList();
+                foreach (GF_PERF_DAILY_ATTRIBUTION record in data)
+                {
+                    result.Add(new RelativePerformanceSectorData()
+                    {
+                        SectorId = record.GICS_LVL1,
+                        SectorName = record.GICS_LVL1
+                    });
+                }
+                result = result.Distinct().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieves relative performance data for a particular composite/fund, effective date and period.
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="period">Period</param>
+        /// <returns>List of RelativePerformanceData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceData> RetrieveRelativePerformanceData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null || period == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GF_PERF_DAILY_ATTRIBUTION> dailyData = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, null, null);
+
+                if (dailyData == null)
+                    return null;
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+
+                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                {
+                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, null, null);
+                    if (monthlyData == null)
+                        return null;
+                }
+
+                List<string> countryCodes = new List<string>();
+                foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
+                {
+                    countryCodes.Add(record.COUNTRY);
+                }
+                countryCodes = countryCodes.Distinct().ToList();
+
+                List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
+                foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
+                {
+                    sectors.Add(new RelativePerformanceSectorData()
+                    {
+                        SectorId = record.GICS_LVL1,
+                        SectorName = record.GICS_LVL1
+                    });
+                }
+                sectors = sectors.Distinct().ToList();
+
+
+                List<RelativePerformanceData> result = new List<RelativePerformanceData>();
+                foreach (string countryCode in countryCodes)
+                {
+                    decimal? aggcsAlpha = 0;
+                    decimal? aggcsPortfolioShare = 0;
+                    decimal? aggcsBenchmarkShare = 0;
+                    List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
+                    foreach (RelativePerformanceSectorData sectorData in sectors)
+                    {
+                        decimal? aggAlpha = 0;
+                        decimal? aggPortfolioShare = 0;
+                        decimal? aggBenchmarkShare = 0;
+                        List<GF_PERF_DAILY_ATTRIBUTION> specificData = dailyData.Where(t => t.COUNTRY == countryCode && t.GICS_LVL1 == sectorData.SectorName).ToList();
+
+                        foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
+                        {
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period)) * 100;
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period)) * 100;
+                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period);
+
+                        }
+
+                        sectorSpecificData.Add(new RelativePerformanceCountrySpecificData()
+                        {
+                            SectorId = sectorData.SectorId,
+                            SectorName = sectorData.SectorName,
+                            Alpha = aggAlpha,
+                            PortfolioShare = aggPortfolioShare,
+                            BenchmarkShare = aggBenchmarkShare,
+                            ActivePosition = Convert.ToDecimal(aggPortfolioShare - aggBenchmarkShare),
+                        });
+
+                        aggcsAlpha = aggcsAlpha + aggAlpha;
+                        aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
+                        aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
+                    }
+
+                    if (sectorSpecificData.Count > 0)
+                    {
+                        result.Add(new RelativePerformanceData()
+                        {
+                            CountryId = countryCode,
+                            RelativePerformanceCountrySpecificInfo = sectorSpecificData,
+                            AggregateCountryAlpha = aggcsAlpha,
+                            AggregateCountryPortfolioShare = aggcsPortfolioShare,
+                            AggregateCountryBenchmarkShare = aggcsBenchmarkShare,
+                            AggregateCountryActivePosition = aggcsPortfolioShare - aggcsBenchmarkShare,
+                        });
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        ///  Retrieves Country Level Active Position Data for a particular composite/fund, effective date and period.
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="period">Period</param>
+        /// <param name="countryID">(optional) COUNTRY; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceCountryActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, string countryID = null, string sectorID = null)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null || period == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                {
+                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                    if (monthlyData == null)
+                        return null;
+                }
+
+                List<string> countryCodes = new List<string>();
+                foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
+                {
+                    countryCodes.Add(row.COUNTRY);
+                }
+                countryCodes = countryCodes.Distinct().ToList();
+
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (string countryCode in countryCodes)
+                {
+                    if (countryID != null)
+                    {
+                        if (!countryCode.Equals(countryID.ToString()))
+                        {
+                            continue;
+                        }
+                    }
+
+                    RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                    decimal? MarketValue = 0;
+                    decimal? FundWeight = 0;
+                    decimal? BenchmarkWeight = 0;
+
+                    record.Entity = countryCode.ToString();
+                    List<GF_PERF_DAILY_ATTRIBUTION> countrySpecificData = data.Where(row => row.COUNTRY == countryCode).ToList();
+
+                    foreach (GF_PERF_DAILY_ATTRIBUTION row in countrySpecificData)
+                    {
+                        MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                    }
+
+                    record.MarketValue = MarketValue;
+                    record.FundWeight = FundWeight;
+                    record.BenchmarkWeight = BenchmarkWeight;
+                    record.ActivePosition = Convert.ToDecimal(FundWeight - BenchmarkWeight);
+
+                    result.Add(record);
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        ///  Retrieves Sector Level Active Position Data for a particular composite/fund, effective date and period.
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="period">Period</param>
+        /// <param name="countryID">(optional) COUNTRY; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSectorActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, string countryID = null, string sectorID = null)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null || period == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                {
+                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                    if (monthlyData == null)
+                        return null;
+                }
+                List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
+                foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
+                {
+                    sectorCodes.Add(new RelativePerformanceSectorData()
+                    {
+                        SectorId = row.GICS_LVL1,
+                        SectorName = row.GICS_LVL1
+                    });
+                }
+                sectorCodes = sectorCodes.Distinct().ToList();
+
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (RelativePerformanceSectorData sector in sectorCodes)
+                {
+                    if (sectorID != null)
+                    {
+                        if (!sector.SectorId.Equals(sectorID))
+                        {
+                            continue;
+                        }
+                    }
+
+                    RelativePerformanceActivePositionData record = new RelativePerformanceActivePositionData();
+                    decimal? MarketValue = 0;
+                    decimal? FundWeight = 0;
+                    decimal? BenchmarkWeight = 0;
+
+                    record.Entity = sector.SectorName.ToString();
+
+                    List<GF_PERF_DAILY_ATTRIBUTION> sectorSpecificData = data.Where(row => row.GICS_LVL1 == sector.SectorId).ToList();
+
+                    foreach (GF_PERF_DAILY_ATTRIBUTION row in sectorSpecificData)
+                    {
+                        MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                    }
+
+                    record.MarketValue = MarketValue;
+                    record.FundWeight = FundWeight;
+                    record.BenchmarkWeight = BenchmarkWeight;
+                    record.ActivePosition = Convert.ToDecimal(FundWeight - BenchmarkWeight);
+
+                    result.Add(record);
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        ///  Retrieves Security Level Active Position Data for a particular composite/fund, effective date and period.
+        /// </summary>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="period">Period</param>
+        /// <param name="countryID">(optional) COUNTRY; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <returns>List of RelativePerformanceActivePositionData objects</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceActivePositionData> RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, string countryID = null, string sectorID = null)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null || period == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                {
+                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                    if (monthlyData == null)
+                        return null;
+                }
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
+                foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
+                {
+                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
+                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                    decimal? activePosition = Convert.ToDecimal(fundWeight - benchmarkWeight);
+
+                    result.Add(new RelativePerformanceActivePositionData()
+                    {
+                        Entity = row.SEC_NAME,
+                        MarketValue = row.POR_RC_MARKET_VALUE,
+                        FundWeight = fundWeight,
+                        BenchmarkWeight = benchmarkWeight,
+                        ActivePosition = activePosition
+                    });
+                }
+
+                return result.OrderByDescending(t => t.ActivePosition).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
+        /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
+        /// </summary>
+        /// <param name="fundSelectionData">PortfolioSelectionData object</param>
+        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
+        /// <param name="effectiveDate">Effective date</param>
+        /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
+        /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
+        /// <param name="order">(optional)1 for Ascending - data ordering - By default descending</param>
+        /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
+        /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RelativePerformanceSecurityData> RetrieveRelativePerformanceSecurityData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string period, string countryID = null, string sectorID = null)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null || period == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+
+                //checking if the service is down
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                List<GF_PERF_DAILY_ATTRIBUTION> s1 = data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
+
+                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                {
+                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+
+                    if (monthlyData == null)
+                        return null;
+                }
+                List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
+                foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
+                {
+                    result.Add(new RelativePerformanceSecurityData()
+                    {
+                        SecurityName = row.SEC_NAME,
+                        SecurityCountryId = row.COUNTRY,
+                        SecuritySectorName = row.GICS_LVL1,
+                        SecurityMarketValue = row.POR_RC_MARKET_VALUE,
+                        SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period)
+                    });
+                }
+                return result.OrderByDescending(e => e.SecurityAlpha).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+       
+        #region Relative Performance Helper Methods
+        /// <summary>
+        /// retrieving data from GF_PERF_DAILY_ATTRIBUTION view for relative performance gadgets
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="country"></param>
+        /// <param name="sector"></param>
+        /// <returns>GF_PERF_DAILY_ATTRIBUTION Collection</returns>
+        private List<GF_PERF_DAILY_ATTRIBUTION> RetrieveRelativePerformanceDailyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
+        {
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+            List<GF_PERF_DAILY_ATTRIBUTION> dailyData = new List<GF_PERF_DAILY_ATTRIBUTION>();
+            if (country == null && sector == null)
+            {
+                dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY != null &&
+                                                                   t.GICS_LVL1 != null).ToList();
+            }
+
+            else if (country == null && sector != null)
+            {
+                dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                    t.NODE_NAME == "Security ID" &&
+                                                                    t.POR_RC_MARKET_VALUE != 0 &&
+                                                                    t.COUNTRY != null &&
+                                                                    t.GICS_LVL1 == sector).ToList();
+            }
+
+            else if (sector == null && country != null)
+            {
+                dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY == country &&
+                                                                   t.GICS_LVL1 != null).ToList();
+            }
+
+            else if (sector != null && country != null)
+            {
+                dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY == country &&
+                                                                   t.GICS_LVL1 == sector).ToList();
+            }
+            return dailyData;
+        }
+
+        /// <summary>
+        /// retrieving data from GF_PERF_MONTHLY_ATTRIBUTION view for relative performance gadgets
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="country"></param>
+        /// <param name="sector"></param>
+        /// <returns>GF_PERF_MONTHLY_ATTRIBUTION Collection</returns>
+        private List<GF_PERF_MONTHLY_ATTRIBUTION> RetrieveRelativePerformanceMonthlyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
+        {
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+            List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+            if (country == null && sector == null)
+            {
+                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY != null &&
+                                                                   t.GICS_LVL1 != null).ToList();
+            }
+
+            else if (country == null && sector != null)
+            {
+                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                    t.NODE_NAME == "Security ID" &&
+                                                                    t.POR_RC_MARKET_VALUE != 0 &&
+                                                                    t.COUNTRY != null &&
+                                                                    t.GICS_LVL1 == sector).ToList();
+            }
+
+            else if (sector == null && country != null)
+            {
+                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY == country &&
+                                                                   t.GICS_LVL1 != null).ToList();
+            }
+
+            else if (sector != null && country != null)
+            {
+                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY == country &&
+                                                                   t.GICS_LVL1 == sector).ToList();
+            }
+            return monthlyData;
+        }
+
+        /// <summary>
+        /// retrieving alpha values based on period selected for relative performance gadget
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="monthlydata"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        private decimal? RetrieveRelativePerformanceAlphaValue(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        {
+            decimal? alpha = 0;
+            decimal? fundReturn = 0;
+            decimal? benchmarkReturn = 0;
+            switch (period)
+            {
+                case "1M":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_1M).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_1M).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                case "3M":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3M).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3M).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                case "6M":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_6M).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_6M).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                case "YTD":
+                    alpha = row.F_POR_ASH_RC_CTN_YTD - row.F_BM1_ASH_RC_CTN_YTD;
+                    break;
+
+                case "1Y":
+                    alpha = row.F_POR_ASH_RC_CTN_1Y - row.F_BM1_ASH_RC_CTN_1Y;
+                    break;
+
+                case "3Y":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3Y).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3Y).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                case "5Y":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_5Y).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_5Y).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                case "SI":
+                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_SI).FirstOrDefault();
+                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_SI).FirstOrDefault();
+                    alpha = fundReturn - benchmarkReturn;
+                    break;
+
+                default:
+                    break;
+            }
+            return alpha;
+        }
+
+        /// <summary>
+        /// retrieving benchmark weights based on period selected for relative performance gadget
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="monthlydata"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        private decimal? RetrieveRelativePerformanceBenchmarkWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        {
+            decimal? benchmarkWeight = 0;
+            switch (period)
+            {
+                case "1M":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_1M).FirstOrDefault();
+                    break;
+
+                case "3M":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3M).FirstOrDefault();
+                    break;
+
+                case "6M":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_6M).FirstOrDefault();
+                    break;
+
+                case "YTD":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_YTD;
+                    break;
+
+                case "1Y":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_1Y;
+                    break;
+
+                case "3Y":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3Y).FirstOrDefault();
+                    break;
+
+                case "5Y":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_5Y).FirstOrDefault();
+                    break;
+
+                case "SI":
+                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_SI).FirstOrDefault();
+                    break;
+
+                default:
+                    break;
+            }
+            return benchmarkWeight;
+        }
+
+        /// <summary>
+        /// retrieving portfolio weights based on period selected for relative performance gadget
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="monthlydata"></param>
+        /// <param name="period"></param>
+        /// <returns></returns>
+        private decimal? RetrieveRelativePerformancePortfolioWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        {
+            decimal? portfolioWeight = 0;
+            switch (period)
+            {
+                case "1M":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_1M).FirstOrDefault();
+                    break;
+
+                case "3M":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3M).FirstOrDefault();
+                    break;
+
+                case "6M":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_6M).FirstOrDefault();
+                    break;
+
+                case "YTD":
+                    portfolioWeight = row.POR_RC_AVG_WGT_YTD;
+                    break;
+
+                case "1Y":
+                    portfolioWeight = row.POR_RC_AVG_WGT_1Y;
+                    break;
+
+                case "3Y":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3Y).FirstOrDefault();
+                    break;
+
+                case "5Y":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_5Y).FirstOrDefault();
+                    break;
+
+                case "SI":
+                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_SI).FirstOrDefault();
+                    break;
+
+                default:
+                    break;
+            }
+            return portfolioWeight;
+        }
+
+        #endregion
+
         #endregion
 
     }
