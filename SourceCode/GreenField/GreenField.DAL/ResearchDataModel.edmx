@@ -6,6 +6,7 @@
     <edmx:StorageModels>
     <Schema Namespace="ResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ResearchModelStoreContainer">
+          <EntitySet Name="COMMODITY_FORECASTS" EntityType="ResearchModel.Store.COMMODITY_FORECASTS" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Country_Master" EntityType="ResearchModel.Store.Country_Master" store:Type="Tables" store:Schema="dbo" store:Name="Country_Master">
             <DefiningQuery>SELECT 
       [Country_Master].[COUNTRY_CODE] AS [COUNTRY_CODE], 
@@ -38,6 +39,16 @@
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreference" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="COMMODITY_FORECASTS">
+          <Key>
+            <PropertyRef Name="COMMODITY_ID" />
+          </Key>
+          <Property Name="COMMODITY_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CURRENT_YEAR_END" Type="real" />
+          <Property Name="NEXT_YEAR_END" Type="real" />
+          <Property Name="LONG_TERM" Type="real" />
+          <Property Name="LASTUPDATE" Type="datetime" />
+        </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AshmoreEMMPOC.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -205,7 +216,9 @@
           <Parameter Name="PeriodType" Type="varchar" Mode="In" />
           <Parameter Name="EstimateType" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="GetCOMMODITY_FORECASTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCOMMODITY_FORECASTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CommodityID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetCompanies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Country" Type="varchar" Mode="In" />
           <Parameter Name="Currency" Type="varchar" Mode="In" />
@@ -355,14 +368,17 @@
           <FunctionImport Name="RetrieveCTYSUMMARYDataReport" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
           <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetCOMMODITY_FORECASTS" ReturnType="Collection(ResearchModel.CommodityResult)" />
+          <FunctionImport Name="GetCOMMODITY_FORECASTS" ReturnType="Collection(ResearchModel.CommodityResult)" >
+          <Parameter Name="CommodityID" Mode="In" Type="String" />
+          </FunctionImport>
           <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
             <End Role="tblMarketSnapshotEntityPreference" EntitySet="tblMarketSnapshotEntityPreferences" />
           </AssociationSet>
           <FunctionImport Name="RetrieveEMSummaryDataReportCountry" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
-            <Parameter Name="country" Mode="In" Type="String" />
+          <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="COMMODITY_FORECASTS" EntityType="ResearchModel.COMMODITY_FORECASTS" />
         </EntityContainer>
         <ComplexType Name="ConsensusEstimates_Result">
           <Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
@@ -617,6 +633,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="COMMODITY_FORECASTS">
+          <Key>
+            <PropertyRef Name="COMMODITY_ID" />
+          </Key>
+          <Property Type="String" Name="COMMODITY_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="CURRENT_YEAR_END" />
+          <Property Type="Single" Name="NEXT_YEAR_END" />
+          <Property Type="Single" Name="LONG_TERM" />
+          <Property Type="DateTime" Name="LASTUPDATE" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -943,6 +969,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="COMMODITY_FORECASTS">
+            <EntityTypeMapping TypeName="ResearchModel.COMMODITY_FORECASTS">
+              <MappingFragment StoreEntitySet="COMMODITY_FORECASTS">
+                <ScalarProperty Name="LASTUPDATE" ColumnName="LASTUPDATE" />
+                <ScalarProperty Name="LONG_TERM" ColumnName="LONG_TERM" />
+                <ScalarProperty Name="NEXT_YEAR_END" ColumnName="NEXT_YEAR_END" />
+                <ScalarProperty Name="CURRENT_YEAR_END" ColumnName="CURRENT_YEAR_END" />
+                <ScalarProperty Name="COMMODITY_ID" ColumnName="COMMODITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -980,6 +1017,7 @@
           <ConnectorPoint PointX="8.625" PointY="2.7903857421875005" />
           <ConnectorPoint PointX="8.625" PointY="12.625" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="ResearchModel.COMMODITY_FORECASTS" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333317" />
         </Diagram>
     </Diagrams>
   </Designer>

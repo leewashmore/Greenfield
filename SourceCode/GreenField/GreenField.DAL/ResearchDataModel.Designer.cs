@@ -182,6 +182,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<Country_Master> _Country_Master;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<COMMODITY_FORECASTS> COMMODITY_FORECASTS
+        {
+            get
+            {
+                if ((_COMMODITY_FORECASTS == null))
+                {
+                    _COMMODITY_FORECASTS = base.CreateObjectSet<COMMODITY_FORECASTS>("COMMODITY_FORECASTS");
+                }
+                return _COMMODITY_FORECASTS;
+            }
+        }
+        private ObjectSet<COMMODITY_FORECASTS> _COMMODITY_FORECASTS;
 
         #endregion
         #region AddTo Methods
@@ -240,6 +256,14 @@ namespace GreenField.DAL
         public void AddToCountry_Master(Country_Master country_Master)
         {
             base.AddObject("Country_Master", country_Master);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the COMMODITY_FORECASTS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCOMMODITY_FORECASTS(COMMODITY_FORECASTS cOMMODITY_FORECASTS)
+        {
+            base.AddObject("COMMODITY_FORECASTS", cOMMODITY_FORECASTS);
         }
 
         #endregion
@@ -884,9 +908,20 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectResult<CommodityResult> GetCOMMODITY_FORECASTS()
+        /// <param name="commodityID">No Metadata Documentation available.</param>
+        public ObjectResult<CommodityResult> GetCOMMODITY_FORECASTS(global::System.String commodityID)
         {
-            return base.ExecuteFunction<CommodityResult>("GetCOMMODITY_FORECASTS");
+            ObjectParameter commodityIDParameter;
+            if (commodityID != null)
+            {
+                commodityIDParameter = new ObjectParameter("CommodityID", commodityID);
+            }
+            else
+            {
+                commodityIDParameter = new ObjectParameter("CommodityID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CommodityResult>("GetCOMMODITY_FORECASTS", commodityIDParameter);
         }
     
         /// <summary>
@@ -915,6 +950,157 @@ namespace GreenField.DAL
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ResearchModel", Name="COMMODITY_FORECASTS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class COMMODITY_FORECASTS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new COMMODITY_FORECASTS object.
+        /// </summary>
+        /// <param name="cOMMODITY_ID">Initial value of the COMMODITY_ID property.</param>
+        public static COMMODITY_FORECASTS CreateCOMMODITY_FORECASTS(global::System.String cOMMODITY_ID)
+        {
+            COMMODITY_FORECASTS cOMMODITY_FORECASTS = new COMMODITY_FORECASTS();
+            cOMMODITY_FORECASTS.COMMODITY_ID = cOMMODITY_ID;
+            return cOMMODITY_FORECASTS;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String COMMODITY_ID
+        {
+            get
+            {
+                return _COMMODITY_ID;
+            }
+            set
+            {
+                if (_COMMODITY_ID != value)
+                {
+                    OnCOMMODITY_IDChanging(value);
+                    ReportPropertyChanging("COMMODITY_ID");
+                    _COMMODITY_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("COMMODITY_ID");
+                    OnCOMMODITY_IDChanged();
+                }
+            }
+        }
+        private global::System.String _COMMODITY_ID;
+        partial void OnCOMMODITY_IDChanging(global::System.String value);
+        partial void OnCOMMODITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> CURRENT_YEAR_END
+        {
+            get
+            {
+                return _CURRENT_YEAR_END;
+            }
+            set
+            {
+                OnCURRENT_YEAR_ENDChanging(value);
+                ReportPropertyChanging("CURRENT_YEAR_END");
+                _CURRENT_YEAR_END = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CURRENT_YEAR_END");
+                OnCURRENT_YEAR_ENDChanged();
+            }
+        }
+        private Nullable<global::System.Single> _CURRENT_YEAR_END;
+        partial void OnCURRENT_YEAR_ENDChanging(Nullable<global::System.Single> value);
+        partial void OnCURRENT_YEAR_ENDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> NEXT_YEAR_END
+        {
+            get
+            {
+                return _NEXT_YEAR_END;
+            }
+            set
+            {
+                OnNEXT_YEAR_ENDChanging(value);
+                ReportPropertyChanging("NEXT_YEAR_END");
+                _NEXT_YEAR_END = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NEXT_YEAR_END");
+                OnNEXT_YEAR_ENDChanged();
+            }
+        }
+        private Nullable<global::System.Single> _NEXT_YEAR_END;
+        partial void OnNEXT_YEAR_ENDChanging(Nullable<global::System.Single> value);
+        partial void OnNEXT_YEAR_ENDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> LONG_TERM
+        {
+            get
+            {
+                return _LONG_TERM;
+            }
+            set
+            {
+                OnLONG_TERMChanging(value);
+                ReportPropertyChanging("LONG_TERM");
+                _LONG_TERM = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LONG_TERM");
+                OnLONG_TERMChanged();
+            }
+        }
+        private Nullable<global::System.Single> _LONG_TERM;
+        partial void OnLONG_TERMChanging(Nullable<global::System.Single> value);
+        partial void OnLONG_TERMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> LASTUPDATE
+        {
+            get
+            {
+                return _LASTUPDATE;
+            }
+            set
+            {
+                OnLASTUPDATEChanging(value);
+                ReportPropertyChanging("LASTUPDATE");
+                _LASTUPDATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LASTUPDATE");
+                OnLASTUPDATEChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _LASTUPDATE;
+        partial void OnLASTUPDATEChanging(Nullable<global::System.DateTime> value);
+        partial void OnLASTUPDATEChanged();
+
+        #endregion
+    
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
