@@ -58,6 +58,8 @@ namespace GreenField.Common
 
     public class ExCashSecuritySetEvent : CompositePresentationEvent<bool> { }
 
+    public class CommoditySelectionSetEvent : CompositePresentationEvent<String> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }
