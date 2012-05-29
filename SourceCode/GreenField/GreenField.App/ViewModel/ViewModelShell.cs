@@ -845,6 +845,69 @@ namespace GreenField.App.ViewModel
         
         #endregion
         #endregion
+
+        #region COMMODITY
+        /// <summary>
+        /// Stores Commodity data
+        /// </summary>
+        private List<FXCommodityData> _commodityTypeInfo;
+        public List<FXCommodityData> CommodityTypeInfo
+        {
+            get { return _commodityTypeInfo; }
+            set
+            {
+                _commodityTypeInfo = value;
+                CommodityIDs = value.Select(l => l.CommodityID).Distinct().ToList();
+                RaisePropertyChanged(() => this.CommodityTypeInfo);
+            }
+        }
+        /// <summary>
+        /// Stores Commodity ID values
+        /// </summary>
+        private List<String> _commodityIDs;
+        public List<String> CommodityIDs
+        {
+            get { return _commodityIDs; }
+            set
+            {
+                _commodityIDs = value;
+                RaisePropertyChanged(() => this.CommodityIDs);
+            }
+
+        }
+        /// <summary>
+        /// Stores commodity ID value selected by user
+        /// </summary>
+        private String _selCommodityID;
+        public String SelCommodityID
+        {
+            get { return _selCommodityID; }
+            set
+            {
+                _selCommodityID = value;
+                RaisePropertyChanged(() => this.SelCommodityID);
+                if (value != null)
+                    _selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper() == value.ToUpper()).ToString();
+                _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
+            }
+        }
+
+        /// <summary>
+        /// Stores Commodity Selector Visibility
+        /// </summary>
+        private Visibility _commoditySelectorVisibilty = Visibility.Collapsed;
+        public Visibility CommoditySelectorVisibility
+        {
+            get { return _commoditySelectorVisibilty; }
+            set
+            {
+                _commoditySelectorVisibilty = value;
+                RaisePropertyChanged(() => this.CommoditySelectorVisibility);
+                if (value == Visibility.Visible && CommodityTypeInfo == null)
+                    _dbInteractivity.RetrieveCommoditySelectionData(RetrieveFXCommoditySelectionCallbackMethod);
+            }
+        }
+        #endregion
         #endregion
 
         # region ICommand
@@ -3016,6 +3079,7 @@ namespace GreenField.App.ViewModel
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;            
             FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
+            CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
             
         }
 
@@ -3078,6 +3142,29 @@ namespace GreenField.App.ViewModel
                 }
             }
 
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    CommodityTypeInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
