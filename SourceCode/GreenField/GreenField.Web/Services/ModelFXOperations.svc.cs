@@ -234,7 +234,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         //TODO Seema: Add Input Param Country
-        public List<FXCommodityData> RetrieveCommodityData()//CountrySelectionData selectedCountry)
+        public List<FXCommodityData> RetrieveCommodityData(string selectedCommodityID)
         {
             try
             {
@@ -246,22 +246,19 @@ namespace GreenField.Web.Services
 
                 List<CommodityResult> resultDB = new List<CommodityResult>();
                 List<FXCommodityData> result = new List<FXCommodityData>();
-                
+                ResearchEntities research = new ResearchEntities();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimSvcPricingViewData = null;
 
                 if (entity.GF_PRICING_BASEVIEW == null && entity.GF_PRICING_BASEVIEW.Count() == 0)
-                return null;
+                    return null;
 
-                
-
-                
-                ResearchEntities research = new ResearchEntities();
-               
                 //TODO Seema: Input Parameter has to be added - Country
                 //Retrieving data from database
-                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS ZINC").ToList();
+                //TODO Seema: Remove HardCoded Value below
+                //selectedCommodityID = "ZINC";
+                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS @commodityID={0}", selectedCommodityID).ToList();
 
                 for (int _index = 0; _index < resultDB.Count; _index++)
                 {
@@ -275,12 +272,13 @@ namespace GreenField.Web.Services
                 }
                 //TODO Seema: Input Parameter has to be added - Country
                 //Retrieving Data from WCF svc
-                // dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
-                ////var res = from p in entity.GF_PRICING_BASEVIEW
-                //          where p.FROMDATE == Convert.ToDateTime("05/18/2012") //&& p.INSTRUMENT_ID == Convert.ToString("299")
-                //          select p;
-                ////dimSvcPricingViewData = res.ToList();
-                
+                //dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW.ToList();
+                var res = from p in entity.GF_PRICING_BASEVIEW
+                          where p.INSTRUMENT_ID.ToUpper() == Convert.ToString(selectedCommodityID).ToUpper()
+                          select p;
+                dimSvcPricingViewData = res.ToList();
+
+
                 return result;
             }
             catch (Exception ex)
@@ -290,6 +288,25 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
+        /// <summary>
+        /// Gets Commodity ID List
+        /// </summary>
+        /// <returns>List of Commodity ID</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FXCommodityData> RetrieveCommoditySelectionData()
+        {
+            List<FXCommodityData> result = new List<FXCommodityData>();
+            ResearchEntities research = new ResearchEntities();
+            List<COMMODITY_FORECASTS> commodityData = new List<COMMODITY_FORECASTS>();
+            commodityData = research.COMMODITY_FORECASTS.ToList();
+            for (int i = 0; i < commodityData.Count; i++)
+            {
+                FXCommodityData data = new FXCommodityData();
+                data.CommodityID = commodityData[i].COMMODITY_ID;
+                result.Add(data);
+            }
+            return result;
+        }
     }
 }
