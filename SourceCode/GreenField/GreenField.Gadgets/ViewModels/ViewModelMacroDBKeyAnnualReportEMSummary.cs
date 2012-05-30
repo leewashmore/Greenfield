@@ -100,16 +100,27 @@ namespace GreenField.Gadgets.ViewModels
             {
                 MacroDatabaseKeyAnnualReportData m = new MacroDatabaseKeyAnnualReportData();
                 FiveYearDataModels entry = new FiveYearDataModels();
-                entry.CATEGORY_NAME = macroCountryData[i].CATEGORY_NAME;
-                entry.COUNTRY_NAME = macroCountryData[i].COUNTRY_NAME;
-                entry.DESCRIPTION = macroCountryData[i].DESCRIPTION;
-                entry.DISPLAY_TYPE = macroCountryData[i].DISPLAY_TYPE;
-                entry.SORT_ORDER = macroCountryData[i].SORT_ORDER;
-                entry.YEAR_ONE = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + CurrentYear);
-                entry.YEAR_TWO = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 1));
-                entry.YEAR_THREE = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 2));
-                entry.YEAR_FOUR = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 3));
-                entry.YEAR_FIVE = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 4));
+                entry.CategoryName = macroCountryData[i].CATEGORY_NAME;
+                entry.CountryName = macroCountryData[i].COUNTRY_NAME;
+                entry.Description = macroCountryData[i].DESCRIPTION;
+                entry.DisplayType = macroCountryData[i].DISPLAY_TYPE;
+                entry.SortOrder = macroCountryData[i].SORT_ORDER;
+                entry.YearOne = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + CurrentYear);
+                entry.YearTwo = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 1));
+                entry.YearThree = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 2));
+                entry.YearFour = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 3));
+                entry.YearFive = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 4));
+                if (entry.YearOne == null)
+                    entry.YearOne = 0;
+                if (entry.YearTwo == null)
+                    entry.YearTwo = 0;
+                if (entry.YearThree == null)
+                    entry.YearThree = 0;
+                if (entry.YearFour == null)
+                    entry.YearFour = 0;
+                if (entry.YearFive == null)
+                    entry.YearFive = 0;
+                entry.FiveYearAvg = (entry.YearOne + entry.YearTwo + entry.YearThree + entry.YearFour + entry.YearFive)/5;
                 result.Add(entry);
             }
             FiveYearMacroCountryData = result;
@@ -117,6 +128,22 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #region ICommand
+
+        public ICommand LeftNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveLeftCommandMethod);
+            }
+        }
+
+        public ICommand RightNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveRightCommandMethod);
+            }
+        }
 
 
         public ICommand MoveRightCommand
@@ -130,17 +157,16 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(MoveLeftCommandMethod); }
         }
 
-        #endregion
-
-        private void MoveRightCommandMethod(object param)
+        public void MoveRightCommandMethod(object param)
         {
             CurrentYear = CurrentYear + 1;
         }
 
-        private void MoveLeftCommandMethod(object param)
+        public void MoveLeftCommandMethod(object param)
         {
             CurrentYear = CurrentYear - 1;
         }
+        #endregion
 
         private List<FiveYearDataModels> fiveYearMacroCountryData;
         public List<FiveYearDataModels> FiveYearMacroCountryData

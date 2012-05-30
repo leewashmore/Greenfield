@@ -31,7 +31,30 @@ namespace GreenField.Gadgets.Views
             dataContextSource.RetrieveMacroEMSummaryDataCompletedEvent += new Common.RetrieveMacroCountrySummaryDataCompleteEventHandler(dataContextSource_RetrieveMacroDataCompletedEvent);
             dataContextSource.macroDBKeyAnnualReportEMSummaryDataLoadedEvent +=
            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_macroDBKeyAnnualReportEMSummaryDataLoadedEvent);
+            SetGridColumnHeaders();
 
+        }
+
+        /// <summary>
+        /// Event Handler for LeftNavigation Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void LeftButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+                (this.DataContext as ViewModelMacroDBKeyAnnualReportEMSummary).MoveLeftCommandMethod(null);
+        }
+
+        /// <summary>
+        /// Event Handler for Right navigation click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void RightButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+                (this.DataContext as ViewModelMacroDBKeyAnnualReportEMSummary).MoveRightCommandMethod(null);
         }
 
          /// <summary>
@@ -52,81 +75,46 @@ namespace GreenField.Gadgets.Views
 
         public void dataContextSource_RetrieveMacroDataCompletedEvent(Common.RetrieveMacroCountrySummaryDataCompleteEventArgs e)
         {
+            if (_currentYear == 2022)
+                return;
+
             _macroInfo = e.MacroInfo;
             this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).FiveYearMacroCountryData;
-            this.dgMacroDBKeyReport.Columns.Clear();
             this.dgMacroDBKeyReport.GroupDescriptors.Clear();
             this.dgMacroDBKeyReport.SortDescriptors.Clear();
             _currentYear = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).CurrentYear;
             if (_macroInfo != null)
             {
-
-
-
-                //            <helpers:ViewBaseUserControl.Resources>
-                //    <ResourceDictionary>
-                //        <ResourceDictionary.MergedDictionaries>
-                //            <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
-                //        </ResourceDictionary.MergedDictionaries>
-                //    </ResourceDictionary>
-                //</helpers:ViewBaseUserControl.Resources>
-                //ViewBaseUserControl v = new ViewBaseUserControl();
-
-                //ResourceDictionary r = new ResourceDictionary();
-                //r.Source = new Uri("/GreenField.Gadgets;component/Assets/Styles.xaml");
-                //r.MergedDictionaries.Add(r);
-                //v.Resources.Add(
-
-
-                //Telerik.Windows.Controls.GridView.GridViewHeaderCell.BackgroundProperty.
-
-                //GridViewHeaderCell.BackgroundProperty  = 
                 GroupDescriptor descriptor = new GroupDescriptor();
-                descriptor.Member = "CATEGORY_NAME";
+                descriptor.Member = "CategoryName";
                 descriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.GroupDescriptors.Add(descriptor);
                 SortDescriptor sdescriptor = new SortDescriptor();
-                sdescriptor.Member = "SORT_ORDER";
+                sdescriptor.Member = "SortOrder";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
-                GridViewDataColumn column = new GridViewDataColumn();
-                column.DataMemberBinding = new Binding("DESCRIPTION");
-                column.Header = "DESCRIPTION";
-                column.UniqueName = "MyColumn";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column);
-                GridViewDataColumn column1 = new GridViewDataColumn();
-                column1.DataMemberBinding = new Binding("YEAR_ONE");
-                column1.Header = _currentYear.ToString();
-                column1.UniqueName = "MyColumn1";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column1);
-                GridViewDataColumn column2 = new GridViewDataColumn();
-                column2.DataMemberBinding = new Binding("YEAR_TWO");
-                column2.Header = (_currentYear + 1).ToString();
-                column2.UniqueName = "MyColumn2";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column2);
-                GridViewDataColumn column3 = new GridViewDataColumn();
-                column3.DataMemberBinding = new Binding("YEAR_THREE");
-                column3.Header = (_currentYear + 2).ToString();
-                column3.UniqueName = "MyColumn3";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column3);
-                GridViewDataColumn column4 = new GridViewDataColumn();
-                column4.DataMemberBinding = new Binding("YEAR_FOUR");
-                column4.Header = (_currentYear + 3).ToString();
-                column4.UniqueName = "MyColumn4";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column4);
-                GridViewDataColumn column5 = new GridViewDataColumn();
-                column5.DataMemberBinding = new Binding("YEAR_FIVE");
-                column5.Header = (_currentYear + 4).ToString();
-                column5.UniqueName = "MyColumn5";
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                this.dgMacroDBKeyReport.Columns.Add(column5);
 
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
+                dgMacroDBKeyReport.Columns[2].Header = _currentYear.ToString();
+                dgMacroDBKeyReport.Columns[3].Header = (_currentYear + 1).ToString();
+                dgMacroDBKeyReport.Columns[4].Header = (_currentYear + 2).ToString();
+                dgMacroDBKeyReport.Columns[5].Header = (_currentYear + 3).ToString();
+                dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 4).ToString();
+                dgMacroDBKeyReport.Columns[7].Header = "Five Year Average" + "(" + _currentYear.ToString() + "-" + (_currentYear + 4).ToString() + ")";
             }
+        }
+
+
+        public void SetGridColumnHeaders()
+        {
+            int currentYear = DateTime.Today.Year;
+            dgMacroDBKeyReport.Columns[2].Header = currentYear.ToString();
+            dgMacroDBKeyReport.Columns[3].Header = (currentYear + 1).ToString();
+            dgMacroDBKeyReport.Columns[4].Header = (currentYear + 2).ToString();
+            dgMacroDBKeyReport.Columns[5].Header = (currentYear + 3).ToString();
+            dgMacroDBKeyReport.Columns[6].Header = (currentYear + 4).ToString();
+            dgMacroDBKeyReport.Columns[7].Header = "Five Year Average" + "(" + currentYear.ToString() + "-" + (currentYear + 4).ToString() + ")";
+
         }
     }
 }
