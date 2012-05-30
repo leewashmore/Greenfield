@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Runtime.Serialization;
 
-namespace GreenField.Web.DataContracts
+namespace GreenField.DataContracts.Web.DataContracts
 {
     [DataContract]
     public class FXCommodityData
@@ -20,19 +19,23 @@ namespace GreenField.Web.DataContracts
         
         [DataMember]
         public decimal? LongTerm { get; set; }
-        
-        //[DataMember]
-        //public DateTime LastUpdate { get; set; }
+
+        [DataMember]
+        public DateTime? FromDate { get; set; }
+
+        [DataMember]
+        public decimal? DailyClosingPrice { get; set; }
+
 
         //[DataMember]
         //public decimal? GPToday { get; set; }
-        
+
         //[DataMember]
         //public decimal? GPLastYearEnd { get; set; }
-                
+
         //[DataMember]
         //public decimal? GP12MonthsAgo { get; set; }
-                 
+
         //[DataMember]
         //public decimal? GP36MonthsAgo { get; set; }
         

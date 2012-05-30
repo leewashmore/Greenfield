@@ -158,5 +158,15 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Unsubscribe((HandleCommodityReferenceSet));           
+        }
+
+        #endregion
     }
 }

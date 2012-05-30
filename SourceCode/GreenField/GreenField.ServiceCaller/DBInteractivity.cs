@@ -1429,7 +1429,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>  
         public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {

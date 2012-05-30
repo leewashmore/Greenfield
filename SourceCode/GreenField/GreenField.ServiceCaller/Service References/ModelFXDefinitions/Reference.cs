@@ -47,12 +47,17 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FXCommodityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FXCommodityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.Web.DataContract" +
+        "s")]
     public partial class FXCommodityData : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string CommodityIDField;
         
         private System.Nullable<decimal> CurrentYearEndField;
+        
+        private System.Nullable<decimal> DailyClosingPriceField;
+        
+        private System.Nullable<System.DateTime> FromDateField;
         
         private System.Nullable<decimal> LongTermField;
         
@@ -86,6 +91,32 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 if ((this.CurrentYearEndField.Equals(value) != true)) {
                     this.CurrentYearEndField = value;
                     this.RaisePropertyChanged("CurrentYearEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> DailyClosingPrice {
+            get {
+                return this.DailyClosingPriceField;
+            }
+            set {
+                if ((this.DailyClosingPriceField.Equals(value) != true)) {
+                    this.DailyClosingPriceField = value;
+                    this.RaisePropertyChanged("DailyClosingPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> FromDate {
+            get {
+                return this.FromDateField;
+            }
+            set {
+                if ((this.FromDateField.Equals(value) != true)) {
+                    this.FromDateField = value;
+                    this.RaisePropertyChanged("FromDate");
                 }
             }
         }

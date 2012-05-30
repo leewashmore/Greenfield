@@ -878,14 +878,14 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores commodity ID value selected by user
         /// </summary>
-        private string _selCommodityID;
-        public string SelCommodityID
+        private string _selCommodityId;
+        public string SelCommodityId
         {
-            get { return _selCommodityID; }
+            get { return _selCommodityId; }
             set
             {
-                _selCommodityID = value;
-                RaisePropertyChanged(() => this.SelCommodityID);
+                _selCommodityId = value;
+                RaisePropertyChanged(() => this.SelCommodityId);
                 if (value != null)
                     _selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper() == value.ToUpper()).ToString();
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);

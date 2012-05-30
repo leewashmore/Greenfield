@@ -209,45 +209,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopBenchmarkSecuritiesData" nillable="true" type="tns:TopBenchmarkSecuritiesData" />
-  <xs:complexType name="ArrayOfMarketCapitalizationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfMarketCapitalizationData" nillable="true" type="tns:ArrayOfMarketCapitalizationData" />
-  <xs:complexType name="MarketCapitalizationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AsecSecShortName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BenchmarkSumLargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMegaRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumSmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumUndefinedRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWtdAvg" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWtdMedian" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Benchmark_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MarketCapitalInUSD" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumLargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMegaRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumSmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumUndefinedRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioWtdAvg" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioWtdMedian" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Portfolio_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SecurityThemeCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="UndefinedRange" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
   <xs:complexType name="ArrayOfHeatMapData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="HeatMapData" nillable="true" type="tns:HeatMapData" />

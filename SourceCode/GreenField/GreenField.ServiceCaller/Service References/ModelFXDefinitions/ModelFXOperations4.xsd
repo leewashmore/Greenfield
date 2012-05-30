@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.Web.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.Web.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:complexType name="ArrayOfFXCommodityData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />
@@ -10,6 +10,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="CommodityID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrentYearEnd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyClosingPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FromDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="LongTerm" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="NextYearEnd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
