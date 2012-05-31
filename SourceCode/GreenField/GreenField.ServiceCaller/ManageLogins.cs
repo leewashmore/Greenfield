@@ -44,10 +44,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -82,10 +82,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result.ToString());
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -117,10 +117,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -151,10 +151,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -184,10 +184,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -218,10 +218,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -251,10 +251,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -284,10 +284,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -318,10 +318,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -360,10 +360,10 @@ namespace GreenField.ServiceCaller
                     }
 
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -393,10 +393,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -426,10 +426,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -461,10 +461,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -502,10 +502,10 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -544,10 +544,10 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -578,10 +578,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -612,10 +612,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -646,10 +646,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
@@ -681,10 +681,10 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.LoginDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
