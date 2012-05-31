@@ -19,13 +19,13 @@
                     <DataTemplate x:Key="DraggedItemTemplate">
                         <StackPanel Orientation="Horizontal" Margin="2" Background="#9F1D21">
                             <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName, Converter={StaticResource DraggedItemTemplateConverter}}" 
-                                       FontWeight="Bold" Foreground="White" FontFamily="Arial" FontSize="8"/>
+                                       FontWeight="Bold" Foreground="White" FontFamily="Arial" FontSize="7"/>
                         </StackPanel>
                     </DataTemplate>
                     <DataTemplate x:Key="DropItemTemplate">
                         <StackPanel Orientation="Horizontal" Margin="2">
                             <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName, Converter={StaticResource DraggedItemTemplateConverter}}" 
-                                       FontWeight="Bold" FontFamily="Arial" FontSize="8" Foreground="#9F1D21"/>
+                                       FontWeight="Bold" FontFamily="Arial" FontSize="7" Foreground="#9F1D21"/>
                         </StackPanel>
                     </DataTemplate>
                     <Style TargetType="telerik:TreeViewDragCue" x:Key="DragCueStyle">
@@ -34,13 +34,13 @@
                         <Setter Property="BorderBrush" Value="#9F1D21"/>
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="Foreground" Value="White"/>
-                    </Style>
+                    </Style>                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>        
     </UserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="8" FontFamily="Arial"
+    <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
         <Grid x:Name="LayoutRoot">
             <Grid>
@@ -54,7 +54,7 @@
                        VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
 
                 <!--grid containing benchmark data-->
-                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2" AlternateRowBackground="Wheat"
+                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2" AlternateRowBackground="#d8d5d4"
                                  ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                  AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
                                  telerik:StyleManager.Theme="Metro" AutoExpandGroups="True" FontSize="7" FontFamily="Arial" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -63,7 +63,7 @@
                                  SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
-                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="8" FontFamily="Arial">
+                        <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">
                             <telerik:RadContextMenu.Items>
                                 <telerik:RadMenuItem x:Name="miAddGroup" Height="25" VerticalContentAlignment="Center" Header="Add Group" FontWeight="Bold" Command="{Binding AddEntityGroupCommand}">
                                     <telerik:RadMenuItem.IconTemplate>

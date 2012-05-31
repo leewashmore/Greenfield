@@ -79,8 +79,7 @@
   <xs:element name="RetrieveMarketSnapshotPreference">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="snapshotName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="snapshotPreferenceId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -196,20 +195,15 @@
   <xs:element name="SaveMarketSnapshotPreference">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="marketSnapshotSelectionData" nillable="true" type="q15:MarketSnapshotSelectionData" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="createEntityPreferenceInfo" nillable="true" type="q16:ArrayOfMarketSnapshotPreference" />
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="updateEntityPreferenceInfo" nillable="true" type="q17:ArrayOfMarketSnapshotPreference" />
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="deleteEntityPreferenceInfo" nillable="true" type="q18:ArrayOfMarketSnapshotPreference" />
-        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="deleteGroupPreferenceInfo" nillable="true" type="q19:ArrayOfint" />
-        <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="createGroupPreferenceInfo" nillable="true" type="q20:ArrayOfstring" />
+        <xs:element minOccurs="0" name="snapshotPreferenceId" type="xs:int" />
+        <xs:element minOccurs="0" name="updateXML" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveMarketSnapshotPreferenceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="SaveMarketSnapshotPreferenceResult" nillable="true" type="q21:ArrayOfMarketSnapshotPreference" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="SaveMarketSnapshotPreferenceResult" nillable="true" type="q15:ArrayOfMarketSnapshotPreference" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -218,14 +212,14 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="snapshotName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="snapshotPreference" nillable="true" type="q22:ArrayOfMarketSnapshotPreference" />
+        <xs:element minOccurs="0" name="updateXML" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveAsMarketSnapshotPreferenceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="SaveAsMarketSnapshotPreferenceResult" nillable="true" type="q23:PopulatedMarketPerformanceSnapshotData" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="SaveAsMarketSnapshotPreferenceResult" nillable="true" type="q16:PopulatedMarketPerformanceSnapshotData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

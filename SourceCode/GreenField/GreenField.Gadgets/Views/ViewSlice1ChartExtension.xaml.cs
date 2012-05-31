@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Controls;
 using GreenField.Common;
+using GreenField.ServiceCaller;
 using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
@@ -169,7 +170,7 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Prompt.ShowDialog(ex.Message);
             }
         }
 

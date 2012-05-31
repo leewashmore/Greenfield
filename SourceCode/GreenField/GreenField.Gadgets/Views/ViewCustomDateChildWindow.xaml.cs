@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using GreenField.Common;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -26,17 +28,17 @@ namespace GreenField.Gadgets.Views
         {
             if (dpStartDate.SelectedDate == null)
             {
-                MessageBox.Show("Please enter a valid start Date in MM/DD/YY format");
+                Prompt.ShowDialog("Please enter a valid start Date in MM/DD/YY format");
             }
             else if (dpEndDate.SelectedDate == null)
             {
-                MessageBox.Show("Please enter a valid end Date in MM/DD/YY format");
+                Prompt.ShowDialog("Please enter a valid end Date in MM/DD/YY format");
             }
             else
             {
                 if (dpStartDate.SelectedDate > dpEndDate.SelectedDate)
                 {
-                    MessageBox.Show("Start Date cannot be greater then End Date ");
+                    Prompt.ShowDialog("Start Date cannot be greater then End Date ");
                 }
                 else
                 {

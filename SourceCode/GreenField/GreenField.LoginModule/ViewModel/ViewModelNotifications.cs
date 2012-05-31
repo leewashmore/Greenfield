@@ -14,6 +14,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Commands;
 using GreenField.Common;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.ServiceCaller;
 
 namespace GreenField.LoginModule.ViewModel
 {
@@ -101,7 +102,7 @@ namespace GreenField.LoginModule.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogLoginException(_logger, ex);
             }
         }
@@ -140,7 +141,7 @@ namespace GreenField.LoginModule.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogLoginException(_logger, ex);
             }
         } 

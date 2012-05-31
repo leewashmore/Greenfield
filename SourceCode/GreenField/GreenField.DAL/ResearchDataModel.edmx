@@ -227,8 +227,7 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetMarketSnapshotPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="userid" Type="nvarchar" Mode="In" />
-          <Parameter Name="snapshotname" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="SnapshotPreferenceId" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMarketSnapshotSelectionData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userId" Type="nvarchar" Mode="In" />
@@ -272,6 +271,10 @@
           <Parameter Name="userId" Type="nvarchar" Mode="In" />
           <Parameter Name="snapshotname" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="snapshotpreferenceid" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateMarketPerformanceSnapshot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="snapshotPreferenceId" Type="int" Mode="In" />
+          <Parameter Name="updateXML" Type="varchar(max)" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -332,11 +335,6 @@
             <End Role="tblMarketSnapshotPreference" EntitySet="tblMarketSnapshotPreferences" />
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
           </AssociationSet>
-          <FunctionImport Name="UpdateMarketSnapshotPreference" ReturnType="Collection(Int32)">
-            <Parameter Name="userId" Mode="In" Type="String" />
-            <Parameter Name="snapshotname" Mode="In" Type="String" />
-            <Parameter Name="snapshotpreferenceid" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="UpdateMarketSnapshotEntityPreference" ReturnType="Collection(Int32)">
             <Parameter Name="grouppreferenceid" Mode="In" Type="Int32" />
             <Parameter Name="entitypreferenceid" Mode="In" Type="Int32" />
@@ -360,10 +358,6 @@
           <FunctionImport Name="GetMarketSnapshotSelectionData" ReturnType="Collection(ResearchModel.MarketSnapshotSelectionData)">
           <Parameter Name="userId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
-            <Parameter Name="userid" Mode="In" Type="String" />
-            <Parameter Name="snapshotname" Mode="In" Type="String" />
-          </FunctionImport>
           <EntitySet Name="Country_Master" EntityType="ResearchModel.Country_Master" />
           <FunctionImport Name="RetrieveCTYSUMMARYDataReport" ReturnType="Collection(ResearchModel.MacroDataCTY_Result)">
           <Parameter Name="country" Mode="In" Type="String" />
@@ -379,6 +373,18 @@
           <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="COMMODITY_FORECASTS" EntityType="ResearchModel.COMMODITY_FORECASTS" />
+          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">          
+          <Parameter Name="SnapshotPreferenceId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateMarketSnapshotPreference" ReturnType="Collection(Int32)">
+            <Parameter Name="userId" Mode="In" Type="String" />
+            <Parameter Name="snapshotname" Mode="In" Type="String" />
+            <Parameter Name="snapshotpreferenceid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateMarketPerformanceSnapshot" ReturnType="Collection(Int32)">
+            <Parameter Name="snapshotPreferenceId" Mode="In" Type="Int32" />
+            <Parameter Name="updateXML" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="ConsensusEstimates_Result">
           <Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
@@ -817,7 +823,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotPreference" />
           <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotEntityPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotEntityPreference" />
           <FunctionImportMapping FunctionImportName="SetMarketSnapshotPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotPreference" />
           <FunctionImportMapping FunctionImportName="SetMarketSnapshotGroupPreference" FunctionName="ResearchModel.Store.SetMarketSnapshotGroupPreference" />
@@ -827,19 +832,6 @@
               <ComplexTypeMapping TypeName="ResearchModel.MarketSnapshotSelectionData">
                 <ScalarProperty Name="SnapshotPreferenceId" ColumnName="SnapshotPreferenceId" />
                 <ScalarProperty Name="SnapshotName" ColumnName="SnapshotName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetMarketSnapshotPreference" FunctionName="ResearchModel.Store.GetMarketSnapshotPreference">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ResearchModel.MarketSnapshotPreference">
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
-                <ScalarProperty Name="EntityPreferenceId" ColumnName="EntityPreferenceId" />
-                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
-                <ScalarProperty Name="EntityOrder" ColumnName="EntityOrder" />
-                <ScalarProperty Name="EntityReturnType" ColumnName="EntityReturnType" />
-                <ScalarProperty Name="EntityType" ColumnName="EntityType" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -969,6 +961,21 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetMarketSnapshotPreference" FunctionName="ResearchModel.Store.GetMarketSnapshotPreference">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ResearchModel.MarketSnapshotPreference">
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupPreferenceID" ColumnName="GroupPreferenceID" />
+                <ScalarProperty Name="EntityPreferenceId" ColumnName="EntityPreferenceId" />
+                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+                <ScalarProperty Name="EntityOrder" ColumnName="EntityOrder" />
+                <ScalarProperty Name="EntityReturnType" ColumnName="EntityReturnType" />
+                <ScalarProperty Name="EntityType" ColumnName="EntityType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMarketSnapshotPreference" FunctionName="ResearchModel.Store.UpdateMarketSnapshotPreference" />
+          <FunctionImportMapping FunctionImportName="UpdateMarketPerformanceSnapshot" FunctionName="ResearchModel.Store.usp_UpdateMarketPerformanceSnapshot" />
           <EntitySetMapping Name="COMMODITY_FORECASTS">
             <EntityTypeMapping TypeName="ResearchModel.COMMODITY_FORECASTS">
               <MappingFragment StoreEntitySet="COMMODITY_FORECASTS">
@@ -1004,7 +1011,7 @@
         <EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="9.5" PointY="12.625" Height="1.5956835937500031" />
         <EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="6.25" PointY="12.625" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="15.375" PointY="3.75" Height="8.51853515625001" />
-        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.5" PointX="7.875" PointY="12.625" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotEntityPreference" Width="1.5" PointX="19.75" PointY="0.875" Height="2.3648893229166656" />
         <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotGroupPreference" Width="1.5" PointX="17.625" PointY="0.875" Height="1.7879850260416674" />
         <EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotPreference" Width="1.5" PointX="15.375" PointY="0.875" Height="1.7879850260416674" />
         <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" >
@@ -1013,9 +1020,8 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="ResearchModel.Country_Master" Width="1.5" PointX="11.125" PointY="12.75" Height="2.3648893229166674" />
         <AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" >
-          <ConnectorPoint PointX="17.625" PointY="2.7903857421875005" />
-          <ConnectorPoint PointX="8.625" PointY="2.7903857421875005" />
-          <ConnectorPoint PointX="8.625" PointY="12.625" />
+          <ConnectorPoint PointX="19.125" PointY="1.8651432291666665" />
+          <ConnectorPoint PointX="19.75" PointY="1.8651432291666665" />
         </AssociationConnector>
         <EntityTypeShape EntityType="ResearchModel.COMMODITY_FORECASTS" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333317" />
         </Diagram>

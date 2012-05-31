@@ -26,11 +26,12 @@ namespace GreenField.Gadgets.Helpers
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp")]
         RADCHART_EXPORT_FILTER = 0,
         [DescriptionAttribute("Excel Workbook (*.xls)|*.xls|XML (*.xml)|*.xml|CSV (Comma delimited)|*.csv|Word Document (*.doc)|*.doc")]
-        RADGRIDVIEW_EXPORT_FILTER = 1      
+        RADGRIDVIEW_EXPORT_FILTER = 1
     }
 
     public class ExportElementOptions
     {
+        #region Fields
         private Color _defaultBackground = Colors.White;
         private Color _highlightedBackground = Colors.DarkGray;
 
@@ -47,19 +48,24 @@ namespace GreenField.Gadgets.Helpers
         private FontWeight _highlightedFontWeight = FontWeights.Bold;
 
         private TextAlignment _defaultTextAlignment = TextAlignment.Left;
-        private TextAlignment _highlightedTextAlignment = TextAlignment.Center;
+        private TextAlignment _highlightedTextAlignment = TextAlignment.Center; 
+        #endregion
 
+        #region Properties
         public ExportElement ExportElementType { get; set; }
         public Color ExportElementBackground { get; set; }
         public Color ExportElementForeground { get; set; }
         public FontFamily ExportElementFontFamily { get; set; }
         public double ExportElementFontSize { get; set; }
         public FontWeight ExportElementFontWeight { get; set; }
-        public TextAlignment ExportElementTextAlignment { get; set; }
+        public TextAlignment ExportElementTextAlignment { get; set; } 
+        #endregion
 
+        #region Constructors
         /// <summary>
-        /// Contructor
+        /// Constructor
         /// </summary>
+        /// <param name="exportElement">ExportElement</param>
         /// <param name="Type"><value = "True">Highlighted elements</value><value = "False">Default elements</param>
         public ExportElementOptions(ExportElement exportElement, bool Type = false)
         {
@@ -83,6 +89,35 @@ namespace GreenField.Gadgets.Helpers
                 ExportElementTextAlignment = _defaultTextAlignment;
             }
         }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="exportElement">ExportElement</param>
+        public ExportElementOptions(ExportElement exportElement)
+        {
+            ExportElementType = exportElement;
+            ExportElementBackground = _defaultBackground;
+            ExportElementForeground = _defaultForeground;
+            ExportElementFontFamily = _defaultFontFamily;
+            ExportElementFontSize = _defaultFontSize;
+            ExportElementFontWeight = _defaultFontWeight;
+            ExportElementTextAlignment = _defaultTextAlignment;
+        }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ExportElementOptions()
+        {
+            ExportElementBackground = _defaultBackground;
+            ExportElementForeground = _defaultForeground;
+            ExportElementFontFamily = _defaultFontFamily;
+            ExportElementFontSize = _defaultFontSize;
+            ExportElementFontWeight = _defaultFontWeight;
+            ExportElementTextAlignment = _defaultTextAlignment;
+        } 
+        #endregion
     }
 
     public class ExportElementType
@@ -95,7 +130,7 @@ namespace GreenField.Gadgets.Helpers
     {
         public FontFamily ExportFontFamilyValue { get; set; }
         public string ExportFontFamilyTitle { get; set; }
-    }    
+    }
 
     public class ExportFontWeight
     {
@@ -115,7 +150,7 @@ namespace GreenField.Gadgets.Helpers
         {
             FieldInfo fi = value.GetType().GetField(value.ToString());
             DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            if (attributes!= null && attributes.Length > 0)
+            if (attributes != null && attributes.Length > 0)
             {
                 return attributes[0].Description;
             }
@@ -123,7 +158,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 return value.ToString();
             }
-        }        
+        }
     }
 
     /// <summary>
@@ -144,7 +179,7 @@ namespace GreenField.Gadgets.Helpers
         /// <summary>
         /// Filter option based on the UIElement being exported
         /// </summary>
-        public RadExportFilterOption ExportFilterOption { get; set; }        
+        public RadExportFilterOption ExportFilterOption { get; set; }
     }
 
     public static class RadExport
@@ -284,7 +319,7 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.Width = 100;
                 exportElement.VerticalAlignment = VerticalAlignment.Center;
                 exportElement.FontWeight = element.ExportElementFontWeight;
-                exportElement.TextAlignment = element.ExportElementTextAlignment;   
+                exportElement.TextAlignment = element.ExportElementTextAlignment;
             }
 
             if (exportElement.Element == ExportElement.GroupFooterRow || exportElement.Element == ExportElement.GroupFooterCell)
@@ -292,7 +327,7 @@ namespace GreenField.Gadgets.Helpers
                 if (showGroupFooters == false)
                 {
                     exportElement.Cancel = true;
-                    return; 
+                    return;
                 }
             }
 
@@ -300,7 +335,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (cellValueConverter != null)
                 {
-                    exportElement.Value = cellValueConverter();                    
+                    exportElement.Value = cellValueConverter();
                 }
             }
 
@@ -314,7 +349,7 @@ namespace GreenField.Gadgets.Helpers
                     exportElement.Value = GetAggregates(qcvGroup, column);
                 }
             }
-            
+
         }
 
         private static string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)

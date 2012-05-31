@@ -344,15 +344,12 @@ namespace GreenField.Web.Services
         /// <returns>list of user preference of entities in market performance snapshot</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketSnapshotPreference> RetrieveMarketSnapshotPreference(string userName, string snapshotName)
+        public List<MarketSnapshotPreference> RetrieveMarketSnapshotPreference(int snapshotPreferenceId)
         {
             try
             {
-                if (userName == null)
-                    return null;
-
                 ResearchEntities entity = new ResearchEntities();
-                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName, snapshotName)).ToList<MarketSnapshotPreference>();
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId)).ToList<MarketSnapshotPreference>();
                 return userPreference.OrderBy(record => record.GroupPreferenceID).ThenBy(record => record.EntityOrder).ToList();
             }
             catch (Exception ex)
@@ -659,54 +656,35 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData
-            , List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
-            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo)
+        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                foreach (string groupName in createGroupPreferenceInfo)
-                {
-                    int groupPrefId = Convert.ToInt32(entity.SetMarketSnapshotGroupPreference(marketSnapshotSelectionData.SnapshotPreferenceId, groupName).FirstOrDefault());
+                int? result = entity.UpdateMarketPerformanceSnapshot(snapshotPreferenceId, updateXML).FirstOrDefault();
 
-                    foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
-                    {
-                        if (preference.GroupName == groupName)
-                        {
-                            entity.SetMarketSnapshotEntityPreference(groupPrefId, preference.EntityName
-                                , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);
-                        }
-                    }
-                }
+                switch (result)
+	            {
+                    case 0:
+                        break;
+                    case 1:
+                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
+                    case 2:
+                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
+                    case 3:
+                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
+                    case 4:
+                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
+                    case 5:
+                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
+                    case 6:
+                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
+		            default:
+                        break;
+	            }
 
-                foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
-                {
-                    if (!createGroupPreferenceInfo.Contains(preference.GroupName))
-                    {
-                        entity.SetMarketSnapshotEntityPreference(preference.GroupPreferenceID, preference.EntityName
-                            , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);
-                    }
-                }
-
-                foreach (int groupPreferenceId in deleteGroupPreferenceInfo)
-                {
-                    entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
-                }
-
-                foreach (MarketSnapshotPreference preference in deleteEntityPreferenceInfo)
-                {
-                    entity.DeleteMarketSnapshotEntityPreference(preference.EntityPreferenceId);
-                }
-
-                foreach (MarketSnapshotPreference preference in updateEntityPreferenceInfo)
-                {
-                    entity.UpdateMarketSnapshotEntityPreference(preference.GroupPreferenceID
-                        , preference.EntityPreferenceId, preference.EntityOrder);
-                }
-
-                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName
-                    , marketSnapshotSelectionData.SnapshotName)).ToList<MarketSnapshotPreference>();
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId))
+                    .ToList<MarketSnapshotPreference>();
 
                 return userPreference;
             }
@@ -725,44 +703,67 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
+        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
                 PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
                 
-
                 Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
                 if (snapshotID == null)
                     return null;
 
-                snapshotPreference = snapshotPreference
-                    .OrderBy(record => record.GroupPreferenceID)
-                    .ThenBy(record => record.EntityOrder)
-                    .ToList();
+                int? status = entity.UpdateMarketPerformanceSnapshot(Convert.ToInt32(snapshotID), updateXML).FirstOrDefault();
 
-                string insertedGroupName = String.Empty;
-                Decimal? groupPreferenceId = 0;
-
-                foreach (MarketSnapshotPreference preference in snapshotPreference)
+                switch (status)
                 {
-                    if (preference.GroupName != insertedGroupName)
-                    {
-                        groupPreferenceId = entity.SetMarketSnapshotGroupPreference(Convert.ToInt32(snapshotID), preference.GroupName).FirstOrDefault();
-                        insertedGroupName = preference.GroupName;
-                    }
-
-                    entity.SetMarketSnapshotEntityPreference(Convert.ToInt32(groupPreferenceId), preference.EntityName, preference.EntityReturnType,
-                        preference.EntityType, preference.EntityOrder);
+                    case 0:
+                        break;
+                    case 1:
+                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
+                    case 2:
+                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
+                    case 3:
+                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
+                    case 4:
+                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
+                    case 5:
+                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
+                    case 6:
+                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
+                    default:
+                        break;
                 }
 
-                MarketSnapshotSelectionData marketSnapshotSelectionData = (entity.GetMarketSnapshotSelectionData(userName))
-                    .ToList<MarketSnapshotSelectionData>()
-                    .Where(record => record.SnapshotName == snapshotName)
-                    .FirstOrDefault();
+                //snapshotPreference = snapshotPreference
+                //    .OrderBy(record => record.GroupPreferenceID)
+                //    .ThenBy(record => record.EntityOrder)
+                //    .ToList();
 
-                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(userName, snapshotName);
+                //string insertedGroupName = String.Empty;
+                //Decimal? groupPreferenceId = 0;
+
+
+
+                //foreach (MarketSnapshotPreference preference in snapshotPreference)
+                //{
+                //    if (preference.GroupName != insertedGroupName)
+                //    {
+                //        groupPreferenceId = entity.SetMarketSnapshotGroupPreference(Convert.ToInt32(snapshotID), preference.GroupName).FirstOrDefault();
+                //        insertedGroupName = preference.GroupName;
+                //    }
+
+                //    entity.SetMarketSnapshotEntityPreference(Convert.ToInt32(groupPreferenceId), preference.EntityName, preference.EntityReturnType,
+                //        preference.EntityType, preference.EntityOrder);
+                //}
+
+                
+
+                MarketSnapshotSelectionData marketSnapshotSelectionData = RetrieveMarketSnapshotSelectionData(userName)
+                    .Where(record => record.SnapshotName == snapshotName).FirstOrDefault();
+
+                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(snapshotID));
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
                 
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;

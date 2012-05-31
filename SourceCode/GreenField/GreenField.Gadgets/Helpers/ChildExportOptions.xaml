@@ -1,7 +1,7 @@
 ﻿<controls:ChildWindow x:Class="GreenField.Gadgets.Helpers.ChildExportOptions"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" FontFamily="Arial" FontSize="7" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls">
 
     <controls:ChildWindow.Resources>
@@ -114,7 +114,7 @@
         </ControlTemplate>
     </controls:ChildWindow.Resources>
 
-    <Grid x:Name="LayoutRoot" Margin="2">
+    <Grid x:Name="LayoutRoot" Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -125,7 +125,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="txtExportOptions" Grid.Column="0" Text="Export: "/>
+            <TextBlock x:Name="txtExportOptions" Grid.Column="0" Text="Export: " VerticalAlignment="Center"/>
             <telerik:RadComboBox x:Name="cbExportOptions" Grid.Column="1" SelectedIndex="0"
                                  SelectionChanged="cbExportOptions_SelectionChanged"/>
         </Grid>
@@ -207,7 +207,7 @@
                 </Grid>
             </Grid>
         </Border>
-        <telerik:RadButton x:Name="CancelButton" Grid.Row="2" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,0,0" />
-        <telerik:RadButton x:Name="OKButton" Grid.Row="2" Content="OK" IsEnabled="False" Click="OKButton_Click" Width="75" Height="23" HorizontalAlignment="Right" Margin="0,12,79,0"/>
+        <telerik:RadButton x:Name="OKButton" Click="OKButton_Click" Grid.Row="2" Content="OK" IsEnabled="False" Width="75" Height="Auto" HorizontalAlignment="Right" Margin="0,2,79,0"/>
+        <telerik:RadButton x:Name="CancelButton" Click="CancelButton_Click" Grid.Row="2" Content="Cancel" Width="75" Height="Auto" HorizontalAlignment="Right" Margin="0,2,0,0" />        
     </Grid>
 </controls:ChildWindow>

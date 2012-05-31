@@ -14,6 +14,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using Telerik.Windows.Controls;
 using System.Windows.Printing;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -163,7 +164,7 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Prompt.ShowDialog(ex.Message);
             }
         }
 

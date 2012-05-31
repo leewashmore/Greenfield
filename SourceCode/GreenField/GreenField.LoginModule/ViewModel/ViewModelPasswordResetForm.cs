@@ -431,7 +431,7 @@ namespace GreenField.LoginModule.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogLoginException(_logger, ex);
             }
         }
@@ -472,7 +472,7 @@ namespace GreenField.LoginModule.ViewModel
                                             {
                                                 Logging.LogLoginMethodParameter(_logger, resetMethodNamespace, password, 1, _loginIdText);
                                                 Logging.LogAccountPasswordReset(_logger, LoginIdText);
-                                                MessageBox.Show(password); // Password displayed as messagebox, to be sent as email alert later
+                                                Prompt.ShowDialog(password); // Password displayed as messagebox, to be sent as email alert later
                                                 ResourceManager NotificationManager = new ResourceManager(typeof(Notifications));
                                                 NotificationText = NotificationManager.GetString("PasswordResetNotification").Replace("[LoginId]", LoginIdText);
 
@@ -486,7 +486,7 @@ namespace GreenField.LoginModule.ViewModel
                                         }
                                         catch (Exception ex)
                                         {
-                                            MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                            Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                                             Logging.LogLoginException(_logger, ex);
                                         }
 
@@ -502,7 +502,7 @@ namespace GreenField.LoginModule.ViewModel
                             }
                             catch (Exception ex)
                             {
-                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                                 Logging.LogLoginException(_logger, ex);
                             }
 
@@ -514,7 +514,7 @@ namespace GreenField.LoginModule.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogLoginException(_logger, ex);
             }
         }
@@ -544,7 +544,7 @@ namespace GreenField.LoginModule.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
                 _logger.Log("User : " + SessionManager.SESSION.UserName +"\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
             }
         }

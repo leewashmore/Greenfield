@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
-    mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"             
+    mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600" FontSize="7" FontFamily="Arial">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,13 +17,6 @@
         <telerik:RadBusyIndicator x:Name="gridBusyIndicator"                                  
                                   BusyContent="{Binding BusyIndicatorContent}"                                                        
                                   IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-            <!--telerik:StyleManager.Theme="Metro"-->
-            <!--OverlayStyle="{StaticResource RadBusyIndicatorOverlayStyle}"
-            <telerik:RadBusyIndicator.BusyContentTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding BusyIndicatorContent}" Foreground="Black"/>
-                </DataTemplate>
-            </telerik:RadBusyIndicator.BusyContentTemplate>-->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

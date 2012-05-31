@@ -55,7 +55,7 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);
                 }
@@ -77,7 +77,7 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);
                 }
@@ -108,7 +108,7 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);
                 }
@@ -149,7 +149,7 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);
                 }
@@ -191,7 +191,7 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Detail.Description + "\n" + fault.Reason.ToString());
                     if (callback != null)
                         callback(null);
                 }
@@ -227,7 +227,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -261,7 +267,13 @@ namespace GreenField.ServiceCaller
                     {
                         FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                             = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                        MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                        Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                        if (callback != null)
+                            callback(null);
+                    }
+                    else
+                    {
+                        Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                         if (callback != null)
                             callback(null);
                     }
@@ -269,7 +281,43 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        /// <summary>
+        ///// <summary>
+        ///// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
+        ///// </summary>
+        ///// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        ///// <param name="effectiveDate">Effective date as selected by the user</param>
+        ///// <param name="filterType">The filter type selected by the user</param>
+        ///// <param name="filterValue">The filter value selected by the user</param>
+        ///// <param name="callback"></param>  
+        //public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
+        //{
+        //    BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+        //    client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+        //    client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+        //    };
+        //}
         /// Service Caller method for AssetAllocation gadget
         /// </summary>
         /// <param name="fundSelectionData">Selected Portfolio</param>
@@ -299,7 +347,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -336,7 +390,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -373,7 +433,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -410,7 +476,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -447,7 +519,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -486,7 +564,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -525,14 +609,401 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
             };
         }
        
+        
         #endregion
+        
+        #region Market Performance Gadget
+        /// <summary>
+        /// service call method for retrieving list of market performance snapshots for a user
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="callback"></param>
+        public void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveMarketSnapshotSelectionDataAsync(userName);
+            client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+
+        }
+
+        /// <summary>
+        /// service call method for retrieving user preference of entities in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="snapshotName"></param>
+        /// <param name="callback"></param>
+        public void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveMarketSnapshotPreferenceAsync(snapshotPreferenceId);
+            client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// service call method for “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
+            client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// service call method to add user preferred group in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="snapshotPreferenceId"></param>
+        /// <param name="groupName"></param>
+        /// <param name="callback"></param>
+        public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
+            client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+            };
+        }
+
+        /// <summary>
+        ///  service call method to remove user preferred group from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="groupPreferenceId"></param>
+        /// <param name="callback"></param>
+        public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
+            client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+            };
+        }
+
+        /// <summary>
+        /// service call method to add user preferred entity in “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+            client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+            };
+        }
+
+        /// <summary>
+        ///  service call method to remove user preferred entity from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+            client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+            };
+        }
+
+        /// <summary>
+        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML, Action<List<MarketSnapshotPreference>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.SaveMarketSnapshotPreferenceAsync(snapshotPreferenceId, updateXML);
+            client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot” as a new snapshot
+        /// </summary>
+        /// <param name="marketSnapshotPreference"></param>
+        /// <param name="callback"></param>
+        public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
+            , string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, updateXML);
+            client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RemoveMarketSnapshotPreferenceAsync(userName, snapshotName);
+            client.RemoveMarketSnapshotPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+        #endregion
+
 
         /// <summary>
         /// Retrieves filter values for a selected filter type by calling the service
@@ -561,7 +1032,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -598,7 +1075,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -634,7 +1117,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -670,7 +1159,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -708,7 +1203,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -747,7 +1248,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -785,7 +1292,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -820,7 +1333,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -830,327 +1349,6 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Slice3
-        #region Market Performance Gadget
-        /// <summary>
-        /// service call method for retrieving list of market performance snapshots for a user
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="callback"></param>
-        public void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketSnapshotSelectionDataAsync(userName);
-            client.RetrieveMarketSnapshotSelectionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-
-        }
-
-        /// <summary>
-        /// service call method for retrieving user preference of entities in “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="snapshotName"></param>
-        /// <param name="callback"></param>
-        public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
-            client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// service call method for “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
-            client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// service call method to add user preferred group in “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="snapshotPreferenceId"></param>
-        /// <param name="groupName"></param>
-        /// <param name="callback"></param>
-        public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
-            client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
-
-        /// <summary>
-        ///  service call method to remove user preferred group from “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="groupPreferenceId"></param>
-        /// <param name="callback"></param>
-        public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
-            client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
-
-        /// <summary>
-        /// service call method to add user preferred entity in “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-            client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
-
-        /// <summary>
-        ///  service call method to remove user preferred entity from “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-            client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
-
-        /// <summary>
-        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
-            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo
-                , deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo);
-            client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot” as a new snapshot
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
-            , List<MarketSnapshotPreference> snapshotPreference, Action<PopulatedMarketPerformanceSnapshotData> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, snapshotPreference);
-            client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        public void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RemoveMarketSnapshotPreferenceAsync(userName, snapshotName);
-            client.RemoveMarketSnapshotPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        #endregion
-
         /// <summary>
         /// Service Caller Method for Relative Performance UI Data
         /// </summary>
@@ -1165,6 +1363,29 @@ namespace GreenField.ServiceCaller
             {
                 if (e.Error == null)
                 {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                     {
                         if (e.Result != null)
@@ -1206,6 +1427,29 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
             };
         }
 
@@ -1217,6 +1461,29 @@ namespace GreenField.ServiceCaller
             {
                 if (e.Error == null)
                 {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                     {
                         if (e.Result != null)
@@ -1257,7 +1524,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1288,7 +1561,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1319,7 +1598,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1350,7 +1635,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1381,10 +1672,17 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1412,10 +1710,17 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1444,7 +1749,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1480,10 +1791,17 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1516,10 +1834,17 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
         #endregion
@@ -1548,6 +1873,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1571,6 +1911,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
 
         }
@@ -1595,6 +1950,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1618,6 +1988,20 @@ namespace GreenField.ServiceCaller
                             callback(null);
                         }
                     }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }

@@ -12,14 +12,17 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <!--GridViewGroupPanelStyle-->
+                    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
+                        <Setter Property="Height" Value="10"/>
+                        <Setter Property="FontSize" Value="7"/>
+                        <Setter Property="Background" Value="#9F1D21"/>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <!--GridViewGroupPanelStyle-->
-        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
-            <Setter Property="Height" Value="10"/>
-            <Setter Property="FontSize" Value="7"/>
-            <Setter Property="Background" Value="#9F1D21"/>
-        </Style>
+        
     </helpers:ViewBaseUserControl.Resources>
 
 

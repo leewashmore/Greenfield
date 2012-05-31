@@ -89,7 +89,7 @@ namespace GreenField.DashboardModule.Views
             catch (Exception ex)
             {
                 //_logger.Log("User : " + SessionManager.SESSION.UserName +"\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
         }
 
@@ -187,7 +187,7 @@ namespace GreenField.DashboardModule.Views
             catch (Exception ex)
             {
                 _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
         }
 
@@ -224,20 +224,20 @@ namespace GreenField.DashboardModule.Views
                         if (result != null)
                         {
                             if ((bool)result)
-                                MessageBox.Show("User Preference saved");
+                                Prompt.ShowDialog("User Preference saved");
                             else
-                                MessageBox.Show("User Preference save failed");
+                                Prompt.ShowDialog("User Preference save failed");
                         }
                         else
                         {
-                            MessageBox.Show("User Preference save failed");
+                            Prompt.ShowDialog("User Preference save failed");
                         }
                     });
             }
             catch (Exception ex)
             {
                 _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
         }
 
@@ -295,7 +295,7 @@ namespace GreenField.DashboardModule.Views
             catch (Exception ex)
             {
                 _logger.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
 
             return content;
