@@ -25,7 +25,7 @@ namespace GreenField.Common.Helper
 
         public BenchmarkSelectionData BenchmarkSelectionData { get; set; }
 
-        private DateTime? _effectiveDate = DateTime.Now.AddDays(-1).Date;
+        private DateTime? _effectiveDate = DateTime.SpecifyKind(DateTime.Now.AddDays(-1).Date, DateTimeKind.Unspecified);
         public DateTime? EffectiveDate
         {
             get

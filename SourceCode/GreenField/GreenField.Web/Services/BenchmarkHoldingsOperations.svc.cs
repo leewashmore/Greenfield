@@ -335,7 +335,9 @@ namespace GreenField.Web.Services
 
                     //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
                     GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
-                            .Where(rec => rec.TICKER == record.TICKER)
+                            .Where(rec => rec.ISSUE_NAME == record.ISSUE_NAME && 
+                                   rec.BENCHMARK_ID == record.BENCHMARK_ID && 
+                                   rec.PORTFOLIO_DATE == record.PORTFOLIO_DATE )
                             .FirstOrDefault();
                     decimal? benchmarkWeight = specificHolding != null ? Convert.ToDecimal(specificHolding.BENCHMARK_WEIGHT) : Convert.ToDecimal(null);
 
