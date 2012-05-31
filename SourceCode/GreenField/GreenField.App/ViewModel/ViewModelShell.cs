@@ -394,7 +394,7 @@ namespace GreenField.App.ViewModel
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
-                    if (_dbInteractivity != null && _filterVisibility == Visibility.Visible)
+                    if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible)
                     {
                         BusyIndicatorContent = "Retrieving...";
                         if (ShellFilterDataLoadEvent != null)
@@ -588,6 +588,7 @@ namespace GreenField.App.ViewModel
                 {
                     if (value == "Show Everything")
                     {
+                        this.FilterValueVisibility = Visibility.Collapsed;
                         FilterSelectionData filterSelData = new FilterSelectionData();
                         filterSelData.Filtertype = value;
                         filterSelData.FilterValues = string.Empty;
@@ -595,9 +596,13 @@ namespace GreenField.App.ViewModel
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
+                        //this.FilterVisibility = Visibility.Collapsed;
+                       
+                       
                     }
                     else
                     {
+                        this.FilterValueVisibility = Visibility.Visible;
                         FilterSelectorInfo = FilterSelectionInfo
                                             .Where(record => record.Filtertype == value)
                                             .ToList();
@@ -665,14 +670,14 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
-        private Visibility _filterVisibility = Visibility.Collapsed;
-        public Visibility FilterVisibility
+        private Visibility _filterTypeVisibility = Visibility.Collapsed;
+        public Visibility FilterTypeVisibility
         {
-            get { return _filterVisibility; }
+            get { return _filterTypeVisibility; }
             set
             {
-                _filterVisibility = value;
-                RaisePropertyChanged(() => this.FilterVisibility);
+                _filterTypeVisibility = value;
+                RaisePropertyChanged(() => this.FilterTypeVisibility);
                 if (value == Visibility.Visible && FilterSelectionInfo == null)
                 {
                     if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
@@ -685,6 +690,32 @@ namespace GreenField.App.ViewModel
                         _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Stores visibility property of the filter selector for holdings pie chart
+        /// </summary>
+        private Visibility _filterValueVisibility = Visibility.Collapsed;
+        public Visibility FilterValueVisibility
+        {
+            get { return _filterValueVisibility; }
+            set
+            {
+                _filterValueVisibility = value;
+                RaisePropertyChanged(() => this.FilterValueVisibility);
+                //if (value == Visibility.Visible && FilterSelectionInfo == null)
+                //{
+                //    if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
+                //    {
+                //        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                //        if (ShellFilterDataLoadEvent != null)
+                //        {
+                //            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                //        }
+                //        _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                //    }
+                //}
             }
         }
 
@@ -3078,7 +3109,8 @@ namespace GreenField.App.ViewModel
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;            
-            FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
+            FilterTypeVisibility = ToolBoxItemVisibility.FILTER_TYPE_SELECTOR_VISIBILITY;
+            FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
             

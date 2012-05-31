@@ -728,11 +728,11 @@ namespace GreenField.Web.Services
                         {
                             case "Region":
                                 var q = from p in data
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var k = from p in portfolioData
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -768,11 +768,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Country":
                                 var l = from p in data
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var c = from p in portfolioData
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -808,12 +808,12 @@ namespace GreenField.Web.Services
                                 break;
                             case "Industry":
                                 var m = from p in data
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
 
                                 var s = from p in portfolioData
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -846,13 +846,13 @@ namespace GreenField.Web.Services
                                 }
 
                                 break;
-                            case "Sector":
+                            case "Sector":                                
                                 var n = from p in data
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.GICS_INDUSTRY_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var d = from p in portfolioData
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.GICS_INDUSTRY_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -878,6 +878,43 @@ namespace GreenField.Web.Services
                                     }
                                 }
                                 foreach (var a in d)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
+                                }   
+                                break;
+                            case "Show Everything":
+                               var v=  from p in data                                      
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+
+                               var h = from p in portfolioData                                     
+                                       group p by p.GICS_SECTOR_NAME into g
+                                       select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                               foreach (var a in v)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                               foreach (var a in v)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
+                                }
+                               foreach (var a in h)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in h)
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
@@ -941,11 +978,11 @@ namespace GreenField.Web.Services
                         {
                             case "Region":
                                 var q = from p in data
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE==filterValue
                                         group p by p.ISO_COUNTRY_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var k = from p in portfolioData
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE == filterValue
                                         group p by p.ISO_COUNTRY_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
                                 foreach (var a in q)
@@ -979,11 +1016,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Country":
                                 var l = from p in data
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var c = from p in portfolioData
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -1020,11 +1057,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Industry":
                                 var m = from p in data
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var s = from p in portfolioData
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -1059,13 +1096,16 @@ namespace GreenField.Web.Services
                                 break;
                             case "Sector":
                                 var n = from p in data
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var d = from p in portfolioData
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                                if (n == null || d == null)
+                                    return result;
 
                                 foreach (var a in n)
                                 {
@@ -1094,6 +1134,45 @@ namespace GreenField.Web.Services
                                         continue;
                                     CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
+                                break;
+
+                            case "Show Everything":
+                                var v = from p in data
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+
+                                var h = from p in portfolioData
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                                foreach (var a in v)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in v)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
+                                }
+                                foreach (var a in h)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in h)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
+                                }
+
                                 break;
                             default:
                                 break;
