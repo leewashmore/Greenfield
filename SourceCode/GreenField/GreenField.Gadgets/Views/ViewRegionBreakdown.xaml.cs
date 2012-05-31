@@ -51,6 +51,22 @@ namespace GreenField.Gadgets.Views
                 this.gridBusyIndicator.IsBusy = false;
         }
 
+        /// <summary>
+        /// Disabling the indentation when grouping is applied in the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgRegionBreakdown_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            //var row = e.Row as GridViewRow;
+            //if (row != null)
+            //{
+            //    var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
+            //    if (indent != null)
+            //    { indent.Visibility = Visibility.Collapsed; }
+            //}
+        }
+
         #endregion
 
         /// <summary>

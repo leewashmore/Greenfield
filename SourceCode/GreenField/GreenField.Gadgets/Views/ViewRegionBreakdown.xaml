@@ -20,8 +20,7 @@
                         <Setter Property="Height" Value="10"/>
                         <Setter Property="FontSize" Value="7"/>
                         <Setter Property="Background" Value="#9F1D21"/>
-                    </Style>
-                    
+                    </Style>                   
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>        
@@ -96,14 +95,17 @@
                                          ScrollMode="Deferred"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
-                                         ShowGroupFooters="True"
+                                         ShowGroupFooters="False"
+                                         ShowColumnFooters="False"
                                          FontSize="7" 
                                          FontFamily="Arial" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupPanelBackground="#9F1D21"
-                                         >
+                                         RowLoaded="dgRegionBreakdown_RowLoaded"
+                                         AlternateRowBackground="#d8d5d4"
+                                         AlternationCount="2">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Region" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>

@@ -166,10 +166,10 @@ namespace GreenField.Web.Services
                         continue;
 
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                     //Retrieve Benchmark Weight 
-                    decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
+                    decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()));
 
                     //Calculate Active Position
                     decimal? activePosition = portfolioWeight - benchmarkWeight;
@@ -250,7 +250,7 @@ namespace GreenField.Web.Services
                         continue;
 
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                     //Retrieve Benchmark Weight
                     decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
@@ -331,7 +331,7 @@ namespace GreenField.Web.Services
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / sumMarketValuePortfolio;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) * 100;
 
                     //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
                     GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
