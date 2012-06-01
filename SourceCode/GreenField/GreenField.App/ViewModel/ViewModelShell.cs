@@ -432,7 +432,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "1W", "MTD", "QTD", "YTD", "1Y" };
+                return new List<String> { "1D","1W", "MTD", "QTD", "YTD", "1Y" };
             }
         }
 

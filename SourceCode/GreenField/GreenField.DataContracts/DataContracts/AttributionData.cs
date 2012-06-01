@@ -16,6 +16,24 @@ namespace GreenField.DataContracts
        public String CountryName { get; set; }
 
        [DataMember]
+       public Decimal? PorRcAvgWgt1d { get; set; }
+
+       [DataMember]
+       public Decimal? Bm1RcAvgWgt1d { get; set; }
+
+       [DataMember]
+       public Decimal? FPorAshRcCtn1d { get; set; }
+
+       [DataMember]
+       public Decimal? FBm1AshRcCtn1d { get; set; }
+
+       [DataMember]
+       public Decimal? FBm1AshAssetAlloc1d { get; set; }
+
+       [DataMember]
+       public Decimal? FBm1AshSecSelec1d { get; set; }
+
+       [DataMember]
        public Decimal? PorRcAvgWgt1w { get; set; }
 
        [DataMember]

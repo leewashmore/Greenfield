@@ -126,6 +126,25 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         switch (value)
                         {
+                            case "1D":
+                                List<PeriodAttributeData> resultd = new List<PeriodAttributeData>();
+                                for (int i = 0; i < AttributionDataInfo.Count; i++)
+                                {
+                                    PeriodAttributeData entry = new PeriodAttributeData();
+                                    entry.Country = AttributionDataInfo[i].Country;
+                                    entry.CountryName = AttributionDataInfo[i].CountryName;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1d;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1d;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1d;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1d;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1d;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1d;
+                                    resultd.Add(entry);
+                                }
+                                PeriodAttributionInfo = resultd;
+                                if (null != attributionDataLoadedEvent)
+                                    attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                                break;
                             case "1W":                                
                                 List<PeriodAttributeData> result = new List<PeriodAttributeData>();                                    
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
@@ -145,7 +164,7 @@ namespace GreenField.Gadgets.ViewModels
                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "MTD":
-                                 List<PeriodAttributeData> result3M = new List<PeriodAttributeData>();                                    
+                                 List<PeriodAttributeData> resultMtd = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
@@ -156,14 +175,14 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnMtd;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
-                                      result3M.Add(entry);
+                                    resultMtd.Add(entry);
                                     }
-                                PeriodAttributionInfo = result3M;
+                                 PeriodAttributionInfo = resultMtd;
                                 if (null != attributionDataLoadedEvent)
                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                             case "QTD":
-                                List<PeriodAttributeData> result6M = new List<PeriodAttributeData>();                                    
+                                List<PeriodAttributeData> resultQtd = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
@@ -174,9 +193,9 @@ namespace GreenField.Gadgets.ViewModels
                                     entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnQtd;
                                     entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
                                     entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
-                                      result6M.Add(entry);
+                                    resultQtd.Add(entry);
                                     }
-                                  PeriodAttributionInfo = result6M;
+                                 PeriodAttributionInfo = resultQtd;
                                   if (null != attributionDataLoadedEvent)
                                       attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;

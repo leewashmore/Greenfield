@@ -1481,6 +1481,12 @@ namespace GreenField.Web.Services
                     entry.FBm1AshRcCtn1w = attributionData[i].F_BM1_ASH_RC_CTN_1W;
                     entry.FBm1AshAssetAlloc1w = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1W;
                     entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
+                    entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
+                    entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
+                    entry.FPorAshRcCtn1d = attributionData[i].F_POR_ASH_RC_CTN_1D;
+                    entry.FBm1AshRcCtn1d = attributionData[i].F_BM1_ASH_RC_CTN_1D;
+                    entry.FBm1AshAssetAlloc1d = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1D;
+                    entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
                     entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
                     entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
                     entry.FPorAshRcCtnMtd = attributionData[i].F_POR_ASH_RC_CTN_MTD;
