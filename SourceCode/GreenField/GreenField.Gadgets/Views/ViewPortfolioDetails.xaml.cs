@@ -56,6 +56,12 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        private static class ExportTypes
+        {
+            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+        }
+
+
         #region Constructor
 
         /// <summary>
@@ -91,31 +97,24 @@ namespace GreenField.Gadgets.Views
         #region ExportToExcel/PDF/Print
 
         /// <summary>
-        /// Event handler when user wants to Export the Grid to ExcelSheet
+        /// Method to catch Click Event of Export to Excel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            string extension = "xls";
-            string selectedItem = "Excel";
-            ExportFormat format = ExportFormat.Html;
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = extension;
-            dialog.Filter = String.Format("{1} files (*.{0})|*.{0}|All files (*.*)|*.*", extension, selectedItem);
-            dialog.FilterIndex = 1;
-
-            if (dialog.ShowDialog() == true)
+            try
             {
-                using (Stream stream = dialog.OpenFile())
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    GridViewExportOptions exportOptions = new GridViewExportOptions();
-                    exportOptions.Format = format;
-                    exportOptions.ShowColumnFooters = true;
-                    exportOptions.ShowColumnHeaders = true;
-                    exportOptions.ShowGroupFooters = true;
-                    dgPortfolioDetails.Export(stream, exportOptions);
-                }
+                    new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },         
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_PORTFOLIO_DETAILS_UI);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -412,6 +411,8 @@ namespace GreenField.Gadgets.Views
                 DataContextPortfolioDetails.GroupingColumn = "No Grouping";
             }
             SetGroupedData();
+            this.dgPortfolioDetails.GroupPanelItemStyle = this.Resources["GridViewGroupPanelItemStyle"] as Style;
+
         }
 
         /// <summary>
@@ -474,5 +475,36 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            var row = e.Row as GridViewRow;
+            if (row != null)
+            {
+                var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
+                if (indent != null)
+                {
+                    indent.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            var groupHeaderIndentCell = dgPortfolioDetails.ChildrenOfType<GridViewHeaderIndentCell>().FirstOrDefault();
+            if (groupHeaderIndentCell != null)
+            {
+                groupHeaderIndentCell.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void dgPortfolioDetails_Grouped(object sender, GridViewGroupedEventArgs e)
+        {
+            var groupPanelItem = dgPortfolioDetails.ChildrenOfType<GridViewGroupPanelItem>().FirstOrDefault();
+            if (groupPanelItem != null)
+            {
+                groupPanelItem.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
+                groupPanelItem.Foreground = new SolidColorBrush(Colors.White);
+                groupPanelItem.FontFamily = new FontFamily("Arial");
+                groupPanelItem.FontSize = 15;
+            }
+        }
     }
 }

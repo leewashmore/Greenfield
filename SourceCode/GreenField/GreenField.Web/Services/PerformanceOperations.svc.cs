@@ -121,7 +121,7 @@ namespace GreenField.Web.Services
                     Where(a => a.PORTFOLIO == portfolioId
                         && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
                         && a.TO_DATE >= startDate).ToList();
-
+                
                 //Checking contents of Data fetched from Dimension
                 if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
                     return result;
@@ -663,7 +663,7 @@ namespace GreenField.Web.Services
                 int? result = entity.UpdateMarketPerformanceSnapshot(snapshotPreferenceId, updateXML).FirstOrDefault();
 
                 switch (result)
-	            {
+                {
                     case 0:
                         break;
                     case 1:
@@ -678,9 +678,9 @@ namespace GreenField.Web.Services
                         throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
                     case 6:
                         throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
-		            default:
+                    default:
                         break;
-	            }
+                }
 
                 List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId))
                     .ToList<MarketSnapshotPreference>();
@@ -708,7 +708,7 @@ namespace GreenField.Web.Services
             try
             {
                 PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
-                
+
                 Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
                 if (snapshotID == null)
                     return null;
@@ -757,14 +757,14 @@ namespace GreenField.Web.Services
                 //        preference.EntityType, preference.EntityOrder);
                 //}
 
-                
+
 
                 MarketSnapshotSelectionData marketSnapshotSelectionData = RetrieveMarketSnapshotSelectionData(userName)
                     .Where(record => record.SnapshotName == snapshotName).FirstOrDefault();
 
                 List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(snapshotID));
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
-                
+
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
                 result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData;
                 return result;
@@ -799,7 +799,7 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-       #region Relative Performance Gadgets
+        #region Relative Performance Gadgets
         /// <summary>
         /// Retrieves list of sector information for a particular composite/fund and effective date.
         /// </summary>
@@ -842,7 +842,7 @@ namespace GreenField.Web.Services
                 }
                 result = result.Distinct().ToList();
                 return result;
-           }
+            }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
@@ -1180,7 +1180,7 @@ namespace GreenField.Web.Services
                         BenchmarkWeight = benchmarkWeight,
                         ActivePosition = activePosition
                     });
-               }
+                }
 
                 return result.OrderByDescending(t => t.ActivePosition).ToList();
             }
@@ -1255,7 +1255,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-       
+
         #region Relative Performance Helper Methods
         /// <summary>
         /// retrieving data from GF_PERF_DAILY_ATTRIBUTION view for relative performance gadgets

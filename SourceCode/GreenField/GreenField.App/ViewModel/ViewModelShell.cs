@@ -175,11 +175,12 @@ namespace GreenField.App.ViewModel
         private List<EntitySelectionData> _entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
-            get 
+            get
             {
                 if (_entitySelectionInfo == null)
                     _entitySelectionInfo = new List<EntitySelectionData>();
-                return _entitySelectionInfo; }
+                return _entitySelectionInfo;
+            }
             set
             {
                 _entitySelectionInfo = value;
@@ -483,14 +484,14 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-               
+
                 return _countryTypeInfo;
 
             }
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();               
+                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -510,7 +511,7 @@ namespace GreenField.App.ViewModel
 
             }
         }
-       
+
         private String _countryCode;
         public String CountryCode
         {
@@ -539,7 +540,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-         
+
 
 
         /// <summary>
@@ -554,8 +555,8 @@ namespace GreenField.App.ViewModel
                 _countrySelectorVisibility = value;
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
                 if (value == Visibility.Visible && CountryTypeInfo == null)
-                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
-             
+                    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+
             }
         }
 
@@ -729,7 +730,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _marketCapCashSelectorVisibility = value;
-                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);               
+                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);
             }
         }
         #endregion
@@ -837,7 +838,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        
+
         /// <summary>
         /// Stores checked-unchecked value for ExCash checkbox
         /// </summary>
@@ -849,13 +850,13 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-               
-                    _selectorPayload.IsExCashSecurityData = value;
-                    _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
-               
+
+                _selectorPayload.IsExCashSecurityData = value;
+                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
+
             }
         }
-    
+
 
         #endregion
 
@@ -870,10 +871,10 @@ namespace GreenField.App.ViewModel
             set
             {
                 _mktCapExCashSelectorVisibility = value;
-                RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);                
+                RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);
             }
         }
-        
+
         #endregion
         #endregion
 
@@ -3108,12 +3109,12 @@ namespace GreenField.App.ViewModel
             //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
-            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;            
+            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
             FilterTypeVisibility = ToolBoxItemVisibility.FILTER_TYPE_SELECTOR_VISIBILITY;
             FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
-            
+
         }
 
 

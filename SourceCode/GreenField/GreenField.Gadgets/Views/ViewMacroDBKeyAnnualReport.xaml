@@ -16,7 +16,6 @@
                     <!--GRID Buttons-->
 
                     <!--LeftButton-->
-
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellLeftButtonStyle">
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
@@ -32,7 +31,6 @@
                     </Style>
 
                     <!--Right Button-->
-
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellRightButtonStyle">
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
@@ -68,7 +66,7 @@
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                            DisplayAfter="0">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                    <telerik:RadGridView  Name="dgMacroDBKeyReport" 
+                    <telerik:RadGridView Name="dgMacroDBKeyReport" 
                                          AutoGenerateColumns="True"                                                                                    
                                          CanUserSelect="False" 
                                          CanUserReorderColumns="False" 
@@ -83,6 +81,8 @@
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="False"
                                          FontSize="7" 
+                                         AlternateRowBackground="#d8d5d4"
+                                         AlternationCount="2"
                                          FontFamily="Arial" 
                                          ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"                                         

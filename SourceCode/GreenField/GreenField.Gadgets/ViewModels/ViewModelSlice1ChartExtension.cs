@@ -230,6 +230,39 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private double _axisXMinValue;
+        public double AxisXMinValue
+        {
+            get { return _axisXMinValue; }
+            set
+            {
+                _axisXMinValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMinValue);
+            }
+        }
+
+        private double _axisXMaxValue;
+        public double AxisXMaxValue
+        {
+            get { return _axisXMaxValue; }
+            set
+            {
+                _axisXMaxValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMaxValue);
+            }
+        }
+
+        private int _axisXStep;
+        public int AxisXStep
+        {
+            get { return _axisXStep; }
+            set
+            {
+                _axisXStep = value;
+
+            }
+        }
+
         #region ICommand
 
         /// <summary>

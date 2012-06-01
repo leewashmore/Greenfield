@@ -1,7 +1,10 @@
-﻿<ResourceDictionary
+﻿<ResourceDictionary xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit" 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:layout="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Layout.Toolkit"
+    xmlns:my="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Data"
+    xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=System.Windows.Controls.Data"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
 
     <!--Grid Styles-->
@@ -33,6 +36,9 @@
     <!--GridViewGroupRow Style-->
     <Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
         <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
     </Style>
     <!--Grid Styles End-->
 
@@ -43,6 +49,17 @@
         <Setter Property="MaxHeight" Value="15"/>
     </Style>
 
+    <!--GroupPanelItemStyle-->
+    <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
+    </Style>
+
+    <Style TargetType="telerik:GridViewIndentCell" x:Name="GridViewIndentCellStyle">
+        <Setter Property="Background" Value="Black"/>
+    </Style>
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
@@ -53,14 +70,10 @@
     </Style>
 
     <!--Chart Item Label Style-->
-    <Style x:Key="ItemLabelStyle"
-       TargetType="TextBlock">
-        <Setter Property="Foreground"
-            Value="Black" />
-        <Setter Property="FontSize"
-            Value="8" />
-        <Setter Property="FontStyle"
-            Value="Normal" />
+    <Style x:Key="ItemLabelStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="FontStyle" Value="Normal" />
     </Style>
 
     <!--Chart Legend Style-->
@@ -85,7 +98,7 @@
 
 
     <!--RadChart Axis Title Styles-->
-    <Thickness x:Key="AxisTitleMargin">1,1,1,1</Thickness>
+    <Thickness x:Key="AxisTitleMargin">0.1,0.1,0.1,0.1</Thickness>
     <Style x:Key="AxisTitleBorderStyle"
             TargetType="Border">
         <Setter Property="Margin"
@@ -111,8 +124,8 @@
         <Setter Property="CornerRadius"
                 Value="1" />
     </Style>
-    
-    
+
+
     <Style x:Key="AxisTitleStyle" TargetType="telerik:AxisTitle">
         <Setter Property="HorizontalAlignment"
                 Value="Center" />
@@ -133,7 +146,7 @@
                 <ControlTemplate TargetType="telerik:AxisTitle">
                     <Border Style="{TemplateBinding BorderStyle}">
                         <Border Style="{TemplateBinding InnerBorderStyle}">
-                            <ContentControl Margin="1,1,1,1"
+                            <ContentControl Margin="0.1,0.1,0.1,0.1"
                                             FontFamily="Arial"
                                             FontSize="7"
                                             Foreground="{TemplateBinding Foreground}"
@@ -339,19 +352,25 @@
                     <Border BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         Background="{TemplateBinding Background}">
-                        <Grid Margin="{TemplateBinding Padding}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <ContentControl ContentTemplate="{TemplateBinding HeaderTemplate}"
+                        <telerik:LayoutTransformControl>
+                            <telerik:LayoutTransformControl.LayoutTransform>
+                                <RotateTransform Angle="90"/>
+                            </telerik:LayoutTransformControl.LayoutTransform>
+
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <ContentControl ContentTemplate="{TemplateBinding HeaderTemplate}"
                                         Content="{TemplateBinding Header}"
                                         Foreground="{TemplateBinding Foreground}"
                                         FontWeight="{TemplateBinding HeaderFontWeight}" />
-                            <ItemsPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        Grid.Row="1"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Grid>
+                                <ItemsPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            Grid.Row="1"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </telerik:LayoutTransformControl>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -380,11 +399,46 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-
     <!--RadChart Legend Style End-->
 
 
+    <!--LegendItemStyle-->
+    <Style x:Key="CustomLegendItem" TargetType="telerik:ChartLegendItem">
+        <Setter Property="Padding" Value="5,0,5,0" />
+        <Setter Property="Margin" Value="0,3,0,2" />
+        <Setter Property="Template" >
+            <Setter.Value>
+                <ControlTemplate TargetType="telerik:ChartLegendItem">
+                    <Grid x:Name="PART_MainContainer" Background="{TemplateBinding Background}"
+                          HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Path x:Name="PART_LegendItemMarker" 
+                             Width="16"
+                             Height="16"
+                             Margin="{TemplateBinding Margin}"
+                             StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
+                             Style="{TemplateBinding ItemStyle}"
+                             Stretch="Fill">
+                            <Path.Data>
+                                <PathGeometry x:Name="PART_ItemMarkerGeometry" />
+                            </Path.Data>
+                        </Path>
+
+                        <TextBlock x:Name="PART_TextBlock"
+                                   Grid.Column="1"
+                                   Padding="{TemplateBinding Padding}"
+                                   Margin="{TemplateBinding Margin}"
+                                   Foreground="{TemplateBinding Foreground}"
+                                   Text="{TemplateBinding Label}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--LegendItemStyleEnd-->
 
 
 </ResourceDictionary>

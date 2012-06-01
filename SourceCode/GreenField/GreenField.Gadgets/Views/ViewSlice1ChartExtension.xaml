@@ -169,27 +169,25 @@
                             </telerik:RadChart.PaletteBrushes>
 
                             <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView ChartLegendPosition="Bottom" >
+                                <telerik:ChartDefaultView ChartLegendPosition="Right" >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea  SmartLabelsEnabled="True" 
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chChartExtensionLegend" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
-                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="0.5" />
+                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
                                             </telerik:ChartArea.ZoomScrollSettingsX>
                                             <telerik:ChartArea.ZoomScrollSettingsY>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                             </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX AutoRange="True"  IsDateTime="True" 
-                                                               LayoutMode="Normal" IsZeroBased="False" 
-                                                               Step="10" TicksDistance="50"
-                                                               LabelStep="2" DefaultLabelFormat="d">
+                                                <telerik:AxisX AutoRange="False"  IsDateTime="True" IsZeroBased="False" MinValue="{Binding AxisXMinValue}"
+                                                               LayoutMode="Normal"  LabelStep="2" TicksDistance="50" MaxValue="{Binding AxisXMaxValue}"
+                                                               DefaultLabelFormat="d">
                                                     <telerik:AxisX.AxisStyles>
-                                                        <telerik:AxisStyles                                                                
-                                                                ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
+                                                        <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                     </telerik:AxisX.AxisStyles>
                                                 </telerik:AxisX>
                                             </telerik:ChartArea.AxisX>
@@ -197,7 +195,7 @@
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
                                                                AutoRange="True" IsZeroBased="False" ExtendDirection="None" >
                                                     <telerik:AxisY.AxisStyles>
-                                                        <telerik:AxisStyles                                                                
+                                                        <telerik:AxisStyles TitleStyle="{StaticResource AxisTitleStyle}"                                                               
                                                                 ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                     </telerik:AxisY.AxisStyles>
                                                 </telerik:AxisY>
@@ -207,8 +205,7 @@
                                                 <telerik:AxisY x:Name="Secondary" AxisName="Secondary" Title="Transaction"  
                                                                 AutoRange="True" >
                                                     <telerik:AxisY.AxisStyles>
-                                                        <telerik:AxisStyles                                                                
-                                                                ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
+                                                        <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                     </telerik:AxisY.AxisStyles>
                                                 </telerik:AxisY>
                                             </telerik:ChartArea.AdditionalYAxes>
@@ -224,9 +221,7 @@
                             </telerik:RadChart.DefaultView>
 
                             <telerik:RadChart.SeriesMappings>
-
                                 <telerik:SeriesMapping LegendLabel="{Binding Ticker}">
-
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
                                             <telerik:GroupingSettings.GroupDescriptors>
@@ -239,7 +234,7 @@
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                     ItemToolTipFormat="Security: #Ticker, Units Traded : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                     ItemToolTipFormat="Units Traded : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping DataPointMember="YValue" FieldName="AmountTraded" />
                                     <telerik:ItemMapping DataPointMember="XValue" FieldName="ToDate" />
@@ -257,18 +252,16 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Security: #Ticker, Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping FieldName="PriceReturn" DataPointMember="YValue" />
                                     <telerik:ItemMapping FieldName="ToDate" DataPointMember="XValue" />
                                 </telerik:SeriesMapping>
-
                             </telerik:RadChart.SeriesMappings>
                         </telerik:RadChart>
                     </telerik:RadBusyIndicator>
                 </Border>
             </Grid>
         </Grid>
-
     </Grid>
 </helpers:ViewBaseUserControl>

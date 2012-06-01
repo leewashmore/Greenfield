@@ -29,20 +29,18 @@
   <xs:element name="ArrayOfBenchmarkChartReturnData" nillable="true" type="tns:ArrayOfBenchmarkChartReturnData" />
   <xs:complexType name="BenchmarkChartReturnData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FiveY" type="xs:decimal" />
       <xs:element minOccurs="0" name="FromDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="IndexedValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTD" type="xs:decimal" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="OneM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneD" type="xs:decimal" />
       <xs:element minOccurs="0" name="OneY" type="xs:decimal" />
       <xs:element minOccurs="0" name="PreviousYearData" type="xs:decimal" />
-      <xs:element minOccurs="0" name="SI" type="xs:decimal" />
-      <xs:element minOccurs="0" name="SixM" type="xs:decimal" />
-      <xs:element minOccurs="0" name="ThreeM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTD" type="xs:decimal" />
       <xs:element minOccurs="0" name="ThreePreviousYearData" type="xs:decimal" />
-      <xs:element minOccurs="0" name="ThreeY" type="xs:decimal" />
       <xs:element minOccurs="0" name="TwoPreviousYearData" type="xs:decimal" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WTD" type="xs:decimal" />
       <xs:element minOccurs="0" name="YTD" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
@@ -83,7 +81,7 @@
       <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SectorReturn" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ToDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />

@@ -29,7 +29,7 @@ namespace GreenField.Web.Helpers
             sumDirtyValuePC = portfolioDetailsData.Sum(a => a.DirtyValuePC);
             sumModelWeight = portfolioDetailsData.Sum(a => a.AshEmmModelWeight);
 
-            //Removed for DEmo
+            //Removed for Demo
             //if (sumModelWeight == 0 || sumDirtyValuePC == 0)
             //    return new List<PortfolioDetailsData>();
 
@@ -39,7 +39,7 @@ namespace GreenField.Web.Helpers
                 item.RePortfolioWeight = item.PortfolioWeight;
                 item.ReBenchmarkWeight = item.BenchmarkWeight;
                 item.ReAshEmmModelWeight = item.AshEmmModelWeight;
-                item.ActivePosition = item.AshEmmModelWeight - item.BenchmarkWeight;
+                item.ActivePosition = item.PortfolioWeight - item.BenchmarkWeight;
                 //item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight;
             }
             return portfolioDetailsData;

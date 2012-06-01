@@ -13,7 +13,7 @@ namespace GreenField.DataContracts
     public class ChartExtensionData
     {
         [DataMember]
-        public DateTime? ToDate { get; set; }
+        public DateTime ToDate { get; set; }
 
         [DataMember]
         public string Ticker { get; set; }

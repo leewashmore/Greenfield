@@ -63,7 +63,6 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
             this.chVolume.DataBound += dataContextSource.ChartDataBound;
             ApplyChartStyles();
-            this.chPricing.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -77,6 +76,7 @@ namespace GreenField.Gadgets.Views
             this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPricing.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
             this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
             this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
@@ -133,11 +133,15 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
                     new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
                     new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
                     
                 };
+                RadExportOptions dataGridOption = new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER };
+
+                if (dgPricing.ItemsSource != null && dgPricing.Items.Count > 0)
+                    RadExportOptionsInfo.Add(dataGridOption);
+
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();
             }
