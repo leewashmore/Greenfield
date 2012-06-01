@@ -376,7 +376,7 @@ namespace GreenField.Gadgets.ViewModels
 
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -415,7 +415,7 @@ namespace GreenField.Gadgets.ViewModels
 
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -435,7 +435,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (null != MultiLineBenchmarkDataLoadedEvent)
                         MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-
+                    _periodSelectionData = periodSelectionData;
                     MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, periodSelectionData);
 
                     if (null != MultiLineBenchmarkDataLoadedEvent)
@@ -449,7 +449,7 @@ namespace GreenField.Gadgets.ViewModels
 
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -524,6 +524,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     MultiLineBenchmarkUIChartData.Clear();
                     MultiLineBenchmarkUIChartData.AddRange(result);
+                    MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, _periodSelectionData);
                 }
                 else
                 {
@@ -534,7 +535,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -564,7 +565,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -635,27 +636,27 @@ namespace GreenField.Gadgets.ViewModels
         {
             switch (periodType)
             {
-                case "1M":
+                case "1D":
                     {
                         foreach (BenchmarkChartReturnData item in plottedSeries)
                         {
-                            item.IndexedValue = item.OneM;
+                            item.IndexedValue = item.OneD;
                         }
                         break;
                     }
-                case "3M":
+                case "WTD":
                     {
                         foreach (BenchmarkChartReturnData item in plottedSeries)
                         {
-                            item.IndexedValue = item.ThreeM;
+                            item.IndexedValue = item.WTD;
                         }
                         break;
                     }
-                case "6M":
+                case "MTD":
                     {
                         foreach (BenchmarkChartReturnData item in plottedSeries)
                         {
-                            item.IndexedValue = item.SixM;
+                            item.IndexedValue = item.MTD;
                         }
                         break;
                     }
@@ -667,7 +668,15 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         break;
                     }
-                case "1Y":
+                case "QTD":
+                    {
+                        foreach (BenchmarkChartReturnData item in plottedSeries)
+                        {
+                            item.IndexedValue = item.QTD;
+                        }
+                        break;
+                    }
+                case "OneY":
                     {
                         foreach (BenchmarkChartReturnData item in plottedSeries)
                         {
@@ -675,35 +684,11 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         break;
                     }
-                case "3Y":
-                    {
-                        foreach (BenchmarkChartReturnData item in plottedSeries)
-                        {
-                            item.IndexedValue = item.ThreeY;
-                        }
-                        break;
-                    }
-                case "5Y":
-                    {
-                        foreach (BenchmarkChartReturnData item in plottedSeries)
-                        {
-                            item.IndexedValue = item.FiveY;
-                        }
-                        break;
-                    }
-                case "SI":
-                    {
-                        foreach (BenchmarkChartReturnData item in plottedSeries)
-                        {
-                            item.IndexedValue = item.SI;
-                        }
-                        break;
-                    }
                 default:
                     {
                         foreach (BenchmarkChartReturnData item in plottedSeries)
                         {
-                            item.IndexedValue = item.OneM;
+                            item.IndexedValue = item.OneD;
                         }
                         break;
                     }
@@ -714,3 +699,4 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 }
+

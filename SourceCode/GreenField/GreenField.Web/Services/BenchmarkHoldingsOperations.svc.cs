@@ -1307,37 +1307,37 @@ namespace GreenField.Web.Services
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
             List<HeatMapData> result = new List<HeatMapData>();
-            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> data = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
             if (data == null || data.Count == 0)
                 return result;
             for (int i = 0; i < data.Count; i++)
             {
                 HeatMapData entry = new HeatMapData();
-                if (data[i].COUNTRY == null)
-                    continue;
-                entry.CountryID = data[i].COUNTRY;
-                entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
-                Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
-                if (diff > Convert.ToDecimal(0.05))
-                {
-                    entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
-                }
-                else
-                    if (diff < Convert.ToDecimal(-0.05))
-                    {
-                        entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
-                    }
-                    else
-                        if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
-                        {
-                            entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
-                        }
-                        else
-                            if (data[i].F_POR_ASH_RC_CTN_YTD == null || data[i].F_BM1_ASH_RC_CTN_YTD == null)
-                            {
-                                entry.CountryPerformance = PerformanceGrade.NO_RELATION;
-                                entry.CountryYTD = Convert.ToDecimal(0);
-                            }
+                //if (data[i].COUNTRY == null)
+                //    continue;
+                //entry.CountryID = data[i].COUNTRY;
+                //entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
+                //Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
+                //if (diff > Convert.ToDecimal(0.05))
+                //{
+                //    entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
+                //}
+                //else
+                //    if (diff < Convert.ToDecimal(-0.05))
+                //    {
+                //        entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
+                //    }
+                //    else
+                //        if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
+                //        {
+                //            entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
+                //        }
+                //        else
+                //            if (data[i].F_POR_ASH_RC_CTN_YTD == null || data[i].F_BM1_ASH_RC_CTN_YTD == null)
+                //            {
+                //                entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                //                entry.CountryYTD = Convert.ToDecimal(0);
+                //            }
                 result.Add(entry);
             }
             return result;
@@ -1401,8 +1401,8 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
                 throw new Exception();
 
-           
-            DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
+
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             if (performanceData == null)
                 return result;
             String portfolioID = performanceData.PORTFOLIO;
@@ -1412,23 +1412,23 @@ namespace GreenField.Web.Services
                 {
                     PerformanceGridData entry = new PerformanceGridData();
                     entry.Name = portfolioID;
-                    entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
-                    entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
-                    entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
-                    entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
-                    entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
-                    entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
-                    entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
+                    //entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
+                    //entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
+                    //entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
+                    //entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
+                    //entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
+                    //entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
+                    //entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
                     result.Add(entry);
                     entry = new PerformanceGridData();
                     entry.Name = benchmarkID;
-                    entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
-                    entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
-                    entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
-                    entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
-                    entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
-                    entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
-                    entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
+                    //entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
+                    //entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
+                    //entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
+                    //entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
+                    //entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
+                    //entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
+                    //entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
                     result.Add(entry);
                 }
                 return result;
@@ -1464,8 +1464,8 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
 
                 throw new Exception();
-          
-            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;
             try
@@ -1473,55 +1473,55 @@ namespace GreenField.Web.Services
                 for (int i = 0; i < attributionData.Count; i++)
                 {
                     AttributionData entry = new AttributionData();
-                    entry.Country = attributionData[i].COUNTRY;
-                    entry.CountryName = attributionData[i].COUNTRY_NAME;
-                    entry.PorRcAvgWgt1m = attributionData[i].POR_RC_AVG_WGT_1M;
-                    entry.Bm1RcAvgWgt1m = attributionData[i].BM1_RC_AVG_WGT_1M;
-                    entry.FPorAshRcCtn1m = attributionData[i].F_POR_ASH_RC_CTN_1M;
-                    entry.FBm1AshRcCtn1m = attributionData[i].F_BM1_ASH_RC_CTN_1M;
-                    entry.FBm1AshAssetAlloc1m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1M;
-                    entry.FBm1AshSecSelec1m = attributionData[i].F_BM1_ASH_SEC_SELEC_1M;
-                    entry.PorRcAvgWgt3m = attributionData[i].POR_RC_AVG_WGT_3M;
-                    entry.Bm1RcAvgWgt3m = attributionData[i].BM1_RC_AVG_WGT_3M;
-                    entry.FPorAshRcCtn3m = attributionData[i].F_POR_ASH_RC_CTN_3M;
-                    entry.FBm1AshAssetAlloc3m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3M;
-                    entry.FBm1AshSecSelec3m = attributionData[i].F_BM1_ASH_SEC_SELEC_3M;
-                    entry.PorRcAvgWgt6m = attributionData[i].POR_RC_AVG_WGT_6M;
-                    entry.Bm1RcAvgWgt6m = attributionData[i].BM1_RC_AVG_WGT_6M;
-                    entry.FPorAshRcCtn6m = attributionData[i].F_POR_ASH_RC_CTN_6M;
-                    entry.FBm1AshRcCtn6m = attributionData[i].F_BM1_ASH_RC_CTN_6M;
-                    entry.FBm1AshAssetAlloc6m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_6M;
-                    entry.FBm1AshSecSelec6m = attributionData[i].F_BM1_ASH_SEC_SELEC_6M;
-                    entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
-                    entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
-                    entry.FPorAshRcCtnYtd = attributionData[i].F_POR_ASH_RC_CTN_YTD;
-                    entry.FBm1AshRcCtnYtd = attributionData[i].F_BM1_ASH_RC_CTN_YTD;
-                    entry.FBm1AshAssetAllocYtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
-                    entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
-                    entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
-                    entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
-                    entry.FPorAshRcCtn1y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
-                    entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
-                    entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
-                    entry.PorRcAvgWgt3y = attributionData[i].POR_RC_AVG_WGT_3Y;
-                    entry.Bm1RcAvgWgt3y = attributionData[i].BM1_RC_AVG_WGT_3Y;
-                    entry.FPorAshRcCtn3y = attributionData[i].F_POR_ASH_RC_CTN_3Y;
-                    entry.FBm1AshRcCtn3y = attributionData[i].F_BM1_ASH_RC_CTN_3Y;
-                    entry.FBm1AshAssetAlloc3y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3Y;
-                    entry.FBm1AshSecSelec3y = attributionData[i].F_BM1_ASH_SEC_SELEC_3Y;
-                    entry.PorRcAvgWgt5y = attributionData[i].POR_RC_AVG_WGT_5Y;
-                    entry.Bm1RcAvgWgt5y = attributionData[i].BM1_RC_AVG_WGT_5Y;
-                    entry.FPorAshRcCtn5y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
-                    entry.FBm1AshRcCtn5y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
-                    entry.FBm1AshAssetAlloc5y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
-                    entry.FBm1AshSecSelec5y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
-                    entry.PorRcAvgWgtSi = attributionData[i].POR_RC_AVG_WGT_SI;
-                    entry.Bm1RcAvgWgtSi = attributionData[i].BM1_RC_AVG_WGT_SI;
-                    entry.FPorAshRcCtnSi = attributionData[i].F_POR_ASH_RC_CTN_SI;
-                    entry.FBm1AshRcCtnSi = attributionData[i].F_BM1_ASH_RC_CTN_SI;
-                    entry.FBm1AshAssetAllocSi = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
-                    entry.FBm1AshSecSelecSi = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
+                    //entry.Country = attributionData[i].COUNTRY;
+                    //entry.CountryName = attributionData[i].COUNTRY_NAME;
+                    //entry.PorRcAvgWgt1m = attributionData[i].POR_RC_AVG_WGT_1M;
+                    //entry.Bm1RcAvgWgt1m = attributionData[i].BM1_RC_AVG_WGT_1M;
+                    //entry.FPorAshRcCtn1m = attributionData[i].F_POR_ASH_RC_CTN_1M;
+                    //entry.FBm1AshRcCtn1m = attributionData[i].F_BM1_ASH_RC_CTN_1M;
+                    //entry.FBm1AshAssetAlloc1m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1M;
+                    //entry.FBm1AshSecSelec1m = attributionData[i].F_BM1_ASH_SEC_SELEC_1M;
+                    //entry.PorRcAvgWgt3m = attributionData[i].POR_RC_AVG_WGT_3M;
+                    //entry.Bm1RcAvgWgt3m = attributionData[i].BM1_RC_AVG_WGT_3M;
+                    //entry.FPorAshRcCtn3m = attributionData[i].F_POR_ASH_RC_CTN_3M;
+                    //entry.FBm1AshAssetAlloc3m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3M;
+                    //entry.FBm1AshSecSelec3m = attributionData[i].F_BM1_ASH_SEC_SELEC_3M;
+                    //entry.PorRcAvgWgt6m = attributionData[i].POR_RC_AVG_WGT_6M;
+                    //entry.Bm1RcAvgWgt6m = attributionData[i].BM1_RC_AVG_WGT_6M;
+                    //entry.FPorAshRcCtn6m = attributionData[i].F_POR_ASH_RC_CTN_6M;
+                    //entry.FBm1AshRcCtn6m = attributionData[i].F_BM1_ASH_RC_CTN_6M;
+                    //entry.FBm1AshAssetAlloc6m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_6M;
+                    //entry.FBm1AshSecSelec6m = attributionData[i].F_BM1_ASH_SEC_SELEC_6M;
+                    //entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
+                    //entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
+                    //entry.FPorAshRcCtnYtd = attributionData[i].F_POR_ASH_RC_CTN_YTD;
+                    //entry.FBm1AshRcCtnYtd = attributionData[i].F_BM1_ASH_RC_CTN_YTD;
+                    //entry.FBm1AshAssetAllocYtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
+                    //entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
+                    //entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
+                    //entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
+                    //entry.FPorAshRcCtn1y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
+                    //entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
+                    //entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
+                    //entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
+                    //entry.PorRcAvgWgt3y = attributionData[i].POR_RC_AVG_WGT_3Y;
+                    //entry.Bm1RcAvgWgt3y = attributionData[i].BM1_RC_AVG_WGT_3Y;
+                    //entry.FPorAshRcCtn3y = attributionData[i].F_POR_ASH_RC_CTN_3Y;
+                    //entry.FBm1AshRcCtn3y = attributionData[i].F_BM1_ASH_RC_CTN_3Y;
+                    //entry.FBm1AshAssetAlloc3y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3Y;
+                    //entry.FBm1AshSecSelec3y = attributionData[i].F_BM1_ASH_SEC_SELEC_3Y;
+                    //entry.PorRcAvgWgt5y = attributionData[i].POR_RC_AVG_WGT_5Y;
+                    //entry.Bm1RcAvgWgt5y = attributionData[i].BM1_RC_AVG_WGT_5Y;
+                    //entry.FPorAshRcCtn5y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
+                    //entry.FBm1AshRcCtn5y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
+                    //entry.FBm1AshAssetAlloc5y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
+                    //entry.FBm1AshSecSelec5y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
+                    //entry.PorRcAvgWgtSi = attributionData[i].POR_RC_AVG_WGT_SI;
+                    //entry.Bm1RcAvgWgtSi = attributionData[i].BM1_RC_AVG_WGT_SI;
+                    //entry.FPorAshRcCtnSi = attributionData[i].F_POR_ASH_RC_CTN_SI;
+                    //entry.FBm1AshRcCtnSi = attributionData[i].F_BM1_ASH_RC_CTN_SI;
+                    //entry.FBm1AshAssetAllocSi = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
+                    //entry.FBm1AshSecSelecSi = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
                     result.Add(entry);
                 }
 

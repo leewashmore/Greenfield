@@ -18,32 +18,28 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="dimensionMonthlyPerfData">Collection of GF_PERF_MOTHLY_ATTRIBUTION retrieved from Dimension for the selected security & portfolio for a specified date </param>
         /// <returns>List of type BenchmarkChartReturnData</returns>
-        public static List<BenchmarkChartReturnData> RetrieveBenchmarkChartData(List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData)
+        public static List<BenchmarkChartReturnData> RetrieveBenchmarkChartData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData)
         {
             try
             {
                 //Arguement null Exception
-                if (dimensionMonthlyPerfData == null)
+                if (dimensionDailyPerfData == null)
                     throw new InvalidOperationException();
 
                 List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
 
                 BenchmarkChartReturnData data = new BenchmarkChartReturnData();
 
-                foreach (GF_PERF_MONTHLY_ATTRIBUTION item in dimensionMonthlyPerfData)
+                foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionDailyPerfData)
                 {
                     data = new BenchmarkChartReturnData();
                     data.Name = (item.NODE_NAME.ToUpper() == "COUNTRY") ? (item.BMNAME + " " + item.AGG_LVL_1_LONG_NAME) : (item.BMNAME);
                     data.Type = (item.NODE_NAME.ToUpper() == "COUNTRY") ? "COUNTRY INDEX" : "BENCHMARK";
                     data.FromDate = item.TO_DATE;
-                    data.OneM = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1M);
-                    data.ThreeM = Convert.ToDecimal(item.BM1_RC_AVG_WGT_3M);
-                    data.SixM = Convert.ToDecimal(item.BM1_RC_AVG_WGT_6M);
-                    data.OneY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1Y);
-                    data.ThreeY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_3Y);
-                    data.FiveY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_5Y);
-                    data.OneY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1Y);
-                    data.SI = Convert.ToDecimal(item.BM1_RC_AVG_WGT_SI);
+                    data.OneD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1D);
+                    data.WTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1W);
+                    data.MTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_MTD);
+                    data.QTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_QTD);
                     data.YTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_YTD);
                     result.Add(data);
                 }

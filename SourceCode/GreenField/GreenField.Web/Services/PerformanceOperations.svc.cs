@@ -117,16 +117,16 @@ namespace GreenField.Web.Services
                     return result;
 
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData = entity.GF_PERF_MONTHLY_ATTRIBUTION.
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO == portfolioId
                         && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
                         && a.TO_DATE >= startDate).ToList();
 
                 //Checking contents of Data fetched from Dimension
-                if (dimensionMonthlyPerfData == null || dimensionMonthlyPerfData.Count == 0)
+                if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
                     return result;
 
-                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionMonthlyPerfData);
+                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionDailyPerfData);
 
                 if (result == null)
                     throw new InvalidOperationException();
@@ -141,6 +141,8 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+
 
         /// <summary>
         /// Method to retrieve data in Multi-Line Benchmark UI Grid
@@ -800,7 +802,7 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-        #region Relative Performance Gadgets
+       #region Relative Performance Gadgets
         /// <summary>
         /// Retrieves list of sector information for a particular composite/fund and effective date.
         /// </summary>
@@ -843,7 +845,7 @@ namespace GreenField.Web.Services
                 }
                 result = result.Distinct().ToList();
                 return result;
-            }
+           }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
@@ -873,15 +875,6 @@ namespace GreenField.Web.Services
 
                 if (dailyData == null)
                     return null;
-
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, null, null);
-                    if (monthlyData == null)
-                        return null;
-                }
 
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
@@ -918,9 +911,9 @@ namespace GreenField.Web.Services
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period)) * 100;
-                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period)) * 100;
-                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period);
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period)) * 100;
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period)) * 100;
+                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
 
@@ -991,15 +984,6 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                    if (monthlyData == null)
-                        return null;
-                }
-
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1030,8 +1014,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in countrySpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     }
 
                     record.MarketValue = MarketValue;
@@ -1080,14 +1064,15 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1123,8 +1108,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in sectorSpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     }
 
                     record.MarketValue = MarketValue;
@@ -1173,20 +1158,21 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
-                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     decimal? activePosition = Convert.ToDecimal(fundWeight - benchmarkWeight);
 
                     result.Add(new RelativePerformanceActivePositionData()
@@ -1197,7 +1183,7 @@ namespace GreenField.Web.Services
                         BenchmarkWeight = benchmarkWeight,
                         ActivePosition = activePosition
                     });
-                }
+               }
 
                 return result.OrderByDescending(t => t.ActivePosition).ToList();
             }
@@ -1242,14 +1228,15 @@ namespace GreenField.Web.Services
 
                 List<GF_PERF_DAILY_ATTRIBUTION> s1 = data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1259,7 +1246,7 @@ namespace GreenField.Web.Services
                         SecurityCountryId = row.COUNTRY,
                         SecuritySectorName = row.GICS_LVL1,
                         SecurityMarketValue = row.POR_RC_MARKET_VALUE,
-                        SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period)
+                        SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, period)
                     });
                 }
                 return result.OrderByDescending(e => e.SecurityAlpha).ToList();
@@ -1328,115 +1315,38 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// retrieving data from GF_PERF_MONTHLY_ATTRIBUTION view for relative performance gadgets
-        /// </summary>
-        /// <param name="portfolioSelectionData"></param>
-        /// <param name="effectiveDate"></param>
-        /// <param name="country"></param>
-        /// <param name="sector"></param>
-        /// <returns>GF_PERF_MONTHLY_ATTRIBUTION Collection</returns>
-        private List<GF_PERF_MONTHLY_ATTRIBUTION> RetrieveRelativePerformanceMonthlyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
-        {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-            if (country == null && sector == null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY != null &&
-                                                                   t.GICS_LVL1 != null).ToList();
-            }
-
-            else if (country == null && sector != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                    t.NODE_NAME == "Security ID" &&
-                                                                    t.POR_RC_MARKET_VALUE != 0 &&
-                                                                    t.COUNTRY != null &&
-                                                                    t.GICS_LVL1 == sector).ToList();
-            }
-
-            else if (sector == null && country != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY == country &&
-                                                                   t.GICS_LVL1 != null).ToList();
-            }
-
-            else if (sector != null && country != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY == country &&
-                                                                   t.GICS_LVL1 == sector).ToList();
-            }
-            return monthlyData;
-        }
-
-        /// <summary>
         /// retrieving alpha values based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformanceAlphaValue(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformanceAlphaValue(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? alpha = 0;
-            decimal? fundReturn = 0;
-            decimal? benchmarkReturn = 0;
             switch (period)
             {
-                case "1M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_1M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_1M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "1D":
+                    alpha = row.F_POR_ASH_RC_CTN_1D - row.F_BM1_ASH_RC_CTN_1D;
                     break;
 
-                case "3M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "1W":
+                    alpha = row.F_POR_ASH_RC_CTN_1W - row.F_BM1_ASH_RC_CTN_1W;
                     break;
 
-                case "6M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_6M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_6M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "MTD":
+                    alpha = row.F_POR_ASH_RC_CTN_MTD - row.F_BM1_ASH_RC_CTN_MTD;
                     break;
 
                 case "YTD":
                     alpha = row.F_POR_ASH_RC_CTN_YTD - row.F_BM1_ASH_RC_CTN_YTD;
                     break;
 
+                case "QTD":
+                    alpha = row.F_POR_ASH_RC_CTN_QTD - row.F_BM1_ASH_RC_CTN_QTD;
+                    break;
+
                 case "1Y":
                     alpha = row.F_POR_ASH_RC_CTN_1Y - row.F_BM1_ASH_RC_CTN_1Y;
-                    break;
-
-                case "3Y":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3Y).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3Y).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
-                    break;
-
-                case "5Y":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_5Y).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_5Y).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
-                    break;
-
-                case "SI":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_SI).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_SI).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
                     break;
 
                 default:
@@ -1449,44 +1359,35 @@ namespace GreenField.Web.Services
         /// retrieving benchmark weights based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformanceBenchmarkWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformanceBenchmarkWeight(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? benchmarkWeight = 0;
             switch (period)
             {
-                case "1M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_1M).FirstOrDefault();
+                case "1D":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_1D;
                     break;
 
-                case "3M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3M).FirstOrDefault();
+                case "1W":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_1W;
                     break;
 
-                case "6M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_6M).FirstOrDefault();
+                case "MTD":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_MTD;
                     break;
 
                 case "YTD":
                     benchmarkWeight = row.BM1_RC_AVG_WGT_YTD;
                     break;
 
+                case "QTD":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_QTD;
+                    break;
+
                 case "1Y":
                     benchmarkWeight = row.BM1_RC_AVG_WGT_1Y;
-                    break;
-
-                case "3Y":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3Y).FirstOrDefault();
-                    break;
-
-                case "5Y":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_5Y).FirstOrDefault();
-                    break;
-
-                case "SI":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_SI).FirstOrDefault();
                     break;
 
                 default:
@@ -1499,44 +1400,35 @@ namespace GreenField.Web.Services
         /// retrieving portfolio weights based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformancePortfolioWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformancePortfolioWeight(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? portfolioWeight = 0;
             switch (period)
             {
-                case "1M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_1M).FirstOrDefault();
+                case "1D":
+                    portfolioWeight = row.POR_RC_AVG_WGT_1D;
                     break;
 
-                case "3M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3M).FirstOrDefault();
+                case "1W":
+                    portfolioWeight = row.POR_RC_AVG_WGT_1W;
                     break;
 
-                case "6M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_6M).FirstOrDefault();
+                case "MTD":
+                    portfolioWeight = row.POR_RC_AVG_WGT_MTD;
                     break;
 
                 case "YTD":
                     portfolioWeight = row.POR_RC_AVG_WGT_YTD;
                     break;
 
+                case "QTD":
+                    portfolioWeight = row.POR_RC_AVG_WGT_QTD;
+                    break;
+
                 case "1Y":
                     portfolioWeight = row.POR_RC_AVG_WGT_1Y;
-                    break;
-
-                case "3Y":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3Y).FirstOrDefault();
-                    break;
-
-                case "5Y":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_5Y).FirstOrDefault();
-                    break;
-
-                case "SI":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_SI).FirstOrDefault();
                     break;
 
                 default:
@@ -1548,6 +1440,7 @@ namespace GreenField.Web.Services
         #endregion
 
         #endregion
+
         #region MARKET CAPITALIZATION METHODS
         /// <summary>
         /// Retrieves consolidated data for portfolio and benchmark
