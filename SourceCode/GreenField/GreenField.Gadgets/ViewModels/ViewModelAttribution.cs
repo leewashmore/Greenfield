@@ -126,54 +126,54 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         switch (value)
                         {
-                            case "1M":                                
+                            case "1W":                                
                                 List<PeriodAttributeData> result = new List<PeriodAttributeData>();                                    
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1m;
-                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1m;
-                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1m;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1m;
-                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1m;
-                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1m;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1w;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt1w;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn1w;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn1w;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc1w;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec1w;
                                       result.Add(entry);
                                     }
                                 PeriodAttributionInfo = result;
                                 if (null != attributionDataLoadedEvent)
                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
-                            case "3M":
+                            case "MTD":
                                  List<PeriodAttributeData> result3M = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt3m;
-                                      entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt3m;
-                                      entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn3m;
-                                      entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn3m;
-                                      entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc3m;
-                                      entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec3m;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtMtd;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtMtd;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnMtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnMtd;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocMtd;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecMtd;
                                       result3M.Add(entry);
                                     }
                                 PeriodAttributionInfo = result3M;
                                 if (null != attributionDataLoadedEvent)
                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
-                            case "6M":
+                            case "QTD":
                                 List<PeriodAttributeData> result6M = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {   PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt6m;
-                                      entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt6m;
-                                      entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn6m;
-                                      entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn6m;
-                                      entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc6m;
-                                      entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec6m;
+                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtQtd;
+                                    entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtQtd;
+                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnQtd;
+                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnQtd;
+                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocQtd;
+                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecQtd;
                                       result6M.Add(entry);
                                     }
                                   PeriodAttributionInfo = result6M;
@@ -216,60 +216,60 @@ namespace GreenField.Gadgets.ViewModels
                                  if (null != attributionDataLoadedEvent)
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
-                            case "3Y":
-                                List<PeriodAttributeData> result3Y = new List<PeriodAttributeData>();                                    
-                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
-                                    entry.Country = AttributionDataInfo[i].Country;
-                                    entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt3y;
-                                      entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt3y;
-                                      entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn3y;
-                                      entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn3y;
-                                      entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc3y;
-                                      entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec3y;
-                                      result3Y.Add(entry);
-                                    }
-                                 PeriodAttributionInfo = result3Y;
-                                 if (null != attributionDataLoadedEvent)
-                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                                break;
-                            case "5Y":
-                                  List<PeriodAttributeData> result5Y = new List<PeriodAttributeData>();                                    
-                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
-                                    entry.Country = AttributionDataInfo[i].Country;
-                                    entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].PorRcAvgWgt5y;
-                                    entry.PortfolioWeight = AttributionDataInfo[i].Bm1RcAvgWgt5y;
-                                    entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn5y;
-                                    entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn5y;
-                                    entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc5y;
-                                    entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec5y;
-                                      result5Y.Add(entry);
-                                    }
-                                 PeriodAttributionInfo = result5Y;
-                                 if (null != attributionDataLoadedEvent)
-                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                                break;
-                            case "SI":
-                                List<PeriodAttributeData> resultSI = new List<PeriodAttributeData>();                                    
-                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
-                                    entry.Country = AttributionDataInfo[i].Country;
-                                    entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtSi;
-                                      entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtSi;
-                                      entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnSi;
-                                      entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnSi;
-                                      entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocSi;
-                                      entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecSi;
-                                      resultSI.Add(entry);
-                                    }
-                                 PeriodAttributionInfo = resultSI;
-                                 if (null != attributionDataLoadedEvent)
-                                     attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                                break;
+                            //case "3Y":
+                            //    List<PeriodAttributeData> result3Y = new List<PeriodAttributeData>();                                    
+                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
+                            //        entry.Country = AttributionDataInfo[i].Country;
+                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
+                            //        entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt3y;
+                            //          entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt3y;
+                            //          entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn3y;
+                            //          entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn3y;
+                            //          entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc3y;
+                            //          entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec3y;
+                            //          result3Y.Add(entry);
+                            //        }
+                            //     PeriodAttributionInfo = result3Y;
+                            //     if (null != attributionDataLoadedEvent)
+                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                            //    break;
+                            //case "5Y":
+                            //      List<PeriodAttributeData> result5Y = new List<PeriodAttributeData>();                                    
+                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
+                            //        entry.Country = AttributionDataInfo[i].Country;
+                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
+                            //        entry.BenchmarkWeight = AttributionDataInfo[i].PorRcAvgWgt5y;
+                            //        entry.PortfolioWeight = AttributionDataInfo[i].Bm1RcAvgWgt5y;
+                            //        entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn5y;
+                            //        entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn5y;
+                            //        entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc5y;
+                            //        entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec5y;
+                            //          result5Y.Add(entry);
+                            //        }
+                            //     PeriodAttributionInfo = result5Y;
+                            //     if (null != attributionDataLoadedEvent)
+                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                            //    break;
+                            //case "SI":
+                            //    List<PeriodAttributeData> resultSI = new List<PeriodAttributeData>();                                    
+                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
+                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
+                            //        entry.Country = AttributionDataInfo[i].Country;
+                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
+                            //        entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtSi;
+                            //          entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtSi;
+                            //          entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnSi;
+                            //          entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnSi;
+                            //          entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocSi;
+                            //          entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecSi;
+                            //          resultSI.Add(entry);
+                            //        }
+                            //     PeriodAttributionInfo = resultSI;
+                            //     if (null != attributionDataLoadedEvent)
+                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                            //    break;
                             default:
                                 List<PeriodAttributeData> result10Y = new List<PeriodAttributeData>();
                                 PeriodAttributionInfo = result10Y;

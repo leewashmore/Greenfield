@@ -142,8 +142,6 @@ namespace GreenField.Web.Services
             }
         }
 
-
-
         /// <summary>
         /// Method to retrieve data in Multi-Line Benchmark UI Grid
         /// </summary>
@@ -303,7 +301,6 @@ namespace GreenField.Web.Services
 
             return result;
         }
-
 
         #endregion
 
