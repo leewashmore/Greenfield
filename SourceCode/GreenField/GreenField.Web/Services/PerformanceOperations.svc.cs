@@ -68,10 +68,26 @@ namespace GreenField.Web.Services
             string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
             string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
             List<string> countryName = new List<string>();
-            List<string> SectorName = new List<string>();
+            List<string> benchmarkName = new List<string>();
 
-            countryName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.COUNTRY_NAME).ToList();
-            SectorName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
+            countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+            benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
+
+            if (benchmarkName == null)
+                throw new Exception("No Benchmark is found for the selected Portfolio");
+
+            if (benchmarkName.Count == 0)
+                throw new Exception("No Benchmark is allotted for the selected Portfolio");
+            else if (benchmarkName.Count > 1)
+                throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
+            if (countryName == null)
+                throw new Exception("No Country is found for the selected security");
+
+            if (countryName.Count == 0)
+                throw new Exception("No Country is allotted for the selected Security");
+            else if (countryName.Count > 1)
+                throw new Exception("More then 1 country is allotted to selected security ");
 
             List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
             return result;
@@ -103,25 +119,39 @@ namespace GreenField.Web.Services
                 string portfolioId = "";
                 DateTime startDate = DateTime.Today.AddYears(-1);
                 List<string> countryName;
+                List<string> benchmarkName;
 
                 if (objSelectedEntities.ContainsKey("SECURITY"))
                     securityLongName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
                 if (objSelectedEntities.ContainsKey("PORTFOLIO"))
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
 
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).Distinct().ToList();
 
+                if (benchmarkName == null)
+                    throw new Exception("No Benchmark is found for the selected Portfolio");
 
-                //Need to show a message here
-                if (countryName.Count != 1)
-                    return result;
+                if (benchmarkName.Count == 0)
+                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+                else if (benchmarkName.Count > 1)
+                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
+                if (countryName == null)
+                    throw new Exception("No Country is found for the selected security");
+
+                if (countryName.Count == 0)
+                    throw new Exception("No Country is allotted for the selected Security");
+                else if (countryName.Count > 1)
+                    throw new Exception("More then 1 country is allotted to selected security ");
+
 
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO == portfolioId
                         && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
                         && a.TO_DATE >= startDate).ToList();
-                
+
                 //Checking contents of Data fetched from Dimension
                 if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
                     return result;
@@ -192,6 +222,7 @@ namespace GreenField.Web.Services
                 string securityLongName = "";
                 string portfolioId = "";
                 List<string> countryName;
+                List<string> benchmarkName = new List<string>();
 
 
                 if (objSelectedEntities.ContainsKey("SECURITY"))
@@ -200,14 +231,26 @@ namespace GreenField.Web.Services
                     portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
 
                 countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList();
 
-                //Need to show a message here.
+
+                if (benchmarkName == null)
+                    throw new Exception("No Benchmark is found for the selected Portfolio");
+
+                if (benchmarkName.Count == 0)
+                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+
+                else if (benchmarkName.Count > 1)
+                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
                 if (countryName == null)
-                    return result;
-                //Need to show a message here
-                if (countryName.Count != 1)
-                    return result;
+                    throw new Exception("No Country is found for the selected security");
 
+                if (countryName.Count == 0)
+                    throw new Exception("No Country is allotted for the selected Security");
+
+                else if (countryName.Count > 1)
+                    throw new Exception("More then 1 country is allotted to selected security ");
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO.ToUpper() == portfolioId &&
