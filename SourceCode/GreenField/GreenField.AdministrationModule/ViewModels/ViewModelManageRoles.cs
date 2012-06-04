@@ -167,9 +167,9 @@ namespace GreenField.AdministrationModule.ViewModels
                                         }
                                         else
                                         {
-                                            MessageBox.Show("Message: Role creation failed\nStacktrace: " + methodNamespace);
+                                            Prompt.ShowDialog("Message: Role creation failed\nStacktrace: " + methodNamespace);
                                             Logging.LogRoleCreateFailed(_logger, NewRoleName);
-                                        } 
+                                        }
                                     }
                                     else
                                     {
@@ -178,11 +178,11 @@ namespace GreenField.AdministrationModule.ViewModels
                                 }
                                 catch (Exception ex)
                                 {
-                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                                     Logging.LogLoginException(_logger, ex);
                                 }
                                 Logging.LogEndMethod(_logger, methodNamespace);
-                            }); 
+                            });
                              #endregion
                          }
                      }
@@ -190,7 +190,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -216,54 +216,58 @@ namespace GreenField.AdministrationModule.ViewModels
                             ? confirmationMessage = confirmationMessage + "'" + role + "', "
                             : confirmationMessage = confirmationMessage + " and '" + role + "' ?";
 
-                if (MessageBox.Show(confirmationMessage, "Delete Roles", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                Prompt.ShowDialog(confirmationMessage, "Delete Roles", MessageBoxButton.OKCancel, (messageResult) =>
                 {
-                    foreach (string role in SelectedRoles)
+                    if (messageResult == MessageBoxResult.OK)
                     {
-                        if (_manageLogins != null)
+                        foreach (string role in SelectedRoles)
                         {
-                            #region DeleteRole Service Call
-                            _manageLogins.DeleteRole(role, false, (result) =>
+                            if (_manageLogins != null)
                             {
-                                string deleteRoleMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                Logging.LogBeginMethod(_logger, deleteRoleMethodNamespace);
-                                try
+                                #region DeleteRole Service Call
+                                _manageLogins.DeleteRole(role, false, (result) =>
                                 {
-                                    if (result != null)
+                                    string deleteRoleMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                    Logging.LogBeginMethod(_logger, deleteRoleMethodNamespace);
+                                    try
                                     {
-                                        Logging.LogMethodParameter(_logger, deleteRoleMethodNamespace, result, 1);
-                                        if ((bool)result)
+                                        if (result != null)
                                         {
-                                            AllRoles.Remove(role);
-                                            Logging.LogRoleDelete(_logger, role);
+                                            Logging.LogMethodParameter(_logger, deleteRoleMethodNamespace, result, 1);
+                                            if ((bool)result)
+                                            {
+                                                AllRoles.Remove(role);
+                                                Logging.LogRoleDelete(_logger, role);
+                                            }
+                                            else
+                                            {
+                                                Prompt.ShowDialog("Message: Role deletion failed\nStacktrace: " + methodNamespace);
+                                                Logging.LogRoleDeleteFailed(_logger, role);
+                                            }
                                         }
+
                                         else
                                         {
-                                            MessageBox.Show("Message: Role deletion failed\nStacktrace: " + methodNamespace);
-                                            Logging.LogRoleDeleteFailed(_logger, role);
-                                        } 
+                                            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                                        }
                                     }
-
-                                    else
+                                    catch (Exception ex)
                                     {
-                                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                        Logging.LogLoginException(_logger, ex);
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogLoginException(_logger, ex);
-                                }
-                                Logging.LogEndMethod(_logger, methodNamespace);
-                            }); 
-                            #endregion
+                                    Logging.LogEndMethod(_logger, methodNamespace);
+                                });
+                                #endregion
+                            }
                         }
                     }
-                }
+                });
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -298,7 +302,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -323,13 +327,13 @@ namespace GreenField.AdministrationModule.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                     Logging.LogException(_logger, ex);
                 }
             }
             else
             {
-                MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                 Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
             }
 

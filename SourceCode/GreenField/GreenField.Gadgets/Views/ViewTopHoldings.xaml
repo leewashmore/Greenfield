@@ -48,7 +48,9 @@
                                      FontSize="7" 
                                      FontFamily="Arial" 
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
-                                     RowStyle="{StaticResource GridViewRowStyle}">
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     AlternateRowBackground="#d8d5d4"
+                                     AlternationCount="2">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">

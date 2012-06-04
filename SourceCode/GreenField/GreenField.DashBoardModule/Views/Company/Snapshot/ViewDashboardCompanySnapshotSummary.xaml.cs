@@ -91,7 +91,9 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_CHART_EXTENTION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_CHART_EXTENTION, Foreground = new SolidColorBrush(Colors.White), FontSize =
+ 8, FontFamily = new FontFamily("Arial") },
+                RestoredHeight =300,
                 Content = new ViewSlice1ChartExtension(new ViewModelSlice1ChartExtension(param))
             });
 

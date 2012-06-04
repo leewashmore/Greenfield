@@ -58,7 +58,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (NullReferenceException ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -348,65 +348,68 @@ namespace GreenField.AdministrationModule.ViewModels
                                     : confirmationMessage = confirmationMessage + " and '" + user.UserName + "' ?";
                     }
 
-                    if (MessageBox.Show(confirmationMessage, "Approve Logins", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    Prompt.ShowDialog(confirmationMessage, "Approve Logins", MessageBoxButton.OKCancel, (messageResult) =>
                     {
-                        foreach (MembershipUserInfo user in SelectedMembershipUsers)
+                        if (messageResult == MessageBoxResult.OK)
                         {
-                            user.IsApproved = !(user.IsApproved);
-                        }
-
-                        #region UpdateApprovalForUsers Service Call
-                        _manageLogins.UpdateApprovalForUsers(SelectedMembershipUsers, (result) =>
-                        {
-                            string updateApprovalMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                            Logging.LogBeginMethod(_logger, updateApprovalMethodNamespace);
-
-                            try
+                            foreach (MembershipUserInfo user in SelectedMembershipUsers)
                             {
-                                if (result != null)
+                                user.IsApproved = !(user.IsApproved);
+                            }
+
+                            #region UpdateApprovalForUsers Service Call
+                            _manageLogins.UpdateApprovalForUsers(SelectedMembershipUsers, (result) =>
+                            {
+                                string updateApprovalMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                Logging.LogBeginMethod(_logger, updateApprovalMethodNamespace);
+
+                                try
                                 {
-                                    Logging.LogMethodParameter(_logger, updateApprovalMethodNamespace, result, 1);
-                                    if ((bool)result)
+                                    if (result != null)
                                     {
-                                        foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                        Logging.LogMethodParameter(_logger, updateApprovalMethodNamespace, result, 1);
+                                        if ((bool)result)
                                         {
-                                            if (selectedUser.IsApproved)
-                                                Logging.LogLoginActivate(_logger, selectedUser.UserName);
-                                            else
-                                                Logging.LogLoginBlock(_logger, selectedUser.UserName);
+                                            foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                            {
+                                                if (selectedUser.IsApproved)
+                                                    Logging.LogLoginActivate(_logger, selectedUser.UserName);
+                                                else
+                                                    Logging.LogLoginBlock(_logger, selectedUser.UserName);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                            {
+                                                if (selectedUser.IsApproved)
+                                                    Logging.LogLoginActivateFailed(_logger, selectedUser.UserName);
+                                                else
+                                                    Logging.LogLoginBlockFailed(_logger, selectedUser.UserName);
+                                                MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName).First().IsApproved = !(selectedUser.IsApproved);
+
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
-                                        {
-                                            if (selectedUser.IsApproved)
-                                                Logging.LogLoginActivateFailed(_logger, selectedUser.UserName);
-                                            else
-                                                Logging.LogLoginBlockFailed(_logger, selectedUser.UserName);
-                                            MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName).First().IsApproved = !(selectedUser.IsApproved);
-
-                                        }
+                                        Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                                     }
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                    Logging.LogLoginException(_logger, ex);
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                Logging.LogLoginException(_logger, ex);
-                            }
-                        }); 
-                        #endregion
-                    }
+                            });
+                            #endregion
+                        }
+                    });
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -448,51 +451,54 @@ namespace GreenField.AdministrationModule.ViewModels
                                     ? confirmationMessage = confirmationMessage + "'" + user + "', "
                                     : confirmationMessage = confirmationMessage + " and '" + user + "' ?";
 
-                        if (MessageBox.Show(confirmationMessage, "Release Lockout", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        Prompt.ShowDialog(confirmationMessage, "Release Lockout", MessageBoxButton.OKCancel, (messageResult) =>
                         {
-                            #region UnlockUsers Service Call
-                            _manageLogins.UnlockUsers(lockedLogins, (result) =>
+                            if (messageResult == MessageBoxResult.OK)
                             {
-                                string unlockUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                Logging.LogBeginMethod(_logger, unlockUsersMethodNamespace);
-                                try
+                                #region UnlockUsers Service Call
+                                _manageLogins.UnlockUsers(lockedLogins, (result) =>
                                 {
-                                    if (result != null)
+                                    string unlockUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                    Logging.LogBeginMethod(_logger, unlockUsersMethodNamespace);
+                                    try
                                     {
-                                        Logging.LogMethodParameter(_logger, unlockUsersMethodNamespace, result, 1);
-                                        if ((bool)result)
+                                        if (result != null)
                                         {
-                                            foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
-                                                MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName && lockedLogins.Contains(selectedUser.UserName)).First().IsLockedOut = false;
-                                            foreach (string item in lockedLogins)
-                                                _logger.Log(String.Format("Account '{0}' unlocked by {1}",
-                                                    item, SessionManager.SESSION.UserName), Category.Info, Priority.None);
+                                            Logging.LogMethodParameter(_logger, unlockUsersMethodNamespace, result, 1);
+                                            if ((bool)result)
+                                            {
+                                                foreach (MembershipUserInfo selectedUser in SelectedMembershipUsers)
+                                                    MembershipUserInfo.Where(u => u.UserName == selectedUser.UserName && lockedLogins.Contains(selectedUser.UserName)).First().IsLockedOut = false;
+                                                foreach (string item in lockedLogins)
+                                                    _logger.Log(String.Format("Account '{0}' unlocked by {1}",
+                                                        item, SessionManager.SESSION.UserName), Category.Info, Priority.None);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Logging.LogMethodParameterNull(_logger, unlockUsersMethodNamespace, 1);
                                         }
                                     }
-                                    else
+                                    catch (Exception ex)
                                     {
-                                        Logging.LogMethodParameterNull(_logger, unlockUsersMethodNamespace, 1);
+                                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                        Logging.LogLoginException(_logger, ex);
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogLoginException(_logger, ex);
-                                }
-                                Logging.LogEndMethod(_logger, methodNamespace);
-                            }); 
-                            #endregion
-                        }
+                                    Logging.LogEndMethod(_logger, methodNamespace);
+                                });
+                                #endregion
+                            }
+                        });
                     }
                     else
                     {
-                        MessageBox.Show("No Locked Logins", "Release Lockout", MessageBoxButton.OK);
+                        Prompt.ShowDialog("No Locked Logins", "Release Lockout", MessageBoxButton.OK);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -519,69 +525,72 @@ namespace GreenField.AdministrationModule.ViewModels
                                 ? confirmationMessage + "'" + user.UserName + "', "
                                 : confirmationMessage + " and '" + user.UserName + "' ?";
 
-                    if (MessageBox.Show(confirmationMessage, "Delete Users", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    Prompt.ShowDialog(confirmationMessage, "Delete Users", MessageBoxButton.OKCancel, (messageResult) =>
                     {
-                        ObservableCollection<string> deleteUsers = new ObservableCollection<string>();
+                        if (messageResult == MessageBoxResult.OK)
+                        {
+                            ObservableCollection<string> deleteUsers = new ObservableCollection<string>();
 
-                        foreach (MembershipUserInfo user in SelectedMembershipUsers)
-                            deleteUsers.Add(user.UserName);
+                            foreach (MembershipUserInfo user in SelectedMembershipUsers)
+                                deleteUsers.Add(user.UserName);
 
-                        _manageLogins.DeleteUsers(deleteUsers, (result) =>
-                            {
-                                string deleteUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                                Logging.LogBeginMethod(_logger, deleteUsersMethodNamespace);
-                                try
+                            _manageLogins.DeleteUsers(deleteUsers, (result) =>
                                 {
-                                    if (result != null)
+                                    string deleteUsersMethodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+                                    Logging.LogBeginMethod(_logger, deleteUsersMethodNamespace);
+                                    try
                                     {
-                                        Logging.LogMethodParameter(_logger, deleteUsersMethodNamespace, result, 1);
-                                        if ((bool)result)
+                                        if (result != null)
                                         {
-                                            foreach (string user in deleteUsers)
+                                            Logging.LogMethodParameter(_logger, deleteUsersMethodNamespace, result, 1);
+                                            if ((bool)result)
                                             {
-                                                Logging.LogLoginDelete(_logger, user);
-                                            }
-                                            _manageLogins.GetAllUsers(GetAllUsersCallBackMethod);
+                                                foreach (string user in deleteUsers)
+                                                {
+                                                    Logging.LogLoginDelete(_logger, user);
+                                                }
+                                                _manageLogins.GetAllUsers(GetAllUsersCallBackMethod);
 
-                                            if (UserRoles != null)
-                                            {
-                                                UserRoles.Clear();
+                                                if (UserRoles != null)
+                                                {
+                                                    UserRoles.Clear();
+                                                }
+                                                if (AvailableRoles != null)
+                                                {
+                                                    AvailableRoles.Clear();
+                                                }
+                                                if (SelectedMembershipUser != null)
+                                                {
+                                                    SelectedMembershipUser = null;
+                                                }
                                             }
-                                            if (AvailableRoles != null)
+                                            else
                                             {
-                                                AvailableRoles.Clear();
-                                            }
-                                            if (SelectedMembershipUser != null)
-                                            {
-                                                SelectedMembershipUser = null;
+                                                foreach (string user in deleteUsers)
+                                                {
+                                                    Logging.LogLoginDeleteFailed(_logger, user);
+                                                }
                                             }
                                         }
                                         else
                                         {
-                                            foreach (string user in deleteUsers)
-                                            {
-                                                Logging.LogLoginDeleteFailed(_logger, user);
-                                            }
+                                            Logging.LogMethodParameterNull(_logger, deleteUsersMethodNamespace, 1);
                                         }
                                     }
-                                    else
+                                    catch (Exception ex)
                                     {
-                                        Logging.LogMethodParameterNull(_logger, deleteUsersMethodNamespace, 1);
+                                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                                        Logging.LogLoginException(_logger, ex);
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                                    Logging.LogLoginException(_logger, ex);
-                                }
-                                Logging.LogEndMethod(_logger, methodNamespace);
-                            });
-                    }
+                                    Logging.LogEndMethod(_logger, methodNamespace);
+                                });
+                        }
+                    });
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -603,7 +612,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -632,7 +641,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -649,7 +658,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);                
             }
 
@@ -671,7 +680,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -698,7 +707,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -715,7 +724,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             return false;
@@ -736,7 +745,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -809,7 +818,7 @@ namespace GreenField.AdministrationModule.ViewModels
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                            Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                             Logging.LogLoginException(_logger, ex);
                         }
                         Logging.LogEndMethod(_logger, methodNamespace);
@@ -819,7 +828,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -846,13 +855,13 @@ namespace GreenField.AdministrationModule.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                     Logging.LogException(_logger, ex);
                 }
             }
             else
             {
-                MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                 Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
             }
 
@@ -879,13 +888,13 @@ namespace GreenField.AdministrationModule.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                     Logging.LogException(_logger, ex);
                 }
             }
             else
             {
-                MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                 Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
             }
 
@@ -919,13 +928,13 @@ namespace GreenField.AdministrationModule.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                     Logging.LogException(_logger, ex);
                 }
             }
             else
             {
-                MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                 Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
             }
 
@@ -976,7 +985,7 @@ namespace GreenField.AdministrationModule.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }

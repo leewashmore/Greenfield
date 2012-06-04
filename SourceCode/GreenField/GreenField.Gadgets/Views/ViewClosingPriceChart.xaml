@@ -13,239 +13,68 @@
              mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="300">
 
     <helpers:ViewBaseUserControl.Resources>
-        <helpers:DataContextProxy x:Key="DataContextProxy"/>
-        <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
-        <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
-            <helpers:ItemStyleSelector.GroupStyle>
-                <Style TargetType="ContentControl">
-                    <Setter Property="IsEnabled" Value="False" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" />
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </helpers:ItemStyleSelector.GroupStyle>
-            <helpers:ItemStyleSelector.ItemStyle>
-                <Style TargetType="ContentControl">
-                    <Setter Property="ContentTemplate">
-                        <Setter.Value>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
-                                    <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
-                                    <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
-                                    <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </helpers:ItemStyleSelector.ItemStyle>
-        </helpers:ItemStyleSelector>
-        <!--Chart Styles-->
-        <Style x:Key="CustomStyle" TargetType="telerik:Line">
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="telerik:Line">
-                        <Canvas x:Name="PART_MainContainer">
-                            <Line x:Name="PART_LineGeometry"
-                              Fill="Transparent" IsHitTestVisible="False"
-                              Stroke="Transparent"
-                              StrokeThickness="5"
-                              X1="0"
-                              Y1="{TemplateBinding StartPointY}"
-                              X2="{TemplateBinding EndPointX}"
-                              Y2="{TemplateBinding EndPointY}"
-                              Style="{TemplateBinding ItemStyle}" />
-                            <telerik:PointMark x:Name="PART_PointMark"
-                                               Canvas.Top="{TemplateBinding StartPointY}"
-                                               PointMarkCanvasLeft="{TemplateBinding PointMarkCanvasLeft}"
-                                               PointMarkCanvasTop="{TemplateBinding PointMarkCanvasTop}"
-                                               Visibility="{TemplateBinding PointMarkVisibility}"
-                                               ShapeStyle="{TemplateBinding PointMarkShapeStyle}" 
-                                               Style="{TemplateBinding PointMarkItemStyle}" />
-                        </Canvas>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="CustomLegendItem" TargetType="telerik:ChartLegendItem">
-            <Setter Property="Padding" Value="5,0,5,0" />
-            <Setter Property="Margin" Value="0,3,0,2" />
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="telerik:ChartLegendItem">
-                        <Grid x:Name="PART_MainContainer" Background="{TemplateBinding Background}"
-                          HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Path x:Name="PART_LegendItemMarker" 
-                             Width="16"
-                             Height="16"
-                             Margin="{TemplateBinding Margin}"
-                             StrokeThickness="{TemplateBinding MarkerStrokeThickness}"
-                             Style="{TemplateBinding ItemStyle}"
-                             Stretch="Fill">
-                                <Path.Data>
-                                    <PathGeometry x:Name="PART_ItemMarkerGeometry" />
-                                </Path.Data>
-                            </Path>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml" x:Name="BaseStyles"/>
+                <ResourceDictionary x:Name="GadgetSpecificStyles">
+                    <helpers:DataContextProxy x:Key="DataContextProxy"/>
+                    <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
+                    <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
+                        <helpers:ItemStyleSelector.GroupStyle>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </helpers:ItemStyleSelector.GroupStyle>
+                        <helpers:ItemStyleSelector.ItemStyle>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
+                                                <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </helpers:ItemStyleSelector.ItemStyle>
+                    </helpers:ItemStyleSelector>                                      
 
-                            <TextBlock x:Name="PART_TextBlock"
-                                   Grid.Column="1"
-                                   Padding="{TemplateBinding Padding}"
-                                   Margin="{TemplateBinding Margin}"
-                                   Foreground="{TemplateBinding Foreground}"
-                                   Text="{TemplateBinding Label}" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+                    <telerik:TextToVisibilityConverter x:Key="textToVisibilityConverter" />
+                    <SolidColorBrush x:Key="LegendForeground" Color="#FF000000" />
+                    <LinearGradientBrush x:Key="LegendBackground" EndPoint="1.96,0.5" StartPoint="-0.96,0.5">
+                        <GradientStop Color="#FFB5B5B5"/>
+                        <GradientStop Color="#FFF0F0F0" Offset="0.5"/>
+                    </LinearGradientBrush>
+                    <SolidColorBrush x:Key="LegendBorderBrush" Color="#FF848484" />
+                    <Thickness x:Key="LegendBorderThickness">1</Thickness>
 
-      
+                    <system:Double x:Key="LegendItemMarkerMaskStrokeThickness">1</system:Double>
+                    <SolidColorBrush x:Key="LegendItemMarkerMaskStroke" Color="White" />
+                    <LinearGradientBrush x:Key="LegendItemMarkerMask" EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#D8FFFFFF" Offset="0.009"/>
+                        <GradientStop Color="#66FFFFFF" Offset="1"/>
+                        <GradientStop Color="Transparent" Offset="0.43"/>
+                        <GradientStop Color="#7FFFFFFF" Offset="0.42"/>
+                    </LinearGradientBrush>
+                    <SolidColorBrush x:Key="LegendItemMarkerMaskOpacityMask" Color="#FF000000" />
+                    <SolidColorBrush x:Key="LegendItemMarkerMask2" Color="Transparent" />
 
-        <!--Grid Styles End-->
-
-
-        <!--Chart Legend Scrollbar-->
-
-        <telerik:TextToVisibilityConverter x:Key="textToVisibilityConverter" />
-
-        <SolidColorBrush x:Key="LegendForeground" Color="#FF000000" />
-        <LinearGradientBrush x:Key="LegendBackground" EndPoint="1.96,0.5" StartPoint="-0.96,0.5">
-            <GradientStop Color="#FFB5B5B5"/>
-            <GradientStop Color="#FFF0F0F0" Offset="0.5"/>
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="LegendBorderBrush" Color="#FF848484" />
-        <Thickness x:Key="LegendBorderThickness">1</Thickness>
-
-        <system:Double x:Key="LegendItemMarkerMaskStrokeThickness">1</system:Double>
-        <SolidColorBrush x:Key="LegendItemMarkerMaskStroke" Color="White" />
-        <LinearGradientBrush x:Key="LegendItemMarkerMask" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="#D8FFFFFF" Offset="0.009"/>
-            <GradientStop Color="#66FFFFFF" Offset="1"/>
-            <GradientStop Color="Transparent" Offset="0.43"/>
-            <GradientStop Color="#7FFFFFFF" Offset="0.42"/>
-        </LinearGradientBrush>
-        <SolidColorBrush x:Key="LegendItemMarkerMaskOpacityMask" Color="#FF000000" />
-        <SolidColorBrush x:Key="LegendItemMarkerMask2" Color="Transparent" />
-
-        <telerik:MarkerShape x:Key="LegendItemMarkerShape">SquareRounded</telerik:MarkerShape>
-
-        <Style x:Key="ChartLegendStyle"
-        TargetType="telerik:ChartLegend">
-            <Setter Property="Foreground" Value="{StaticResource LegendForeground}" />
-            <Setter Property="Background" Value="{StaticResource LegendBackground}" />
-            <Setter Property="Padding" Value="10,10,10,5" />
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="BorderBrush" Value="{StaticResource LegendBorderBrush}" />
-            <Setter Property="BorderThickness" Value="{StaticResource LegendBorderThickness}" />
-            <Setter Property="HeaderFontWeight" Value="Bold" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-            <Setter Property="LegendItemMarkerShape" Value="{StaticResource LegendItemMarkerShape}" />
-            <Setter Property="Template" >
-                <Setter.Value>
-                    <ControlTemplate TargetType="telerik:ChartLegend">
-                        <Border 
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" >
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <ContentControl Foreground="{TemplateBinding Foreground}"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            FontWeight="{TemplateBinding HeaderFontWeight}" 
-                                            Content="{TemplateBinding Header}" 
-                                            ContentTemplate="{TemplateBinding HeaderTemplate}"/>
-                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" >
-                                    <ItemsPresenter/>
-                                </ScrollViewer>
-                            </Grid>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <telerik:RadWrapPanel/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="HeaderTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <Grid>
-                            <TextBlock FontSize="6"
-                                   Padding="0,0,0,2"  
-                                   Width="Auto" 
-                                   Height="Auto" 
-                                   Visibility="{Binding Converter={StaticResource textToVisibilityConverter}}"
-                                   TextWrapping="Wrap" />
-                        </Grid>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        
-        <!--GridViewRowStyle-->
-        <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-            <Setter Property="Height" Value="15"/>
-        </Style>
-        <!--Chart Legend Scrollbar End-->
-
-        <!--Chart Axis Label Styles-->
-
-        <Style x:Key="ItemLabelStyle"
-       TargetType="TextBlock">
-            <Setter Property="Foreground"
-            Value="Black" />
-            <Setter Property="FontSize"
-            Value="8" />
-            <Setter Property="FontStyle"
-            Value="Normal" />
-        </Style>
-
-        <!--GridViewHeaderHeaderRowStyle-->
-        <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
-            <Setter Property="Height" Value="15"/>
-            <Setter Property="Background" Value="#9F1D21"/>
-            <Setter Property="MaxHeight" Value="15"/>
-        </Style>
-
-
-        <!--GridViewHeaderCellStyleStyle-->
-        <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyle">
-            <Setter Property="Background" Value="#9F1D21" />
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="7"/>
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="15"/>
-            <Setter Property="HorizontalContentAlignment" Value="Right"/>
-        </Style>
-
-
-        <!--Chart Axis Label Styles End-->
-
-        <DataTemplate x:Key="chartControlDataTemplate">
-            <StackPanel>
-                <TextBlock Text="Chart Controls"/>
-            </StackPanel>
-        </DataTemplate>
-
+                    <telerik:MarkerShape x:Key="LegendItemMarkerShape">SquareRounded</telerik:MarkerShape>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5">
@@ -253,7 +82,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
                              telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
             <telerik:RadExpander.Header>
@@ -374,16 +203,14 @@
                                              ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
-                                             IsTextSearchEnabled="False" 
-                                             />
+                                             IsTextSearchEnabled="False" />
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
                             <Image Source="../Images/AddToChart.png"/>
                         </Button>
-
                     </Grid>
-                    
-                    
+
+
                     <Grid Grid.Row="6" Margin="0,2,0,0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -395,7 +222,7 @@
                         <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
                                    Grid.Row="1" HorizontalAlignment="Right" />
                     </Grid>
-                    
+
                     <!--List of Comparison entities-->
                     <Grid Grid.Row="7" Margin="0,2,0,0">
                         <ItemsControl  HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
@@ -427,12 +254,13 @@
                                          CanUserSortColumns="True" ScrollMode="Deferred" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7"
-                                         AlternateRowBackground="#d8d5d4" GroupPanelBackground="#9F1D21"
+                                         GroupPanelBackground="#9F1D21"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ColumnWidth="*" FontFamily="Arial"
                                          EnableColumnVirtualization="True"
                                          EnableRowVirtualization="True"
+                                         AlternateRowBackground="#d8d5d4"
                                          AlternationCount="2">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"
@@ -455,7 +283,7 @@
                                                         DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
-                                                        DataFormatString="{}{0:n2}"
+                                                        DataFormatString="{}{0:n4}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         </telerik:RadGridView.Columns>
 
@@ -485,9 +313,9 @@
 
                             </telerik:RadChart.PaletteBrushes>
                             <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView >
+                                <telerik:ChartDefaultView ChartLegendPosition="Right" >
                                     <telerik:ChartDefaultView.ChartArea >
-                                        <telerik:ChartArea  SmartLabelsEnabled="True" 
+                                        <telerik:ChartArea  SmartLabelsEnabled="True" LegendName="chPricingLegend"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
@@ -510,7 +338,13 @@
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
                                     </telerik:ChartDefaultView.ChartArea>
-                                    
+                                    <telerik:ChartDefaultView.ChartLegend>
+                                        <telerik:ChartLegend UseAutoGeneratedItems="True" 
+                                                             Header="" ItemsPanelOrientation="Horizontal" x:Name="chPricingLegend" 
+                                                             Style="{StaticResource ChartLegendStyle}" 
+                                                             LegendItemStyle="{StaticResource ChartLegendItemStyle}" />
+                                    </telerik:ChartDefaultView.ChartLegend>
+
                                 </telerik:ChartDefaultView>
                             </telerik:RadChart.DefaultView>
                             <telerik:RadChart.SeriesMappings>
@@ -519,7 +353,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Security: #Ticker, Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
@@ -573,7 +407,7 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
-                                                                 ItemToolTipFormat="Security: #Ticker, Volume: #Y /Date: #X{dd-MMM-yyyy}" />
+                                                                     ItemToolTipFormat="Volume: #Y /Date: #X{dd-MMM-yyyy}" />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
@@ -57,6 +58,22 @@ namespace GreenField.Gadgets.Views
             else
                 this.gridBusyIndicator.IsBusy = false;
         }
+
+        /// <summary>
+        /// Disabling the indentation when grouping is applied in the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgSectorBreakdown_Rowloaded(object sender, RowLoadedEventArgs e)
+        {
+            //var row = e.Row as GridViewRow;
+            //if (row != null)
+            //{
+            //    var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
+            //    if (indent != null)
+            //    { indent.Visibility = Visibility.Collapsed; }
+            //}
+        }
         #endregion
 
         #region Flip Method
@@ -92,5 +109,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         } 
         #endregion
+
+       
     }
 }

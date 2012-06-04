@@ -230,6 +230,39 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private double _axisXMinValue;
+        public double AxisXMinValue
+        {
+            get { return _axisXMinValue; }
+            set
+            {
+                _axisXMinValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMinValue);
+            }
+        }
+
+        private double _axisXMaxValue;
+        public double AxisXMaxValue
+        {
+            get { return _axisXMaxValue; }
+            set
+            {
+                _axisXMaxValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMaxValue);
+            }
+        }
+
+        private int _axisXStep;
+        public int AxisXStep
+        {
+            get { return _axisXStep; }
+            set
+            {
+                _axisXStep = value;
+
+            }
+        }
+
         #region ICommand
 
         /// <summary>
@@ -372,7 +405,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -410,7 +443,7 @@ namespace GreenField.Gadgets.ViewModels
 
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
 
@@ -445,7 +478,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -491,7 +524,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);

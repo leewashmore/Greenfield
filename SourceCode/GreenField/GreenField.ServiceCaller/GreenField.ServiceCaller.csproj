@@ -63,9 +63,11 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBInteractivity.cs" />
@@ -78,6 +80,10 @@
     <Compile Include="ManageDashboard.cs" />
     <Compile Include="ManageLogins.cs" />
     <Compile Include="ManageSessions.cs" />
+    <Compile Include="Prompt\Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Prompt\Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\BenchmarkHoldingsDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -376,6 +382,12 @@
     <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Prompt\Message.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

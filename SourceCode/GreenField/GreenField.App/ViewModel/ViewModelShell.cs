@@ -92,7 +92,7 @@ namespace GreenField.App.ViewModel
                 catch (Exception ex)
                 {
                     string StackTrace = Logging.StackTraceToString(ex);
-                    MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + StackTrace, "Exception", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + StackTrace, "Exception", MessageBoxButton.OK);
                     Logging.LogException(_logger, ex);
                 }
             }
@@ -175,11 +175,12 @@ namespace GreenField.App.ViewModel
         private List<EntitySelectionData> _entitySelectionInfo;
         public List<EntitySelectionData> EntitySelectionInfo
         {
-            get 
+            get
             {
                 if (_entitySelectionInfo == null)
                     _entitySelectionInfo = new List<EntitySelectionData>();
-                return _entitySelectionInfo; }
+                return _entitySelectionInfo;
+            }
             set
             {
                 _entitySelectionInfo = value;
@@ -394,7 +395,7 @@ namespace GreenField.App.ViewModel
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
-                    if (_dbInteractivity != null && _filterVisibility == Visibility.Visible)
+                    if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible)
                     {
                         BusyIndicatorContent = "Retrieving...";
                         if (ShellFilterDataLoadEvent != null)
@@ -432,7 +433,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "1M", "3M", "6M", "YTD", "1Y", "3Y", "5Y", "SI","10Y" };
+                return new List<String> { "1D","1W", "MTD", "QTD", "YTD", "1Y" };
             }
         }
 
@@ -483,14 +484,14 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-               
+
                 return _countryTypeInfo;
 
             }
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();               
+                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -510,7 +511,7 @@ namespace GreenField.App.ViewModel
 
             }
         }
-       
+
         private String _countryCode;
         public String CountryCode
         {
@@ -539,7 +540,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-         
+
 
 
         /// <summary>
@@ -554,8 +555,8 @@ namespace GreenField.App.ViewModel
                 _countrySelectorVisibility = value;
                 RaisePropertyChanged(() => this.CountrySelectorVisibility);
                 if (value == Visibility.Visible && CountryTypeInfo == null)
-                _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
-             
+                    _dbInteractivity.RetrieveCountrySelectionData(RetrieveCountrySelectionCallbackMethod);
+
             }
         }
 
@@ -588,6 +589,7 @@ namespace GreenField.App.ViewModel
                 {
                     if (value == "Show Everything")
                     {
+                        this.FilterValueVisibility = Visibility.Collapsed;
                         FilterSelectionData filterSelData = new FilterSelectionData();
                         filterSelData.Filtertype = value;
                         filterSelData.FilterValues = string.Empty;
@@ -595,9 +597,13 @@ namespace GreenField.App.ViewModel
                         SelectorPayload.FilterSelectionData = filterSelData;
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
+                        //this.FilterVisibility = Visibility.Collapsed;
+                       
+                       
                     }
                     else
                     {
+                        this.FilterValueVisibility = Visibility.Visible;
                         FilterSelectorInfo = FilterSelectionInfo
                                             .Where(record => record.Filtertype == value)
                                             .ToList();
@@ -665,14 +671,14 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
-        private Visibility _filterVisibility = Visibility.Collapsed;
-        public Visibility FilterVisibility
+        private Visibility _filterTypeVisibility = Visibility.Collapsed;
+        public Visibility FilterTypeVisibility
         {
-            get { return _filterVisibility; }
+            get { return _filterTypeVisibility; }
             set
             {
-                _filterVisibility = value;
-                RaisePropertyChanged(() => this.FilterVisibility);
+                _filterTypeVisibility = value;
+                RaisePropertyChanged(() => this.FilterTypeVisibility);
                 if (value == Visibility.Visible && FilterSelectionInfo == null)
                 {
                     if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
@@ -691,6 +697,32 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores visibility property of the filter selector for holdings pie chart
         /// </summary>
+        private Visibility _filterValueVisibility = Visibility.Collapsed;
+        public Visibility FilterValueVisibility
+        {
+            get { return _filterValueVisibility; }
+            set
+            {
+                _filterValueVisibility = value;
+                RaisePropertyChanged(() => this.FilterValueVisibility);
+                //if (value == Visibility.Visible && FilterSelectionInfo == null)
+                //{
+                //    if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
+                //    {
+                //        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
+                //        if (ShellFilterDataLoadEvent != null)
+                //        {
+                //            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                //        }
+                //        _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                //    }
+                //}
+            }
+        }
+
+        /// <summary>
+        /// Stores visibility property of the filter selector for holdings pie chart
+        /// </summary>
         private Visibility _marketCapCashSelectorVisibility = Visibility.Collapsed;
         public Visibility MarketCapCashSelectorVisibility
         {
@@ -698,7 +730,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _marketCapCashSelectorVisibility = value;
-                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);               
+                RaisePropertyChanged(() => this.MarketCapCashSelectorVisibility);
             }
         }
         #endregion
@@ -806,7 +838,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        
+
         /// <summary>
         /// Stores checked-unchecked value for ExCash checkbox
         /// </summary>
@@ -818,13 +850,13 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-               
-                    _selectorPayload.IsExCashSecurityData = value;
-                    _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
-               
+
+                _selectorPayload.IsExCashSecurityData = value;
+                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
+
             }
         }
-    
+
 
         #endregion
 
@@ -839,10 +871,10 @@ namespace GreenField.App.ViewModel
             set
             {
                 _mktCapExCashSelectorVisibility = value;
-                RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);                
+                RaisePropertyChanged(() => this.MktCapExCashSelectorVisibility);
             }
         }
-        
+
         #endregion
         #endregion
 
@@ -878,14 +910,14 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores commodity ID value selected by user
         /// </summary>
-        private string _selCommodityID;
-        public string SelCommodityID
+        private string _selCommodityId;
+        public string SelCommodityId
         {
-            get { return _selCommodityID; }
+            get { return _selCommodityId; }
             set
             {
-                _selCommodityID = value;
-                RaisePropertyChanged(() => this.SelCommodityID);
+                _selCommodityId = value;
+                RaisePropertyChanged(() => this.SelCommodityId);
                 if (value != null)
                     _selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper() == value.ToUpper()).ToString();
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
@@ -1417,7 +1449,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
         }
@@ -1438,7 +1470,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1457,7 +1489,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1476,7 +1508,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1497,7 +1529,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1516,7 +1548,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1535,7 +1567,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1554,7 +1586,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1573,7 +1605,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1592,7 +1624,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1613,7 +1645,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1632,7 +1664,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1651,7 +1683,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1672,7 +1704,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1691,7 +1723,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1712,7 +1744,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1733,7 +1765,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1752,7 +1784,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1771,7 +1803,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1790,7 +1822,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1811,7 +1843,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1830,7 +1862,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1853,7 +1885,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1872,7 +1904,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1891,7 +1923,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1912,7 +1944,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1931,7 +1963,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1952,7 +1984,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1975,7 +2007,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -1996,7 +2028,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2017,7 +2049,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2036,7 +2068,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2055,7 +2087,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2076,7 +2108,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2095,7 +2127,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2124,7 +2156,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2160,7 +2192,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2186,7 +2218,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2222,7 +2254,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2238,7 +2270,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2253,7 +2285,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2280,7 +2312,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2304,7 +2336,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2328,7 +2360,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2352,7 +2384,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2376,7 +2408,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2400,7 +2432,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2424,7 +2456,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2448,7 +2480,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2472,7 +2504,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2497,7 +2529,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2522,7 +2554,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2547,7 +2579,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2572,7 +2604,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2597,7 +2629,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2622,7 +2654,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2647,7 +2679,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2672,7 +2704,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2697,7 +2729,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2716,7 +2748,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -2742,7 +2774,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2763,7 +2795,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2784,7 +2816,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2805,7 +2837,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2826,7 +2858,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2847,7 +2879,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2875,13 +2907,13 @@ namespace GreenField.App.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             if (ShellDataLoadEvent != null)
@@ -2932,7 +2964,7 @@ namespace GreenField.App.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
                 if (ShellDataLoadEvent != null)
@@ -2942,7 +2974,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -2967,7 +2999,7 @@ namespace GreenField.App.ViewModel
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                         Logging.LogException(_logger, ex);
                     }
                 }
@@ -2982,7 +3014,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -3025,7 +3057,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -3056,7 +3088,7 @@ namespace GreenField.App.ViewModel
             catch (Exception ex)
             {
                 param = null;
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "NullReferenceException", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
 
@@ -3077,11 +3109,12 @@ namespace GreenField.App.ViewModel
             //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
             //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
             //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
-            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;            
-            FilterVisibility = ToolBoxItemVisibility.FILTER_SELECTOR_VISIBILITY;
+            SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
+            FilterTypeVisibility = ToolBoxItemVisibility.FILTER_TYPE_SELECTOR_VISIBILITY;
+            FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
-            
+
         }
 
 
@@ -3118,7 +3151,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
 
@@ -3168,7 +3201,7 @@ namespace GreenField.App.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);

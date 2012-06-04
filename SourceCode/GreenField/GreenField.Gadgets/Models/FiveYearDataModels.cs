@@ -14,24 +14,26 @@ namespace GreenField.Gadgets.Models
     public class FiveYearDataModels
     {
       
-        public String COUNTRY_NAME { get; set; }
+        public String CountryName { get; set; }
         
-        public String CATEGORY_NAME { get; set; }
+        public String CategoryName { get; set; }
        
-        public String DISPLAY_TYPE { get; set; }
+        public String DisplayType { get; set; }
         
-        public String DESCRIPTION { get; set; }
+        public String Description { get; set; }
        
-        public int SORT_ORDER { get; set; }
+        public int SortOrder { get; set; }
       
-        public Decimal? YEAR_ONE { get; set; }
+        public Decimal? YearOne { get; set; }
      
-        public Decimal? YEAR_TWO { get; set; }
+        public Decimal? YearTwo { get; set; }
 
-        public Decimal? YEAR_THREE { get; set; }
+        public Decimal? YearThree { get; set; }
       
-        public Decimal? YEAR_FOUR { get; set; }
+        public Decimal? YearFour { get; set; }
        
-        public Decimal? YEAR_FIVE { get; set; }
+        public Decimal? YearFive { get; set; }
+
+        public Decimal? FiveYearAvg { get; set; }
     }
 }

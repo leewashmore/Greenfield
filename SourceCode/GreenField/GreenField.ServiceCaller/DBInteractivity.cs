@@ -55,7 +55,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -77,7 +83,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -108,7 +120,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -149,7 +167,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -191,7 +215,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -223,11 +253,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -257,11 +293,17 @@ namespace GreenField.ServiceCaller
                             }
                         }
                     }
-                    else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                    else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                     {
-                        FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                            = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                        MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                        FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                            = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                        Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                        if (callback != null)
+                            callback(null);
+                    }
+                    else
+                    {
+                        Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                         if (callback != null)
                             callback(null);
                     }
@@ -269,7 +311,43 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        /// <summary>
+        ///// <summary>
+        ///// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
+        ///// </summary>
+        ///// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
+        ///// <param name="effectiveDate">Effective date as selected by the user</param>
+        ///// <param name="filterType">The filter type selected by the user</param>
+        ///// <param name="filterValue">The filter value selected by the user</param>
+        ///// <param name="callback"></param>  
+        //public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
+        //{
+        //    BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+        //    client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+        //    client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+        //    };
+        //}
         /// Service Caller method for AssetAllocation gadget
         /// </summary>
         /// <param name="fundSelectionData">Selected Portfolio</param>
@@ -295,11 +373,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -332,11 +416,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -369,11 +459,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -406,11 +502,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -443,11 +545,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -482,11 +590,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -521,315 +635,26 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
             };
         }
        
+        
         #endregion
-
-        /// <summary>
-        /// Retrieves filter values for a selected filter type by calling the service
-        /// </summary>
-        /// <param name="filterType">Filter Type selected by the user</param>
-        /// <param name="effectiveDate">Effected Date selected by the user</param>
-        /// <param name="callback">callback method</param>
-        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveFilterSelectionDataAsync(effectiveDate);
-            client.RetrieveFilterSelectionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (e.Result != null)
-                    {
-                        callback(e.Result.ToList());
-                    }
-                    else
-                    {
-                        callback(null);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-       
-        /// <summary>
-        /// Service caller method to retrieve PortfolioDetails Data
-        /// </summary>
-        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
-        /// <param name="objSelectedDate">Selected Date</param>
-        /// <param name="callback">collection of Portfolio Details Data</param>
-        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
-            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
-        /// </summary>
-        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
-        /// <param name="callback">List of BenchmarkChartReturnData</param>
-        public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
-            client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
-        /// </summary>
-        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
-        /// <param name="callback">List of BenchmarkGridReturnData</param>
-        public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
-            client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #region Interaction Method for Attribution Gadget
-        /// <summary>
-        /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
-        /// <param name="effectiveDate">Contains the selected effective date</param>
-        /// <param name="callback">callback</param>
-        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
-            client.RetrieveAttributionDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-        #endregion
-
-        #region Interaction Methods for Benchmark
-        /// <summary>
-        /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
-        /// <param name="effectiveDate">Effective Date selected by the user</param>
-        /// <param name="callback">callback</param>
-        public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
-            client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        /// <summary>
-        /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
-        /// </summary>
-        /// <param name="fundSelectionData">object containing Fund Selection Data</param>
-        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
-        /// <param name="effectiveDate">Effective Date selected by the user</param>
-        /// <param name="callback">callback</param>
-        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
-            client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-              
-        #endregion
-
-        #region Interaction Method for Heat Map
-
-        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
-        {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
-            client.RetrieveHeatMapDataCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        if (e.Result != null)
-                        {
-                            callback(e.Result.ToList());
-                        }
-                        else
-                        {
-                            callback(null);
-                        }
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
-                    if (callback != null)
-                        callback(null);
-                }
-            };
-        }
-
-        #endregion
-
-        #region Slice3
+        
         #region Market Performance Gadget
         /// <summary>
         /// service call method for retrieving list of market performance snapshots for a user
@@ -860,7 +685,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -874,10 +705,10 @@ namespace GreenField.ServiceCaller
         /// <param name="userName"></param>
         /// <param name="snapshotName"></param>
         /// <param name="callback"></param>
-        public void RetrieveMarketSnapshotPreference(string userName, string snapshotName, Action<List<MarketSnapshotPreference>> callback)
+        public void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketSnapshotPreferenceAsync(userName, snapshotName);
+            client.RetrieveMarketSnapshotPreferenceAsync(snapshotPreferenceId);
             client.RetrieveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -898,7 +729,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -934,7 +771,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -964,7 +807,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(false);
                 }
@@ -993,7 +842,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(false);
                 }
@@ -1022,7 +877,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(false);
                 }
@@ -1051,7 +912,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(false);
                 }
@@ -1063,12 +930,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData, List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
-            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo, Action<List<MarketSnapshotPreference>> callback)
+        public void SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML, Action<List<MarketSnapshotPreference>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveMarketSnapshotPreferenceAsync(userName, marketSnapshotSelectionData, createEntityPreferenceInfo, updateEntityPreferenceInfo
-                , deleteEntityPreferenceInfo, deleteGroupPreferenceInfo, createGroupPreferenceInfo);
+            client.SaveMarketSnapshotPreferenceAsync(snapshotPreferenceId, updateXML);
             client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1089,7 +954,13 @@ namespace GreenField.ServiceCaller
                 {
                     FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1102,10 +973,10 @@ namespace GreenField.ServiceCaller
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
         public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
-            , List<MarketSnapshotPreference> snapshotPreference, Action<PopulatedMarketPerformanceSnapshotData> callback)
+            , string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, snapshotPreference);
+            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, updateXML);
             client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1117,9 +988,15 @@ namespace GreenField.ServiceCaller
                 }
                 else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1141,9 +1018,15 @@ namespace GreenField.ServiceCaller
                 }
                 else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1151,6 +1034,351 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
+
+        /// <summary>
+        /// Retrieves filter values for a selected filter type by calling the service
+        /// </summary>
+        /// <param name="filterType">Filter Type selected by the user</param>
+        /// <param name="effectiveDate">Effected Date selected by the user</param>
+        /// <param name="callback">callback method</param>
+        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveFilterSelectionDataAsync(effectiveDate);
+            client.RetrieveFilterSelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+       
+        /// <summary>
+        /// Service caller method to retrieve PortfolioDetails Data
+        /// </summary>
+        /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
+        /// <param name="objSelectedDate">Selected Date</param>
+        /// <param name="callback">collection of Portfolio Details Data</param>
+        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
+            client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
+        /// </summary>
+        /// <param name="objSelectedEntities">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkChartReturnData</param>
+        public void RetrieveBenchmarkChartReturnData(Dictionary<string, string> objSelectedEntities, Action<List<BenchmarkChartReturnData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveBenchmarkChartReturnDataAsync(objSelectedEntities);
+            client.RetrieveBenchmarkChartReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart 
+        /// </summary>
+        /// <param name="objSelectedEntites">Details of Selected Portfolio & Security</param>
+        /// <param name="callback">List of BenchmarkGridReturnData</param>
+        public void RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntites, Action<List<BenchmarkGridReturnData>> callback)
+        {
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveBenchmarkGridReturnDataAsync(objSelectedEntites);
+            client.RetrieveBenchmarkGridReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        #region Interaction Method for Attribution Gadget
+        /// <summary>
+        /// Method that calls the RetrieveAttributionData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
+        /// <param name="effectiveDate">Contains the selected effective date</param>
+        /// <param name="callback">callback</param>
+        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveAttributionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+        #endregion
+
+        #region Interaction Methods for Benchmark
+        /// <summary>
+        /// Method that calls the RetrieveTopBenchmarkSecuritiesData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+        /// <param name="callback">callback</param>
+        public void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveTopBenchmarkSecuritiesDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveTopBenchmarkSecuritiesDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// Method that calls the RetrievePortfolioRiskReturnData method of the service and provides interation between the Viewmodel and Service.
+        /// </summary>
+        /// <param name="fundSelectionData">object containing Fund Selection Data</param>
+        /// <param name="benchmarkSelectionData">object containing Benchmark Selection Data</param>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+        /// <param name="callback">callback</param>
+        public void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrievePortfolioRiskReturnDataAsync(portfolioSelectionData, effectiveDate, effectiveDate);
+            client.RetrievePortfolioRiskReturnDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+              
+        #endregion
+
+        #region Interaction Method for Heat Map
+
+        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
+            client.RetrieveHeatMapDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        #endregion
+
+        #region Slice3
         /// <summary>
         /// Service Caller Method for Relative Performance UI Data
         /// </summary>
@@ -1176,6 +1404,20 @@ namespace GreenField.ServiceCaller
                             callback(null);
                         }
                     }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -1206,6 +1448,20 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
             };
         }
 
@@ -1228,6 +1484,20 @@ namespace GreenField.ServiceCaller
                             callback(null);
                         }
                     }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }
@@ -1253,11 +1523,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1284,11 +1560,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1315,11 +1597,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1346,11 +1634,17 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1377,14 +1671,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1408,14 +1709,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1429,7 +1737,7 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"></param>  
         public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
@@ -1440,11 +1748,17 @@ namespace GreenField.ServiceCaller
                         callback(e.Result);
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -1476,14 +1790,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1512,14 +1833,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
                 {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
         #endregion
@@ -1548,6 +1876,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1571,6 +1914,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
 
         }
@@ -1595,6 +1953,21 @@ namespace GreenField.ServiceCaller
                         }
                     }
                 }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
             };
         }
 
@@ -1618,6 +1991,20 @@ namespace GreenField.ServiceCaller
                             callback(null);
                         }
                     }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
                 }
             };
         }

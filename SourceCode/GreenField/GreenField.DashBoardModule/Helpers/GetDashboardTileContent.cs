@@ -13,6 +13,7 @@ using GreenField.DashboardModule.Helpers;
 using GreenField.Common;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.DashBoardModule.Helpers
 {
@@ -51,7 +52,7 @@ namespace GreenField.DashBoardModule.Helpers
             catch (Exception ex)
             {
                 param.LoggerFacade.Log("User : " + SessionManager.SESSION.UserName + "\nMessage: " + ex.Message + "\nStackTrace: " + ex.StackTrace, Category.Exception, Priority.Medium);
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
             }
 
             return content;

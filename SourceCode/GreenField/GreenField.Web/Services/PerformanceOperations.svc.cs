@@ -68,10 +68,26 @@ namespace GreenField.Web.Services
             string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
             string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
             List<string> countryName = new List<string>();
-            List<string> SectorName = new List<string>();
+            List<string> benchmarkName = new List<string>();
 
-            countryName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.COUNTRY_NAME).ToList();
-            SectorName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
+            countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+            benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
+
+            if (benchmarkName == null)
+                throw new Exception("No Benchmark is found for the selected Portfolio");
+
+            if (benchmarkName.Count == 0)
+                throw new Exception("No Benchmark is allotted for the selected Portfolio");
+            else if (benchmarkName.Count > 1)
+                throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
+            if (countryName == null)
+                throw new Exception("No Country is found for the selected security");
+
+            if (countryName.Count == 0)
+                throw new Exception("No Country is allotted for the selected Security");
+            else if (countryName.Count > 1)
+                throw new Exception("More then 1 country is allotted to selected security ");
 
             List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
             return result;
@@ -103,30 +119,44 @@ namespace GreenField.Web.Services
                 string portfolioId = "";
                 DateTime startDate = DateTime.Today.AddYears(-1);
                 List<string> countryName;
+                List<string> benchmarkName;
 
                 if (objSelectedEntities.ContainsKey("SECURITY"))
                     securityLongName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
                 if (objSelectedEntities.ContainsKey("PORTFOLIO"))
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
 
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                if (benchmarkName == null)
+                    throw new Exception("No Benchmark is found for the selected Portfolio");
+
+                if (benchmarkName.Count == 0)
+                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+                else if (benchmarkName.Count > 1)
+                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
+                if (countryName == null)
+                    throw new Exception("No Country is found for the selected security");
+
+                if (countryName.Count == 0)
+                    throw new Exception("No Country is allotted for the selected Security");
+                else if (countryName.Count > 1)
+                    throw new Exception("More then 1 country is allotted to selected security ");
 
 
-                //Need to show a message here
-                if (countryName.Count != 1)
-                    return result;
 
-
-                List<GF_PERF_MONTHLY_ATTRIBUTION> dimensionMonthlyPerfData = entity.GF_PERF_MONTHLY_ATTRIBUTION.
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO == portfolioId
                         && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
                         && a.TO_DATE >= startDate).ToList();
 
                 //Checking contents of Data fetched from Dimension
-                if (dimensionMonthlyPerfData == null || dimensionMonthlyPerfData.Count == 0)
+                if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
                     return result;
 
-                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionMonthlyPerfData);
+                result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionDailyPerfData);
 
                 if (result == null)
                     throw new InvalidOperationException();
@@ -192,6 +222,7 @@ namespace GreenField.Web.Services
                 string securityLongName = "";
                 string portfolioId = "";
                 List<string> countryName;
+                List<string> benchmarkName = new List<string>();
 
 
                 if (objSelectedEntities.ContainsKey("SECURITY"))
@@ -200,14 +231,26 @@ namespace GreenField.Web.Services
                     portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
 
                 countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList();
 
-                //Need to show a message here.
+
+                if (benchmarkName == null)
+                    throw new Exception("No Benchmark is found for the selected Portfolio");
+
+                if (benchmarkName.Count == 0)
+                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+
+                else if (benchmarkName.Count > 1)
+                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
                 if (countryName == null)
-                    return result;
-                //Need to show a message here
-                if (countryName.Count != 1)
-                    return result;
+                    throw new Exception("No Country is found for the selected security");
 
+                if (countryName.Count == 0)
+                    throw new Exception("No Country is allotted for the selected Security");
+
+                else if (countryName.Count > 1)
+                    throw new Exception("More then 1 country is allotted to selected security ");
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO.ToUpper() == portfolioId &&
@@ -302,7 +345,6 @@ namespace GreenField.Web.Services
             return result;
         }
 
-
         #endregion
 
         #region Market Performance Snapshot Operation Contracts
@@ -344,15 +386,12 @@ namespace GreenField.Web.Services
         /// <returns>list of user preference of entities in market performance snapshot</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketSnapshotPreference> RetrieveMarketSnapshotPreference(string userName, string snapshotName)
+        public List<MarketSnapshotPreference> RetrieveMarketSnapshotPreference(int snapshotPreferenceId)
         {
             try
             {
-                if (userName == null)
-                    return null;
-
                 ResearchEntities entity = new ResearchEntities();
-                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName, snapshotName)).ToList<MarketSnapshotPreference>();
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId)).ToList<MarketSnapshotPreference>();
                 return userPreference.OrderBy(record => record.GroupPreferenceID).ThenBy(record => record.EntityOrder).ToList();
             }
             catch (Exception ex)
@@ -659,54 +698,35 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(string userName, MarketSnapshotSelectionData marketSnapshotSelectionData
-            , List<MarketSnapshotPreference> createEntityPreferenceInfo, List<MarketSnapshotPreference> updateEntityPreferenceInfo
-            , List<MarketSnapshotPreference> deleteEntityPreferenceInfo, List<int> deleteGroupPreferenceInfo, List<string> createGroupPreferenceInfo)
+        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                foreach (string groupName in createGroupPreferenceInfo)
-                {
-                    int groupPrefId = Convert.ToInt32(entity.SetMarketSnapshotGroupPreference(marketSnapshotSelectionData.SnapshotPreferenceId, groupName).FirstOrDefault());
+                int? result = entity.UpdateMarketPerformanceSnapshot(snapshotPreferenceId, updateXML).FirstOrDefault();
 
-                    foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
-                    {
-                        if (preference.GroupName == groupName)
-                        {
-                            entity.SetMarketSnapshotEntityPreference(groupPrefId, preference.EntityName
-                                , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);
-                        }
-                    }
+                switch (result)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
+                    case 2:
+                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
+                    case 3:
+                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
+                    case 4:
+                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
+                    case 5:
+                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
+                    case 6:
+                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
+                    default:
+                        break;
                 }
 
-                foreach (MarketSnapshotPreference preference in createEntityPreferenceInfo)
-                {
-                    if (!createGroupPreferenceInfo.Contains(preference.GroupName))
-                    {
-                        entity.SetMarketSnapshotEntityPreference(preference.GroupPreferenceID, preference.EntityName
-                            , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);
-                    }
-                }
-
-                foreach (int groupPreferenceId in deleteGroupPreferenceInfo)
-                {
-                    entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
-                }
-
-                foreach (MarketSnapshotPreference preference in deleteEntityPreferenceInfo)
-                {
-                    entity.DeleteMarketSnapshotEntityPreference(preference.EntityPreferenceId);
-                }
-
-                foreach (MarketSnapshotPreference preference in updateEntityPreferenceInfo)
-                {
-                    entity.UpdateMarketSnapshotEntityPreference(preference.GroupPreferenceID
-                        , preference.EntityPreferenceId, preference.EntityOrder);
-                }
-
-                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(userName
-                    , marketSnapshotSelectionData.SnapshotName)).ToList<MarketSnapshotPreference>();
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId))
+                    .ToList<MarketSnapshotPreference>();
 
                 return userPreference;
             }
@@ -725,46 +745,69 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, List<MarketSnapshotPreference> snapshotPreference)
+        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
                 PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
-                
 
                 Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
                 if (snapshotID == null)
                     return null;
 
-                snapshotPreference = snapshotPreference
-                    .OrderBy(record => record.GroupPreferenceID)
-                    .ThenBy(record => record.EntityOrder)
-                    .ToList();
+                int? status = entity.UpdateMarketPerformanceSnapshot(Convert.ToInt32(snapshotID), updateXML).FirstOrDefault();
 
-                string insertedGroupName = String.Empty;
-                Decimal? groupPreferenceId = 0;
-
-                foreach (MarketSnapshotPreference preference in snapshotPreference)
+                switch (status)
                 {
-                    if (preference.GroupName != insertedGroupName)
-                    {
-                        groupPreferenceId = entity.SetMarketSnapshotGroupPreference(Convert.ToInt32(snapshotID), preference.GroupName).FirstOrDefault();
-                        insertedGroupName = preference.GroupName;
-                    }
-
-                    entity.SetMarketSnapshotEntityPreference(Convert.ToInt32(groupPreferenceId), preference.EntityName, preference.EntityReturnType,
-                        preference.EntityType, preference.EntityOrder);
+                    case 0:
+                        break;
+                    case 1:
+                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
+                    case 2:
+                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
+                    case 3:
+                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
+                    case 4:
+                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
+                    case 5:
+                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
+                    case 6:
+                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
+                    default:
+                        break;
                 }
 
-                MarketSnapshotSelectionData marketSnapshotSelectionData = (entity.GetMarketSnapshotSelectionData(userName))
-                    .ToList<MarketSnapshotSelectionData>()
-                    .Where(record => record.SnapshotName == snapshotName)
-                    .FirstOrDefault();
+                //snapshotPreference = snapshotPreference
+                //    .OrderBy(record => record.GroupPreferenceID)
+                //    .ThenBy(record => record.EntityOrder)
+                //    .ToList();
 
-                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(userName, snapshotName);
+                //string insertedGroupName = String.Empty;
+                //Decimal? groupPreferenceId = 0;
+
+
+
+                //foreach (MarketSnapshotPreference preference in snapshotPreference)
+                //{
+                //    if (preference.GroupName != insertedGroupName)
+                //    {
+                //        groupPreferenceId = entity.SetMarketSnapshotGroupPreference(Convert.ToInt32(snapshotID), preference.GroupName).FirstOrDefault();
+                //        insertedGroupName = preference.GroupName;
+                //    }
+
+                //    entity.SetMarketSnapshotEntityPreference(Convert.ToInt32(groupPreferenceId), preference.EntityName, preference.EntityReturnType,
+                //        preference.EntityType, preference.EntityOrder);
+                //}
+
+
+
+                MarketSnapshotSelectionData marketSnapshotSelectionData = RetrieveMarketSnapshotSelectionData(userName)
+                    .Where(record => record.SnapshotName == snapshotName).FirstOrDefault();
+
+                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(snapshotID));
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
-                
+
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
                 result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData;
                 return result;
@@ -873,15 +916,6 @@ namespace GreenField.Web.Services
                 if (dailyData == null)
                     return null;
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, null, null);
-                    if (monthlyData == null)
-                        return null;
-                }
-
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
                 {
@@ -917,9 +951,9 @@ namespace GreenField.Web.Services
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period)) * 100;
-                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period)) * 100;
-                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period);
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period)) * 100;
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period)) * 100;
+                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
 
@@ -990,15 +1024,6 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                    if (monthlyData == null)
-                        return null;
-                }
-
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1029,8 +1054,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in countrySpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     }
 
                     record.MarketValue = MarketValue;
@@ -1079,14 +1104,15 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1122,8 +1148,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in sectorSpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     }
 
                     record.MarketValue = MarketValue;
@@ -1172,20 +1198,21 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
-                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, monthlyData, period) * 100);
-                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, monthlyData, period) * 100);
+                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
+                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
                     decimal? activePosition = Convert.ToDecimal(fundWeight - benchmarkWeight);
 
                     result.Add(new RelativePerformanceActivePositionData()
@@ -1241,14 +1268,15 @@ namespace GreenField.Web.Services
 
                 List<GF_PERF_DAILY_ATTRIBUTION> s1 = data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
 
-                List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                {
-                    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
+                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
+                //{
+                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                    if (monthlyData == null)
-                        return null;
-                }
+                //    if (monthlyData == null)
+                //        return null;
+                //}
+
                 List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1258,7 +1286,7 @@ namespace GreenField.Web.Services
                         SecurityCountryId = row.COUNTRY,
                         SecuritySectorName = row.GICS_LVL1,
                         SecurityMarketValue = row.POR_RC_MARKET_VALUE,
-                        SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, monthlyData, period)
+                        SecurityAlpha = RetrieveRelativePerformanceAlphaValue(row, period)
                     });
                 }
                 return result.OrderByDescending(e => e.SecurityAlpha).ToList();
@@ -1270,7 +1298,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-       
+
         #region Relative Performance Helper Methods
         /// <summary>
         /// retrieving data from GF_PERF_DAILY_ATTRIBUTION view for relative performance gadgets
@@ -1327,115 +1355,38 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// retrieving data from GF_PERF_MONTHLY_ATTRIBUTION view for relative performance gadgets
-        /// </summary>
-        /// <param name="portfolioSelectionData"></param>
-        /// <param name="effectiveDate"></param>
-        /// <param name="country"></param>
-        /// <param name="sector"></param>
-        /// <returns>GF_PERF_MONTHLY_ATTRIBUTION Collection</returns>
-        private List<GF_PERF_MONTHLY_ATTRIBUTION> RetrieveRelativePerformanceMonthlyData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, string country = null, string sector = null)
-        {
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-            if (country == null && sector == null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY != null &&
-                                                                   t.GICS_LVL1 != null).ToList();
-            }
-
-            else if (country == null && sector != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                    t.NODE_NAME == "Security ID" &&
-                                                                    t.POR_RC_MARKET_VALUE != 0 &&
-                                                                    t.COUNTRY != null &&
-                                                                    t.GICS_LVL1 == sector).ToList();
-            }
-
-            else if (sector == null && country != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY == country &&
-                                                                   t.GICS_LVL1 != null).ToList();
-            }
-
-            else if (sector != null && country != null)
-            {
-                monthlyData = entity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
-                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY == country &&
-                                                                   t.GICS_LVL1 == sector).ToList();
-            }
-            return monthlyData;
-        }
-
-        /// <summary>
         /// retrieving alpha values based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformanceAlphaValue(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformanceAlphaValue(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? alpha = 0;
-            decimal? fundReturn = 0;
-            decimal? benchmarkReturn = 0;
             switch (period)
             {
-                case "1M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_1M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_1M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "1D":
+                    alpha = row.F_POR_ASH_RC_CTN_1D - row.F_BM1_ASH_RC_CTN_1D;
                     break;
 
-                case "3M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "1W":
+                    alpha = row.F_POR_ASH_RC_CTN_1W - row.F_BM1_ASH_RC_CTN_1W;
                     break;
 
-                case "6M":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_6M).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_6M).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
+                case "MTD":
+                    alpha = row.F_POR_ASH_RC_CTN_MTD - row.F_BM1_ASH_RC_CTN_MTD;
                     break;
 
                 case "YTD":
                     alpha = row.F_POR_ASH_RC_CTN_YTD - row.F_BM1_ASH_RC_CTN_YTD;
                     break;
 
+                case "QTD":
+                    alpha = row.F_POR_ASH_RC_CTN_QTD - row.F_BM1_ASH_RC_CTN_QTD;
+                    break;
+
                 case "1Y":
                     alpha = row.F_POR_ASH_RC_CTN_1Y - row.F_BM1_ASH_RC_CTN_1Y;
-                    break;
-
-                case "3Y":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_3Y).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_3Y).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
-                    break;
-
-                case "5Y":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_5Y).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_5Y).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
-                    break;
-
-                case "SI":
-                    fundReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_POR_ASH_RC_CTN_SI).FirstOrDefault();
-                    benchmarkReturn = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.F_BM1_ASH_RC_CTN_SI).FirstOrDefault();
-                    alpha = fundReturn - benchmarkReturn;
                     break;
 
                 default:
@@ -1448,44 +1399,35 @@ namespace GreenField.Web.Services
         /// retrieving benchmark weights based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformanceBenchmarkWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformanceBenchmarkWeight(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? benchmarkWeight = 0;
             switch (period)
             {
-                case "1M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_1M).FirstOrDefault();
+                case "1D":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_1D;
                     break;
 
-                case "3M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3M).FirstOrDefault();
+                case "1W":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_1W;
                     break;
 
-                case "6M":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_6M).FirstOrDefault();
+                case "MTD":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_MTD;
                     break;
 
                 case "YTD":
                     benchmarkWeight = row.BM1_RC_AVG_WGT_YTD;
                     break;
 
+                case "QTD":
+                    benchmarkWeight = row.BM1_RC_AVG_WGT_QTD;
+                    break;
+
                 case "1Y":
                     benchmarkWeight = row.BM1_RC_AVG_WGT_1Y;
-                    break;
-
-                case "3Y":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_3Y).FirstOrDefault();
-                    break;
-
-                case "5Y":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_5Y).FirstOrDefault();
-                    break;
-
-                case "SI":
-                    benchmarkWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.BM1_RC_AVG_WGT_SI).FirstOrDefault();
                     break;
 
                 default:
@@ -1498,44 +1440,35 @@ namespace GreenField.Web.Services
         /// retrieving portfolio weights based on period selected for relative performance gadget
         /// </summary>
         /// <param name="row"></param>
-        /// <param name="monthlydata"></param>
         /// <param name="period"></param>
         /// <returns></returns>
-        private decimal? RetrieveRelativePerformancePortfolioWeight(GF_PERF_DAILY_ATTRIBUTION row, List<GF_PERF_MONTHLY_ATTRIBUTION> monthlydata, string period)
+        private decimal? RetrieveRelativePerformancePortfolioWeight(GF_PERF_DAILY_ATTRIBUTION row, string period)
         {
             decimal? portfolioWeight = 0;
             switch (period)
             {
-                case "1M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_1M).FirstOrDefault();
+                case "1D":
+                    portfolioWeight = row.POR_RC_AVG_WGT_1D;
                     break;
 
-                case "3M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3M).FirstOrDefault();
+                case "1W":
+                    portfolioWeight = row.POR_RC_AVG_WGT_1W;
                     break;
 
-                case "6M":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_6M).FirstOrDefault();
+                case "MTD":
+                    portfolioWeight = row.POR_RC_AVG_WGT_MTD;
                     break;
 
                 case "YTD":
                     portfolioWeight = row.POR_RC_AVG_WGT_YTD;
                     break;
 
+                case "QTD":
+                    portfolioWeight = row.POR_RC_AVG_WGT_QTD;
+                    break;
+
                 case "1Y":
                     portfolioWeight = row.POR_RC_AVG_WGT_1Y;
-                    break;
-
-                case "3Y":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_3Y).FirstOrDefault();
-                    break;
-
-                case "5Y":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_5Y).FirstOrDefault();
-                    break;
-
-                case "SI":
-                    portfolioWeight = monthlydata.Where(t => t.GICS_LVL1 == row.GICS_LVL1 && t.COUNTRY == row.COUNTRY && t.SEC_NAME == row.SEC_NAME).Select(t => t.POR_RC_AVG_WGT_SI).FirstOrDefault();
                     break;
 
                 default:
@@ -1546,6 +1479,295 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        #endregion
+
+        #region MARKET CAPITALIZATION METHODS
+        /// <summary>
+        /// Retrieves consolidated data for portfolio and benchmark
+        /// </summary>
+        /// <param name="selPortfolioID">Contains Selected Portfolio ID</param>
+        /// <param name="selPortfolioDate">Effective Date selected by user</param>
+        /// <returns>Consolidated list of portfolio and benchmark</returns>        
+        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
+        {
+
+            List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
+            //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> filteredResult = new List<GF_PORTFOLIO_HOLDINGS>();
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+            List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
+
+            if (entity.GF_PORTFOLIO_HOLDINGS == null && entity.GF_BENCHMARK_HOLDINGS.Count() == 0)
+                return null;
+
+            if (isExCashSecurity)
+            {
+                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)
+                            && (portfolioList.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
+            }
+            else
+            {
+                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+            }
+
+            if (dimensionServicePortfolioData == null || dimensionServicePortfolioData.Count == 0)
+                return result;
+
+
+            //Applying filters
+            if (filterType != null)//&& filterValue != null)
+            {
+                switch (filterType)
+                {
+                    case GreenfieldConstants.REGION:
+                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.COUNTRY:
+                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.INDUSTRY:
+                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.SECTOR:
+                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.SHOW_EVERYTHING:
+                        dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+
+                        break;
+                    //default:
+                    //    break;
+                }
+            }
+
+            for (int _index = 0; _index < dimensionServicePortfolioData.Count; _index++)
+            {
+                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
+                mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
+                mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
+                mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
+                mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
+                mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
+                mktCapData.BenchmarkWeight = 0;
+
+                result.Add(mktCapData);
+            }
+            List<MarketCapitalizationData> _portfolioBenchmarkData = RetrieveBenchmarkMktCapData(result, effectiveDate, filterType, filterValue, isExCashSecurity);
+            return _portfolioBenchmarkData;
+
+        }
+
+        /// <summary>
+        /// Retrieves bechmark data
+        /// </summary>
+        /// <param name="portfolioData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <returns>bechmark data</returns>
+        private List<MarketCapitalizationData> RetrieveBenchmarkMktCapData(List<MarketCapitalizationData> portfolioData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
+        {
+
+            //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+            List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
+
+            //Retrieve the Id of benchmark associated with the Portfolio
+            List<string> benchmarkId = portfolioData.Select(a => a.Benchmark_ID).Distinct().ToList();
+
+            //If the DataBase doesn't return a single Benchmark for a Portfolio
+            if (benchmarkId == null || benchmarkId.Count != 1)
+                throw new InvalidOperationException();
+
+            if (isExCashSecurity)
+            {
+                dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                    Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
+                    && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)
+                    && (benchMarklist.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
+            }
+            else
+            {
+                dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                    Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
+                    && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+            }
+
+            if (dimensionServiceBenchmarkData.Count < 1)
+                return null;
+
+            //Applying filters
+            if (filterType != null)//&& filterValue != null)
+            {
+                switch (filterType)
+                {
+                    case GreenfieldConstants.REGION:
+                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.COUNTRY:
+                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.INDUSTRY:
+                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.SECTOR:
+                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+
+                        break;
+                    case GreenfieldConstants.SHOW_EVERYTHING:
+                        dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                            Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
+                            && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                        break;
+
+                }
+            }
+            //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
+            //    portfolioData.Capacity = portfolioData.Count + dimensionServiceBenchmarkData.Count;
+            //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
+            foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
+            {
+                var existingPortfolio = from p in portfolioData
+                                        where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
+                                        select p;
+
+                if (existingPortfolio.Count() == 0)
+                {
+                    MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                    mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                    mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                    mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                    mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                    portfolioData.Add(mktCapData);
+                }
+                //for (int i = portfolioData.Count - 1; i >= 0; i--)
+                //{
+                //    if (portfolioData[i].AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                //    {
+                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                //        portfolioData.Add(mktCapData);
+                //        break;
+                //    }
+                //}
+
+                //foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
+                //{
+                //    if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
+                //    {
+                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+                //        portfolioData.Add(mktCapData);
+                //    }
+                //}                    
+            }
+
+            return portfolioData;
+
+        }
+
+        /// <summary>
+        /// Retrieves portfolio and benchmark data for market capitalization grid
+        /// </summary>
+        /// <param name="portfolioSelectionData">Contains Selected Fund Data</param>
+        /// <param name="effectiveDate">Effectice date as selected by the user</param>
+        /// <param name="filterType">The Filter type selected by the user</param>
+        /// <param name="filterValue">The Filter value selected by the user</param>
+        /// <returns>List of MarketCapitalizationData </returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MarketCapitalizationData> RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
+        {
+            try
+            {
+                if (portfolioSelectionData == null || effectiveDate == null)//|| filterType == null || filterValue == null)
+                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString(GreenfieldConstants.SERVICE_NULL_ARG_EXC_MSG).ToString());
+
+                List<MarketCapitalizationData> mktCap = new List<MarketCapitalizationData>();
+                List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
+                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+                //Consolidated list Portfolio and benchmark Data
+                mktCap = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+
+                if (mktCap == null || mktCap.Count == 0)
+                    return mktCap;
+
+                //weighted avg for portfolio                 
+                mktCapData.PortfolioWtdAvg = MarketCapitalizationCalculations.CalculatePortfolioWeightedAvg(mktCap);
+
+                //weighted median for portfolio
+                mktCapData.PortfolioWtdMedian = MarketCapitalizationCalculations.CalculatePortfolioWeightedMedian(mktCap);
+
+                //ranges for portfolio
+                List<MarketCapitalizationData> lstmktCapPortfolio = MarketCapitalizationCalculations.CalculateSumPortfolioRanges(mktCap);
+                mktCapData.PortfolioSumMegaRange = lstmktCapPortfolio[0].PortfolioSumMegaRange;
+                mktCapData.PortfolioSumLargeRange = lstmktCapPortfolio[0].PortfolioSumLargeRange;
+                mktCapData.PortfolioSumMediumRange = lstmktCapPortfolio[0].PortfolioSumMediumRange;
+                mktCapData.PortfolioSumSmallRange = lstmktCapPortfolio[0].PortfolioSumSmallRange;
+                mktCapData.PortfolioSumMicroRange = lstmktCapPortfolio[0].PortfolioSumMicroRange;
+                mktCapData.PortfolioSumUndefinedRange = lstmktCapPortfolio[0].PortfolioSumUndefinedRange;
+
+                //Lower and upper limits range values are coming from portfolio list
+                mktCapData.LargeRange = lstmktCapPortfolio[0].LargeRange;
+                mktCapData.MediumRange = lstmktCapPortfolio[0].MediumRange;
+                mktCapData.SmallRange = lstmktCapPortfolio[0].SmallRange;
+                mktCapData.MicroRange = lstmktCapPortfolio[0].MicroRange;
+                mktCapData.UndefinedRange = lstmktCapPortfolio[0].UndefinedRange;
+
+
+                //weighted avg for benchmark
+                mktCapData.BenchmarkWtdAvg = MarketCapitalizationCalculations.CalculateBenchmarkWeightedAvg(mktCap);
+
+                //weighted median for benchmark
+                mktCapData.BenchmarkWtdMedian = MarketCapitalizationCalculations.CalculateBenchmarkWeightedMedian(mktCap);
+
+                //ranges for benchmark
+                List<MarketCapitalizationData> lstmktCapBenchmark = MarketCapitalizationCalculations.CalculateSumBenchmarkRanges(mktCap);
+                mktCapData.BenchmarkSumMegaRange = lstmktCapBenchmark[0].BenchmarkSumMegaRange;
+                mktCapData.BenchmarkSumLargeRange = lstmktCapBenchmark[0].BenchmarkSumLargeRange;
+                mktCapData.BenchmarkSumMediumRange = lstmktCapBenchmark[0].BenchmarkSumMediumRange;
+                mktCapData.BenchmarkSumSmallRange = lstmktCapBenchmark[0].BenchmarkSumSmallRange;
+                mktCapData.BenchmarkSumMicroRange = lstmktCapBenchmark[0].BenchmarkSumMicroRange;
+                mktCapData.BenchmarkSumUndefinedRange = lstmktCapBenchmark[0].BenchmarkSumUndefinedRange;
+
+                result.Add(mktCapData);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString(GreenfieldConstants.NETWORK_FAULT_ECX_MSG).ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+
+        }
         #endregion
 
     }

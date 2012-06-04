@@ -12,6 +12,41 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <!--GRID Buttons-->
+
+                    <!--LeftButton-->
+
+                    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellLeftButtonStyle">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Button  Command="{Binding RightNavigationClick}" Click="LeftButton_Click" Height="15" >
+                                        <Button.Content>
+                                            <Image Source="../Images/LeftArrow.png"/>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <!--Right Button-->
+
+                    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellRightButtonStyle">
+                        <Setter Property="ContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Button Command="{Binding RightNavigationClick}" Click="RightButton_Click" Height="15"  >
+                                        <Button.Content>
+                                            <Image Source="../Images/AddToChart.png"/>
+                                        </Button.Content>
+                                    </Button>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
@@ -50,30 +85,59 @@
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      AutoExpandGroups="True">
-                    <!--<telerik:RadGridView.GroupDescriptors >
-                        <telerik:GroupDescriptor Member="CATEGORY_NAME" 
-                                                 SortDirection="Ascending" />
-                    </telerik:RadGridView.GroupDescriptors>
-                    <telerik:RadGridView.SortDescriptors>
-                        <telerik:SortDescriptor Member="SORT_ORDER"
-                                                SortDirection="Ascending" />
-                    </telerik:RadGridView.SortDescriptors>
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcDescription" 
-                                                    Header="DESCRIPTION" 
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcDescription" 
+                                                    Header="Description" 
                                                     IsFilterable="False" 
                                                     DataMemberBinding="{Binding DESCRIPTION}" 
-                                                    Width="*"
+                                                    Width="Auto"
                                                     HeaderTextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
-                        <telerik:GridViewDataColumn x:Name="dgcYear" 
-                                                    Header="1988" 
-                                                    DataMemberBinding="{Binding YEAR_1988}" 
+                            <telerik:GridViewDataColumn x:Name="dgcYear1" 
+                                                    Header="Year1" 
+                                                    DataMemberBinding="{Binding YearOne}" 
+                                                    Width="*" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcYear2" 
+                                                    Header="Year2" 
+                                                    DataMemberBinding="{Binding YearTwo}" 
+                                                    Width="*" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+
+                            <telerik:GridViewDataColumn x:Name="dgcYear3" 
+                                                    Header="Year3" 
+                                                    DataMemberBinding="{Binding YearThree}" 
                                                     Width="Auto" HeaderTextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-                    </telerik:RadGridView.Columns>-->
-                </telerik:RadGridView>
+
+                            <telerik:GridViewDataColumn x:Name="dgcYear4" 
+                                                    Header="Year4" 
+                                                    DataMemberBinding="{Binding YearFour}" 
+                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcYear5" 
+                                                    Header="Year5" 
+                                                    DataMemberBinding="{Binding YearFive}" 
+                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+
+                            <telerik:GridViewDataColumn x:Name="dgcFiveYearAverage" 
+                                                    Header="FiveYearAvg" 
+                                                    DataMemberBinding="{Binding FiveYearAvg}" 
+                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcRightClick" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}"/>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
             </Border>
         </telerik:RadBusyIndicator>
         </Grid>

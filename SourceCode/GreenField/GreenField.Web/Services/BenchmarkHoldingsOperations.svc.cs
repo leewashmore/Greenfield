@@ -166,10 +166,10 @@ namespace GreenField.Web.Services
                         continue;
 
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                     //Retrieve Benchmark Weight 
-                    decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
+                    decimal? benchmarkWeight = (Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault()));
 
                     //Calculate Active Position
                     decimal? activePosition = portfolioWeight - benchmarkWeight;
@@ -250,7 +250,7 @@ namespace GreenField.Web.Services
                         continue;
 
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / netPortfolioValuation;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / netPortfolioValuation) * 100;
 
                     //Retrieve Benchmark Weight
                     decimal? benchmarkWeight = Convert.ToDecimal(benchmarkData.Where(a => a.ISSUE_NAME == record.ISSUE_NAME).Select(a => a.BENCHMARK_WEIGHT).FirstOrDefault());
@@ -331,11 +331,13 @@ namespace GreenField.Web.Services
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
                 {
                     //Calculate Portfolio Weight
-                    decimal? portfolioWeight = record.DIRTY_VALUE_PC / sumMarketValuePortfolio;
+                    decimal? portfolioWeight = (record.DIRTY_VALUE_PC / sumMarketValuePortfolio) * 100;
 
                     //Calculate Benchmark Weight - if null look for data in GF_BENCHMARK_HOLDINGS
                     GF_BENCHMARK_HOLDINGS specificHolding = DimensionEntity.GF_BENCHMARK_HOLDINGS
-                            .Where(rec => rec.TICKER == record.TICKER)
+                            .Where(rec => rec.ISSUE_NAME == record.ISSUE_NAME && 
+                                   rec.BENCHMARK_ID == record.BENCHMARK_ID && 
+                                   rec.PORTFOLIO_DATE == record.PORTFOLIO_DATE )
                             .FirstOrDefault();
                     decimal? benchmarkWeight = specificHolding != null ? Convert.ToDecimal(specificHolding.BENCHMARK_WEIGHT) : Convert.ToDecimal(null);
 
@@ -726,11 +728,11 @@ namespace GreenField.Web.Services
                         {
                             case "Region":
                                 var q = from p in data
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var k = from p in portfolioData
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -766,11 +768,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Country":
                                 var l = from p in data
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var c = from p in portfolioData
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -806,12 +808,12 @@ namespace GreenField.Web.Services
                                 break;
                             case "Industry":
                                 var m = from p in data
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME==filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
 
                                 var s = from p in portfolioData
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME == filterValue
                                         group p by p.GICS_SECTOR_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -844,13 +846,13 @@ namespace GreenField.Web.Services
                                 }
 
                                 break;
-                            case "Sector":
+                            case "Sector":                                
                                 var n = from p in data
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.GICS_INDUSTRY_NAME into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var d = from p in portfolioData
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.GICS_INDUSTRY_NAME into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -876,6 +878,43 @@ namespace GreenField.Web.Services
                                     }
                                 }
                                 foreach (var a in d)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
+                                }   
+                                break;
+                            case "Show Everything":
+                               var v=  from p in data                                      
+                                        group p by p.GICS_SECTOR_NAME into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+
+                               var h = from p in portfolioData                                     
+                                       group p by p.GICS_SECTOR_NAME into g
+                                       select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                               foreach (var a in v)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                               foreach (var a in v)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
+                                }
+                               foreach (var a in h)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in h)
                                 {
                                     if (sumForPortfolios == 0)
                                         continue;
@@ -939,11 +978,11 @@ namespace GreenField.Web.Services
                         {
                             case "Region":
                                 var q = from p in data
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE==filterValue
                                         group p by p.ISO_COUNTRY_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var k = from p in portfolioData
-                                        where (p.ASHEMM_PROP_REGION_CODE.ToString()).Equals(filterValue)
+                                        where p.ASHEMM_PROP_REGION_CODE == filterValue
                                         group p by p.ISO_COUNTRY_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
                                 foreach (var a in q)
@@ -977,11 +1016,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Country":
                                 var l = from p in data
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var c = from p in portfolioData
-                                        where (p.ISO_COUNTRY_CODE.ToString()).Equals(filterValue)
+                                        where p.ISO_COUNTRY_CODE == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -1018,11 +1057,11 @@ namespace GreenField.Web.Services
                                 break;
                             case "Industry":
                                 var m = from p in data
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var s = from p in portfolioData
-                                        where (p.GICS_INDUSTRY_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_INDUSTRY_NAME == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
 
@@ -1057,13 +1096,16 @@ namespace GreenField.Web.Services
                                 break;
                             case "Sector":
                                 var n = from p in data
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME==filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
                                 var d = from p in portfolioData
-                                        where (p.GICS_SECTOR_NAME.ToString()).Equals(filterValue)
+                                        where p.GICS_SECTOR_NAME == filterValue
                                         group p by p.ASHEMM_PROP_REGION_CODE into g
                                         select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                                if (n == null || d == null)
+                                    return result;
 
                                 foreach (var a in n)
                                 {
@@ -1092,6 +1134,45 @@ namespace GreenField.Web.Services
                                         continue;
                                     CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
                                 }
+                                break;
+
+                            case "Show Everything":
+                                var v = from p in data
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, BenchmarkSum = g.Sum(a => a.BENCHMARK_WEIGHT) };
+
+                                var h = from p in portfolioData
+                                        group p by p.ASHEMM_PROP_REGION_CODE into g
+                                        select new { SectorName = g.Key, PortfolioSum = g.Sum(a => a.DIRTY_VALUE_PC) };
+
+                                foreach (var a in v)
+                                {
+                                    sumForBenchmarks = sumForBenchmarks + a.BenchmarkSum;
+                                }
+                                foreach (var a in v)
+                                {
+                                    if (sumForBenchmarks == 0)
+                                        continue;
+                                    CalculatesPercentageForBenchmarkSum(entry, sumForBenchmarks, a.SectorName, a.BenchmarkSum, benchmarkId, ref result, effectiveDate);
+                                }
+                                foreach (var a in h)
+                                {
+                                    sumForPortfolios = sumForPortfolios + a.PortfolioSum;
+                                }
+                                for (int i = 0; i < result.Count; i++)
+                                {
+                                    if (result[i].PortfolioWeight.Equals(null))
+                                    {
+                                        result[i].PortfolioWeight = 0;
+                                    }
+                                }
+                                foreach (var a in h)
+                                {
+                                    if (sumForPortfolios == 0)
+                                        continue;
+                                    CalculatesPercentageForPortfolioSum(entry, sumForPortfolios, a.SectorName, a.PortfolioSum, benchmarkId, ref result, effectiveDate);
+                                }
+
                                 break;
                             default:
                                 break;
@@ -1206,294 +1287,7 @@ namespace GreenField.Web.Services
 
         #region Performance
 
-        #region MARKET CAPITALIZATION METHODS
-        /// <summary>
-        /// Retrieves consolidated data for portfolio and benchmark
-        /// </summary>
-        /// <param name="selPortfolioID">Contains Selected Portfolio ID</param>
-        /// <param name="selPortfolioDate">Effective Date selected by user</param>
-        /// <returns>Consolidated list of portfolio and benchmark</returns>        
-        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
-        {
-
-            List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
-            //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> filteredResult = new List<GF_PORTFOLIO_HOLDINGS>();
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
-
-            if (entity.GF_PORTFOLIO_HOLDINGS == null && entity.GF_BENCHMARK_HOLDINGS.Count() == 0)
-                return null;
-
-            if (isExCashSecurity)
-            {
-                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)
-                            && (portfolioList.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
-            }
-            else
-            {
-                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
-            }
-
-            if (dimensionServicePortfolioData == null || dimensionServicePortfolioData.Count == 0)
-                return result;
-
-
-            //Applying filters
-            if (filterType != null)//&& filterValue != null)
-            {
-                switch (filterType)
-                {
-                    case GreenfieldConstants.REGION:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.COUNTRY:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.INDUSTRY:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.SECTOR:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.SHOW_EVERYTHING:
-                        dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
-
-                        break;
-                    //default:
-                    //    break;
-                }
-            }
-
-            for (int _index = 0; _index < dimensionServicePortfolioData.Count; _index++)
-            {
-                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-                mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
-                mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
-                mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
-                mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
-                mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
-                mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
-                mktCapData.BenchmarkWeight = 0;
-
-                result.Add(mktCapData);
-            }
-            List<MarketCapitalizationData> _portfolioBenchmarkData = RetrieveBenchmarkMktCapData(result, effectiveDate, filterType, filterValue, isExCashSecurity);
-            return _portfolioBenchmarkData;
-
-        }
-
-        /// <summary>
-        /// Retrieves bechmark data
-        /// </summary>
-        /// <param name="portfolioData"></param>
-        /// <param name="effectiveDate"></param>
-        /// <returns>bechmark data</returns>
-        private List<MarketCapitalizationData> RetrieveBenchmarkMktCapData(List<MarketCapitalizationData> portfolioData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
-        {
-
-            //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
-
-            //Retrieve the Id of benchmark associated with the Portfolio
-            List<string> benchmarkId = portfolioData.Select(a => a.Benchmark_ID).Distinct().ToList();
-
-            //If the DataBase doesn't return a single Benchmark for a Portfolio
-            if (benchmarkId == null || benchmarkId.Count != 1)
-                throw new InvalidOperationException();
-
-            if (isExCashSecurity)
-            {
-                dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
-                    Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
-                    && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)
-                    && (benchMarklist.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
-            }
-            else
-            {
-                dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
-                    Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
-                    && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-            }
-
-            if (dimensionServiceBenchmarkData.Count < 1)
-                return null;
-
-            //Applying filters
-            if (filterType != null)//&& filterValue != null)
-            {
-                switch (filterType)
-                {
-                    case GreenfieldConstants.REGION:
-                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.COUNTRY:
-                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.INDUSTRY:
-                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.SECTOR:
-                        dimensionServiceBenchmarkData = dimensionServiceBenchmarkData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
-
-                        break;
-                    case GreenfieldConstants.SHOW_EVERYTHING:
-                        dimensionServiceBenchmarkData = entity.GF_BENCHMARK_HOLDINGS.
-                            Where(benchMarklist => (benchMarklist.BENCHMARK_ID == benchmarkId.First())
-                            && (benchMarklist.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
-
-                        break;
-
-                }
-            }
-            //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
-            //    portfolioData.Capacity = portfolioData.Count + dimensionServiceBenchmarkData.Count;
-            //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
-            foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
-            {
-                var existingPortfolio = from p in portfolioData
-                                        where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
-                                        select p;
-
-                if (existingPortfolio.Count() == 0)
-                {
-                    MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                    mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                    mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                    mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                    mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                    portfolioData.Add(mktCapData);
-                }
-                //for (int i = portfolioData.Count - 1; i >= 0; i--)
-                //{
-                //    if (portfolioData[i].AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                //    {
-                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                //        portfolioData.Add(mktCapData);
-                //        break;
-                //    }
-                //}
-
-                //foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
-                //{
-                //    if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                //    {
-                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                //        portfolioData.Add(mktCapData);
-                //    }
-                //}                    
-            }
-
-            return portfolioData;
-
-        }
-
-        /// <summary>
-        /// Retrieves portfolio and benchmark data for market capitalization grid
-        /// </summary>
-        /// <param name="portfolioSelectionData">Contains Selected Fund Data</param>
-        /// <param name="effectiveDate">Effectice date as selected by the user</param>
-        /// <param name="filterType">The Filter type selected by the user</param>
-        /// <param name="filterValue">The Filter value selected by the user</param>
-        /// <returns>List of MarketCapitalizationData </returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<MarketCapitalizationData> RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
-        {
-            try
-            {
-                if (portfolioSelectionData == null || effectiveDate == null)//|| filterType == null || filterValue == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString(GreenfieldConstants.SERVICE_NULL_ARG_EXC_MSG).ToString());
-
-                List<MarketCapitalizationData> mktCap = new List<MarketCapitalizationData>();
-                List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
-                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                //Consolidated list Portfolio and benchmark Data
-                mktCap = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
-
-                if (mktCap.Count == 0)
-                    return mktCap;
-
-                //weighted avg for portfolio                 
-                mktCapData.PortfolioWtdAvg = MarketCapitalizationCalculations.CalculatePortfolioWeightedAvg(mktCap);
-
-                //weighted median for portfolio
-                mktCapData.PortfolioWtdMedian = MarketCapitalizationCalculations.CalculatePortfolioWeightedMedian(mktCap);
-
-                //ranges for portfolio
-                List<MarketCapitalizationData> lstmktCapPortfolio = MarketCapitalizationCalculations.CalculateSumPortfolioRanges(mktCap);
-                mktCapData.PortfolioSumMegaRange = lstmktCapPortfolio[0].PortfolioSumMegaRange;
-                mktCapData.PortfolioSumLargeRange = lstmktCapPortfolio[0].PortfolioSumLargeRange;
-                mktCapData.PortfolioSumMediumRange = lstmktCapPortfolio[0].PortfolioSumMediumRange;
-                mktCapData.PortfolioSumSmallRange = lstmktCapPortfolio[0].PortfolioSumSmallRange;
-                mktCapData.PortfolioSumMicroRange = lstmktCapPortfolio[0].PortfolioSumMicroRange;
-                mktCapData.PortfolioSumUndefinedRange = lstmktCapPortfolio[0].PortfolioSumUndefinedRange;
-
-                //Lower and upper limits range values are coming from portfolio list
-                mktCapData.LargeRange = lstmktCapPortfolio[0].LargeRange;
-                mktCapData.MediumRange = lstmktCapPortfolio[0].MediumRange;
-                mktCapData.SmallRange = lstmktCapPortfolio[0].SmallRange;
-                mktCapData.MicroRange = lstmktCapPortfolio[0].MicroRange;
-                mktCapData.UndefinedRange = lstmktCapPortfolio[0].UndefinedRange;
-
-
-                //weighted avg for benchmark
-                mktCapData.BenchmarkWtdAvg = MarketCapitalizationCalculations.CalculateBenchmarkWeightedAvg(mktCap);
-
-                //weighted median for benchmark
-                mktCapData.BenchmarkWtdMedian = MarketCapitalizationCalculations.CalculateBenchmarkWeightedMedian(mktCap);
-
-                //ranges for benchmark
-                List<MarketCapitalizationData> lstmktCapBenchmark = MarketCapitalizationCalculations.CalculateSumBenchmarkRanges(mktCap);
-                mktCapData.BenchmarkSumMegaRange = lstmktCapBenchmark[0].BenchmarkSumMegaRange;
-                mktCapData.BenchmarkSumLargeRange = lstmktCapBenchmark[0].BenchmarkSumLargeRange;
-                mktCapData.BenchmarkSumMediumRange = lstmktCapBenchmark[0].BenchmarkSumMediumRange;
-                mktCapData.BenchmarkSumSmallRange = lstmktCapBenchmark[0].BenchmarkSumSmallRange;
-                mktCapData.BenchmarkSumMicroRange = lstmktCapBenchmark[0].BenchmarkSumMicroRange;
-                mktCapData.BenchmarkSumUndefinedRange = lstmktCapBenchmark[0].BenchmarkSumUndefinedRange;
-
-                result.Add(mktCapData);
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString(GreenfieldConstants.NETWORK_FAULT_ECX_MSG).ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-
-
-        }
-        #endregion
+        
 
         #endregion
 
@@ -1513,7 +1307,7 @@ namespace GreenField.Web.Services
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
             List<HeatMapData> result = new List<HeatMapData>();
-            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> data = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> data = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
             if (data == null || data.Count == 0)
                 return result;
             for (int i = 0; i < data.Count; i++)
@@ -1607,8 +1401,8 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
                 throw new Exception();
 
-           
-            DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
+
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             if (performanceData == null)
                 return result;
             String portfolioID = performanceData.PORTFOLIO;
@@ -1618,23 +1412,23 @@ namespace GreenField.Web.Services
                 {
                     PerformanceGridData entry = new PerformanceGridData();
                     entry.Name = portfolioID;
-                    entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
-                    entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
-                    entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
-                    entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
-                    entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
-                    entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
-                    entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
+                    //entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
+                    //entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
+                    //entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
+                    //entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
+                    //entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
+                    //entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
+                    //entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
                     result.Add(entry);
                     entry = new PerformanceGridData();
                     entry.Name = benchmarkID;
-                    entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
-                    entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
-                    entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
-                    entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
-                    entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
-                    entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
-                    entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
+                    //entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
+                    //entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
+                    //entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
+                    //entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
+                    //entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
+                    //entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
+                    //entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
                     result.Add(entry);
                 }
                 return result;
@@ -1670,8 +1464,8 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
 
                 throw new Exception();
-          
-            List<DimensionEntitiesService.GF_PERF_MONTHLY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_MONTHLY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             if (attributionData.Count == 0 || attributionData == null)
                 return result;
             try
@@ -1681,23 +1475,30 @@ namespace GreenField.Web.Services
                     AttributionData entry = new AttributionData();
                     entry.Country = attributionData[i].COUNTRY;
                     entry.CountryName = attributionData[i].COUNTRY_NAME;
-                    entry.PorRcAvgWgt1m = attributionData[i].POR_RC_AVG_WGT_1M;
-                    entry.Bm1RcAvgWgt1m = attributionData[i].BM1_RC_AVG_WGT_1M;
-                    entry.FPorAshRcCtn1m = attributionData[i].F_POR_ASH_RC_CTN_1M;
-                    entry.FBm1AshRcCtn1m = attributionData[i].F_BM1_ASH_RC_CTN_1M;
-                    entry.FBm1AshAssetAlloc1m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1M;
-                    entry.FBm1AshSecSelec1m = attributionData[i].F_BM1_ASH_SEC_SELEC_1M;
-                    entry.PorRcAvgWgt3m = attributionData[i].POR_RC_AVG_WGT_3M;
-                    entry.Bm1RcAvgWgt3m = attributionData[i].BM1_RC_AVG_WGT_3M;
-                    entry.FPorAshRcCtn3m = attributionData[i].F_POR_ASH_RC_CTN_3M;
-                    entry.FBm1AshAssetAlloc3m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3M;
-                    entry.FBm1AshSecSelec3m = attributionData[i].F_BM1_ASH_SEC_SELEC_3M;
-                    entry.PorRcAvgWgt6m = attributionData[i].POR_RC_AVG_WGT_6M;
-                    entry.Bm1RcAvgWgt6m = attributionData[i].BM1_RC_AVG_WGT_6M;
-                    entry.FPorAshRcCtn6m = attributionData[i].F_POR_ASH_RC_CTN_6M;
-                    entry.FBm1AshRcCtn6m = attributionData[i].F_BM1_ASH_RC_CTN_6M;
-                    entry.FBm1AshAssetAlloc6m = attributionData[i].F_BM1_ASH_ASSET_ALLOC_6M;
-                    entry.FBm1AshSecSelec6m = attributionData[i].F_BM1_ASH_SEC_SELEC_6M;
+                    entry.PorRcAvgWgt1w = attributionData[i].POR_RC_AVG_WGT_1W;
+                    entry.Bm1RcAvgWgt1w = attributionData[i].BM1_RC_AVG_WGT_1W;
+                    entry.FPorAshRcCtn1w = attributionData[i].F_POR_ASH_RC_CTN_1W;
+                    entry.FBm1AshRcCtn1w = attributionData[i].F_BM1_ASH_RC_CTN_1W;
+                    entry.FBm1AshAssetAlloc1w = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1W;
+                    entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
+                    entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
+                    entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
+                    entry.FPorAshRcCtn1d = attributionData[i].F_POR_ASH_RC_CTN_1D;
+                    entry.FBm1AshRcCtn1d = attributionData[i].F_BM1_ASH_RC_CTN_1D;
+                    entry.FBm1AshAssetAlloc1d = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1D;
+                    entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
+                    entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
+                    entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
+                    entry.FPorAshRcCtnMtd = attributionData[i].F_POR_ASH_RC_CTN_MTD;
+                    entry.FBm1AshRcCtnMtd = attributionData[i].F_BM1_ASH_RC_CTN_MTD;
+                    entry.FBm1AshAssetAllocMtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_MTD;
+                    entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
+                    entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
+                    entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
+                    entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
+                    entry.FBm1AshRcCtnQtd = attributionData[i].F_BM1_ASH_RC_CTN_QTD;
+                    entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
+                    entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
                     entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
                     entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
                     entry.FPorAshRcCtnYtd = attributionData[i].F_POR_ASH_RC_CTN_YTD;
@@ -1709,25 +1510,19 @@ namespace GreenField.Web.Services
                     entry.FPorAshRcCtn1y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
                     entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
                     entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
-                    entry.PorRcAvgWgt3y = attributionData[i].POR_RC_AVG_WGT_3Y;
-                    entry.Bm1RcAvgWgt3y = attributionData[i].BM1_RC_AVG_WGT_3Y;
-                    entry.FPorAshRcCtn3y = attributionData[i].F_POR_ASH_RC_CTN_3Y;
-                    entry.FBm1AshRcCtn3y = attributionData[i].F_BM1_ASH_RC_CTN_3Y;
-                    entry.FBm1AshAssetAlloc3y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_3Y;
-                    entry.FBm1AshSecSelec3y = attributionData[i].F_BM1_ASH_SEC_SELEC_3Y;
-                    entry.PorRcAvgWgt5y = attributionData[i].POR_RC_AVG_WGT_5Y;
-                    entry.Bm1RcAvgWgt5y = attributionData[i].BM1_RC_AVG_WGT_5Y;
-                    entry.FPorAshRcCtn5y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
-                    entry.FBm1AshRcCtn5y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
-                    entry.FBm1AshAssetAlloc5y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
-                    entry.FBm1AshSecSelec5y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
-                    entry.PorRcAvgWgtSi = attributionData[i].POR_RC_AVG_WGT_SI;
-                    entry.Bm1RcAvgWgtSi = attributionData[i].BM1_RC_AVG_WGT_SI;
-                    entry.FPorAshRcCtnSi = attributionData[i].F_POR_ASH_RC_CTN_SI;
-                    entry.FBm1AshRcCtnSi = attributionData[i].F_BM1_ASH_RC_CTN_SI;
-                    entry.FBm1AshAssetAllocSi = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
-                    entry.FBm1AshSecSelecSi = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
+                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;                   
+                    //entry.PorRcAvgWgt5y = attributionData[i].POR_RC_AVG_WGT_5Y;
+                    //entry.Bm1RcAvgWgt5y = attributionData[i].BM1_RC_AVG_WGT_5Y;
+                    //entry.FPorAshRcCtn5y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
+                    //entry.FBm1AshRcCtn5y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
+                    //entry.FBm1AshAssetAlloc5y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
+                    //entry.FBm1AshSecSelec5y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
+                    //entry.PorRcAvgWgtSi = attributionData[i].POR_RC_AVG_WGT_SI;
+                    //entry.Bm1RcAvgWgtSi = attributionData[i].BM1_RC_AVG_WGT_SI;
+                    //entry.FPorAshRcCtnSi = attributionData[i].F_POR_ASH_RC_CTN_SI;
+                    //entry.FBm1AshRcCtnSi = attributionData[i].F_BM1_ASH_RC_CTN_SI;
+                    //entry.FBm1AshAssetAllocSi = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
+                    //entry.FBm1AshSecSelecSi = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
                     result.Add(entry);
                 }
 

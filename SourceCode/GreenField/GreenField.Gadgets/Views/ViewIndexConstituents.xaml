@@ -12,14 +12,17 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <!--GridViewGroupPanelStyle-->
+                    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
+                        <Setter Property="Height" Value="10"/>
+                        <Setter Property="FontSize" Value="7"/>
+                        <Setter Property="Background" Value="#9F1D21"/>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <!--GridViewGroupPanelStyle-->
-        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
-            <Setter Property="Height" Value="10"/>
-            <Setter Property="FontSize" Value="7"/>
-            <Setter Property="Background" Value="#9F1D21"/>
-        </Style>
+        
     </helpers:ViewBaseUserControl.Resources>
 
 
@@ -71,7 +74,9 @@
                                          GroupPanelBackground="#9F1D21"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"
-                                         RowStyle="{StaticResource GridViewRowStyle}">                        
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         AlternateRowBackground="#d8d5d4"
+                                         AlternationCount="2">                        
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>

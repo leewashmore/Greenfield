@@ -51,7 +51,7 @@ namespace GreenField.ServiceCaller
                     }
                     catch (TargetInvocationException ex)
                     {
-                        MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
+                        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + ex.StackTrace, "Exception", MessageBoxButton.OK);
                     }
                 };
             }
@@ -113,7 +113,7 @@ namespace GreenField.ServiceCaller
             {
                 if (e.Error != null)
                 {
-                    MessageBox.Show(e.Error.InnerException.Message);
+                    Prompt.ShowDialog(e.Error.InnerException.Message);
                 }
             };
             #endregion

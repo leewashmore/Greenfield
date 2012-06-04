@@ -60,10 +60,17 @@ namespace GreenField.ServiceCaller
                             callback(null);
                     }
                 }
-                else if (e.Error is FaultException<ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault>)
                 {
-                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }
@@ -86,10 +93,17 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(e.Result);
                 }
-                else if (e.Error is FaultException<ServiceFault>)
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault>)
                 {
-                    FaultException<ServiceFault> fault = e.Error as FaultException<ServiceFault>;
-                    MessageBox.Show(fault.Detail.Description + "\n" + fault.Reason.ToString());
+                    FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DashboardDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
                         callback(null);
                 }

@@ -209,45 +209,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopBenchmarkSecuritiesData" nillable="true" type="tns:TopBenchmarkSecuritiesData" />
-  <xs:complexType name="ArrayOfMarketCapitalizationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfMarketCapitalizationData" nillable="true" type="tns:ArrayOfMarketCapitalizationData" />
-  <xs:complexType name="MarketCapitalizationData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="AsecSecShortName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BenchmarkSumLargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMegaRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumMicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumSmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkSumUndefinedRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWtdAvg" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BenchmarkWtdMedian" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Benchmark_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MarketCapitalInUSD" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioDirtyValuePC" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumLargeRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMediumRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMegaRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumMicroRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumSmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioSumUndefinedRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioWtdAvg" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PortfolioWtdMedian" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Portfolio_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SecurityThemeCode" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SmallRange" type="xs:decimal" />
-      <xs:element minOccurs="0" name="UndefinedRange" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
   <xs:complexType name="ArrayOfHeatMapData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="HeatMapData" nillable="true" type="tns:HeatMapData" />
@@ -321,55 +282,43 @@
   <xs:element name="ArrayOfAttributionData" nillable="true" type="tns:ArrayOfAttributionData" />
   <xs:complexType name="AttributionData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Bm1RcAvgWgt1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Bm1RcAvgWgt1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Bm1RcAvgWgt1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Bm1RcAvgWgt1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Bm1RcAvgWgt3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Bm1RcAvgWgt3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Bm1RcAvgWgt5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Bm1RcAvgWgt6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Bm1RcAvgWgtSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Bm1RcAvgWgtMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Bm1RcAvgWgtQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Bm1RcAvgWgtYtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAlloc1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshAssetAlloc1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshAssetAlloc1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAlloc1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAlloc3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAlloc3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAlloc5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAlloc6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshAssetAllocSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshAssetAllocMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshAssetAllocQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAllocYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshRcCtn1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshRcCtn1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshRcCtn1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtn6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshRcCtnSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshRcCtnMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshRcCtnQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshRcCtnYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelec1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshSecSelec1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshSecSelec1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelec1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelec3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelec3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelec5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelec6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FBm1AshSecSelecSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshSecSelecMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FBm1AshSecSelecQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshSecSelecYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtn1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FPorAshRcCtn1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FPorAshRcCtn1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FPorAshRcCtn1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtn3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtn3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtn5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtn6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="FPorAshRcCtnSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FPorAshRcCtnMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FPorAshRcCtnQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FPorAshRcCtnYtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgt1m" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorRcAvgWgt1d" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorRcAvgWgt1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgt1y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgt3m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgt3y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgt5y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgt6m" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PorRcAvgWgtSi" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorRcAvgWgtMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorRcAvgWgtQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgtYtd" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>

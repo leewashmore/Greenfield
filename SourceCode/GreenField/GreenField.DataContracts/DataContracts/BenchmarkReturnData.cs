@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
- 
+
 using System.Runtime.Serialization;
 
 namespace GreenField.DataContracts
@@ -22,28 +22,22 @@ namespace GreenField.DataContracts
         public DateTime FromDate { get; set; }
 
         [DataMember]
-        public decimal OneM { get; set; }
+        public decimal OneD { get; set; }
 
         [DataMember]
-        public decimal ThreeM { get; set; }
+        public decimal WTD { get; set; }
 
         [DataMember]
-        public decimal SixM { get; set; }
+        public decimal MTD { get; set; }
+
+        [DataMember]
+        public decimal QTD { get; set; }
 
         [DataMember]
         public decimal YTD { get; set; }
 
         [DataMember]
         public decimal OneY { get; set; }
-
-        [DataMember]
-        public decimal ThreeY { get; set; }
-
-        [DataMember]
-        public decimal FiveY { get; set; }
-
-        [DataMember]
-        public decimal SI { get; set; }
 
         [DataMember]
         public decimal PreviousYearData { get; set; }
@@ -89,3 +83,4 @@ namespace GreenField.DataContracts
         public decimal ThreePreviousYearReturn { get; set; }
     }
 }
+

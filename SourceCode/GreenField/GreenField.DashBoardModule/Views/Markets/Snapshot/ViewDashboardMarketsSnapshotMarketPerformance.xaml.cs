@@ -79,12 +79,15 @@ namespace GreenField.DashboardModule.Views
         #region IConfirmNavigationRequest Method
         public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
         {
-            if (MessageBox.Show("On navigation any unsaved changes might be lost. Are you sure you want to navigate", "", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            Prompt.ShowDialog("On navigation any unsaved changes might be lost. Are you sure you want to navigate", "", MessageBoxButton.OKCancel, (messageResult) =>
             {
-                continuationCallback(true);
-                return;
-            }
-            continuationCallback(false);
+                if (messageResult == MessageBoxResult.OK)
+                {
+                    continuationCallback(true);
+                    return;
+                }
+                continuationCallback(false);
+            });
         } 
         #endregion
     }

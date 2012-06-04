@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.Views
 
         private void btn_DetailsClick(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         #region Event

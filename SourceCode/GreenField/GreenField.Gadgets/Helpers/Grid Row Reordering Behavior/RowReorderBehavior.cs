@@ -621,7 +621,7 @@ namespace GreenField.Gadgets.Helpers
             cue.FontFamily = new FontFamily("Arial");
             cue.Foreground = new SolidColorBrush(Colors.White);
             cue.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
-            cue.FontSize = 8;
+            cue.FontSize = 7;
             cue.DragTooltipContentTemplate = this.DragCueTooltipContentTemplate;
             cue.DragActionContentTemplate = this.DragCueActionContentTemplate;
             cue.ItemTemplate = this.DragCueItemTemplate;

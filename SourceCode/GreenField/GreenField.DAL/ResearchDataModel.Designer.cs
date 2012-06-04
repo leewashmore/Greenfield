@@ -635,47 +635,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="userId">No Metadata Documentation available.</param>
-        /// <param name="snapshotname">No Metadata Documentation available.</param>
-        /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname, Nullable<global::System.Int32> snapshotpreferenceid)
-        {
-            ObjectParameter userIdParameter;
-            if (userId != null)
-            {
-                userIdParameter = new ObjectParameter("userId", userId);
-            }
-            else
-            {
-                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
-            }
-    
-            ObjectParameter snapshotnameParameter;
-            if (snapshotname != null)
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
-            }
-            else
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
-            }
-    
-            ObjectParameter snapshotpreferenceidParameter;
-            if (snapshotpreferenceid.HasValue)
-            {
-                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", snapshotpreferenceid);
-            }
-            else
-            {
-                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotPreference", userIdParameter, snapshotnameParameter, snapshotpreferenceidParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="grouppreferenceid">No Metadata Documentation available.</param>
         /// <param name="entitypreferenceid">No Metadata Documentation available.</param>
         /// <param name="entityOrder">No Metadata Documentation available.</param>
@@ -859,36 +818,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="userid">No Metadata Documentation available.</param>
-        /// <param name="snapshotname">No Metadata Documentation available.</param>
-        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(global::System.String userid, global::System.String snapshotname)
-        {
-            ObjectParameter useridParameter;
-            if (userid != null)
-            {
-                useridParameter = new ObjectParameter("userid", userid);
-            }
-            else
-            {
-                useridParameter = new ObjectParameter("userid", typeof(global::System.String));
-            }
-    
-            ObjectParameter snapshotnameParameter;
-            if (snapshotname != null)
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
-            }
-            else
-            {
-                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", useridParameter, snapshotnameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="country">No Metadata Documentation available.</param>
         public ObjectResult<MacroDataCTY_Result> RetrieveCTYSUMMARYDataReport(global::System.String country)
         {
@@ -941,6 +870,96 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<MacroDataCTY_Result>("RetrieveEMSummaryDataReportCountry", countryParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="snapshotPreferenceId">No Metadata Documentation available.</param>
+        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(Nullable<global::System.Int32> snapshotPreferenceId)
+        {
+            ObjectParameter snapshotPreferenceIdParameter;
+            if (snapshotPreferenceId.HasValue)
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", snapshotPreferenceId);
+            }
+            else
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", snapshotPreferenceIdParameter);
+        }
+        
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userId">No Metadata Documentation available.</param>
+        /// <param name="snapshotname">No Metadata Documentation available.</param>
+        /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketSnapshotPreference(global::System.String userId, global::System.String snapshotname, Nullable<global::System.Int32> snapshotpreferenceid)
+        {
+            ObjectParameter userIdParameter;
+            if (userId != null)
+            {
+                userIdParameter = new ObjectParameter("userId", userId);
+            }
+            else
+            {
+                userIdParameter = new ObjectParameter("userId", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotnameParameter;
+            if (snapshotname != null)
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", snapshotname);
+            }
+            else
+            {
+                snapshotnameParameter = new ObjectParameter("snapshotname", typeof(global::System.String));
+            }
+    
+            ObjectParameter snapshotpreferenceidParameter;
+            if (snapshotpreferenceid.HasValue)
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", snapshotpreferenceid);
+            }
+            else
+            {
+                snapshotpreferenceidParameter = new ObjectParameter("snapshotpreferenceid", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketSnapshotPreference", userIdParameter, snapshotnameParameter, snapshotpreferenceidParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="snapshotPreferenceId">No Metadata Documentation available.</param>
+        /// <param name="updateXML">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketPerformanceSnapshot(Nullable<global::System.Int32> snapshotPreferenceId, global::System.String updateXML)
+        {
+            ObjectParameter snapshotPreferenceIdParameter;
+            if (snapshotPreferenceId.HasValue)
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("snapshotPreferenceId", snapshotPreferenceId);
+            }
+            else
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("snapshotPreferenceId", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter updateXMLParameter;
+            if (updateXML != null)
+            {
+                updateXMLParameter = new ObjectParameter("updateXML", updateXML);
+            }
+            else
+            {
+                updateXMLParameter = new ObjectParameter("updateXML", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketPerformanceSnapshot", snapshotPreferenceIdParameter, updateXMLParameter);
         }
 
         #endregion

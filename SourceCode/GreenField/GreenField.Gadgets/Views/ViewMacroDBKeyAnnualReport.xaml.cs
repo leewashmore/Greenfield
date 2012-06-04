@@ -90,26 +90,21 @@ namespace GreenField.Gadgets.Views
             if (_macroInfo != null)
             {
                 GroupDescriptor descriptor = new GroupDescriptor();
-                descriptor.Member = "CATEGORY_NAME";
+                descriptor.Member = "CategoryName";
                 descriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.GroupDescriptors.Add(descriptor);
                 SortDescriptor sdescriptor = new SortDescriptor();
-                sdescriptor.Member = "SORT_ORDER";
+                sdescriptor.Member = "SortOrder";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
-                this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
-
-                
+                this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);              
                                 
-                this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-
-                
-
-
+                this.dgMacroDBKeyReport.AutoGenerateColumns = false;    
                 dgMacroDBKeyReport.Columns[2].Header = _currentYear.ToString();
                 dgMacroDBKeyReport.Columns[3].Header = (_currentYear + 1).ToString();
                 dgMacroDBKeyReport.Columns[4].Header = (_currentYear + 2).ToString();
                 dgMacroDBKeyReport.Columns[5].Header = (_currentYear + 3).ToString();
                 dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 4).ToString();
+                dgMacroDBKeyReport.Columns[7].Header = "Five Year Average" + "(" + _currentYear.ToString() + "-" + (_currentYear + 4).ToString() + ")";
             }
         }
 
@@ -121,6 +116,7 @@ namespace GreenField.Gadgets.Views
             dgMacroDBKeyReport.Columns[4].Header = (currentYear + 2).ToString();
             dgMacroDBKeyReport.Columns[5].Header = (currentYear + 3).ToString();
             dgMacroDBKeyReport.Columns[6].Header = (currentYear + 4).ToString();
+            dgMacroDBKeyReport.Columns[7].Header = "Five Year Average"+"(" + currentYear.ToString() + "-" + (currentYear + 4).ToString() + ")";
 
         }
     }

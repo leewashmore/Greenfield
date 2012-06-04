@@ -133,7 +133,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = activePosition,
+                    Content = activePosition                    
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
@@ -229,6 +229,7 @@ namespace GreenField.Gadgets.Views
                 CellTemp.Append("<StackPanel Orientation='Horizontal'>");
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
+                //CellTemp.Append("StringFormat= {0:n2}}'/>");
                 CellTemp.Append("</StackPanel>");
                 CellTemp.Append("</DataTemplate>");
 
@@ -243,7 +244,7 @@ namespace GreenField.Gadgets.Views
                     AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
                     FunctionName = sectorData.SectorId.ToString()
                 };
-
+                                
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
                 dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
                 dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;

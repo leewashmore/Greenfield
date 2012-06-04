@@ -11,27 +11,45 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.Helpers
 {
     public partial class ChildExportOptions : ChildWindow
     {
-
-
-
+        #region Constructors
         /// <summary>
         /// Child Window to display export options for Radgridview and RadChart data
         /// </summary>
         /// <param name="exportOptions">List of RadExportOptions objects</param>
         /// <param name="title">(optional) Window Title; default: 'Export Options'</param>
-        public ChildExportOptions(List<RadExportOptions> exportOptions, string title = "Export Options")
+        public ChildExportOptions(List<RadExportOptions> exportOptions, string title)
         {
             InitializeComponent();
             ChildWindowTitle = title;
-            ExportOptions = exportOptions;            
+            ExportOptions = exportOptions;
         }
 
-        private string _childWindowTitle;
+        /// <summary>
+        /// Child Window to display export options for Radgridview and RadChart data
+        /// </summary>
+        /// <param name="exportOptions">List of RadExportOptions objects</param>
+        public ChildExportOptions(List<RadExportOptions> exportOptions)
+        {
+            InitializeComponent();
+            ExportOptions = exportOptions;
+        }
+
+        /// <summary>
+        /// Child Window to display export options for Radgridview and RadChart data
+        /// </summary>
+        public ChildExportOptions()
+        {
+            InitializeComponent();
+        }
+        #endregion
+
+        private string _childWindowTitle = "Export Options";
         public string ChildWindowTitle
         {
             get { return _childWindowTitle; }
@@ -77,7 +95,7 @@ namespace GreenField.Gadgets.Helpers
             set { _exportTextAlignmentInfo = value; }
         }
 
-        private List<RadExportOptions> _exportOptions;
+        private List<RadExportOptions> _exportOptions = new List<RadExportOptions>();
         public List<RadExportOptions> ExportOptions
         {
             get { return _exportOptions; }

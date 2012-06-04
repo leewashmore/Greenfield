@@ -314,7 +314,7 @@
                                 <telerik:SeriesMapping LegendLabel="Gain / Loss" >
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:LineSeriesDefinition ShowItemToolTips="True"  ShowItemLabels="False" ShowPointMarks="False"
-                                                              ItemToolTipFormat="Price: #Y   / Date: #X{dd-MMM-yyyy}" AxisName="Secondary" />
+                                                              ItemToolTipFormat="Gain/Loss: #Y   / Date: #X{dd-MMM-yyyy}" AxisName="Secondary" />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.ItemMappings>
                                         <telerik:ItemMapping DataPointMember="YValue" FieldName="UnrealizedGainLoss" />

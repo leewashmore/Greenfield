@@ -14,21 +14,21 @@ namespace GreenField.Gadgets.Models
     public class PeriodAttributeData
 
     { 
-       public  String COUNTRY { get; set; }
+       public  String Country { get; set; }
 
-       public String COUNTRY_NAME { get; set; }
+       public String CountryName { get; set; }
 
-       public Decimal? PORTFOLIO_WEIGHT { get; set; }
+       public Decimal? PortfolioWeight { get; set; }
 
-       public Decimal? BENCHMARK_WEIGHT { get; set; }      
+       public Decimal? BenchmarkWeight { get; set; }      
 
-       public Decimal? PORTFOLIO_RETURN { get; set; }
+       public Decimal? PortfolioReturn { get; set; }
 
-       public Decimal? BENCHMARK_RETURN { get; set; }
+       public Decimal? BenchmarkReturn { get; set; }
 
-       public Decimal? ASSET_ALLOCATION { get; set; }
+       public Decimal? AssetAllocation { get; set; }
 
-       public Decimal? STOCK_SELECTION_TOTAL { get; set; }
+       public Decimal? StockSelectionTotal { get; set; }
 
     }
 }
