@@ -8,16 +8,16 @@
   <xs:element name="ArrayOfRelativePerformanceUIData" nillable="true" type="tns:ArrayOfRelativePerformanceUIData" />
   <xs:complexType name="RelativePerformanceUIData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EffectiveDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EntityType" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FiveYearReturn" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="MTDReturn" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="OneYearReturn" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="QTDReturn" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="ThreeYearReturn" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YTDReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FiveYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTDReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTDReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ThreeYearReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTDReturn" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="RelativePerformanceUIData" nillable="true" type="tns:RelativePerformanceUIData" />

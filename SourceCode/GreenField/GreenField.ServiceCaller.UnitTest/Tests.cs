@@ -584,8 +584,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
-            
-        
+
+
         /// <summary>
         /// RetrieveMarketCapitalizationData Test Method - portfolioIdentifiers as null - should return an empty result set
         /// portfolioIdentifiers - null
@@ -632,7 +632,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
         #endregion
-        
+
         #region AssetAllocationGadget
 
         /// <summary>
@@ -984,7 +984,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void RetrieveChartExtensionDataSelectedEntitiesEmpty()
         {
             DBInteractivity instance = new DBInteractivity();
-            Dictionary<string, string> selectedEntites = new Dictionary<string,string>();
+            Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
             DateTime objEffectiveDate = new DateTime(2012, 1, 31);
             instance.RetrieveChartExtensionData(selectedEntites, objEffectiveDate, (List<ChartExtensionData> resultSet) =>
             {
@@ -1004,7 +1004,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
-            selectedEntites.Add("SECURITY","ABC");
+            selectedEntites.Add("SECURITY", "ABC");
             selectedEntites.Add("PORTFOLIO", "XYZ");
             DateTime objEffectiveDate = new DateTime(2012, 1, 31);
             instance.RetrieveChartExtensionData(selectedEntites, objEffectiveDate, (List<ChartExtensionData> resultSet) =>
@@ -1024,7 +1024,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void RetrieveChartExtensionDataSelectedEntitiesSampleData()
         {
             DBInteractivity instance = new DBInteractivity();
-            Dictionary<string, string> selectedEntites = new Dictionary<string,string>();
+            Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
             DateTime objEffectiveDate = new DateTime(2012, 1, 31);
             selectedEntites.Add("SECURITY", "AAF");
             selectedEntites.Add("PORTFOLIO", "AFRICA");
@@ -1078,26 +1078,6 @@ namespace Greenfield.ServiceCaller.UnitTest
         }
 
 
-        /// <summary>
-        /// RetrieveRelativePerformanceUIData Test Method - selectedDate as null - should  return an  empty set
-        /// selectedDate - null
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        [Tag("RelativePerformanceUI")]
-        public void RetrieveRelativePerformanceUIDataEffectiveDateNull()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
-            selectedEntites.Add("SECURITY", "AAF");
-            selectedEntites.Add("PORTFOLIO", "AFRICA");
-            DateTime? objEffectiveDate = null;
-            instance.RetrieveRelativePerformanceUIData(selectedEntites, objEffectiveDate, (List<RelativePerformanceUIData> resultSet) =>
-            {
-                Assert.AreEqual<int>(0, resultSet.Count, "RelativePerformanceUIData should be Empty");
-                EnqueueTestComplete();
-            });
-        }  
 
         /// <summary>
         /// RetrieveRelativePerformanceUIData Test Method - selectedEntity as Dummy Values - should  return an  empty set
@@ -1229,7 +1209,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
-        
+
         #endregion
 
         #region HoldingsPieChartforRegion Gadget
@@ -1329,8 +1309,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 2, 29);
-            
-            instance.RetrieveAttributionData(portfolio, effectiveDate,(List<AttributionData> resultSet) =>
+
+            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Attribution Data Not Available");
                 EnqueueTestComplete();
@@ -1346,7 +1326,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
-            DateTime effectiveDate = new DateTime(2012, 2, 29);           
+            DateTime effectiveDate = new DateTime(2012, 2, 29);
             instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
@@ -1367,7 +1347,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 2, 29);
 
-            instance.RetrieveAttributionData(portfolio, effectiveDate,(List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -1509,7 +1489,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             DateTime effectiveDate = new DateTime(2012, 2, 29);
             String period = "1M";
 
-            instance.RetrieveRelativePerformanceData(portfolio, effectiveDate,period, (List<RelativePerformanceData> resultSet) =>
+            instance.RetrieveRelativePerformanceData(portfolio, effectiveDate, period, (List<RelativePerformanceData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Relative Performance Should Be Empty");
                 EnqueueTestComplete();
@@ -1832,7 +1812,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
-        
+
         #endregion
 
         #region Relative Performance Security Active Position Gadget

@@ -23,6 +23,8 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class PerformanceOperations
     {
+        #region PropertyDeclaration
+
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
@@ -35,6 +37,10 @@ namespace GreenField.Web.Services
             }
         }
 
+        #endregion
+
+        #region FaultResourceManager
+
         public ResourceManager ServiceFaultResourceManager
         {
             get
@@ -42,6 +48,8 @@ namespace GreenField.Web.Services
                 return new ResourceManager(typeof(FaultDescriptions));
             }
         }
+
+        #endregion
 
         #region PerformanceServices
 
@@ -52,45 +60,76 @@ namespace GreenField.Web.Services
         /// <param name="objEffectiveDate">selected effective Date</param>
         /// <returns>List of RelativePerformanceUIData</returns>
         [OperationContract]
-        public List<RelativePerformanceUIData> RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate)
+        public List<RelativePerformanceUIData> RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime objEffectiveDate)
         {
-            //Null Arguement Check
-            if ((objSelectedEntity == null) || (objEffectiveDate == null) || (objSelectedEntity.Count == 0))
-                return new List<RelativePerformanceUIData>();
+            try
+            {
+                //Null Arguement Check
+                if ((objSelectedEntity == null) || (objEffectiveDate == null) || (objSelectedEntity.Count == 0))
+                    return new List<RelativePerformanceUIData>();
 
-            //If dictionary object doesn't contains Security/Portfolio data, return empty set
-            if (!objSelectedEntity.ContainsKey("SECURITY") || !objSelectedEntity.ContainsKey("PORTFOLIO"))
-                return new List<RelativePerformanceUIData>();
+                //If dictionary object doesn't contains Security/Portfolio data, return empty set
+                if (!objSelectedEntity.ContainsKey("SECURITY") || !objSelectedEntity.ContainsKey("PORTFOLIO"))
+                    return new List<RelativePerformanceUIData>();
 
-            //Create new Entity for service
-            DimensionEntitiesService.Entities entity = DimensionEntity;
+                //Create new Entity for service
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
-            string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
-            string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
-            List<string> countryName = new List<string>();
-            List<string> benchmarkName = new List<string>();
+                string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
+                string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
+                List<string> countryName = new List<string>();
+                List<string> benchmarkName = new List<string>();
+                List<string> sectorName = new List<string>();
 
-            countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
-            benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME == securityName).ToList()).Select(a => a.GICS_LVL1).ToList();
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList())
+                    .Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
 
-            if (benchmarkName == null)
-                throw new Exception("No Benchmark is found for the selected Portfolio");
+                benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList()).Select(a => a.GICS_LVL1).ToList();
 
-            if (benchmarkName.Count == 0)
-                throw new Exception("No Benchmark is allotted for the selected Portfolio");
-            else if (benchmarkName.Count > 1)
-                throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+                sectorName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList()).Select(a => a.GICS_SECTOR_NAME).ToList();
 
-            if (countryName == null)
-                throw new Exception("No Country is found for the selected security");
+                if (benchmarkName == null)
+                    throw new Exception("No Benchmark is found for the selected Portfolio");
 
-            if (countryName.Count == 0)
-                throw new Exception("No Country is allotted for the selected Security");
-            else if (countryName.Count > 1)
-                throw new Exception("More then 1 country is allotted to selected security ");
+                if (benchmarkName.Count == 0)
+                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+                else if (benchmarkName.Count > 1)
+                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
 
-            List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
-            return result;
+                if (countryName == null)
+                    throw new Exception("No Country is found for the selected security");
+
+                if (countryName.Count == 0)
+                    throw new Exception("No Country is allotted for the selected Security");
+                else if (countryName.Count > 1)
+                    throw new Exception("More then 1 country is allotted to selected security ");
+
+                if (sectorName == null)
+                    throw new Exception("No Sector is Allotted for the selected security");
+
+                if (sectorName.Count == 0)
+                    throw new Exception("No Sector is allotted for the selected Security");
+                else if (sectorName.Count > 1)
+                    throw new Exception("More then 1 sector is allotted to selected security ");
+
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
+                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
+                    && a.TO_DATE == objEffectiveDate.Date).ToList();
+
+                List<RelativePerformanceUIData> result = RelativePerformanceUICalculations.CalculateRelativePerformanceUIData(dimensionDailyPerfData);
+
+                if (result == null)
+                    throw new InvalidOperationException
+                        ("Method Name: CalculateRelativePerformanceUIData, Class: GreenField.Web.Helpers.RelativePerformanceUICalculations, Result Null Exception");
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         }
 
         /// <summary>
@@ -145,12 +184,10 @@ namespace GreenField.Web.Services
                 else if (countryName.Count > 1)
                     throw new Exception("More then 1 country is allotted to selected security ");
 
-
-
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.PORTFOLIO == portfolioId
-                        && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
-                        && a.TO_DATE >= startDate).ToList();
+                            && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
+                            && a.TO_DATE >= startDate).ToList();
 
                 //Checking contents of Data fetched from Dimension
                 if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
@@ -1481,7 +1518,7 @@ namespace GreenField.Web.Services
 
         #endregion
 
-        #region MARKET CAPITALIZATION METHODS
+        #region Market Capitalization Methods
         /// <summary>
         /// Retrieves consolidated data for portfolio and benchmark
         /// </summary>

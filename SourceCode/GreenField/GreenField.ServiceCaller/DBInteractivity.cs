@@ -1385,7 +1385,7 @@ namespace GreenField.ServiceCaller
         /// <param name="objSelectedEntity">Data of Selected Entities</param>
         /// <param name="objEffectiveDate">Selected Date</param>
         /// <param name="callback">List of Relative Performance Data</param>
-        public void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback)
+        public void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime objEffectiveDate, Action<List<RelativePerformanceUIData>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
             client.RetrieveRelativePerformanceUIDataAsync(objSelectedEntity, objEffectiveDate);
