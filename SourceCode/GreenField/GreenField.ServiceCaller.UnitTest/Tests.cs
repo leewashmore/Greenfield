@@ -859,7 +859,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
-            selectedEntites.Add("SECURITY", "AAF");
+            selectedEntites.Add("SECURITY", "AFGRI LTD");
             selectedEntites.Add("PORTFOLIO", "AFRICA");
             instance.RetrieveBenchmarkChartReturnData(selectedEntites, (List<BenchmarkChartReturnData> resultSet) =>
             {
@@ -939,7 +939,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             Dictionary<string, string> selectedEntites = new Dictionary<string, string>();
-            selectedEntites.Add("SECURITY", "AAF");
+            selectedEntites.Add("SECURITY", "AFGRI LTD");
             selectedEntites.Add("PORTFOLIO", "AFRICA");
             instance.RetrieveBenchmarkGridReturnData(selectedEntites, (List<BenchmarkGridReturnData> resultSet) =>
             {
