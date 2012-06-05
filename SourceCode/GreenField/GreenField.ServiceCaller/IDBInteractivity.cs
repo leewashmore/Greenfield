@@ -150,7 +150,7 @@ namespace GreenField.ServiceCaller
 
         #region Slice-3
 
-        void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime? objEffectiveDate, Action<List<RelativePerformanceUIData>> callback);
+        void RetrieveRelativePerformanceUIData(Dictionary<string, string> objSelectedEntity, DateTime objEffectiveDate, Action<List<RelativePerformanceUIData>> callback);
 
         void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback);
 

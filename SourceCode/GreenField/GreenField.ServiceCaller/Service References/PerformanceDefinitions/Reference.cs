@@ -419,7 +419,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIDataRespons" +
             "e")]
-        System.IAsyncResult BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.Nullable<System.DateTime> objEffectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.RelativePerformanceUIData> EndRetrieveRelativePerformanceUIData(System.IAsyncResult result);
         
@@ -1280,7 +1280,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.Nullable<System.DateTime> objEffectiveDate, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveRelativePerformanceUIData(objSelectedEntity, objEffectiveDate, callback, asyncState);
         }
         
@@ -1291,7 +1291,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         private System.IAsyncResult OnBeginRetrieveRelativePerformanceUIData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             System.Collections.Generic.Dictionary<string, string> objSelectedEntity = ((System.Collections.Generic.Dictionary<string, string>)(inValues[0]));
-            System.Nullable<System.DateTime> objEffectiveDate = ((System.Nullable<System.DateTime>)(inValues[1]));
+            System.DateTime objEffectiveDate = ((System.DateTime)(inValues[1]));
             return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrieveRelativePerformanceUIData(objSelectedEntity, objEffectiveDate, callback, asyncState);
         }
         
@@ -1308,11 +1308,11 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             }
         }
         
-        public void RetrieveRelativePerformanceUIDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.Nullable<System.DateTime> objEffectiveDate) {
+        public void RetrieveRelativePerformanceUIDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.DateTime objEffectiveDate) {
             this.RetrieveRelativePerformanceUIDataAsync(objSelectedEntity, objEffectiveDate, null);
         }
         
-        public void RetrieveRelativePerformanceUIDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.Nullable<System.DateTime> objEffectiveDate, object userState) {
+        public void RetrieveRelativePerformanceUIDataAsync(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.DateTime objEffectiveDate, object userState) {
             if ((this.onBeginRetrieveRelativePerformanceUIDataDelegate == null)) {
                 this.onBeginRetrieveRelativePerformanceUIDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRelativePerformanceUIData);
             }
@@ -2479,7 +2479,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.Nullable<System.DateTime> objEffectiveDate, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveRelativePerformanceUIData(System.Collections.Generic.Dictionary<string, string> objSelectedEntity, System.DateTime objEffectiveDate, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = objSelectedEntity;
                 _args[1] = objEffectiveDate;

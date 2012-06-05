@@ -22,25 +22,25 @@ namespace GreenField.DataContracts
         public string EntityType { get; set; }
 
         [DataMember]
-        public DateTime? EffectiveDate { get; set; }
+        public DateTime EffectiveDate { get; set; }
 
         [DataMember]
-        public decimal? MTDReturn { get; set; }
+        public decimal MTDReturn { get; set; }
 
         [DataMember]
-        public decimal? QTDReturn { get; set; }
+        public decimal QTDReturn { get; set; }
 
         [DataMember]
-        public decimal? YTDReturn { get; set; }
+        public decimal YTDReturn { get; set; }
 
         [DataMember]
-        public decimal? OneYearReturn { get; set; }
+        public decimal OneYearReturn { get; set; }
 
         [DataMember]
-        public decimal? ThreeYearReturn { get; set; }
+        public decimal ThreeYearReturn { get; set; }
 
         [DataMember]
-        public decimal? FiveYearReturn { get; set; }
+        public decimal FiveYearReturn { get; set; }
 
     }
 
