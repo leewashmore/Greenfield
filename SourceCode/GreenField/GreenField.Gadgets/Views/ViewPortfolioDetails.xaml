@@ -90,8 +90,9 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          EnableRowVirtualization="True"
                                          EnableColumnVirtualization="True"
-                                         AlternationCount="2" RowLoaded="dgPortfolioDetails_RowLoaded" Grouped="dgPortfolioDetails_Grouped">
-                        
+                                         AlternationCount="2" 
+                                         RowLoaded="dgPortfolioDetails_RowLoaded" 
+                                         Grouped="dgPortfolioDetails_Grouped">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
@@ -149,7 +150,7 @@
                             <telerik:GridViewDataColumn Header="Quantity" DataMemberBinding="{Binding BalanceNominal}" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding DirtyValuePC}" 
+                            <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding DirtyValuePC, StringFormat=c}" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <!--<telerik:GridViewDataColumn Header="Portfolio Dirty Value PC" DataMemberBinding="{Binding PortfolioDirtyValuePC}" 
