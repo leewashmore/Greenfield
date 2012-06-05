@@ -14,6 +14,7 @@
     <AssemblyName>GreenField.Web</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightApplicationList>{F914419C-A86A-487F-9757-8DF5151FAA77}|..\GATEVA.App\GATEVA.App.csproj|ClientBin|False,{52101286-444F-49E8-ADC8-28F884471DB7}|..\GreenField.Login.App\GreenField.Login.App.csproj|ClientBin|False</SilverlightApplicationList>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
