@@ -74,6 +74,11 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
+            if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
+            {
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate),"Show Everything"," ", RetrieveHoldingsPercentageDataCallbackMethod);
+            }
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSetEvent);
@@ -183,7 +188,16 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
                     {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
+
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -220,6 +234,13 @@ namespace GreenField.Gadgets.ViewModels
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
+
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -295,6 +316,8 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    HoldingsPercentageInfo = new ObservableCollection<HoldingsPercentageData>(result);
+                    BenchmarkName = "";
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
