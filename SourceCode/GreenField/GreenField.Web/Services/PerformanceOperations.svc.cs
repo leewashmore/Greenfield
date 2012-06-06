@@ -1006,8 +1006,8 @@ namespace GreenField.Web.Services
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period)) * 100;
-                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period)) * 100;
+                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period));
+                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period));
                             aggAlpha = RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
@@ -1109,8 +1109,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in countrySpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period));
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period));
                     }
 
                     record.MarketValue = MarketValue;
@@ -1159,15 +1159,6 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                //{
-                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                //    if (monthlyData == null)
-                //        return null;
-                //}
-
                 List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1203,8 +1194,8 @@ namespace GreenField.Web.Services
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in sectorSpecificData)
                     {
                         MarketValue = MarketValue + ((row.POR_RC_MARKET_VALUE) == null ? 0 : row.POR_RC_MARKET_VALUE);
-                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
-                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
+                        FundWeight = FundWeight + (RetrieveRelativePerformancePortfolioWeight(row, period));
+                        BenchmarkWeight = BenchmarkWeight + (RetrieveRelativePerformanceBenchmarkWeight(row, period));
                     }
 
                     record.MarketValue = MarketValue;
@@ -1253,21 +1244,12 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                //{
-                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                //    if (monthlyData == null)
-                //        return null;
-                //}
-
                 List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
-                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period) * 100);
-                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, period) * 100);
+                    decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period));
+                    decimal? benchmarkWeight = (RetrieveRelativePerformanceBenchmarkWeight(row, period));
                     decimal? activePosition = Convert.ToDecimal(fundWeight - benchmarkWeight);
 
                     result.Add(new RelativePerformanceActivePositionData()
@@ -1320,17 +1302,6 @@ namespace GreenField.Web.Services
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                List<GF_PERF_DAILY_ATTRIBUTION> s1 = data.Where(t => t.POR_RC_MARKET_VALUE < 0).ToList();
-
-                //List<GF_PERF_MONTHLY_ATTRIBUTION> monthlyData = new List<GF_PERF_MONTHLY_ATTRIBUTION>();
-                //if (period == "1M" || period == "3M" || period == "6M" || period == "3Y" || period == "5Y" || period == "SI")
-                //{
-                //    monthlyData = RetrieveRelativePerformanceMonthlyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                //    if (monthlyData == null)
-                //        return null;
-                //}
 
                 List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)

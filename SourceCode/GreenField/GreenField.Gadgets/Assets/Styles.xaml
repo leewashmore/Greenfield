@@ -26,6 +26,9 @@
         <Setter Property="Height" Value="12"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
     <!--GridViewRowStyle-->

@@ -12,19 +12,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
-                <ResourceDictionary>
-                    <!--GridViewGroupPanelStyle-->
-                    <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
-                        <Setter Property="Height" Value="10"/>
-                        <Setter Property="FontSize" Value="7"/>
-                        <Setter Property="Background" Value="#9F1D21"/>
-                    </Style>
-                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
     </helpers:ViewBaseUserControl.Resources>
-
 
     <!--Layout Grid-->
     <Grid x:Name="LayoutRoot" Background="White">
@@ -68,15 +58,14 @@
                                          ShowGroupPanel="False"
                                          UseLayoutRounding="True"
                                          IsReadOnly="True"
-                                         ScrollMode="Deferred"
+                                         ScrollMode="RealTime"
                                          FontSize="7"
                                          FontFamily="Arial"
-                                         GroupPanelBackground="#9F1D21"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2">                        
+                                         AlternationCount="2" EnableRowVirtualization="False" EnableColumnVirtualization="False">                        
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
@@ -87,35 +76,35 @@
                                                         Header="Constituent Name" 
                                                         DataMemberBinding="{Binding ConstituentName}" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        Width="*" 
+                                                        Width="*" CellStyle="{StaticResource GridViewCellStyle}"
                                                         HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn x:Name="dgcRegion" 
                                                         Header="Region"
                                                         DataMemberBinding="{Binding Region}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        Width="*"
+                                                        Width="*" CellStyle="{StaticResource GridViewCellStyle}"
                                                         HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn x:Name="dgcSector" 
                                                         Header="Sector"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding Sector}"
-                                                        Width="*"
+                                                        Width="*" CellStyle="{StaticResource GridViewCellStyle}"
                                                         HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>                           
                             <telerik:GridViewDataColumn x:Name="dgcSubIndustry"
                                                         Header="Sub-Industry"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding SubIndustry}"
-                                                        Width="*"
+                                                        Width="*" CellStyle="{StaticResource GridViewCellStyle}"
                                                         HeaderTextAlignment="Left" 
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn x:Name="dgcWeight"
                                                         Header="Weight" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         DataMemberBinding="{Binding Weight, StringFormat=\{0:n5\}}"
-                                                        Width="*"
+                                                        Width="*" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -139,10 +128,8 @@
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>
             </Border>
-        </Grid>
-        
+        </Grid>        
     </Grid>
-
 </helpers:ViewBaseUserControl>
 
 

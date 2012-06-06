@@ -10,7 +10,6 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
-
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
@@ -33,28 +32,28 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
     
-    <Grid x:Name="LayoutRoot" Background="White">
+    <Grid x:Name="LayoutRoot">
         <Border telerikQuickstart:ThemeAwareBackgroundBehavior.IsEnabled="True">
             <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                 <!--Grid to display data-->
                 <telerik:RadGridView Name="dgContributorDetractor" 
                                      AutoGenerateColumns="False" 
                                      CanUserDeleteRows="False" 
-                                     CanUserInsertRows="False"
+                                     CanUserInsertRows="False" 
                                      CanUserReorderColumns="False" 
                                      CanUserSelect="False" 
                                      telerik:StyleManager.Theme="Metro"
                                      IsReadOnly="True" 
-                                     ScrollMode="Deferred" 
+                                     ScrollMode="RealTime" 
                                      ShowGroupPanel="False" 
                                      CanUserSortColumns="False"
                                      RowIndicatorVisibility="Collapsed" 
                                      ItemsSource="{Binding ContributorDetractorInfo}"
-                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowStyleSelector="{StaticResource GridRowMarkerStyle}" RowHeight="15" Foreground="White">
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
+                                     RowStyleSelector="{StaticResource GridRowMarkerStyle}" Foreground="White" RowHeight="15">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryID}" Width="Auto" 
-                                                    TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryId}" Width="Auto" 
+                                                    TextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto" TextAlignment="Left" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha}" Width="*" TextAlignment="Right" 
@@ -67,3 +66,6 @@
         </Border>
     </Grid>
 </helpers:ViewBaseUserControl>
+
+
+

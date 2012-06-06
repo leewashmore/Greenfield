@@ -60,7 +60,7 @@
                         </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" SortingState="Descending"  DataMemberBinding="{Binding MarketValue}" 
+                        <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" DataMemberBinding="{Binding MarketValue}" 
                                                     Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     DataFormatString="{}{0:n0}" IsFilterable="False"/>

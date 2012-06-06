@@ -58,13 +58,18 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgRegionBreakdown_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            //var row = e.Row as GridViewRow;
-            //if (row != null)
-            //{
-            //    var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
-            //    if (indent != null)
-            //    { indent.Visibility = Visibility.Collapsed; }
-            //}
+            if (e.Row is GridViewRow && !(e.Row is GridViewNewRow))
+            {
+                var row = e.Row as GridViewRow;
+                if (row != null && row.IndentLevel > 1)
+                {
+                    var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
+                    if (indent != null)
+                    {
+                        indent.Visibility = Visibility.Collapsed;
+                    }
+                }
+            } 
         }
 
         #endregion

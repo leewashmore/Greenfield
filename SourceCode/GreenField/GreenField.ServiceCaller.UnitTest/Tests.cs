@@ -454,7 +454,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
-            DateTime effectiveDate = Convert.ToDateTime("01 / 31 / 2012");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
@@ -474,7 +474,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
-            DateTime effectiveDate = Convert.ToDateTime("01/31/001");
+            DateTime effectiveDate = new DateTime(2012, 1, 31);
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;

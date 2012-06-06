@@ -94,13 +94,12 @@
                                          FontFamily="Arial" 
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="False"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupPanelBackground="#9F1D21" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          RowLoaded="dgSectorBreakdown_Rowloaded"
                                          AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2">
+                                         AlternationCount="2" EnableColumnVirtualization="False" EnableRowVirtualization="False">
                         <telerik:RadGridView.GroupDescriptors>
                             <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
                                 <telerik:GroupDescriptor.AggregateFunctions>

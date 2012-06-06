@@ -129,7 +129,8 @@ namespace GreenField.Gadgets.Views
                 if (cell.Column.DisplayIndex == this.dgRelativePerformance.Columns.Count - 1)
                     continue;
 
-                decimal? activePosition = (cell.ParentRow.DataContext as RelativePerformanceData).AggregateCountryActivePosition;
+                //decimal? activePosition = (cell.ParentRow.DataContext as RelativePerformanceData).AggregateCountryActivePosition;
+                decimal? activePosition = (cell.Value as RelativePerformanceCountrySpecificData).ActivePosition;
 
                 ToolTip toolTip = new ToolTip()
                 {
@@ -229,7 +230,6 @@ namespace GreenField.Gadgets.Views
                 CellTemp.Append("<StackPanel Orientation='Horizontal'>");
                 CellTemp.Append("<TextBlock ");
                 CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
-                //CellTemp.Append("StringFormat= {0:n2}}'/>");
                 CellTemp.Append("</StackPanel>");
                 CellTemp.Append("</DataTemplate>");
 
@@ -241,13 +241,15 @@ namespace GreenField.Gadgets.Views
 
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                 {
-                    AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
+                    //AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
+                    AggregationExpression = Models => string.Format("{0}", aggregateSectorAlpha),
                     FunctionName = sectorData.SectorId.ToString()
                 };
-                                
+                dataColumn.Width = GridViewLength.Auto;               
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
                 dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
                 dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
+                dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
 
                 dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
             }
@@ -283,9 +285,9 @@ namespace GreenField.Gadgets.Views
                 {
                     int securityNum = 1;
                     List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
-                    TextBox txtHeader = new TextBox() { Text = countryName, FontWeight = FontWeights.ExtraBold, IsReadOnly = true,
+                    TextBox txtHeader = new TextBox() { Text = countryName, FontWeight = FontWeights.Bold, IsReadOnly = true,
                                                         Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
-                                                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255))};
+                                                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)), Height = 15,FontSize = 7};
                     grd.ColumnDefinitions.Add(new ColumnDefinition() {Width = GridLength.Auto });
                     int colIndex = grd.ColumnDefinitions.Count() -1;
                     txtHeader.SetValue(Grid.RowProperty, 0);
@@ -293,7 +295,7 @@ namespace GreenField.Gadgets.Views
                     grd.Children.Add(txtHeader);
                     foreach (string securityName in s1)
                     {                        
-                        TextBlock txtSecurityName = new TextBlock() { Text = securityName };
+                        TextBlock txtSecurityName = new TextBlock() { Text = securityName, FontSize = 7 };
                         txtSecurityName.SetValue(Grid.ColumnProperty, countryNum);
                         txtSecurityName.SetValue(Grid.RowProperty, securityNum);
                         grd.Children.Add(txtSecurityName);
