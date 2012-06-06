@@ -927,8 +927,9 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
                 if (portfolioSelectionData == null || effectiveDate == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 //checking if the service is down
                 bool isServiceUp;
@@ -938,7 +939,7 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<RelativePerformanceSectorData> result = new List<RelativePerformanceSectorData>();
+               
 
                 List<GF_PERF_DAILY_ATTRIBUTION> data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t =>
                                                                                         t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
@@ -979,8 +980,9 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceData> result = new List<RelativePerformanceData>();
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, null, null);
@@ -1005,9 +1007,7 @@ namespace GreenField.Web.Services
                     });
                 }
                 sectors = sectors.Distinct().ToList();
-
-
-                List<RelativePerformanceData> result = new List<RelativePerformanceData>();
+                                               
                 foreach (string countryCode in countryCodes)
                 {
                     decimal? aggcsAlpha = 0;
@@ -1083,8 +1083,10 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 //checking if the service is down
                 bool isServiceUp;
@@ -1102,8 +1104,6 @@ namespace GreenField.Web.Services
                     countryCodes.Add(row.COUNTRY);
                 }
                 countryCodes = countryCodes.Distinct().ToList();
-
-                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
 
                 foreach (string countryCode in countryCodes)
                 {
@@ -1163,8 +1163,10 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 //checking if the service is down
                 bool isServiceUp;
@@ -1186,9 +1188,7 @@ namespace GreenField.Web.Services
                     });
                 }
                 sectorCodes = sectorCodes.Distinct().ToList();
-
-                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
-
+                
                 foreach (RelativePerformanceSectorData sector in sectorCodes)
                 {
                     if (sectorID != null)
@@ -1248,8 +1248,10 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 //checking if the service is down
                 bool isServiceUp;
@@ -1260,8 +1262,6 @@ namespace GreenField.Web.Services
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
-
-                List<RelativePerformanceActivePositionData> result = new List<RelativePerformanceActivePositionData>();
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1307,8 +1307,10 @@ namespace GreenField.Web.Services
         {
             try
             {
+                List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
+
                 if (portfolioSelectionData == null || effectiveDate == null || period == null)
-                    throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
+                    return result;
 
                 //checking if the service is down
                 bool isServiceUp;
@@ -1320,7 +1322,6 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
-                List<RelativePerformanceSecurityData> result = new List<RelativePerformanceSecurityData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
                     result.Add(new RelativePerformanceSecurityData()

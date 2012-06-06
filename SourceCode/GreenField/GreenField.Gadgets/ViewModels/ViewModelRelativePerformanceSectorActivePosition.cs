@@ -213,7 +213,7 @@ namespace GreenField.Gadgets.ViewModels
                     Period = period;
                     if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
+                       _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod);
 
                         if (SectorActivePositionDataLoadEvent != null)
                             SectorActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });

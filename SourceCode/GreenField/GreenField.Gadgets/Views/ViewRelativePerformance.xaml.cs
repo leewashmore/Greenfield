@@ -134,7 +134,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = activePosition                    
+                    Content = activePosition               
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
@@ -235,14 +235,14 @@ namespace GreenField.Gadgets.Views
 
                 dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
                 decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
-                string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorAlphaValue.ToString()), 2).ToString();
+                string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Decimal.Parse(aggregateSectorAlphaValue.ToString()).ToString();
                 decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
                 string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorActiviePositionValue.ToString()), 2).ToString();
 
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                 {
                     //AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
-                    AggregationExpression = Models => string.Format("{0}", aggregateSectorAlpha),
+                    AggregationExpression = Models => aggregateSectorAlpha,
                     FunctionName = sectorData.SectorId.ToString()
                 };
                 dataColumn.Width = GridViewLength.Auto;               

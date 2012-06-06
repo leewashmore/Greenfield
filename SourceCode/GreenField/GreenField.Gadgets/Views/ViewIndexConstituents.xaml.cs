@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
 using System.IO;
+using Telerik.Windows.Controls.GridView;
 using GreenField.Gadgets.ViewModels;
 using Telerik.Windows.Data;
 using GreenField.Gadgets.Helpers;
@@ -60,6 +61,16 @@ namespace GreenField.Gadgets.Views
             else
                 this.gridBusyIndicator.IsBusy = false;
         }
+
+        /// <summary>
+        /// Handling row loaded event of grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgIndexConstituents_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }   
         #endregion
 
         #region Export To Excel Methods
