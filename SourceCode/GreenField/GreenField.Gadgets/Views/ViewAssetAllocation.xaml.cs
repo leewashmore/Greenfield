@@ -18,7 +18,6 @@ namespace GreenField.Gadgets.Views
     public partial class ViewAssetAllocation : ViewBaseUserControl
     {
         #region PropertyDeclaration
-
         private ViewModelAssetAllocation _dataContextAssetAllocation;
         public ViewModelAssetAllocation DataContextAssetAllocation
         {
@@ -31,8 +30,6 @@ namespace GreenField.Gadgets.Views
                 _dataContextAssetAllocation = value;
             }
         }
-
-
         #endregion
 
         #region Constructor
@@ -62,14 +59,17 @@ namespace GreenField.Gadgets.Views
         }
 
         #region EventUnsubscribe
-
         public override void Dispose()
         {
             this.DataContextAssetAllocation.Dispose();
             this.DataContextAssetAllocation = null;
             this.DataContext = null;
         }
-
         #endregion
+
+        private void dgAssetAllocation_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

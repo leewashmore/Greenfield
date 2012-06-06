@@ -25,7 +25,7 @@ namespace GreenField.DataContracts
         public String LongName { get; set; }
 
         [DataMember]
-        public String InstrumentID { get; set; }        
+        public String InstrumentID { get; set; }
     }
 
 

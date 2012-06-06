@@ -24,9 +24,12 @@
                                  CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                 FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
+                                 FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"                                         
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     RowLoaded="dgAssetAllocation_RowLoaded">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>

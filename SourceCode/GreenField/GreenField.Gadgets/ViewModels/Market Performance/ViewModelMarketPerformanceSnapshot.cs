@@ -357,7 +357,7 @@ namespace GreenField.Gadgets.ViewModels
                                     .ThenBy(record => record.EntityOrder)
                                     .ToList();
 
-                                abc();
+                                //abc();
 
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
@@ -446,7 +446,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
             BusyIndicatorNotification();
-            abc();
+            //abc();
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace GreenField.Gadgets.ViewModels
                                     .ThenBy(record => record.EntityOrder)
                                     .ToList();
 
-                                abc();
+                                //abc();
 
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
@@ -603,7 +603,7 @@ namespace GreenField.Gadgets.ViewModels
                                     }
                                 }
                                 #endregion
-                                abc();
+                                //abc();
                             }
                             catch (Exception ex)
                             {
@@ -1886,20 +1886,20 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        public void abc()
-        {
-            string A = String.Empty;
-            foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceInfo)
-            {
-                if (record.EntityName != null)
-                {
-                    A = A + record.EntityName + " " +
-                        record.GroupPreferenceID.ToString() + " " +
-                        ((int)record.EntityOrder).ToString() + "\n";
-                }
-            }
-            Prompt.ShowDialog(A);
-        }
+        //public void abc()
+        //{
+        //    string A = String.Empty;
+        //    foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceInfo)
+        //    {
+        //        if (record.EntityName != null)
+        //        {
+        //            A = A + record.EntityName + " " +
+        //                record.GroupPreferenceID.ToString() + " " +
+        //                ((int)record.EntityOrder).ToString() + "\n";
+        //        }
+        //    }
+        //    Prompt.ShowDialog(A);
+        //}
 
 
 

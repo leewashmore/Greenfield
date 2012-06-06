@@ -2,36 +2,49 @@
 	<system.serviceModel>
 		<bindings>
 			<basicHttpBinding>
-				<binding name="BenchmarkHoldingsOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="BenchmarkHoldingsOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="DashboardOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="DashboardOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="LoggingOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="LoggingOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="LoginOperations" maxBufferSize="2147483647"
-				maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="LoginOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_ModelFXOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="BasicHttpBinding_ModelFXOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="PerformanceOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="PerformanceOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="SecurityReferenceOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="SecurityReferenceOperations" closeTimeout="00:10:00"
+				 openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="SessionOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647" openTimeout="00:10:00" closeTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+				<binding name="SessionOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
+					<security mode="None" />
+				</binding>
+				<binding name="ExternalResearchOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+				 receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
 			</basicHttpBinding>
@@ -64,6 +77,10 @@
 			<endpoint address="http://localhost:59430/Services/SessionOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="SessionOperations"
 			 contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
+			<endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
+			 contract="ExternalResearchDefinitions.ExternalResearchOperations"
+			 name="ExternalResearchOperations" />
 		</client>
 
 	</system.serviceModel>

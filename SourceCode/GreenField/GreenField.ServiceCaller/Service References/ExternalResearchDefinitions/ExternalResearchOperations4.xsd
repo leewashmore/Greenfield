@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="FinancialStatementDataSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REUTERS" />
+      <xs:enumeration value="PRIMARY" />
+      <xs:enumeration value="INDUSTRY" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementDataSource" nillable="true" type="tns:FinancialStatementDataSource" />
+  <xs:simpleType name="FinancialStatementPeriodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="A" />
+      <xs:enumeration value="Q" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementPeriodType" nillable="true" type="tns:FinancialStatementPeriodType" />
+  <xs:simpleType name="FinancialStatementFiscalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FISCAL" />
+      <xs:enumeration value="CALENDAR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementFiscalType" nillable="true" type="tns:FinancialStatementFiscalType" />
+  <xs:simpleType name="FinancialStatementStatementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BAL" />
+      <xs:enumeration value="CAS" />
+      <xs:enumeration value="INC" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />
+</xs:schema>

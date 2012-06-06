@@ -57,5 +57,10 @@ namespace GreenField.Gadgets.Views
         {
             throw new NotImplementedException();
         }
+
+        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

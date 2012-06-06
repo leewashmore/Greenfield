@@ -12,6 +12,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using System.ServiceModel;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
 
 namespace GreenField.ServiceCaller
 {
@@ -2008,6 +2009,48 @@ namespace GreenField.ServiceCaller
                 }
             };
         }
+        #endregion
+
+        #region Slice 5 - External Research
+
+        public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.GetFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
+            client.GetFinancialStatementCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
         #endregion
 
     }

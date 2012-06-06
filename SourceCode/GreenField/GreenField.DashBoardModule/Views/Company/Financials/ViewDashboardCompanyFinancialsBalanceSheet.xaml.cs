@@ -42,7 +42,6 @@ namespace GreenField.DashboardModule.Views
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
             this.tbHeader.Text = GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET;
-            
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -55,7 +54,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = new ViewFinancialStatements(new ViewModelFinancialStatements(param));
         }
     }
 }

@@ -68,6 +68,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\FilterSelectionData.cs">
       <Link>DataContracts\FilterSelectionData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\FinancialStatementInputData.cs">
+      <Link>DataContracts\FinancialStatementInputData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\HeatMapData.cs">
       <Link>DataContracts\HeatMapData.cs</Link>
     </Compile>

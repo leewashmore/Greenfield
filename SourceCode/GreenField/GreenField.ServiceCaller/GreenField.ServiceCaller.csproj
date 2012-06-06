@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -93,6 +94,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\DashboardDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExternalResearchDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -182,6 +188,28 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
     <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
     <None Include="Service References\LoggingDefinitions\configuration.svcinfo" />
@@ -236,6 +264,13 @@
     <None Include="Service References\SessionDefinitions\configuration91.svcinfo" />
     <None Include="Service References\SessionDefinitions\configuration.svcinfo" />
     <None Include="Service References\SessionDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.disco" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -378,6 +413,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
+    <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
     <WCFMetadataStorage Include="Service References\ModelFXDefinitions\" />

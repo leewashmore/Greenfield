@@ -81,4 +81,49 @@ namespace GreenField.Gadgets.Models
         /// </summary>
         public Decimal? QUARTER_SIX { get; set; }
     }
+
+    public static class PeriodRecord
+    {
+        public static int YearOne;
+        public static bool YearOneIsHistorical;
+
+        public static int YearTwo;
+        public static bool YearTwoIsHistorical;
+
+        public static int YearThree;
+        public static bool YearThreeIsHistorical;
+
+        public static int YearFour;
+        public static bool YearFourIsHistorical;
+
+        public static int YearFive;
+        public static bool YearFiveIsHistorical;
+
+        public static int YearSix;
+        public static bool YearSixIsHistorical;
+
+        public static int QuarterOneYear;
+        public static int QuarterOneQuarter;
+        public static bool QuarterOneIsHistorical;
+
+        public static int QuarterTwoYear;
+        public static int QuarterTwoQuarter;
+        public static bool QuarterTwoIsHistorical;
+
+        public static int QuarterThreeYear;
+        public static int QuarterThreeQuarter;
+        public static bool QuarterThreeIsHistorical;
+
+        public static int QuarterFourYear;
+        public static int QuarterFourQuarter;
+        public static bool QuarterFourIsHistorical;
+
+        public static int QuarterFiveYear;
+        public static int QuarterFiveQuarter;
+        public static bool QuarterFiveIsHistorical;
+
+        public static int QuarterSixYear;
+        public static int QuarterSixQuarter;
+        public static bool QuarterSixIsHistorical;
+    }
 }

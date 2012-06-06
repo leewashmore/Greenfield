@@ -383,7 +383,7 @@ namespace GreenField.Web.Services
             {
                 List<IndexConstituentsData> result = new List<IndexConstituentsData>();
 
-                if (portfolioSelectionData == null || effectiveDate == null)
+               if (portfolioSelectionData == null || effectiveDate == null)
                     return result;
 
                 //checking if the service is down
@@ -1355,7 +1355,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<PerformanceGraphData> RetrievePerformanceGraphData(String nameOfFund)
-        {
+       {
             List<PerformanceGraphData> result = new List<PerformanceGraphData>();
             try
             {
@@ -1461,7 +1461,7 @@ namespace GreenField.Web.Services
             bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
-            if (!isServiceUp)
+           if (!isServiceUp)
 
                 throw new Exception();
 
@@ -1495,7 +1495,7 @@ namespace GreenField.Web.Services
                     entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
-                    entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
+                   entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
                     entry.FBm1AshRcCtnQtd = attributionData[i].F_BM1_ASH_RC_CTN_QTD;
                     entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
                     entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
@@ -1527,7 +1527,7 @@ namespace GreenField.Web.Services
                 }
 
                 return result;
-            }
+           }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
@@ -1581,7 +1581,7 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue2 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "03 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
-                entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
+               entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 result.Add(entry);
                 entry = new PortfolioRiskReturnData();
                 entry.DataPointName = "Beta";

@@ -1158,6 +1158,22 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand UserManagementCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(UserManagementCommandMethod);
+            }
+        }
+
+        public ICommand RoleManagementCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(RoleManagementCommandMethod);
+            }
+        }
+
         #region Dashboard
         #region Company
         #region Snapshot
@@ -2263,6 +2279,7 @@ namespace GreenField.App.ViewModel
         }
 
         #endregion
+
         private void UserManagementCommandMethod(object param)
         {
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));

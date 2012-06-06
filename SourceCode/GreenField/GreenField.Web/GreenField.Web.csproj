@@ -75,6 +75,7 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\ModelFXOperations.svc" />
     <Content Include="Services\BenchmarkHoldingsOperations.svc" />
     <Content Include="Services\DashboardOperations.svc" />
@@ -100,6 +101,7 @@
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
+    <Compile Include="Helpers\EnumUtils.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\FXCommodityCalculations.cs" />
@@ -117,6 +119,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\ExternalResearchOperations.svc.cs">
+      <DependentUpon>ExternalResearchOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\ModelFXOperations.svc.cs">
       <DependentUpon>ModelFXOperations.svc</DependentUpon>

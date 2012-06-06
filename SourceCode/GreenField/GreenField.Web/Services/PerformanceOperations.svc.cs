@@ -1389,7 +1389,7 @@ namespace GreenField.Web.Services
             {
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                   t.NODE_NAME == "Security ID" &&
+                                                                  t.NODE_NAME == "Security ID" &&
                                                                    t.POR_RC_MARKET_VALUE != 0 &&
                                                                    t.COUNTRY == country &&
                                                                    t.GICS_LVL1 == sector).ToList();

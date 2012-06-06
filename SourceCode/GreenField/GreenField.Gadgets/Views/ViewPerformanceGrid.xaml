@@ -32,8 +32,10 @@
                                      FontSize="7"
                                      FontFamily="Arial"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                 RowLoaded="dgPerformance_RowLoaded"
                                      AlternateRowBackground="#d8d5d4"
                                      AlternationCount="2">
                 <telerik:RadGridView.Columns>

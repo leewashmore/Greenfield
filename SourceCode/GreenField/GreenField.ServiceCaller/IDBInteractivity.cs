@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 
 
@@ -168,6 +169,13 @@ namespace GreenField.ServiceCaller
         void RetrieveCommoditySelectionData(Action<List<FXCommodityData>> callback);
 
         void RetrieveCommodityData(string  commodityID, Action<List<FXCommodityData>> callback);
+
+        #endregion
+
+        #region Slice 5 - External Research
+
+        void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
 
         #endregion
 
