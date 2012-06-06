@@ -88,8 +88,7 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True"
+                                         ScrollMode="RealTime"
                                          AlternationCount="2" 
                                          RowLoaded="dgPortfolioDetails_RowLoaded" 
                                          Grouped="dgPortfolioDetails_Grouped">

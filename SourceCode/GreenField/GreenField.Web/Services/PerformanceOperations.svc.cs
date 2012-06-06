@@ -72,51 +72,68 @@ namespace GreenField.Web.Services
                 if (!objSelectedEntity.ContainsKey("SECURITY") || !objSelectedEntity.ContainsKey("PORTFOLIO"))
                     return new List<RelativePerformanceUIData>();
 
+                List<RelativePerformanceUIData> result = new List<RelativePerformanceUIData>();
+
                 //Create new Entity for service
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
-                string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
-                string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
                 List<string> countryName = new List<string>();
                 List<string> benchmarkName = new List<string>();
                 List<string> sectorName = new List<string>();
 
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList())
-                    .Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                string securityName = objSelectedEntity.Where(a => a.Key == "SECURITY").First().Value;
+                string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
 
-                benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.SEC_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList()).Select(a => a.GICS_LVL1).ToList();
+                List<GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList());
 
-                sectorName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList()).Select(a => a.GICS_SECTOR_NAME).ToList();
+                countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
+                sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).ToList();
+                benchmarkName = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.BMNAME != null).Take(1).ToList()).
+                    Select(a => a.BMNAME).Distinct().ToList();
+
+
+                //if (benchmarkName == null)
+                //    throw new Exception("No Benchmark is found for the selected Portfolio");
+
+                //if (benchmarkName.Count == 0)
+                //    throw new Exception("No Benchmark is allotted for the selected Portfolio");
+                //else if (benchmarkName.Count > 1)
+                //    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
+
+                //if (countryName == null)
+                //    throw new Exception("No Country is found for the selected security");
+
+                //if (countryName.Count == 0)
+                //    throw new Exception("No Country is allotted for the selected Security");
+                //else if (countryName.Count > 1)
+                //    throw new Exception("More then 1 country is allotted to selected security ");
+
+                //if (sectorName == null)
+                //    throw new Exception("No Sector is Allotted for the selected security");
+
+                //if (sectorName.Count == 0)
+                //    throw new Exception("No Sector is allotted for the selected Security");
+                //else if (sectorName.Count > 1)
+                //    throw new Exception("More then 1 sector is allotted to selected security ");
 
                 if (benchmarkName == null)
-                    throw new Exception("No Benchmark is found for the selected Portfolio");
-
-                if (benchmarkName.Count == 0)
-                    throw new Exception("No Benchmark is allotted for the selected Portfolio");
-                else if (benchmarkName.Count > 1)
-                    throw new Exception("More then 1 Benchmark is allotted to selected Portfolio ");
-
+                    return result;
+                if (benchmarkName.Count != 1)
+                    return result;
                 if (countryName == null)
-                    throw new Exception("No Country is found for the selected security");
-
-                if (countryName.Count == 0)
-                    throw new Exception("No Country is allotted for the selected Security");
-                else if (countryName.Count > 1)
-                    throw new Exception("More then 1 country is allotted to selected security ");
-
+                    return result;
+                if (countryName.Count != 1)
+                    return result;
                 if (sectorName == null)
-                    throw new Exception("No Sector is Allotted for the selected security");
-
-                if (sectorName.Count == 0)
-                    throw new Exception("No Sector is allotted for the selected Security");
-                else if (sectorName.Count > 1)
-                    throw new Exception("More then 1 sector is allotted to selected security ");
+                    return result;
+                if (sectorName.Count != 1)
+                    return result;
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
-                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
+                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
                     && a.TO_DATE == objEffectiveDate.Date).ToList();
 
-                List<RelativePerformanceUIData> result = RelativePerformanceUICalculations.CalculateRelativePerformanceUIData(dimensionDailyPerfData);
+                result = RelativePerformanceUICalculations.CalculateRelativePerformanceUIData(dimensionDailyPerfData);
 
                 if (result == null)
                     throw new InvalidOperationException

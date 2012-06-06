@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GreenField.DataContracts;
-using GreenField.DataContracts;
 
 namespace GreenField.Web.Helpers
 {

@@ -31,6 +31,7 @@ namespace GreenField.Web.Helpers
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionDailyPerfData)
                 {
+                    data = new RelativePerformanceUIData();
                     data.EffectiveDate = Convert.ToDateTime(item.TO_DATE);
                     if (item.NODE_NAME.ToUpper().Trim() == "SECURITY ID")
                     {

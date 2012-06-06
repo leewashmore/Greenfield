@@ -213,7 +213,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntityValues.Remove("SECURITY");
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     SelectedSecurity = entitySelectionData;
-                    SelectedEntityValues.Add("SECURITY", entitySelectionData.InstrumentID);
+                    SelectedEntityValues.Add("SECURITY", entitySelectionData.LongName);
 
                     if (SelectedPortfolio != null && SelectedDate != null && SelectedSecurity != null && SelectedEntityValues != null)
                     {
