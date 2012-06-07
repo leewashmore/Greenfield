@@ -121,5 +121,10 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void dgHoldingsPercentageRegion_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            //GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

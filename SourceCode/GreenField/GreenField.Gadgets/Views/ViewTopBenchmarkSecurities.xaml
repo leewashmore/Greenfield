@@ -41,7 +41,12 @@
                                      telerik:StyleManager.Theme="Metro"
                                      UseLayoutRounding="True"
                                      FontSize="7"
-                                     FontFamily="Arial"> 
+                                     FontFamily="Arial"
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                 RowLoaded="dgTopTenSecurities_RowLoaded"> 
                 <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Security Name" 
                                                     DataMemberBinding="{Binding IssuerName}"  

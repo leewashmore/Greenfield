@@ -55,23 +55,23 @@
                                          AutoGenerateColumns="False"
                                          CanUserInsertRows="False"
                                          CanUserDeleteRows="False"
+                                         ShowGroupFooters="False"
+                                         ShowColumnFooters="False"
                                          ShowGroupPanel="False"
                                          UseLayoutRounding="True"
                                          IsReadOnly="True"
                                          ScrollMode="RealTime"
                                          FontSize="7"
                                          FontFamily="Arial"
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         RowLoaded="dgIndexConstituents_RowLoaded"
                                          AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2" RowLoaded="dgIndexConstituents_RowLoaded"
-                                         EnableRowVirtualization="False" EnableColumnVirtualization="False">                        
-                        <telerik:RadGridView.GroupDescriptors>
-                            <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
-                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
-                        </telerik:RadGridView.GroupDescriptors>
-                        
+                                         AlternationCount="2" 
+                                         EnableRowVirtualization="False" EnableColumnVirtualization="False"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         >                        
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcConstituentName" 
                                                         Header="Constituent Name" 
@@ -126,6 +126,10 @@
                                                         TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
+                        <telerik:RadGridView.GroupDescriptors>
+                            <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
+                        </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>
             </Border>

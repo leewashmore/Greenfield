@@ -69,7 +69,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgIndexConstituents_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            GroupedGridRowLoadedHandler.Implement(e); 
         }   
         #endregion
 
@@ -94,7 +94,6 @@ namespace GreenField.Gadgets.Views
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
 
-
         #endregion
 
         #region Dispose Method
@@ -109,5 +108,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        
     }
 }

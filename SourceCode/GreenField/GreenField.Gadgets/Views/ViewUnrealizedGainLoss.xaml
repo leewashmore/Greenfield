@@ -226,7 +226,8 @@
                                  CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="dgUnrealizedGainLoss_ElementExporting"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                 telerik:StyleManager.Theme="Metro" Visibility="Visible" FontSize="7">
+                                 telerik:StyleManager.Theme="Metro" Visibility="Visible" FontSize="7"
+                                             RowLoaded="dgUnrealizedGainLoss_RowLoaded">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}" 
                                                             HeaderCellStyle="{StaticResource GridViewHeaderCell}" />

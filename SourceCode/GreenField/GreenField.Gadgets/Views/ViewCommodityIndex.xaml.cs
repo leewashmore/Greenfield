@@ -37,5 +37,10 @@ namespace GreenField.Gadgets.Views
                 this.gridBusyIndicator.IsBusy = false;
         }
         #endregion
+
+        private void dgCommodity_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+//            GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

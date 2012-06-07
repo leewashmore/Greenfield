@@ -111,7 +111,8 @@
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                 telerik:StyleManager.Theme="Metro" Visibility="Visible">
+                                 telerik:StyleManager.Theme="Metro" Visibility="Visible"
+                                                 RowLoaded="dgPerformanceGadget_RowLoaded">
                                 <telerik:RadGridView.Columns>
                                     <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" />
                                     <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" />

@@ -44,7 +44,9 @@
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}" 
-                                 GridLinesVisibility="None">
+                                 GridLinesVisibility="None"
+                                 RowLoaded="dgRelativePerformance_RowLoaded"
+                                 >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n2\}}" Width="*" 

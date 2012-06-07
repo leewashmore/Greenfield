@@ -293,7 +293,10 @@
                                          EnableColumnVirtualization="True"
                                          EnableRowVirtualization="True"
                                          AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2">
+                                         AlternationCount="2"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowLoaded="dgPricing_RowLoaded"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                         <telerik:RadGridView.SortDescriptors>
                             <telerik:SortDescriptor Member="FromDate"
                                     SortDirection="Ascending" />

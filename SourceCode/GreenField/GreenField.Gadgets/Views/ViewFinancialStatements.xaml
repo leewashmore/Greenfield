@@ -97,7 +97,10 @@
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                      FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21" CanUserResizeColumns="False"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}">
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     RowLoaded="dgFinancialReport_RowLoaded">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgvcDataType" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                         <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" IsSortable="False" IsFilterable="False"/>

@@ -107,6 +107,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgRelativePerformance_RowLoaded(object sender, RowLoadedEventArgs e)
         {
+            //GroupedGridRowLoadedHandler.Implement(e);
+
             if (e.Row is GridViewHeaderRow)
                 return;
             if (e.Row.Cells[0] is GridViewFooterCell)

@@ -79,6 +79,11 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         } 
         #endregion
+
+        private void dgTopHoldings_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            //GroupedGridRowLoadedHandler.Implement(e);
+        }
        
     }
 }

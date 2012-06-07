@@ -393,6 +393,9 @@ namespace GreenField.Gadgets.Views
                 }
                 Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
                 DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
+
+                //this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
+                //this.dgPortfolioDetails.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             }
             else
             {
@@ -466,33 +469,22 @@ namespace GreenField.Gadgets.Views
 
         private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            var row = e.Row as GridViewRow;
-            if (row != null)
-            {
-                var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
-                if (indent != null)
-                {
-                    indent.Visibility = Visibility.Collapsed;
-                }
-            }
-
-            var groupHeaderIndentCell = dgPortfolioDetails.ChildrenOfType<GridViewHeaderIndentCell>().FirstOrDefault();
-            if (groupHeaderIndentCell != null)
-            {
-                groupHeaderIndentCell.Visibility = Visibility.Collapsed;
-            }
+            GroupedGridRowLoadedHandler.Implement(e);            
         }
 
         private void dgPortfolioDetails_Grouped(object sender, GridViewGroupedEventArgs e)
         {
-            var groupPanelItem = dgPortfolioDetails.ChildrenOfType<GridViewGroupPanelItem>().FirstOrDefault();
-            if (groupPanelItem != null)
-            {
-                groupPanelItem.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
-                groupPanelItem.Foreground = new SolidColorBrush(Colors.White);
-                groupPanelItem.FontFamily = new FontFamily("Arial");
-                groupPanelItem.FontSize = 15;
-            }
+            //this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
+            //this.dgPortfolioDetails.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
+
+            //var groupPanelItem = dgPortfolioDetails.ChildrenOfType<GridViewGroupPanelItem>().FirstOrDefault();
+            //if (groupPanelItem != null)
+            //{
+            //    groupPanelItem.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
+            //    groupPanelItem.Foreground = new SolidColorBrush(Colors.White);
+            //    groupPanelItem.FontFamily = new FontFamily("Arial");
+            //    groupPanelItem.FontSize = 15;
+            //}
         }
     }
 }

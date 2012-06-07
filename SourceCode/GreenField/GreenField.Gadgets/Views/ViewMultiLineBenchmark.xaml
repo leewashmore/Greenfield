@@ -140,6 +140,10 @@
                                  UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" 
                                  ColumnWidth="*" 
                                  RowStyle="{StaticResource GridViewRowStyle}"
+                                 RowLoaded="dgBenchmarkUI_RowLoaded"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                  >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"

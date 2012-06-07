@@ -9,6 +9,7 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <!--GridViewFooterCellStyle-->
+        
         <ControlTemplate x:Key="GridViewFooterCellTemplate" TargetType="telerik:GridViewFooterCell">
             <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
                 <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
@@ -173,7 +174,8 @@
                                      RowLoaded="dgRelativePerformance_RowLoaded" 
                                      SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}">
+                                     RowStyle="{StaticResource GridViewRowStyle}"                                    
+                                         >
 
                     <telerik:RadGridView.Columns>
                         <!--CountryID Column-->

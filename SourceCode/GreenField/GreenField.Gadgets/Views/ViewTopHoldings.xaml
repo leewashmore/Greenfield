@@ -50,7 +50,11 @@
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      AlternateRowBackground="#d8d5d4"
-                                     AlternationCount="2">
+                                     AlternationCount="2"
+                                     RowLoaded="dgTopHoldings_RowLoaded"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">

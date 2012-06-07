@@ -77,59 +77,62 @@
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                     <telerik:RadGridView Name="dgSectorBreakdown" 
+                                         Background="White"
                                          AutoGenerateColumns="False" 
+                                         AlternationCount="2"
+                                         AlternateRowBackground="#d8d5d4"
                                          ItemsSource="{Binding SectorBreakdownInfo}" 
                                          CanUserSelect="False" 
-                                         CanUserReorderColumns="False" 
+                                         CanUserReorderColumns="True" 
                                          CanUserInsertRows="False" 
-                                         telerik:StyleManager.Theme="Metro"
+                                         CanUserFreezeColumns="False"
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
                                          CanUserSortColumns="False" 
-                                         ScrollMode="Deferred" 
+                                         ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
-                                         ShowColumnFooters="False"
+                                         UseLayoutRounding="True" 
+                                         ShowGroupFooters="True"
                                          FontSize="7" 
                                          FontFamily="Arial" 
-                                         UseLayoutRounding="True" 
-                                         ShowGroupFooters="False"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         RowLoaded="dgSectorBreakdown_Rowloaded"
-                                         AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2" EnableColumnVirtualization="False" EnableRowVirtualization="False">
-                        <telerik:RadGridView.GroupDescriptors>
-                            <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending">
-                                <telerik:GroupDescriptor.AggregateFunctions>
-                                    <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%"/>
-                                    <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%" />
-                                    <telerik:SumFunction SourceField="ActivePosition" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
-                                </telerik:GroupDescriptor.AggregateFunctions>
-                            </telerik:GroupDescriptor>
-                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending">
-                                <telerik:GroupDescriptor.AggregateFunctions>
-                                    <telerik:SumFunction SourceField="PortfolioShare" Caption="Portfolio % - " ResultFormatString="{}{0:n2}%"/>
-                                    <telerik:SumFunction SourceField="BenchmarkShare" Caption="Benchmark % - " ResultFormatString="{}{0:n2}%"/>
-                                    <telerik:SumFunction SourceField="ActivePosition" Caption="Active Position - " ResultFormatString="{}{0:n2}%"/>
-                                </telerik:GroupDescriptor.AggregateFunctions>
-                            </telerik:GroupDescriptor>
-                        </telerik:RadGridView.GroupDescriptors>
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                         RowLoaded="dgSectorBreakdown_Rowloaded">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="" IsFilterable="False" DataMemberBinding="{Binding Security}" Width="*" HeaderTextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn x:Name="dgcBetShare" Header="Active Position" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" MinWidth="150"/>
+                            <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="PortfolioShare" ResultFormatString="{}{0:n2}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
+                            <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" IsFilterable="False" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="BenchmarkShare" ResultFormatString="{}{0:n2}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
+                            <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" IsFilterable="False" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%"/>
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
                         </telerik:RadGridView.Columns>
+                        <telerik:RadGridView.GroupDescriptors>
+                            <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending"/>
+                            <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
+                        </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
+                    
                 </telerik:RadBusyIndicator>
             </Border>
         </Grid>

@@ -214,6 +214,11 @@ namespace GreenField.Gadgets.Views
                 this.dgFinancialReport.Columns[12].Header = PeriodRecord.QuarterFiveYear.ToString() + " Q" + PeriodRecord.QuarterFiveQuarter.ToString() + " " + (PeriodRecord.QuarterFiveIsHistorical ? "A" : "E");
                 this.dgFinancialReport.Columns[13].Header = PeriodRecord.QuarterSixYear.ToString() + " Q" + PeriodRecord.QuarterSixQuarter.ToString() + " " + (PeriodRecord.QuarterSixIsHistorical ? "A" : "E");
             }
+        }
+
+        private void dgFinancialReport_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            //GroupedGridRowLoadedHandler.Implement(e);
         }       
 
         

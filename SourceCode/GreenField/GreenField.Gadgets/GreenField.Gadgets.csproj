@@ -123,6 +123,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />

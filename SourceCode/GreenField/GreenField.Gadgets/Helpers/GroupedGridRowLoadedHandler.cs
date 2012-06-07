@@ -60,9 +60,6 @@ namespace GreenField.Gadgets.Helpers
                         }
                     }
                 }
-
-
-
             }
 
             if (e.Row is GridViewHeaderRow)

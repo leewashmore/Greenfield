@@ -60,7 +60,11 @@
                                  telerik:StyleManager.Theme="Metro" AutoExpandGroups="True" FontSize="7" FontFamily="Arial" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
                                  ItemsSource="{Binding MarketPerformanceSnapshotInfo}" IsFilteringAllowed="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False">
+                                 SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False"
+                                     RowLoaded="radGridSnapshot_RowLoaded"                                     
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
                         <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">

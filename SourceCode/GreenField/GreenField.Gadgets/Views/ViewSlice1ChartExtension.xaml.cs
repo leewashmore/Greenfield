@@ -354,5 +354,10 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+
+        private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            //GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

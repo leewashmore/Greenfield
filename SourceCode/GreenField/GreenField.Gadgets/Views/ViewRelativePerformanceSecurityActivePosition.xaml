@@ -42,7 +42,8 @@
                                  ShowColumnFooters="False" 
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 RowLoaded="dgRelativePerformance_RowLoaded">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Security Name" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="auto" CellStyle="{StaticResource GridViewCellStyle}"/>

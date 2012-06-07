@@ -94,7 +94,9 @@
                                      FontFamily="Arial"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}">
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                             RowLoaded="dgHoldingsPercentageRegion_RowLoaded"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn Header="Benchmark Name" 
                                                     DataMemberBinding="{Binding BenchmarkName}"  

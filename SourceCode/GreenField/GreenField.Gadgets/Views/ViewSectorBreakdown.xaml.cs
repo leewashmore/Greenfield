@@ -66,13 +66,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgSectorBreakdown_Rowloaded(object sender, RowLoadedEventArgs e)
         {
-            //var row = e.Row as GridViewRow;
-            //if (row != null)
-            //{
-            //    var indent = row.ChildrenOfType<GridViewIndentCell>().FirstOrDefault();
-            //    if (indent != null)
-            //    { indent.Visibility = Visibility.Collapsed; }
-            //}
+            GroupedGridRowLoadedHandler.Implement(e); 
         }
         #endregion
 

@@ -467,6 +467,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private void radGridSnapshot_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            //GroupedGridRowLoadedHandler.Implement(e); 
+        }
+
         
         
 

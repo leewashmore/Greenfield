@@ -79,11 +79,12 @@
                                          Filtered="dgPortfolioDetails_Filtered" 
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
-                                         ColumnWidth="*"
+                                         ColumnWidth="*" ShowColumnFooters="False"
                                          FontFamily="Arial"
                                          FontSize="7"
                                          AlternateRowBackground="#d8d5d4"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         ShowGroupFooters="True"
                                          GroupPanelBackground="#9F1D21"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
@@ -108,29 +109,40 @@
                             <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding IsoCountryCode}" IsGroupable="True" 
                                                         IsFilterable="True" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"
-                                                        TextAlignment="Left">
-                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                                        TextAlignment="Left"/>
+                                <!--<telerik:GridViewDataColumn.AggregateFunctions>
                                     <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" Caption="Benchmark Weight:"
                                                                    ResultFormatString="{}{0:n4}" />
                                     <local:BenchmarkWeightFunction SourceField="PortfolioWeight" Caption="Portfolio Weight:"
                                                                    ResultFormatString="{}{0:n4}" />
                                     <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" Caption="Model Weight:"
                                                                    ResultFormatString="{}{0:n4}" />
-                                </telerik:GridViewDataColumn.AggregateFunctions>
-                            </telerik:GridViewDataColumn>
+                                </telerik:GridViewDataColumn.AggregateFunctions>-->
                             <telerik:GridViewDataColumn Header="Region Code" DataMemberBinding="{Binding ProprietaryRegionCode}"
                                                         IsGroupable="True" IsFilterable="True" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
-                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <local:BenchmarkWeightFunction SourceField="AshEmmModelWeight" ResultFormatString="{}{0:n4}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
-                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <local:BenchmarkWeightFunction SourceField="PortfolioWeight" ResultFormatString="{}{0:n4}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
-                                                        DataFormatString="{}{0:n4}%" x:Name="BenchmarkWeight" IsGroupable="False"
+                                                        DataFormatString="{}{0:n4}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}">
+                                <telerik:GridViewDataColumn.AggregateFunctions>
+                                    <local:BenchmarkWeightFunction SourceField="BenchmarkWeight" ResultFormatString="{}{0:n4}%" />
+                                </telerik:GridViewDataColumn.AggregateFunctions>
+                            </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
                                                         DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -158,7 +170,7 @@
                             <telerik:GridViewDataColumn Header="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
                                                         IsGroupable="False" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                        </telerik:RadGridView.Columns>
+                        </telerik:RadGridView.Columns>                        
                     </telerik:RadGridView>
                 </telerik:RadBusyIndicator>
             </Border>

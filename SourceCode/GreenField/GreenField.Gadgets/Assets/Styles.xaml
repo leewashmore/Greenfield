@@ -8,6 +8,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converter="clr-namespace:GreenField.Gadgets.Helpers.Converters"
     mc:Ignorable="d">
 
     <!--Grid Styles-->
@@ -19,6 +20,7 @@
     <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#9F1D21"/>
     <telerik:Office_BlackTheme x:Key="Theme"/>
     <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <converter:GroupAggregationToVisibilityConverter x:Key="GroupAggregationToVisibilityConverter"/>
     <!--<LinearGradientBrush x:Key="GridView_GroupExpanderGridBackground" StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Color="DarkGray" Offset="1"/>
                         <GradientStop Color="White" Offset="0.5"/>
@@ -141,10 +143,10 @@
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Footer">
-                                <DiscreteObjectKeyFrame KeyTime="0">
-                                    <DiscreteObjectKeyFrame.Value>
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding AggregateResults, Converter={StaticResource GroupAggregationToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <!--<DiscreteObjectKeyFrame.Value>
                                         <Visibility>Visible</Visibility>
-                                    </DiscreteObjectKeyFrame.Value>
+                                    </DiscreteObjectKeyFrame.Value>-->
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
                             <DoubleAnimation Duration="0" To="-1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="ExpanderButton" d:IsOptimized="True"/>
@@ -250,6 +252,8 @@
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Padding" Value="10,0,0,0"/>
     </Style>
+
+    
 
     <!--GridViewGroupFooterCellStyle-->
     <Style TargetType="telerik:GridViewGroupFooterCell">
