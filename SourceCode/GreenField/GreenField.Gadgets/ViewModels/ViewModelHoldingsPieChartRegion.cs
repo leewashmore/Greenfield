@@ -82,7 +82,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
             }
 
            
@@ -200,7 +200,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
 
 
@@ -245,7 +245,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 }
                 else

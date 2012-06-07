@@ -63,7 +63,10 @@ namespace GreenField.Gadgets.ViewModels
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
+
             {
+                if (null != unrealizedGainLossDataLoadedEvent)
+                    unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                 RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
             }
         }

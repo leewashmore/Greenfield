@@ -46,54 +46,40 @@
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
-                    <telerik:GridViewDataColumn Header="MTD" 
-                                                    DataMemberBinding="{Binding MTD}"                                                     
+                    <telerik:GridViewDataColumn Header="1D" 
+                                                    DataMemberBinding="{Binding TopRcTwr1D}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*" 
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
-                    <telerik:GridViewDataColumn Header="QTD"                                                     
-                                                 DataMemberBinding="{Binding QTD}"          
+                    <telerik:GridViewDataColumn Header="1W"                                                     
+                                                 DataMemberBinding="{Binding TopRcTwr1W}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                  Width="*"   
                                                  HeaderTextAlignment="Left"                                                    
                                                  TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="YTD" 
-                                                DataMemberBinding="{Binding YTD}"                                                
+                    <telerik:GridViewDataColumn Header="QTD" 
+                                                DataMemberBinding="{Binding TopRcTwrQtd}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="1 YEAR" 
-                                                DataMemberBinding="{Binding FIRST_YEAR}"                                               
+                    <telerik:GridViewDataColumn Header="YTD" 
+                                                DataMemberBinding="{Binding TopRcTwrYtd}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="3 YEAR" 
-                                                DataMemberBinding="{Binding THIRD_YEAR}"                                               
+                    <telerik:GridViewDataColumn Header="1Y" 
+                                                DataMemberBinding="{Binding TopRcTwr1Y}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Left"
-                                                TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="5 YEAR" 
-                                                DataMemberBinding="{Binding FIFTH_YEAR}"                                               
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
-                                                DataFormatString="{}{0:n2}"
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="10 YEAR" 
-                                                DataMemberBinding="{Binding TENTH_YEAR}"                                               
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
-                                                DataFormatString="{}{0:n2}"
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"/>                   
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>

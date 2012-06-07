@@ -435,7 +435,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> {"1D", "1W", "MTD", "QTD", "YTD", "1Y" };
+                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y", "3Y", "5Y", "10Y", "SI" };
             }
         }
 
@@ -707,18 +707,7 @@ namespace GreenField.App.ViewModel
             {
                 _filterValueVisibility = value;
                 RaisePropertyChanged(() => this.FilterValueVisibility);
-                //if (value == Visibility.Visible && FilterSelectionInfo == null)
-                //{
-                //    if (_dbInteractivity != null && SelectedEffectiveDateInfo != null)
-                //    {
-                //        BusyIndicatorContent = "Retrieving Filter Selection Data based on selected effective date...";
-                //        if (ShellFilterDataLoadEvent != null)
-                //        {
-                //            ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                //        }
-                //        _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
-                //    }
-                //}
+
             }
         }
 

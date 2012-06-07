@@ -1397,11 +1397,10 @@ namespace GreenField.Web.Services
             //checking if the service is down
             bool isServiceUp;
             isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
             if (!isServiceUp)
                 throw new Exception();
 
-
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
             DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
             if (performanceData == null)
                 return result;
@@ -1412,23 +1411,21 @@ namespace GreenField.Web.Services
                 {
                     PerformanceGridData entry = new PerformanceGridData();
                     entry.Name = portfolioID;
-                    //entry.MTD = performanceData.POR_TOP_QC_TWR_1M;
-                    //entry.QTD = performanceData.POR_TOP_RC_TWR_3M;
-                    //entry.YTD = performanceData.POR_TOP_RC_TWR_YTD;
-                    //entry.FIRST_YEAR = performanceData.POR_TOP_RC_TWR_1Y;
-                    //entry.THIRD_YEAR = performanceData.POR_TOP_RC_TWR_3Y_ANN;
-                    //entry.FIFTH_YEAR = performanceData.POR_TOP_RC_TWR_5Y_ANN;
-                    //entry.TENTH_YEAR = performanceData.POR_TOP_RC_TWR_SI_ANN;
+                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D;
+                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W;
+                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD;
+                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y;
                     result.Add(entry);
                     entry = new PerformanceGridData();
                     entry.Name = benchmarkID;
-                    //entry.MTD = performanceData.BM1_TOP_RC_TWR_1M;
-                    //entry.QTD = performanceData.BM1_TOP_RC_TWR_3M;
-                    //entry.YTD = performanceData.BM1_TOP_RC_TWR_YTD;
-                    //entry.FIRST_YEAR = performanceData.BM1_TOP_RC_TWR_1Y;
-                    //entry.THIRD_YEAR = performanceData.BM1_TOP_RC_TWR_3Y_ANN;
-                    //entry.FIFTH_YEAR = performanceData.BM1_TOP_RC_TWR_5Y_ANN;
-                    //entry.TENTH_YEAR = performanceData.BM1_TOP_RC_TWR_SI_ANN;
+                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D;
+                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W;
+                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD;
+                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y;
                     result.Add(entry);
                 }
                 return result;
@@ -1566,6 +1563,19 @@ namespace GreenField.Web.Services
                                                                                    && p.TO_DATE == effectiveDate.Date
                                                                                    && p.CURRENCY == "USD" && p.RETURN_TYPE == "Gross"
                                                                                     select p).ToList<GF_PERF_TOPLEVELSTATS>();
+            //DimensionEntitiesService.Entities entity = DimensionEntity;
+
+            //var data = from p in entity.GF_PERF_TOPLEVELSTATS
+            //           where p.TO_DATE == Convert.ToDateTime("12/31/2006")
+            //           && p.PORTFOLIO == "ABPEQ"
+            //           && p.CURRENCY == "USD"
+            //           && p.RETURN_TYPE == "Gross"
+            //           select p;
+
+            //var oneyearData = (from p in data
+            //                  where p.PORTYPE.StartsWith("Benchmark") && p.YEAR == "01 Year"
+            //                  select p.RC_ALPHA).First();
+
             if (riskReturnData == null || riskReturnData.Count == 0)
                 return result;
             try

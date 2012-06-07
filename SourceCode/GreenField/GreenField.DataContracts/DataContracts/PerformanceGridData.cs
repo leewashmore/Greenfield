@@ -13,24 +13,22 @@ namespace GreenField.DataContracts
         public String Name {get;set;}
 
         [DataMember]
-        public Decimal? MTD { get; set; }
+        public Decimal? TopRcTwr1D { get; set; }
 
         [DataMember]
-        public Decimal? QTD { get; set; }
+        public Decimal? TopRcTwr1W { get; set; }
 
         [DataMember]
-        public Decimal? YTD { get; set; }
+        public Decimal? TopRcTwrMtd { get; set; }
 
         [DataMember]
-        public Decimal? FIRST_YEAR { get; set; }
+        public Decimal? TopRcTwrQtd { get; set; }
 
         [DataMember]
-        public Decimal? THIRD_YEAR { get; set; }
+        public Decimal? TopRcTwrYtd { get; set; }
 
         [DataMember]
-        public Decimal? FIFTH_YEAR { get; set; }
+        public Decimal? TopRcTwr1Y { get; set; }
 
-        [DataMember]
-        public Decimal? TENTH_YEAR { get; set; }
     }
 }
