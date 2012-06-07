@@ -48,7 +48,7 @@
 
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
-        <Setter Property="Height" Value="12"/>
+        <Setter Property="Height" Value="15"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
@@ -416,9 +416,10 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="HoverStates">
                                 <VisualState x:Name="Normal">
@@ -515,7 +516,7 @@
                             </Path.Data>
                         </Path>
                         <TextBlock x:Name="PART_TextBlock"
-                                Grid.Column="1"
+                                Grid.Column="1" 
                                 Foreground="{TemplateBinding Foreground}"
                                 Margin="{TemplateBinding Margin}"
                                 Padding="{TemplateBinding Padding}"

@@ -51,8 +51,7 @@ namespace GreenField.Gadgets.ViewModels
             if (_entitySelectionData != null)
             {
                 HandleSecurityReferenceSet(_entitySelectionData);
-                if (null != ClosingPriceDataLoadedEvent)
-                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                BusyIndicatorStatus = true;
             }
         }
 
@@ -475,7 +474,22 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
 
         private ChartArea _chartAreaPricing;
         public ChartArea ChartAreaPricing
@@ -584,17 +598,24 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (!PlottedSeries.Any(t => t.InstrumentID == SelectedSeriesReference.InstrumentID))
                 {
+                    if (ChartEntityList.Count >= 5)
+                    {
+                        Prompt.ShowDialog("Cannot Add more than 5 Entities at a Time");
+                        return;
+                    }
+
                     //string type = SelectedSeriesReference.Type.ToString();
                     ChartEntityList.Add(SelectedSeriesReference);
 
                     //Making initially ChartEntityTypes False
                     ChartEntityTypes = true;
 
-
+                    BusyIndicatorStatus = true;
                     _dbInteractivity.RetrievePricingReferenceData(ChartEntityList, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, (result) =>
                     {
                         PlottedSeries.Clear();
-                        PlottedSeries.AddRange(result);
+                        PlottedSeries.AddRange(result.OrderBy(a => a.SortingID).ToList());
+                        BusyIndicatorStatus = false;
                         ComparisonSeries.Add(SelectedSeriesReference);
                         if (ReturnTypeSelection)
                         {
@@ -681,6 +702,7 @@ namespace GreenField.Gadgets.ViewModels
             return this.ChartAreaPricing.ZoomScrollSettingsX.Range < 1d &&
                 this.ChartAreaVolume.ZoomScrollSettingsX.Range < 1d;
         }
+
         #endregion
 
         #region Callback Methods
@@ -739,7 +761,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (ChartEntityList.Count == 1)
                     {
                         PrimaryPlottedSeries.Clear();
-                        PrimaryPlottedSeries.AddRange(result);
+                        PrimaryPlottedSeries.AddRange(result.OrderBy(a => a.SortingID).ToList());
                     }
                     else
                     {
@@ -757,13 +779,15 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
-                if (null != ClosingPriceDataLoadedEvent)
-                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
         }
 
@@ -783,27 +807,24 @@ namespace GreenField.Gadgets.ViewModels
                     PlottedSeries.Clear();
                     PrimaryPlottedSeries.Clear();
                     PlottedSeries.AddRange(result);
-                    PrimaryPlottedSeries.AddRange(result);
+                    PrimaryPlottedSeries.AddRange(result.OrderBy(a => a.SortingID).ToList());
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
-                if (null != ClosingPriceDataLoadedEvent)
-                    ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally
+            {
+                BusyIndicatorStatus = false;
+            }
         }
-
-        #endregion
-
-        #region Events
-        public event DataRetrievalProgressIndicatorEventHandler ClosingPriceDataLoadedEvent;
 
         #endregion
 
@@ -838,8 +859,7 @@ namespace GreenField.Gadgets.ViewModels
                         ChartEntityList.Add(entitySelectionData);
 
                         //Retrieve Pricing Data for Primary Security Reference
-                        if (null != ClosingPriceDataLoadedEvent)
-                            ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                         RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
 
                         SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
@@ -875,8 +895,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="callback">CallBack Method Predicate</param>
         private void RetrievePricingData(ObservableCollection<EntitySelectionData> entityIdentifiers, Action<List<PricingReferenceData>> callback)
         {
-            if (null != ClosingPriceDataLoadedEvent)
-                ClosingPriceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            BusyIndicatorStatus = true;
             _dbInteractivity.RetrievePricingReferenceData(entityIdentifiers, SelectedStartDate, SelectedEndDate, ReturnTypeSelection, SelectedFrequencyInterval, callback);
         }
 

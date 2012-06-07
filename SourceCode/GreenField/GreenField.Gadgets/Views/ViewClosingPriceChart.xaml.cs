@@ -57,7 +57,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextClosingPriceChart = dataContextSource;
-            dataContextSource.ClosingPriceDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
+            //dataContextSource.ClosingPriceDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
             dataContextSource.ChartAreaPricing = this.chPricing.DefaultView.ChartArea;
             this.chPricing.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.ChartAreaVolume = this.chVolume.DefaultView.ChartArea;
@@ -84,25 +84,6 @@ namespace GreenField.Gadgets.Views
             this.cmbTime.SelectedValue = "1-Year";
         }
 
-        /// <summary>
-        /// Data Retrieval Progress Indicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSource_closingPriceDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.busyIndicator.IsBusy = true;
-                this.busyIndicatorchartVolume.IsBusy = true;
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicator.IsBusy = false;
-                this.busyIndicatorchartVolume.IsBusy = false;
-                this.busyIndicatorGrid.IsBusy = false;
-            }
-        }
 
         /// <summary>
         /// Flipping between Grid & Chart
@@ -325,7 +306,7 @@ namespace GreenField.Gadgets.Views
 
         public override void Dispose()
         {
-            this.DataContextClosingPriceChart.ClosingPriceDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
+            //this.DataContextClosingPriceChart.ClosingPriceDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
             this.DataContextClosingPriceChart.Dispose();
             this.DataContextClosingPriceChart = null;
             this.DataContext = null;

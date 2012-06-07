@@ -48,5 +48,7 @@ namespace GreenField.DataContracts
         [DataMember]
         public decimal AdjustedDollarPrice { get; set; }
 
+        [DataMember]
+        public int SortingID { get; set; }
     }
 }

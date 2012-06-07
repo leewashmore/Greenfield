@@ -56,6 +56,7 @@
       <xs:element minOccurs="0" name="IndexedPrice" type="xs:decimal" />
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortingID" type="xs:int" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Volume" type="xs:decimal" />

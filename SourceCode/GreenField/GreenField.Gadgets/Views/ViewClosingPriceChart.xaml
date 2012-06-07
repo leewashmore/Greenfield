@@ -49,7 +49,7 @@
                                 </Setter>
                             </Style>
                         </helpers:ItemStyleSelector.ItemStyle>
-                    </helpers:ItemStyleSelector>                                      
+                    </helpers:ItemStyleSelector>
 
                     <telerik:TextToVisibilityConverter x:Key="textToVisibilityConverter" />
                     <SolidColorBrush x:Key="LegendForeground" Color="#FF000000" />
@@ -188,6 +188,8 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <telerik:RadComboBox Grid.Column="0" 
+                                             FontFamily="Arial"
+                                             FontSize="7"
                                              Name="cmbAddSeries"
                                              ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                              IsEditable="True" 
@@ -203,7 +205,13 @@
                                              ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
-                                             IsTextSearchEnabled="False" />
+                                             IsTextSearchEnabled="False" >
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
                         <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                 Command="{Binding AddCommand}" Width="20" Height="20" Background="White">
                             <Image Source="../Images/AddToChart.png"/>
@@ -219,26 +227,50 @@
                         <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
                                   IsChecked="{Binding SearchFilterEnabled, Mode=TwoWay}" Grid.Row="0" Name="chkSearchFilter" 
                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" />
-                        <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
-                                   Grid.Row="1" HorizontalAlignment="Right" />
+                        <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" CornerRadius="2" Height="15">
+                            <Grid>
+                                <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
+                                           HorizontalAlignment="Left" FontSize="7" FontFamily="Arial" FontWeight="Bold" Margin="2,0,0,0" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
                     </Grid>
 
                     <!--List of Comparison entities-->
-                    <Grid Grid.Row="7" Margin="0,2,0,0">
-                        <ItemsControl  HorizontalAlignment="Right" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
+                    <Grid Grid.Row="7">
+
+                        <ItemsControl  HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Height="15" Margin="0,2,0,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" FontSize="7" FontFamily="Arial" Text="{Binding ShortName, Mode=TwoWay}" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" />
+                                            <telerik:RadButton Background="White" Grid.Column="1" 
+                                                               Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
+                                                               CommandParameter="{Binding}" Width="20" HorizontalAlignment="Right"
+                                                               VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5">
+                                                <TextBlock Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" />
+                                            </telerik:RadButton>
+                                        </Grid>
+                                    </Border>
+                                    <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <TextBlock Text="{Binding ShortName, Mode=TwoWay}" HorizontalAlignment="Right" />
                                         <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
                                         CommandParameter="{Binding}"  Width="20" HorizontalAlignment="Right">
                                             <Image Source="../Images/Delete.png"/>
                                         </Button>
-                                    </StackPanel>
+                                    </StackPanel>-->
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
+
                     </Grid>
+
                 </Grid>
             </telerik:RadExpander.Content>
         </telerik:RadExpander>
@@ -246,7 +278,7 @@
         <Grid Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
                                          ItemsSource="{Binding PlottedSeries}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                          SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
@@ -262,29 +294,36 @@
                                          EnableRowVirtualization="True"
                                          AlternateRowBackground="#d8d5d4"
                                          AlternationCount="2">
+                        <telerik:RadGridView.SortDescriptors>
+                            <telerik:SortDescriptor Member="FromDate"
+                                    SortDirection="Ascending" />
+                        </telerik:RadGridView.SortDescriptors>
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Dollar Adjusted Price" 
                                                         DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
                                                         DataFormatString="{}{0:n4}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>
@@ -298,11 +337,11 @@
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
                                           ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
+                            
                             <telerik:RadChart.PaletteBrushes>
-
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
                                 <SolidColorBrush Color="#A7362C"/>
@@ -310,7 +349,6 @@
                                 <SolidColorBrush Color="#DAAE9E"/>
                                 <SolidColorBrush Color="#FFFFFF"/>
                                 <SolidColorBrush Color="#000000"/>
-
                             </telerik:RadChart.PaletteBrushes>
                             <telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView ChartLegendPosition="Right" >
@@ -374,9 +412,10 @@
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" x:Name="volumeChartBorder" Margin="0,2,0,0" Grid.Row="1">
                     <telerik:RadBusyIndicator x:Name="busyIndicatorchartVolume" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chVolume" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PrimaryPlottedSeries}" IsHitTestVisible="True">
+                            
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                             </telerik:RadChart.PaletteBrushes>

@@ -174,6 +174,7 @@ namespace GreenField.Web.Services
                 string entityInstrumentID = "";
                 DateTime startDate = Convert.ToDateTime(startDateTime);
                 DateTime endDate = Convert.ToDateTime(endDateTime);
+                int sortingID = 0;
 
                 //List Containing the names of Securities/Commodities/Indexes to be added
                 List<string> entityNames = (from p in entityIdentifiers
@@ -220,8 +221,6 @@ namespace GreenField.Web.Services
 
                         foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionServicePricingData)
                         {
-                            if (pricingItem.DAILY_SPOT_FX == 0)
-                                continue;
                             PricingReferenceData objPricingReferenceData = new PricingReferenceData();
                             objPricingReferenceData.Type = pricingItem.TYPE;
                             objPricingReferenceData.Ticker = pricingItem.TICKER + ((totalReturnCheck) ? " (Total)" : "");
@@ -233,7 +232,7 @@ namespace GreenField.Web.Services
                             objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                             objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
                             objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
-
+                            objPricingReferenceData.SortingID = sortingID;
                             //Checking if the Item is the first item in the list
                             if ((pricingItem.INSTRUMENT_ID == dimensionServicePricingData[0].INSTRUMENT_ID) && (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE))
                             {
@@ -264,6 +263,7 @@ namespace GreenField.Web.Services
                     {
                         if (Convert.ToString(item.Type).ToUpper() == "SECURITY")
                         {
+                            sortingID = ++sortingID;
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
 
 
@@ -290,6 +290,7 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.DailyClosingPrice = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                                     objPricingReferenceData.DailyPriceReturn = Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN);
                                     objPricingReferenceData.DailyGrossReturn = Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN);
+                                    objPricingReferenceData.SortingID = sortingID;
 
                                     //Checking if the current object is first in the series
                                     if (pricingItem.FROMDATE == dimensionServicePricingData[0].FROMDATE)
@@ -311,6 +312,7 @@ namespace GreenField.Web.Services
 
                         else if ((Convert.ToString(item.Type).ToUpper() == "COMMODITY") || ((Convert.ToString(item.Type).ToUpper() == "INDEX")) || ((Convert.ToString(item.Type).ToUpper() == "CURRENCY")))
                         {
+                            sortingID = ++sortingID;
                             entityInstrumentID = Convert.ToString(item.InstrumentID);
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
                                 entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
@@ -336,6 +338,7 @@ namespace GreenField.Web.Services
                                     objReturn = ((totalReturnCheck) ? (Convert.ToDecimal(pricingItem.DAILY_GROSS_RETURN)) : (Convert.ToDecimal(pricingItem.DAILY_PRICE_RETURN)));
                                     objPricingReferenceData.AdjustedDollarPrice =
                                         (Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE) / Convert.ToDecimal(pricingItem.DAILY_SPOT_FX));
+                                    objPricingReferenceData.SortingID = sortingID;
                                     pricingDataResult.Add(objPricingReferenceData);
                                 }
                             }
