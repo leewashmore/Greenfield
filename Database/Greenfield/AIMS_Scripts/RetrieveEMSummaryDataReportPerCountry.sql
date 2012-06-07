@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[RetrieveEMSummaryDataReportPerCountry]    Script Date: 06/05/2012 10:59:40 ******/
 SET ANSI_NULLS ON
@@ -10,7 +8,7 @@ GO
 
 
 
- CREATE PROCEDURE [dbo].[RetrieveEMSummaryDataReportPerCountry]
+ Alter PROCEDURE [dbo].[RetrieveEMSummaryDataReportPerCountry]
 		@country		varchar(9)	
 AS
 BEGIN

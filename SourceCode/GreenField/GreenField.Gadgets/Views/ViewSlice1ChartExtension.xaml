@@ -185,7 +185,7 @@
                                             </telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ChartArea.AxisX>
                                                 <telerik:AxisX AutoRange="False"  IsDateTime="True" IsZeroBased="False" MinValue="{Binding AxisXMinValue}"
-                                                               LayoutMode="Normal"  LabelStep="2" TicksDistance="50" MaxValue="{Binding AxisXMaxValue}"
+                                                               LayoutMode="Normal"  LabelStep="3" TicksDistance="60" MaxValue="{Binding AxisXMaxValue}"
                                                                DefaultLabelFormat="d">
                                                     <telerik:AxisX.AxisStyles>
                                                         <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>

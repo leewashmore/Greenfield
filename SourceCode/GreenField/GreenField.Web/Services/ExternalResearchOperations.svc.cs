@@ -28,29 +28,28 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinancialStatementData> GetFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency)
+        public void GetFinancialStatement()
         {
-            try
-            {
-                string _dataSource = EnumUtils.ToString(dataSource);
-                string _periodType = EnumUtils.ToString(periodType);
-                string _fiscalType = EnumUtils.ToString(fiscalType);
-                string _statementType = EnumUtils.ToString(statementType);
+            //try
+            //{
+            //    string _dataSource = EnumUtils.ToString(dataSource);
+            //    string _periodType = EnumUtils.ToString(periodType);
+            //    string _fiscalType = EnumUtils.ToString(fiscalType);
+            //    string _statementType = EnumUtils.ToString(statementType);
 
-                ExternalResearchEntities entity = new ExternalResearchEntities();
-                ObjectResult<FinancialStatementData> result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency);
-                if (result == null)
-                    return null;
+            //    ExternalResearchEntities entity = new ExternalResearchEntities();
+            //    ObjectResult<FinancialStatementData> result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency);
+            //    if (result == null)
+            //        return null;
 
-                return result.ToList();                
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
+            //    return result.ToList();
+            //}
+            //catch (Exception ex)
+            //{
+            //    ExceptionTrace.LogException(ex);
+            //    string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+            //    throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            //}
         }
     }
 }

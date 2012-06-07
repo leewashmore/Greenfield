@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[UpdateMarketSnapshotEntityPreference]    Script Date: 06/05/2012 11:00:51 ******/
 SET ANSI_NULLS ON
@@ -9,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [dbo].[UpdateMarketSnapshotEntityPreference] 
+Alter PROCEDURE [dbo].[UpdateMarketSnapshotEntityPreference] 
 	-- Add the parameters for the stored procedure here
 	  @grouppreferenceid int,
 	  @entitypreferenceid int,

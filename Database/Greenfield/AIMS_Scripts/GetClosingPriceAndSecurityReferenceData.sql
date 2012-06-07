@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[GetClosingPriceSecurityReferenceData]    Script Date: 06/05/2012 10:34:08 ******/
 SET ANSI_NULLS ON

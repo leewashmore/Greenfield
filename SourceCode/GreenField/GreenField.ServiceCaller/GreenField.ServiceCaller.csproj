@@ -188,12 +188,6 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
-    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -202,12 +196,6 @@
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations4.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
     <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
@@ -273,7 +261,9 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig" />
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>

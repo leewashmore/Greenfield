@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[RetrieveCTYSUMMARYDataReportPerCountry]    Script Date: 06/05/2012 10:59:15 ******/
 SET ANSI_NULLS ON
@@ -9,7 +7,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
-CREATE PROCEDURE [dbo].[RetrieveCTYSUMMARYDataReportPerCountry]
+Alter PROCEDURE [dbo].[RetrieveCTYSUMMARYDataReportPerCountry]
 		@country		varchar(9)	
 AS
 BEGIN

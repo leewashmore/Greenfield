@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[DeleteMarketSnapshotGroupPreference]    Script Date: 06/05/2012 10:32:53 ******/
 SET ANSI_NULLS ON
@@ -13,7 +11,7 @@ GO
 
 
 
-CREATE PROCEDURE [dbo].[DeleteMarketSnapshotGroupPreference] 
+Alter PROCEDURE [dbo].[DeleteMarketSnapshotGroupPreference] 
 	-- Add the parameters for the stored procedure here
 	  @grouppreferenceid int
 AS

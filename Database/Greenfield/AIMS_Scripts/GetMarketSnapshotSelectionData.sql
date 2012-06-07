@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[GetMarketSnapshotSelectionData]    Script Date: 06/05/2012 10:58:52 ******/
 SET ANSI_NULLS ON
@@ -10,7 +8,7 @@ GO
 
 
 
-CREATE PROCEDURE [dbo].[GetMarketSnapshotSelectionData] 
+Alter PROCEDURE [dbo].[GetMarketSnapshotSelectionData] 
 	-- Add the parameters for the stored procedure here
 	  @userId nVARCHAR(100)	  
 AS

@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[DetailedEstimates]    Script Date: 06/05/2012 10:33:28 ******/
 SET ANSI_NULLS ON
@@ -8,7 +6,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE procedure [dbo].[DetailedEstimates]
+Alter procedure [dbo].[DetailedEstimates]
 		@Xref				varchar(9)	
 	,	@Name				varchar(50)	
 	,	@PeriodType			varchar(2)		

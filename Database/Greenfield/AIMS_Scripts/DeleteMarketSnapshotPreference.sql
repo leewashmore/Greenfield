@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[DeleteMarketSnapshotPreference]    Script Date: 06/05/2012 10:33:14 ******/
 SET ANSI_NULLS ON
@@ -12,7 +10,7 @@ GO
 
 
 
-CREATE PROCEDURE [dbo].[DeleteMarketSnapshotPreference] 
+Alter PROCEDURE [dbo].[DeleteMarketSnapshotPreference] 
 	-- Add the parameters for the stored procedure here
 	  @userId nVARCHAR(100),
 	  @snapshotname NVARCHAR(max)

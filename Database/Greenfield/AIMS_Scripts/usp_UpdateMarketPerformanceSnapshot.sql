@@ -1,5 +1,3 @@
-USE [AshmoreEMMPOC]
-GO
 
 /****** Object:  StoredProcedure [dbo].[usp_UpdateMarketPerformanceSnapshot]    Script Date: 06/05/2012 11:01:34 ******/
 SET ANSI_NULLS ON

@@ -1,4 +1,3 @@
-USE [AshmoreEMMPOC]
 GO
 
 /****** Object:  StoredProcedure [dbo].[GetIssuerResearchData]    Script Date: 06/05/2012 10:34:25 ******/
