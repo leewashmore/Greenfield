@@ -1313,9 +1313,9 @@ namespace GreenField.Web.Services
             for (int i = 0; i < data.Count; i++)
             {
                 HeatMapData entry = new HeatMapData();
-                if (data[i].COUNTRY == null)
+                if (data[i].AGG_LVL_1 == null)
                     continue;
-                entry.CountryID = data[i].COUNTRY;
+                entry.CountryID = data[i].AGG_LVL_1;
                 entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
                 Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
                 if (diff > Convert.ToDecimal(0.05))
@@ -1380,65 +1380,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
-        /// Retrieves Performance grid data for a particular composite/fund.
-        /// Filtering data based on the fund name and Effective date.
-        /// </summary>
-        /// <param name="portfolioSelectionData">Portfolio Data that contains the name of the selected portfolio</param>
-        /// <param name="effectiveDate">Selected Effective Date</param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
-        {
-            List<PerformanceGridData> result = new List<PerformanceGridData>();
-            if (portfolioSelectionData == null || effectiveDate == null)
-                return result;
-            //checking if the service is down
-            bool isServiceUp;
-            isServiceUp = CheckServiceAvailability.ServiceAvailability();
-            if (!isServiceUp)
-                throw new Exception();
-
-            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
-            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
-            if (performanceData == null)
-                return result;
-            String portfolioID = performanceData.PORTFOLIO;
-            String benchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).FirstOrDefault().BENCHMARK_ID;
-            try
-            {
-                {
-                    PerformanceGridData entry = new PerformanceGridData();
-                    entry.Name = portfolioID;
-                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D;
-                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W;
-                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD;
-                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD;
-                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD;
-                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y;
-                    result.Add(entry);
-                    entry = new PerformanceGridData();
-                    entry.Name = benchmarkID;
-                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D;
-                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W;
-                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD;
-                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD;
-                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD;
-                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y;
-                    result.Add(entry);
-                }
-                return result;
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-
-        }
+       
 
         /// <summary>
         /// Retrieves Attribution Data for a particular composite/fund and Effective Date

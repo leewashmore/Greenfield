@@ -359,4 +359,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrievePerformanceGridData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q31:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGridDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrievePerformanceGridDataResult" nillable="true" type="q32:ArrayOfPerformanceGridData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
