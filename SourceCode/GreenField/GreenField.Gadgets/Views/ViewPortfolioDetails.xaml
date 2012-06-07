@@ -79,7 +79,7 @@
                                          Filtered="dgPortfolioDetails_Filtered" 
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
-                                         ColumnWidth="*" ShowColumnFooters="False"
+                                         ColumnWidth="Auto" ShowColumnFooters="False"
                                          FontFamily="Arial"
                                          FontSize="7"
                                          AlternateRowBackground="#d8d5d4"
