@@ -55,8 +55,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
             {
-                if (null != PortfolioDetailsDataLoadedEvent)
-                    PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                BusyIndicatorStatus = true;
                 _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 
@@ -243,6 +242,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Busy Indicator for Portfolio Details
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
+
         #endregion
 
         #region CallbackMethods
@@ -253,13 +269,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result"></param>
         private void RetrievePortfolioDetailsDataCallbackMethod(List<PortfolioDetailsData> result)
         {
-            if (result != null)
+            try
             {
-                SelectedPortfolioDetailsData.Clear();
-                SelectedPortfolioDetailsData.AddRange(result);
+                if (result != null)
+                {
+                    SelectedPortfolioDetailsData.Clear();
+                    SelectedPortfolioDetailsData.AddRange(result);
+                }
             }
-            if (null != PortfolioDetailsDataLoadedEvent)
-                PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;            
+            }
         }
 
         #endregion
@@ -472,21 +498,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="PortfolioSelectionData"></param>
         public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 //Arguement Null Exception
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
-                    if (null != PortfolioDetailsDataLoadedEvent)
-                        PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    BusyIndicatorStatus = true;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         /// <summary>
@@ -505,8 +534,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && SelectedPortfolioId != null)
                     {
-                        if (null != PortfolioDetailsDataLoadedEvent)
-                            PortfolioDetailsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                         _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
                     }
                 }

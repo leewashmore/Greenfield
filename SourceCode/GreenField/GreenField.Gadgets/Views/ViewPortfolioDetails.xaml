@@ -61,7 +61,7 @@
         <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView x:Name="dgPortfolioDetails" 
                                          ShowGroupPanel="True" 
                                          AutoGenerateColumns="False" 
