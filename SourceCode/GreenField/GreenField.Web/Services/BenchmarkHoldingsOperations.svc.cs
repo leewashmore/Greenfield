@@ -1346,41 +1346,6 @@ namespace GreenField.Web.Services
 
         #region Relative Performance
 
-        /// <summary>
-        /// Retrieves Performance graph data for a particular composite/fund.
-        /// Filtering data based on the fund name.
-        /// </summary>
-        /// <param name="nameOfFund">Name of the selected fund</param>
-        /// <returns></returns>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGraphData> RetrievePerformanceGraphData(String nameOfFund)
-       {
-            List<PerformanceGraphData> result = new List<PerformanceGraphData>();
-            try
-            {
-                if (nameOfFund != null)
-                {
-                    List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-                    PerformanceGraphData entry = new PerformanceGraphData();
-                    ResearchEntities research = new ResearchEntities();
-                    holdingData = research.tblHoldingsDatas.ToList();
-                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P1", BENCHMARK_ID = "B1", PORTFOLIO_PERFORMANCE = 33.3, BENCHMARK_PERFORMANCE = 58.6, EFFECTIVE_DATE = new DateTime(2011, 12, 31), MTD = 23, QTD = 29, YTD = 13, FIRST_YEAR = 12, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
-                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P2", BENCHMARK_ID = "B2", PORTFOLIO_PERFORMANCE = 38.3, BENCHMARK_PERFORMANCE = 68.6, EFFECTIVE_DATE = new DateTime(2011, 10, 14), MTD = 13, QTD = 19, YTD = 23, FIRST_YEAR = 15, THIRD_YEAR = 17, FIFTH_YEAR = 09, TENTH_YEAR = 39 });
-                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P3", BENCHMARK_ID = "B3", PORTFOLIO_PERFORMANCE = 31.5, BENCHMARK_PERFORMANCE = 53.9, EFFECTIVE_DATE = new DateTime(2011, 09, 13), MTD = 24, QTD = 28, YTD = 19, FIRST_YEAR = 15, THIRD_YEAR = 11, FIFTH_YEAR = 16, TENTH_YEAR = 19 });
-                    result.Add(new PerformanceGraphData() { PORTFOLIO_ID = "P4", BENCHMARK_ID = "B4", PORTFOLIO_PERFORMANCE = 39.9, BENCHMARK_PERFORMANCE = 78.6, EFFECTIVE_DATE = new DateTime(2011, 08, 29), MTD = 25, QTD = 26, YTD = 15, FIRST_YEAR = 13, THIRD_YEAR = 10, FIFTH_YEAR = 07, TENTH_YEAR = 19 });
-                }
-                return result;
-            }
-
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                return null;
-            }
-        }
-
-       
 
         /// <summary>
         /// Retrieves Attribution Data for a particular composite/fund and Effective Date
@@ -1449,19 +1414,7 @@ namespace GreenField.Web.Services
                     entry.FPorAshRcCtn1y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
                     entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
                     entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;                   
-                    //entry.PorRcAvgWgt5y = attributionData[i].POR_RC_AVG_WGT_5Y;
-                    //entry.Bm1RcAvgWgt5y = attributionData[i].BM1_RC_AVG_WGT_5Y;
-                    //entry.FPorAshRcCtn5y = attributionData[i].F_POR_ASH_RC_CTN_5Y;
-                    //entry.FBm1AshRcCtn5y = attributionData[i].F_BM1_ASH_RC_CTN_5Y;
-                    //entry.FBm1AshAssetAlloc5y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_5Y;
-                    //entry.FBm1AshSecSelec5y = attributionData[i].F_BM1_ASH_SEC_SELEC_5Y;
-                    //entry.PorRcAvgWgtSi = attributionData[i].POR_RC_AVG_WGT_SI;
-                    //entry.Bm1RcAvgWgtSi = attributionData[i].BM1_RC_AVG_WGT_SI;
-                    //entry.FPorAshRcCtnSi = attributionData[i].F_POR_ASH_RC_CTN_SI;
-                    //entry.FBm1AshRcCtnSi = attributionData[i].F_BM1_ASH_RC_CTN_SI;
-                    //entry.FBm1AshAssetAllocSi = attributionData[i].F_BM1_ASH_ASSET_ALLOC_SI;
-                    //entry.FBm1AshSecSelecSi = attributionData[i].F_BM1_ASH_SEC_SELEC_SI;
+                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
                     result.Add(entry);
                 }
 

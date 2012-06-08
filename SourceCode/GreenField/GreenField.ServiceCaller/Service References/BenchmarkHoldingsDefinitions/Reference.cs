@@ -156,14 +156,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphDataRespon" +
-            "se")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphDataServic" +
-            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePerformanceGraphData(string nameOfFund, System.AsyncCallback callback, object asyncState);
-        
-        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAttributionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAttributionDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAttributionDataServiceFaul" +
             "tFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -433,25 +425,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrievePerformanceGraphDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RetrievePerformanceGraphDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveAttributionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -576,12 +549,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveHeatMapDataCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrievePerformanceGraphDataDelegate;
-        
-        private EndOperationDelegate onEndRetrievePerformanceGraphDataDelegate;
-        
-        private System.Threading.SendOrPostCallback onRetrievePerformanceGraphDataCompletedDelegate;
-        
         private BeginOperationDelegate onBeginRetrieveAttributionDataDelegate;
         
         private EndOperationDelegate onEndRetrieveAttributionDataDelegate;
@@ -674,8 +641,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         public event System.EventHandler<RetrieveTopBenchmarkSecuritiesDataCompletedEventArgs> RetrieveTopBenchmarkSecuritiesDataCompleted;
         
         public event System.EventHandler<RetrieveHeatMapDataCompletedEventArgs> RetrieveHeatMapDataCompleted;
-        
-        public event System.EventHandler<RetrievePerformanceGraphDataCompletedEventArgs> RetrievePerformanceGraphDataCompleted;
         
         public event System.EventHandler<RetrieveAttributionDataCompletedEventArgs> RetrieveAttributionDataCompleted;
         
@@ -1355,52 +1320,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrievePerformanceGraphData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePerformanceGraphData(nameOfFund, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.EndRetrievePerformanceGraphData(System.IAsyncResult result) {
-            return base.Channel.EndRetrievePerformanceGraphData(result);
-        }
-        
-        private System.IAsyncResult OnBeginRetrievePerformanceGraphData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            string nameOfFund = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrievePerformanceGraphData(nameOfFund, callback, asyncState);
-        }
-        
-        private object[] OnEndRetrievePerformanceGraphData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).EndRetrievePerformanceGraphData(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRetrievePerformanceGraphDataCompleted(object state) {
-            if ((this.RetrievePerformanceGraphDataCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrievePerformanceGraphDataCompleted(this, new RetrievePerformanceGraphDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RetrievePerformanceGraphDataAsync(string nameOfFund) {
-            this.RetrievePerformanceGraphDataAsync(nameOfFund, null);
-        }
-        
-        public void RetrievePerformanceGraphDataAsync(string nameOfFund, object userState) {
-            if ((this.onBeginRetrievePerformanceGraphDataDelegate == null)) {
-                this.onBeginRetrievePerformanceGraphDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePerformanceGraphData);
-            }
-            if ((this.onEndRetrievePerformanceGraphDataDelegate == null)) {
-                this.onEndRetrievePerformanceGraphDataDelegate = new EndOperationDelegate(this.OnEndRetrievePerformanceGraphData);
-            }
-            if ((this.onRetrievePerformanceGraphDataCompletedDelegate == null)) {
-                this.onRetrievePerformanceGraphDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePerformanceGraphDataCompleted);
-            }
-            base.InvokeAsync(this.onBeginRetrievePerformanceGraphDataDelegate, new object[] {
-                        nameOfFund}, this.onEndRetrievePerformanceGraphDataDelegate, this.onRetrievePerformanceGraphDataCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveAttributionData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveAttributionData(portfolioSelectionData, effectiveDate, callback, asyncState);
         }
@@ -1763,19 +1682,6 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.HeatMapData> EndRetrieveHeatMapData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.HeatMapData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.HeatMapData>)(base.EndInvoke("RetrieveHeatMapData", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginRetrievePerformanceGraphData(string nameOfFund, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = nameOfFund;
-                System.IAsyncResult _result = base.BeginInvoke("RetrievePerformanceGraphData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData>)(base.EndInvoke("RetrievePerformanceGraphData", _args, result)));
                 return _result;
             }
             

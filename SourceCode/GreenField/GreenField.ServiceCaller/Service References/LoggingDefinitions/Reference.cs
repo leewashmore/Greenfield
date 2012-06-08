@@ -342,7 +342,7 @@ namespace GreenField.ServiceCaller.LoggingDefinitions {
             
             public void EndLogToFile(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                 base.EndInvoke("LogToFile", _args, result);
+                base.EndInvoke("LogToFile", _args, result);
             }
             
             public System.IAsyncResult BeginGetLoggingLevel(System.AsyncCallback callback, object asyncState) {

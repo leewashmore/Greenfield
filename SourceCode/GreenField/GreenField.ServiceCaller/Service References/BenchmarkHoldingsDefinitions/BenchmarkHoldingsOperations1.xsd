@@ -232,29 +232,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PerformanceType" nillable="true" type="tns:PerformanceType" />
-  <xs:complexType name="ArrayOfPerformanceGraphData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPerformanceGraphData" nillable="true" type="tns:ArrayOfPerformanceGraphData" />
-  <xs:complexType name="PerformanceGraphData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BENCHMARK_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BENCHMARK_PERFORMANCE" type="xs:double" />
-      <xs:element minOccurs="0" name="EFFECTIVE_DATE" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="FIFTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="FIRST_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="PORTFOLIO_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PORTFOLIO_PERFORMANCE" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="TENTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="THIRD_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
   <xs:complexType name="ArrayOfAttributionData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AttributionData" nillable="true" type="tns:AttributionData" />

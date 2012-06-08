@@ -230,4 +230,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
+  <xs:complexType name="ArrayOfPerformanceGraphData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerformanceGraphData" nillable="true" type="tns:ArrayOfPerformanceGraphData" />
+  <xs:complexType name="PerformanceGraphData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BENCHMARK_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BENCHMARK_PERFORMANCE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PORTFOLIO_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PORTFOLIO_PERFORMANCE" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
 </xs:schema>

@@ -52,6 +52,14 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
 
+        /// <summary>
+        /// Stores Effective Date selected by the user
+        /// </summary>
+        private DateTime? _effectiveDate;
+
+        public String _selectedPeriod;
+            
+
         #endregion
 
         #region Constructor
@@ -66,11 +74,19 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
 
-            //_dbInteractivity.RetrievePortfolioSelectionData(RetrievePortfolioSelectionDataCallBackMethod);
-            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
-            if (_PortfolioSelectionData != null)
-                HandlePortfolioReferenceSet(_PortfolioSelectionData);
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod !=null)
+            {
+                _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+            }
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
+            }   
         }
 
         #endregion
@@ -152,50 +168,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #endregion
-
-        #region Callback Methods
-        /// <summary>
-        /// Method that calls the service Method through a call to Service Caller
-        /// </summary>
-        /// <param name="nameOfFund">Unique Identifier for a fund</param>
-        /// <param name="callback">Callback for this method</param>
-        private void RetrievePerformanceGraphData(String nameOfFund, Action<List<PerformanceGraphData>> callback)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (nameOfFund != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, nameOfFund, 1);
-                    if (callback != null)
-                    {
-                        Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
-                        if (null != performanceGraphDataLoadedEvent)
-                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGraphData(nameOfFund, callback);
-                    }
-                    else
-                    {
-                        Logging.LogMethodParameterNull(_logger, methodNamespace, 2);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
-        }
-
-        #endregion
+        #endregion        
 
         #endregion
 
@@ -222,7 +195,12 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    RetrievePerformanceGraphData(PortfolioSelectionData.PortfolioId.ToString(), RetrievePerformanceGraphDataCallBackMethod);
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
+                    {
+                        if (null != performanceGraphDataLoadedEvent)
+                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                    }
                 }
                 else
                 {
@@ -235,6 +213,79 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Effective Date
+        /// </summary>
+        /// <param name="effectiveDate">Effective Date selected by the user</param>
+
+        public void HandleEffectiveDateSet(DateTime effectiveDate)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (effectiveDate != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
+                    _effectiveDate = effectiveDate;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (null != performanceGraphDataLoadedEvent)
+                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+        /// <summary>
+        /// Assigns UI Field Properties based on Period
+        /// </summary>
+        /// <param name="selectedPeriodType">Period selected by the user</param>
+        public void HandlePeriodReferenceSet(String selectedPeriodType)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (selectedPeriodType != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
+                    _selectedPeriod = selectedPeriodType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (null != performanceGraphDataLoadedEvent)
+                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                    }
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
         }
 
         #endregion
@@ -334,6 +385,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

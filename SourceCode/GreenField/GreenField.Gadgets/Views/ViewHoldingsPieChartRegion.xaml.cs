@@ -96,15 +96,34 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                if (this.crtHoldingsPercentageRegion.Visibility == Visibility.Visible)
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID_REGION, Element = this.dgHoldingsPercentageRegion, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {                 
                     new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART_REGION, Element = this.crtHoldingsPercentageRegion, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
-                childExportOptions.Show();
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
+                    childExportOptions.Show();
+                }
+
+
+                else
+                {
+                    if (this.dgHoldingsPercentageRegion.Visibility == Visibility.Visible)
+                    {
+                        List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID_REGION, Element = this.dgHoldingsPercentageRegion, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                  
+                };
+                        ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART);
+                        childExportOptions.Show();
+                    }
+
+                }
             }
+
             catch (Exception ex)
             {
                 Prompt.ShowDialog(ex.Message);

@@ -97,14 +97,34 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+
+                if (this.crtHoldingsPercentageSector.Visibility == Visibility.Visible)
+
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                   
                     new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_CHART, Element = this.crtHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
-                childExportOptions.Show();
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
+                    childExportOptions.Show();
+                }
+
+                else
+                { 
+                 if (this.dgHoldingsPercentageSector.Visibility == Visibility.Visible)
+                 {
+                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                    new RadExportOptions() { ElementName = ExportTypes.HOLDINGS_PIE_GRID, Element = this.dgHoldingsPercentageSector, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                  
+                };
+                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART);
+                     childExportOptions.Show();
+                 }
+                
+                }
             }
             catch (Exception ex)
             {

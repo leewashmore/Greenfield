@@ -1874,5 +1874,226 @@ namespace GreenField.Web.Services
 
         }
 
+        /// <summary>
+        /// Retrieves Performance graph data for a particular composite/fund.
+        /// Filtering data based on the fund name.
+        /// </summary>
+        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period)
+        {
+            List<PerformanceGraphData> result = new List<PerformanceGraphData>();
+            PerformanceGraphData entry = new PerformanceGraphData();
+            if (fundSelectionData == null || effectiveDate == null)
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+
+                throw new Exception();           
+            try
+            {
+                switch (period)
+                {
+                    case "1D":
+                       List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+                       if (attributionDatafor1D.Count == 0 || attributionDatafor1D == null)
+                       return result;
+                        entry = new PerformanceGraphData();
+                        entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                        entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                        entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDatafor1D.Select(t => t.BM1_RC_TWR_1D));
+                        entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDatafor1D.Select(t => t.ADJ_RTN_POR_RC_TWR_1D));
+                        break;
+                    case "1W":
+                        List<DateTime> listOfEffectiveDates1W = new List<DateTime>();
+                        for (int i = 0; i < 4; i++)
+                        { 
+                            DateTime newDate = new DateTime();
+                            newDate = effectiveDate.AddDays(-i);
+                            listOfEffectiveDates1W.Add(newDate);
+                        }
+
+                        foreach (DateTime d in listOfEffectiveDates1W)
+                        {
+                            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1W = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d).ToList();
+                            if (attributionDatafor1W.Count == 0 || attributionDatafor1W == null)
+                                return result;
+                            entry =  new PerformanceGraphData();
+                            entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                            entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                            entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDatafor1W.Select(t => t.BM1_RC_TWR_1D));
+                            entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDatafor1W.Select(t => t.ADJ_RTN_POR_RC_TWR_1D));
+                            result.Add(entry);
+                        }                      
+                        break;
+
+                    case "MTD":
+                        DateTime now = effectiveDate;
+                        DateTime lastDayLastMonth = new DateTime(now.Year, now.Month, 1); 
+                        lastDayLastMonth = lastDayLastMonth.AddDays(-1);
+                        List<DateTime> listOfEffectiveDatesMTD = new List<DateTime>();
+                        listOfEffectiveDatesMTD.Add(lastDayLastMonth);
+                        for (int i = 1; i <= effectiveDate.Day; i++)
+                        {
+                            DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                            listOfEffectiveDatesMTD.Add(newDate);
+                        }
+
+                        foreach (DateTime d in listOfEffectiveDatesMTD)
+                        {
+                            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d).ToList();
+                            if (attributionDataforMTD.Count == 0 || attributionDataforMTD == null)
+                                return result;
+                            entry = new PerformanceGraphData();
+                            entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                            entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                            entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDataforMTD.Select(t => t.BM1_RC_TWR_1D));
+                            entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDataforMTD.Select(t => t.ADJ_RTN_POR_RC_TWR_1D));
+                            result.Add(entry);
+                        }                                                 
+                        break;
+                    case "QTD":
+                        int quarter = (int)Math.Ceiling(effectiveDate.Month / 3.0);
+                        int lastMonthInQuarter = 3 * quarter;
+                        DateTime lastDayOfQuarter = new DateTime(effectiveDate.Year, lastMonthInQuarter, DateTime.DaysInMonth(effectiveDate.Year, lastMonthInQuarter));
+                         List<DateTime> listOfEffectiveDatesQTD = new List<DateTime>();
+                         listOfEffectiveDatesQTD.Add(lastDayOfQuarter);
+                         int differenceInMonths = effectiveDate.Month - lastDayOfQuarter.Month;
+                         switch (differenceInMonths)
+                         { 
+                             case 1 :
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+                             case 2 :
+                                 int previousMonth = effectiveDate.Month - 1;                                
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previousMonth); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previousMonth, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+
+                             case 3 :
+
+                                 int previous2Month = effectiveDate.Month - 2;
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previous2Month); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previous2Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 int previous1Month = effectiveDate.Month - 1;
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previous1Month); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previous1Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+                             default:
+                                 break;
+                         
+                         }
+
+                         foreach (DateTime d in listOfEffectiveDatesQTD)
+                         {
+                             List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforQTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d).ToList();
+                             if (attributionDataforQTD.Count == 0 || attributionDataforQTD == null)
+                                 return result;
+                             entry = new PerformanceGraphData();
+                             entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                             entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                             entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDataforQTD.Select(t => t.BM1_RC_TWR_1D));
+                             entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDataforQTD.Select(t => t.ADJ_RTN_POR_RC_TWR_1D));
+                             result.Add(entry);
+                         } 
+                        break;
+
+                    case "YTD":
+                        DateTime previousYearEndDate = new DateTime(effectiveDate.Year - 1 , 12, 31);
+                        List<DateTime> listOfEffectiveDatesYTD = new List<DateTime>();
+                        listOfEffectiveDatesYTD.Add(previousYearEndDate);
+                        listOfEffectiveDatesYTD.Add(effectiveDate);
+                        int noOfMonths = effectiveDate.Month;
+                        for (int i = 1; i < noOfMonths-1; i++)
+                        {
+                            DateTime newDate = new DateTime(effectiveDate.Year, noOfMonths, DateTime.DaysInMonth(effectiveDate.Year, noOfMonths));
+                            listOfEffectiveDatesYTD.Add(newDate);
+                        }
+                        foreach (DateTime d in listOfEffectiveDatesYTD)
+                        {
+                            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforYTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d).ToList();
+                            if (attributionDataforYTD.Count == 0 || attributionDataforYTD == null)
+                                return result;
+                            entry = new PerformanceGraphData();
+                            entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                            entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                            entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDataforYTD.Select(t => t.BM1_RC_TWR_MTD));
+                            entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDataforYTD.Select(t => t.ADJ_RTN_POR_RC_TWR_MTD));
+                            result.Add(entry);
+                        } 
+
+                        break;
+
+                    case "1Y":
+
+                        DateTime previousYearDate = effectiveDate.AddYears(-1);
+                        int noOfMonth = previousYearDate.Month;
+                        List<DateTime> listOfEffectiveDates1Y = new List<DateTime>();
+                        DateTime nextMonthEnd = new DateTime(previousYearDate.Year, noOfMonth, DateTime.DaysInMonth(previousYearDate.Year, noOfMonth));
+                        for (int i = previousYearDate.Day; i <= nextMonthEnd.Day; i++)
+                        {
+                            DateTime newDate = new DateTime(previousYearDate.Year, nextMonthEnd.Month, i);
+                            listOfEffectiveDates1Y.Add(newDate);
+                        }
+                        foreach (DateTime d in listOfEffectiveDates1Y)
+                        {
+                            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d).ToList();
+                            if (attributionDatafor1Y.Count == 0 || attributionDatafor1Y == null)
+                                return result;
+                            entry = new PerformanceGraphData();
+                            entry.PORTFOLIO_ID = fundSelectionData.PortfolioId;
+                            entry.BENCHMARK_ID = fundSelectionData.BenchmarkId;
+                            entry.BENCHMARK_PERFORMANCE = Convert.ToDecimal(attributionDatafor1Y.Select(t => t.BM1_RC_TWR_1D));
+                            entry.PORTFOLIO_PERFORMANCE = Convert.ToDecimal(attributionDatafor1Y.Select(t => t.ADJ_RTN_POR_RC_TWR_1D));
+                            result.Add(entry);
+                        } 
+                        break;
+                       default:
+                        List<PerformanceGraphData> resultForDefault = new List<PerformanceGraphData>();
+                        break;
+                }
+                return result;
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+
+        }
     }
 }

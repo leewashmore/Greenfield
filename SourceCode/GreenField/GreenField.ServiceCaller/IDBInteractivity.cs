@@ -116,7 +116,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
-        void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback);
+        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<PerformanceGraphData>> callback);
 
         void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback);
 
@@ -178,6 +178,8 @@ namespace GreenField.ServiceCaller
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
 
         #endregion
+
+
 
     }
 }

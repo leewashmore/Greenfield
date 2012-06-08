@@ -128,15 +128,6 @@
   <wsdl:message name="BenchmarkHoldingsOperations_RetrieveHeatMapData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsOperations_RetrievePerformanceGraphData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphData" />
-  </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsOperations_RetrievePerformanceGraphData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphDataResponse" />
-  </wsdl:message>
-  <wsdl:message name="BenchmarkHoldingsOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
-  </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsOperations_RetrieveAttributionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveAttributionData" />
   </wsdl:message>
@@ -144,7 +135,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveAttributionDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsOperations_RetrieveAttributionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsOperations_RetrievePortfolioRiskReturnData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnData" />
@@ -153,7 +144,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePortfolioRiskReturnDataResponse" />
   </wsdl:message>
   <wsdl:message name="BenchmarkHoldingsOperations_RetrievePortfolioRiskReturnData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="BenchmarkHoldingsOperations">
     <wsdl:operation name="Temp">
@@ -223,11 +214,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapData" message="tns:BenchmarkHoldingsOperations_RetrieveHeatMapData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataResponse" message="tns:BenchmarkHoldingsOperations_RetrieveHeatMapData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsOperations_RetrieveHeatMapData_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePerformanceGraphData">
-      <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphData" message="tns:BenchmarkHoldingsOperations_RetrievePerformanceGraphData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphDataResponse" message="tns:BenchmarkHoldingsOperations_RetrievePerformanceGraphData_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphDataServiceFaultFault" name="ServiceFaultFault" message="tns:BenchmarkHoldingsOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveAttributionData">
       <wsdl:input wsaw:Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAttributionData" message="tns:BenchmarkHoldingsOperations_RetrieveAttributionData_InputMessage" />
@@ -394,18 +380,6 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveHeatMapData">
       <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHeatMapData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="RetrievePerformanceGraphData">
-      <soap:operation soapAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePerformanceGraphData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
