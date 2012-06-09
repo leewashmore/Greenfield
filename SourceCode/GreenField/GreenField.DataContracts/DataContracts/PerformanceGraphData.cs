@@ -10,16 +10,18 @@ namespace GreenField.DataContracts
     public class PerformanceGraphData
     {
         [DataMember]
-        public String PORTFOLIO_ID;
+        public String PortfolioID;
 
         [DataMember]
-        public String BENCHMARK_ID;
+        public String BenchmarkID;
 
         [DataMember]
-        public Decimal? PORTFOLIO_PERFORMANCE;
+        public Decimal? PortfolioPerformance;
 
         [DataMember]
-        public Decimal? BENCHMARK_PERFORMANCE;
+        public Decimal? BenchmarkPerformance;
 
+        [DataMember]
+        public DateTime EffectiveDate;
     }
 }

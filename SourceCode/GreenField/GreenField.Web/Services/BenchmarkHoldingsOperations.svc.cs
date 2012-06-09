@@ -1268,21 +1268,46 @@ namespace GreenField.Web.Services
         public List<TopBenchmarkSecuritiesData> RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
             List<TopBenchmarkSecuritiesData> result = new List<TopBenchmarkSecuritiesData>();
-            List<tblHoldingsData> holdingData = new List<tblHoldingsData>();
-            List<tblHoldingsData> top10HoldingData = new List<tblHoldingsData>();
-            TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
-            ResearchEntities research = new ResearchEntities();
-            holdingData = research.tblHoldingsDatas.ToList();
-            top10HoldingData = (from p in holdingData orderby p.BENCHMARK_WEIGHT descending select p).Take(10).ToList();
+            if (portfolioSelectionData == null || effectiveDate == null)
+                return result;
 
-            foreach (tblHoldingsData item in top10HoldingData)
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+
+                throw new Exception();
+
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();
+            if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
+                return result;
+          
+             try
             {
-                entry = new TopBenchmarkSecuritiesData();
-                entry.Weight = Convert.ToDouble(item.BENCHMARK_WEIGHT);
-                entry.IssuerName = item.ISSUE_NAME;
-                result.Add(entry);
+                for (int i = 0; i < topTenBenchmarkData.Count; i++)
+                {
+                    TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
+                    entry.IssuerName = topTenBenchmarkData[i].SEC_NAME.ToString();
+                    entry.Weight = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_WGT_EOD);
+                    entry.OneDayReturn = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1D);
+                    entry.WTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1W);
+                    entry.MTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_MTD);
+                    entry.QTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_QTD);
+                    entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD);
+                    result.Add(entry);
+                }
+
+                return result;
             }
-            return result;
+
+             catch (Exception ex)
+             {
+                 ExceptionTrace.LogException(ex);
+                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+             }
+           
         }
 
         #region Performance
@@ -1399,7 +1424,7 @@ namespace GreenField.Web.Services
                     entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
-                   entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
+                    entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
                     entry.FBm1AshRcCtnQtd = attributionData[i].F_BM1_ASH_RC_CTN_QTD;
                     entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
                     entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;

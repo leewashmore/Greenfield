@@ -106,22 +106,13 @@
                 <Grid x:Name="grdRadGridView" >
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="False"
+                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="True"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro" Visibility="Visible"
-                                                 RowLoaded="dgPerformanceGadget_RowLoaded">
-                                <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" />
-                                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" />
-                                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" />
-                                    <telerik:GridViewDataColumn Header="1 Year" DataMemberBinding="{Binding FIRST_YEAR}"/>
-                                    <telerik:GridViewDataColumn Header="3 Year" DataMemberBinding="{Binding THIRD_YEAR}" />
-                                    <telerik:GridViewDataColumn Header="5 Year" DataMemberBinding="{Binding FIFTH_YEAR}"/>
-                                    <telerik:GridViewDataColumn Header="10 Year" DataMemberBinding="{Binding TENTH_YEAR}" />                                    
-                                </telerik:RadGridView.Columns>
+                                                 RowLoaded="dgPerformanceGadget_RowLoaded">                                
                             </telerik:RadGridView>
                         </Border>
                     </telerik:RadBusyIndicator>
@@ -188,8 +179,8 @@
                                                               ShowItemLabels="False" ShowPointMarks="False" />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.ItemMappings>
-                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="PORTFOLIO_PERFORMANCE"/>
-                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EFFECTIVE_DATE" />
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="PortfolioPerformance"/>
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EffectiveDate" />
                                     </telerik:SeriesMapping.ItemMappings>
                                 </telerik:SeriesMapping>
                                 <telerik:SeriesMapping LegendLabel="Benchmark" >
@@ -198,8 +189,8 @@
                                                               ItemToolTipFormat=" #Y   / Date: #X{dd-MMM-yyyy}"  />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.ItemMappings>
-                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="BENCHMARK_PERFORMANCE" />
-                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EFFECTIVE_DATE" />
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="BenchmarkPerformance" />
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EffectiveDate" />
                                     </telerik:SeriesMapping.ItemMappings>
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>

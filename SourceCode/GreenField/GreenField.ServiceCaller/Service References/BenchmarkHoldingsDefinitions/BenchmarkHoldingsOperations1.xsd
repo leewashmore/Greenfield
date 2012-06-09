@@ -199,13 +199,12 @@
   <xs:complexType name="TopBenchmarkSecuritiesData">
     <xs:sequence>
       <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="PreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="SecondPreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="ThirdPreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="Weight" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
+      <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneDayReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopBenchmarkSecuritiesData" nillable="true" type="tns:TopBenchmarkSecuritiesData" />
