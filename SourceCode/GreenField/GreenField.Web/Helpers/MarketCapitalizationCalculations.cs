@@ -13,7 +13,7 @@ namespace GreenField.Web.Helpers
     /// </summary>
     public class MarketCapitalizationCalculations
     {
-     
+
         /// <summary>
         /// Calculates Weighted Average for Portfolio
         /// </summary>
@@ -32,9 +32,10 @@ namespace GreenField.Web.Helpers
 
             foreach (MarketCapitalizationData _mktCapData in marketCapDetails)
             {
-                if (!(string.IsNullOrEmpty(_mktCapData.Portfolio_ID)) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
-                    portfolioWtdAvg = portfolioWtdAvg +Convert.ToDecimal(_mktCapData.PortfolioDirtyValuePC / totalPortfolioMV * _mktCapData.MarketCapitalInUSD);
-            }           
+                //if (!(string.IsNullOrEmpty(_mktCapData.Portfolio_ID)) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
+                if (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null)
+                    portfolioWtdAvg = portfolioWtdAvg + Convert.ToDecimal(_mktCapData.PortfolioDirtyValuePC / totalPortfolioMV * _mktCapData.MarketCapitalInUSD);
+            }
 
             return portfolioWtdAvg;
         }
@@ -56,12 +57,13 @@ namespace GreenField.Web.Helpers
 
             foreach (MarketCapitalizationData _mktCapData in marketCapDetails)
             {
-                if (string.IsNullOrEmpty(_mktCapData.Portfolio_ID) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
+                //if (!(string.IsNullOrEmpty(_mktCapData.Benchmark_ID)) && (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null))
+                if (_mktCapData.MarketCapitalInUSD != 0 && _mktCapData.MarketCapitalInUSD != null)
                     benchmarkWtdAvg = benchmarkWtdAvg + Convert.ToDecimal(_mktCapData.BenchmarkWeight / totalBenchmarkWeight * _mktCapData.MarketCapitalInUSD);
             }
             return benchmarkWtdAvg;
         }
-        
+
         /// <summary>
         /// Calculates Weighted Median for Portfolio
         /// </summary>
@@ -72,35 +74,42 @@ namespace GreenField.Web.Helpers
         {
             List<MarketCapitalizationData> mktCapDetails = new List<MarketCapitalizationData>();
             decimal portfolioWeightedMedian = 0;
-            decimal fiftyPercTotalMV = 0;
+            decimal fiftyPercTotalMV = 0.50M;
             decimal totalPortfolioMV = 0;
+            decimal sumPortfolioWeight = 0;
 
             if (marketCapitalizationData == null)
                 throw new ArgumentNullException(GreenfieldConstants.MARKET_CAPITALIZATION);
 
             //Arrange list in ascending order by "MarketCapitalInUSD"
             mktCapDetails = marketCapitalizationData
-                                        //.Where(list => list.SecurityThemeCode != GreenfieldConstants.CASH)
+                //.Where(list => list.SecurityThemeCode != GreenfieldConstants.CASH)
                                         .OrderBy(list => list.MarketCapitalInUSD).ToList();
 
             //Calculate total Market Value(DirtyValue_PC) for portfolio
             totalPortfolioMV = Convert.ToDecimal(mktCapDetails.Sum(a => a.PortfolioDirtyValuePC));
 
             //Calculate fifty percent of total market value(dirty value ex-cash)
-            foreach (MarketCapitalizationData _mktCap in marketCapitalizationData)
-            {
-                if (!string.IsNullOrEmpty(_mktCap.Portfolio_ID))
-                    fiftyPercTotalMV = fiftyPercTotalMV + Convert.ToDecimal(_mktCap.PortfolioDirtyValuePC / totalPortfolioMV);
-            }
-            fiftyPercTotalMV = fiftyPercTotalMV / 2;
+            //foreach (MarketCapitalizationData _mktCap in mktCapDetails)
+            //{
+            //    //if (!string.IsNullOrEmpty(_mktCap.Portfolio_ID))
+            //        fiftyPercTotalMV = fiftyPercTotalMV + Convert.ToDecimal(_mktCap.PortfolioDirtyValuePC / totalPortfolioMV);
+            //}
+            //fiftyPercTotalMV = fiftyPercTotalMV / 2;
 
-            for (int _index = 0; _index < marketCapitalizationData.Count; _index++)
+            for (int _index = 0; _index < mktCapDetails.Count; _index++)
             {
-                if (marketCapitalizationData[_index].MarketCapitalInUSD == fiftyPercTotalMV)
-                    portfolioWeightedMedian = Convert.ToDecimal(marketCapitalizationData[_index].MarketCapitalInUSD);
-                else if (marketCapitalizationData[_index].MarketCapitalInUSD > fiftyPercTotalMV)
-                    portfolioWeightedMedian = Convert.ToDecimal(marketCapitalizationData[_index - 1].MarketCapitalInUSD + marketCapitalizationData[_index].MarketCapitalInUSD) / 2;
-                
+                sumPortfolioWeight = sumPortfolioWeight + Convert.ToDecimal(mktCapDetails[_index].PortfolioDirtyValuePC / totalPortfolioMV);
+                if (sumPortfolioWeight == fiftyPercTotalMV)
+                {
+                    portfolioWeightedMedian = Convert.ToDecimal(mktCapDetails[_index].MarketCapitalInUSD);
+                    break;
+                }
+                else if (sumPortfolioWeight > fiftyPercTotalMV)
+                {
+                    portfolioWeightedMedian = Convert.ToDecimal(mktCapDetails[_index - 1].MarketCapitalInUSD + mktCapDetails[_index].MarketCapitalInUSD) / 2;
+                    break;
+                }
             }
             return portfolioWeightedMedian;
         }
@@ -113,43 +122,42 @@ namespace GreenField.Web.Helpers
         public static decimal CalculateBenchmarkWeightedMedian(List<MarketCapitalizationData> marketCapitalizationData)
         {
             List<MarketCapitalizationData> mktCapDetails = new List<MarketCapitalizationData>();
-            decimal fiftyPercTotalBenchWt = 0;
+            decimal fiftyPercTotalBenchWt = 0.50M;
             decimal benchmarkWtdMedian = 0;
             decimal totalBenchmarkWt = 0;
-
+            decimal sumBenchmarkWeight = 0;
             if (marketCapitalizationData == null)
                 throw new ArgumentNullException(GreenfieldConstants.MARKET_CAPITALIZATION);
 
             //Arrange list in ascending order by "MarketCapitalInUSD"
             mktCapDetails = marketCapitalizationData
-                                        //.Where(list => list.SecurityThemeCode !=GreenfieldConstants.CASH)
+                //.Where(list => list.SecurityThemeCode !=GreenfieldConstants.CASH)
                                         .OrderBy(list => list.MarketCapitalInUSD).ToList();
 
             //Calculate total Benchmark weight(Ex-Cash)
             totalBenchmarkWt = Convert.ToDecimal(mktCapDetails.Sum(a => a.BenchmarkWeight));
 
             //Calculate fifty percent of total market value(dirty value ex-cash)            
-            foreach (MarketCapitalizationData _mktCap in marketCapitalizationData)
-            {
-                if (string.IsNullOrEmpty(_mktCap.Portfolio_ID))
-                    fiftyPercTotalBenchWt = fiftyPercTotalBenchWt + Convert.ToDecimal(_mktCap.BenchmarkWeight / totalBenchmarkWt);
-            }
+            //foreach (MarketCapitalizationData _mktCap in mktCapDetails)
+            //{
+            //    //if (string.IsNullOrEmpty(_mktCap.Portfolio_ID))
+            //        fiftyPercTotalBenchWt = fiftyPercTotalBenchWt + Convert.ToDecimal(_mktCap.BenchmarkWeight / totalBenchmarkWt);
+            //}
 
-            fiftyPercTotalBenchWt = fiftyPercTotalBenchWt / 2;
-
-            for (int _index = 0; _index < marketCapitalizationData.Count; _index++)
+            //fiftyPercTotalBenchWt = fiftyPercTotalBenchWt / 2;
+            for (int _index = 0; _index < mktCapDetails.Count; _index++)
             {
-                if (marketCapitalizationData[_index].MarketCapitalInUSD == fiftyPercTotalBenchWt)
+                sumBenchmarkWeight = sumBenchmarkWeight + Convert.ToDecimal(mktCapDetails[_index].BenchmarkWeight / totalBenchmarkWt);
+                if (sumBenchmarkWeight == fiftyPercTotalBenchWt)
                 {
-                    benchmarkWtdMedian =Convert.ToDecimal(marketCapitalizationData[_index].MarketCapitalInUSD);
+                    benchmarkWtdMedian = Convert.ToDecimal(mktCapDetails[_index].MarketCapitalInUSD);
                     break;
                 }
-
-                else if (marketCapitalizationData[_index].MarketCapitalInUSD > fiftyPercTotalBenchWt)
+                else if (sumBenchmarkWeight > fiftyPercTotalBenchWt)
                 {
-                    benchmarkWtdMedian = Convert.ToDecimal(marketCapitalizationData[_index - 1].MarketCapitalInUSD + marketCapitalizationData[_index].MarketCapitalInUSD) / 2;
+                    benchmarkWtdMedian = Convert.ToDecimal(mktCapDetails[_index - 1].MarketCapitalInUSD + mktCapDetails[_index].MarketCapitalInUSD) / 2;
                     break;
-                }                    
+                }
             }
             return benchmarkWtdMedian;
         }
@@ -176,7 +184,7 @@ namespace GreenField.Web.Helpers
 
             //Getting the lower and upper limit's values for all the Ranges.
             //These values are same for Portfolio and Benchmark. Hence, We are taking these values from Portfolio list not from Benchmark
-            
+
             mktCapRanges = GetRangeLimit();
             mktCapData.LargeRange = mktCapRanges[0].LargeRange;
             mktCapData.MediumRange = mktCapRanges[0].MediumRange;
@@ -188,26 +196,26 @@ namespace GreenField.Web.Helpers
             //Calcualting sum for different ranges
             foreach (MarketCapitalizationData mktCap in marketCapiltalizationData)
             {
-                if (!string.IsNullOrEmpty(mktCap.Portfolio_ID))
-                {
-                    if (mktCap.MarketCapitalInUSD > mktCapRanges[0].LargeRange)
-                        portfolioSumRange[0].PortfolioSumMegaRange = portfolioSumRange[0].PortfolioSumMegaRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                ////if (!string.IsNullOrEmpty(mktCap.Portfolio_ID))
+                ////{
+                if (mktCap.MarketCapitalInUSD > mktCapRanges[0].LargeRange)
+                    portfolioSumRange[0].PortfolioSumMegaRange = portfolioSumRange[0].PortfolioSumMegaRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
 
-                    else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].MediumRange && mktCap.MarketCapitalInUSD <= mktCapRanges[0].LargeRange)
-                        portfolioSumRange[0].PortfolioSumLargeRange = portfolioSumRange[0].PortfolioSumLargeRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].MediumRange && mktCap.MarketCapitalInUSD <= mktCapRanges[0].LargeRange)
+                    portfolioSumRange[0].PortfolioSumLargeRange = portfolioSumRange[0].PortfolioSumLargeRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
 
-                    else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].SmallRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].MediumRange)
-                        portfolioSumRange[0].PortfolioSumMediumRange = portfolioSumRange[0].PortfolioSumMediumRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].SmallRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].MediumRange)
+                    portfolioSumRange[0].PortfolioSumMediumRange = portfolioSumRange[0].PortfolioSumMediumRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
 
-                    else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].MicroRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].SmallRange)
-                        portfolioSumRange[0].PortfolioSumSmallRange = portfolioSumRange[0].PortfolioSumSmallRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                else if (mktCap.MarketCapitalInUSD >= mktCapRanges[0].MicroRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].SmallRange)
+                    portfolioSumRange[0].PortfolioSumSmallRange = portfolioSumRange[0].PortfolioSumSmallRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
 
-                    else if (mktCap.MarketCapitalInUSD > mktCapRanges[0].UndefinedRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].MicroRange)
-                        portfolioSumRange[0].PortfolioSumMicroRange = portfolioSumRange[0].PortfolioSumMicroRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                else if (mktCap.MarketCapitalInUSD > mktCapRanges[0].UndefinedRange && mktCap.MarketCapitalInUSD < mktCapRanges[0].MicroRange)
+                    portfolioSumRange[0].PortfolioSumMicroRange = portfolioSumRange[0].PortfolioSumMicroRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
 
-                    else if (mktCap.MarketCapitalInUSD == mktCapRanges[0].UndefinedRange)
-                        portfolioSumRange[0].PortfolioSumUndefinedRange = portfolioSumRange[0].PortfolioSumUndefinedRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
-                }
+                else if (mktCap.MarketCapitalInUSD == mktCapRanges[0].UndefinedRange || mktCap.MarketCapitalInUSD == null)
+                    portfolioSumRange[0].PortfolioSumUndefinedRange = portfolioSumRange[0].PortfolioSumUndefinedRange + Convert.ToDecimal(mktCap.PortfolioDirtyValuePC / mktCapTotalDirtyValue);
+                //}
             }
             return portfolioSumRange;
         }
@@ -226,7 +234,7 @@ namespace GreenField.Web.Helpers
             decimal mktCapTotalBenchmarkWt = Convert.ToDecimal(marketCapiltalizationData.Sum(a => a.BenchmarkWeight));
 
             //Getting the lower and upper limit's values for all the Ranges
-            
+
             mktCapRanges = GetRangeLimit();
 
             mktCap.LargeRange = mktCapRanges[0].LargeRange;
@@ -236,37 +244,30 @@ namespace GreenField.Web.Helpers
             mktCap.UndefinedRange = mktCapRanges[0].UndefinedRange;
             benchmarkSumRange.Add(mktCap);
 
-            ////No need to take these values again as it already from Portfolio list in the above method
-
-            //_benchmarkSumRange[0].LargeRange = _mktCapRanges[0].LargeRange;
-            //_benchmarkSumRange[0].MediumRange = _mktCapRanges[0].MediumRange;
-            //_benchmarkSumRange[0].SmallRange = _mktCapRanges[0].SmallRange;
-            //_benchmarkSumRange[0].MicroRange = _mktCapRanges[0].MicroRange;
-            //_benchmarkSumRange[0].UndefinedRange = _mktCapRanges[0].UndefinedRange;
 
             //Calcualting sum for different ranges
             foreach (MarketCapitalizationData mktCapData in marketCapiltalizationData)
             {
-                if (string.IsNullOrEmpty(mktCapData.Portfolio_ID))
-                {
-                    if (mktCapData.MarketCapitalInUSD > mktCapRanges[0].LargeRange)
-                        benchmarkSumRange[0].BenchmarkSumMegaRange = benchmarkSumRange[0].BenchmarkSumMegaRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                //if (!string.IsNullOrEmpty(mktCap.Benchmark_ID))
+                //{
+                if (mktCapData.MarketCapitalInUSD > mktCapRanges[0].LargeRange)
+                    benchmarkSumRange[0].BenchmarkSumMegaRange = benchmarkSumRange[0].BenchmarkSumMegaRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
 
-                    else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].MediumRange && mktCapData.MarketCapitalInUSD <= mktCapRanges[0].LargeRange)
-                        benchmarkSumRange[0].BenchmarkSumLargeRange = benchmarkSumRange[0].BenchmarkSumLargeRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].MediumRange && mktCapData.MarketCapitalInUSD <= mktCapRanges[0].LargeRange)
+                    benchmarkSumRange[0].BenchmarkSumLargeRange = benchmarkSumRange[0].BenchmarkSumLargeRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
 
-                    else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].SmallRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].MediumRange)
-                        benchmarkSumRange[0].BenchmarkSumMediumRange = benchmarkSumRange[0].BenchmarkSumMediumRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].SmallRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].MediumRange)
+                    benchmarkSumRange[0].BenchmarkSumMediumRange = benchmarkSumRange[0].BenchmarkSumMediumRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
 
-                    else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].MicroRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].SmallRange)
-                        benchmarkSumRange[0].BenchmarkSumSmallRange = benchmarkSumRange[0].BenchmarkSumSmallRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                else if (mktCapData.MarketCapitalInUSD >= mktCapRanges[0].MicroRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].SmallRange)
+                    benchmarkSumRange[0].BenchmarkSumSmallRange = benchmarkSumRange[0].BenchmarkSumSmallRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
 
-                    else if (mktCapData.MarketCapitalInUSD > mktCapRanges[0].UndefinedRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].MicroRange)
-                        benchmarkSumRange[0].BenchmarkSumMicroRange = benchmarkSumRange[0].BenchmarkSumMicroRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                else if (mktCapData.MarketCapitalInUSD > mktCapRanges[0].UndefinedRange && mktCapData.MarketCapitalInUSD < mktCapRanges[0].MicroRange)
+                    benchmarkSumRange[0].BenchmarkSumMicroRange = benchmarkSumRange[0].BenchmarkSumMicroRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
 
-                    else if (mktCapData.MarketCapitalInUSD == mktCapRanges[0].UndefinedRange)
-                        benchmarkSumRange[0].BenchmarkSumUndefinedRange = benchmarkSumRange[0].BenchmarkSumUndefinedRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
-                }
+                else if (mktCapData.MarketCapitalInUSD == mktCapRanges[0].UndefinedRange || mktCap.MarketCapitalInUSD == null)
+                    benchmarkSumRange[0].BenchmarkSumUndefinedRange = benchmarkSumRange[0].BenchmarkSumUndefinedRange + Convert.ToDecimal(mktCapData.BenchmarkWeight / mktCapTotalBenchmarkWt);
+                //}
             }
             return benchmarkSumRange;
         }
@@ -291,7 +292,7 @@ namespace GreenField.Web.Helpers
             _mktCapData.MediumRange = Convert.ToDecimal(ConfigurationManager.AppSettings[GreenfieldConstants.MEDIUM_RANGE]);
             _mktCapData.SmallRange = Convert.ToDecimal(ConfigurationManager.AppSettings[GreenfieldConstants.SMALL_RANGE]);
             _mktCapData.MicroRange = Convert.ToDecimal(ConfigurationManager.AppSettings[GreenfieldConstants.MICRO_RANGE]);
-            
+
             _rangeLimit.Add(_mktCapData);
             return _rangeLimit;
         }
