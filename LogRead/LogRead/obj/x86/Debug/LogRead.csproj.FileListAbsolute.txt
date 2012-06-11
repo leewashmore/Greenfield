@@ -1,0 +1,12 @@
+e:\LogRead\LogRead\bin\Debug\LogRead.exe
+e:\LogRead\LogRead\bin\Debug\LogRead.pdb
+e:\LogRead\LogRead\obj\x86\Debug\ResolveAssemblyReference.cache
+e:\LogRead\LogRead\obj\x86\Debug\LogRead.Form1.resources
+e:\LogRead\LogRead\obj\x86\Debug\LogRead.Properties.Resources.resources
+e:\LogRead\LogRead\obj\x86\Debug\GenerateResource.read.1.tlog
+e:\LogRead\LogRead\obj\x86\Debug\GenerateResource.write.1.tlog
+e:\LogRead\LogRead\obj\x86\Debug\LogRead.exe
+e:\LogRead\LogRead\obj\x86\Debug\LogRead.pdb
+E:\LogRead\LogRead\bin\Debug\DataGridViewAutoFilter.dll
+E:\LogRead\LogRead\bin\Debug\DataGridViewAutoFilter.pdb
+E:\LogRead\LogRead\obj\x86\Debug\LogRead.csproj.ResolveComReference.cache
