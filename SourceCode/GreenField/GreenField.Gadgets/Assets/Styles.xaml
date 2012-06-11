@@ -51,8 +51,8 @@
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
         <Setter Property="Height" Value="15"/>
-        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
     </Style>
 
     <!--GridViewGroupPanelStyle-->
@@ -74,6 +74,12 @@
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
         <Setter Property="Height" Value="15"/>
+    </Style>
+
+    <!--GridViewRowStyle-->
+    <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Background" Value="#d8d5d4"/>
     </Style>
 
     <!--GridViewHeaderRowStyle-->

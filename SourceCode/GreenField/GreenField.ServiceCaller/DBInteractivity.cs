@@ -1082,10 +1082,10 @@ namespace GreenField.ServiceCaller
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
         /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
-        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
+        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate,bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate,excludeCash, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

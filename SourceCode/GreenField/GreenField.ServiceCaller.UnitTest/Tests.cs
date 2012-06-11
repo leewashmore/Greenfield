@@ -734,8 +734,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = null;
             bool getBenchmark = false;
+            bool excludeCash = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -756,8 +757,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             bool getBenchmark = false;
+            bool excludeCash = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -776,8 +778,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool getBenchamrk = false;
-
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
+            bool excludeCash = false;
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,excludeCash, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual(0, resultSet.Count, "Portfolio Details Data Should Be Empty");
                 EnqueueTestComplete();

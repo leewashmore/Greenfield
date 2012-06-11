@@ -78,7 +78,7 @@ namespace GreenField.Gadgets.Views
 
         #region DataProgressIndicator
 
-        
+
 
         #endregion
 
@@ -120,15 +120,18 @@ namespace GreenField.Gadgets.Views
             if (dialog.ShowDialog() == true)
             {
                 RadDocument document = CreateDocument(dgPortfolioDetails);
+
                 document.LayoutMode = DocumentLayoutMode.Paged;
                 document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                 document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
                 PdfFormatProvider provider = new PdfFormatProvider();
                 using (Stream output = dialog.OpenFile())
                 {
                     provider.Export(document, output);
                 }
             }
+
         }
 
         private RadDocument CreateDocument(RadGridView grid)
@@ -261,7 +264,11 @@ namespace GreenField.Gadgets.Views
             Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
             cell.Blocks.Add(paragraph);
             Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
+            if (value == "")
+                value = " ";
             span.Text = value;
+            span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+            span.FontSize = 7;
             paragraph.Inlines.Add(span);
         }
 

@@ -14,6 +14,7 @@ using Telerik.Windows.Controls.Charting;
 using System.Collections.ObjectModel;
 using Telerik.Windows.Controls;
 using GreenField.DataContracts;
+using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -78,11 +79,10 @@ namespace GreenField.Gadgets.ViewModels
                 objDictionary.Add("SECURITY", _entitySelectionData.LongName);
                 DateTime startDate = DateTime.Today.AddYears(-1);
                 _dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
+                BusyIndicatorStatus = true;
             }
-
             if (_eventAggregator != null)
                 SubscribeEvents(_eventAggregator);
-
         }
 
         #endregion
@@ -192,6 +192,24 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
+
+
+        /// <summary>
         /// Collection of Time Range Options
         /// </summary>
         public ObservableCollection<String> TimeRange
@@ -230,6 +248,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Legend Label for Transaction Axis
+        /// </summary>
+        private string _transactionLegendLabel;
+        public string TransactionLegendLabel
+        {
+            get 
+            {
+                return _transactionLegendLabel; 
+            }
+            set
+            {
+                _transactionLegendLabel = value;
+                this.RaisePropertyChanged(() => this.TransactionLegendLabel);
+            }
+        }
+        
+
+        /// <summary>
+        /// Minimum Value for X-Axis of Chart
+        /// </summary>
         private double _axisXMinValue;
         public double AxisXMinValue
         {
@@ -241,6 +280,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Maximum Value for X-Axis of Chart
+        /// </summary>
         private double _axisXMaxValue;
         public double AxisXMaxValue
         {
@@ -252,6 +294,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Step size of XAxis of Chart
+        /// </summary>
         private int _axisXStep;
         public int AxisXStep
         {
@@ -391,11 +436,10 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
                     SelectedEntities.Add("PORTFOLIO", PortfolioSelectionData.PortfolioId);
 
-                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null)
+                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null)
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
-                        if (null != ChartExtensionDataLoadedEvent)
-                            ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -428,11 +472,11 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("SECURITY");
                     SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
 
-                    if (SelectedStartDate != null && SelectedEntities != null)
+                    if (SelectedStartDate != null && SelectedEntities != null && _period != null)
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
-                        if (null != ChartExtensionDataLoadedEvent)
-                            ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
+
                     }
                 }
                 else
@@ -462,13 +506,15 @@ namespace GreenField.Gadgets.ViewModels
                 if (period != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
-
-                    if (SelectedEntities != null)
+                    _period = period;
+                    if (ChartExtensionData.Count != 0)
                     {
-                        if (SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null)
-                        {
-                            //Waiting for calculations for Country/Sector Returns
-                        }
+                        RetrieveChartAccordingDataPeriod(_period);
+                    }
+                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null)
+                    {
+                        _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -481,6 +527,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -513,19 +560,26 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, chartExtensionData, 1);
                     ChartExtensionData.Clear();
-                    ChartExtensionData.AddRange(chartExtensionData);
+                    if (chartExtensionData.Any(a => a.AmountTraded != null))
+                    {
+                        TransactionLegendLabel = chartExtensionData.Where(a => a.Type == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
+                    }
+                    ChartExtensionData.AddRange(chartExtensionData.OrderBy(a => a.SortId).ToList());
+                    RetrieveChartAccordingDataPeriod(_period);
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (null != ChartExtensionDataLoadedEvent)
-                    ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -534,7 +588,102 @@ namespace GreenField.Gadgets.ViewModels
 
         #region HelperMethods
 
+        /// <summary>
+        /// Show Sector/Country data in Chart according to SelectedPeriod
+        /// </summary>
+        /// <param name="selectedPeriod">Selected Period from the Toolbar</param>
+        /// <param name="chartedData"></param>
+        private void RetrieveChartAccordingDataPeriod(string selectedPeriod)
+        {
+            if (selectedPeriod == null)
+                return;
+            if (ChartExtensionData == null)
+                return;
+            if (ChartExtensionData.Count == 0)
+                return;
 
+            switch (selectedPeriod)
+            {
+                case ("1D"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.OneD;
+                            }
+                        }
+                        break;
+                    }
+                case ("WTD"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.WTD;
+                            }
+                        }
+                        break;
+                    }
+                case ("MTD"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.MTD;
+                            }
+                        }
+                        break;
+                    }
+                case ("QTD"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.QTD;
+                            }
+                        }
+                        break;
+                    }
+                case ("YTD"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.YTD;
+                            }
+                        }
+                        break;
+                    }
+                case ("1Y"):
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.OneY;
+                            }
+                        }
+                        break;
+                    }
+
+                default:
+                    {
+                        foreach (ChartExtensionData item in ChartExtensionData)
+                        {
+                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            {
+                                item.PriceReturn = item.OneD;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
 
         /// <summary>
         /// Zoom In Algo

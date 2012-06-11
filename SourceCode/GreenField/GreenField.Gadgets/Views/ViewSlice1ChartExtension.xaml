@@ -99,7 +99,7 @@
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" >
                     <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False"
                                          ItemsSource="{Binding ChartExtensionData}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                          SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
@@ -107,7 +107,7 @@
                                          CanUserSortColumns="True" ScrollMode="Deferred" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
-                                         AlternateRowBackground="#d8d5d4"
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#9F1D21"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
@@ -122,30 +122,23 @@
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Country}"
+                            <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding Type}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding ToDate, StringFormat=d}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Price" DataMemberBinding="{Binding Price, StringFormat=c}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                        CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding PriceReturn}" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        HeaderTextAlignment="Right" TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Amount Traded" DataMemberBinding="{Binding AmountTraded}" 
-                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        HeaderTextAlignment="Right" TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Sector Return" DataMemberBinding="{Binding SectorReturn}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Country Return" DataMemberBinding="{Binding CountryReturn }" 
-                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Sector" 
-                                                        DataMemberBinding="{Binding Sector}" CellStyle="{StaticResource GridViewCellStyle}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>
@@ -156,7 +149,7 @@
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
                                           ItemsSource="{Binding ChartExtensionData, Mode=TwoWay}" IsHitTestVisible="True" DataBound="chChartExtension_DataBound">
                             <telerik:RadChart.PaletteBrushes>
@@ -222,15 +215,7 @@
                             </telerik:RadChart.DefaultView>
 
                             <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping LegendLabel="{Binding Ticker}">
-                                    <telerik:SeriesMapping.GroupingSettings>
-                                        <telerik:GroupingSettings>
-                                            <telerik:GroupingSettings.GroupDescriptors>
-                                                <telerikCharting:ChartGroupDescriptor Member="Ticker"/>
-                                            </telerik:GroupingSettings.GroupDescriptors>
-                                        </telerik:GroupingSettings>
-                                    </telerik:SeriesMapping.GroupingSettings>
-
+                                <telerik:SeriesMapping LegendLabel="{Binding TransactionLegendLabel}">
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
