@@ -242,7 +242,6 @@ namespace GreenField.Gadgets.ViewModels
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                         }
-
                     }
                 
             } 
@@ -298,7 +297,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null)
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
                     {
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -334,7 +333,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
                     {
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -368,10 +367,24 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedPeriodType != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
-                    if (null != attributionDataLoadedEvent)
-                        attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    SelectedPeriod = selectedPeriodType;
+                    _selectedPeriod = selectedPeriodType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (AttributionDataInfo.Count==0)
+                        {
+                            if (null != attributionDataLoadedEvent)
+                                attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+                            //SelectedPeriod = selectedPeriodType;
+                        }
+
+                        else 
+                        {
+                          if (null != attributionDataLoadedEvent)
+                               attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            SelectedPeriod = selectedPeriodType;
+                        }
+                    }
                     
                 }
                 else
@@ -407,6 +420,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     AttributionDataInfo = result;
+                    SelectedPeriod = _selectedPeriod;
                     if (null != attributionDataLoadedEvent)
                         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
