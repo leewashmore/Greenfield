@@ -43,18 +43,12 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextFinancialStatements = dataContextSource;
-            dataContextSource.FinancialStatementsDataLoadedEvent +=new DataRetrievalProgressIndicatorEventHandler(dataContextSource_FinancialStatementsDataLoadedEvent);
             SetColumnHeaders();
             DataContextFinancialStatements.SetFinancialStatementDisplayInfo();            
         }
         #endregion
 
         #region Event Handlers
-        void dataContextSource_FinancialStatementsDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            this.busyIndicatorGrid.IsBusy = e.ShowBusy;
-        }
-
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SetColumnHeaders(Convert.ToBoolean(this.rbtnYearly.IsChecked),--_iterator);

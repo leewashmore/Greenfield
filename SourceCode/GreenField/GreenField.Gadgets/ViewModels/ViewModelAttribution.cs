@@ -288,7 +288,6 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData class containg the Fund Selection Data </param>
         public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try

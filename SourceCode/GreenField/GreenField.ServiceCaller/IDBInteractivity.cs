@@ -174,6 +174,8 @@ namespace GreenField.ServiceCaller
 
         #region Slice 5 - External Research
 
+        void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback);
+
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
 

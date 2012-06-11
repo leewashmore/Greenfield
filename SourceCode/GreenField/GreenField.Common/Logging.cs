@@ -25,7 +25,7 @@ namespace GreenField.Common
                 var method = currFrame.GetMethod();
                 sb.Append(string.Format("{0}|{1} || ", method.ReflectedType != null ? method.ReflectedType.FullName : string.Empty, method.Name));
             }
-            return sb.ToString();
+            return sb.ToString().Replace(Environment.NewLine, " ");
         }
 
         #region Methods
@@ -35,43 +35,43 @@ namespace GreenField.Common
             {
                 if (logger != null && SessionManager.SESSION != null)
                 {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | BeginMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
+                    logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ") 
+                        + ")]|Type[(BeginMethod"
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ") 
+                        + ")]", Category.Info, Priority.None);
                 }
             }
             else
             {
-                logger.Log("User : [(" + userName + ")]" + " | BeginMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(BeginMethod" 
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]", Category.Info, Priority.None);                
             }
         }
 
-        public static void LogEndMethod(ILoggerFacade logger, string methodNamespace, string userName = "")
+        public static void LogMethodParameter(ILoggerFacade logger, string methodNamespace, object parameter, int index, string userName = "")
         {
             if (userName == "")
             {
                 if (logger != null && SessionManager.SESSION != null)
                 {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | EndMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
-
+                    logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                        + ")]", Category.Debug, Priority.None);
                 }
             }
             else
             {
-                logger.Log("User : [(" + userName + ")]" + " | EndMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
-            }
-        }
-
-        public static void LogMethodParameter(ILoggerFacade logger, object methodName, object parameter, int index, string userName = "")
-        {
-            if (userName == "")
-            {
-                if (logger != null && SessionManager.SESSION != null)
-                {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(" + parameter.ToString() + ")]", Category.Debug, Priority.None);
-                }
-            }
-            else
-            {
-                logger.Log("User : [(" + userName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(" + parameter.ToString() + ")]", Category.Debug, Priority.None);
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                        + ")]", Category.Debug, Priority.None);
             }
         }
 
@@ -81,12 +81,44 @@ namespace GreenField.Common
             {
                 if (logger != null && SessionManager.SESSION != null)
                 {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
+                    logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
                 }
             }
             else
             {
-                logger.Log("User : [(" + userName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
+                if (logger != null && SessionManager.SESSION != null)
+                {
+                    logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
+                }
+            }
+        }
+
+        public static void LogEndMethod(ILoggerFacade logger, string methodNamespace, string userName = "")
+        {
+            if (userName == "")
+            {
+                if (logger != null && SessionManager.SESSION != null)
+                {
+                    logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(EndMethod"
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ") 
+                        + ")]", Category.Info, Priority.None);
+                }
+            }
+            else
+            {
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(EndMethod"
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -96,12 +128,20 @@ namespace GreenField.Common
             {
                 if (logger != null && SessionManager.SESSION != null)
                 {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(False)]", Category.Debug, Priority.None);
+                    logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(False)]", Category.Debug, Priority.None);
                 }
             }
             else
             {
-                logger.Log("User : [(" + userName + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(False)]", Category.Debug, Priority.None);
+                logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                        + ")]|Type[(MethodParameter"
+                        + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|ArgumentValue[(False)]", Category.Debug, Priority.None);
             }
         }
         #endregion
@@ -111,7 +151,11 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | Exception: [(" + exception.Message + ")] | StackTrace: [(" + StackTraceToString(exception) + ")]", Category.Exception, Priority.Medium);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(Exception"
+                    + ")]|Message[(" + exception.Message.Replace(Environment.NewLine, " ") 
+                    + ")]|StackTrace[(" + StackTraceToString(exception)
+                    + ")]", Category.Exception, Priority.Medium);                
             }
         }
         #endregion
@@ -121,23 +165,17 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | SessionBegin", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(SessionBegin"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
         public static void LogSessionClose(ILoggerFacade logger, string userName = "")
         {
-            if (userName == "")
-            {
-                if (logger != null && SessionManager.SESSION != null)
-                {
-                    logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | SessionEnd", Category.Info, Priority.None);
-                }
-            }
-            else
-            {
-                logger.Log("User : [(" + userName + ")]" + " | SessionEnd", Category.Info, Priority.None);
-            }
+            logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
+                + ")]|Type[(SessionEnd"
+                + ")]", Category.Info, Priority.None);
         }
         #endregion
 
@@ -146,7 +184,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | RoleCreation [(" + roleName + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(RoleCreation"
+                    + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -154,7 +195,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | RoleCreationFailed [(" + roleName + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(RoleCreationFailed"
+                    + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -162,7 +206,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | RoleDeletion [(" + roleName + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(RoleDeletion"
+                    + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -170,7 +217,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | RoleDeletionFailed [(" + roleName + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(RoleDeletionFailed"
+                    + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
         #endregion
@@ -180,7 +230,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountActivation [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountActivation"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -188,7 +241,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountActivationFailed [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountActivationFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -196,7 +252,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountBlock [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountBlock"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -204,7 +263,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountBlockFailed [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountBlockFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -212,7 +274,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountLockRelease [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountLockRelease"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -220,7 +285,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountLockReleaseFailed [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountLockReleaseFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -228,7 +296,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountDeletion [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountDeletion"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -236,7 +307,10 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountDeletionFailed [(" + user + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountDeletionFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -244,7 +318,11 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountRoleAssignment [User:(" + user + ")|Role:(" + role + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountRoleAssignment"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -252,7 +330,11 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountRoleAssignmentFailed [User:(" + user + ")|Role:(" + role + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountRoleAssignmentFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -260,7 +342,11 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountRoleRemoval [User:(" + user + ")|Role:(" + role + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountRoleRemoval"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -268,7 +354,11 @@ namespace GreenField.Common
         {
             if (logger != null && SessionManager.SESSION != null)
             {
-                logger.Log("User : [(" + SessionManager.SESSION.UserName + ")]" + " | AccountRoleRemovalFailed [User:(" + user + ")|Role:(" + role + ")]", Category.Info, Priority.None);
+                logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountRoleRemovalFailed"
+                    + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
         #endregion
@@ -278,7 +368,9 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountInactiveLoginAttempt", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountInactiveLoginAttempt"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -286,7 +378,9 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountLockedLoginAttempt", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountLockedLoginAttempt"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -294,7 +388,9 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountInvalidLoginAttempt", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountInvalidLoginAttempt"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -302,7 +398,10 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")]" + " | BeginMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(BeginMethod"
+                    + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -310,8 +409,10 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")]" + " | EndMethod: [(" + methodNamespace + ")]", Category.Info, Priority.None);
-
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(EndMethod"
+                    + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -319,7 +420,12 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(" + parameter.ToString() + ")]", Category.Debug, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(MethodParameter"
+                    + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                    + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                    + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                    + ")]", Category.Debug, Priority.None);
             }
         }
 
@@ -327,20 +433,29 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")]" + " | MethodParameter: [(" + methodName + ")] | Index: [(" + index.ToString() + ")] | Value: [(Null)]", Category.Debug, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(MethodParameter"
+                    + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
+                    + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
+                    + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
             }
         }
 
         public static void LogLoginException(ILoggerFacade logger, Exception exception)
         {
-            logger.Log("User : [(Null)] | Exception: [(" + exception.Message + ")] | StackTrace: [(" + StackTraceToString(exception) + ")]", Category.Exception, Priority.Medium);
+            logger.Log("|User[(Null)]|Exception[(" + exception.Message.Replace(Environment.NewLine, " ")
+                + ")]|Type[(Exception"
+                + ")]|StackTrace[(" + StackTraceToString(exception).Replace(Environment.NewLine, " ")
+                + ")]", Category.Exception, Priority.Medium);
         }
 
         public static void LogAccountRegister(ILoggerFacade logger, string loginId)
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountRegistration", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountRegistration"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -348,7 +463,9 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountPasswordChange", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountPasswordChange"
+                    + ")]", Category.Info, Priority.None);
             }
         }
 
@@ -356,7 +473,9 @@ namespace GreenField.Common
         {
             if (logger != null)
             {
-                logger.Log("LoginID : [(" + loginId + ")] | AccountPasswordReset", Category.Info, Priority.None);
+                logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
+                    + ")]|Type[(AccountPasswordReset"
+                    + ")]", Category.Info, Priority.None);
             }
         }
         #endregion

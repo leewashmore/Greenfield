@@ -2013,12 +2013,42 @@ namespace GreenField.ServiceCaller
 
         #region Slice 5 - External Research
 
+        public void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveIssuerIdAsync(entitySelectionData);
+            client.RetrieveIssuerIdCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);                        
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
         public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.GetFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
-            client.GetFinancialStatementCompleted += (se, e) =>
+            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
+            client.RetrieveFinancialStatementCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {

@@ -1,32 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
-  <xs:complexType name="ArrayOfFinancialStatementData">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ServiceFault">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="FinancialStatementData" nillable="true" type="tns:FinancialStatementData" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfFinancialStatementData" nillable="true" type="tns:ArrayOfFinancialStatementData" />
-  <xs:complexType name="FinancialStatementData">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AMOUNT" nillable="true" type="xs:decimal" />
-          <xs:element minOccurs="0" name="AMOUNT_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="BOLD_FONT" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CALCULATION_DIAGRAM" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DATA_DESC" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DATA_ID" type="xs:int" />
-          <xs:element minOccurs="0" name="DECIMALS" type="xs:int" />
-          <xs:element minOccurs="0" name="GROUP_NAME" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="PERIOD" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="PERIOD_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ROOT_SOURCE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ROOT_SOURCE_DATE" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="SORT_ORDER" type="xs:int" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="FinancialStatementData" nillable="true" type="tns:FinancialStatementData" />
+  <xs:element name="ServiceFault" nillable="true" type="tns:ServiceFault" />
 </xs:schema>

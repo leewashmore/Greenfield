@@ -11,6 +11,8 @@ using GreenField.Web.Helpers;
 using GreenField.DataContracts;
 using GreenField.DAL;
 using System.Data.Objects;
+using GreenField.Web.DimensionEntitiesService;
+using System.Configuration;
 
 namespace GreenField.Web.Services
 {
@@ -26,9 +28,44 @@ namespace GreenField.Web.Services
             }
         }
 
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+
+                return dimensionEntity;
+            }
+        }
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinancialStatementData> GetFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+        public string RetrieveIssuerId(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                string result = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
+                        record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName)
+                    .Select(record => record.ISSUER_ID).FirstOrDefault();
+
+                return result == null ? String.Empty : result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency)
         {
             try

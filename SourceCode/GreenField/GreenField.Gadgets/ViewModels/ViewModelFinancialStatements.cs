@@ -27,15 +27,26 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// MEF Singletons
         /// </summary>
+        private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger; 
+        private ILoggerFacade _logger;
+        private EntitySelectionData _entitySelectionData;
         #endregion
 
         public ViewModelFinancialStatements(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
+            _eventAggregator = param.EventAggregator;
+            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+
+
             PeriodColumn.NavigationCompleted +=new PeriodColumnNavigationEventHandler(SetFinancialStatementDisplayInfo);
+
+            if (_eventAggregator != null && _entitySelectionData != null)
+            {
+                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+            }
             
             if (FinancialStatementInfo.Count.Equals(0) && _dbInteractivity!= null)
             {
@@ -43,6 +54,35 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveFinancialStatementData("223340", FinancialStatementDataSource.REUTERS
                     , FinancialStatementPeriodType.ANNUAL, FinancialStatementFiscalType.FISCAL, FinancialStatementStatementType.BALANCE_SHEET, "CNY", RetrieveFinancialStatementDataCallbackMethod);
             }
+        }
+
+        public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    _entitySelectionData = result;
+                    if (_entitySelectionData != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerId(result, RetrieveIssuerIdCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         private List<FinancialStatementDisplayData> _financialStatementDisplayInfo;
@@ -79,6 +119,19 @@ namespace GreenField.Gadgets.ViewModels
                 
             }
         }
+
+        private bool _busyIndicatorIsBusy;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }
+
+        
 
         private string _busyIndicatorContent;
         public string BusyIndicatorContent
@@ -187,13 +240,42 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (message != null)
                 BusyIndicatorContent = message;
-            if (FinancialStatementsDataLoadedEvent != null)
-            {
-                FinancialStatementsDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = showBusyIndicator });
-            }
+            BusyIndicatorIsBusy = showBusyIndicator;            
         }
 
         #region Callback Methods
+        public void RetrieveIssuerIdCallbackMethod(string result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    if (result.Equals(String.Empty))
+                    {
+                        Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
+                        return;
+                    }
+
+                    BusyIndicatorNotification(true, "Retrieving Financial Statement Data for ");
+                    _dbInteractivity.RetrieveFinancialStatementData("223340", FinancialStatementDataSource.REUTERS
+                        , FinancialStatementPeriodType.ANNUAL, FinancialStatementFiscalType.FISCAL, FinancialStatementStatementType.BALANCE_SHEET, "CNY", RetrieveFinancialStatementDataCallbackMethod);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                BusyIndicatorNotification();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
         public void RetrieveFinancialStatementDataCallbackMethod(List<FinancialStatementData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

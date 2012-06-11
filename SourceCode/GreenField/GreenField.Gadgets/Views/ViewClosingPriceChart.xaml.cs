@@ -66,6 +66,8 @@ namespace GreenField.Gadgets.Views
             ApplyChartStyles();
         }
 
+        
+
         #endregion
 
         /// <summary>
