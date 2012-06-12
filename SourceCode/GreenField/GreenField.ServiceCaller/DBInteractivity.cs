@@ -134,6 +134,43 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void RetrieveEntitySelectionWithBenchmarkData(Action<List<EntitySelectionData>> callback)
+        {
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.RetrieveEntitySelectionWithBenchmarkDataAsync();
+            client.RetrieveEntitySelectionWithBenchmarkDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
         /// <summary>
         /// Service Caller Method for Closing Price Chart
         /// </summary>

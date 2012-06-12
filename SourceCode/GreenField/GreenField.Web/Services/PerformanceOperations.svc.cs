@@ -512,6 +512,8 @@ namespace GreenField.Web.Services
 
         #region Market Performance Snapshot Operation Contracts
 
+        
+
         /// <summary>
         /// retrieving list of market performance snapshots for particular user
         /// </summary>

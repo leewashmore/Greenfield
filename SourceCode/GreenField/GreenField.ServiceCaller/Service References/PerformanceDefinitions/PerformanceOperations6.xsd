@@ -156,6 +156,7 @@
       <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Entity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityGroup" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FundWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:decimal" />
     </xs:sequence>

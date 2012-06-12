@@ -81,6 +81,15 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchma" +
+            "rkData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchma" +
+            "rkDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchma" +
+            "rkDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveEntitySelectionWithBenchmarkData(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> EndRetrieveEntitySelectionWithBenchmarkData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData", ReplyAction="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataResp" +
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault), Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossDataServ" +
@@ -172,6 +181,25 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveEntitySelectionWithBenchmarkDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveEntitySelectionWithBenchmarkDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveUnrealizedGainLossDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -216,6 +244,12 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         private EndOperationDelegate onEndRetrieveEntitySelectionDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveEntitySelectionDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveEntitySelectionWithBenchmarkDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveEntitySelectionWithBenchmarkDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveEntitySelectionWithBenchmarkDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveUnrealizedGainLossDataDelegate;
         
@@ -283,6 +317,8 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         public event System.EventHandler<RetrievePricingReferenceDataCompletedEventArgs> RetrievePricingReferenceDataCompleted;
         
         public event System.EventHandler<RetrieveEntitySelectionDataCompletedEventArgs> RetrieveEntitySelectionDataCompleted;
+        
+        public event System.EventHandler<RetrieveEntitySelectionWithBenchmarkDataCompletedEventArgs> RetrieveEntitySelectionWithBenchmarkDataCompleted;
         
         public event System.EventHandler<RetrieveUnrealizedGainLossDataCompletedEventArgs> RetrieveUnrealizedGainLossDataCompleted;
         
@@ -479,6 +515,50 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrieveEntitySelectionWithBenchmarkData(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveEntitySelectionWithBenchmarkData(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.EndRetrieveEntitySelectionWithBenchmarkData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveEntitySelectionWithBenchmarkData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveEntitySelectionWithBenchmarkData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).BeginRetrieveEntitySelectionWithBenchmarkData(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveEntitySelectionWithBenchmarkData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> retVal = ((GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations)(this)).EndRetrieveEntitySelectionWithBenchmarkData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveEntitySelectionWithBenchmarkDataCompleted(object state) {
+            if ((this.RetrieveEntitySelectionWithBenchmarkDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveEntitySelectionWithBenchmarkDataCompleted(this, new RetrieveEntitySelectionWithBenchmarkDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveEntitySelectionWithBenchmarkDataAsync() {
+            this.RetrieveEntitySelectionWithBenchmarkDataAsync(null);
+        }
+        
+        public void RetrieveEntitySelectionWithBenchmarkDataAsync(object userState) {
+            if ((this.onBeginRetrieveEntitySelectionWithBenchmarkDataDelegate == null)) {
+                this.onBeginRetrieveEntitySelectionWithBenchmarkDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveEntitySelectionWithBenchmarkData);
+            }
+            if ((this.onEndRetrieveEntitySelectionWithBenchmarkDataDelegate == null)) {
+                this.onEndRetrieveEntitySelectionWithBenchmarkDataDelegate = new EndOperationDelegate(this.OnEndRetrieveEntitySelectionWithBenchmarkData);
+            }
+            if ((this.onRetrieveEntitySelectionWithBenchmarkDataCompletedDelegate == null)) {
+                this.onRetrieveEntitySelectionWithBenchmarkDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveEntitySelectionWithBenchmarkDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveEntitySelectionWithBenchmarkDataDelegate, null, this.onEndRetrieveEntitySelectionWithBenchmarkDataDelegate, this.onRetrieveEntitySelectionWithBenchmarkDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.SecurityReferenceDefinitions.SecurityReferenceOperations.BeginRetrieveUnrealizedGainLossData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.DateTime startDateTime, System.DateTime endDateTime, string frequencyInterval, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveUnrealizedGainLossData(entityIdentifier, startDateTime, endDateTime, frequencyInterval, callback, asyncState);
         }
@@ -657,6 +737,18 @@ namespace GreenField.ServiceCaller.SecurityReferenceDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> EndRetrieveEntitySelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData>)(base.EndInvoke("RetrieveEntitySelectionData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveEntitySelectionWithBenchmarkData(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveEntitySelectionWithBenchmarkData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> EndRetrieveEntitySelectionWithBenchmarkData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.EntitySelectionData>)(base.EndInvoke("RetrieveEntitySelectionWithBenchmarkData", _args, result)));
                 return _result;
             }
             

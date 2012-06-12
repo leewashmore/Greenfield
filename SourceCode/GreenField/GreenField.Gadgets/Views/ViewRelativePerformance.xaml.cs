@@ -206,7 +206,8 @@ namespace GreenField.Gadgets.Views
             //Clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; columnIndex++)
             {
-                dgRelativePerformance.Columns.RemoveAt(columnIndex);
+                this.dgRelativePerformance.Columns.RemoveAt(columnIndex);
+
             }
 
             int cIndex = 0;
