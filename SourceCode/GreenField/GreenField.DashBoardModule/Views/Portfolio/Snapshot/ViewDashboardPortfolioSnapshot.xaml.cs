@@ -79,7 +79,8 @@ namespace GreenField.DashboardModule.Views
             {
                  
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_REGION_BREAKDOWN, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = new ViewRegionBreakdown(new ViewModelRegionBreakdown(param))
+                Content = new ViewRegionBreakdown(new ViewModelRegionBreakdown(param)),
+                RestoredHeight = 300
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
@@ -92,7 +93,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_SECTOR_BREAKDOWN, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                 
+                RestoredHeight = 300,
                 Content = new ViewSectorBreakdown(new ViewModelSectorBreakdown(param))
             });
 

@@ -28,6 +28,7 @@ using Telerik.Windows.Documents.FormatProviders.Pdf;
 using System.IO;
 using System.Collections;
 using GreenField.DataContracts;
+using System.Windows.Data;
 
 namespace GreenField.Gadgets.Views
 {
@@ -111,8 +112,10 @@ namespace GreenField.Gadgets.Views
 
             if (e.Row is GridViewHeaderRow)
                 return;
+
             if (e.Row.Cells[0] is GridViewFooterCell)
-                return;
+                return;                     
+
             foreach (GridViewCell cell in e.Row.Cells)
             {
                 //Null Check
@@ -196,18 +199,17 @@ namespace GreenField.Gadgets.Views
                 SectorID = sectorID,
             });
 
+
         }
 
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
             _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
-
             
             //Clear grid of previous sector info
-            for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; columnIndex++)
+            for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; )
             {
                 this.dgRelativePerformance.Columns.RemoveAt(columnIndex);
-
             }
 
             int cIndex = 0;
@@ -235,23 +237,33 @@ namespace GreenField.Gadgets.Views
                 CellTemp.Append("</DataTemplate>");
 
                 dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
+
                 decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
                 string aggregateSectorAlpha = aggregateSectorAlphaValue == null ? String.Empty : Decimal.Parse(aggregateSectorAlphaValue.ToString()).ToString();
                 decimal? aggregateSectorActiviePositionValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.ActivePosition == null ? 0 : t.ActivePosition);
-                string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : Math.Round(Decimal.Parse(aggregateSectorActiviePositionValue.ToString()), 2).ToString();
+                string aggregateSectorActiviePosition = aggregateSectorActiviePositionValue == null ? String.Empty : (Decimal.Parse(aggregateSectorActiviePositionValue.ToString())).ToString();
 
                 var aggregateAlphaSumFunction = new AggregateFunction<RelativePerformanceData, string>
                 {
                     //AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
                     AggregationExpression = Models => aggregateSectorAlpha,
                     FunctionName = sectorData.SectorId.ToString()
-                };
-                dataColumn.Width = GridViewLength.Auto;               
-                dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
-                dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
-                dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
-                dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
+                };                
 
+                dataColumn.FooterTextAlignment = TextAlignment.Right;
+                dataColumn.Width = GridViewLength.Auto;
+                dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
+                
+                TextBlock spFunctions = new TextBlock() { Text = aggregateSectorActiviePosition.ToString(), Tag = sectorData.SectorId,TextAlignment = TextAlignment.Right };
+                TextBlock footerText = new TextBlock() { Text = aggregateSectorAlpha.ToString(), Tag = sectorData.SectorId, TextAlignment = TextAlignment.Right };
+                
+
+                ToolTipService.SetToolTip(footerText, spFunctions);
+                dataColumn.Footer = footerText;
+                
+                dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
+                dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;                
+                dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
             }
 
@@ -364,7 +376,7 @@ namespace GreenField.Gadgets.Views
                     List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
                     TextBox txtHeader = new TextBox() { Text = countryName, FontWeight = FontWeights.Bold, IsReadOnly = true,
                                                         Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
-                                                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)), Height = 15,FontSize = 7};
+                                                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)), FontSize = 7};
                     grd.ColumnDefinitions.Add(new ColumnDefinition() {Width = GridLength.Auto });
                     int colIndex = grd.ColumnDefinitions.Count() -1;
                     txtHeader.SetValue(Grid.RowProperty, 0);
@@ -470,7 +482,7 @@ namespace GreenField.Gadgets.Views
         {
             if (e.OriginalSource is TextBlock)
             {
-                string sectorID = ((e.OriginalSource as TextBlock).DataContext as AggregateResult).FunctionName.ToString();
+                string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
                 _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
                 {
                     SectorID = sectorID
@@ -500,181 +512,190 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+                
+        #region Export to Pdf
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportToPdf_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.DefaultExt = "*.pdf";
+            dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
 
-        //#region Export To Pdf Methods
+            if (dialog.ShowDialog() == true)
+            {
+                RadDocument document = CreateDocument(dgRelativePerformance);
 
-        ///// <summary>
-        ///// Event handler when user wants to Export the Grid to PDF
-        ///// </summary>
-        ///// <param name="sender"></param>
-        ///// <param name="e"></param>
-        //private void btnExportToPdf_Click(object sender, RoutedEventArgs e)
-        //{
-        //    SaveFileDialog dialog = new SaveFileDialog();
-        //    dialog.DefaultExt = "*.pdf";
-        //    dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
+                document.LayoutMode = DocumentLayoutMode.Paged;
+                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
 
-        //    if (dialog.ShowDialog() == true)
-        //    {
-        //        RadDocument document = CreateDocument(dgRelativePerformance);
-        //        document.LayoutMode = DocumentLayoutMode.Paged;
-        //        document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-        //        document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
-        //        PdfFormatProvider provider = new PdfFormatProvider();
-        //        using (Stream output = dialog.OpenFile())
-        //        {
-        //            provider.Export(document, output);
-        //        }
-        //    }
-        //}       
+                PdfFormatProvider provider = new PdfFormatProvider();
+                using (Stream output = dialog.OpenFile())
+                {
+                    provider.Export(document, output);
+                }
+            }
 
-        //private RadDocument CreateDocument(RadGridView grid)
-        //{
-        //    List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
-        //                                             orderby c.DisplayIndex
-        //                                             select c).ToList();
-        //    Table table = new Table();
-        //    RadDocument document = new RadDocument();
-        //    Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
-        //    section.Blocks.Add(table);
-        //    document.Sections.Add(section);
+        }
 
-        //    if (grid.ShowColumnHeaders)
-        //    {
-        //        TableRow headerRow = new TableRow();
-        //        if (grid.GroupDescriptors.Count() > 0)
-        //        {
-        //            TableCell indentCell = new TableCell();
-        //            indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
-        //            indentCell.Background = Colors.Gray;
-        //            headerRow.Cells.Add(indentCell);
-        //        }
+        private RadDocument CreateDocument(RadGridView grid)
+        {
+            List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
+                                                     orderby c.DisplayIndex
+                                                     select c).ToList();
+            Table table = new Table();
+            RadDocument document = new RadDocument();
+            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            section.Blocks.Add(table);
+            document.Sections.Add(section);
 
-        //        for (int i = 0; i < columns.Count(); i++)
-        //        {
-        //            TableCell cell = new TableCell();
-        //            cell.Background = Colors.White;
-        //            AddCellValue(cell, columns[i].UniqueName);
-        //            cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
-        //            headerRow.Cells.Add(cell);
-        //        }
+            if (grid.ShowColumnHeaders)
+            {
+                TableRow headerRow = new TableRow();
+                if (grid.GroupDescriptors.Count() > 0)
+                {
+                    TableCell indentCell = new TableCell();
+                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+                    indentCell.Background = Colors.Gray;
+                    headerRow.Cells.Add(indentCell);
+                }
 
-        //        table.Rows.Add(headerRow);
-        //    }
+                for (int i = 0; i < columns.Count(); i++)
+                {
+                    TableCell cell = new TableCell();
+                    cell.Background = Colors.White;
+                    AddCellValue(cell, columns[i].UniqueName);
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
+                    headerRow.Cells.Add(cell);
+                }
 
-        //    if (grid.Items.Groups != null)
-        //    {
-        //        for (int i = 0; i < grid.Items.Groups.Count(); i++)
-        //        {
-        //            AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        AddDataRows(table, grid.Items, columns, grid);
-        //    }
+                table.Rows.Add(headerRow);
+            }
 
-        //    return document;
-        //}
+            if (grid.Items.Groups != null)
+            {
+                for (int i = 0; i < grid.Items.Groups.Count(); i++)
+                {
+                    AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
+                }
+            }
+            else
+            {
+                AddDataRows(table, grid.Items, columns, grid);
+            }
 
-        //private void AddDataRows(Table table, IList items, IList<GridViewBoundColumnBase> columns, RadGridView grid)
-        //{
-        //    for (int i = 0; i < items.Count; i++)
-        //    {
-        //        TableRow row = new TableRow();
+            return document;
+        }
 
-        //        if (grid.GroupDescriptors.Count() > 0)
-        //        {
-        //            TableCell indentCell = new TableCell();
-        //            indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
-        //            indentCell.Background = Colors.White;
-        //            row.Cells.Add(indentCell);
-        //        }
+        private void AddDataRows(Table table, IList items, IList<GridViewBoundColumnBase> columns, RadGridView grid)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                TableRow row = new TableRow();
 
-        //        for (int j = 0; j < columns.Count(); j++)
-        //        {
-        //            TableCell cell = new TableCell();
+                if (grid.GroupDescriptors.Count() > 0)
+                {
+                    TableCell indentCell = new TableCell();
+                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+                    indentCell.Background = Colors.White;
+                    row.Cells.Add(indentCell);
+                }
 
-        //            object value = columns[j].GetValueForItem(items[i]);
+                for (int j = 0; j < columns.Count(); j++)
+                {
+                    TableCell cell = new TableCell();
 
-        //            AddCellValue(cell, value != null ? value.ToString() : string.Empty);
+                    object value = columns[j].GetValueForItem(items[i]);
 
-        //            cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
-        //            cell.Background = Colors.White;
+                    AddCellValue(cell, value != null ? value.ToString() : string.Empty);
 
-        //            row.Cells.Add(cell);
-        //        }
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[j].ActualWidth);
+                    cell.Background = Colors.White;
 
-        //        table.Rows.Add(row);
-        //    }
-        //}
+                    row.Cells.Add(cell);
+                }
 
-        //private void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid)
-        //{
-        //    TableRow row = new TableRow();
+                table.Rows.Add(row);
+            }
+        }
 
-        //    int level = GetGroupLevel(group);
-        //    if (level > 0)
-        //    {
-        //        TableCell cell = new TableCell();
-        //        cell.PreferredWidth = new TableWidthUnit(level * 20);
-        //        cell.Background = Colors.White;
-        //        row.Cells.Add(cell);
-        //    }
+        private void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid)
+        {
+            TableRow row = new TableRow();
 
-        //    TableCell aggregatesCell = new TableCell();
-        //    aggregatesCell.Background = Colors.White;
-        //    aggregatesCell.ColumnSpan = columns.Count() + (grid.GroupDescriptors.Count() > 0 ? 1 : 0) - (level > 0 ? 1 : 0);
+            int level = GetGroupLevel(group);
+            if (level > 0)
+            {
+                TableCell cell = new TableCell();
+                cell.PreferredWidth = new TableWidthUnit(level * 20);
+                cell.Background = Colors.White;
+                row.Cells.Add(cell);
+            }
 
-        //    AddCellValue(aggregatesCell, group.Key != null ? group.Key.ToString() : string.Empty);
+            TableCell aggregatesCell = new TableCell();
+            aggregatesCell.Background = Colors.White;
+            aggregatesCell.ColumnSpan = columns.Count() + (grid.GroupDescriptors.Count() > 0 ? 1 : 0) - (level > 0 ? 1 : 0);
 
-        //    foreach (AggregateResult result in group.AggregateResults)
-        //    {
-        //        AddCellValue(aggregatesCell, result.FormattedValue != null ? result.FormattedValue.ToString() : string.Empty);
-        //    }
+            AddCellValue(aggregatesCell, group.Key != null ? group.Key.ToString() : string.Empty);
 
-        //    row.Cells.Add(aggregatesCell);
+            foreach (AggregateResult result in group.AggregateResults)
+            {
+                AddCellValue(aggregatesCell, result.FormattedValue != null ? result.FormattedValue.ToString() : string.Empty);
+            }
 
-        //    table.Rows.Add(row);
+            row.Cells.Add(aggregatesCell);
 
-        //    if (group.HasSubgroups)
-        //    {
-        //        for (int i = 0; i < group.Subgroups.Count(); i++)
-        //        {
-        //            AddGroupRow(table, group.Subgroups[i] as QueryableCollectionViewGroup, columns, grid);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < group.ItemCount; i++)
-        //        {
-        //            AddDataRows(table, group.Items, columns, grid);
-        //        }
-        //    }
-        //}
+            table.Rows.Add(row);
 
-        //private void AddCellValue(TableCell cell, string value)
-        //{
-        //    Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
-        //    cell.Blocks.Add(paragraph);
-        //    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
-        //    span.Text = value;
-        //    paragraph.Inlines.Add(span);
-        //}
+            if (group.HasSubgroups)
+            {
+                for (int i = 0; i < group.Subgroups.Count(); i++)
+                {
+                    AddGroupRow(table, group.Subgroups[i] as QueryableCollectionViewGroup, columns, grid);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < group.ItemCount; i++)
+               {
+                    AddDataRows(table, group.Items, columns, grid);
+                }
+            }
+        }
 
-        //private int GetGroupLevel(IGroup group)
-        //{
-        //    int level = 0;
-        //    IGroup parent = group.ParentGroup;
-        //    while (parent != null)
-        //    {
-        //        level++;
-        //        parent = parent.ParentGroup;
-        //    }
-        //    return level;
-        //} 
+        private void AddCellValue(TableCell cell, string value)
+        {
+            if (value != null)
+            {
+                Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
+                cell.Blocks.Add(paragraph);
+                Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
+                if (value == "")
+                    value = " ";
+                span.Text = value;
+                span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+                span.FontSize = 7;
+                paragraph.Inlines.Add(span);
+            }
+        }
 
-        //#endregion
+        private int GetGroupLevel(IGroup group)
+        {
+            int level = 0;
+            IGroup parent = group.ParentGroup;
+            while (parent != null)
+            {
+                level++;
+                parent = parent.ParentGroup;
+            }
+            return level;
+        }
+
+        #endregion
 
         #region Dispose Method
         /// <summary>

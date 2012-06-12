@@ -15,13 +15,6 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
-        <!--GridViewGroupPanelStyle-->
-        <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
-            <Setter Property="Height" Value="10"/>
-            <Setter Property="FontSize" Value="7"/>
-            <Setter Property="Background" Value="#9F1D21"/>
-        </Style>
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -41,7 +34,7 @@
         <Grid Grid.Row="1">
             <!--doughnutchart-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
+                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed" MaxHeight="300">
                     <telerik:RadChart.DefaultView>
                         <telerikCharting:ChartDefaultView>
                             <telerik:ChartDefaultView.ChartLegend>
@@ -98,7 +91,6 @@
                                          FontFamily="Arial" 
                                          ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          RowLoaded="dgSectorBreakdown_Rowloaded">
@@ -131,8 +123,7 @@
                             <telerik:GroupDescriptor Member="Sector" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
-                    </telerik:RadGridView>
-                    
+                    </telerik:RadGridView>                    
                 </telerik:RadBusyIndicator>
             </Border>
         </Grid>

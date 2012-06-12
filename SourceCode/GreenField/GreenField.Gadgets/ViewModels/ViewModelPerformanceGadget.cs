@@ -79,7 +79,7 @@ namespace GreenField.Gadgets.ViewModels
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod !=null)
             {
-                _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+              //  _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
             }
             if (_eventAggregator != null)
             {

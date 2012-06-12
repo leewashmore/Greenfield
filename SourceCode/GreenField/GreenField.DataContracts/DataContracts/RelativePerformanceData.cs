@@ -68,7 +68,6 @@ namespace GreenField.DataContracts
 
         public override int GetHashCode()
         {
-
             //Get hash code for the Name field if it is not null.
             int hashProductName = SectorId.GetHashCode();
 

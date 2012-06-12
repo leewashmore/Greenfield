@@ -15,8 +15,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-
-    <!--Layout Grid-->
+    
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        <!--Layout Grid-->
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,7 +28,7 @@
         <Grid Grid.Row="0">
             <!--header for the gadget-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding PortfolioSelectionData.PortfolioId}" FontWeight="Bold"/>
+                <TextBlock Text="{Binding BenchmarkId}" FontWeight="Bold"/>
                 <TextBlock Text=" (" FontWeight="Bold"/>
                 <TextBlock Text="{Binding EffectiveDate, StringFormat='MMMM dd, yyyy'}" FontWeight="Bold"/>
                 <TextBlock Text=") Constituents" FontWeight="Bold"/>
@@ -44,7 +45,6 @@
         <!--Grid containing data to be displayed in the gadget-->
         <Grid Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                     <telerik:RadGridView Name="dgIndexConstituents" 
                                          ItemsSource="{Binding IndexConstituentsInfo}" 
                                          telerik:StyleManager.Theme="Metro"
@@ -131,10 +131,11 @@
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>
-                </telerik:RadBusyIndicator>
             </Border>
         </Grid>        
     </Grid>
+    </telerik:RadBusyIndicator>
+
 </helpers:ViewBaseUserControl>
 
 

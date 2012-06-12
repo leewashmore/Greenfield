@@ -986,7 +986,6 @@ namespace GreenField.Web.Services
             }
         }
 
-
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public bool RemoveMarketSnapshotPreference(string userName, string snapshotName)
@@ -1119,7 +1118,7 @@ namespace GreenField.Web.Services
                         {
                             aggssPortfolioShare += RetrieveRelativePerformancePortfolioWeight(row, period);
                             aggssBenchmarkShare += RetrieveRelativePerformanceBenchmarkWeight(row, period);
-                            aggssAlpha += RetrieveRelativePerformanceAlphaValue(row, period);
+                            aggssAlpha = aggssAlpha + RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
 

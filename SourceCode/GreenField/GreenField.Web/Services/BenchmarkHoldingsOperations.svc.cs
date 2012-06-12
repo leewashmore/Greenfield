@@ -115,10 +115,11 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
+        /// <param name="isExCashSecurity">bool</param>
         /// <returns>list of sector breakdown data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        public List<SectorBreakdownData> RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity)
         {
             try
             {
@@ -134,12 +135,14 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception();
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                //Retrieve GF_PORTFOLIO_HOLDINGS data SECURITYTHEMECODE
+                List<GF_PORTFOLIO_HOLDINGS> data = isExCashSecurity
+                                                   ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                           && record.SECURITYTHEMECODE != "CASH").ToList()
+                                                   : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
 
-                List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
-                    .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate.Date)
-                        .ToList();
 
                 if (data.Count.Equals(0))
                     return result;
@@ -156,7 +159,7 @@ namespace GreenField.Web.Services
                 if (benchmarkId.Count != 1)
                     throw new InvalidOperationException();
 
-                List<GF_BENCHMARK_HOLDINGS> benchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                List<GF_BENCHMARK_HOLDINGS> benchmarkData = DimensionEntity.GF_BENCHMARK_HOLDINGS.
                     Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
 
@@ -200,10 +203,11 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <param name="fundSelectionData">PortfolioSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
+        /// <param name="isExCashSecurity">bool</param>
         /// <returns>list of region breakdown data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        public List<RegionBreakdownData> RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity)
         {
             try
             {
@@ -219,12 +223,13 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception();
 
-                DimensionEntitiesService.Entities entity = DimensionEntity;
-
-                List<GF_PORTFOLIO_HOLDINGS> data = entity.GF_PORTFOLIO_HOLDINGS
-                    .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate.Date)
-                        .ToList();
+                //Retrieve GF_PORTFOLIO_HOLDINGS data SECURITYTHEMECODE
+                List<GF_PORTFOLIO_HOLDINGS> data = isExCashSecurity 
+                                                   ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                           && record.SECURITYTHEMECODE != "CASH").ToList()
+                                                   : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date).ToList();
 
                 if (data.Count.Equals(0))
                     return result;
@@ -241,7 +246,7 @@ namespace GreenField.Web.Services
                 if (benchmarkId.Count != 1)
                     throw new InvalidOperationException();
 
-                List<GF_BENCHMARK_HOLDINGS> benchmarkData = entity.GF_BENCHMARK_HOLDINGS.
+                List<GF_BENCHMARK_HOLDINGS> benchmarkData = DimensionEntity.GF_BENCHMARK_HOLDINGS.
                     Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
                 foreach (GF_PORTFOLIO_HOLDINGS record in data)
@@ -287,10 +292,11 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <param name="portfolioSelectionData">PortfolioSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
+        /// <param name="isExCashSecurity">bool</param>
         /// <returns>list of top holdings data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<TopHoldingsData> RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        public List<TopHoldingsData> RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity)
         {
             try
             {
@@ -306,24 +312,30 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception();
 
-                //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare
-                decimal sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS
-                    .Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && t.PORTFOLIO_DATE == effectiveDate.Date)
-                    .ToList()
-                    .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare on the basis of SECURITYTHEMECODE
+                decimal sumMarketValuePortfolio = isExCashSecurity 
+                                                  ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                     && t.PORTFOLIO_DATE == effectiveDate.Date 
+                                                                                                     && t.SECURITYTHEMECODE != "CASH").ToList()
+                                                                                                     .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC))
+               
+                                                  : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                     && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
+                                                                                                     .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                 //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
                 if (sumMarketValuePortfolio == 0)
                     return result;
 
-                //Retrieve GF_PORTFOLIO_HOLDINGS data for top ten holdings based on DIRTY_VALUE_PC
-                List<GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
-                    .Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                        && record.PORTFOLIO_DATE == effectiveDate.Date)
-                    .OrderByDescending(record => record.DIRTY_VALUE_PC)
-                    .Take(10)
-                    .ToList();
+                //Retrieve GF_PORTFOLIO_HOLDINGS data for top ten holdings based on DIRTY_VALUE_PC and SECURITYTHEMECODE
+                List<GF_PORTFOLIO_HOLDINGS> data = isExCashSecurity 
+                                                   ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                           && record.SECURITYTHEMECODE != "CASH")
+                                                                                                           .OrderByDescending(record => record.DIRTY_VALUE_PC).Take(10).ToList() 
+                                                   : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date)
+                                                                                                           .OrderByDescending(record => record.DIRTY_VALUE_PC).Take(10).ToList();
 
                 if (data == null)
                     throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
@@ -427,6 +439,7 @@ namespace GreenField.Web.Services
                                 result.Add(new IndexConstituentsData()
                                 {
                                     ConstituentName = record.ISSUE_NAME,
+                                    BenchmarkId = record.BENCHMARK_ID,
                                     Country = country + " (" + record.ISO_COUNTRY_CODE + ")",
                                     Region = record.ASHEMM_PROP_REGION_CODE,
                                     Sector = record.GICS_SECTOR_NAME,

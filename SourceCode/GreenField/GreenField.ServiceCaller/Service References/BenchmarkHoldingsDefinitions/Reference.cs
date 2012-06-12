@@ -74,7 +74,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "e")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveSectorBreakdownDataService" +
             "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.SectorBreakdownData> EndRetrieveSectorBreakdownData(System.IAsyncResult result);
         
@@ -82,14 +82,14 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "e")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRegionBreakdownDataService" +
             "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.RegionBreakdownData> EndRetrieveRegionBreakdownData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveTopHoldingsData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveTopHoldingsDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveTopHoldingsDataServiceFaul" +
             "tFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.TopHoldingsData> EndRetrieveTopHoldingsData(System.IAsyncResult result);
         
@@ -784,8 +784,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -796,7 +796,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         private System.IAsyncResult OnBeginRetrieveSectorBreakdownData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
+            bool isExCashSecurity = ((bool)(inValues[2]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveSectorBreakdownData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         private object[] OnEndRetrieveSectorBreakdownData(System.IAsyncResult result) {
@@ -812,11 +813,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveSectorBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, null);
+        public void RetrieveSectorBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity) {
+            this.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, null);
         }
         
-        public void RetrieveSectorBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveSectorBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, object userState) {
             if ((this.onBeginRetrieveSectorBreakdownDataDelegate == null)) {
                 this.onBeginRetrieveSectorBreakdownDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSectorBreakdownData);
             }
@@ -828,12 +829,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveSectorBreakdownDataDelegate, new object[] {
                         portfolioSelectionData,
-                        effectiveDate}, this.onEndRetrieveSectorBreakdownDataDelegate, this.onRetrieveSectorBreakdownDataCompletedDelegate, userState);
+                        effectiveDate,
+                        isExCashSecurity}, this.onEndRetrieveSectorBreakdownDataDelegate, this.onRetrieveSectorBreakdownDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -844,7 +846,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         private System.IAsyncResult OnBeginRetrieveRegionBreakdownData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, callback, asyncState);
+            bool isExCashSecurity = ((bool)(inValues[2]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveRegionBreakdownData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         private object[] OnEndRetrieveRegionBreakdownData(System.IAsyncResult result) {
@@ -860,11 +863,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveRegionBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, null);
+        public void RetrieveRegionBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity) {
+            this.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, null);
         }
         
-        public void RetrieveRegionBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveRegionBreakdownDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, object userState) {
             if ((this.onBeginRetrieveRegionBreakdownDataDelegate == null)) {
                 this.onBeginRetrieveRegionBreakdownDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRegionBreakdownData);
             }
@@ -876,12 +879,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveRegionBreakdownDataDelegate, new object[] {
                         portfolioSelectionData,
-                        effectiveDate}, this.onEndRetrieveRegionBreakdownDataDelegate, this.onRetrieveRegionBreakdownDataCompletedDelegate, userState);
+                        effectiveDate,
+                        isExCashSecurity}, this.onEndRetrieveRegionBreakdownDataDelegate, this.onRetrieveRegionBreakdownDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveTopHoldingsData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveTopHoldingsData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -892,7 +896,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         private System.IAsyncResult OnBeginRetrieveTopHoldingsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveTopHoldingsData(portfolioSelectionData, effectiveDate, callback, asyncState);
+            bool isExCashSecurity = ((bool)(inValues[2]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveTopHoldingsData(portfolioSelectionData, effectiveDate, isExCashSecurity, callback, asyncState);
         }
         
         private object[] OnEndRetrieveTopHoldingsData(System.IAsyncResult result) {
@@ -908,11 +913,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveTopHoldingsDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, null);
+        public void RetrieveTopHoldingsDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity) {
+            this.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, null);
         }
         
-        public void RetrieveTopHoldingsDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveTopHoldingsDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, object userState) {
             if ((this.onBeginRetrieveTopHoldingsDataDelegate == null)) {
                 this.onBeginRetrieveTopHoldingsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveTopHoldingsData);
             }
@@ -924,7 +929,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveTopHoldingsDataDelegate, new object[] {
                         portfolioSelectionData,
-                        effectiveDate}, this.onEndRetrieveTopHoldingsDataDelegate, this.onRetrieveTopHoldingsDataCompletedDelegate, userState);
+                        effectiveDate,
+                        isExCashSecurity}, this.onEndRetrieveTopHoldingsDataDelegate, this.onRetrieveTopHoldingsDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1529,10 +1535,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRetrieveSectorBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
+                _args[2] = isExCashSecurity;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveSectorBreakdownData", _args, callback, asyncState);
                 return _result;
             }
@@ -1543,10 +1550,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRetrieveRegionBreakdownData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
+                _args[2] = isExCashSecurity;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveRegionBreakdownData", _args, callback, asyncState);
                 return _result;
             }
@@ -1557,10 +1565,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRetrieveTopHoldingsData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
+                _args[2] = isExCashSecurity;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveTopHoldingsData", _args, callback, asyncState);
                 return _result;
             }

@@ -324,9 +324,7 @@ namespace GreenField.App.ViewModel
                     {
                         SelectorPayload.PortfolioSelectionData = value;
                         _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
-                    }
-
-
+                    }                    
                 }
             }
         }
