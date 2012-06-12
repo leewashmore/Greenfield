@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
             {
                 BusyIndicatorStatus = true;
-                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate),ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -299,7 +299,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(result);
+                    SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result));
                 }
             }
             catch (Exception ex)
@@ -316,7 +316,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region Methods
+        #region HelperMethods
 
         /// <summary>
         /// Service call to Retrieve the Details for a Portfolio
@@ -376,14 +376,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IsoCountryCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                                
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -406,14 +411,21 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.ProprietaryRegionCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
+
                                 }
                             }
                             break;
@@ -436,14 +448,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SectorName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -466,14 +483,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                                
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -496,14 +518,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SubIndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -518,13 +545,77 @@ namespace GreenField.Gadgets.ViewModels
                             }
                             break;
                         }
-
-
                 }
             }
             catch (Exception ex)
             {
 
+            }
+        }
+
+        /// <summary>
+        /// Calculations for Portfolio Details UI
+        /// </summary>
+        /// <param name="portfolioDetailsData">Collection of Portfolio Details Data</param>
+        /// <returns>Collection of PortfolioDetailsData</returns>
+        private List<PortfolioDetailsData> CalculatePortfolioValues(List<PortfolioDetailsData> portfolioDetailsData)
+        {
+            try
+            {
+                if (portfolioDetailsData == null)
+                    return new List<PortfolioDetailsData>();
+                if (portfolioDetailsData.Count == 0)
+                    return new List<PortfolioDetailsData>();
+
+                decimal sumDirtyValuePC = 0;
+                decimal sumModelWeight = 0;
+
+                sumDirtyValuePC = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.DirtyValuePC));
+                sumModelWeight = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.AshEmmModelWeight));
+
+                if (sumDirtyValuePC == 0 && sumModelWeight == 0)
+                    return portfolioDetailsData;
+
+                if (sumDirtyValuePC == 0)
+                    Prompt.ShowDialog("Portfolio Details UI :The Sum of Portfolio Weights is 0");
+
+                if (sumModelWeight == 0)
+                    Prompt.ShowDialog("Portfolio Details UI :The Sum of Model Weights is 0");
+
+
+                foreach (PortfolioDetailsData item in portfolioDetailsData)
+                {
+                    if (sumDirtyValuePC != 0)
+                    {
+                        item.PortfolioWeight = item.DirtyValuePC / sumDirtyValuePC * 100;
+                        item.RePortfolioWeight = item.PortfolioWeight;
+                        item.ActivePosition = item.PortfolioWeight - item.BenchmarkWeight;
+                    }
+                    else
+                    {
+                        item.RePortfolioWeight = 0;
+                        item.ActivePosition = 0;
+                    }
+
+
+                    if (sumModelWeight != 0)
+                    {
+                        item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight * 100;
+                        item.ReAshEmmModelWeight = item.AshEmmModelWeight;
+                    }
+                    else
+                    {
+                        item.ReAshEmmModelWeight = 0;
+                    }
+
+                    item.ReBenchmarkWeight = item.BenchmarkWeight;
+
+                }
+                return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                return new List<PortfolioDetailsData>();
             }
         }
 

@@ -20,7 +20,11 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ChildViewInsertEntity : ChildWindow
     {
-        private List<string> _groupNames;
+        #region Fields
+        private List<string> _groupNames; 
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -39,10 +43,19 @@ namespace GreenField.Gadgets.Views
             this._groupNames = groupNames;
             this.DataContext = new ChildViewModelInsertEntity(result);
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
-        }
+        } 
+        #endregion
 
-        public MarketSnapshotPreference InsertedMarketSnapshotPreference { get; set; }
+        #region Properties
+        public MarketSnapshotPreference InsertedMarketSnapshotPreference { get; set; } 
+        #endregion
 
+        #region Event Handlers
+        /// <summary>
+        /// OK button Click Event Handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             InsertedMarketSnapshotPreference = (this.DataContext as ChildViewModelInsertEntity).SelectedMarketSnapshotPreference;
@@ -55,30 +68,43 @@ namespace GreenField.Gadgets.Views
                         + "' is already present in this snapshot. Please input a different group name";
                     this.txtMessage.Visibility = System.Windows.Visibility.Visible;
                     return;
-                } 
+                }
             }
             this.DialogResult = true;
-            
+
         }
 
+        /// <summary>
+        /// Cancel button Click Event Handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">RoutedEventArgs</param>
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;            
+            this.DialogResult = false;
         }
 
+        /// <summary>
+        /// txtGroupName TextChanged Event Handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">TextChangedEventArgs</param>
         private void txtGroupName_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         }
 
+        /// <summary>
+        /// cmbEntitySelection SelectionChanged Event Handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">SelectionChangedEventArgs</param>
         private void cmbEntitySelection_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
-        }       
-
-
-        
+        }        
+        #endregion
     }
 }
 

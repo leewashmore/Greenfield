@@ -73,8 +73,10 @@ namespace GreenField.Gadgets.ViewModels
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if ((_portfolioSelectionData != null) && (_effectiveDate != null))
+            {
                 _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
-
+                BusyIndicatorStatus = true;
+            }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
@@ -110,6 +112,24 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get 
+            {
+                return _busyIndicatorStatus; 
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
+        
+
         #endregion
         #endregion
 
@@ -140,11 +160,9 @@ namespace GreenField.Gadgets.ViewModels
                     _portfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        if (null != AssetAllocationDataLoadedEvent)
-                            AssetAllocationDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
-
                 }
                 else
                 {
@@ -175,8 +193,7 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
-                        if (null != AssetAllocationDataLoadedEvent)
-                            AssetAllocationDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
@@ -225,6 +242,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }

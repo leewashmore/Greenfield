@@ -68,8 +68,7 @@
             </StackPanel>
         </Grid>
 
-        <telerik:RadButton x:Name="CancelButton" FontSize="7" FontFamily="Arial" Content="Cancel" Click="CancelButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="3" />
         <telerik:RadButton x:Name="OKButton" FontSize="7" FontFamily="Arial" Content="OK" Click="OKButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,79,0" Grid.Row="3" />
-
+        <telerik:RadButton x:Name="CancelButton" FontSize="7" FontFamily="Arial" Content="Cancel" Click="CancelButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="3" />        
     </Grid>
 </controls:ChildWindow>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Windows;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Ink;
@@ -67,13 +68,38 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+
+        private List<RelativePerformanceActivePositionData> _relativePerformanceActivePositionOrigInfo;
+        public List<RelativePerformanceActivePositionData> RelativePerformanceActivePositionOrigInfo
+        {
+            get
+            {
+                if (_relativePerformanceActivePositionOrigInfo == null)
+                    _relativePerformanceActivePositionOrigInfo = new List<RelativePerformanceActivePositionData>();
+                return _relativePerformanceActivePositionOrigInfo;
+            }
+            set
+            {
+                if (_relativePerformanceActivePositionOrigInfo != value)
+                {
+                    _relativePerformanceActivePositionOrigInfo = value;
+                    UpdateRelativePerformanceActivePositionInfo(value, Convert.ToBoolean(DisplayIssuerIsChecked));
+                }
+            }
+        }
+
         /// <summary>
         /// Contains data to be displayed in the gadget
         /// </summary>
         private ObservableCollection<RelativePerformanceActivePositionData> _relativePerformanceActivePositionInfo;
         public ObservableCollection<RelativePerformanceActivePositionData> RelativePerformanceActivePositionInfo
         {
-            get { return _relativePerformanceActivePositionInfo; }
+            get
+            {
+                if (_relativePerformanceActivePositionInfo == null)
+                    _relativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>();
+                return _relativePerformanceActivePositionInfo; 
+            }
             set
             {
                 if (_relativePerformanceActivePositionInfo != value)
@@ -83,6 +109,22 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        private bool? _displayIssuerIsChecked = true;
+        public bool? DisplayIssuerIsChecked
+        {
+            get { return _displayIssuerIsChecked; }
+            set
+            {
+                if (_displayIssuerIsChecked != value)
+                {
+                    _displayIssuerIsChecked = value;
+                    RaisePropertyChanged(() => this.DisplayIssuerIsChecked);
+                    UpdateRelativePerformanceActivePositionInfo(RelativePerformanceActivePositionOrigInfo, Convert.ToBoolean(value));
+                }
+            }
+        }
+        
 
         /// <summary>
         /// Effective date selected
@@ -283,7 +325,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(result);
+                    RelativePerformanceActivePositionOrigInfo = result;
                 }
                 else
                 {
@@ -300,6 +342,60 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
+
+        private void UpdateRelativePerformanceActivePositionInfo(List<RelativePerformanceActivePositionData> value, bool issuerFilter = false)
+        {
+            if (issuerFilter)
+            {
+                List<RelativePerformanceActivePositionData> groupedData = new List<RelativePerformanceActivePositionData>();
+                List<String> distinctIssuers = value.Select(record => record.EntityGroup).Distinct().ToList();
+                foreach (String item in distinctIssuers)
+                {
+                    Decimal? aggMarketValue = 0;
+                    Decimal? aggFundWeight = 0;
+                    Decimal? aggBenchmarkWeight = 0;
+
+                    foreach (RelativePerformanceActivePositionData data in value.Where(g => g.EntityGroup == item))
+                    {
+                        aggMarketValue += data.MarketValue == null ? 0 : data.MarketValue;
+                        aggFundWeight += data.FundWeight == null ? 0 : data.FundWeight;
+                        aggBenchmarkWeight += data.BenchmarkWeight == null ? 0 : data.BenchmarkWeight;
+                    }
+
+                    groupedData.Add(new RelativePerformanceActivePositionData()
+                    {
+                        Entity = item,
+                        EntityGroup = null,
+                        MarketValue = aggMarketValue,
+                        FundWeight = aggFundWeight,
+                        BenchmarkWeight = aggBenchmarkWeight,
+                        ActivePosition = aggFundWeight - aggBenchmarkWeight
+                    });
+
+                    RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(groupedData);
+                }
+
+            }
+            else
+            {
+                List<RelativePerformanceActivePositionData> unGroupedData = new List<RelativePerformanceActivePositionData>();
+
+                foreach (RelativePerformanceActivePositionData item in value)
+                {
+                    unGroupedData.Add(new RelativePerformanceActivePositionData()
+                    {
+                        Entity = item.Entity,
+                        EntityGroup = item.EntityGroup,
+                        MarketValue = item.MarketValue,
+                        FundWeight = item.FundWeight,
+                        BenchmarkWeight = item.BenchmarkWeight,
+                        ActivePosition = item.ActivePosition
+                    });
+                }
+
+                RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(unGroupedData);
+            }
+        }
 
         #region Dispose Method
         /// <summary>

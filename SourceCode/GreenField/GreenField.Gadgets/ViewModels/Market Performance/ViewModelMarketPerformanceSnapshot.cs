@@ -63,6 +63,13 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             SelectedMarketSnapshotSelectionInfo = param.DashboardGadgetPayload.MarketSnapshotSelectionData;
 
+            //RetrieveEntitySelectionData Service Call
+            if (_dbInteractivity != null && EntitySelectionInfo == null)
+            {
+                BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
+                _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
+            }
+
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
             if (_eventAggregator != null)
             {
@@ -75,6 +82,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 HandleMarketPerformanceSnapshotNameReferenceSetEvent(SelectedMarketSnapshotSelectionInfo);
             }
+
+            
         }
         #endregion
 
@@ -238,7 +247,21 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region Busy Indicator Notification Content
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool _busyIndicatorIsBusy = false;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }        
+
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
@@ -623,10 +646,6 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
             BusyIndicatorNotification();            
         }
-        #endregion
-
-        #region Events
-        public event DataRetrievalProgressIndicatorEventHandler SnapshotPerformanceDataLoadedEvent;
         #endregion
 
         #region Event Handlers
@@ -1652,16 +1671,24 @@ namespace GreenField.Gadgets.ViewModels
             _createGroupInfo = crtGroupInfo;
         }
 
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="showBusyIndicator">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
                 BusyIndicatorContent = message;
-            if (SnapshotPerformanceDataLoadedEvent != null)
-            {
-                SnapshotPerformanceDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = showBusyIndicator });
-            }
+
+            BusyIndicatorIsBusy = showBusyIndicator;
         }
 
+        /// <summary>
+        /// Get Deep Copy for List of MarketSnapshotPreference type data
+        /// </summary>
+        /// <param name="data">List of MarketSnapshotPreference object</param>
+        /// <returns>List of MarketSnapshotPreference object</returns>
         public List<MarketSnapshotPreference> GetMarketSnapshotPreferenceDeepCopy(List<MarketSnapshotPreference> list)
         {
             List<MarketSnapshotPreference> result = new List<MarketSnapshotPreference>();
@@ -1683,6 +1710,11 @@ namespace GreenField.Gadgets.ViewModels
             return result;
         }
 
+        /// <summary>
+        /// Get Deep Copy for List of MarketPerformanceSnapshotData type data
+        /// </summary>
+        /// <param name="data">List of MarketPerformanceSnapshotData object</param>
+        /// <returns>List of MarketPerformanceSnapshotData object</returns>
         public List<MarketPerformanceSnapshotData> GetMarketPerformanceSnapshotDataDeepCopy(List<MarketPerformanceSnapshotData> list)
         {
             List<MarketPerformanceSnapshotData> result = new List<MarketPerformanceSnapshotData>();
@@ -1719,6 +1751,11 @@ namespace GreenField.Gadgets.ViewModels
             return result;
         }
 
+        /// <summary>
+        /// Get Deep Copy for PopulatedMarketPerformanceSnapshotData type data
+        /// </summary>
+        /// <param name="data">PopulatedMarketPerformanceSnapshotData object</param>
+        /// <returns>PopulatedMarketPerformanceSnapshotData object</returns>
         public PopulatedMarketPerformanceSnapshotData GetPopulatedMarketPerformanceSnapshotDataDeepCopy(PopulatedMarketPerformanceSnapshotData data)
         {
             PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
@@ -1740,6 +1777,10 @@ namespace GreenField.Gadgets.ViewModels
             return result;
         }
 
+        /// <summary>
+        /// Construct XML for Save As Event
+        /// </summary>
+        /// <returns></returns>
         private string SaveAsXmlBuilder()
         {
             string saveAsXml = String.Empty;
@@ -1789,6 +1830,10 @@ namespace GreenField.Gadgets.ViewModels
             return saveAsXml;
         }
 
+        /// <summary>
+        /// Construct XML for Save Event
+        /// </summary>
+        /// <returns></returns>
         private string SaveXmlBuilder()
         {
             string saveXml = String.Empty;

@@ -24,7 +24,7 @@ namespace GreenField.Gadgets.Helpers
                 row.FontFamily = new FontFamily("Arial");
                 row.FontWeight = FontWeights.Bold;
                 row.Height = 15;
-                    
+
                 if (row != null && row.IndentLevel > 1)
                 {
                     foreach (var indent in row.ChildrenOfType<GridViewIndentCell>())

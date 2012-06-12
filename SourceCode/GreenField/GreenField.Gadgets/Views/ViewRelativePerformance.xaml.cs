@@ -87,7 +87,7 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        #region Event
+        #region Event Handlers
         /// <summary>
         /// event to handle RadBusyIndicator
         /// </summary>
@@ -198,9 +198,6 @@ namespace GreenField.Gadgets.Views
 
         }
 
-        #endregion
-
-        #region Event Handlers
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
             _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
@@ -209,7 +206,8 @@ namespace GreenField.Gadgets.Views
             //Clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; columnIndex++)
             {
-                dgRelativePerformance.Columns.RemoveAt(columnIndex);
+                this.dgRelativePerformance.Columns.RemoveAt(columnIndex);
+
             }
 
             int cIndex = 0;
@@ -337,13 +335,7 @@ namespace GreenField.Gadgets.Views
                 this.dpTopActivePositionSecurity.Children.Add(svc); 
             }
 
-        }
-
-        private class SecurityDetail
-        {
-            public String SecurityName { get; set; }
-            public String SecurityAlpha { get; set; }
-        }
+        }        
 
         void RelativePerformanceToggledSectorGridBuildEvent(RelativePerformanceToggledSectorGridBuildEventArgs e)
         {
@@ -697,5 +689,11 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private class SecurityDetail
+        {
+            public String SecurityName { get; set; }
+            public String SecurityAlpha { get; set; }
+        }
     }
 }

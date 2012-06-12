@@ -132,7 +132,7 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Right" TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding PriceReturn}" 
-                                                        DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         HeaderTextAlignment="Right" TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn Header="Amount Traded" DataMemberBinding="{Binding AmountTraded}" 

@@ -26,6 +26,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
 
+        void RetrieveEntitySelectionWithBenchmarkData(Action<List<EntitySelectionData>> callback);
+
         void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval, Action<List<UnrealizedGainLossData>> callback);
 
         void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback);

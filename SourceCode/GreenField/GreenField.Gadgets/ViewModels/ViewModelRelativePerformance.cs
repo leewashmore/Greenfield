@@ -345,8 +345,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (RelativePerformanceDataLoadEvent != null)
-                    RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                //if (RelativePerformanceDataLoadEvent != null)
+                //    RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {

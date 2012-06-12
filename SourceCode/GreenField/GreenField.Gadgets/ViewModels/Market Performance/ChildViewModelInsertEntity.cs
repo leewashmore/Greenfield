@@ -30,15 +30,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result">List of EntitySelectionData object</param>
         public ChildViewModelInsertEntity(List<EntitySelectionData> result)
         {
-            EntitySelectionInfoSource = result;
-            //EntitySelectionGroupInfo = new CollectionViewSource();
-            //EntitySelectionGroupInfo.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
-            //EntitySelectionGroupInfo.SortDescriptions.Add(new SortDescription
-            //        {
-            //            PropertyName = "SortOrder",
-            //            Direction = ListSortDirection.Ascending
-            //        });
-            //EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
+            EntitySelectionInfoSource = result;            
         }
         #endregion
 
@@ -175,6 +167,10 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Toggle Checked Bindings
+        /// <summary>
+        /// SecurityToggle IsChecked
+        /// </summary>
         private bool? _securityToggleChecked = true;
         public bool? SecurityToggleChecked
         {
@@ -194,6 +190,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// BenchmarkToggle IsChecked
+        /// </summary>
         private bool? _benchmarkToggleChecked = false;
         public bool? BenchmarkToggleChecked
         {
@@ -213,6 +212,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// CommodityToggle IsChecked
+        /// </summary>
         private bool? _commodityToggleChecked = false;
         public bool? CommodityToggleChecked
         {
@@ -230,7 +232,8 @@ namespace GreenField.Gadgets.ViewModels
                     BenchmarkToggleChecked = !value;
                 }
             }
-        }
+        } 
+        #endregion
 
         #region Return Type Selection
         /// <summary>

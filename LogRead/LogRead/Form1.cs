@@ -110,151 +110,172 @@ namespace LogRead
             _SelectedDirectory = this.tbxLogFolderLoc.Text;
 
             List<LogDetails> logdetails = new List<LogDetails>();
-            
+
+            if (Directory.Exists(@"C:\Log_Temp"))
+                Directory.Delete(@"C:\Log_Temp", true);
+
+            Directory.CreateDirectory(@"C:\Log_Temp");
+
             foreach (String logFile in logFiles)
             {
-                Encoding encoding = GetFileEncoding(logFile);
-                StreamReader logFileReader = new StreamReader(logFile, encoding);
-                do
+                string cpyLogFile = @"C:\Log_Temp" + logFile.Replace(this.tbxLogFolderLoc.Text, "");
+
+                if (!Directory.Exists(@"C:\Log_Temp"))
+                    Directory.CreateDirectory(@"C:\Log_Temp");
+
+                File.Copy(logFile, cpyLogFile);
+
+                Encoding encoding = GetFileEncoding(cpyLogFile);
+                using (StreamReader logFileReader = new StreamReader(cpyLogFile, encoding))
                 {
-                    String textLine = logFileReader.ReadLine();
-
-                    String subString = String.Empty;
-                    LogDetails logDetail = new LogDetails();
-
-                    logDetail.LogSelection = true;
-
-                    logDetail.LogDateTime = new DateTime(Convert.ToInt32(textLine.Substring(0, 4))
-                        , Convert.ToInt32(textLine.Substring(5, 2)), Convert.ToInt32(textLine.Substring(8, 2))
-                        , Convert.ToInt32(textLine.Substring(11, 2)), Convert.ToInt32(textLine.Substring(14, 2))
-                        , Convert.ToInt32(textLine.Substring(17, 2)), Convert.ToInt32(textLine.Substring(20, 3))).ToString("dd/MM/yyyy HH:mm:ss:fff");
-
-                    subString = textLine.Substring(24, textLine.Length - 24);
-                    logDetail.LogCategory = textLine.Substring(24, subString.IndexOf("?") - 1).Trim();
-
-                    logDetail.LogUserIsLogged = subString.IndexOf("|User[(") > 0;
-
-                    
-                    string logUserSubString = logDetail.LogUserIsLogged
-                        ? subString.Substring(subString.IndexOf("|User[("), subString.Length - subString.IndexOf("|User[("))
-                        : subString.Substring(subString.IndexOf("|LoginID[("), subString.Length - subString.IndexOf("|LoginID[("));
-
-                    if (logUserSubString.IndexOf(")]").Equals(-1))
-                        logDetail.LogUserName = logUserSubString.Substring(logUserSubString.IndexOf("[(") + 2, logUserSubString.Length - logUserSubString.IndexOf("[(") - 1);
-                    else
-                        logDetail.LogUserName = logUserSubString.Substring(logUserSubString.IndexOf("[(") + 2, logUserSubString.IndexOf(")]") - logUserSubString.IndexOf("[(") - 2);
-
-
-                    if (subString.IndexOf("|Type[(").Equals(-1))
+                    #region Log File Read
+                    do
                     {
-                        logDetail.LogType = null;
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|Type[("), subString.Length - subString.IndexOf("|Type[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogType = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        String textLine = logFileReader.ReadLine();
+
+                        String subString = String.Empty;
+                        LogDetails logDetail = new LogDetails();
+
+                        logDetail.LogSelection = true;
+
+                        logDetail.LogDateTime = new DateTime(Convert.ToInt32(textLine.Substring(0, 4))
+                            , Convert.ToInt32(textLine.Substring(5, 2)), Convert.ToInt32(textLine.Substring(8, 2))
+                            , Convert.ToInt32(textLine.Substring(11, 2)), Convert.ToInt32(textLine.Substring(14, 2))
+                            , Convert.ToInt32(textLine.Substring(17, 2)), Convert.ToInt32(textLine.Substring(20, 3))).ToString("dd/MM/yyyy HH:mm:ss:fff");
+
+                        subString = textLine.Substring(24, textLine.Length - 24);
+                        logDetail.LogCategory = textLine.Substring(24, subString.IndexOf("?") - 1).Trim();
+
+                        logDetail.LogUserIsLogged = subString.IndexOf("|User[(") > 0;
+
+
+                        string logUserSubString = logDetail.LogUserIsLogged
+                            ? subString.Substring(subString.IndexOf("|User[("), subString.Length - subString.IndexOf("|User[("))
+                            : subString.Substring(subString.IndexOf("|LoginID[("), subString.Length - subString.IndexOf("|LoginID[("));
+
+                        if (logUserSubString.IndexOf(")]").Equals(-1))
+                            logDetail.LogUserName = logUserSubString.Substring(logUserSubString.IndexOf("[(") + 2, logUserSubString.Length - logUserSubString.IndexOf("[(") - 1);
                         else
-                            logDetail.LogType = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                            logDetail.LogUserName = logUserSubString.Substring(logUserSubString.IndexOf("[(") + 2, logUserSubString.IndexOf(")]") - logUserSubString.IndexOf("[(") - 2);
 
 
-                    if (subString.IndexOf("|Message[(").Equals(-1))
-                    {
-                        logDetail.LogExceptionMessage = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|Message[("), subString.Length - subString.IndexOf("|Message[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogExceptionMessage = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|Type[(").Equals(-1))
+                        {
+                            logDetail.LogType = null;
+                        }
                         else
-                            logDetail.LogExceptionMessage = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|Type[("), subString.Length - subString.IndexOf("|Type[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogType = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogType = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|StackTrace[(").Equals(-1))
-                    {
-                        logDetail.LogExceptionStackTrace = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|StackTrace[("), subString.Length - subString.IndexOf("|StackTrace[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogExceptionStackTrace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+
+                        if (subString.IndexOf("|Message[(").Equals(-1))
+                        {
+                            logDetail.LogExceptionMessage = "N/A";
+                        }
                         else
-                            logDetail.LogExceptionStackTrace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|Message[("), subString.Length - subString.IndexOf("|Message[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogExceptionMessage = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogExceptionMessage = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|MethodNameSpace[(").Equals(-1))
-                    {
-                        logDetail.LogMethodNameSpace = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|MethodNameSpace[("), subString.Length - subString.IndexOf("|MethodNameSpace[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogMethodNameSpace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|StackTrace[(").Equals(-1))
+                        {
+                            logDetail.LogExceptionStackTrace = "N/A";
+                        }
                         else
-                            logDetail.LogMethodNameSpace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|StackTrace[("), subString.Length - subString.IndexOf("|StackTrace[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogExceptionStackTrace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogExceptionStackTrace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|ArgumentIndex[(").Equals(-1))
-                    {
-                        logDetail.LogArgumentIndex = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|ArgumentIndex[("), subString.Length - subString.IndexOf("|ArgumentIndex[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogArgumentIndex = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|MethodNameSpace[(").Equals(-1))
+                        {
+                            logDetail.LogMethodNameSpace = "N/A";
+                        }
                         else
-                            logDetail.LogArgumentIndex = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|MethodNameSpace[("), subString.Length - subString.IndexOf("|MethodNameSpace[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogMethodNameSpace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogMethodNameSpace = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|ArgumentValue[(").Equals(-1))
-                    {
-                        logDetail.LogArgumentValue = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|ArgumentValue[("), subString.Length - subString.IndexOf("|ArgumentValue[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogArgumentValue = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|ArgumentIndex[(").Equals(-1))
+                        {
+                            logDetail.LogArgumentIndex = "N/A";
+                        }
                         else
-                            logDetail.LogArgumentValue = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|ArgumentIndex[("), subString.Length - subString.IndexOf("|ArgumentIndex[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogArgumentIndex = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogArgumentIndex = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|Account[(").Equals(-1))
-                    {
-                        logDetail.LogAccountDetail = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|Account[("), subString.Length - subString.IndexOf("|Account[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogAccountDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|ArgumentValue[(").Equals(-1))
+                        {
+                            logDetail.LogArgumentValue = "N/A";
+                        }
                         else
-                            logDetail.LogAccountDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|ArgumentValue[("), subString.Length - subString.IndexOf("|ArgumentValue[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogArgumentValue = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogArgumentValue = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                    if (subString.IndexOf("|Role[(").Equals(-1))
-                    {
-                        logDetail.LogRoleDetail = "N/A";
-                    }
-                    else
-                    {
-                        string logSubString = subString.Substring(subString.IndexOf("|Role[("), subString.Length - subString.IndexOf("|Role[("));
-                        if (logSubString.IndexOf(")]").Equals(-1))
-                            logDetail.LogRoleDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                        if (subString.IndexOf("|Account[(").Equals(-1))
+                        {
+                            logDetail.LogAccountDetail = "N/A";
+                        }
                         else
-                            logDetail.LogRoleDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
-                    }
-                    
-                    logdetails.Add(logDetail);
-                    
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|Account[("), subString.Length - subString.IndexOf("|Account[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogAccountDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogAccountDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
 
-                } while (logFileReader.Peek() != -1);
+                        if (subString.IndexOf("|Role[(").Equals(-1))
+                        {
+                            logDetail.LogRoleDetail = "N/A";
+                        }
+                        else
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|Role[("), subString.Length - subString.IndexOf("|Role[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogRoleDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogRoleDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
+
+                        logdetails.Add(logDetail);
+
+
+                    } while (logFileReader.Peek() != -1);
+                    #endregion                     
+                }                
+                
+                File.Delete(cpyLogFile);
             }
+
+            if (Directory.Exists(@"C:\Log_Temp"))
+                Directory.Delete(@"C:\Log_Temp", true);
 
             this.dgcDate.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             this.dgcCategory.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -282,40 +303,43 @@ namespace LogRead
         private Encoding GetFileEncoding(String filePath)
         {
             Encoding enc = null;
-            System.IO.FileStream file = new System.IO.FileStream(filePath,
-                FileMode.Open, FileAccess.Read, FileShare.Read);
-            if (file.CanSeek)
+            
+            using (FileStream file = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                byte[] bom = new byte[4]; // Get the byte-order mark, if there is one  
-                file.Read(bom, 0, 4);
-                if ((bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) || // utf-8  
-                    (bom[0] == 0xff && bom[1] == 0xfe) || // ucs-2le, ucs-4le, and ucs-16le  
-                    (bom[0] == 0xfe && bom[1] == 0xff) || // utf-16 and ucs-2  
-                    (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)) // ucs-4  
+                if (file.CanSeek)
                 {
-                    enc = System.Text.Encoding.Unicode;
+                    byte[] bom = new byte[4]; // Get the byte-order mark, if there is one  
+                    file.Read(bom, 0, 4);
+                    if ((bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf) || // utf-8  
+                        (bom[0] == 0xff && bom[1] == 0xfe) || // ucs-2le, ucs-4le, and ucs-16le  
+                        (bom[0] == 0xfe && bom[1] == 0xff) || // utf-16 and ucs-2  
+                        (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)) // ucs-4  
+                    {
+                        enc = System.Text.Encoding.Unicode;
+                    }
+                    else
+                    {
+                        enc = System.Text.Encoding.ASCII;
+                    }
+
+                    // Now reposition the file cursor back to the start of the file  
+                    file.Seek(0, System.IO.SeekOrigin.Begin);
                 }
                 else
                 {
+                    // The file cannot be randomly accessed, so you need to decide what to set the default to  
+                    // based on the data provided. If you're expecting data from a lot of older applications,  
+                    // default your encoding to Encoding.ASCII. If you're expecting data from a lot of newer  
+                    // applications, default your encoding to Encoding.Unicode. Also, since binary files are  
+                    // single byte-based, so you will want to use Encoding.ASCII, even though you'll probably  
+                    // never need to use the encoding then since the Encoding classes are really meant to get  
+                    // strings from the byte array that is the file.  
+
                     enc = System.Text.Encoding.ASCII;
-                }
-
-                // Now reposition the file cursor back to the start of the file  
-                file.Seek(0, System.IO.SeekOrigin.Begin);
-            }
-            else
-            {
-                // The file cannot be randomly accessed, so you need to decide what to set the default to  
-                // based on the data provided. If you're expecting data from a lot of older applications,  
-                // default your encoding to Encoding.ASCII. If you're expecting data from a lot of newer  
-                // applications, default your encoding to Encoding.Unicode. Also, since binary files are  
-                // single byte-based, so you will want to use Encoding.ASCII, even though you'll probably  
-                // never need to use the encoding then since the Encoding classes are really meant to get  
-                // strings from the byte array that is the file.  
-
-                enc = System.Text.Encoding.ASCII;
+                } 
             }
 
+            
             return enc;
         }
 

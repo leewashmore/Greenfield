@@ -69,7 +69,8 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartAreaMultiLineBenchmark = this.chMultiLineBenchmarkChart.DefaultView.ChartArea;
             this.chMultiLineBenchmarkChart.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.MultiLineBenchmarkDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_MultiLineBenchmarkDataLoadedEvent);
-            AddGridHeader();
+            this.AddGridHeader();
+            this.ApplyChartStyles();
         }
 
         #endregion
@@ -154,6 +155,17 @@ namespace GreenField.Gadgets.Views
             dgBenchmarkUI.Columns[5].Header = DateTime.Today.AddYears(-1).Year.ToString();
             dgBenchmarkUI.Columns[6].Header = DateTime.Today.AddYears(-2).Year.ToString();
 
+        }
+
+        /// <summary>
+        /// Applying Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartLegend.Header = string.Empty;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.TicksDistance = 50;
         }
 
         #endregion

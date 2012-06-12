@@ -44,6 +44,15 @@
   <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionWithBenchmarkData" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveEntitySelectionWithBenchmarkDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossData" />
   </wsdl:message>
@@ -51,7 +60,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveUnrealizedGainLossDataResponse" />
   </wsdl:message>
   <wsdl:message name="SecurityReferenceOperations_RetrieveUnrealizedGainLossData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="SecurityReferenceOperations">
     <wsdl:operation name="RetrieveSecurityReferenceData">
@@ -73,6 +82,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataResponse" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEntitySelectionWithBenchmarkData">
+      <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchmarkData" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchmarkDataResponse" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchmarkDataServiceFaultFault" name="ServiceFaultFault" message="tns:SecurityReferenceOperations_RetrieveEntitySelectionWithBenchmarkData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveUnrealizedGainLossData">
       <wsdl:input wsaw:Action="http://tempuri.org/SecurityReferenceOperations/RetrieveUnrealizedGainLossData" message="tns:SecurityReferenceOperations_RetrieveUnrealizedGainLossData_InputMessage" />
@@ -120,6 +134,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveEntitySelectionData">
       <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveEntitySelectionWithBenchmarkData">
+      <soap:operation soapAction="http://tempuri.org/SecurityReferenceOperations/RetrieveEntitySelectionWithBenchmarkData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

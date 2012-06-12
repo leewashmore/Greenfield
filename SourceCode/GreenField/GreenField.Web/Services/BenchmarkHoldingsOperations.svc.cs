@@ -582,9 +582,7 @@ namespace GreenField.Web.Services
                     portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                     result.Add(portfolioResult);
                 }
-
-                result = PortfolioDetailsCalculations.CalculatePortfolioDetails(result);
-
+                                
                 return result;
             }
             catch (Exception ex)
