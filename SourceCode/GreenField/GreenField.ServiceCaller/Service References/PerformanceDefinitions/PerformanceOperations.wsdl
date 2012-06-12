@@ -213,6 +213,24 @@
   <wsdl:message name="PerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q21:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGridData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGridData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGridData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGridDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGridData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q22:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphData" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q23:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="PerformanceOperations">
     <wsdl:operation name="RetrieveRelativePerformanceUIData">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveRelativePerformanceUIData" message="tns:PerformanceOperations_RetrieveRelativePerformanceUIData_InputMessage" />
@@ -326,6 +344,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketCapitalizationData" message="tns:PerformanceOperations_RetrieveMarketCapitalizationData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketCapitalizationDataResponse" message="tns:PerformanceOperations_RetrieveMarketCapitalizationData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketCapitalizationDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGridData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridData" message="tns:PerformanceOperations_RetrievePerformanceGridData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridDataResponse" message="tns:PerformanceOperations_RetrievePerformanceGridData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrievePerformanceGridData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGraphData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData" message="tns:PerformanceOperations_RetrievePerformanceGraphData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataResponse" message="tns:PerformanceOperations_RetrievePerformanceGraphData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PerformanceOperations" type="tns:PerformanceOperations">
@@ -590,6 +618,30 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveMarketCapitalizationData">
       <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketCapitalizationData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGridData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePerformanceGraphData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -11,6 +11,11 @@
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
     <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml" x:Name="BaseStyles"/>                
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
         <Style x:Key="ItemLabelStyle"
        TargetType="TextBlock">
         <Setter Property="Foreground"
@@ -19,7 +24,7 @@
             Value="8" />
         <Setter Property="FontStyle"
             Value="Normal" />
-        </Style>
+        </Style>                
     </helpers:ViewBaseUserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -73,32 +78,7 @@
                                 <Image Source="../Images/zoom_out.png" Width="16" Height="16" Margin="3" />
                             </telerik:RadButton>
                         </Grid>
-                    </telerik:RadExpander.Header>
-                    <telerik:RadExpander.Content>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid Grid.Row="0" Margin="0,0,2,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="100"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="FromDate" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <telerik:RadDateTimePicker InputMode="DatePicker" Grid.Column="1"/>                                
-                            </Grid>
-
-                            <Grid Grid.Row="1" Margin="0,2,2,0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="100"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="ToDate" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                <telerik:RadDateTimePicker InputMode="DatePicker" Grid.Column="1"/>
-                            </Grid>
-                        </Grid>
-                    </telerik:RadExpander.Content>
+                    </telerik:RadExpander.Header>                   
                 </telerik:RadExpander>
 
             </Grid>
@@ -106,22 +86,13 @@
                 <Grid x:Name="grdRadGridView" >
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="False"
+                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="True"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro" Visibility="Visible"
-                                                 RowLoaded="dgPerformanceGadget_RowLoaded">
-                                <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" />
-                                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" />
-                                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" />
-                                    <telerik:GridViewDataColumn Header="1 Year" DataMemberBinding="{Binding FIRST_YEAR}"/>
-                                    <telerik:GridViewDataColumn Header="3 Year" DataMemberBinding="{Binding THIRD_YEAR}" />
-                                    <telerik:GridViewDataColumn Header="5 Year" DataMemberBinding="{Binding FIFTH_YEAR}"/>
-                                    <telerik:GridViewDataColumn Header="10 Year" DataMemberBinding="{Binding TENTH_YEAR}" />                                    
-                                </telerik:RadGridView.Columns>
+                                                 RowLoaded="dgPerformanceGadget_RowLoaded">                                
                             </telerik:RadGridView>
                         </Border>
                     </telerik:RadBusyIndicator>
@@ -133,7 +104,7 @@
                         <telerik:RadChart x:Name="chPerformanceGadget" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}">
                             <telerik:RadChart.DefaultView>
-                                <telerik:ChartDefaultView ChartLegendPosition="Bottom">                                   
+                                <telerik:ChartDefaultView ChartLegendPosition="Right">                                   
                                     <telerik:ChartDefaultView.ChartArea>
                                         <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" 
                                                            EnableAnimations="False" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
@@ -176,7 +147,9 @@
                                     <telerik:ChartDefaultView.ChartLegend>
                                         <telerik:ChartLegend UseAutoGeneratedItems="True" LegendItemMarkerShape="SquareRounded"
                                                              Header="" ItemsPanelOrientation="Horizontal" x:Name="chUnrealizedGainLossLegend" 
-                                                             BorderBrush="Transparent" Background="Transparent" FontSize="8" />
+                                                             BorderBrush="Transparent" Background="Transparent" FontSize="8"
+                                                             Style="{StaticResource ChartLegendStyle}" 
+                                                             LegendItemStyle="{StaticResource ChartLegendItemStyle}" />
                                     </telerik:ChartDefaultView.ChartLegend>
                                 </telerik:ChartDefaultView>
                             </telerik:RadChart.DefaultView>
@@ -188,8 +161,8 @@
                                                               ShowItemLabels="False" ShowPointMarks="False" />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.ItemMappings>
-                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="PORTFOLIO_PERFORMANCE"/>
-                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EFFECTIVE_DATE" />
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="PortfolioPerformance"/>
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EffectiveDate" />
                                     </telerik:SeriesMapping.ItemMappings>
                                 </telerik:SeriesMapping>
                                 <telerik:SeriesMapping LegendLabel="Benchmark" >
@@ -198,8 +171,8 @@
                                                               ItemToolTipFormat=" #Y   / Date: #X{dd-MMM-yyyy}"  />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.ItemMappings>
-                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="BENCHMARK_PERFORMANCE" />
-                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EFFECTIVE_DATE" />
+                                            <telerik:ItemMapping DataPointMember="YValue" FieldName="BenchmarkPerformance" />
+                                            <telerik:ItemMapping DataPointMember="XValue" FieldName="EffectiveDate" />
                                     </telerik:SeriesMapping.ItemMappings>
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>

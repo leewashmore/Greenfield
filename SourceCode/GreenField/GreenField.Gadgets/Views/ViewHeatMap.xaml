@@ -30,10 +30,12 @@
                         BorderThickness="1"                        
                         UseDefaultLayout="False"
                         MouseClickMode="None" 
-                        MouseDoubleClickMode="None"
-                        MouseDragMode="None"
-                        IsMouseWheelZoomEnabled="False" Grid.Column="0" Grid.Row="0">
-
+                        MouseDoubleClickMode="None"                      
+                        IsMouseWheelZoomEnabled="False" 
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        MouseLeftButtonUp="shape_MouseLeftButtonUp">
+                            
                 <telerik:RadMap.Provider>
                     <telerik:EmptyProvider />
                 </telerik:RadMap.Provider>

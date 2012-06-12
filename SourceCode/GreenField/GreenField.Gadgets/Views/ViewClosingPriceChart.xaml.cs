@@ -17,6 +17,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Telerik.Windows.Controls.Primitives;
 using GreenField.ServiceCaller;
+using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
@@ -65,6 +66,8 @@ namespace GreenField.Gadgets.Views
             ApplyChartStyles();
         }
 
+
+
         #endregion
 
         /// <summary>
@@ -82,6 +85,7 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
+            this.chPricing.DefaultView.ChartArea.ItemToolTipOpening += new ItemToolTipEventHandler(ChartArea_ItemToolTipOpening);
         }
 
 
@@ -112,17 +116,21 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if(grdRadChart.Visibility==Visibility.Visible)
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    
-                };
-                RadExportOptions dataGridOption = new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER };
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                    { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                }
 
-                if (dgPricing.ItemsSource != null && dgPricing.Items.Count > 0)
-                    RadExportOptionsInfo.Add(dataGridOption);
-
+                if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                }
+                                               
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();
             }
@@ -302,6 +310,20 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
+        {
+            //string ticker = Convert.ToString(e.DataPoint.LegendLabel);
+            //double dateOA = (double)(e.DataPoint.XValue);
+            //DateTime xAxisValue = DateTime.FromOADate(dateOA);
+            //if (ticker == "")
+            //{
+            //    ticker = this.DataContextClosingPriceChart.PlottedSeries.
+            //        Where(a => a.IndexedPrice == Convert.ToDecimal(e.DataPoint.YValue) && a.FromDate == xAxisValue.Date).Select(a => a.Ticker).FirstOrDefault();
+            //}
+            //tooltip.Content = "Security: " + ticker + " " + "Return: " + e.DataPoint.YValue.ToString() + "/Date: " + string.Format("{0:dd.MM.yyyy} \n {0}", DateTime.FromOADate(dateOA));
+            //e.DataSeries.LegendLabel + string.Format("{0:dd.MM.yyyy} \n {1}", DateTime.FromOADate(value), e.DataPoint.YValue);
+        }
+
         #region RemoveEvents
 
         public override void Dispose()
@@ -316,7 +338,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgPricing_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            //GroupedGridRowLoadedHandler.Implement(e);
+            GroupedGridRowLoadedHandler.Implement(e);
         }
     }
 }

@@ -134,6 +134,43 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void RetrieveEntitySelectionWithBenchmarkData(Action<List<EntitySelectionData>> callback)
+        {
+            SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
+            client.RetrieveEntitySelectionWithBenchmarkDataAsync();
+            client.RetrieveEntitySelectionWithBenchmarkDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
         /// <summary>
         /// Service Caller Method for Closing Price Chart
         /// </summary>
@@ -396,11 +433,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
         /// <param name="callback"></param>
-        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback)
+        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<SectorBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate,isExCashSecurity);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -439,11 +477,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
         /// <param name="callback"></param>
-        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback)
+        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<RegionBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -482,11 +521,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
         /// <param name="callback"></param>
-        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback)
+        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<TopHoldingsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate,isExCashSecurity);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1082,10 +1122,10 @@ namespace GreenField.ServiceCaller
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
         /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
-        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
+        public void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate,bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate, objGetBenchmark);
+            client.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, objSelectedDate,excludeCash, objGetBenchmark);
             client.RetrievePortfolioDetailsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1771,10 +1811,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="name">Name of the fund</param>
         /// <param name="callback"></param>
-        public void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback)
+        public void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period,String country, Action<List<PerformanceGraphData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePerformanceGraphDataAsync(name);
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrievePerformanceGraphDataAsync(fundSelectionData, effectiveDate, period,country);
             client.RetrievePerformanceGraphDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1814,10 +1854,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="name">Name of the fund</param>
         /// <param name="callback"></param>
-        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback)
+        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country, Action<List<PerformanceGridData>> callback)
         {
-            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate);
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate, country);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -2011,47 +2051,77 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-        //#region Slice 5 - External Research
+        #region Slice 5 - External Research
 
-        //public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-        //    , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback)
-        //{
-        //    ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-        //    client.GetFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
-        //    client.GetFinancialStatementCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                if (e.Result != null)
-        //                {
-        //                    callback(e.Result.ToList());
-        //                }
-        //                else
-        //                {
-        //                    callback(null);
-        //                }
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(null);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(null);
-        //        }
-        //    };
-        //}
+        public void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveIssuerIdAsync(entitySelectionData);
+            client.RetrieveIssuerIdCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);                        
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
 
-        //#endregion
+        public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
+            client.RetrieveFinancialStatementCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        #endregion
 
     }
 }

@@ -85,61 +85,86 @@
                                          AlternationCount="2"
                                          FontFamily="Arial" 
                                          ShowColumnFooters="False" 
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"                                         
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupPanelBackground="#9F1D21"
-                                         AutoExpandGroups="True">
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                         AutoExpandGroups="True"
+                                         RowLoaded="dgMacroDBKeyReport_RowLoaded">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
+                        
                         <telerik:GridViewDataColumn x:Name="dgcDescription" 
                                                     Header="Description" 
                                                     IsFilterable="False" 
                                                     DataMemberBinding="{Binding DESCRIPTION}" 
-                                                    Width="Auto"
+                                                    Width="*"
                                                     HeaderTextAlignment="Left" 
+                                                    TextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
-                        <telerik:GridViewDataColumn x:Name="dgcYear1" 
+                            <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcYear1" 
                                                     Header="Year1" 
                                                     DataMemberBinding="{Binding YearOne}" 
-                                                    Width="*" HeaderTextAlignment="Left" 
+                                                    Width="Auto"
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcYear2" 
                                                     Header="Year2" 
                                                     DataMemberBinding="{Binding YearTwo}" 
-                                                    Width="*" HeaderTextAlignment="Left" 
+                                                     Width="Auto"
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
                         <telerik:GridViewDataColumn x:Name="dgcYear3" 
                                                     Header="Year3" 
                                                     DataMemberBinding="{Binding YearThree}" 
-                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    Width="Auto" 
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
                         <telerik:GridViewDataColumn x:Name="dgcYear4" 
                                                     Header="Year4" 
                                                     DataMemberBinding="{Binding YearFour}" 
-                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    Width="Auto" 
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
+                        
                         <telerik:GridViewDataColumn x:Name="dgcYear5" 
                                                     Header="Year5" 
                                                     DataMemberBinding="{Binding YearFive}" 
-                                                    Width="Auto" HeaderTextAlignment="Left" 
+                                                    Width="Auto" 
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
-                            <telerik:GridViewDataColumn x:Name="dgcFiveYearAverage" 
-                                                    Header="FiveYearAvg" 
-                                                    DataMemberBinding="{Binding FiveYearAvg}" 
-                                                    Width="Auto" HeaderTextAlignment="Left" 
+                            <telerik:GridViewDataColumn x:Name="dgcYear6" 
+                                                    Header="Year6" 
+                                                    DataMemberBinding="{Binding YearSix}" 
+                                                    Width="Auto"
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcRightClick" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcFiveYearAverage" 
+                                                    Header="FiveYearAvg" 
+                                                    DataMemberBinding="{Binding FiveYearAvg}" 
+                                                    Width="Auto"
+                                                    HeaderTextAlignment="Right" 
+                                                    TextAlignment="Right"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
+                            
                     </telerik:RadGridView.Columns>
 
                     <!--<telerik:RadGridView.GroupDescriptors >

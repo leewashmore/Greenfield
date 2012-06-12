@@ -591,6 +591,20 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGridDataServiceFaultF" +
+            "ault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrievePerformanceGridData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string Country, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> EndRetrievePerformanceGridData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataServiceFault" +
+            "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1036,6 +1050,44 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrievePerformanceGridDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrievePerformanceGridDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrievePerformanceGraphDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrievePerformanceGraphDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class PerformanceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations>, GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations {
         
         private BeginOperationDelegate onBeginRetrieveRelativePerformanceUIDataDelegate;
@@ -1176,6 +1228,18 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveMarketCapitalizationDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrievePerformanceGridDataDelegate;
+        
+        private EndOperationDelegate onEndRetrievePerformanceGridDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrievePerformanceGridDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrievePerformanceGraphDataDelegate;
+        
+        private EndOperationDelegate onEndRetrievePerformanceGraphDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrievePerformanceGraphDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1274,6 +1338,10 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         public event System.EventHandler<RetrieveRelativePerformanceSecurityDataCompletedEventArgs> RetrieveRelativePerformanceSecurityDataCompleted;
         
         public event System.EventHandler<RetrieveMarketCapitalizationDataCompletedEventArgs> RetrieveMarketCapitalizationDataCompleted;
+        
+        public event System.EventHandler<RetrievePerformanceGridDataCompletedEventArgs> RetrievePerformanceGridDataCompleted;
+        
+        public event System.EventHandler<RetrievePerformanceGraphDataCompletedEventArgs> RetrievePerformanceGraphDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -2403,6 +2471,108 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                         isExCashSecurity}, this.onEndRetrieveMarketCapitalizationDataDelegate, this.onRetrieveMarketCapitalizationDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrievePerformanceGridData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string Country, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePerformanceGridData(portfolioSelectionData, effectiveDate, Country, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndRetrievePerformanceGridData(System.IAsyncResult result) {
+            return base.Channel.EndRetrievePerformanceGridData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrievePerformanceGridData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            string Country = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrievePerformanceGridData(portfolioSelectionData, effectiveDate, Country, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrievePerformanceGridData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndRetrievePerformanceGridData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrievePerformanceGridDataCompleted(object state) {
+            if ((this.RetrievePerformanceGridDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrievePerformanceGridDataCompleted(this, new RetrievePerformanceGridDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrievePerformanceGridDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string Country) {
+            this.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate, Country, null);
+        }
+        
+        public void RetrievePerformanceGridDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string Country, object userState) {
+            if ((this.onBeginRetrievePerformanceGridDataDelegate == null)) {
+                this.onBeginRetrievePerformanceGridDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePerformanceGridData);
+            }
+            if ((this.onEndRetrievePerformanceGridDataDelegate == null)) {
+                this.onEndRetrievePerformanceGridDataDelegate = new EndOperationDelegate(this.OnEndRetrievePerformanceGridData);
+            }
+            if ((this.onRetrievePerformanceGridDataCompletedDelegate == null)) {
+                this.onRetrievePerformanceGridDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePerformanceGridDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrievePerformanceGridDataDelegate, new object[] {
+                        portfolioSelectionData,
+                        effectiveDate,
+                        Country}, this.onEndRetrievePerformanceGridDataDelegate, this.onRetrievePerformanceGridDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, Country, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndRetrievePerformanceGraphData(System.IAsyncResult result) {
+            return base.Channel.EndRetrievePerformanceGraphData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrievePerformanceGraphData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.PortfolioSelectionData fundSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            string period = ((string)(inValues[2]));
+            string Country = ((string)(inValues[3]));
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, Country, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrievePerformanceGraphData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndRetrievePerformanceGraphData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrievePerformanceGraphDataCompleted(object state) {
+            if ((this.RetrievePerformanceGraphDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrievePerformanceGraphDataCompleted(this, new RetrievePerformanceGraphDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country) {
+            this.RetrievePerformanceGraphDataAsync(fundSelectionData, effectiveDate, period, Country, null);
+        }
+        
+        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, object userState) {
+            if ((this.onBeginRetrievePerformanceGraphDataDelegate == null)) {
+                this.onBeginRetrievePerformanceGraphDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePerformanceGraphData);
+            }
+            if ((this.onEndRetrievePerformanceGraphDataDelegate == null)) {
+                this.onEndRetrievePerformanceGraphDataDelegate = new EndOperationDelegate(this.OnEndRetrievePerformanceGraphData);
+            }
+            if ((this.onRetrievePerformanceGraphDataCompletedDelegate == null)) {
+                this.onRetrievePerformanceGraphDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePerformanceGraphDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrievePerformanceGraphDataDelegate, new object[] {
+                        fundSelectionData,
+                        effectiveDate,
+                        period,
+                        Country}, this.onEndRetrievePerformanceGraphDataDelegate, this.onRetrievePerformanceGraphDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -2808,6 +2978,37 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.MarketCapitalizationData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.MarketCapitalizationData>)(base.EndInvoke("RetrieveMarketCapitalizationData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrievePerformanceGridData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string Country, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
+                _args[2] = Country;
+                System.IAsyncResult _result = base.BeginInvoke("RetrievePerformanceGridData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> EndRetrievePerformanceGridData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGridData>)(base.EndInvoke("RetrievePerformanceGridData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
+                _args[0] = fundSelectionData;
+                _args[1] = effectiveDate;
+                _args[2] = period;
+                _args[3] = Country;
+                System.IAsyncResult _result = base.BeginInvoke("RetrievePerformanceGraphData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData>)(base.EndInvoke("RetrievePerformanceGraphData", _args, result)));
                 return _result;
             }
         }

@@ -42,7 +42,7 @@
             <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="15" Width="15" 
                                        HorizontalAlignment="Center" Click="btnExportExcel_Click"
                                        VerticalAlignment="Center" Margin="5,0,0,0"  
-                                       ToolTipService.ToolTip="Export">
+                                       ToolTipService.ToolTip="Export to Excel">
                 <Image Source="../Images/ExportExcel.png"/>
             </telerik:RadButton>
             <Rectangle Margin="5,0,0,0" Grid.Column="4" Width="1" Stroke="Gray" Opacity="0.2"/>
@@ -59,7 +59,6 @@
             </telerik:RadButton>
         </Grid>
 
-
         <Grid Grid.Row="1" x:Name="grdChart">
             <Grid.RowDefinitions>
                 <RowDefinition Height="7*"/>
@@ -71,36 +70,49 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0">
                     <telerik:RadChart x:Name="chMultiLineBenchmarkChart" telerik:StyleManager.Theme="Metro" 
-                                      ItemsSource="{Binding MultiLineBenchmarkUIChartData, Mode=TwoWay}" IsHitTestVisible="True" >
+                                      ItemsSource="{Binding MultiLineBenchmarkUIChartData, Mode=TwoWay}" IsHitTestVisible="True" 
+                                      DataBound="chMultiLineBenchmarkChart_DataBound">
+
+                        <telerik:RadChart.PaletteBrushes>
+                            <SolidColorBrush Color="#213671"/>
+                            <SolidColorBrush Color="#9F1D21"/>
+                            <SolidColorBrush Color="#A7362C"/>
+                            <SolidColorBrush Color="#BE715C"/>
+                            <SolidColorBrush Color="#DAAE9E"/>
+                            <SolidColorBrush Color="#FFFFFF"/>
+                            <SolidColorBrush Color="#000000"/>
+                        </telerik:RadChart.PaletteBrushes>
+
                         <telerik:RadChart.DefaultView>
-                            <telerik:ChartDefaultView ChartLegendPosition="Top">
+                            <telerik:ChartDefaultView ChartLegendPosition="Right">
                                 <telerik:ChartDefaultView.ChartArea >
                                     <telerik:ChartArea LegendName="chMultiLineBenchmarkLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString="No Data Available" >
+                                                       ItemOverlapPercent="0" ItemWidthPercent="100"
+                                                       EnableAnimations="False" NoDataString="No Data Available" >
                                         <telerik:ChartArea.ZoomScrollSettingsX>
                                             <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
-                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
+                                                                        SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
                                         </telerik:ChartArea.ZoomScrollSettingsX>
                                         <telerik:ChartArea.ZoomScrollSettingsY>
                                             <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"
-                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
+                                                                        SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                         </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerik:ChartArea.AxisX>
                                             <telerik:AxisX AutoRange="True" IsDateTime="True" 
-                                                               LayoutMode="Between"  
-                                                               Step="5"
-                                                               LabelStep="2" DefaultLabelFormat="d"/>
+                                                           LayoutMode="Between"  
+                                                           DefaultLabelFormat="m"/>
                                         </telerik:ChartArea.AxisX>
                                         <telerik:ChartArea.AxisY>
                                             <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True"/>
+                                                           AutoRange="True"/>
                                         </telerik:ChartArea.AxisY>
                                     </telerik:ChartArea>
                                 </telerik:ChartDefaultView.ChartArea>
                                 <telerik:ChartDefaultView.ChartLegend>
-                                    <telerik:ChartLegend FontSize="8" UseAutoGeneratedItems="True" 
-                                                             LegendItemMarkerShape="SquareRounded" Header=""
-                                                             ItemsPanelOrientation="Horizontal" x:Name="chMultiLineBenchmarkLegend" />
+                                    <telerik:ChartLegend UseAutoGeneratedItems="True" 
+                                                         Header="" Style="{StaticResource ChartLegendStyle}" 
+                                                         LegendItemStyle="{StaticResource ChartLegendItemStyle}"
+                                                         ItemsPanelOrientation="Horizontal" x:Name="chMultiLineBenchmarkLegend" />
                                 </telerik:ChartDefaultView.ChartLegend>
                             </telerik:ChartDefaultView>
                         </telerik:RadChart.DefaultView>
@@ -108,9 +120,9 @@
                             <telerik:SeriesMapping>
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
-                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                  EmptyPointBehavior="Gap" ShowItemToolTips="True"
+                                                                  LegendDisplayMode="SeriesLabel" 
+                                                                  ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:SeriesMapping.GroupingSettings>
                                     <telerik:GroupingSettings>
@@ -134,38 +146,44 @@
                                  SelectionMode ="Single" SelectionUnit="FullRow" 
                                  CanUserInsertRows="False" AlternationCount="2"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="True" 
-                                 ScrollMode="RealTime" AlternateRowBackground="#d8d5d4"
+                                 ScrollMode="RealTime" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" 
-                                 ColumnWidth="*" 
+                                 ColumnWidth="*" IsFilteringAllowed="False" 
                                  RowStyle="{StaticResource GridViewRowStyle}"
-                                 RowLoaded="dgBenchmarkUI_RowLoaded"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                 >
+                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n2}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n2}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n2}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding Name}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Left" TextAlignment="Left"/>
+                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n4}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n4}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n4}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="{Binding PreviousYearDataColumnHeader, Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding PreviousYearData}" x:Name="previousYearColumn"
-                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="{Binding TwoPreviousYearDataColumnHeader,Mode=TwoWay}"
                                                 DataMemberBinding="{Binding TwoPreviousYearData}" x:Name="twoPreviousYearColumn"
-                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="{Binding ThreePreviousYearDataColumnHeader,Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding ThreePreviousYearData}" x:Name="threePreviousYearColumn"
-                                                DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                CellStyle="{StaticResource GridViewCellStyle}" 
+                                                HeaderTextAlignment="Right" TextAlignment="Right"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Grid>
-
     </Grid>
 </my:ViewBaseUserControl>

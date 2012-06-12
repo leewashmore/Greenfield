@@ -785,12 +785,12 @@
       </EntityType>
       <EntityType Name="GF_SELECTION_BASEVIEW">
         <Key>
-          <PropertyRef Name="SHORT_NAME" />
+          <PropertyRef Name="INSTRUMENT_ID" />
           <PropertyRef Name="TYPE" />
         </Key>
-        <Property Name="SHORT_NAME" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="false" FixedLength="false" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
         <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
         <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="AIMS_COMMODITY_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />

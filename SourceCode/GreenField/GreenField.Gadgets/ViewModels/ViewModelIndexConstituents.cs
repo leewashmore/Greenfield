@@ -14,6 +14,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.Common;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
@@ -117,6 +118,24 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// benchmarkId for portfolio selected
+        /// </summary>
+        private string _benchmarkId;
+        public string BenchmarkId
+        {
+            get { return _benchmarkId; }
+            set 
+            {
+                if (_benchmarkId != value)
+                {
+                    _benchmarkId = value;
+                    RaisePropertyChanged(() => BenchmarkId);
+                }
+            }
+        }
+        
+
         #endregion
         #endregion
 
@@ -209,6 +228,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, indexConstituentsData, 1);
                     IndexConstituentsInfo = new ObservableCollection<IndexConstituentsData>(indexConstituentsData);
+                    BenchmarkId = IndexConstituentsInfo.ElementAt(0).BenchmarkId.ToString();
                 }
                 else
                 {

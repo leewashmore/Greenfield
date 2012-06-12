@@ -38,6 +38,28 @@ namespace GreenField.Web.Services
             }
         }
 
+        private class BenchmarkSelectionData : IEquatable<BenchmarkSelectionData>
+        {
+            public String BenchmarkId { get; set; }
+            public String BenchmarkName { get; set; }
+
+            public bool Equals(BenchmarkSelectionData other)
+            {
+                if (Object.ReferenceEquals(other, null)) return false;
+                if (Object.ReferenceEquals(this, other)) return true;
+                //return BenchmarkId.Equals(other.BenchmarkId) && BenchmarkName.Equals(other.BenchmarkName);
+                return BenchmarkId.Equals(other.BenchmarkId);
+            }
+
+            public override int GetHashCode()
+            {
+                int hashBenchmarkId = BenchmarkId.GetHashCode();
+                //int hashBenchmarkName = BenchmarkName.GetHashCode();
+                //return hashBenchmarkId ^ hashBenchmarkName;
+                return hashBenchmarkId;
+            }
+        }
+
         public ResourceManager ServiceFaultResourceManager
         {
             get
@@ -433,11 +455,61 @@ namespace GreenField.Web.Services
                         {
 
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
-                            ShortName = record.SHORT_NAME,
-                            LongName = record.LONG_NAME,
-                            InstrumentID = record.INSTRUMENT_ID,
-                            Type = record.TYPE,
-                            SecurityType = record.SECURITY_TYPE
+                            ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
+                            LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
+                            InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
+                            Type = record.TYPE == null ? String.Empty : record.TYPE,
+                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE
+                        });
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// retrieve list of securities for security selector
+        /// </summary>
+        /// <returns>list of entity selection data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<EntitySelectionData> RetrieveEntitySelectionWithBenchmarkData()
+        {
+            try
+            {
+                List<EntitySelectionData> result = new List<EntitySelectionData>();
+               
+                List<BenchmarkSelectionData> benchmarkSelectionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
+                    .Where(record => record.TO_DATE == Convert.ToDateTime("30/4/2012"))
+                    .Select(record => new BenchmarkSelectionData()
+                    {
+                        BenchmarkId = record.BM,
+                        BenchmarkName = record.BMNAME
+                    })
+                    .ToList();
+
+                benchmarkSelectionData = benchmarkSelectionData.Distinct().ToList();
+
+                if (benchmarkSelectionData != null)
+                {
+                    foreach (BenchmarkSelectionData record in benchmarkSelectionData)
+                    {
+                        result.Add(new EntitySelectionData()
+                        {
+
+                            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
+                            ShortName = record.BenchmarkId,
+                            LongName = record.BenchmarkName,
+                            InstrumentID = null,
+                            Type = "BENCHMARK",
+                            SecurityType = null
                         });
                     }
                 }

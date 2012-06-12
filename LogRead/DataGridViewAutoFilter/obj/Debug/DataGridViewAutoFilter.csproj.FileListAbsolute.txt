@@ -1,0 +1,5 @@
+E:\LogRead\DataGridViewAutoFilter\obj\Debug\ResolveAssemblyReference.cache
+E:\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.dll
+E:\LogRead\DataGridViewAutoFilter\bin\Debug\DataGridViewAutoFilter.pdb
+E:\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.dll
+E:\LogRead\DataGridViewAutoFilter\obj\Debug\DataGridViewAutoFilter.pdb

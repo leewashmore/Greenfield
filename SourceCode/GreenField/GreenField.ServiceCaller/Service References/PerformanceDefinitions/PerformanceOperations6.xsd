@@ -212,4 +212,43 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MarketCapitalizationData" nillable="true" type="tns:MarketCapitalizationData" />
+  <xs:complexType name="ArrayOfPerformanceGridData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerformanceGridData" nillable="true" type="tns:ArrayOfPerformanceGridData" />
+  <xs:complexType name="PerformanceGridData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TopRcTwr1D" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TopRcTwr1W" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TopRcTwr1Y" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TopRcTwrMtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TopRcTwrQtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TopRcTwrYtd" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
+  <xs:complexType name="ArrayOfPerformanceGraphData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPerformanceGraphData" nillable="true" type="tns:ArrayOfPerformanceGraphData" />
+  <xs:complexType name="PerformanceGraphData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BenchmarkPerformance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EffectiveDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PortfolioID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioPerformance" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
+</xs:schema>
+      <xs:element minOccurs="0" name="PortfolioPerformance" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
 </xs:schema>

@@ -188,6 +188,12 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -196,6 +202,12 @@
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations4.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
     <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
@@ -233,12 +245,30 @@
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
-    <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
-    <None Include="Service References\PerformanceDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations7.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.disco" />
     <None Include="Service References\SecurityReferenceDefinitions\configuration91.svcinfo" />
@@ -261,9 +291,14 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="ServiceReferences.ClientConfig">
-      <SubType>Designer</SubType>
-    </Content>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
+    <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>
@@ -336,31 +371,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PerformanceDefinitions\PerformanceOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />

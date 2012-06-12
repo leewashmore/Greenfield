@@ -87,6 +87,7 @@ namespace GreenField.Common
     public class RelativePerformanceGridBuildEventArgs : EventArgs
     {
         public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
+        public List<RelativePerformanceSecurityData> RelativePerformanceSecurityInfo { get; set; }
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
 
@@ -101,6 +102,12 @@ namespace GreenField.Common
     public class RetrieveHeatMapDataCompleteEventArgs : EventArgs
     {
         public List<HeatMapData> HeatMapInfo { get; set; }
+    }
+
+    public delegate void RetrieveHeatMapSelectedCountryEventHandler(RetrieveHeatMapSelectedCountryCompletedEventArgs e);
+    public class RetrieveHeatMapSelectedCountryCompletedEventArgs : EventArgs
+    {
+        public String SelectedCountry { get; set; }
     }
 
     public delegate void RetrieveMacroCountrySummaryDataCompleteEventHandler(RetrieveMacroCountrySummaryDataCompleteEventArgs e);

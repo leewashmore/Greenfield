@@ -108,10 +108,10 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , filterTypeSelectorVisibility: Visibility.Collapsed, filterValueSelectorVisibility: Visibility.Collapsed);
+                        , filterTypeSelectorVisibility: Visibility.Collapsed, filterValueSelectorVisibility: Visibility.Collapsed, mktCapSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_ATTRIBUTION:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);

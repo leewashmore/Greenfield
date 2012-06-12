@@ -359,4 +359,37 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrievePerformanceGridData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q31:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGridDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrievePerformanceGridDataResult" nillable="true" type="q32:ArrayOfPerformanceGridData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGraphData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q33:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="period" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePerformanceGraphDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrievePerformanceGraphDataResult" nillable="true" type="q34:ArrayOfPerformanceGraphData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
 </xs:schema>

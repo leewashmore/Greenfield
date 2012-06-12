@@ -324,9 +324,7 @@ namespace GreenField.App.ViewModel
                     {
                         SelectorPayload.PortfolioSelectionData = value;
                         _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
-                    }
-
-                    
+                    }                    
                 }
             }
         }
@@ -405,7 +403,7 @@ namespace GreenField.App.ViewModel
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
                         _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
-                    }                
+                    }
                 }
             }
         }
@@ -435,7 +433,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y", "3Y", "5Y", "10Y", "SI" };
+                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y" };
             }
         }
 
@@ -493,7 +491,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.OrderBy(t=>t.CountryName).Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -539,6 +537,30 @@ namespace GreenField.App.ViewModel
                     }
                 }
 
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
+        /// </summary>
+        private string _countrySearchText;
+        public string CountrySearchText
+        {
+            get { return _countrySearchText; }
+            set
+            {
+                if (value != null)
+                {
+                    _countrySearchText = value;
+                    RaisePropertyChanged(() => this.CountrySearchText);
+                    if (value != String.Empty && CountryTypeInfo != null)
+                        CountryName = CountryTypeInfo
+                                    .OrderBy(t => t.CountryName)
+                                    .Where(record => record.CountryName.ToLower().Contains(value.ToLower()))
+                                    .Select(record => record.CountryName).Distinct().ToList();
+                    else
+                        CountryName = CountryTypeInfo.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                }
             }
         }
 
@@ -600,8 +622,8 @@ namespace GreenField.App.ViewModel
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
                         //this.FilterVisibility = Visibility.Collapsed;
-                       
-                       
+
+
                     }
                     else
                     {
@@ -841,7 +863,8 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-
+                if (SelectedFilterType == "Show Everything" && value == true)
+                    SelectedFilterType = "";
                 _selectorPayload.IsExCashSecurityData = value;
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
 

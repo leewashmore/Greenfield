@@ -13,6 +13,9 @@ namespace GreenField.DataContracts
         public string ConstituentName { get; set; }
 
         [DataMember]
+        public string BenchmarkId { get; set; }
+
+        [DataMember]
         public string Country { get; set; }
 
         [DataMember]

@@ -21,6 +21,7 @@ using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using Telerik.Windows.Documents.UI;
 #endif
 
 namespace GreenField.Gadgets.Views
@@ -56,11 +57,6 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        private static class ExportTypes
-        {
-            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
-        }
-
         #region Constructor
 
         /// <summary>
@@ -76,13 +72,12 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        #region DataProgressIndicator
-
-        
-
-        #endregion
-
         #region ExportToExcel/PDF/Print
+
+        private static class ExportTypes
+        {
+            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+        }
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel
@@ -120,15 +115,18 @@ namespace GreenField.Gadgets.Views
             if (dialog.ShowDialog() == true)
             {
                 RadDocument document = CreateDocument(dgPortfolioDetails);
+
                 document.LayoutMode = DocumentLayoutMode.Paged;
                 document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                 document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
                 PdfFormatProvider provider = new PdfFormatProvider();
                 using (Stream output = dialog.OpenFile())
                 {
                     provider.Export(document, output);
                 }
             }
+
         }
 
         private RadDocument CreateDocument(RadGridView grid)
@@ -261,7 +259,11 @@ namespace GreenField.Gadgets.Views
             Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
             cell.Blocks.Add(paragraph);
             Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span();
+            if (value == "")
+                value = " ";
             span.Text = value;
+            span.FontFamily = new System.Windows.Media.FontFamily("Arial");
+            span.FontSize = 7;
             paragraph.Inlines.Add(span);
         }
 
@@ -279,68 +281,61 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
-        //{
-        //    RadRichTextBox radTxtDoc = new RadRichTextBox();
-        //    Dispatcher.BeginInvoke((Action)(() =>
-        //    {
-        //        radTxtDoc.Document = CreateDocument(dgPortfolioDetails);
-        //    }));
-        //    //radTxtDoc.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-        //    radTxtDoc.Print(radTxtDoc.Document.ToString(), Telerik.Windows.Documents.UI.PrintMode.Native);
-        //}
-
         #region Printing the DataGrid
 
-        //private void btnPrint_Click(object sender, RoutedEventArgs e)
-        //{
-        //    offsetY = 0d;
-        //    totalHeight = 0d;
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            offsetY = 0d;
+            totalHeight = 0d;
 
-        //    grid = new RadGridView();
-        //    grid.DataContext = dgPortfolioDetails.DataContext;
-        //    grid.ItemsSource = dgPortfolioDetails.ItemsSource;
-        //    grid.RowIndicatorVisibility = Visibility.Collapsed;
-        //    grid.ShowGroupPanel = false;
-        //    grid.CanUserFreezeColumns = false;
-        //    grid.IsFilteringAllowed = false;
-        //    grid.AutoExpandGroups = true;
-        //    grid.AutoGenerateColumns = false;
+            grid = new RadGridView();
+            grid.DataContext = dgPortfolioDetails.DataContext;
+            grid.ItemsSource = dgPortfolioDetails.ItemsSource;
+            grid.RowIndicatorVisibility = Visibility.Collapsed;
+            grid.ShowGroupPanel = false;
+            grid.CanUserFreezeColumns = false;
+            grid.IsFilteringAllowed = false;
+            grid.AutoExpandGroups = true;
+            grid.AutoGenerateColumns = false;
+            grid.FontFamily = new FontFamily("Arial");
+            grid.FontSize = 7;
 
-        //    foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
-        //    {
-        //        GridViewDataColumn newColumn = new GridViewDataColumn();
-        //        newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-        //        grid.Columns.Add(newColumn);
-        //    }
 
-        //    foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-        //    {
-        //        GridViewDataColumn currentColumn = column;
-        //        GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
-        //                                             where c.UniqueName == currentColumn.UniqueName
-        //                                             select c).FirstOrDefault();
-        //        if (originalColumn != null)
-        //        {
-        //            column.Width = originalColumn.ActualWidth;
-        //            column.DisplayIndex = originalColumn.DisplayIndex;
-        //        }
-        //    }
+            foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn newColumn = new GridViewDataColumn();
+                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
+                grid.Columns.Add(newColumn);
+            }
 
-        //    StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
+            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn currentColumn = column;
+                GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
+                                                     where c.UniqueName == currentColumn.UniqueName
+                                                     select c).FirstOrDefault();
+                if (originalColumn != null)
+                {
+                    column.Width = originalColumn.ActualWidth;
+                    column.DisplayIndex = originalColumn.DisplayIndex;
+                    
+                }
+            }
 
-        //    grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
-        //    grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
-        //    grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
+            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
 
-        //    ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-        //    ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-        //    PrintDocument doc = new PrintDocument();
-        //    canvas = new Canvas();
-        //    canvas.Children.Add(grid);
-        //    doc.PrintPage += this.doc_PrintPage;
-        //    doc.Print("RadGridView print");
-        //}
+            grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
+            grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
+            grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
+
+            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            PrintDocument doc = new PrintDocument();
+            canvas = new Canvas();
+            canvas.Children.Add(grid);
+            doc.PrintPage += this.doc_PrintPage;
+            doc.Print("RadGridView print");
+        }
 
         void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -359,22 +354,48 @@ namespace GreenField.Gadgets.Views
 
         #region RadDocument
 
-        private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
+        //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
+        //{
+        //    Dispatcher.BeginInvoke((Action)(() =>
+        //    {
+        //        RichTextBox.Document = CreateDocument(dgPortfolioDetails);
+        //    }));
+
+        //    PrintSettings printSettings = new PrintSettings();
+        //    printSettings.DocumentName = "MyDocument";
+        //    printSettings.PrintMode = PrintMode.Native;
+        //    printSettings.PrintScaling = PrintScaling.ShrinkToPageSize;
+        //    RichTextBox.Print(printSettings);
+        //}
+
+        #endregion
+
+        #region EventUnsubscribe
+
+        public override void Dispose()
         {
-            Telerik.Windows.Documents.UI.PrintSettings s = new Telerik.Windows.Documents.UI.PrintSettings();
-            s.DocumentName = "MyDocument";
-            s.PrintMode = Telerik.Windows.Documents.UI.PrintMode.Native;
-            s.PrintScaling = Telerik.Windows.Documents.UI.PrintScaling.ShrinkToPageSize;
-            RadRichTextBox RadRichTextBox1 = new RadRichTextBox();
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                RadRichTextBox1.Document = new RadDocument();
-                RadRichTextBox1.Document = CreateDocument(dgPortfolioDetails);
-                RadRichTextBox1.Print(s);
-            }));
+            this.DataContextPortfolioDetails.Dispose();
+            this.DataContextPortfolioDetails = null;
+            this.DataContext = null;
         }
 
         #endregion
+
+        #region ApplyingGroupStyle
+
+        /// <summary>
+        /// Row loaded Event of DataGrid, Applying styles to Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        #endregion
+
+        #region GroupingHelperMethods
 
         /// <summary>
         /// Event when User groups the data
@@ -413,7 +434,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
-            Telerik.Windows.Controls.GridView.ColumnFilterDescriptor fd = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
+            Telerik.Windows.Controls.GridView.ColumnFilterDescriptor filterDescriptor = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
         }
 
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
@@ -456,35 +477,6 @@ namespace GreenField.Gadgets.Views
             DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
         }
 
-        #region EventUnsubscribe
-
-        public override void Dispose()
-        {
-            this.DataContextPortfolioDetails.Dispose();
-            this.DataContextPortfolioDetails = null;
-            this.DataContext = null;
-        }
-
         #endregion
-
-        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);            
-        }
-
-        private void dgPortfolioDetails_Grouped(object sender, GridViewGroupedEventArgs e)
-        {
-            //this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
-            //this.dgPortfolioDetails.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
-
-            //var groupPanelItem = dgPortfolioDetails.ChildrenOfType<GridViewGroupPanelItem>().FirstOrDefault();
-            //if (groupPanelItem != null)
-            //{
-            //    groupPanelItem.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
-            //    groupPanelItem.Foreground = new SolidColorBrush(Colors.White);
-            //    groupPanelItem.FontFamily = new FontFamily("Arial");
-            //    groupPanelItem.FontSize = 15;
-            //}
-        }
     }
 }

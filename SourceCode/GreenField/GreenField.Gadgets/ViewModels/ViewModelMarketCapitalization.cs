@@ -346,6 +346,8 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+                MarketCapitalizationInfo = null;
+                MarketCapGadgetVisibility = Visibility.Collapsed;
                 if (marketCapitalizationData != null && marketCapitalizationData.Count > 0)
                 {
                     MarketCapGadgetVisibility = Visibility.Visible;

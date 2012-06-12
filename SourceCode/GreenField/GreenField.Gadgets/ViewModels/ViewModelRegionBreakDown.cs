@@ -41,6 +41,11 @@ namespace GreenField.Gadgets.ViewModels
         /// DashboardGadgetPayLoad fields
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
+
+        /// <summary>
+        /// Private member to store info about including or excluding cash securities
+        /// </summary>
+        private bool _isExCashSecurity = false;
         #endregion
 
         #region Constructor
@@ -56,16 +61,17 @@ namespace GreenField.Gadgets.ViewModels
 
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-
-            if (EffectiveDate != null && _PortfolioSelectionData != null)
+            _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
+            if (EffectiveDate != null && _PortfolioSelectionData != null && (_isExCashSecurity != null))
             {
-                _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
+                _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity, RetrieveRegionBreakdownDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
             }
         }
         #endregion
@@ -144,9 +150,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _PortfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && (_isExCashSecurity != null))
                     {
-                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, RetrieveRegionBreakdownDataCallbackMethod);
                         if (RegionBreakdownDataLoadEvent != null)
                             RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -178,9 +184,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && (_isExCashSecurity != null))
                     {
-                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveRegionBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity, RetrieveRegionBreakdownDataCallbackMethod);
                         if (RegionBreakdownDataLoadEvent != null)
                             RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -197,7 +203,39 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-      
+
+        /// <summary>
+        /// Event Handler to Check for Cash Securities
+        /// </summary>
+        /// <param name="isExCashSec"></param>
+        public void HandleExCashSecuritySetEvent(bool isExCashSec)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
+                if (isExCashSec != null)
+                {
+                    _isExCashSecurity = isExCashSec;
+
+                    if (_isExCashSecurity != null && _PortfolioSelectionData != null && _effectiveDate != null)
+                    {
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, RetrieveRegionBreakdownDataCallbackMethod);
+
+                        if (RegionBreakdownDataLoadEvent != null)
+                            RegionBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
         #endregion
 
         #region Events
@@ -223,7 +261,18 @@ namespace GreenField.Gadgets.ViewModels
                 if (regionBreakdownData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, regionBreakdownData, 1);
-                    RegionBreakdownInfo = new ObservableCollection<RegionBreakdownData>(regionBreakdownData);
+                    List<RegionBreakdownData> templist = new List<RegionBreakdownData>(regionBreakdownData);
+                    foreach (RegionBreakdownData item in templist)
+                    {
+                        if (item.Region == "Not classified" || item.Region == null || item.Region == string.Empty || item.Region == " ")
+                            item.Region = CapitalizeFirstLetterAfterSpace("Not classified");
+
+                        if(item.Country == null || item.Country == string.Empty || item.Country == " ")
+                            item.Country = CapitalizeFirstLetterAfterSpace("Not classified");
+                    }
+
+
+                    RegionBreakdownInfo = new ObservableCollection<RegionBreakdownData>(templist);
                     foreach (RegionBreakdownData item in RegionBreakdownInfo)
                     {
                         if (RegionSpecificInfo == null)
@@ -258,6 +307,27 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Helper Methods
+        public string CapitalizeFirstLetterAfterSpace(string value)
+        {
+            char[] array = value.ToCharArray();
+
+            // Scan through the letters, checking for spaces.
+            // ... Uppercase the lowercase letters following spaces.
+            for (int i = 1; i < array.Length; i++)
+            {
+                if (array[i - 1] == ' ')
+                {
+                    if (char.IsLower(array[i]))
+                    {
+                        array[i] = char.ToUpper(array[i]);
+                    }
+                }
+            }
+            return new string(array);
+        } 
+        #endregion
+
         #region Dispose Method
         /// <summary>
         /// method to dispose all subscribed events
@@ -266,7 +336,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
-
+            _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Unsubscribe(HandleExCashSecuritySetEvent);
         }
 
         #endregion

@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 01-06-2012 10:14:35
+// Generation date: 6/12/2012 9:02:51 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -14943,22 +14943,22 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_SELECTION_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// SHORT_NAME
+    /// INSTRUMENT_ID
     /// TYPE
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("SHORT_NAME", "TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("INSTRUMENT_ID", "TYPE")]
     public partial class GF_SELECTION_BASEVIEW
     {
         /// <summary>
         /// Create a new GF_SELECTION_BASEVIEW object.
         /// </summary>
-        /// <param name="sHORT_NAME">Initial value of SHORT_NAME.</param>
+        /// <param name="iNSTRUMENT_ID">Initial value of INSTRUMENT_ID.</param>
         /// <param name="tYPE">Initial value of TYPE.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(string sHORT_NAME, string tYPE)
+        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(string iNSTRUMENT_ID, string tYPE)
         {
             GF_SELECTION_BASEVIEW gF_SELECTION_BASEVIEW = new GF_SELECTION_BASEVIEW();
-            gF_SELECTION_BASEVIEW.SHORT_NAME = sHORT_NAME;
+            gF_SELECTION_BASEVIEW.INSTRUMENT_ID = iNSTRUMENT_ID;
             gF_SELECTION_BASEVIEW.TYPE = tYPE;
             return gF_SELECTION_BASEVIEW;
         }

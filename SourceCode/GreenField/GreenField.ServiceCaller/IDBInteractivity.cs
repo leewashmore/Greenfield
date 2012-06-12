@@ -26,6 +26,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
 
+        void RetrieveEntitySelectionWithBenchmarkData(Action<List<EntitySelectionData>> callback);
+
         void RetrieveUnrealizedGainLossData(EntitySelectionData entityIdentifier, DateTime startDateTime, DateTime endDateTime, String frequencyInterval, Action<List<UnrealizedGainLossData>> callback);
 
         void RetrievePricingReferenceData(ObservableCollection<EntitySelectionData> entityIdentifiers, DateTime startDateTime, DateTime endDateTime, bool totalReturnCheck, string frequencyInterval, Action<List<PricingReferenceData>> callback);
@@ -48,11 +50,11 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">List of AssetAllocationData</param>
         void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback);
 
-        void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<SectorBreakdownData>> callback);
+        void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<SectorBreakdownData>> callback);
 
-        void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<RegionBreakdownData>> callback);
+        void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<RegionBreakdownData>> callback);
 
-        void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopHoldingsData>> callback);
+        void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<TopHoldingsData>> callback);
 
         void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback);
 
@@ -116,9 +118,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
-        void RetrievePerformanceGraphData(String name, Action<List<PerformanceGraphData>> callback);
+        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, String country, Action<List<PerformanceGraphData>> callback);
 
-        void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback);
+        void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String country, Action<List<PerformanceGridData>> callback);
 
         void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
 
@@ -130,7 +132,7 @@ namespace GreenField.ServiceCaller
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
         /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
-        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
+        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate,bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
@@ -174,10 +176,14 @@ namespace GreenField.ServiceCaller
 
         #region Slice 5 - External Research
 
-        //void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-        //    , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
+        void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback);
+
+        void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
 
         #endregion
+
+
 
     }
 }

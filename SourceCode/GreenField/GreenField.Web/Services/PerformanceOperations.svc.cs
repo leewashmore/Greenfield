@@ -64,6 +64,7 @@ namespace GreenField.Web.Services
         {
             try
             {
+                bool isServiceUp = false;
                 //Null Arguement Check
                 if ((objSelectedEntity == null) || (objEffectiveDate == null) || (objSelectedEntity.Count == 0))
                     return new List<RelativePerformanceUIData>();
@@ -85,6 +86,14 @@ namespace GreenField.Web.Services
                 string portfolioName = objSelectedEntity.Where(a => a.Key == "PORTFOLIO").First().Value;
 
                 List<GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()).ToList());
+
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
 
                 countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
                 sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).ToList();
@@ -129,6 +138,14 @@ namespace GreenField.Web.Services
                 if (sectorName.Count != 1)
                     return result;
 
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
+
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
                     ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
                     && a.TO_DATE == objEffectiveDate.Date).ToList();
@@ -161,6 +178,7 @@ namespace GreenField.Web.Services
         {
             try
             {
+                bool isServiceUp = false;
                 List<BenchmarkChartReturnData> result = new List<BenchmarkChartReturnData>();
 
                 //Arguement null Exception
@@ -182,8 +200,19 @@ namespace GreenField.Web.Services
                 if (objSelectedEntities.ContainsKey("PORTFOLIO"))
                     portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
 
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
-                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).Distinct().ToList();
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
+
+                countryName = (entity.GF_SECURITY_BASEVIEW.
+                    Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.
+                    Where(a => a.PORTFOLIO_ID.ToUpper().Trim() == portfolioId.ToUpper().Trim()).ToList()).Select(a => a.BENCHMARK_ID).Distinct().ToList();
 
                 //if (benchmarkName == null)
                 //    throw new Exception("No Benchmark is found for the selected Portfolio");
@@ -210,10 +239,19 @@ namespace GreenField.Web.Services
                 if (countryName.Count != 1)
                     return result;
 
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.
-                    Where(a => a.PORTFOLIO == portfolioId
-                            && ((a.AGG_LVL_1_LONG_NAME == securityLongName) || ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME == countryName.First())))
-                            && a.TO_DATE >= startDate).ToList();
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
+
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = (entity.GF_PERF_DAILY_ATTRIBUTION.
+                    Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && ((a.BMNAME.ToUpper().Trim() == benchmarkName.First().ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "SECURITY ID" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim())
+                        || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))
+                        && a.TO_DATE >= startDate).ToList()).Distinct().ToList();
+
 
                 //Checking contents of Data fetched from Dimension
                 if (dimensionDailyPerfData == null || dimensionDailyPerfData.Count == 0)
@@ -244,6 +282,7 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<BenchmarkGridReturnData> RetrieveBenchmarkGridReturnData(Dictionary<string, string> objSelectedEntities)
         {
+            bool isServiceUp = false;
             List<BenchmarkGridReturnData> result = new List<BenchmarkGridReturnData>();
             try
             {
@@ -293,8 +332,17 @@ namespace GreenField.Web.Services
                 if (objSelectedEntities.ContainsKey("PORTFOLIO"))
                     portfolioId = (objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value);
 
-                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).ToList();
-                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList();
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
+
+                countryName = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper() == securityLongName).ToList()).Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList().Distinct().ToList();
 
 
                 //if (benchmarkName == null)
@@ -324,14 +372,21 @@ namespace GreenField.Web.Services
                 if (countryName.Count != 1)
                     return result;
 
+                #region ServiceAvailabilityChecker
+
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                if (!isServiceUp)
+                    throw new Exception("Data Services are not available");
+
+                #endregion
+
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionPerfDailyData = entity.GF_PERF_DAILY_ATTRIBUTION.
-                    Where(a => a.PORTFOLIO.ToUpper() == portfolioId &&
-                        ((a.AGG_LVL_1_LONG_NAME.ToUpper() == securityLongName.ToUpper()) ||
-                        ((a.NODE_NAME.ToUpper() == "COUNTRY") && (a.COUNTRY_NAME.ToUpper() == countryName.First().ToUpper())))
-                        && ((a.TO_DATE > startDate && a.TO_DATE <= endDate) || (a.TO_DATE > startDatePreviousYear && a.TO_DATE <= endDatePreviousYear) || (a.TO_DATE > startDateTwoPreviousYear && a.TO_DATE <= endDateTwoPreviousYear) || (a.TO_DATE > startDateThreePreviousYear && a.TO_DATE <= endDateThreePreviousYear))).ToList();
+                    Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim() && (a.BMNAME.ToUpper().Trim() == benchmarkName.First().ToUpper().Trim())) ||
+                        ((a.NODE_NAME.ToUpper().Trim() == "COUNTRY") && (a.COUNTRY_NAME.ToUpper().Trim() == countryName.First().Trim().ToUpper())))
+                        && ((a.TO_DATE > startDate && a.TO_DATE < endDate) || (a.TO_DATE > startDatePreviousYear && a.TO_DATE <= endDatePreviousYear) || (a.TO_DATE > startDateTwoPreviousYear && a.TO_DATE <= endDateTwoPreviousYear) || (a.TO_DATE > startDateThreePreviousYear && a.TO_DATE <= endDateThreePreviousYear))).ToList();
 
                 if (dimensionPerfDailyData == null)
-                    throw new Exception("Service returned Null");
+                    throw new Exception("Service returned No Data");
 
                 if (dimensionPerfDailyData.Count() != 0)
                     result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkGridData(dimensionPerfDailyData);
@@ -359,67 +414,105 @@ namespace GreenField.Web.Services
         [OperationContract]
         public List<ChartExtensionData> RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objStartDate)
         {
-            //Arguement null check
-            if (objSelectedEntities == null || objStartDate == null)
-                return new List<ChartExtensionData>();
-            List<ChartExtensionData> result = new List<ChartExtensionData>();
-
-
-            string longName = "";
-            string portfolioID = "";
-
-            //Create new Entity for service
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-
-            bool isServiceUp;
-            if (objSelectedEntities.ContainsKey("SECURITY"))
-                longName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
-            else
-                return new List<ChartExtensionData>();
-
-            if (objSelectedEntities.ContainsKey("PORTFOLIO"))
-                portfolioID = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
-
-
-
-            if (longName != null && longName != "")
+            try
             {
-                #region ServiceAvailabilityChecker
+                //Arguement null check
+                if (objSelectedEntities == null || objStartDate == null)
+                    return new List<ChartExtensionData>();
+                List<ChartExtensionData> result = new List<ChartExtensionData>();
 
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
+                bool isServiceUp;
+                string securityLongName = "";
+                string portfolioId = "";
+                List<string> countryName;
+                List<string> benchmarkName = new List<string>();
+                List<string> sectorName = new List<string>();
 
-                #endregion
+                //Create new Entity for service
+                DimensionEntitiesService.Entities entity = DimensionEntity;
 
-                List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
-                    Where(a => (a.ISSUE_NAME == longName) && (a.FROMDATE >= objStartDate.Date)).OrderByDescending(a => a.FROMDATE).ToList();
-                result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
+
+
+                if (objSelectedEntities.ContainsKey("SECURITY"))
+                    securityLongName = objSelectedEntities.Where(a => a.Key == "SECURITY").First().Value;
+                else
+                    return new List<ChartExtensionData>();
+
+                if (objSelectedEntities.ContainsKey("PORTFOLIO"))
+                    portfolioId = objSelectedEntities.Where(a => a.Key == "PORTFOLIO").First().Value;
+
+                List<GF_SECURITY_BASEVIEW> securityBaseData = (entity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()).ToList());
+
+                countryName = securityBaseData.Select(a => a.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+                sectorName = securityBaseData.Select(a => a.GICS_SECTOR_NAME).Distinct().ToList();
+
+                benchmarkName = (entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolioId).ToList()).Select(a => a.BENCHMARK_ID).ToList().Distinct().ToList();
+
+                if (benchmarkName == null)
+                    return result;
+                if (benchmarkName.Count != 1)
+                    return result;
+                if (countryName == null)
+                    return result;
+                if (countryName.Count != 1)
+                    return result;
+                if (sectorName == null)
+                    return result;
+                if (sectorName.Count != 1)
+                    return result;
+
+                //PricingData
+                if (securityLongName != null && securityLongName != "")
+                {
+                    #region ServiceAvailabilityChecker
+
+                    isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                    if (!isServiceUp)
+                        throw new Exception();
+
+                    #endregion
+
+                    List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
+                        Where(a => (a.ISSUE_NAME == securityLongName) && (a.FROMDATE >= objStartDate.Date)).OrderByDescending(a => a.FROMDATE).ToList();
+                    result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
+                }
+
+                //Transaction data
+                if (portfolioId != null && portfolioId != "")
+                {    
+                    List<GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
+                        Where(a => ((a.TRANSACTION_CODE.ToUpper().Trim() == "BUY") || (a.TRANSACTION_CODE.ToUpper().Trim() == "SELL")) && (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioId.ToUpper().Trim())
+                            && (a.SEC_NAME.ToUpper().Trim() == securityLongName.ToUpper().Trim()) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
+                    result = ChartExtensionCalculations.CalculateTransactionValues(dimensionTransactionData, result);
+                }
+
+                //Sector & Country Return Data
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.TO_DATE > objStartDate.Date && ((a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))).ToList();
+
+                if (dimensionSectorCountryReturnData == null)
+                    return result;
+                if (dimensionSectorCountryReturnData.Count == 0)
+                    return result;
+
+                List<ChartExtensionData> sectorCountryReturnData = ChartExtensionCalculations.CalculateSectorCountryReturnValues(dimensionSectorCountryReturnData);
+                if (sectorCountryReturnData != null || sectorCountryReturnData.Count != 0)
+                    result.AddRange(sectorCountryReturnData);
+
+                return result;
             }
-
-            if (portfolioID != null && portfolioID != "")
+            catch (Exception ex)
             {
-
-                #region ServiceAvailabilityChecker
-
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-                if (!isServiceUp)
-                    throw new Exception();
-
-                #endregion
-
-                List<GF_TRANSACTIONS> dimensionTransactionData = entity.GF_TRANSACTIONS.
-                    Where(a => ((a.TRANSACTION_CODE.ToUpper() == "BUY") || (a.TRANSACTION_CODE.ToUpper() == "SELL")) && (a.PORTFOLIO_ID == portfolioID)
-                        && (a.SEC_NAME == longName) && (a.TRADE_DATE >= Convert.ToDateTime(objStartDate.Date))).ToList();
-                result = ChartExtensionCalculations.CalculateTransactionValues(dimensionTransactionData, result);
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
-            return result;
         }
 
         #endregion
 
         #region Market Performance Snapshot Operation Contracts
+
+        
 
         /// <summary>
         /// retrieving list of market performance snapshots for particular user
@@ -893,7 +986,6 @@ namespace GreenField.Web.Services
             }
         }
 
-
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public bool RemoveMarketSnapshotPreference(string userName, string snapshotName)
@@ -939,7 +1031,7 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-               
+
 
                 List<GF_PERF_DAILY_ATTRIBUTION> data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t =>
                                                                                         t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
@@ -1007,7 +1099,7 @@ namespace GreenField.Web.Services
                     });
                 }
                 sectors = sectors.Distinct().ToList();
-                                               
+
                 foreach (string countryCode in countryCodes)
                 {
                     decimal? aggcsAlpha = 0;
@@ -1016,16 +1108,17 @@ namespace GreenField.Web.Services
                     List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
                     foreach (RelativePerformanceSectorData sectorData in sectors)
                     {
-                        decimal? aggAlpha = 0;
-                        decimal? aggPortfolioShare = 0;
-                        decimal? aggBenchmarkShare = 0;
+                        decimal? aggssAlpha = 0;
+                        decimal? aggssPortfolioShare = 0;
+                        decimal? aggssBenchmarkShare = 0;
+
                         List<GF_PERF_DAILY_ATTRIBUTION> specificData = dailyData.Where(t => t.COUNTRY == countryCode && t.GICS_LVL1 == sectorData.SectorName).ToList();
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period));
-                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period));
-                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, period);
+                            aggssPortfolioShare += RetrieveRelativePerformancePortfolioWeight(row, period);
+                            aggssBenchmarkShare += RetrieveRelativePerformanceBenchmarkWeight(row, period);
+                            aggssAlpha = aggssAlpha + RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
 
@@ -1033,15 +1126,15 @@ namespace GreenField.Web.Services
                         {
                             SectorId = sectorData.SectorId,
                             SectorName = sectorData.SectorName,
-                            Alpha = aggAlpha,
-                            PortfolioShare = aggPortfolioShare,
-                            BenchmarkShare = aggBenchmarkShare,
-                            ActivePosition = Convert.ToDecimal(aggPortfolioShare - aggBenchmarkShare),
+                            Alpha = aggssAlpha,
+                            PortfolioShare = aggssPortfolioShare,
+                            BenchmarkShare = aggssBenchmarkShare,
+                            ActivePosition = Convert.ToDecimal(aggssPortfolioShare - aggssBenchmarkShare),
                         });
 
-                        aggcsAlpha = aggcsAlpha + aggAlpha;
-                        aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
-                        aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
+                        aggcsAlpha += aggssAlpha;
+                        aggcsPortfolioShare += aggssPortfolioShare;
+                        aggcsBenchmarkShare += aggssBenchmarkShare;
                     }
 
                     if (sectorSpecificData.Count > 0)
@@ -1188,7 +1281,7 @@ namespace GreenField.Web.Services
                     });
                 }
                 sectorCodes = sectorCodes.Distinct().ToList();
-                
+
                 foreach (RelativePerformanceSectorData sector in sectorCodes)
                 {
                     if (sectorID != null)
@@ -1272,6 +1365,7 @@ namespace GreenField.Web.Services
                     result.Add(new RelativePerformanceActivePositionData()
                     {
                         Entity = row.SEC_NAME,
+                        EntityGroup = row.ISSUER_NAME,
                         MarketValue = row.POR_RC_MARKET_VALUE,
                         FundWeight = fundWeight,
                         BenchmarkWeight = benchmarkWeight,
@@ -1289,6 +1383,7 @@ namespace GreenField.Web.Services
             }
         }
 
+        
         /// <summary>
         /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
@@ -1606,8 +1701,8 @@ namespace GreenField.Web.Services
 
                 result.Add(mktCapData);
             }
-            List<MarketCapitalizationData> _portfolioBenchmarkData = RetrieveBenchmarkMktCapData(result, effectiveDate, filterType, filterValue, isExCashSecurity);
-            return _portfolioBenchmarkData;
+            //List<MarketCapitalizationData> _portfolioBenchmarkData = RetrieveBenchmarkMktCapData(result, effectiveDate, filterType, filterValue, isExCashSecurity);
+            return result;
 
         }
 
@@ -1623,6 +1718,7 @@ namespace GreenField.Web.Services
             //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> filteredResult = new List<GF_BENCHMARK_HOLDINGS>();
             DimensionEntitiesService.Entities entity = DimensionEntity;
             List<GF_BENCHMARK_HOLDINGS> dimensionServiceBenchmarkData = null;
+            List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
 
             //Retrieve the Id of benchmark associated with the Portfolio
             List<string> benchmarkId = portfolioData.Select(a => a.Benchmark_ID).Distinct().ToList();
@@ -1678,59 +1774,37 @@ namespace GreenField.Web.Services
 
                 }
             }
-            //if (portfolioData.Capacity < (portfolioData.Count + dimensionServiceBenchmarkData.Count))
-            //    portfolioData.Capacity = portfolioData.Count + dimensionServiceBenchmarkData.Count;
-            //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
-            foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
+            for (int _index = 0; _index < dimensionServiceBenchmarkData.Count; _index++)
             {
-                var existingPortfolio = from p in portfolioData
-                                        where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
-                                        select p;
-
-                if (existingPortfolio.Count() == 0)
-                {
-                    MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                    mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                    mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                    mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                    mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                    portfolioData.Add(mktCapData);
-                }
-                //for (int i = portfolioData.Count - 1; i >= 0; i--)
-                //{
-                //    if (portfolioData[i].AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                //    {
-                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                //        portfolioData.Add(mktCapData);
-                //        break;
-                //    }
-                //}
-
-                //foreach (MarketCapitalizationData mktCapPortfolioData in portfolioData)
-                //{
-                //    if (mktCapPortfolioData.AsecSecShortName != benchmarkData.ASEC_SEC_SHORT_NAME)
-                //    {
-                //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-
-                //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
-                //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
-                //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
-                //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
-
-                //        portfolioData.Add(mktCapData);
-                //    }
-                //}                    
+                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                mktCapData.MarketCapitalInUSD = dimensionServiceBenchmarkData[_index].MARKET_CAP_IN_USD;
+                mktCapData.SecurityThemeCode = dimensionServiceBenchmarkData[_index].SECURITYTHEMECODE;
+                mktCapData.BenchmarkWeight = dimensionServiceBenchmarkData[_index].BENCHMARK_WEIGHT;
+                mktCapData.AsecSecShortName = dimensionServiceBenchmarkData[_index].ASEC_SEC_SHORT_NAME;
+                result.Add(mktCapData);
             }
 
-            return portfolioData;
+            //Add benchmark wieghts if ASEC_SEC_SHORT_NAME does not exist in portfolio list
+            //foreach (GF_BENCHMARK_HOLDINGS benchmarkData in dimensionServiceBenchmarkData)
+            //{
+            //    var existingPortfolio = from p in portfolioData
+            //                            where p.AsecSecShortName.ToLower() == benchmarkData.ASEC_SEC_SHORT_NAME.ToLower()
+            //                            select p;
+
+            //    if (existingPortfolio.Count() == 0)
+            //    {
+            //        MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+
+            //        mktCapData.MarketCapitalInUSD = benchmarkData.MARKET_CAP_IN_USD;
+            //        mktCapData.SecurityThemeCode = benchmarkData.SECURITYTHEMECODE;
+            //        mktCapData.BenchmarkWeight = benchmarkData.BENCHMARK_WEIGHT;
+            //        mktCapData.AsecSecShortName = benchmarkData.ASEC_SEC_SHORT_NAME;
+
+            //        portfolioData.Add(mktCapData);
+            //    }           
+            //}
+
+            return result;
 
         }
 
@@ -1748,27 +1822,32 @@ namespace GreenField.Web.Services
         {
             try
             {
-                if (portfolioSelectionData == null || effectiveDate == null)//|| filterType == null || filterValue == null)
+                if (portfolioSelectionData == null || effectiveDate == null)
                     throw new ArgumentNullException(ServiceFaultResourceManager.GetString(GreenfieldConstants.SERVICE_NULL_ARG_EXC_MSG).ToString());
 
-                List<MarketCapitalizationData> mktCap = new List<MarketCapitalizationData>();
+                List<MarketCapitalizationData> portfollioData = new List<MarketCapitalizationData>();
+                List<MarketCapitalizationData> benchmarkData = new List<MarketCapitalizationData>();
                 List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
                 MarketCapitalizationData mktCapData = new MarketCapitalizationData();
 
-                //Consolidated list Portfolio and benchmark Data
-                mktCap = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
 
-                if (mktCap == null || mktCap.Count == 0)
-                    return mktCap;
+                portfollioData = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+
+                if (portfollioData == null || portfollioData.Count == 0)
+                    return portfollioData;
+
+                benchmarkData = RetrieveBenchmarkMktCapData(portfollioData, effectiveDate, filterType, filterValue, isExCashSecurity);
+
+                //****************** PORTFOLIO CALCULATIONS ***********************//
 
                 //weighted avg for portfolio                 
-                mktCapData.PortfolioWtdAvg = MarketCapitalizationCalculations.CalculatePortfolioWeightedAvg(mktCap);
+                mktCapData.PortfolioWtdAvg = MarketCapitalizationCalculations.CalculatePortfolioWeightedAvg(portfollioData);
 
                 //weighted median for portfolio
-                mktCapData.PortfolioWtdMedian = MarketCapitalizationCalculations.CalculatePortfolioWeightedMedian(mktCap);
+                mktCapData.PortfolioWtdMedian = MarketCapitalizationCalculations.CalculatePortfolioWeightedMedian(portfollioData);
 
                 //ranges for portfolio
-                List<MarketCapitalizationData> lstmktCapPortfolio = MarketCapitalizationCalculations.CalculateSumPortfolioRanges(mktCap);
+                List<MarketCapitalizationData> lstmktCapPortfolio = MarketCapitalizationCalculations.CalculateSumPortfolioRanges(portfollioData);
                 mktCapData.PortfolioSumMegaRange = lstmktCapPortfolio[0].PortfolioSumMegaRange;
                 mktCapData.PortfolioSumLargeRange = lstmktCapPortfolio[0].PortfolioSumLargeRange;
                 mktCapData.PortfolioSumMediumRange = lstmktCapPortfolio[0].PortfolioSumMediumRange;
@@ -1783,21 +1862,25 @@ namespace GreenField.Web.Services
                 mktCapData.MicroRange = lstmktCapPortfolio[0].MicroRange;
                 mktCapData.UndefinedRange = lstmktCapPortfolio[0].UndefinedRange;
 
+                //****************** BENCHMARK CALCULATIONS ***********************//
 
-                //weighted avg for benchmark
-                mktCapData.BenchmarkWtdAvg = MarketCapitalizationCalculations.CalculateBenchmarkWeightedAvg(mktCap);
+                if (benchmarkData != null || benchmarkData.Count > 0)
+                {
+                    //weighted avg for benchmark
+                    mktCapData.BenchmarkWtdAvg = MarketCapitalizationCalculations.CalculateBenchmarkWeightedAvg(benchmarkData);
 
-                //weighted median for benchmark
-                mktCapData.BenchmarkWtdMedian = MarketCapitalizationCalculations.CalculateBenchmarkWeightedMedian(mktCap);
+                    //weighted median for benchmark
+                    mktCapData.BenchmarkWtdMedian = MarketCapitalizationCalculations.CalculateBenchmarkWeightedMedian(benchmarkData);
 
-                //ranges for benchmark
-                List<MarketCapitalizationData> lstmktCapBenchmark = MarketCapitalizationCalculations.CalculateSumBenchmarkRanges(mktCap);
-                mktCapData.BenchmarkSumMegaRange = lstmktCapBenchmark[0].BenchmarkSumMegaRange;
-                mktCapData.BenchmarkSumLargeRange = lstmktCapBenchmark[0].BenchmarkSumLargeRange;
-                mktCapData.BenchmarkSumMediumRange = lstmktCapBenchmark[0].BenchmarkSumMediumRange;
-                mktCapData.BenchmarkSumSmallRange = lstmktCapBenchmark[0].BenchmarkSumSmallRange;
-                mktCapData.BenchmarkSumMicroRange = lstmktCapBenchmark[0].BenchmarkSumMicroRange;
-                mktCapData.BenchmarkSumUndefinedRange = lstmktCapBenchmark[0].BenchmarkSumUndefinedRange;
+                    //ranges for benchmark
+                    List<MarketCapitalizationData> lstmktCapBenchmark = MarketCapitalizationCalculations.CalculateSumBenchmarkRanges(benchmarkData);
+                    mktCapData.BenchmarkSumMegaRange = lstmktCapBenchmark[0].BenchmarkSumMegaRange;
+                    mktCapData.BenchmarkSumLargeRange = lstmktCapBenchmark[0].BenchmarkSumLargeRange;
+                    mktCapData.BenchmarkSumMediumRange = lstmktCapBenchmark[0].BenchmarkSumMediumRange;
+                    mktCapData.BenchmarkSumSmallRange = lstmktCapBenchmark[0].BenchmarkSumSmallRange;
+                    mktCapData.BenchmarkSumMicroRange = lstmktCapBenchmark[0].BenchmarkSumMicroRange;
+                    mktCapData.BenchmarkSumUndefinedRange = lstmktCapBenchmark[0].BenchmarkSumUndefinedRange;
+                }
 
                 result.Add(mktCapData);
                 return result;
@@ -1814,5 +1897,388 @@ namespace GreenField.Web.Services
         }
         #endregion
 
+        /// <summary>
+        /// Retrieves Performance grid data for a particular composite/fund.
+        /// Filtering data based on the fund name and Effective date.
+        /// </summary>
+        /// <param name="portfolioSelectionData">Portfolio Data that contains the name of the selected portfolio</param>
+        /// <param name="effectiveDate">Selected Effective Date</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate , String Country)
+        {
+            List<PerformanceGridData> result = new List<PerformanceGridData>();
+            if (portfolioSelectionData == null || effectiveDate == null)
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+            if (!isServiceUp)
+                throw new Exception();
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData;
+            //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
+            if (Country == "NoFiltering")
+            {
+                performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
+            }
+            else
+            {
+                performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1 == Country).FirstOrDefault();
+            }
+            if (performanceData == null)
+                return result;
+            String portfolioID = performanceData.PORTFOLIO;
+            String benchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).FirstOrDefault().BENCHMARK_ID;
+            try
+            {
+                {
+                    PerformanceGridData entry = new PerformanceGridData();
+                    entry.Name = portfolioID;
+                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D;
+                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W;
+                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD;
+                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y;
+                    result.Add(entry);
+                    entry = new PerformanceGridData();
+                    entry.Name = benchmarkID;
+                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D;
+                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W;
+                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD;
+                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y;
+                    result.Add(entry);
+                }
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
+        /// <summary>
+        /// Retrieves Performance graph data for a particular composite/fund.
+        /// Filtering data based on the fund name.
+        /// </summary>
+        /// <param name="nameOfFund">Name of the selected fund</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PerformanceGraphData> RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period ,String Country)
+        {
+            List<PerformanceGraphData> result = new List<PerformanceGraphData>();
+            PerformanceGraphData entry = new PerformanceGraphData();
+            if (fundSelectionData == null || effectiveDate == null)
+                return result;
+            //checking if the service is down
+            bool isServiceUp;
+            isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+            if (!isServiceUp)
+
+                throw new Exception();           
+            try
+            {
+                switch (period)
+                {
+                    case "1D":
+                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1D;
+                        if (Country == "NoFiltering")
+                        {
+                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+                        }
+                        else
+                        {
+                            attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1 == Country).ToList();
+                        }
+                       if (attributionDatafor1D.Count == 0 || attributionDatafor1D == null)
+                       return result;
+                        entry = new PerformanceGraphData();
+                        entry.PortfolioID = fundSelectionData.PortfolioId;
+                        entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                        entry.BenchmarkPerformance = attributionDatafor1D.Select(t => t.ADJ_BM1_RC_EXRTN_1D).First();
+                        entry.PortfolioPerformance = (attributionDatafor1D.Select(t => t.ADJ_RTN_POR_RC_TWR_1D)).First();
+                        entry.EffectiveDate = effectiveDate;
+                        result.Add(entry);
+                        break;
+                    case "1W":
+                        List<DateTime> listOfEffectiveDates1W = new List<DateTime>();
+                        for (int i = 0; i < 4; i++)
+                        { 
+                            DateTime newDate = new DateTime();
+                            newDate = effectiveDate.AddDays(-i);
+                            listOfEffectiveDates1W.Add(newDate);
+                        }
+                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1W;
+                        foreach (DateTime d in listOfEffectiveDates1W)
+                        {
+                            if (Country == "NoFiltering")
+                            {
+                                attributionDatafor1W = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                            }
+                            else
+                            {
+                                attributionDatafor1W = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+
+                            }
+                            if (attributionDatafor1W.Count == 0 || attributionDatafor1W == null)
+                                continue;
+                            entry =  new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = attributionDatafor1W.Select(t => t.ADJ_BM1_RC_EXRTN_1D).First();
+                            entry.PortfolioPerformance = attributionDatafor1W.Select(t => t.ADJ_RTN_POR_RC_TWR_1D).First();
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
+                        }                      
+                        break;
+
+                    case "MTD":
+                        DateTime now = effectiveDate;
+                        DateTime lastDayLastMonth = new DateTime(now.Year, now.Month, 1); 
+                        lastDayLastMonth = lastDayLastMonth.AddDays(-1);
+                        List<DateTime> listOfEffectiveDatesMTD = new List<DateTime>();
+                        listOfEffectiveDatesMTD.Add(lastDayLastMonth);
+                        for (int i = 1; i <= effectiveDate.Day; i++)
+                        {
+                            DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                            listOfEffectiveDatesMTD.Add(newDate);
+                        }
+                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD;
+                        foreach (DateTime d in listOfEffectiveDatesMTD)
+                        {
+                            if (Country == "NoFiltering")
+                            {
+                                attributionDataforMTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                            }
+                            else
+                            {
+                                attributionDataforMTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                            }
+                            if (attributionDataforMTD.Count == 0 || attributionDataforMTD == null)
+                                continue;
+                            entry = new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = attributionDataforMTD.Select(t => t.ADJ_BM1_RC_EXRTN_1D).First();
+                            entry.PortfolioPerformance = attributionDataforMTD.Select(t => t.ADJ_RTN_POR_RC_TWR_1D).First();
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
+                        }                                                 
+                        break;
+                        case "QTD":                      
+                        int tQtr = (effectiveDate.Month - 1) / 3;
+                        int differenceInMonths = 0;
+                        DateTime lastDayOfQuarter= new DateTime(effectiveDate.Year, (tQtr * 3) + 1, 1).AddDays(-1);
+
+                         List<DateTime> listOfEffectiveDatesQTD = new List<DateTime>();
+                         listOfEffectiveDatesQTD.Add(lastDayOfQuarter);
+                         if (lastDayOfQuarter.Month == 12)
+                         {
+                              differenceInMonths = effectiveDate.Month - 0;
+                         }
+                         else
+                         {
+                             differenceInMonths = effectiveDate.Month - lastDayOfQuarter.Month;
+                         }
+                         switch (differenceInMonths)
+                         { 
+                             case 1 :
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+                             case 2 :
+                                 int previousMonth = effectiveDate.Month - 1;                                
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previousMonth); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previousMonth, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+
+                             case 3 :
+
+                                 int previous2Month = effectiveDate.Month - 2;
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previous2Month); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previous2Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 int previous1Month = effectiveDate.Month - 1;
+                                 for (int i = 1; i <= DateTime.DaysInMonth(effectiveDate.Year, previous1Month); i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, previous1Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 for (int i = 1; i <= effectiveDate.Day; i++)
+                                 {
+                                     DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
+                                     listOfEffectiveDatesQTD.Add(newDate);
+                                 }
+                                 break;
+                             default:
+                                 break;
+                         
+                         }
+                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforQTD ;
+                         foreach (DateTime d in listOfEffectiveDatesQTD)
+                         {
+                             if (Country == "NoFiltering")
+                             {
+                                 attributionDataforQTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                             }
+                             else
+                             {
+
+                                 attributionDataforQTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                             }
+                             if (attributionDataforQTD.Count == 0 || attributionDataforQTD == null)
+                                 continue;
+                             entry = new PerformanceGraphData();
+                             entry.PortfolioID = fundSelectionData.PortfolioId;
+                             entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                             entry.BenchmarkPerformance =(attributionDataforQTD.Select(t => t.ADJ_BM1_RC_EXRTN_1D)).First();
+                             entry.PortfolioPerformance = (attributionDataforQTD.Select(t => t.ADJ_RTN_POR_RC_TWR_1D)).First();
+                             entry.EffectiveDate = d;
+                             result.Add(entry);
+                         } 
+                        break;
+
+                    case "YTD":
+                        DateTime previousYearEndDate = new DateTime(effectiveDate.Year - 1 , 12, 31);
+                        List<DateTime> listOfEffectiveDatesYTD = new List<DateTime>();
+                        listOfEffectiveDatesYTD.Add(previousYearEndDate);                        
+                        int noOfMonths = effectiveDate.Month;
+                        for (int i = 1; i < noOfMonths; i++)
+                        {
+                            DateTime newDate = new DateTime(effectiveDate.Year, noOfMonths, DateTime.DaysInMonth(effectiveDate.Year, noOfMonths));
+                            listOfEffectiveDatesYTD.Add(newDate);
+                        }
+                        if(!listOfEffectiveDatesYTD.Contains(effectiveDate))
+                        listOfEffectiveDatesYTD.Add(effectiveDate);
+                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforYTD;
+                        foreach (DateTime d in listOfEffectiveDatesYTD)
+                        {
+                            if (Country == "NoFiltering")
+                            {
+                                attributionDataforYTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                            }
+                            else
+                            {
+                                attributionDataforYTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                            }
+                            if (attributionDataforYTD.Count == 0 || attributionDataforYTD == null)
+                                continue;
+                            entry = new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = (attributionDataforYTD.Select(t => t.ADJ_BM1_RC_EXRTN_MTD)).First();
+                            entry.PortfolioPerformance = (attributionDataforYTD.Select(t => t.ADJ_RTN_POR_RC_TWR_MTD)).First();
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
+                        } 
+
+                        break;
+
+                    case "1Y":
+
+                        DateTime previousYearDate = effectiveDate.AddYears(-1);
+                        int noOfMonth = previousYearDate.Month;
+                        List<DateTime> listOfEffectiveDates1Y1D = new List<DateTime>();
+                        List<DateTime> listOfEffectiveDates1YMTD = new List<DateTime>();
+                        DateTime nextMonthEnd = new DateTime(previousYearDate.Year, noOfMonth, DateTime.DaysInMonth(previousYearDate.Year, noOfMonth));
+                        for (int i = previousYearDate.Day; i <= nextMonthEnd.Day; i++)
+                        {
+                            DateTime newDate = new DateTime(previousYearDate.Year, nextMonthEnd.Month, i);
+                            listOfEffectiveDates1Y1D.Add(newDate);
+                        }
+
+                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y;
+                        foreach (DateTime d in listOfEffectiveDates1Y1D)
+                        {
+                            if (Country == "NoFiltering")
+                            {
+                                attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                            }
+                            else
+                            {
+                                attributionDatafor1Y = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                            }
+                               if (attributionDatafor1Y.Count == 0 || attributionDatafor1Y == null)
+                                continue;
+                            entry = new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = (attributionDatafor1Y.Select(t => t.ADJ_BM1_RC_EXRTN_1D)).First();
+                            entry.PortfolioPerformance = (attributionDatafor1Y.Select(t => t.ADJ_RTN_POR_RC_TWR_1D)).First();
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
+                        }
+                        for (int i = nextMonthEnd.Month; i <= 12; i++)
+                        {
+                            DateTime newDate = new DateTime(previousYearDate.Year, i, DateTime.DaysInMonth(previousYearDate.Year, i));
+                            listOfEffectiveDates1YMTD.Add(newDate);                        
+                        }
+                        for (int i = 1; i < effectiveDate.Month; i++)
+                        {
+                            DateTime newDate = new DateTime(effectiveDate.Year, i, DateTime.DaysInMonth(effectiveDate.Year, i));
+                            listOfEffectiveDates1YMTD.Add(newDate);
+                        }
+
+                        listOfEffectiveDates1YMTD.Add(effectiveDate);
+                        foreach (DateTime d in listOfEffectiveDates1YMTD)
+                        {
+                            if (Country == "NoFiltering")
+                            {
+                                attributionDataforYTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
+                            }
+                            else
+                            {
+                                attributionDataforYTD = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                            }
+                            if (attributionDataforYTD.Count == 0 || attributionDataforYTD == null)
+                            continue;
+                            entry = new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = (attributionDataforYTD.Select(t => t.ADJ_BM1_RC_EXRTN_MTD)).First();
+                            entry.PortfolioPerformance = (attributionDataforYTD.Select(t => t.ADJ_RTN_POR_RC_TWR_MTD)).First();
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
+                        } 
+                        
+                        break;
+                       default:
+                        List<PerformanceGraphData> resultForDefault = new List<PerformanceGraphData>();
+                        break;
+                }
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+
+        }
     }
 }

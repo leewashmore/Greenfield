@@ -15,8 +15,7 @@
                     <helpers:PercentageValueConverter x:Key="PercentageValueConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        
+        </ResourceDictionary>     
         
     </helpers:ViewBaseUserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="White">
@@ -32,6 +31,8 @@
                                  SelectionMode="Single"
                                  CanUserDeleteRows="False" 
                                  IsReadOnly="True" 
+                                 RowHeight="15"
+                                 FontSize="7"
                                  CanUserSortColumns="False" 
                                  ShowGroupFooters="False"
                                  RowIndicatorVisibility="Collapsed" 
@@ -44,19 +45,19 @@
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}" 
-                                 GridLinesVisibility="None"
-                                 RowLoaded="dgRelativePerformance_RowLoaded"
-                                 >
+                                 GridLinesVisibility="None">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                TextAlignment="Left" HeaderTextAlignment="Left"/>
                     <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n2\}}" Width="*" 
-                                                CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="Fund Wt." DataMemberBinding="{Binding FundWeight, Converter={StaticResource PercentageValueConverter}}" 
-                                                CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="Benchmark Wt." DataMemberBinding="{Binding BenchmarkWeight, Converter={StaticResource PercentageValueConverter}}" 
-                                                CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="Active Position" DataMemberBinding="{Binding ActivePosition, Converter={StaticResource PercentageValueConverter}}" 
-                                                CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                TextAlignment="Right" HeaderTextAlignment="Right"/>
+                    <telerik:GridViewDataColumn Header="Fund Wt." DataMemberBinding="{Binding FundWeight, Converter={StaticResource PercentageValueConverter}}" HeaderTextAlignment="Right"
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="Benchmark Wt." DataMemberBinding="{Binding BenchmarkWeight, Converter={StaticResource PercentageValueConverter}}" HeaderTextAlignment="Right"
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                    <telerik:GridViewDataColumn Header="Active Position" DataMemberBinding="{Binding ActivePosition, Converter={StaticResource PercentageValueConverter}}" HeaderTextAlignment="Right"
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>

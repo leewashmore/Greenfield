@@ -199,13 +199,12 @@
   <xs:complexType name="TopBenchmarkSecuritiesData">
     <xs:sequence>
       <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="PreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="SecondPreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="ThirdPreviousYear" type="xs:double" />
-      <xs:element minOccurs="0" name="Weight" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
+      <xs:element minOccurs="0" name="MTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneDayReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TopBenchmarkSecuritiesData" nillable="true" type="tns:TopBenchmarkSecuritiesData" />
@@ -232,47 +231,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="PerformanceType" nillable="true" type="tns:PerformanceType" />
-  <xs:complexType name="ArrayOfPerformanceGraphData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPerformanceGraphData" nillable="true" type="tns:ArrayOfPerformanceGraphData" />
-  <xs:complexType name="PerformanceGraphData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BENCHMARK_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="BENCHMARK_PERFORMANCE" type="xs:double" />
-      <xs:element minOccurs="0" name="EFFECTIVE_DATE" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="FIFTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="FIRST_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="MTD" type="xs:double" />
-      <xs:element minOccurs="0" name="PORTFOLIO_ID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PORTFOLIO_PERFORMANCE" type="xs:double" />
-      <xs:element minOccurs="0" name="QTD" type="xs:double" />
-      <xs:element minOccurs="0" name="TENTH_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="THIRD_YEAR" type="xs:double" />
-      <xs:element minOccurs="0" name="YTD" type="xs:double" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
-  <xs:complexType name="ArrayOfPerformanceGridData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPerformanceGridData" nillable="true" type="tns:ArrayOfPerformanceGridData" />
-  <xs:complexType name="PerformanceGridData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="TopRcTwr1D" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="TopRcTwr1W" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="TopRcTwr1Y" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="TopRcTwrMtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="TopRcTwrQtd" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="TopRcTwrYtd" nillable="true" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PerformanceGridData" nillable="true" type="tns:PerformanceGridData" />
   <xs:complexType name="ArrayOfAttributionData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="AttributionData" nillable="true" type="tns:AttributionData" />

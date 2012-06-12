@@ -16,6 +16,12 @@ namespace GreenField.DataContracts
         public string Entity { get; set; }
 
         /// <summary>
+        /// Country / Sector / Security group for which the active position record is being referenced
+        /// </summary>
+        [DataMember]
+        public string EntityGroup { get; set; }
+
+        /// <summary>
         /// Market value with respect to the entity
         /// </summary>
         [DataMember]

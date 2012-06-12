@@ -34,6 +34,8 @@ namespace GreenField.Gadgets.Models
        
         public Decimal? YearFive { get; set; }
 
+        public Decimal? YearSix { get; set; }
+
         public Decimal? FiveYearAvg { get; set; }
     }
 }

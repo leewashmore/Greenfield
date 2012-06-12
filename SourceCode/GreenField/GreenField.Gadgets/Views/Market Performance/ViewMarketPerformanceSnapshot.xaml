@@ -41,7 +41,7 @@
     </UserControl.Resources>
 
     <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid>
                 <Grid.RowDefinitions>

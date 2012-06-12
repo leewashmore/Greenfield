@@ -69,9 +69,10 @@ namespace GreenField.Gadgets.Views
             dataContextSource.ChartAreaMultiLineBenchmark = this.chMultiLineBenchmarkChart.DefaultView.ChartArea;
             this.chMultiLineBenchmarkChart.DataBound += dataContextSource.ChartDataBound;
             dataContextSource.MultiLineBenchmarkDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_MultiLineBenchmarkDataLoadedEvent);
-            AddGridHeader();
+            this.AddGridHeader();
+            this.ApplyChartStyles();
         }
-        
+
         #endregion
 
         #region ProgressIndicator
@@ -91,7 +92,7 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicator.IsBusy = false;
             }
         }
-        
+
         #endregion
 
         #region Export
@@ -139,7 +140,7 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
 
-        } 
+        }
 
         #endregion
 
@@ -156,11 +157,38 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        /// <summary>
+        /// Applying Chart Styles
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartLegend.Header = string.Empty;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+        }
+
         #endregion
 
-        private void dgBenchmarkUI_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        private void chMultiLineBenchmarkChart_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
-            //GroupedGridRowLoadedHandler.Implement(e);
+            if (this.DataContext as ViewModelMultiLineBenchmark != null)
+            {
+                if ((this.DataContext as ViewModelMultiLineBenchmark).MultiLineBenchmarkUIChartData != null)
+                {
+                    (this.DataContext as ViewModelMultiLineBenchmark).AxisXMinValue =
+                        Convert.ToDateTime(((this.DataContext as ViewModelMultiLineBenchmark).MultiLineBenchmarkUIChartData.OrderBy(a => a.FromDate)).
+                        Select(a => a.FromDate).FirstOrDefault()).ToOADate();
+                    (this.DataContext as ViewModelMultiLineBenchmark).AxisXMaxValue =
+                        Convert.ToDateTime(((this.DataContext as ViewModelMultiLineBenchmark).MultiLineBenchmarkUIChartData.OrderByDescending(a => a.FromDate)).
+                        Select(a => a.FromDate).FirstOrDefault()).ToOADate();
+                    int dataCount = (this.DataContext as ViewModelMultiLineBenchmark).MultiLineBenchmarkUIChartData.Count;
+                    if (dataCount != 0)
+                    {
+                        this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
+                    }
+                }
+            }
         }
     }
 }

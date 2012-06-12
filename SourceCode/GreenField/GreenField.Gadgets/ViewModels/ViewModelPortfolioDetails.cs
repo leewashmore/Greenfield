@@ -35,6 +35,7 @@ namespace GreenField.Gadgets.ViewModels
         private PortfolioSelectionData _portfolioSelectionData;
         private DateTime? _effectiveDate;
 
+
         #endregion
 
         #region Constructor
@@ -52,17 +53,19 @@ namespace GreenField.Gadgets.ViewModels
             this._logger = param.LoggerFacade;
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
 
             if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
             {
                 BusyIndicatorStatus = true;
-                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
             }
         }
 
@@ -259,6 +262,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Check to include Cash Securities
+        /// </summary>
+        private bool _excludeCashSecurities;
+        public bool ExcludeCashSecurities
+        {
+            get
+            {
+                return _excludeCashSecurities;
+            }
+            set
+            {
+                _excludeCashSecurities = value;
+                this.RaisePropertyChanged(() => this.ExcludeCashSecurities);
+            }
+        }
+
+
+
         #endregion
 
         #region CallbackMethods
@@ -269,12 +291,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="result"></param>
         private void RetrievePortfolioDetailsDataCallbackMethod(List<PortfolioDetailsData> result)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(result);
+                    SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result));
                 }
             }
             catch (Exception ex)
@@ -284,13 +309,14 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                BusyIndicatorStatus = false;            
+                BusyIndicatorStatus = false;
             }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         #endregion
 
-        #region Methods
+        #region HelperMethods
 
         /// <summary>
         /// Service call to Retrieve the Details for a Portfolio
@@ -298,7 +324,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="objPortfolioId">PortfolioName</param>
         private void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioId, DateTime objSelectedDate, bool objgetBenchmark, Action<List<PortfolioDetailsData>> callback)
         {
-            _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, GetBenchmarkData, callback);
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (objPortfolioId != null && objSelectedDate != null && _dbInteractivity != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, objSelectedDate, 1);
+                    Logging.LogMethodParameter(_logger, methodNamespace, objPortfolioId, 1);
+                    _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, ExcludeCashSecurities, GetBenchmarkData, callback);
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         /// <summary>
@@ -330,14 +376,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IsoCountryCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                                
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -360,14 +411,21 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.ProprietaryRegionCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
+
                                 }
                             }
                             break;
@@ -390,14 +448,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SectorName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -420,14 +483,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                                
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -450,14 +518,19 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SubIndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
+                               
+
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
                                 {
                                     if (sumDirtyValuePC != 0)
                                         data.RePortfolioWeight = data.DirtyValuePC / sumDirtyValuePC * 100;
+
                                     if (sumBenchmarkWeight != 0)
                                         data.ReBenchmarkWeight = data.BenchmarkWeight / sumBenchmarkWeight * 100;
+
                                     if (sumAshEmmModelWeight != 0)
                                         data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
                                 }
                             }
                             break;
@@ -472,13 +545,70 @@ namespace GreenField.Gadgets.ViewModels
                             }
                             break;
                         }
-
-
                 }
             }
             catch (Exception ex)
             {
 
+            }
+        }
+
+        /// <summary>
+        /// Calculations for Portfolio Details UI
+        /// </summary>
+        /// <param name="portfolioDetailsData">Collection of Portfolio Details Data</param>
+        /// <returns>Collection of PortfolioDetailsData</returns>
+        private List<PortfolioDetailsData> CalculatePortfolioValues(List<PortfolioDetailsData> portfolioDetailsData)
+        {
+            try
+            {
+                if (portfolioDetailsData == null)
+                    return new List<PortfolioDetailsData>();
+                if (portfolioDetailsData.Count == 0)
+                    return new List<PortfolioDetailsData>();
+
+                decimal sumDirtyValuePC = 0;
+                decimal sumModelWeight = 0;
+
+                sumDirtyValuePC = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.DirtyValuePC));
+                sumModelWeight = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.AshEmmModelWeight));
+
+                if (sumDirtyValuePC == 0 && sumModelWeight == 0)
+                    return portfolioDetailsData;               
+
+                foreach (PortfolioDetailsData item in portfolioDetailsData)
+                {
+                    if (sumDirtyValuePC != 0)
+                    {
+                        item.PortfolioWeight = item.DirtyValuePC / sumDirtyValuePC * 100;
+                        item.RePortfolioWeight = item.PortfolioWeight;
+                        item.ActivePosition = item.PortfolioWeight - item.BenchmarkWeight;
+                    }
+                    else
+                    {
+                        item.RePortfolioWeight = 0;
+                        item.ActivePosition = 0;
+                    }
+
+
+                    if (sumModelWeight != 0)
+                    {
+                        item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight * 100;
+                        item.ReAshEmmModelWeight = item.AshEmmModelWeight;
+                    }
+                    else
+                    {
+                        item.ReAshEmmModelWeight = 0;
+                    }
+
+                    item.ReBenchmarkWeight = item.BenchmarkWeight;
+
+                }
+                return portfolioDetailsData;
+            }
+            catch (Exception ex)
+            {
+                return new List<PortfolioDetailsData>();
             }
         }
 
@@ -506,8 +636,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
-                    BusyIndicatorStatus = true;
-                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                    if (SelectedPortfolioId != null && _effectiveDate != null)
+                    {
+                        BusyIndicatorStatus = true;
+                        RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                    }
                 }
             }
             catch (Exception ex)
@@ -535,7 +668,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && SelectedPortfolioId != null)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), false, RetrievePortfolioDetailsDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
                     }
                 }
                 else
@@ -551,6 +684,36 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Event Handler to Check for Cash Securities
+        /// </summary>
+        /// <param name="isExCashSec"></param>
+        public void HandleExCashSecuritySetEvent(bool isExCashSec)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
+                if (isExCashSec != null)
+                {
+                    ExcludeCashSecurities = isExCashSec;
+
+                    if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null)
+                    {
+                        BusyIndicatorStatus = true;
+                        RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
 
         #endregion
 

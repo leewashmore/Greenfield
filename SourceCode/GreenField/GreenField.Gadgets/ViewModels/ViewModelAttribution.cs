@@ -234,61 +234,7 @@ namespace GreenField.Gadgets.ViewModels
                                  PeriodAttributionInfo = result1Y;
                                  if (null != attributionDataLoadedEvent)
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                                break;
-                            //case "3Y":
-                            //    List<PeriodAttributeData> result3Y = new List<PeriodAttributeData>();                                    
-                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
-                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
-                            //        entry.Country = AttributionDataInfo[i].Country;
-                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
-                            //        entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt3y;
-                            //          entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgt3y;
-                            //          entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn3y;
-                            //          entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn3y;
-                            //          entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc3y;
-                            //          entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec3y;
-                            //          result3Y.Add(entry);
-                            //        }
-                            //     PeriodAttributionInfo = result3Y;
-                            //     if (null != attributionDataLoadedEvent)
-                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                            //    break;
-                            //case "5Y":
-                            //      List<PeriodAttributeData> result5Y = new List<PeriodAttributeData>();                                    
-                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
-                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
-                            //        entry.Country = AttributionDataInfo[i].Country;
-                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
-                            //        entry.BenchmarkWeight = AttributionDataInfo[i].PorRcAvgWgt5y;
-                            //        entry.PortfolioWeight = AttributionDataInfo[i].Bm1RcAvgWgt5y;
-                            //        entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtn5y;
-                            //        entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtn5y;
-                            //        entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAlloc5y;
-                            //        entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelec5y;
-                            //          result5Y.Add(entry);
-                            //        }
-                            //     PeriodAttributionInfo = result5Y;
-                            //     if (null != attributionDataLoadedEvent)
-                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                            //    break;
-                            //case "SI":
-                            //    List<PeriodAttributeData> resultSI = new List<PeriodAttributeData>();                                    
-                            //     for (int i = 0; i < AttributionDataInfo.Count; i++)
-                            //        {   PeriodAttributeData entry = new PeriodAttributeData();
-                            //        entry.Country = AttributionDataInfo[i].Country;
-                            //        entry.CountryName = AttributionDataInfo[i].CountryName;
-                            //        entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtSi;
-                            //          entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtSi;
-                            //          entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnSi;
-                            //          entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnSi;
-                            //          entry.AssetAllocation = AttributionDataInfo[i].FBm1AshAssetAllocSi;
-                            //          entry.StockSelectionTotal = AttributionDataInfo[i].FBm1AshSecSelecSi;
-                            //          resultSI.Add(entry);
-                            //        }
-                            //     PeriodAttributionInfo = resultSI;
-                            //     if (null != attributionDataLoadedEvent)
-                            //         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                            //    break;
+                                break;                            
                             default:
                                 List<PeriodAttributeData> result10Y = new List<PeriodAttributeData>();
                                 PeriodAttributionInfo = result10Y;
@@ -296,7 +242,6 @@ namespace GreenField.Gadgets.ViewModels
                                      attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                                 break;
                         }
-
                     }
                 
             } 
@@ -343,7 +288,6 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="PortfolioSelectionData">Object of PortfolioSelectionData class containg the Fund Selection Data </param>
         public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
         {
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
@@ -352,7 +296,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null)
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
                     {
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -388,7 +332,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
                     {
                         if (null != attributionDataLoadedEvent)
                             attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -422,10 +366,24 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedPeriodType != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
-                    if (null != attributionDataLoadedEvent)
-                        attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    SelectedPeriod = selectedPeriodType;
+                    _selectedPeriod = selectedPeriodType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (AttributionDataInfo.Count==0)
+                        {
+                            if (null != attributionDataLoadedEvent)
+                                attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+                            //SelectedPeriod = selectedPeriodType;
+                        }
+
+                        else 
+                        {
+                          if (null != attributionDataLoadedEvent)
+                               attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            SelectedPeriod = selectedPeriodType;
+                        }
+                    }
                     
                 }
                 else
@@ -461,6 +419,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     AttributionDataInfo = result;
+                    SelectedPeriod = _selectedPeriod;
                     if (null != attributionDataLoadedEvent)
                         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

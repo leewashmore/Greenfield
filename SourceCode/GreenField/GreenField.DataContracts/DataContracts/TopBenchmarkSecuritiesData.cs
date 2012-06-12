@@ -10,27 +10,26 @@ namespace GreenField.DataContracts
     public class TopBenchmarkSecuritiesData
     {
         [DataMember]
-        public String IssuerName;
+        public String IssuerName { get; set; }
 
         [DataMember]
-        public Double Weight;
+        public Decimal? Weight { get; set; }
 
         [DataMember]
-        public Double MTD;
+        public Decimal? OneDayReturn { get; set; }
 
         [DataMember]
-        public Double QTD;
+        public Decimal? WTD { get; set; }
 
         [DataMember]
-        public Double YTD;
+        public Decimal? MTD { get; set; }
 
         [DataMember]
-        public Double PreviousYear;
+        public Decimal? QTD { get; set; }
 
         [DataMember]
-        public Double SecondPreviousYear;
+        public Decimal? YTD { get; set; }
 
-        [DataMember]
-        public Double ThirdPreviousYear;
+      
     }
 }

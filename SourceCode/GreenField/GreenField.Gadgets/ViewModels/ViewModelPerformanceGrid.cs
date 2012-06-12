@@ -52,6 +52,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
+        private String _country;
+
 
 
         #endregion
@@ -68,16 +70,18 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
+            _country = param.DashboardGadgetPayload.HeatMapCountryData;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             if (_effectiveDate != null && _PortfolioSelectionData != null)
             {
-                _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePerformanceGridDataCallbackMethod);
+                _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
             }          
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+                _eventAggregator.GetEvent<HeatMapClickEvent>().Subscribe(HandleCountrySelectionDataSet, false);
                 
             }  
         }
@@ -138,7 +142,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != performanceGridDataLoadedEvent)
                             performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePerformanceGridDataCallbackMethod);
+                        _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
                     }
                 }
                 else
@@ -169,7 +173,39 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != performanceGridDataLoadedEvent)
                             performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePerformanceGridDataCallbackMethod);
+                        _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+        public void HandleCountrySelectionDataSet(String country)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (country != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, country, 1);
+                    _country = country;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _country!=null)
+                    {
+                        if (null != performanceGridDataLoadedEvent)
+                            performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), country, RetrievePerformanceGridDataCallbackMethod);
                     }
                 }
                 else

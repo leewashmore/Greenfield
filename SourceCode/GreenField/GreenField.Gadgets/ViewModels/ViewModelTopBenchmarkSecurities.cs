@@ -99,77 +99,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.TopBenchmarkSecuritiesInfo);
             }
         }
-
-        /// <summary>
-        /// Collection that contains the filter types to be displayed in the combo box
-        /// </summary>
-        public ObservableCollection<String> FilterTypes
-        {
-            get
-            {
-                return new ObservableCollection<string> { "Region", "Country", "Industry", "Sector" };
-            }
-        }
-
-        /// <summary>
-        /// String that contains the selected filter type
-        /// </summary>
-        private String _filterTypesSelection;
-        public String FilterTypesSelection
-        {
-            get
-            {
-                return _filterTypesSelection;
-            }
-            set
-            {
-
-                _filterTypesSelection = value;
-                //_dbInteractivity.RetriveValuesForFilters(_filterTypesSelection, RetrieveValuesForFiltersCallbackMethod);
-                RaisePropertyChanged(() => this.FilterTypesSelection);
-            }
-        }
-        /// <summary>
-        ///  Collection that contains the value types to be displayed in the combo box
-        /// </summary>
-        private List<String> _valueTypes;
-        public List<String> ValueTypes
-        {
-            get { return _valueTypes; }
-            set
-            {
-                if (_valueTypes != value)
-                {
-                    _valueTypes = value;
-
-                    RaisePropertyChanged(() => this.ValueTypes);
-                }
-            }
-        }
-
-        /// <summary>
-        /// String that contains the selected value type
-        /// </summary>
-        private String _valueTypesSelection;
-        public String ValueTypesSelection
-        {
-            get { return _valueTypesSelection; }
-            set
-            {
-                if (_valueTypesSelection != value)
-                {
-                    _valueTypesSelection = value;
-
-                    if (_portfolioSelectionData != null)
-                    {
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
-
-                    }
-                    RaisePropertyChanged(() => this.ValueTypesSelection);
-                }
-
-            }
-        }
+               
         #endregion
 
         #region Events
@@ -283,14 +213,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        /// <summary>
-        /// Callback method that assigns value to ValueTypes
-        /// </summary>
-        /// <param name="result">Contains the list of value types for a selected region</param>
-        public void RetrieveValuesForFiltersCallbackMethod(List<String> result)
-        {
-            ValueTypes = result;
-        }
+        
 
         #region EventUnSubscribe
 

@@ -11,6 +11,8 @@ using GreenField.Web.Helpers;
 using GreenField.DataContracts;
 using GreenField.DAL;
 using System.Data.Objects;
+using GreenField.Web.DimensionEntitiesService;
+using System.Configuration;
 
 namespace GreenField.Web.Services
 {
@@ -26,30 +28,66 @@ namespace GreenField.Web.Services
             }
         }
 
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+
+                return dimensionEntity;
+            }
+        }
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public void GetFinancialStatement()
+        public string RetrieveIssuerId(EntitySelectionData entitySelectionData)
         {
-            //try
-            //{
-            //    string _dataSource = EnumUtils.ToString(dataSource);
-            //    string _periodType = EnumUtils.ToString(periodType);
-            //    string _fiscalType = EnumUtils.ToString(fiscalType);
-            //    string _statementType = EnumUtils.ToString(statementType);
+            try
+            {
+                string result = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
+                        record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName)
+                    .Select(record => record.ISSUER_ID).FirstOrDefault();
 
-            //    ExternalResearchEntities entity = new ExternalResearchEntities();
-            //    ObjectResult<FinancialStatementData> result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency);
-            //    if (result == null)
-            //        return null;
+                return result == null ? String.Empty : result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
 
-            //    return result.ToList();
-            //}
-            //catch (Exception ex)
-            //{
-            //    ExceptionTrace.LogException(ex);
-            //    string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-            //    throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            //}
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency)
+        {
+            try
+            {
+                string _dataSource = EnumUtils.ToString(dataSource);
+                string _periodType = EnumUtils.ToString(periodType);
+                string _fiscalType = EnumUtils.ToString(fiscalType);
+                string _statementType = EnumUtils.ToString(statementType);
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                ObjectResult<FinancialStatementData> result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency);
+                if (result == null)
+                    return null;
+
+                return result.ToList();                
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         }
     }
 }
