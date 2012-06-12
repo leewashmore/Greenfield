@@ -67,7 +67,6 @@ namespace GreenField.Gadgets.ViewModels
 
         }
         #endregion
-
         #region Events
         /// <summary>
         /// Event for the notification of Data Load Completion

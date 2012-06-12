@@ -1814,10 +1814,10 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="name">Name of the fund</param>
         /// <param name="callback"></param>
-        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PerformanceGridData>> callback)
+        public void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country, Action<List<PerformanceGridData>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrievePerformanceGridDataAsync(portfolioSelectionData, effectiveDate, country);
             client.RetrievePerformanceGridDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

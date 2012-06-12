@@ -16,6 +16,8 @@ using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
+using GreenField.Common.Helper;
+using Microsoft.Practices.Prism.Events;
 
 namespace GreenField.Gadgets.Views
 {
@@ -41,6 +43,8 @@ namespace GreenField.Gadgets.Views
         /// Private Collection of type Map Shape
         /// </summary>
        private List<MapShape> _shapes = new List<MapShape>();
+       public MapShape mapShape;
+       private IEventAggregator _eventAggregator;
        #region Constructor
        /// <summary>
        /// Constructor
@@ -50,6 +54,7 @@ namespace GreenField.Gadgets.Views
        {
            InitializeComponent();
            this.DataContext = dataContextSource;
+           _eventAggregator = (this.DataContext as ViewModelHeatMap)._eventAggregator;
            this.DataContextHeatMap = dataContextSource;
            dataContextSource.RetrieveHeatMapDataCompletedEvent += new RetrieveHeatMapDataCompleteEventHandler(dataContextSource_RetrieveHeatMapDataCompletedEvent);
            dataContextSource.heatMapDataLoadedEvent +=
@@ -77,7 +82,9 @@ namespace GreenField.Gadgets.Views
             if (_heatMapInfo != null)
             {
                 foreach (MapShape _shape in _shapes)
+
                 {
+                    mapShape = _shape;
                     string countryID = (string)_shape.ExtendedData.GetValue("ISO_2DIGIT");
 
                     HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
@@ -167,6 +174,20 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private DashboardGadgetPayload _selectorPayload;
+        public DashboardGadgetPayload SelectorPayload
+        {
+            get
+            {
+                if (_selectorPayload == null)
+                    _selectorPayload = new DashboardGadgetPayload();
+                return _selectorPayload;
+            }
+            set
+            {
+                _selectorPayload = value;
+            }
+        }
         #region RemoveEvents
         /// <summary>
         /// Disposing events
@@ -179,6 +200,23 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void RadMap1_MapMouseClick(object sender, MapMouseRoutedEventArgs eventArgs)
+        {
+            MapShape shape = sender as MapShape;
+            SelectorPayload.HeatMapCountryData = "Mexico";
+            //MapShape shape;
+            //var element =  this.informationLayer.ItemContainerGenerator.ContainerFromItem(shape) as Shape;
+           //var element = this.informationLayer.ItemContainerGenerator.ContainerFromItem(mapShape) as FrameworkElement; 
+            //var shape1 = element.F<Shape>(); 
+           //his.informationLayer.ma
+            Location loc = eventArgs.Location;
+            object a = sender;
+         //this.informationLayer.Items.lo
+            FrameworkElement element = sender as FrameworkElement;
+            //element.Tag
+            _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
+        }
 
     }
 }

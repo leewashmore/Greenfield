@@ -61,6 +61,8 @@ namespace GreenField.Common
 
     public class CommoditySelectionSetEvent : CompositePresentationEvent<string> { }
 
+    public class HeatMapClickEvent : CompositePresentationEvent<String> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }

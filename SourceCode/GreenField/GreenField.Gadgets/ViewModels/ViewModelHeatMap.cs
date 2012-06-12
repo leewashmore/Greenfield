@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        public IEventAggregator _eventAggregator;
 
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller

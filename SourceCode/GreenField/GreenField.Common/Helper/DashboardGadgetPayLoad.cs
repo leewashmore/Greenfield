@@ -49,6 +49,8 @@ namespace GreenField.Common.Helper
         public bool IsExCashSecurityData { get; set; }
 
         public string CommoditySelectedVal { get; set; }
+
+        public String HeatMapCountryData { get; set; }
         
     }
 }

@@ -1375,82 +1375,82 @@ namespace Greenfield.ServiceCaller.UnitTest
 
         #endregion
 
-        #region Performance Grid Gadget
-        /// <summary>
-        /// RetrievePerformanceGridData Test Method - Sample Data
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        public void RetrievePerformanceGridDataTestMethod()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
-            DateTime effectiveDate = new DateTime(2012, 1, 31);
+        //#region Performance Grid Gadget
+        ///// <summary>
+        ///// RetrievePerformanceGridData Test Method - Sample Data
+        ///// </summary>
+        //[TestMethod]
+        //[Asynchronous]
+        //public void RetrievePerformanceGridDataTestMethod()
+        //{
+        //    DBInteractivity instance = new DBInteractivity();
+        //    PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+        //    DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
-            {
-                Assert.IsNotNull(resultSet, "PerformanceGrid Data Not Available");
-                EnqueueTestComplete();
-            });
-        }
+        //    instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
+        //    {
+        //        Assert.IsNotNull(resultSet, "PerformanceGrid Data Not Available");
+        //        EnqueueTestComplete();
+        //    });
+        //}
 
-        /// <summary>
-        /// RetrievePerformanceGridData Test Method - Sample Data Which does not retrieve any Data - should return an empty result set
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        public void RetrievePerformanceGridDataNotAvailableTestMethod()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
-            DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
-            {
-                Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
-                EnqueueTestComplete();
-            });
-        }
+        ///// <summary>
+        ///// RetrievePerformanceGridData Test Method - Sample Data Which does not retrieve any Data - should return an empty result set
+        ///// </summary>
+        //[TestMethod]
+        //[Asynchronous]
+        //public void RetrievePerformanceGridDataNotAvailableTestMethod()
+        //{
+        //    DBInteractivity instance = new DBInteractivity();
+        //    PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
+        //    DateTime effectiveDate = new DateTime(2012, 1, 31);
+        //    instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
+        //    {
+        //        Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
+        //        EnqueueTestComplete();
+        //    });
+        //}
 
-        /// <summary>
-        /// RetrievePerformanceGridData Test Method - portfolioIdentifiers as null - should return an empty result set
-        /// portfolioIdentifiers - null
-        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        public void RetrievePerformanceGridDataPortfolioIdentifierNullTestMethod()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            PortfolioSelectionData portfolio = null;
-            DateTime effectiveDate = new DateTime(2012, 1, 31);
+        ///// <summary>
+        ///// RetrievePerformanceGridData Test Method - portfolioIdentifiers as null - should return an empty result set
+        ///// portfolioIdentifiers - null
+        ///// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        ///// </summary>
+        //[TestMethod]
+        //[Asynchronous]
+        //public void RetrievePerformanceGridDataPortfolioIdentifierNullTestMethod()
+        //{
+        //    DBInteractivity instance = new DBInteractivity();
+        //    PortfolioSelectionData portfolio = null;
+        //    DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
-            {
-                Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
-                EnqueueTestComplete();
-            });
-        }
+        //    instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
+        //    {
+        //        Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
+        //        EnqueueTestComplete();
+        //    });
+        //}
 
-        /// <summary>
-        /// RetrievePerformanceGridData Test Method - portfolioIdentifiers as Empty - should return an empty result set
-        /// portfolioIdentifiers - Empty
-        /// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
-        /// </summary>
-        [TestMethod]
-        [Asynchronous]
-        public void RetrievePerformanceGridDataPortfolioIdentifierEmptyTestMethod()
-        {
-            DBInteractivity instance = new DBInteractivity();
-            PortfolioSelectionData portfolio = new PortfolioSelectionData();
-            DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
-            {
-                Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
-                EnqueueTestComplete();
-            });
-        }
+        ///// <summary>
+        ///// RetrievePerformanceGridData Test Method - portfolioIdentifiers as Empty - should return an empty result set
+        ///// portfolioIdentifiers - Empty
+        ///// effectiveDate - Convert.ToDateTime("01 / 31 / 2012")
+        ///// </summary>
+        //[TestMethod]
+        //[Asynchronous]
+        //public void RetrievePerformanceGridDataPortfolioIdentifierEmptyTestMethod()
+        //{
+        //    DBInteractivity instance = new DBInteractivity();
+        //    PortfolioSelectionData portfolio = new PortfolioSelectionData();
+        //    DateTime effectiveDate = new DateTime(2012, 1, 31);
+        //    instance.RetrievePerformanceGridData(portfolio, effectiveDate, (List<PerformanceGridData> resultSet) =>
+        //    {
+        //        Assert.AreEqual<int>(0, resultSet.Count, "PerformanceGrid Data Not Available");
+        //        EnqueueTestComplete();
+        //    });
+        //}
 
-        #endregion
+        //#endregion
 
         #region Excess Contribution Gadgets
 

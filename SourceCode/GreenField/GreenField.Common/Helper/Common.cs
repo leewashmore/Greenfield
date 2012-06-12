@@ -103,6 +103,12 @@ namespace GreenField.Common
         public List<HeatMapData> HeatMapInfo { get; set; }
     }
 
+    public delegate void RetrieveHeatMapSelectedCountryEventHandler(RetrieveHeatMapSelectedCountryCompletedEventArgs e);
+    public class RetrieveHeatMapSelectedCountryCompletedEventArgs : EventArgs
+    {
+        public String SelectedCountry { get; set; }
+    }
+
     public delegate void RetrieveMacroCountrySummaryDataCompleteEventHandler(RetrieveMacroCountrySummaryDataCompleteEventArgs e);
     public class RetrieveMacroCountrySummaryDataCompleteEventArgs : EventArgs
     {

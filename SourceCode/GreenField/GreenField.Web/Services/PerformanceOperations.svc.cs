@@ -1823,7 +1823,7 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        public List<PerformanceGridData> RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate , String Country)
         {
             List<PerformanceGridData> result = new List<PerformanceGridData>();
             if (portfolioSelectionData == null || effectiveDate == null)
@@ -1835,7 +1835,7 @@ namespace GreenField.Web.Services
                 throw new Exception();
 
             //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).ToList();
-            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate).FirstOrDefault();
+            DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION performanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.AGG_LVL_1_LONG_NAME == Country).FirstOrDefault();
             if (performanceData == null)
                 return result;
             String portfolioID = performanceData.PORTFOLIO;
