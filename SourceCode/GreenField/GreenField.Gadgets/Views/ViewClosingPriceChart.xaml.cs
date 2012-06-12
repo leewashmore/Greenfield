@@ -338,7 +338,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgPricing_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            //GroupedGridRowLoadedHandler.Implement(e);
+            GroupedGridRowLoadedHandler.Implement(e);
         }
     }
 }

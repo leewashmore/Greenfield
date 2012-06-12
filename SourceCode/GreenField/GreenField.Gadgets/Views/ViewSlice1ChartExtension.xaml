@@ -215,7 +215,7 @@
                             </telerik:RadChart.DefaultView>
 
                             <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping LegendLabel="{Binding TransactionLegendLabel}">
+                                <telerik:SeriesMapping LegendLabel="{Binding TransactionLegendLabel}" x:Name="barSeriesMapping">
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"

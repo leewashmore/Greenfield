@@ -1,4 +1,4 @@
-﻿  using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -15,6 +15,7 @@ using Telerik.Windows.Controls;
 using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.DataContracts;
+using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
@@ -114,7 +115,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         void dataContextSource_ChartExtensionDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
-            
+
         }
 
         #endregion
@@ -344,11 +345,16 @@ namespace GreenField.Gadgets.Views
                     }
                 }
             }
+            if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+            {
+                ChartLegendItem var = this.chChartExtension.DefaultView.ChartLegend.Items[0];
+                this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
+            }
         }
 
         private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            //GroupedGridRowLoadedHandler.Implement(e);
+            GroupedGridRowLoadedHandler.Implement(e);
         }
     }
 }

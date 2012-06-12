@@ -564,6 +564,10 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         TransactionLegendLabel = chartExtensionData.Where(a => a.Type == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
                     }
+                    else
+                    {
+                        TransactionLegendLabel = " ";
+                    }
                     ChartExtensionData.AddRange(chartExtensionData.OrderBy(a => a.SortId).ToList());
                     RetrieveChartAccordingDataPeriod(_period);
                 }

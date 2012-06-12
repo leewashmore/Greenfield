@@ -574,14 +574,7 @@ namespace GreenField.Gadgets.ViewModels
                 sumModelWeight = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.AshEmmModelWeight));
 
                 if (sumDirtyValuePC == 0 && sumModelWeight == 0)
-                    return portfolioDetailsData;
-
-                if (sumDirtyValuePC == 0)
-                    Prompt.ShowDialog("Portfolio Details UI :The Sum of Portfolio Weights is 0");
-
-                if (sumModelWeight == 0)
-                    Prompt.ShowDialog("Portfolio Details UI :The Sum of Model Weights is 0");
-
+                    return portfolioDetailsData;               
 
                 foreach (PortfolioDetailsData item in portfolioDetailsData)
                 {

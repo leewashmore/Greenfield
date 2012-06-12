@@ -283,55 +283,59 @@ namespace GreenField.Gadgets.Views
 
         #region Printing the DataGrid
 
-        //private void btnPrint_Click(object sender, RoutedEventArgs e)
-        //{
-        //    offsetY = 0d;
-        //    totalHeight = 0d;
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            offsetY = 0d;
+            totalHeight = 0d;
 
-        //    grid = new RadGridView();
-        //    grid.DataContext = dgPortfolioDetails.DataContext;
-        //    grid.ItemsSource = dgPortfolioDetails.ItemsSource;
-        //    grid.RowIndicatorVisibility = Visibility.Collapsed;
-        //    grid.ShowGroupPanel = false;
-        //    grid.CanUserFreezeColumns = false;
-        //    grid.IsFilteringAllowed = false;
-        //    grid.AutoExpandGroups = true;
-        //    grid.AutoGenerateColumns = false;
+            grid = new RadGridView();
+            grid.DataContext = dgPortfolioDetails.DataContext;
+            grid.ItemsSource = dgPortfolioDetails.ItemsSource;
+            grid.RowIndicatorVisibility = Visibility.Collapsed;
+            grid.ShowGroupPanel = false;
+            grid.CanUserFreezeColumns = false;
+            grid.IsFilteringAllowed = false;
+            grid.AutoExpandGroups = true;
+            grid.AutoGenerateColumns = false;
+            grid.FontFamily = new FontFamily("Arial");
+            grid.FontSize = 7;
 
-        //    foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
-        //    {
-        //        GridViewDataColumn newColumn = new GridViewDataColumn();
-        //        newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-        //        grid.Columns.Add(newColumn);
-        //    }
 
-        //    foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-        //    {
-        //        GridViewDataColumn currentColumn = column;
-        //        GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
-        //                                             where c.UniqueName == currentColumn.UniqueName
-        //                                             select c).FirstOrDefault();
-        //        if (originalColumn != null)
-        //        {
-        //            column.Width = originalColumn.ActualWidth;
-        //            column.DisplayIndex = originalColumn.DisplayIndex;
-        //        }
-        //    }
+            foreach (GridViewDataColumn column in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn newColumn = new GridViewDataColumn();
+                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
+                grid.Columns.Add(newColumn);
+            }
 
-        //    StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
+            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn currentColumn = column;
+                GridViewDataColumn originalColumn = (from c in dgPortfolioDetails.Columns.OfType<GridViewDataColumn>()
+                                                     where c.UniqueName == currentColumn.UniqueName
+                                                     select c).FirstOrDefault();
+                if (originalColumn != null)
+                {
+                    column.Width = originalColumn.ActualWidth;
+                    column.DisplayIndex = originalColumn.DisplayIndex;
+                    
+                }
+            }
 
-        //    grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
-        //    grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
-        //    grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
+            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgPortfolioDetails));
 
-        //    ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-        //    ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-        //    PrintDocument doc = new PrintDocument();
-        //    canvas = new Canvas();
-        //    canvas.Children.Add(grid);
-        //    doc.PrintPage += this.doc_PrintPage;
-        //    doc.Print("RadGridView print");
-        //}
+            grid.SortDescriptors.AddRange(dgPortfolioDetails.SortDescriptors);
+            grid.GroupDescriptors.AddRange(dgPortfolioDetails.GroupDescriptors);
+            grid.FilterDescriptors.AddRange(dgPortfolioDetails.FilterDescriptors);
+
+            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            PrintDocument doc = new PrintDocument();
+            canvas = new Canvas();
+            canvas.Children.Add(grid);
+            doc.PrintPage += this.doc_PrintPage;
+            doc.Print("RadGridView print");
+        }
 
         void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -350,19 +354,19 @@ namespace GreenField.Gadgets.Views
 
         #region RadDocument
 
-        private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                RichTextBox.Document = CreateDocument(dgPortfolioDetails);
-            }));
+        //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
+        //{
+        //    Dispatcher.BeginInvoke((Action)(() =>
+        //    {
+        //        RichTextBox.Document = CreateDocument(dgPortfolioDetails);
+        //    }));
 
-            PrintSettings printSettings = new PrintSettings();
-            printSettings.DocumentName = "MyDocument";
-            printSettings.PrintMode = PrintMode.Native;
-            printSettings.PrintScaling = PrintScaling.ShrinkToPageSize;
-            RichTextBox.Print(printSettings);
-        }
+        //    PrintSettings printSettings = new PrintSettings();
+        //    printSettings.DocumentName = "MyDocument";
+        //    printSettings.PrintMode = PrintMode.Native;
+        //    printSettings.PrintScaling = PrintScaling.ShrinkToPageSize;
+        //    RichTextBox.Print(printSettings);
+        //}
 
         #endregion
 
