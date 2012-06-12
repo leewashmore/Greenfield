@@ -118,7 +118,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
-        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<PerformanceGraphData>> callback);
+        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, String country, Action<List<PerformanceGraphData>> callback);
 
         void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String country, Action<List<PerformanceGridData>> callback);
 

@@ -58,6 +58,8 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime? _effectiveDate;
 
         public String _selectedPeriod;
+
+        private String _country;
             
 
         #endregion
@@ -75,17 +77,20 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            _country = param.DashboardGadgetPayload.HeatMapCountryData;
             _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod !=null)
             {
-              //  _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+            
+                _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod,"NoFiltering", RetrievePerformanceGraphDataCallBackMethod);
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet, false);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
+                _eventAggregator.GetEvent<HeatMapClickEvent>().Subscribe(HandleCountrySelectionDataSet, false);
             }   
         }
 
@@ -199,7 +204,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != performanceGraphDataLoadedEvent)
                             performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod,"NoFiltering", RetrievePerformanceGraphDataCallBackMethod);
                     }
                 }
                 else
@@ -235,7 +240,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != performanceGraphDataLoadedEvent)
                             performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod,"NoFiltering", RetrievePerformanceGraphDataCallBackMethod);
                     }
                 }
                 else
@@ -270,9 +275,41 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != performanceGraphDataLoadedEvent)
                             performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrievePerformanceGraphDataCallBackMethod);
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod,"NoFiltering", RetrievePerformanceGraphDataCallBackMethod);
                     }
 
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+        public void HandleCountrySelectionDataSet(String country)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (country != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, country, 1);
+                    _country = country;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _country != null)
+                    {
+                        if (null != performanceGraphDataLoadedEvent)
+                            performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePerformanceGraphData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, country, RetrievePerformanceGraphDataCallBackMethod);
+                    }
                 }
                 else
                 {

@@ -455,11 +455,11 @@ namespace GreenField.Web.Services
                         {
 
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
-                            ShortName = record.SHORT_NAME,
-                            LongName = record.LONG_NAME,
-                            InstrumentID = record.INSTRUMENT_ID,
-                            Type = record.TYPE,
-                            SecurityType = record.SECURITY_TYPE
+                            ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
+                            LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
+                            InstrumentID = record.INSTRUMENT_ID == null ? String.Empty : record.INSTRUMENT_ID,
+                            Type = record.TYPE == null ? String.Empty : record.TYPE,
+                            SecurityType = record.SECURITY_TYPE == null ? String.Empty : record.SECURITY_TYPE
                         });
                     }
                 }

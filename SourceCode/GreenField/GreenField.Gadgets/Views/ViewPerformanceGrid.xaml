@@ -49,36 +49,36 @@
                     <telerik:GridViewDataColumn Header="1D" 
                                                     DataMemberBinding="{Binding TopRcTwr1D}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*" 
-                                                    HeaderTextAlignment="Left"
-                                                    TextAlignment="Left">
+                                                    Width="Auto" 
+                                                    HeaderTextAlignment="Right"
+                                                    TextAlignment="Right">
                     </telerik:GridViewDataColumn>
                     <telerik:GridViewDataColumn Header="1W"                                                     
                                                  DataMemberBinding="{Binding TopRcTwr1W}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
-                                                 Width="*"   
-                                                 HeaderTextAlignment="Left"                                                    
+                                                 Width="Auto"   
+                                                 HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="QTD" 
                                                 DataMemberBinding="{Binding TopRcTwrQtd}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                Width="*" 
+                                                Width="Auto" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="YTD" 
                                                 DataMemberBinding="{Binding TopRcTwrYtd}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
+                                                 Width="Auto"  
                                                 DataFormatString="{}{0:n2}"
-                                                HeaderTextAlignment="Left"
+                                                HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="1Y" 
                                                 DataMemberBinding="{Binding TopRcTwr1Y}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
+                                                 Width="Auto" 
                                                 DataFormatString="{}{0:n2}"
-                                                HeaderTextAlignment="Left"
+                                                HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>                   
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>

@@ -29,12 +29,13 @@
                         BorderBrush="Black"
                         BorderThickness="1"                        
                         UseDefaultLayout="False"
-                        MouseClickMode="Center" 
-                        MouseDoubleClickMode="None"
-                        MouseDragMode="None"
-                        IsMouseWheelZoomEnabled="False" Grid.Column="0" Grid.Row="0"
-                        MapMouseClick="RadMap1_MapMouseClick">
-
+                        MouseClickMode="None" 
+                        MouseDoubleClickMode="None"                      
+                        IsMouseWheelZoomEnabled="False" 
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        MouseLeftButtonUp="shape_MouseLeftButtonUp">
+                            
                 <telerik:RadMap.Provider>
                     <telerik:EmptyProvider />
                 </telerik:RadMap.Provider>

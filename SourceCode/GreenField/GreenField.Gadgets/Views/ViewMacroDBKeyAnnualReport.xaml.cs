@@ -107,7 +107,7 @@ namespace GreenField.Gadgets.Views
                 dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 1).ToString();
                 dgMacroDBKeyReport.Columns[7].Header = (_currentYear + 2).ToString();
                 int currentYear = DateTime.Today.Year;
-                dgMacroDBKeyReport.Columns[8].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
+                dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
             }
         }
 
@@ -120,7 +120,7 @@ namespace GreenField.Gadgets.Views
             dgMacroDBKeyReport.Columns[5].Header = (currentYear).ToString();
             dgMacroDBKeyReport.Columns[6].Header = (currentYear + 1).ToString();
             dgMacroDBKeyReport.Columns[7].Header = (currentYear + 2).ToString();
-            dgMacroDBKeyReport.Columns[8].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
+            dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
 
         }
 

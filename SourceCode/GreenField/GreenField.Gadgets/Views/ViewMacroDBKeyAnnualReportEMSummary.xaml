@@ -91,8 +91,7 @@
                                       AlternateRowBackground="#d8d5d4"
                                       AlternationCount="2">
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
+                           
                             <telerik:GridViewDataColumn x:Name="dgcDescription" 
                                                     Header="Description" 
                                                     IsFilterable="False" 
@@ -101,6 +100,8 @@
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
+                            <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcYear1" 
                                                     Header="Year1" 
                                                     DataMemberBinding="{Binding YearOne}" 
@@ -151,7 +152,8 @@
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
+                            <telerik:GridViewDataColumn x:Name="dgcRightClick" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcFiveYearAverage" 
                                                     Header="FiveYearAvg" 
                                                     DataMemberBinding="{Binding FiveYearAvg}" 
@@ -160,8 +162,7 @@
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn x:Name="dgcRightClick" 
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}"/>
+                           
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
             </Border>

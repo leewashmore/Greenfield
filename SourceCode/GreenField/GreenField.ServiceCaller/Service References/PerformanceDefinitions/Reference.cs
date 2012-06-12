@@ -602,7 +602,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrievePerformanceGraphDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.PerformanceGraphData> EndRetrievePerformanceGraphData(System.IAsyncResult result);
     }
@@ -2522,8 +2522,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, Country, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2535,7 +2535,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             GreenField.DataContracts.PortfolioSelectionData fundSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
             string period = ((string)(inValues[2]));
-            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, callback, asyncState);
+            string Country = ((string)(inValues[3]));
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrievePerformanceGraphData(fundSelectionData, effectiveDate, period, Country, callback, asyncState);
         }
         
         private object[] OnEndRetrievePerformanceGraphData(System.IAsyncResult result) {
@@ -2551,11 +2552,11 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             }
         }
         
-        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period) {
-            this.RetrievePerformanceGraphDataAsync(fundSelectionData, effectiveDate, period, null);
+        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country) {
+            this.RetrievePerformanceGraphDataAsync(fundSelectionData, effectiveDate, period, Country, null);
         }
         
-        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, object userState) {
+        public void RetrievePerformanceGraphDataAsync(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, object userState) {
             if ((this.onBeginRetrievePerformanceGraphDataDelegate == null)) {
                 this.onBeginRetrievePerformanceGraphDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePerformanceGraphData);
             }
@@ -2568,7 +2569,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             base.InvokeAsync(this.onBeginRetrievePerformanceGraphDataDelegate, new object[] {
                         fundSelectionData,
                         effectiveDate,
-                        period}, this.onEndRetrievePerformanceGraphDataDelegate, this.onRetrievePerformanceGraphDataCompletedDelegate, userState);
+                        period,
+                        Country}, this.onEndRetrievePerformanceGraphDataDelegate, this.onRetrievePerformanceGraphDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -2994,11 +2996,12 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginRetrievePerformanceGraphData(GreenField.DataContracts.PortfolioSelectionData fundSelectionData, System.DateTime effectiveDate, string period, string Country, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
                 _args[0] = fundSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = period;
+                _args[3] = Country;
                 System.IAsyncResult _result = base.BeginInvoke("RetrievePerformanceGraphData", _args, callback, asyncState);
                 return _result;
             }

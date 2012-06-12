@@ -47,6 +47,7 @@ namespace GreenField.Gadgets.Views
             this.chPerformanceGadget.DataBound += dataContextSource.ChartDataBound;
             this.grdRadChart.Visibility = Visibility.Visible;
             this.grdRadGridView.Visibility = Visibility.Collapsed;
+            this.chPerformanceGadget.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
         }
         #endregion
 
