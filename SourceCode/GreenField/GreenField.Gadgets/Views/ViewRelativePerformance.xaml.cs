@@ -205,6 +205,7 @@ namespace GreenField.Gadgets.Views
         {
             _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
 
+            
             //Clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; columnIndex++)
             {
@@ -260,6 +261,88 @@ namespace GreenField.Gadgets.Views
 
             _dbInteractivity = (this.DataContext as ViewModelRelativePerformance)._dbInteractivity;
             _eventAggregator = (this.DataContext as ViewModelRelativePerformance)._eventAggregator;
+
+
+            //Design Grid for Sector Specific Top Alpha Security Grid
+            //#######################################################
+
+            if (this.dpTopActivePositionSecurity.Children != null)
+                this.dpTopActivePositionSecurity.Children.Clear();
+
+            if (e.RelativePerformanceSectorInfo != null)
+            {
+                ScrollViewer svc = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto, VerticalScrollBarVisibility = ScrollBarVisibility.Hidden };
+
+                Grid grd = new Grid() { ShowGridLines = false, UseLayoutRounding = true };
+
+                grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+                int sectorNum = 0;
+
+                for (int i = 0; i < e.RelativePerformanceSectorInfo.Count; i++)
+                {
+                    int securityNum = 1;
+
+                    List<SecurityDetail> sectorSpecificTopAlphaSecurityNames = e.RelativePerformanceSecurityInfo
+                        .Where(record => record.SecuritySectorName == e.RelativePerformanceSectorInfo[i].SectorName)
+                        .OrderByDescending(record => record.SecurityAlpha)
+                        .Take(3)
+                        .Select(record => new SecurityDetail()
+                            {
+                                SecurityName = record.SecurityName,
+                                SecurityAlpha = record.SecurityAlpha == null
+                                ? "Null" : String.Format("{0}", record.SecurityAlpha.Value)
+                            })
+                        .ToList();
+
+                    TextBox sectorHeader = new TextBox()
+                    {
+                        Text = e.RelativePerformanceSectorInfo[i].SectorName,
+                        FontWeight = FontWeights.Bold,
+                        IsReadOnly = true,
+                        Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
+                        Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
+                        FontSize = 7,
+                        Margin = new Thickness(2)
+                    };
+
+                    grd.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                    int colIndex = grd.ColumnDefinitions.Count() - 1;
+
+                    sectorHeader.SetValue(Grid.RowProperty, 0);
+                    sectorHeader.SetValue(Grid.ColumnProperty, colIndex);
+                    grd.Children.Add(sectorHeader);
+
+                    foreach (SecurityDetail securityName in sectorSpecificTopAlphaSecurityNames)
+                    {
+                        TextBlock txtSecurityName = new TextBlock()
+                        {
+                            Text = securityName.SecurityName
+                                + " (" + securityName.SecurityAlpha + ")",
+                            FontSize = 7
+                        };
+                        txtSecurityName.SetValue(Grid.ColumnProperty, sectorNum);
+                        txtSecurityName.SetValue(Grid.RowProperty, securityNum);
+                        grd.Children.Add(txtSecurityName);
+                        securityNum++;
+                    }
+                    sectorNum++;
+                }
+
+                svc.ScrollIntoView(grd);
+                svc.Content = grd;
+                this.dpTopActivePositionSecurity.Children.Add(svc); 
+            }
+
+        }
+
+        private class SecurityDetail
+        {
+            public String SecurityName { get; set; }
+            public String SecurityAlpha { get; set; }
         }
 
         void RelativePerformanceToggledSectorGridBuildEvent(RelativePerformanceToggledSectorGridBuildEventArgs e)

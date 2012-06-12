@@ -20,12 +20,13 @@ namespace GreenField.Gadgets.Helpers
             if (e.Row is GridViewRow)
             {
                 var row = e.Row as GridViewRow;
+                row.FontSize = 7;
+                row.FontFamily = new FontFamily("Arial");
+                row.FontWeight = FontWeights.Bold;
+                row.Height = 15;
+                    
                 if (row != null && row.IndentLevel > 1)
                 {
-                    row.FontSize = 7;
-                    row.FontFamily = new FontFamily("Arial");
-                    row.FontWeight = FontWeights.Bold;
-                    row.Height = 15;
                     foreach (var indent in row.ChildrenOfType<GridViewIndentCell>())
                     {
                         if (indent != null)

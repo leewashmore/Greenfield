@@ -17,13 +17,14 @@ using System.ComponentModel;
 using Telerik.Windows.Controls;
 using System.Windows.Data;
 using GreenField.Common;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewMacroDBKeyAnnualReportEMSummary : ViewBaseUserControl
     {
         private List<MacroDatabaseKeyAnnualReportData> _macroInfo;
-        private int _currentYear;
+        private int _currentYear = DateTime.Now.Year;
         public ViewMacroDBKeyAnnualReportEMSummary(ViewModelMacroDBKeyAnnualReportEMSummary dataContextSource)
         {
             InitializeComponent();
@@ -75,14 +76,16 @@ namespace GreenField.Gadgets.Views
 
         public void dataContextSource_RetrieveMacroDataCompletedEvent(Common.RetrieveMacroCountrySummaryDataCompleteEventArgs e)
         {
-            if (_currentYear == 2022)
-                return;
+            //if (_currentYear == 2022)
+            //    return;
 
             _macroInfo = e.MacroInfo;
             this.dgMacroDBKeyReport.ItemsSource = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).FiveYearMacroCountryData;
             this.dgMacroDBKeyReport.GroupDescriptors.Clear();
             this.dgMacroDBKeyReport.SortDescriptors.Clear();
             _currentYear = ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).CurrentYear;
+            if (_currentYear >= 2024 || _currentYear <= 1989)
+                return;
             if (_macroInfo != null)
             {
                 GroupDescriptor descriptor = new GroupDescriptor();
@@ -95,12 +98,14 @@ namespace GreenField.Gadgets.Views
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
 
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
-                dgMacroDBKeyReport.Columns[2].Header = _currentYear.ToString();
-                dgMacroDBKeyReport.Columns[3].Header = (_currentYear + 1).ToString();
-                dgMacroDBKeyReport.Columns[4].Header = (_currentYear + 2).ToString();
-                dgMacroDBKeyReport.Columns[5].Header = (_currentYear + 3).ToString();
-                dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 4).ToString();
-                dgMacroDBKeyReport.Columns[7].Header = "Five Year Average" + "(" + _currentYear.ToString() + "-" + (_currentYear + 4).ToString() + ")";
+                dgMacroDBKeyReport.Columns[2].Header = (_currentYear - 3).ToString();
+                dgMacroDBKeyReport.Columns[3].Header = (_currentYear - 2).ToString();
+                dgMacroDBKeyReport.Columns[4].Header = (_currentYear - 1).ToString();
+                dgMacroDBKeyReport.Columns[5].Header = (_currentYear).ToString();
+                dgMacroDBKeyReport.Columns[6].Header = (_currentYear + 1).ToString();
+                dgMacroDBKeyReport.Columns[7].Header = (_currentYear + 2).ToString();
+                int currentYear = DateTime.Today.Year;
+                dgMacroDBKeyReport.Columns[8].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
             }
         }
 
@@ -108,13 +113,19 @@ namespace GreenField.Gadgets.Views
         public void SetGridColumnHeaders()
         {
             int currentYear = DateTime.Today.Year;
-            dgMacroDBKeyReport.Columns[2].Header = currentYear.ToString();
-            dgMacroDBKeyReport.Columns[3].Header = (currentYear + 1).ToString();
-            dgMacroDBKeyReport.Columns[4].Header = (currentYear + 2).ToString();
-            dgMacroDBKeyReport.Columns[5].Header = (currentYear + 3).ToString();
-            dgMacroDBKeyReport.Columns[6].Header = (currentYear + 4).ToString();
-            dgMacroDBKeyReport.Columns[7].Header = "Five Year Average" + "(" + currentYear.ToString() + "-" + (currentYear + 4).ToString() + ")";
+            dgMacroDBKeyReport.Columns[2].Header = (currentYear - 3).ToString();
+            dgMacroDBKeyReport.Columns[3].Header = (currentYear - 2).ToString();
+            dgMacroDBKeyReport.Columns[4].Header = (currentYear - 1).ToString();
+            dgMacroDBKeyReport.Columns[5].Header = (currentYear).ToString();
+            dgMacroDBKeyReport.Columns[6].Header = (currentYear + 1).ToString();
+            dgMacroDBKeyReport.Columns[7].Header = (currentYear + 2).ToString();
+            dgMacroDBKeyReport.Columns[8].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
 
+        }
+
+        private void dgMacroDBKeyReport_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
         }
     }
 }

@@ -33,8 +33,8 @@ namespace GreenField.Web.Helpers
                 foreach (GF_PERF_DAILY_ATTRIBUTION item in dimensionDailyPerfData)
                 {
                     data = new BenchmarkChartReturnData();
-                    data.Name = (item.NODE_NAME.ToUpper() == "COUNTRY") ? (item.BMNAME + " " + item.AGG_LVL_1_LONG_NAME) : (item.BMNAME);
-                    data.Type = (item.NODE_NAME.ToUpper() == "COUNTRY") ? "COUNTRY INDEX" : "BENCHMARK";
+                    data.Name = (item.NODE_NAME.ToUpper().Trim() == "COUNTRY") ? (item.BMNAME + " " + item.AGG_LVL_1_LONG_NAME) : (item.BMNAME);
+                    data.Type = (item.NODE_NAME.ToUpper().Trim() == "COUNTRY") ? "COUNTRY INDEX" : "BENCHMARK";
                     data.FromDate = item.TO_DATE;
                     data.OneD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1D);
                     data.WTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1W);

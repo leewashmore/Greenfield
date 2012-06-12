@@ -114,16 +114,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         void dataContextSource_ChartExtensionDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
-            if (e.ShowBusy)
-            {
-                this.busyIndicator.IsBusy = true;
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicator.IsBusy = false;
-                this.busyIndicatorGrid.IsBusy = false;
-            }
+            
         }
 
         #endregion

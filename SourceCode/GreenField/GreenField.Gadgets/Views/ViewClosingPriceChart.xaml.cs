@@ -17,6 +17,7 @@ using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
 using Telerik.Windows.Controls.Primitives;
 using GreenField.ServiceCaller;
+using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
@@ -65,6 +66,8 @@ namespace GreenField.Gadgets.Views
             ApplyChartStyles();
         }
 
+        
+
         #endregion
 
         /// <summary>
@@ -82,6 +85,8 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
+            this.chPricing.DefaultView.ChartArea.ItemToolTipOpening += new ItemToolTipEventHandler(ChartArea_ItemToolTipOpening);
+            
         }
 
 
@@ -300,6 +305,20 @@ namespace GreenField.Gadgets.Views
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
 
+        }
+        
+        void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
+        {
+            //string ticker = Convert.ToString(e.DataPoint.LegendLabel);
+            //double dateOA = (double)(e.DataPoint.XValue);
+            //DateTime xAxisValue = DateTime.FromOADate(dateOA);
+            //if (ticker == "")
+            //{
+            //    ticker = this.DataContextClosingPriceChart.PlottedSeries.
+            //        Where(a => a.IndexedPrice == Convert.ToDecimal(e.DataPoint.YValue) && a.FromDate == xAxisValue.Date).Select(a => a.Ticker).FirstOrDefault();
+            //}
+            //tooltip.Content = "Security: " + ticker + " " + "Return: " + e.DataPoint.YValue.ToString() + "/Date: " + string.Format("{0:dd.MM.yyyy} \n {0}", DateTime.FromOADate(dateOA));
+            //e.DataSeries.LegendLabel + string.Format("{0:dd.MM.yyyy} \n {1}", DateTime.FromOADate(value), e.DataPoint.YValue);
         }
 
         #region RemoveEvents

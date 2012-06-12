@@ -128,7 +128,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,0,2,0">
                         <CheckBox Content="Total Return" HorizontalAlignment="Left" x:Name="returnTypeSelectionCheckBox" 
@@ -292,7 +292,7 @@
                                          ColumnWidth="*" FontFamily="Arial"
                                          EnableColumnVirtualization="True"
                                          EnableRowVirtualization="True"
-                                         AlternateRowBackground="#d8d5d4"
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowLoaded="dgPricing_RowLoaded"
@@ -302,29 +302,36 @@
                                     SortDirection="Ascending" />
                         </telerik:RadGridView.SortDescriptors>
                         <telerik:RadGridView.Columns>
-                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"
+                            <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}"
+                            <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"
+                            <telerik:GridViewDataColumn Header="Date" DataMemberBinding="{Binding FromDate, StringFormat=d}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"
+                            <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}" 
+                            <telerik:GridViewDataColumn Header="Price Return" DataMemberBinding="{Binding DailyPriceReturn}"  HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" 
+                            <telerik:GridViewDataColumn Header="Gross Return" DataMemberBinding="{Binding DailyGrossReturn}" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}"
+                            <telerik:GridViewDataColumn Header="Volume" DataMemberBinding="{Binding Volume}" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" 
+                            <telerik:GridViewDataColumn Header="Spot FX" DataMemberBinding="{Binding DailySpotFX }" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         DataFormatString="{}{0:n2}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Dollar Adjusted Price" 
+                            <telerik:GridViewDataColumn Header="Dollar Adjusted Price" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         DataMemberBinding="{Binding AdjustedDollarPrice,StringFormat=c}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                            <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" 
+                            <telerik:GridViewDataColumn Header="Display Price" DataMemberBinding="{Binding IndexedPrice}" HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"
                                                         DataFormatString="{}{0:n4}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         </telerik:RadGridView.Columns>
@@ -343,7 +350,6 @@
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
                                           ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
-                            
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
@@ -394,7 +400,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                      ItemToolTipFormat="#DATAITEM.IssueName"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
@@ -405,7 +411,6 @@
                                     </telerik:SeriesMapping.GroupingSettings>
                                     <telerik:ItemMapping FieldName="IndexedPrice" DataPointMember="YValue" />
                                     <telerik:ItemMapping FieldName="FromDate" DataPointMember="XValue"  />
-                                    <!--<telerik:ItemMapping DataPointMember="Tooltip" FieldName="CalculatedPrice"/>-->
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>
                         </telerik:RadChart>

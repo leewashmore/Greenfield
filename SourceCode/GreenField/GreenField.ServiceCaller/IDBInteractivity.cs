@@ -130,7 +130,7 @@ namespace GreenField.ServiceCaller
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
         /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
-        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
+        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate,bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
@@ -173,6 +173,8 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Slice 5 - External Research
+
+        void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback);
 
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);

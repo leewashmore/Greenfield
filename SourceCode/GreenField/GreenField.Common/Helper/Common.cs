@@ -87,6 +87,7 @@ namespace GreenField.Common
     public class RelativePerformanceGridBuildEventArgs : EventArgs
     {
         public List<RelativePerformanceSectorData> RelativePerformanceSectorInfo { get; set; }
+        public List<RelativePerformanceSecurityData> RelativePerformanceSecurityInfo { get; set; }
         public List<RelativePerformanceData> RelativePerformanceInfo { get; set; }
     }
 

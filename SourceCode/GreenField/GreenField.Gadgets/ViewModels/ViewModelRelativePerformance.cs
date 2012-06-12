@@ -331,12 +331,49 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     _relativePerformanceInfo = result;
+
+                    _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate)
+                        , _period, RetrieveRelativePerformanceSecurityDataTopAlphaCallbackMethod);
+                    //RelativePerformanceGridBuildEvent.Invoke(new RelativePerformanceGridBuildEventArgs()
+                    //{
+                    //    RelativePerformanceSectorInfo = _relativePerformanceSectorInfo,
+                    //    RelativePerformanceInfo = _relativePerformanceInfo
+                    //});
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+                if (RelativePerformanceDataLoadEvent != null)
+                    RelativePerformanceDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Callback method for RetrieveRelativePerformanceSecurityData Service call
+        /// </summary>
+        /// <param name="result">RelativePerformanceSecurityData Collection</param>
+        public void RetrieveRelativePerformanceSecurityDataTopAlphaCallbackMethod(List<RelativePerformanceSecurityData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
                     RelativePerformanceGridBuildEvent.Invoke(new RelativePerformanceGridBuildEventArgs()
                     {
                         RelativePerformanceSectorInfo = _relativePerformanceSectorInfo,
-                        RelativePerformanceInfo = _relativePerformanceInfo
+                        RelativePerformanceInfo = _relativePerformanceInfo,
+                        RelativePerformanceSecurityInfo = result
                     });
-
                 }
                 else
                 {

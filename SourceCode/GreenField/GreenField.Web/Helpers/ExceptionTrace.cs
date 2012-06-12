@@ -44,7 +44,12 @@ namespace GreenField.Web.Helpers
             if (userName == null)
                 throw new InvalidOperationException();
 
-            _loggingOperations.LogToFile("User : " + userName + "\nMessage: " + ex.Message + "\nStackTrace: " + StackTraceToString(ex), "Exception", "Medium");
+            _loggingOperations.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
+                + ")]|Type[(Exception"
+                + ")]|Message[(" + ex.Message.Replace(Environment.NewLine, " ") 
+                + ")]|StackTrace[(" + StackTraceToString(ex)
+                + ")]", "Exception", "Medium");
+            
         }
     }
 }

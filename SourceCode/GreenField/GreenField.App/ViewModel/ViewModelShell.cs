@@ -493,7 +493,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.OrderBy(t=>t.CountryName).Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -539,6 +539,30 @@ namespace GreenField.App.ViewModel
                     }
                 }
 
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
+        /// </summary>
+        private string _countrySearchText;
+        public string CountrySearchText
+        {
+            get { return _countrySearchText; }
+            set
+            {
+                if (value != null)
+                {
+                    _countrySearchText = value;
+                    RaisePropertyChanged(() => this.CountrySearchText);
+                    if (value != String.Empty && CountryTypeInfo != null)
+                        CountryName = CountryTypeInfo
+                                    .OrderBy(t => t.CountryName)
+                                    .Where(record => record.CountryName.ToLower().Contains(value.ToLower()))
+                                    .Select(record => record.CountryName).Distinct().ToList();
+                    else
+                        CountryName = CountryTypeInfo.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                }
             }
         }
 

@@ -33,9 +33,9 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                 RowLoaded="dgAttribution_RowLoaded"
-                                      AlternateRowBackground="#d8d5d4"
-                                      AlternationCount="2">
+                                         RowLoaded="dgAttribution_RowLoaded"
+                                         AlternateRowBackground="#d8d5d4"
+                                         AlternationCount="2">
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn Header="COUNTRY" 
                                                     DataMemberBinding="{Binding Country}"  

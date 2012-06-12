@@ -17,13 +17,10 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public string Ticker { get; set; }
-
+                
         [DataMember]
-        public string Country { get; set; }
-
-        [DataMember]
-        public string Sector { get; set; }
-
+        public string Type { get; set; }
+                              
         [DataMember]
         public decimal Price { get; set; }
 
@@ -37,9 +34,25 @@ namespace GreenField.DataContracts
         public decimal? AmountTraded { get; set; }
 
         [DataMember]
-        public decimal? SectorReturn { get; set; }
+        public decimal OneD { get; set; }
 
         [DataMember]
-        public decimal? CountryReturn { get; set; }
+        public decimal WTD { get; set; }
+
+        [DataMember]
+        public decimal MTD { get; set; }
+
+        [DataMember]
+        public decimal QTD { get; set; }
+
+        [DataMember]
+        public decimal YTD { get; set; }
+
+        [DataMember]
+        public decimal OneY { get; set; }
+
+        [DataMember]
+        public int SortId { get; set; }
+               
     }
 }

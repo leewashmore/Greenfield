@@ -200,15 +200,39 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Data Context Source for chart
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        
+
+        private double _axisXMinValue;
+        public double AxisXMinValue
         {
-            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            get { return _axisXMinValue; }
+            set
+            {
+                _axisXMinValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMinValue);
+            }
+        }
+
+        private double _axisXMaxValue;
+        public double AxisXMaxValue
+        {
+            get { return _axisXMaxValue; }
+            set
+            {
+                _axisXMaxValue = value;
+                this.RaisePropertyChanged(() => this.AxisXMaxValue);
+            }
+        }
+
+        private int _axisXStep;
+        public int AxisXStep
+        {
+            get { return _axisXStep; }
+            set
+            {
+                _axisXStep = value;
+
+            }
         }
 
         #endregion
@@ -573,6 +597,17 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region HelperMethods
+
+        /// <summary>
+        /// Data Context Source for chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        {
+            ((DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
 
         /// <summary>
         /// Zoom In Algo
