@@ -8,7 +8,7 @@
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
     <helpers:ViewBaseUserControl.Resources>
-        <!--GridViewFooterCellStyle-->        
+        <!--GridViewFooterCellStyle-->
         <ControlTemplate x:Key="GridViewFooterCellTemplate" TargetType="telerik:GridViewFooterCell">
             <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
                 <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
@@ -28,7 +28,7 @@
             <Setter Property="FontSize" Value="7"/>
             <Setter Property="Height" Value="12"/>
         </Style>
-        
+
         <!--GridViewHeaderRowStyle-->
         <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
             <Setter Property="Height" Value="15"/>
@@ -85,7 +85,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            
+
             <!--Export Row-->
             <Grid Grid.Row="0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -110,7 +110,12 @@
             </Grid>
             <!--Grid Row-->
             <Grid Grid.Row="1">
-                <telerik:RadGridView x:Name="dgCountrySecurityDetails" 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid ScrollViewer.HorizontalScrollBarVisibility="Auto" >
+                    <telerik:RadGridView x:Name="dgCountrySecurityDetails" VerticalAlignment="Top"
                                  AutoGenerateColumns="False"
                                  CanUserDeleteRows="False"
                                  CanUserInsertRows="False"
@@ -129,25 +134,20 @@
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  Visibility="Collapsed"
                                  ItemsSource="{Binding SecurityDetails}">
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left" 
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left" 
                                                     TextAlignment="Left" DataMemberBinding="{Binding SecurityCountryId}" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" Width="*" HeaderTextAlignment="Left"
+                            <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" Width="*" HeaderTextAlignment="Left"
                                                     TextAlignment="Left" DataMemberBinding="{Binding SecurityName}" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
-                    </telerik:RadGridView.Columns>
-                </telerik:RadGridView>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
 
-                <Border x:Name="brdSectorSecurityDetails" Visibility="Collapsed" ScrollViewer.HorizontalScrollBarVisibility="Visible">
-                    <toolkit:DockPanel x:Name="outerPanel" telerik:StyleManager.Theme="Metro" ScrollViewer.HorizontalScrollBarVisibility ="Visible"/>
-                </Border>
+                    <Border x:Name="brdSectorSecurityDetails" Visibility="Collapsed" VerticalAlignment="Top">
+                        <toolkit:DockPanel x:Name="outerPanel" telerik:StyleManager.Theme="Metro"/>
+                    </Border>
 
-                <Grid x:Name="grdTopActivePositionSecurity">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
                     <telerik:RadGridView Name="dgRelativePerformance" 
                                      AutoGenerateColumns="False" 
                                      IsFilteringAllowed="True" 
@@ -182,45 +182,45 @@
                                                     Width="auto" HeaderTextAlignment="Left" TextAlignment="Left">
                                 <telerik:GridViewDataColumn.CellTemplate>
                                     <DataTemplate>
-                                    <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
+                                        <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
                                     </DataTemplate>
                                 </telerik:GridViewDataColumn.CellTemplate>
                                 <telerik:GridViewDataColumn.Footer>
-                                <TextBlock Text="Total" FontSize="7" Height="12"/>
+                                    <TextBlock Text="Total" FontSize="7" Height="12"/>
                                 </telerik:GridViewDataColumn.Footer>
                             </telerik:GridViewDataColumn>
 
                             <!--Totals Column-->
-                        <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
+                            <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCell}" CellStyle="{StaticResource GridViewCellStyle}" Width="*">
                                 <telerik:GridViewDataColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Black">
+                                            <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Black">
                                          <ToolTipService.ToolTip> 
                                          <ToolTip Content="{Binding AggregateCountryActivePosition}"/>
                                          </ToolTipService.ToolTip>
-                                        </TextBlock>
-                                        <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Black" FontWeight="Bold"/>-->
+                                            </TextBlock>
+                                            <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Black" FontWeight="Bold"/>-->
                                         </StackPanel>
                                     </DataTemplate>
                                 </telerik:GridViewDataColumn.CellTemplate>
                                 <telerik:GridViewDataColumn.AggregateFunctions>
-                                <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/> 
+                                    <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
                                     <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:GridViewDataColumn.Footer>
-                                <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalContentAlignment="Right">
+                                    <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalContentAlignment="Right">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Orientation="Horizontal">
-                                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}" TextAlignment="Right"/>                                                
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}" TextAlignment="Right"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"/>
+                                                <StackPanel Orientation="Horizontal"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                     </telerik:AggregateResultsList>
@@ -229,9 +229,11 @@
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>
-                    <Border Grid.Row="1" x:Name="brdTopActivePositionSecurity" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                </Grid>
+                <Grid x:Name="grdTopActivePositionSecurity" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                    <Border x:Name="brdTopActivePositionSecurity" >
                         <toolkit:DockPanel x:Name="dpTopActivePositionSecurity" telerik:StyleManager.Theme="Metro" 
-                                           ScrollViewer.HorizontalScrollBarVisibility ="Visible"/>
+                                           />
                     </Border>
                 </Grid>
             </Grid>

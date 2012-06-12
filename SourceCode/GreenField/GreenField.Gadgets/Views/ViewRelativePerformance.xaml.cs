@@ -175,6 +175,9 @@ namespace GreenField.Gadgets.Views
                     CountryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryId,
                     SectorID = null,
                 });
+
+                this.dgRelativePerformance.SelectedItems.Clear();
+
                 return;
             }
 
@@ -254,8 +257,18 @@ namespace GreenField.Gadgets.Views
                 dataColumn.Width = GridViewLength.Auto;
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
                 
-                TextBlock spFunctions = new TextBlock() { Text = aggregateSectorActiviePosition.ToString(), Tag = sectorData.SectorId,TextAlignment = TextAlignment.Right };
-                TextBlock footerText = new TextBlock() { Text = aggregateSectorAlpha.ToString(), Tag = sectorData.SectorId, TextAlignment = TextAlignment.Right };
+                TextBlock spFunctions = new TextBlock() {
+                    Text = aggregateSectorActiviePosition.ToString(),
+                    Tag = sectorData.SectorId,
+                    TextAlignment = TextAlignment.Right,
+                    FontSize = 8
+                };
+                TextBlock footerText = new TextBlock() { 
+                    Text = aggregateSectorAlpha.ToString(), 
+                    Tag = sectorData.SectorId, 
+                    TextAlignment = TextAlignment.Right,
+                    FontSize = 7
+                };
                 
 
                 ToolTipService.SetToolTip(footerText, spFunctions);
@@ -374,9 +387,15 @@ namespace GreenField.Gadgets.Views
                 {
                     int securityNum = 1;
                     List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
-                    TextBox txtHeader = new TextBox() { Text = countryName, FontWeight = FontWeights.Bold, IsReadOnly = true,
-                                                        Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
-                                                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)), FontSize = 7};
+                    TextBox txtHeader = new TextBox() { 
+                        Text = countryName,
+                        FontWeight = FontWeights.Bold,
+                        IsReadOnly = true,
+                        Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
+                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)),
+                        FontSize = 7,
+                        Margin = new Thickness(2)
+                    };
                     grd.ColumnDefinitions.Add(new ColumnDefinition() {Width = GridLength.Auto });
                     int colIndex = grd.ColumnDefinitions.Count() -1;
                     txtHeader.SetValue(Grid.RowProperty, 0);
@@ -384,7 +403,11 @@ namespace GreenField.Gadgets.Views
                     grd.Children.Add(txtHeader);
                     foreach (string securityName in s1)
                     {                        
-                        TextBlock txtSecurityName = new TextBlock() { Text = securityName, FontSize = 7 };
+                        TextBlock txtSecurityName = new TextBlock() { 
+                            Text = securityName,
+                            FontSize = 7,
+                            Margin = new Thickness(2)
+                        };
                         txtSecurityName.SetValue(Grid.ColumnProperty, countryNum);
                         txtSecurityName.SetValue(Grid.RowProperty, securityNum);
                         grd.Children.Add(txtSecurityName);
@@ -469,6 +492,7 @@ namespace GreenField.Gadgets.Views
 
         private void btn_ToggleClick(object sender, RoutedEventArgs e)
         {
+            this.dgRelativePerformance.SelectedItems.Clear();
             btnExportExcel.Visibility = Visibility.Visible;
             btnExportPDF.Visibility = Visibility.Visible;
             btnPrint.Visibility = Visibility.Visible;
