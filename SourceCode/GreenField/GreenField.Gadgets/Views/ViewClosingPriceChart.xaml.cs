@@ -66,7 +66,7 @@ namespace GreenField.Gadgets.Views
             ApplyChartStyles();
         }
 
-        
+
 
         #endregion
 
@@ -86,7 +86,6 @@ namespace GreenField.Gadgets.Views
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
             this.chPricing.DefaultView.ChartArea.ItemToolTipOpening += new ItemToolTipEventHandler(ChartArea_ItemToolTipOpening);
-            
         }
 
 
@@ -117,17 +116,21 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if(grdRadChart.Visibility==Visibility.Visible)
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    
-                };
-                RadExportOptions dataGridOption = new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER };
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                    { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                RadExportOptionsInfo.Add(new RadExportOptions() 
+                { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                }
 
-                if (dgPricing.ItemsSource != null && dgPricing.Items.Count > 0)
-                    RadExportOptionsInfo.Add(dataGridOption);
-
+                if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                }
+                                               
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
                 childExportOptions.Show();
             }
@@ -306,7 +309,7 @@ namespace GreenField.Gadgets.Views
         {
 
         }
-        
+
         void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
         {
             //string ticker = Convert.ToString(e.DataPoint.LegendLabel);

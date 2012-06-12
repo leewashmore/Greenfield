@@ -21,6 +21,7 @@ using Telerik.Windows.Controls.GridView;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using Telerik.Windows.Documents.UI;
 #endif
 
 namespace GreenField.Gadgets.Views
@@ -56,11 +57,6 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        private static class ExportTypes
-        {
-            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
-        }
-
         #region Constructor
 
         /// <summary>
@@ -76,13 +72,12 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        #region DataProgressIndicator
-
-
-
-        #endregion
-
         #region ExportToExcel/PDF/Print
+
+        private static class ExportTypes
+        {
+            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+        }
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel
@@ -286,17 +281,6 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
-        //{
-        //    RadRichTextBox radTxtDoc = new RadRichTextBox();
-        //    Dispatcher.BeginInvoke((Action)(() =>
-        //    {
-        //        radTxtDoc.Document = CreateDocument(dgPortfolioDetails);
-        //    }));
-        //    //radTxtDoc.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-        //    radTxtDoc.Print(radTxtDoc.Document.ToString(), Telerik.Windows.Documents.UI.PrintMode.Native);
-        //}
-
         #region Printing the DataGrid
 
         //private void btnPrint_Click(object sender, RoutedEventArgs e)
@@ -368,20 +352,46 @@ namespace GreenField.Gadgets.Views
 
         private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Telerik.Windows.Documents.UI.PrintSettings s = new Telerik.Windows.Documents.UI.PrintSettings();
-            s.DocumentName = "MyDocument";
-            s.PrintMode = Telerik.Windows.Documents.UI.PrintMode.Native;
-            s.PrintScaling = Telerik.Windows.Documents.UI.PrintScaling.ShrinkToPageSize;
-            RadRichTextBox RadRichTextBox1 = new RadRichTextBox();
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                RadRichTextBox1.Document = new RadDocument();
-                RadRichTextBox1.Document = CreateDocument(dgPortfolioDetails);
-                RadRichTextBox1.Print(s);
+                RichTextBox.Document = CreateDocument(dgPortfolioDetails);
             }));
+
+            PrintSettings printSettings = new PrintSettings();
+            printSettings.DocumentName = "MyDocument";
+            printSettings.PrintMode = PrintMode.Native;
+            printSettings.PrintScaling = PrintScaling.ShrinkToPageSize;
+            RichTextBox.Print(printSettings);
         }
 
         #endregion
+
+        #region EventUnsubscribe
+
+        public override void Dispose()
+        {
+            this.DataContextPortfolioDetails.Dispose();
+            this.DataContextPortfolioDetails = null;
+            this.DataContext = null;
+        }
+
+        #endregion
+
+        #region ApplyingGroupStyle
+
+        /// <summary>
+        /// Row loaded Event of DataGrid, Applying styles to Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        #endregion
+
+        #region GroupingHelperMethods
 
         /// <summary>
         /// Event when User groups the data
@@ -420,7 +430,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
-            Telerik.Windows.Controls.GridView.ColumnFilterDescriptor fd = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
+            Telerik.Windows.Controls.GridView.ColumnFilterDescriptor filterDescriptor = e.ColumnFilterDescriptor as Telerik.Windows.Controls.GridView.ColumnFilterDescriptor;
         }
 
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
@@ -463,35 +473,6 @@ namespace GreenField.Gadgets.Views
             DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
         }
 
-        #region EventUnsubscribe
-
-        public override void Dispose()
-        {
-            this.DataContextPortfolioDetails.Dispose();
-            this.DataContextPortfolioDetails = null;
-            this.DataContext = null;
-        }
-
         #endregion
-
-        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);            
-        }
-
-        private void dgPortfolioDetails_Grouped(object sender, GridViewGroupedEventArgs e)
-        {
-            //this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
-            //this.dgPortfolioDetails.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
-
-            //var groupPanelItem = dgPortfolioDetails.ChildrenOfType<GridViewGroupPanelItem>().FirstOrDefault();
-            //if (groupPanelItem != null)
-            //{
-            //    groupPanelItem.Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
-            //    groupPanelItem.Foreground = new SolidColorBrush(Colors.White);
-            //    groupPanelItem.FontFamily = new FontFamily("Arial");
-            //    groupPanelItem.FontSize = 15;
-            //}
-        }
     }
 }

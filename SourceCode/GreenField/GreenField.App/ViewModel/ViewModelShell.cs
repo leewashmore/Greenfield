@@ -326,7 +326,7 @@ namespace GreenField.App.ViewModel
                         _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
                     }
 
-                    
+
                 }
             }
         }
@@ -405,7 +405,7 @@ namespace GreenField.App.ViewModel
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
                         _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
-                    }                
+                    }
                 }
             }
         }
@@ -435,7 +435,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y", "3Y", "5Y", "10Y", "SI" };
+                return new List<String> { "1D", "1W", "MTD", "QTD", "YTD", "1Y" };
             }
         }
 
@@ -600,8 +600,8 @@ namespace GreenField.App.ViewModel
                         IsExCashSecurity = false;
                         _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Publish(SelectorPayload.FilterSelectionData);
                         //this.FilterVisibility = Visibility.Collapsed;
-                       
-                       
+
+
                     }
                     else
                     {
