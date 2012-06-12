@@ -1107,16 +1107,17 @@ namespace GreenField.Web.Services
                     List<RelativePerformanceCountrySpecificData> sectorSpecificData = new List<RelativePerformanceCountrySpecificData>();
                     foreach (RelativePerformanceSectorData sectorData in sectors)
                     {
-                        decimal? aggAlpha = 0;
-                        decimal? aggPortfolioShare = 0;
-                        decimal? aggBenchmarkShare = 0;
+                        decimal? aggssAlpha = 0;
+                        decimal? aggssPortfolioShare = 0;
+                        decimal? aggssBenchmarkShare = 0;
+
                         List<GF_PERF_DAILY_ATTRIBUTION> specificData = dailyData.Where(t => t.COUNTRY == countryCode && t.GICS_LVL1 == sectorData.SectorName).ToList();
 
                         foreach (GF_PERF_DAILY_ATTRIBUTION row in specificData)
                         {
-                            aggPortfolioShare = (aggPortfolioShare + RetrieveRelativePerformancePortfolioWeight(row, period));
-                            aggBenchmarkShare = (aggBenchmarkShare + RetrieveRelativePerformanceBenchmarkWeight(row, period));
-                            aggAlpha = RetrieveRelativePerformanceAlphaValue(row, period);
+                            aggssPortfolioShare += RetrieveRelativePerformancePortfolioWeight(row, period);
+                            aggssBenchmarkShare += RetrieveRelativePerformanceBenchmarkWeight(row, period);
+                            aggssAlpha += RetrieveRelativePerformanceAlphaValue(row, period);
 
                         }
 
@@ -1124,15 +1125,15 @@ namespace GreenField.Web.Services
                         {
                             SectorId = sectorData.SectorId,
                             SectorName = sectorData.SectorName,
-                            Alpha = aggAlpha,
-                            PortfolioShare = aggPortfolioShare,
-                            BenchmarkShare = aggBenchmarkShare,
-                            ActivePosition = Convert.ToDecimal(aggPortfolioShare - aggBenchmarkShare),
+                            Alpha = aggssAlpha,
+                            PortfolioShare = aggssPortfolioShare,
+                            BenchmarkShare = aggssBenchmarkShare,
+                            ActivePosition = Convert.ToDecimal(aggssPortfolioShare - aggssBenchmarkShare),
                         });
 
-                        aggcsAlpha = aggcsAlpha + aggAlpha;
-                        aggcsPortfolioShare = aggcsPortfolioShare + aggPortfolioShare;
-                        aggcsBenchmarkShare = aggcsBenchmarkShare + aggBenchmarkShare;
+                        aggcsAlpha += aggssAlpha;
+                        aggcsPortfolioShare += aggssPortfolioShare;
+                        aggcsBenchmarkShare += aggssBenchmarkShare;
                     }
 
                     if (sectorSpecificData.Count > 0)
@@ -1363,6 +1364,7 @@ namespace GreenField.Web.Services
                     result.Add(new RelativePerformanceActivePositionData()
                     {
                         Entity = row.SEC_NAME,
+                        EntityGroup = row.ISSUER_NAME,
                         MarketValue = row.POR_RC_MARKET_VALUE,
                         FundWeight = fundWeight,
                         BenchmarkWeight = benchmarkWeight,
@@ -1380,6 +1382,7 @@ namespace GreenField.Web.Services
             }
         }
 
+        
         /// <summary>
         /// Retrieves Security Level Relative Performance Data for a particular composite/fund, benchmark and efective date.
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments

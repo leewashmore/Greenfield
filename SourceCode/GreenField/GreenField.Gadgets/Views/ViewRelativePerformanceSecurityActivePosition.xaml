@@ -18,10 +18,16 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-
-    <Grid x:Name="LayoutRoot" Background="White">
-        <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <CheckBox Content="Display Issuer" FontSize="7" FontFamily="Arial" VerticalContentAlignment="Center"
+                      IsChecked="{Binding DisplayIssuerIsChecked, Mode=TwoWay}"/>
             <telerik:RadGridView Name="dgRelativePerformance" 
+                                 Grid.Row="1"
                                  AutoGenerateColumns="False" 
                                  IsFilteringAllowed="True" 
                                  ItemsSource="{Binding RelativePerformanceActivePositionInfo}"
@@ -57,6 +63,6 @@
                                                 CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
-        </telerik:RadBusyIndicator>
-    </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
