@@ -345,16 +345,21 @@ namespace GreenField.Gadgets.Views
                     }
                 }
             }
-            if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
-            {
-                ChartLegendItem var = this.chChartExtension.DefaultView.ChartLegend.Items[0];
-                this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
-            }
+            
         }
 
         private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        private void chChartExtension_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+            {
+                ChartLegendItem var = this.chChartExtension.DefaultView.ChartLegend.Items[0];
+                this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
+            }
         }
     }
 }

@@ -151,7 +151,7 @@
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
-                                          ItemsSource="{Binding ChartExtensionData, Mode=TwoWay}" IsHitTestVisible="True" DataBound="chChartExtension_DataBound">
+                                          ItemsSource="{Binding ChartExtensionData, Mode=TwoWay}" IsHitTestVisible="True" DataBound="chChartExtension_DataBound" Loaded="chChartExtension_Loaded">
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>

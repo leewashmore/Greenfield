@@ -228,7 +228,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, indexConstituentsData, 1);
                     IndexConstituentsInfo = new ObservableCollection<IndexConstituentsData>(indexConstituentsData);
-                    BenchmarkId = IndexConstituentsInfo.ElementAt(0).BenchmarkId;
+                    BenchmarkId = IndexConstituentsInfo.ElementAt(0).BenchmarkId.ToString();
                 }
                 else
                 {

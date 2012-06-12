@@ -472,7 +472,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("SECURITY");
                     SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
 
-                    if (SelectedStartDate != null && SelectedEntities != null && _period != null)
+                    if (SelectedStartDate != null && SelectedEntities != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO"))
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
@@ -511,7 +511,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         RetrieveChartAccordingDataPeriod(_period);
                     }
-                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null)
+                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY"))
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;

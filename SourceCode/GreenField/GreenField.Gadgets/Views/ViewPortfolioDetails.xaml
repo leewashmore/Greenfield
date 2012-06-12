@@ -195,7 +195,7 @@
         </Grid>
 
         <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="7" Height="12"
+            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="7" Height="12" Foreground="Red"
                        Text=" * The values for Model Weight are not correct as the corresponding View doesn't have relevant data"/>
         </Grid>
         </Grid>
