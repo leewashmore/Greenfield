@@ -841,7 +841,8 @@ namespace GreenField.App.ViewModel
             {
                 _isExCashSecurity = value;
                 RaisePropertyChanged(() => this.IsExCashSecurity);
-
+                if (SelectedFilterType == "Show Everything" && value == true)
+                    SelectedFilterType = "";
                 _selectorPayload.IsExCashSecurityData = value;
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Publish(value);
 
