@@ -1,3 +1,7 @@
+
+set noexec off
+
+
 --declare  current and required version
 --also do it an the end of the script
 declare @RequiredDBVersion as nvarchar(100) = '00006'
@@ -12,7 +16,7 @@ declare @DBCurrentVersion as nvarchar(100) = (select top 1 ScriptVersion from Ch
 if (@DBCurrentVersion != @RequiredDBVersion)
 begin
 	RAISERROR(N'DB version is "%s", required "%s".', 16, 1, @DBCurrentVersion, @RequiredDBVersion)
-	return
+	set noexec on
 end
 
 GO
