@@ -5,7 +5,7 @@ declare @CurrentScriptVersion as nvarchar(100) = '00011'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
-	return
+ set noexec on 
 
 --check that current DB version is Ok
 declare @DBCurrentVersion as nvarchar(100) = (select top 1 ScriptVersion from ChangeScripts order by DateExecuted desc)
