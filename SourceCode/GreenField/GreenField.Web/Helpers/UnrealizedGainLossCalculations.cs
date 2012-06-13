@@ -37,7 +37,7 @@ public static class UnrealizedGainLossCalculations
 
         entry.AdjustedPrice = resultSetArrangedByDescRecord[0].DAILY_CLOSING_PRICE;
         entry.DailyClosingPrice = resultSetArrangedByDescRecord[0].DAILY_CLOSING_PRICE;
-        entry.FromDate = resultSetArrangedByDescRecord[0].FROMDATE;
+        entry.FromDate = (DateTime)resultSetArrangedByDescRecord[0].FROMDATE;
         entry.Volume = resultSetArrangedByDescRecord[0].VOLUME;
         entry.Ticker = resultSetArrangedByDescRecord[0].TICKER;
         entry.IssueName = resultSetArrangedByDescRecord[0].ISSUE_NAME;
@@ -64,7 +64,7 @@ public static class UnrealizedGainLossCalculations
             entry.AdjustedPrice = previousAdjustedPrice / adjustedPriceDenominator;
             previousPriceReturn = resultSetArrangedByDescRecord[i].DAILY_PRICE_RETURN;
             entry.DailyClosingPrice = resultSetArrangedByDescRecord[i].DAILY_CLOSING_PRICE;
-            entry.FromDate = resultSetArrangedByDescRecord[i].FROMDATE;
+            entry.FromDate = (DateTime)resultSetArrangedByDescRecord[i].FROMDATE;
             entry.Volume = resultSetArrangedByDescRecord[i].VOLUME;
             entry.Ticker = resultSetArrangedByDescRecord[i].TICKER;
             entry.IssueName = resultSetArrangedByDescRecord[i].ISSUE_NAME;
