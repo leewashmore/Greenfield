@@ -146,6 +146,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FXCommodityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.IndexConstituentsData.datasource" />
@@ -222,9 +223,6 @@
     <None Include="Service References\LoginDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
     <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
@@ -368,9 +366,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />

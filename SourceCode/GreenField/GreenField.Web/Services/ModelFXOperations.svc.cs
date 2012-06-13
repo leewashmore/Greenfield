@@ -17,7 +17,6 @@ using GreenField.DAL;
 using System.Collections;
 using System.Data.Common;
 using GreenField.Web.DataContracts;
-using GreenField.DataContracts.Web.DataContracts;
 
 namespace GreenField.Web.Services
 {

@@ -933,7 +933,15 @@ namespace GreenField.App.ViewModel
                 _selCommodityId = value;
                 RaisePropertyChanged(() => this.SelCommodityId);
                 if (value != null)
-                    _selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper() == value.ToUpper()).ToString();
+                    //_selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper().Contains(value.ToUpper())).Select(rec => rec.CommodityID).ToString();
+                    if(CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
+                    {
+                        foreach (FXCommodityData item in CommodityTypeInfo)
+                        {
+                            if (item.CommodityID.ToUpper() == value.ToUpper())
+                                _selectorPayload.CommoditySelectedVal = value;
+                        }
+                    }
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
             }
         }

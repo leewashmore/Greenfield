@@ -501,7 +501,7 @@
                         <TextBlock Text="Commodity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbCommoditySelector"
                                          EmptyText="Search Commodity..." 
-                                         SelectedValue="{Binding SelCommodityID,Mode=TwoWay}"
+                                         SelectedValue="{Binding SelCommodityId,Mode=TwoWay}"
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"

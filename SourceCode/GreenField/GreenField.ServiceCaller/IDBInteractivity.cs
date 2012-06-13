@@ -170,7 +170,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCommoditySelectionData(Action<List<FXCommodityData>> callback);
 
-        void RetrieveCommodityData(string  commodityID, Action<List<FXCommodityData>> callback);
+        void RetrieveCommodityData(string commodityID, Action<List<FXCommodityData>> callback);
 
         #endregion
 

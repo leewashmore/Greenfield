@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using GreenField.Common.Helper;
 using GreenField.DataContracts;
 
+
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelCommodityIndex : NotificationObject
@@ -45,6 +46,10 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member stores selected commodity ID
         /// </summary>
         private string _commodityID;
+        /// <summary>
+        /// Private member stores commodity grid visibility
+        /// </summary>
+        private Visibility _commodityGridVisibility = Visibility.Collapsed;
 
         #endregion
         #region Constructor
@@ -81,6 +86,18 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.CommodityData);
             }
         }
+        /// <summary>
+        /// Stores visibility of grid
+        /// </summary>
+        public Visibility CommodityGridVisibility
+        {
+            get { return _commodityGridVisibility; }
+            set
+            {
+                _commodityGridVisibility = value;
+                RaisePropertyChanged(() => this.CommodityGridVisibility);
+            }
+        }
         #endregion
 
         #region Event
@@ -88,6 +105,10 @@ namespace GreenField.Gadgets.ViewModels
         /// event to handle data retrieval progress indicator
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler CommodityDataLoadEvent;
+        /// <summary>
+        /// event to handle data
+        /// </summary>
+        public event RetrieveCommodityDataCompleteEventHandler RetrieveCommodityDataCompleteEvent;
 
         #region EventHandler
         public void HandleCommodityReferenceSet(string commodityID)
@@ -135,14 +156,18 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+                CommodityGridVisibility = Visibility.Collapsed;
                 if (result != null && result.Count > 0)
                 {
 
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CommodityGridVisibility = Visibility.Visible;
                     CommodityData = result;
-                    this.RaisePropertyChanged(() => this.CommodityData);
+                    //this.RaisePropertyChanged(() => this.CommodityData);
                     if (CommodityDataLoadEvent != null)
                         CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    RetrieveCommodityDataCompleteEvent(new RetrieveCommodityDataCompleteEventArgs() { CommodityInfo = result });
+
                 }
                 else
                 {

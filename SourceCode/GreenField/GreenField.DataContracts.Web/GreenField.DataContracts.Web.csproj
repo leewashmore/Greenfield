@@ -71,6 +71,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\FinancialStatementInputData.cs">
       <Link>DataContracts\FinancialStatementInputData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\FXCommodityData.cs">
+      <Link>DataContracts\FXCommodityData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\HeatMapData.cs">
       <Link>DataContracts\HeatMapData.cs</Link>
     </Compile>
@@ -152,7 +155,6 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\UnrealizedGainLossData.cs">
       <Link>DataContracts\UnrealizedGainLossData.cs</Link>
     </Compile>
-    <Compile Include="DataContracts\FXCommodityData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
