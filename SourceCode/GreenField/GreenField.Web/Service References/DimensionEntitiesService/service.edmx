@@ -20,17 +20,16 @@
       </EntityContainer>
       <EntityType Name="GF_BENCHMARK_HOLDINGS">
         <Key>
-          <PropertyRef Name="PORTFOLIO_DATE" />
-          <PropertyRef Name="BENCHMARK_ID" />
-          <PropertyRef Name="ASEC_SEC_SHORT_NAME" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
-        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="SECURITYTHEMECODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -66,21 +65,21 @@
       </EntityType>
       <EntityType Name="GF_CTY_CUR">
         <Key>
-          <PropertyRef Name="CURRENCY" />
-          <PropertyRef Name="COUNTRY" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="CURRENCY" Type="Edm.String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="COUNTRY" Type="Edm.String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_EQUITYKEYS">
         <Key>
-          <PropertyRef Name="EQUITYKEYS_SECIK" />
-          <PropertyRef Name="EQUITYKEYS_FROMDATE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="EQUITYKEYS_SECIK" Type="Edm.Int32" Nullable="false" />
-        <Property Name="EQUITYKEYS_FROMDATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="EQUITYKEYS_SECIK" Type="Edm.Int32" Nullable="true" />
+        <Property Name="EQUITYKEYS_FROMDATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="EQKEY13_PX_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY14_CHG_PCT_1D" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY15_D2D_TOT_RET_GROSS_DVDS" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
@@ -98,15 +97,13 @@
       </EntityType>
       <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
         <Key>
-          <PropertyRef Name="NODE_NAME" />
-          <PropertyRef Name="TO_DATE" />
-          <PropertyRef Name="PORTFOLIO" />
-          <PropertyRef Name="AGG_LVL_1" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="NODE_NAME" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="false" />
-        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-        <Property Name="AGG_LVL_1" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="NODE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="AGG_LVL_1" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="AGG_LVL_1_LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
         <Property Name="ISSUER" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="COUNTRY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
@@ -486,18 +483,16 @@
       </EntityType>
       <EntityType Name="GF_PERF_TOPLEVELMONTH">
         <Key>
-          <PropertyRef Name="TO_DATE" />
-          <PropertyRef Name="PORTFOLIOGROUP" />
-          <PropertyRef Name="PORTFOLIOCODE" />
-          <PropertyRef Name="RETURN_TYPE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
-        <Property Name="TO_DATE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -515,19 +510,16 @@
       </EntityType>
       <EntityType Name="GF_PERF_TOPLEVELPERIOD">
         <Key>
-          <PropertyRef Name="TO_DATE" />
-          <PropertyRef Name="PORTYPE" />
-          <PropertyRef Name="PORTFOLIOGROUP" />
-          <PropertyRef Name="PORTFOLIOCODE" />
-          <PropertyRef Name="RETURN_TYPE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
-        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="false" />
-        <Property Name="PORTYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -548,19 +540,16 @@
       </EntityType>
       <EntityType Name="GF_PERF_TOPLEVELSTATS">
         <Key>
-          <PropertyRef Name="TO_DATE" />
-          <PropertyRef Name="PORTYPE" />
-          <PropertyRef Name="PORTFOLIOGROUP" />
-          <PropertyRef Name="PORTFOLIOCODE" />
-          <PropertyRef Name="RETURN_TYPE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
-        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="false" />
-        <Property Name="PORTYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="YEAR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -577,18 +566,16 @@
       </EntityType>
       <EntityType Name="GF_PERF_TOPLEVELYEAR">
         <Key>
-          <PropertyRef Name="TO_DATE" />
-          <PropertyRef Name="PORTFOLIOGROUP" />
-          <PropertyRef Name="PORTFOLIOCODE" />
-          <PropertyRef Name="RETURN_TYPE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
-        <Property Name="TO_DATE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
@@ -606,17 +593,16 @@
       </EntityType>
       <EntityType Name="GF_PORTFOLIO_HOLDINGS">
         <Key>
-          <PropertyRef Name="PORTFOLIO_DATE" />
-          <PropertyRef Name="PORTFOLIO_ID" />
-          <PropertyRef Name="ASEC_SEC_SHORT_NAME" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="false" />
-        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
-        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="SECURITYTHEMECODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -652,9 +638,9 @@
       </EntityType>
       <EntityType Name="GF_PORTFOLIO_LTHOLDINGS">
         <Key>
-          <PropertyRef Name="FAKE_KEY" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="FAKE_KEY" Type="Edm.Decimal" Nullable="false" Precision="22" Scale="8" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="A_PFCHOLDINGS_PORLT" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
@@ -699,24 +685,24 @@
       </EntityType>
       <EntityType Name="GF_PORTFOLIO_SELECTION">
         <Key>
-          <PropertyRef Name="PORTFOLIO_ID" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_PRICING_BASEVIEW">
         <Key>
+          <PropertyRef Name="GF_ID" />
           <PropertyRef Name="TYPE" />
-          <PropertyRef Name="TICKER" />
-          <PropertyRef Name="ISSUE_NAME" />
-          <PropertyRef Name="FROMDATE" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
-        <Property Name="TICKER" Type="Edm.String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="DAILY_CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="DAILY_PRICE_RETURN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="DAILY_GROSS_RETURN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
@@ -725,9 +711,10 @@
       </EntityType>
       <EntityType Name="GF_SECURITY_BASEVIEW">
         <Key>
-          <PropertyRef Name="SECURITY_ID" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="SECURITY_ID" Type="Edm.Int32" Nullable="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="SECURITY_ID" Type="Edm.Int32" Nullable="true" />
         <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="ISIN" Type="Edm.String" Nullable="true" MaxLength="12" Unicode="false" FixedLength="false" />
@@ -785,25 +772,24 @@
       </EntityType>
       <EntityType Name="GF_SELECTION_BASEVIEW">
         <Key>
-          <PropertyRef Name="INSTRUMENT_ID" />
+          <PropertyRef Name="GF_ID" />
           <PropertyRef Name="TYPE" />
         </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="false" MaxLength="40" Unicode="false" FixedLength="false" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="false" FixedLength="false" />
         <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
         <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="AIMS_COMMODITY_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_TRANSACTIONS">
         <Key>
-          <PropertyRef Name="A_TRANSACTIONS_TRANSACTION" />
-          <PropertyRef Name="ASEC_SEC_SHORT_NAME" />
-          <PropertyRef Name="PORTFOLIO_ID" />
-          <PropertyRef Name="TRADE_DATE" />
+          <PropertyRef Name="GF_ID" />
         </Key>
-        <Property Name="A_TRANSACTIONS_TRANSACTION" Type="Edm.Int64" Nullable="false" />
-        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="false" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="A_TRANSACTIONS_TRANSACTION" Type="Edm.Int64" Nullable="true" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="CUSTODIAN" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
         <Property Name="FX_RATE_QC_PC" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
         <Property Name="FX_RATE_QC_SC" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
@@ -813,7 +799,7 @@
         <Property Name="PAYMENT_VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="PAYMENT_VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="PAYMENT_VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
-        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="PRICE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="9" />
@@ -821,7 +807,7 @@
         <Property Name="SEC_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
         <Property Name="SETTLEMENT_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="SETTLEMENT_DATE" Type="Edm.DateTime" Nullable="true" />
-        <Property Name="TRADE_DATE" Type="Edm.DateTime" Nullable="false" />
+        <Property Name="TRADE_DATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="TRANSACTION_CODE" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
         <Property Name="VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
