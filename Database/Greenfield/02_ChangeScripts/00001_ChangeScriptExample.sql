@@ -1,4 +1,5 @@
 --declare  current and required version
+--also do it an the end of the script
 declare @RequiredDBVersion as nvarchar(100) = '00000'
 declare @CurrentScriptVersion as nvarchar(100) = '00001'
 
@@ -14,6 +15,7 @@ begin
 	return
 end
 
+GO
 
 --PUT YOUR CODE HERE:
 
@@ -21,7 +23,9 @@ end
 --END OF YOUR CODE.
 
 
+
 --indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00001'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
 
