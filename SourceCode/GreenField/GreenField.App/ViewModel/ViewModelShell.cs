@@ -903,7 +903,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _commodityTypeInfo = value;
-                CommodityIDs = value.Select(l => l.CommodityID).Distinct().ToList();
+                CommodityIDs = value.Select(l => l.CommodityId).Distinct().ToList();
                 RaisePropertyChanged(() => this.CommodityTypeInfo);
             }
         }
@@ -938,7 +938,7 @@ namespace GreenField.App.ViewModel
                     {
                         foreach (FXCommodityData item in CommodityTypeInfo)
                         {
-                            if (item.CommodityID.ToUpper() == value.ToUpper())
+                            if (item.CommodityId.ToUpper() == value.ToUpper())
                                 _selectorPayload.CommoditySelectedVal = value;
                         }
                     }
