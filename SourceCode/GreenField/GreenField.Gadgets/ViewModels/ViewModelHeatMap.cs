@@ -70,6 +70,8 @@ namespace GreenField.Gadgets.ViewModels
         /// Effective Date 
        /// </summary>
         private DateTime? _effectiveDate;
+
+        private String _selectedPeriod;
         #region Constructor
 
         /// <summary>
@@ -83,16 +85,18 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;          
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
+            _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", ShapeExtension), UriKind.Relative);
             this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", DbfExtension), UriKind.Relative);
-            if (_effectiveDate != null && _PortfolioSelectionData != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
             {
-                _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrieveHeatMapDataCallbackMethod);
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);              
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
+                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
             }  
             //_dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
         }
@@ -149,9 +153,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_heatMapInfo == null)
                 {
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
                     {
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrieveHeatMapDataCallbackMethod);
                     }
                   
                 }
@@ -235,11 +239,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null)
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod !=null )
                     {
                         if (null != heatMapDataLoadedEvent)
                             heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod,RetrieveHeatMapDataCallbackMethod);
                     }
                 }
                 else
@@ -270,11 +274,48 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
                     {
                         if (null != heatMapDataLoadedEvent)
                             heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrieveHeatMapDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Period
+        /// </summary>
+        /// <param name="selectedPeriodType">Period selected by the user</param>
+        public void HandlePeriodReferenceSet(String selectedPeriodType)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (selectedPeriodType != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
+                    _selectedPeriod = selectedPeriodType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (null != heatMapDataLoadedEvent)
+                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrieveHeatMapDataCallbackMethod);
+                            //SelectedPeriod = selectedPeriodType;
                     }
                 }
                 else
@@ -298,7 +339,8 @@ namespace GreenField.Gadgets.ViewModels
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
-            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);         
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
         }
 
         #endregion

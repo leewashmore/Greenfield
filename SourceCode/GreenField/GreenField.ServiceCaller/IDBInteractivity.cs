@@ -124,7 +124,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
 
-        void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback);
+        void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<HeatMapData>> callback);
 
         /// <summary>
         /// Service caller method to retrieve PortfolioDetails Data

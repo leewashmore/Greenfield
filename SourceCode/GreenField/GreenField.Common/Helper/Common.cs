@@ -154,6 +154,6 @@ namespace GreenField.Common
     public delegate void RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompleteEventArgs e);
     public class RetrieveCommodityDataCompleteEventArgs : EventArgs
     {
-        public List<FXCommodityData> CommodityInfo { get; set; }
+        public List<GreenField.DataContracts.FXCommodityData> CommodityInfo { get; set; }
     }
 }

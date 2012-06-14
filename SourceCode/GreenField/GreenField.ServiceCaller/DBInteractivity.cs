@@ -1380,10 +1380,10 @@ namespace GreenField.ServiceCaller
 
         #region Interaction Method for Heat Map
 
-        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<HeatMapData>> callback)
+        public void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<HeatMapData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate);
+            client.RetrieveHeatMapDataAsync(fundSelectionData, effectiveDate, period);
             client.RetrieveHeatMapDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

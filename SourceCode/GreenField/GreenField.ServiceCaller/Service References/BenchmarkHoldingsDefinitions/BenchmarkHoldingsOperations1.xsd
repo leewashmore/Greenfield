@@ -96,6 +96,7 @@
   <xs:element name="ArrayOfIndexConstituentsData" nillable="true" type="tns:ArrayOfIndexConstituentsData" />
   <xs:complexType name="IndexConstituentsData">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ConstituentName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
