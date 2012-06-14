@@ -37,6 +37,10 @@ namespace GreenField.Web.Helpers
 
         #endregion 
 
+        #region COMMODITY CONSTANTS
+        public const string COMMODITY_ALL = "ALL";
+        #endregion
+
     }
 
     public class Columns
