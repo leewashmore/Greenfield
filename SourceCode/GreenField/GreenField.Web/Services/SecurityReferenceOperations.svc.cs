@@ -247,7 +247,7 @@ namespace GreenField.Web.Services
                             objPricingReferenceData.Type = pricingItem.TYPE;
                             objPricingReferenceData.Ticker = pricingItem.TICKER + ((totalReturnCheck) ? " (Total)" : "");
                             objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
-                            objPricingReferenceData.FromDate = pricingItem.FROMDATE;
+                            objPricingReferenceData.FromDate = (DateTime)pricingItem.FROMDATE;
                             objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
                             objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
                             objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
@@ -305,7 +305,7 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.Type = pricingItem.TYPE;
                                     objPricingReferenceData.Ticker = pricingItem.TICKER + ((totalReturnCheck) ? " (Total)" : "");
                                     objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
-                                    objPricingReferenceData.FromDate = pricingItem.FROMDATE;
+                                    objPricingReferenceData.FromDate = (DateTime)pricingItem.FROMDATE;
                                     objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
                                     objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
                                     objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
@@ -350,7 +350,7 @@ namespace GreenField.Web.Services
                                     objPricingReferenceData.Type = pricingItem.TYPE;
                                     objPricingReferenceData.Ticker = pricingItem.TICKER;
                                     objPricingReferenceData.IssueName = pricingItem.ISSUE_NAME;
-                                    objPricingReferenceData.FromDate = pricingItem.FROMDATE;
+                                    objPricingReferenceData.FromDate = (DateTime)pricingItem.FROMDATE;
                                     objPricingReferenceData.Volume = Convert.ToDecimal(pricingItem.VOLUME);
                                     objPricingReferenceData.DailySpotFX = Convert.ToDecimal(pricingItem.DAILY_SPOT_FX);
                                     objPricingReferenceData.InstrumentID = pricingItem.INSTRUMENT_ID;
@@ -709,7 +709,7 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<DimensionEntitiesService.GF_PRICING_BASEVIEW> resultSet
                     = entity.GF_PRICING_BASEVIEW
-                        .Where(record => (record.TICKER == entityIdentifier.ShortName))
+                        .Where(record => (record.INSTRUMENT_ID == entityIdentifier.InstrumentID))
                         .OrderByDescending(record => record.FROMDATE)
                         .ToList();
 

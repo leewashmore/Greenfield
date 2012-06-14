@@ -44,7 +44,20 @@ namespace GreenField.Common.Helper
 
         public String CountrySelectionData { get; set; }
 
-        public String PeriodSelectionData { get; set; }
+        private String periodSelectionData = "YTD";
+
+        public String PeriodSelectionData
+        {
+            get
+            {
+                return periodSelectionData; 
+            }
+
+            set
+            { 
+                periodSelectionData = value; 
+            }
+        }
 
         public bool IsExCashSecurityData { get; set; }
 

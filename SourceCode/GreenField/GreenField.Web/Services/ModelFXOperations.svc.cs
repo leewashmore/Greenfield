@@ -9,15 +9,13 @@ using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using System.Resources;
 using GreenField.Web.Helpers.Service_Faults;
-using GreenField.DataContracts;
 using GreenField.Web.Helpers;
 using System.Data;
 using System.Data.SqlClient;
 using GreenField.DAL;
 using System.Collections;
 using System.Data.Common;
-using GreenField.Web.DataContracts;
-using GreenField.DataContracts.Web.DataContracts;
+using GreenField.DataContracts;
 
 namespace GreenField.Web.Services
 {

@@ -151,5 +151,9 @@ namespace GreenField.Common
           SAVEAS,
           DELETE   
       }
-
+    public delegate void RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompleteEventArgs e);
+    public class RetrieveCommodityDataCompleteEventArgs : EventArgs
+    {
+        public List<GreenField.DataContracts.FXCommodityData> CommodityInfo { get; set; }
+    }
 }

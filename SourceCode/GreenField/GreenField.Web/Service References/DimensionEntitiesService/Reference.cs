@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 6/12/2012 9:02:51 PM
+// Generation date: 6/14/2012 11:20:55 AM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -438,33 +438,48 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_BENCHMARK_HOLDINGS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// PORTFOLIO_DATE
-    /// BENCHMARK_ID
-    /// ASEC_SEC_SHORT_NAME
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_DATE", "BENCHMARK_ID", "ASEC_SEC_SHORT_NAME")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_BENCHMARK_HOLDINGS
     {
         /// <summary>
         /// Create a new GF_BENCHMARK_HOLDINGS object.
         /// </summary>
-        /// <param name="pORTFOLIO_DATE">Initial value of PORTFOLIO_DATE.</param>
-        /// <param name="bENCHMARK_ID">Initial value of BENCHMARK_ID.</param>
-        /// <param name="aSEC_SEC_SHORT_NAME">Initial value of ASEC_SEC_SHORT_NAME.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_BENCHMARK_HOLDINGS CreateGF_BENCHMARK_HOLDINGS(global::System.DateTime pORTFOLIO_DATE, string bENCHMARK_ID, string aSEC_SEC_SHORT_NAME)
+        public static GF_BENCHMARK_HOLDINGS CreateGF_BENCHMARK_HOLDINGS(decimal gF_ID)
         {
             GF_BENCHMARK_HOLDINGS gF_BENCHMARK_HOLDINGS = new GF_BENCHMARK_HOLDINGS();
-            gF_BENCHMARK_HOLDINGS.PORTFOLIO_DATE = pORTFOLIO_DATE;
-            gF_BENCHMARK_HOLDINGS.BENCHMARK_ID = bENCHMARK_ID;
-            gF_BENCHMARK_HOLDINGS.ASEC_SEC_SHORT_NAME = aSEC_SEC_SHORT_NAME;
+            gF_BENCHMARK_HOLDINGS.GF_ID = gF_ID;
             return gF_BENCHMARK_HOLDINGS;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime PORTFOLIO_DATE
+        public global::System.Nullable<global::System.DateTime> PORTFOLIO_DATE
         {
             get
             {
@@ -478,8 +493,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _PORTFOLIO_DATE;
-        partial void OnPORTFOLIO_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _PORTFOLIO_DATE;
+        partial void OnPORTFOLIO_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnPORTFOLIO_DATEChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_ID in the schema.
@@ -1284,25 +1299,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_CTY_CUR in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// CURRENCY
-    /// COUNTRY
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("CURRENCY", "COUNTRY")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_CTY_CUR
     {
         /// <summary>
         /// Create a new GF_CTY_CUR object.
         /// </summary>
-        /// <param name="cURRENCY">Initial value of CURRENCY.</param>
-        /// <param name="cOUNTRY">Initial value of COUNTRY.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_CTY_CUR CreateGF_CTY_CUR(string cURRENCY, string cOUNTRY)
+        public static GF_CTY_CUR CreateGF_CTY_CUR(decimal gF_ID)
         {
             GF_CTY_CUR gF_CTY_CUR = new GF_CTY_CUR();
-            gF_CTY_CUR.CURRENCY = cURRENCY;
-            gF_CTY_CUR.COUNTRY = cOUNTRY;
+            gF_CTY_CUR.GF_ID = gF_ID;
             return gF_CTY_CUR;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property CURRENCY in the schema.
         /// </summary>
@@ -1392,30 +1425,48 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_EQUITYKEYS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// EQUITYKEYS_SECIK
-    /// EQUITYKEYS_FROMDATE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("EQUITYKEYS_SECIK", "EQUITYKEYS_FROMDATE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_EQUITYKEYS
     {
         /// <summary>
         /// Create a new GF_EQUITYKEYS object.
         /// </summary>
-        /// <param name="eQUITYKEYS_SECIK">Initial value of EQUITYKEYS_SECIK.</param>
-        /// <param name="eQUITYKEYS_FROMDATE">Initial value of EQUITYKEYS_FROMDATE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_EQUITYKEYS CreateGF_EQUITYKEYS(int eQUITYKEYS_SECIK, global::System.DateTime eQUITYKEYS_FROMDATE)
+        public static GF_EQUITYKEYS CreateGF_EQUITYKEYS(decimal gF_ID)
         {
             GF_EQUITYKEYS gF_EQUITYKEYS = new GF_EQUITYKEYS();
-            gF_EQUITYKEYS.EQUITYKEYS_SECIK = eQUITYKEYS_SECIK;
-            gF_EQUITYKEYS.EQUITYKEYS_FROMDATE = eQUITYKEYS_FROMDATE;
+            gF_EQUITYKEYS.GF_ID = gF_ID;
             return gF_EQUITYKEYS;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property EQUITYKEYS_SECIK in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public int EQUITYKEYS_SECIK
+        public global::System.Nullable<int> EQUITYKEYS_SECIK
         {
             get
             {
@@ -1429,14 +1480,14 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private int _EQUITYKEYS_SECIK;
-        partial void OnEQUITYKEYS_SECIKChanging(int value);
+        private global::System.Nullable<int> _EQUITYKEYS_SECIK;
+        partial void OnEQUITYKEYS_SECIKChanging(global::System.Nullable<int> value);
         partial void OnEQUITYKEYS_SECIKChanged();
         /// <summary>
         /// There are no comments for Property EQUITYKEYS_FROMDATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime EQUITYKEYS_FROMDATE
+        public global::System.Nullable<global::System.DateTime> EQUITYKEYS_FROMDATE
         {
             get
             {
@@ -1450,8 +1501,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _EQUITYKEYS_FROMDATE;
-        partial void OnEQUITYKEYS_FROMDATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _EQUITYKEYS_FROMDATE;
+        partial void OnEQUITYKEYS_FROMDATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnEQUITYKEYS_FROMDATEChanged();
         /// <summary>
         /// There are no comments for Property EQKEY13_PX_VOLUME in the schema.
@@ -1752,31 +1803,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PERF_DAILY_ATTRIBUTION in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// NODE_NAME
-    /// TO_DATE
-    /// PORTFOLIO
-    /// AGG_LVL_1
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("NODE_NAME", "TO_DATE", "PORTFOLIO", "AGG_LVL_1")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PERF_DAILY_ATTRIBUTION
     {
         /// <summary>
         /// Create a new GF_PERF_DAILY_ATTRIBUTION object.
         /// </summary>
-        /// <param name="nODE_NAME">Initial value of NODE_NAME.</param>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTFOLIO">Initial value of PORTFOLIO.</param>
-        /// <param name="aGG_LVL_1">Initial value of AGG_LVL_1.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_DAILY_ATTRIBUTION CreateGF_PERF_DAILY_ATTRIBUTION(string nODE_NAME, global::System.DateTime tO_DATE, string pORTFOLIO, string aGG_LVL_1)
+        public static GF_PERF_DAILY_ATTRIBUTION CreateGF_PERF_DAILY_ATTRIBUTION(decimal gF_ID)
         {
             GF_PERF_DAILY_ATTRIBUTION gF_PERF_DAILY_ATTRIBUTION = new GF_PERF_DAILY_ATTRIBUTION();
-            gF_PERF_DAILY_ATTRIBUTION.NODE_NAME = nODE_NAME;
-            gF_PERF_DAILY_ATTRIBUTION.TO_DATE = tO_DATE;
-            gF_PERF_DAILY_ATTRIBUTION.PORTFOLIO = pORTFOLIO;
-            gF_PERF_DAILY_ATTRIBUTION.AGG_LVL_1 = aGG_LVL_1;
+            gF_PERF_DAILY_ATTRIBUTION.GF_ID = gF_ID;
             return gF_PERF_DAILY_ATTRIBUTION;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property NODE_NAME in the schema.
         /// </summary>
@@ -1802,7 +1865,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property TO_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime TO_DATE
+        public global::System.Nullable<global::System.DateTime> TO_DATE
         {
             get
             {
@@ -1816,8 +1879,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _TO_DATE;
-        partial void OnTO_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnTO_DATEChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO in the schema.
@@ -9762,31 +9825,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PERF_TOPLEVELMONTH in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// TO_DATE
-    /// PORTFOLIOGROUP
-    /// PORTFOLIOCODE
-    /// RETURN_TYPE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PERF_TOPLEVELMONTH
     {
         /// <summary>
         /// Create a new GF_PERF_TOPLEVELMONTH object.
         /// </summary>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
-        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
-        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_TOPLEVELMONTH CreateGF_PERF_TOPLEVELMONTH(string tO_DATE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        public static GF_PERF_TOPLEVELMONTH CreateGF_PERF_TOPLEVELMONTH(decimal gF_ID)
         {
             GF_PERF_TOPLEVELMONTH gF_PERF_TOPLEVELMONTH = new GF_PERF_TOPLEVELMONTH();
-            gF_PERF_TOPLEVELMONTH.TO_DATE = tO_DATE;
-            gF_PERF_TOPLEVELMONTH.PORTFOLIOGROUP = pORTFOLIOGROUP;
-            gF_PERF_TOPLEVELMONTH.PORTFOLIOCODE = pORTFOLIOCODE;
-            gF_PERF_TOPLEVELMONTH.RETURN_TYPE = rETURN_TYPE;
+            gF_PERF_TOPLEVELMONTH.GF_ID = gF_ID;
             return gF_PERF_TOPLEVELMONTH;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property INDE in the schema.
         /// </summary>
@@ -10233,34 +10308,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PERF_TOPLEVELPERIOD in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// TO_DATE
-    /// PORTYPE
-    /// PORTFOLIOGROUP
-    /// PORTFOLIOCODE
-    /// RETURN_TYPE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTYPE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PERF_TOPLEVELPERIOD
     {
         /// <summary>
         /// Create a new GF_PERF_TOPLEVELPERIOD object.
         /// </summary>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTYPE">Initial value of PORTYPE.</param>
-        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
-        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
-        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_TOPLEVELPERIOD CreateGF_PERF_TOPLEVELPERIOD(global::System.DateTime tO_DATE, string pORTYPE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        public static GF_PERF_TOPLEVELPERIOD CreateGF_PERF_TOPLEVELPERIOD(decimal gF_ID)
         {
             GF_PERF_TOPLEVELPERIOD gF_PERF_TOPLEVELPERIOD = new GF_PERF_TOPLEVELPERIOD();
-            gF_PERF_TOPLEVELPERIOD.TO_DATE = tO_DATE;
-            gF_PERF_TOPLEVELPERIOD.PORTYPE = pORTYPE;
-            gF_PERF_TOPLEVELPERIOD.PORTFOLIOGROUP = pORTFOLIOGROUP;
-            gF_PERF_TOPLEVELPERIOD.PORTFOLIOCODE = pORTFOLIOCODE;
-            gF_PERF_TOPLEVELPERIOD.RETURN_TYPE = rETURN_TYPE;
+            gF_PERF_TOPLEVELPERIOD.GF_ID = gF_ID;
             return gF_PERF_TOPLEVELPERIOD;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property INDE in the schema.
         /// </summary>
@@ -10286,7 +10370,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property TO_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime TO_DATE
+        public global::System.Nullable<global::System.DateTime> TO_DATE
         {
             get
             {
@@ -10300,8 +10384,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _TO_DATE;
-        partial void OnTO_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnTO_DATEChanged();
         /// <summary>
         /// There are no comments for Property PORTYPE in the schema.
@@ -10770,34 +10854,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PERF_TOPLEVELSTATS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// TO_DATE
-    /// PORTYPE
-    /// PORTFOLIOGROUP
-    /// PORTFOLIOCODE
-    /// RETURN_TYPE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTYPE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PERF_TOPLEVELSTATS
     {
         /// <summary>
         /// Create a new GF_PERF_TOPLEVELSTATS object.
         /// </summary>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTYPE">Initial value of PORTYPE.</param>
-        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
-        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
-        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_TOPLEVELSTATS CreateGF_PERF_TOPLEVELSTATS(global::System.DateTime tO_DATE, string pORTYPE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        public static GF_PERF_TOPLEVELSTATS CreateGF_PERF_TOPLEVELSTATS(decimal gF_ID)
         {
             GF_PERF_TOPLEVELSTATS gF_PERF_TOPLEVELSTATS = new GF_PERF_TOPLEVELSTATS();
-            gF_PERF_TOPLEVELSTATS.TO_DATE = tO_DATE;
-            gF_PERF_TOPLEVELSTATS.PORTYPE = pORTYPE;
-            gF_PERF_TOPLEVELSTATS.PORTFOLIOGROUP = pORTFOLIOGROUP;
-            gF_PERF_TOPLEVELSTATS.PORTFOLIOCODE = pORTFOLIOCODE;
-            gF_PERF_TOPLEVELSTATS.RETURN_TYPE = rETURN_TYPE;
+            gF_PERF_TOPLEVELSTATS.GF_ID = gF_ID;
             return gF_PERF_TOPLEVELSTATS;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property INDE in the schema.
         /// </summary>
@@ -10823,7 +10916,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property TO_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime TO_DATE
+        public global::System.Nullable<global::System.DateTime> TO_DATE
         {
             get
             {
@@ -10837,8 +10930,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _TO_DATE;
-        partial void OnTO_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _TO_DATE;
+        partial void OnTO_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnTO_DATEChanged();
         /// <summary>
         /// There are no comments for Property PORTYPE in the schema.
@@ -11223,31 +11316,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PERF_TOPLEVELYEAR in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// TO_DATE
-    /// PORTFOLIOGROUP
-    /// PORTFOLIOCODE
-    /// RETURN_TYPE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("TO_DATE", "PORTFOLIOGROUP", "PORTFOLIOCODE", "RETURN_TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PERF_TOPLEVELYEAR
     {
         /// <summary>
         /// Create a new GF_PERF_TOPLEVELYEAR object.
         /// </summary>
-        /// <param name="tO_DATE">Initial value of TO_DATE.</param>
-        /// <param name="pORTFOLIOGROUP">Initial value of PORTFOLIOGROUP.</param>
-        /// <param name="pORTFOLIOCODE">Initial value of PORTFOLIOCODE.</param>
-        /// <param name="rETURN_TYPE">Initial value of RETURN_TYPE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PERF_TOPLEVELYEAR CreateGF_PERF_TOPLEVELYEAR(string tO_DATE, string pORTFOLIOGROUP, string pORTFOLIOCODE, string rETURN_TYPE)
+        public static GF_PERF_TOPLEVELYEAR CreateGF_PERF_TOPLEVELYEAR(decimal gF_ID)
         {
             GF_PERF_TOPLEVELYEAR gF_PERF_TOPLEVELYEAR = new GF_PERF_TOPLEVELYEAR();
-            gF_PERF_TOPLEVELYEAR.TO_DATE = tO_DATE;
-            gF_PERF_TOPLEVELYEAR.PORTFOLIOGROUP = pORTFOLIOGROUP;
-            gF_PERF_TOPLEVELYEAR.PORTFOLIOCODE = pORTFOLIOCODE;
-            gF_PERF_TOPLEVELYEAR.RETURN_TYPE = rETURN_TYPE;
+            gF_PERF_TOPLEVELYEAR.GF_ID = gF_ID;
             return gF_PERF_TOPLEVELYEAR;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property INDE in the schema.
         /// </summary>
@@ -11694,33 +11799,48 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PORTFOLIO_HOLDINGS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// PORTFOLIO_DATE
-    /// PORTFOLIO_ID
-    /// ASEC_SEC_SHORT_NAME
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_DATE", "PORTFOLIO_ID", "ASEC_SEC_SHORT_NAME")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PORTFOLIO_HOLDINGS
     {
         /// <summary>
         /// Create a new GF_PORTFOLIO_HOLDINGS object.
         /// </summary>
-        /// <param name="pORTFOLIO_DATE">Initial value of PORTFOLIO_DATE.</param>
-        /// <param name="pORTFOLIO_ID">Initial value of PORTFOLIO_ID.</param>
-        /// <param name="aSEC_SEC_SHORT_NAME">Initial value of ASEC_SEC_SHORT_NAME.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PORTFOLIO_HOLDINGS CreateGF_PORTFOLIO_HOLDINGS(global::System.DateTime pORTFOLIO_DATE, string pORTFOLIO_ID, string aSEC_SEC_SHORT_NAME)
+        public static GF_PORTFOLIO_HOLDINGS CreateGF_PORTFOLIO_HOLDINGS(decimal gF_ID)
         {
             GF_PORTFOLIO_HOLDINGS gF_PORTFOLIO_HOLDINGS = new GF_PORTFOLIO_HOLDINGS();
-            gF_PORTFOLIO_HOLDINGS.PORTFOLIO_DATE = pORTFOLIO_DATE;
-            gF_PORTFOLIO_HOLDINGS.PORTFOLIO_ID = pORTFOLIO_ID;
-            gF_PORTFOLIO_HOLDINGS.ASEC_SEC_SHORT_NAME = aSEC_SEC_SHORT_NAME;
+            gF_PORTFOLIO_HOLDINGS.GF_ID = gF_ID;
             return gF_PORTFOLIO_HOLDINGS;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime PORTFOLIO_DATE
+        public global::System.Nullable<global::System.DateTime> PORTFOLIO_DATE
         {
             get
             {
@@ -11734,8 +11854,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _PORTFOLIO_DATE;
-        partial void OnPORTFOLIO_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _PORTFOLIO_DATE;
+        partial void OnPORTFOLIO_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnPORTFOLIO_DATEChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_ID in the schema.
@@ -12540,43 +12660,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PORTFOLIO_LTHOLDINGS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// FAKE_KEY
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("FAKE_KEY")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PORTFOLIO_LTHOLDINGS
     {
         /// <summary>
         /// Create a new GF_PORTFOLIO_LTHOLDINGS object.
         /// </summary>
-        /// <param name="fAKE_KEY">Initial value of FAKE_KEY.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PORTFOLIO_LTHOLDINGS CreateGF_PORTFOLIO_LTHOLDINGS(decimal fAKE_KEY)
+        public static GF_PORTFOLIO_LTHOLDINGS CreateGF_PORTFOLIO_LTHOLDINGS(decimal gF_ID)
         {
             GF_PORTFOLIO_LTHOLDINGS gF_PORTFOLIO_LTHOLDINGS = new GF_PORTFOLIO_LTHOLDINGS();
-            gF_PORTFOLIO_LTHOLDINGS.FAKE_KEY = fAKE_KEY;
+            gF_PORTFOLIO_LTHOLDINGS.GF_ID = gF_ID;
             return gF_PORTFOLIO_LTHOLDINGS;
         }
         /// <summary>
-        /// There are no comments for Property FAKE_KEY in the schema.
+        /// There are no comments for Property GF_ID in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public decimal FAKE_KEY
+        public decimal GF_ID
         {
             get
             {
-                return this._FAKE_KEY;
+                return this._GF_ID;
             }
             set
             {
-                this.OnFAKE_KEYChanging(value);
-                this._FAKE_KEY = value;
-                this.OnFAKE_KEYChanged();
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private decimal _FAKE_KEY;
-        partial void OnFAKE_KEYChanging(decimal value);
-        partial void OnFAKE_KEYChanged();
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_DATE in the schema.
         /// </summary>
@@ -13443,22 +13563,43 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PORTFOLIO_SELECTION in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// PORTFOLIO_ID
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("PORTFOLIO_ID")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_PORTFOLIO_SELECTION
     {
         /// <summary>
         /// Create a new GF_PORTFOLIO_SELECTION object.
         /// </summary>
-        /// <param name="pORTFOLIO_ID">Initial value of PORTFOLIO_ID.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PORTFOLIO_SELECTION CreateGF_PORTFOLIO_SELECTION(string pORTFOLIO_ID)
+        public static GF_PORTFOLIO_SELECTION CreateGF_PORTFOLIO_SELECTION(decimal gF_ID)
         {
             GF_PORTFOLIO_SELECTION gF_PORTFOLIO_SELECTION = new GF_PORTFOLIO_SELECTION();
-            gF_PORTFOLIO_SELECTION.PORTFOLIO_ID = pORTFOLIO_ID;
+            gF_PORTFOLIO_SELECTION.GF_ID = gF_ID;
             return gF_PORTFOLIO_SELECTION;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property PORTFOLIO_ID in the schema.
         /// </summary>
@@ -13527,31 +13668,46 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_PRICING_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
+    /// GF_ID
     /// TYPE
-    /// TICKER
-    /// ISSUE_NAME
-    /// FROMDATE
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("TYPE", "TICKER", "ISSUE_NAME", "FROMDATE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID", "TYPE")]
     public partial class GF_PRICING_BASEVIEW
     {
         /// <summary>
         /// Create a new GF_PRICING_BASEVIEW object.
         /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         /// <param name="tYPE">Initial value of TYPE.</param>
-        /// <param name="tICKER">Initial value of TICKER.</param>
-        /// <param name="iSSUE_NAME">Initial value of ISSUE_NAME.</param>
-        /// <param name="fROMDATE">Initial value of FROMDATE.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(string tYPE, string tICKER, string iSSUE_NAME, global::System.DateTime fROMDATE)
+        public static GF_PRICING_BASEVIEW CreateGF_PRICING_BASEVIEW(decimal gF_ID, string tYPE)
         {
             GF_PRICING_BASEVIEW gF_PRICING_BASEVIEW = new GF_PRICING_BASEVIEW();
+            gF_PRICING_BASEVIEW.GF_ID = gF_ID;
             gF_PRICING_BASEVIEW.TYPE = tYPE;
-            gF_PRICING_BASEVIEW.TICKER = tICKER;
-            gF_PRICING_BASEVIEW.ISSUE_NAME = iSSUE_NAME;
-            gF_PRICING_BASEVIEW.FROMDATE = fROMDATE;
             return gF_PRICING_BASEVIEW;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property INSTRUMENT_ID in the schema.
         /// </summary>
@@ -13640,7 +13796,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property FROMDATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime FROMDATE
+        public global::System.Nullable<global::System.DateTime> FROMDATE
         {
             get
             {
@@ -13654,8 +13810,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _FROMDATE;
-        partial void OnFROMDATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _FROMDATE;
+        partial void OnFROMDATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnFROMDATEChanged();
         /// <summary>
         /// There are no comments for Property DAILY_CLOSING_PRICE in the schema.
@@ -13767,27 +13923,48 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_SECURITY_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// SECURITY_ID
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("SECURITY_ID")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_SECURITY_BASEVIEW
     {
         /// <summary>
         /// Create a new GF_SECURITY_BASEVIEW object.
         /// </summary>
-        /// <param name="sECURITY_ID">Initial value of SECURITY_ID.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_SECURITY_BASEVIEW CreateGF_SECURITY_BASEVIEW(int sECURITY_ID)
+        public static GF_SECURITY_BASEVIEW CreateGF_SECURITY_BASEVIEW(decimal gF_ID)
         {
             GF_SECURITY_BASEVIEW gF_SECURITY_BASEVIEW = new GF_SECURITY_BASEVIEW();
-            gF_SECURITY_BASEVIEW.SECURITY_ID = sECURITY_ID;
+            gF_SECURITY_BASEVIEW.GF_ID = gF_ID;
             return gF_SECURITY_BASEVIEW;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property SECURITY_ID in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public int SECURITY_ID
+        public global::System.Nullable<int> SECURITY_ID
         {
             get
             {
@@ -13801,8 +13978,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private int _SECURITY_ID;
-        partial void OnSECURITY_IDChanging(int value);
+        private global::System.Nullable<int> _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.Nullable<int> value);
         partial void OnSECURITY_IDChanged();
         /// <summary>
         /// There are no comments for Property ASEC_SEC_SHORT_NAME in the schema.
@@ -14943,25 +15120,46 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_SELECTION_BASEVIEW in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// INSTRUMENT_ID
+    /// GF_ID
     /// TYPE
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("INSTRUMENT_ID", "TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID", "TYPE")]
     public partial class GF_SELECTION_BASEVIEW
     {
         /// <summary>
         /// Create a new GF_SELECTION_BASEVIEW object.
         /// </summary>
-        /// <param name="iNSTRUMENT_ID">Initial value of INSTRUMENT_ID.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         /// <param name="tYPE">Initial value of TYPE.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(string iNSTRUMENT_ID, string tYPE)
+        public static GF_SELECTION_BASEVIEW CreateGF_SELECTION_BASEVIEW(decimal gF_ID, string tYPE)
         {
             GF_SELECTION_BASEVIEW gF_SELECTION_BASEVIEW = new GF_SELECTION_BASEVIEW();
-            gF_SELECTION_BASEVIEW.INSTRUMENT_ID = iNSTRUMENT_ID;
+            gF_SELECTION_BASEVIEW.GF_ID = gF_ID;
             gF_SELECTION_BASEVIEW.TYPE = tYPE;
             return gF_SELECTION_BASEVIEW;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property SHORT_NAME in the schema.
         /// </summary>
@@ -15093,36 +15291,48 @@ namespace GreenField.Web.DimensionEntitiesService
     /// There are no comments for Model.GF_TRANSACTIONS in the schema.
     /// </summary>
     /// <KeyProperties>
-    /// A_TRANSACTIONS_TRANSACTION
-    /// ASEC_SEC_SHORT_NAME
-    /// PORTFOLIO_ID
-    /// TRADE_DATE
+    /// GF_ID
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("A_TRANSACTIONS_TRANSACTION", "ASEC_SEC_SHORT_NAME", "PORTFOLIO_ID", "TRADE_DATE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_TRANSACTIONS
     {
         /// <summary>
         /// Create a new GF_TRANSACTIONS object.
         /// </summary>
-        /// <param name="a_TRANSACTIONS_TRANSACTION">Initial value of A_TRANSACTIONS_TRANSACTION.</param>
-        /// <param name="aSEC_SEC_SHORT_NAME">Initial value of ASEC_SEC_SHORT_NAME.</param>
-        /// <param name="pORTFOLIO_ID">Initial value of PORTFOLIO_ID.</param>
-        /// <param name="tRADE_DATE">Initial value of TRADE_DATE.</param>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public static GF_TRANSACTIONS CreateGF_TRANSACTIONS(long a_TRANSACTIONS_TRANSACTION, string aSEC_SEC_SHORT_NAME, string pORTFOLIO_ID, global::System.DateTime tRADE_DATE)
+        public static GF_TRANSACTIONS CreateGF_TRANSACTIONS(decimal gF_ID)
         {
             GF_TRANSACTIONS gF_TRANSACTIONS = new GF_TRANSACTIONS();
-            gF_TRANSACTIONS.A_TRANSACTIONS_TRANSACTION = a_TRANSACTIONS_TRANSACTION;
-            gF_TRANSACTIONS.ASEC_SEC_SHORT_NAME = aSEC_SEC_SHORT_NAME;
-            gF_TRANSACTIONS.PORTFOLIO_ID = pORTFOLIO_ID;
-            gF_TRANSACTIONS.TRADE_DATE = tRADE_DATE;
+            gF_TRANSACTIONS.GF_ID = gF_ID;
             return gF_TRANSACTIONS;
         }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
         /// <summary>
         /// There are no comments for Property A_TRANSACTIONS_TRANSACTION in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public long A_TRANSACTIONS_TRANSACTION
+        public global::System.Nullable<long> A_TRANSACTIONS_TRANSACTION
         {
             get
             {
@@ -15136,8 +15346,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private long _A_TRANSACTIONS_TRANSACTION;
-        partial void OnA_TRANSACTIONS_TRANSACTIONChanging(long value);
+        private global::System.Nullable<long> _A_TRANSACTIONS_TRANSACTION;
+        partial void OnA_TRANSACTIONS_TRANSACTIONChanging(global::System.Nullable<long> value);
         partial void OnA_TRANSACTIONS_TRANSACTIONChanged();
         /// <summary>
         /// There are no comments for Property ASEC_SEC_SHORT_NAME in the schema.
@@ -15521,7 +15731,7 @@ namespace GreenField.Web.DimensionEntitiesService
         /// There are no comments for Property TRADE_DATE in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        public global::System.DateTime TRADE_DATE
+        public global::System.Nullable<global::System.DateTime> TRADE_DATE
         {
             get
             {
@@ -15535,8 +15745,8 @@ namespace GreenField.Web.DimensionEntitiesService
             }
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
-        private global::System.DateTime _TRADE_DATE;
-        partial void OnTRADE_DATEChanging(global::System.DateTime value);
+        private global::System.Nullable<global::System.DateTime> _TRADE_DATE;
+        partial void OnTRADE_DATEChanging(global::System.Nullable<global::System.DateTime> value);
         partial void OnTRADE_DATEChanged();
         /// <summary>
         /// There are no comments for Property TRANSACTION_CODE in the schema.

@@ -42,7 +42,7 @@ namespace GreenField.Web.Helpers
                         ChartExtensionData data = new ChartExtensionData();
                         data.Ticker = pricingItem.TICKER;
                         data.Type = "SECURITY";
-                        data.ToDate = pricingItem.FROMDATE;
+                        data.ToDate = (DateTime)pricingItem.FROMDATE;
                         data.Price = Convert.ToDecimal(pricingItem.DAILY_CLOSING_PRICE);
                         data.SortId = 1;
 
@@ -116,7 +116,7 @@ namespace GreenField.Web.Helpers
                 ChartExtensionData data = new ChartExtensionData();
                 string securityLongName = securityExtensionData.Select(a => a.Ticker).First();
 
-                List<DateTime> transactionDates = dimensionTransactionData.Select(a => a.TRADE_DATE).Distinct().ToList();
+                List<DateTime?> transactionDates = dimensionTransactionData.Select(a => a.TRADE_DATE).Distinct().ToList();
 
                 foreach (DateTime tradeDate in transactionDates)
                 {
@@ -177,7 +177,7 @@ namespace GreenField.Web.Helpers
                     data.Type = "SECTOR";
                     data.SortId = 4;
                 }
-                data.ToDate = item.TO_DATE;
+                data.ToDate = (DateTime)item.TO_DATE;
                 data.OneD = Convert.ToDecimal(item.POR_RC_AVG_WGT_1D);
                 data.WTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_1W);
                 data.MTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_MTD);
