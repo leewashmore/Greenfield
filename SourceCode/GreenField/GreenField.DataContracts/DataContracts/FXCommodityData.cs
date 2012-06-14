@@ -9,7 +9,7 @@ namespace GreenField.DataContracts
     public class FXCommodityData
     {
         [DataMember]
-        public string CommodityID { get; set; }
+        public string CommodityId { get; set; }
 
         [DataMember]
         public decimal? CurrentYearEnd { get; set; }
@@ -47,6 +47,9 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? Year3 { get; set; }
+
+        [DataMember]
+        public string InstrumentId { get; set; }
 
 
     }
