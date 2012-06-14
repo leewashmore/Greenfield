@@ -224,7 +224,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (indexConstituentsData != null)
+                if (indexConstituentsData != null && indexConstituentsData.Count != 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, indexConstituentsData, 1);
                     IndexConstituentsInfo = new ObservableCollection<IndexConstituentsData>(indexConstituentsData);

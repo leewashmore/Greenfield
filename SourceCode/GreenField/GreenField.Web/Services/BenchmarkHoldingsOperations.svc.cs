@@ -1345,7 +1345,7 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<HeatMapData> RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate)
+        public List<HeatMapData> RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period)
         {
             if (fundSelectionData == null || effectiveDate == null)
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
@@ -1359,32 +1359,119 @@ namespace GreenField.Web.Services
                 HeatMapData entry = new HeatMapData();
                 if (data[i].AGG_LVL_1 == null)
                     continue;
-                entry.CountryID = data[i].AGG_LVL_1;
-                entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
-                Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
-                if (diff > Convert.ToDecimal(0.05))
+                switch (period)
                 {
-                    entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
-                }
-                else
-                    if (diff < Convert.ToDecimal(-0.05))
-                    {
-                        entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
-                    }
-                    else
-                        if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
+                    case "YTD":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
+                        Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
+                        CalculateHeatMapDiff(diff, ref entry);
+
+                                    if (data[i].F_POR_ASH_RC_CTN_YTD == null || data[i].F_BM1_ASH_RC_CTN_YTD == null)
+                                    {
+                                        entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                        entry.CountryYTD = Convert.ToDecimal(0);
+                                    }
+                        result.Add(entry);
+                        break;
+                    case "MTD":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_MTD;
+                        Decimal? diff1 = data[i].F_POR_ASH_RC_CTN_MTD - data[i].F_BM1_ASH_RC_CTN_MTD;
+
+                        CalculateHeatMapDiff(diff1,ref entry);
+                               
+                        if (data[i].F_POR_ASH_RC_CTN_MTD == null || data[i].F_BM1_ASH_RC_CTN_MTD == null)
                         {
-                            entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
+                         entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                         entry.CountryYTD = Convert.ToDecimal(0);
                         }
-                        else
-                            if (data[i].F_POR_ASH_RC_CTN_YTD == null || data[i].F_BM1_ASH_RC_CTN_YTD == null)
-                            {
-                                entry.CountryPerformance = PerformanceGrade.NO_RELATION;
-                                entry.CountryYTD = Convert.ToDecimal(0);
-                            }
-                result.Add(entry);
+                        result.Add(entry);
+                        break;
+
+                    case "1D":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1D;
+                        Decimal? diff2 = data[i].F_POR_ASH_RC_CTN_1D - data[i].F_BM1_ASH_RC_CTN_1D;
+
+                        CalculateHeatMapDiff(diff2, ref entry);
+                               
+                                    if (data[i].F_POR_ASH_RC_CTN_1D == null || data[i].F_BM1_ASH_RC_CTN_1D == null)
+                                    {
+                                        entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                        entry.CountryYTD = Convert.ToDecimal(0);
+                                    }
+                        result.Add(entry);
+                        break;
+
+                    case "1W":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1W;
+                        Decimal? diff3 = data[i].F_POR_ASH_RC_CTN_1W - data[i].F_BM1_ASH_RC_CTN_1W;
+
+                        CalculateHeatMapDiff(diff3, ref entry);
+
+                        if (data[i].F_POR_ASH_RC_CTN_1W == null || data[i].F_BM1_ASH_RC_CTN_1W == null)
+                                    {
+                                        entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                        entry.CountryYTD = Convert.ToDecimal(0);
+                                    }
+                        result.Add(entry);
+                        break;
+
+                    case "QTD":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_QTD;
+                        Decimal? diff4 = data[i].F_POR_ASH_RC_CTN_QTD - data[i].F_BM1_ASH_RC_CTN_QTD;
+                        CalculateHeatMapDiff(diff4, ref entry);
+
+                                    if (data[i].F_POR_ASH_RC_CTN_QTD == null || data[i].F_BM1_ASH_RC_CTN_QTD == null)
+                                    {
+                                        entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                        entry.CountryYTD = Convert.ToDecimal(0);
+                                    }
+                        result.Add(entry);
+                        break;
+
+                    case "1Y":
+                        entry.CountryID = data[i].AGG_LVL_1;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1Y;
+                        Decimal? diff5 = data[i].F_POR_ASH_RC_CTN_1Y - data[i].F_BM1_ASH_RC_CTN_1Y;
+                        CalculateHeatMapDiff(diff5, ref entry);
+
+                                    if (data[i].F_POR_ASH_RC_CTN_1Y == null || data[i].F_BM1_ASH_RC_CTN_1Y == null)
+                                    {
+                                        entry.CountryPerformance = PerformanceGrade.NO_RELATION;
+                                        entry.CountryYTD = Convert.ToDecimal(0);
+                                    }
+                        result.Add(entry);
+                        break;
+
+                    default:
+                        HeatMapData entry1 = new HeatMapData();
+                        result.Add(entry1);
+                        break;
+                }
             }
             return result;
+        }
+
+        private void CalculateHeatMapDiff(Decimal? diff,ref HeatMapData entry)
+        {
+            if (diff > Convert.ToDecimal(0.05))
+            {
+                entry.CountryPerformance = PerformanceGrade.OVER_PERFORMING;
+            }
+            else
+                if (diff < Convert.ToDecimal(-0.05))
+                {
+                    entry.CountryPerformance = PerformanceGrade.UNDER_PERFORMING;
+                }
+                else
+                    if (diff >= Convert.ToDecimal(-0.05) && diff <= Convert.ToDecimal(0.05))
+                    {
+                        entry.CountryPerformance = PerformanceGrade.FLAT_PERFORMING;
+                    }
         }
         #endregion
 

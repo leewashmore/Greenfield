@@ -457,7 +457,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// String that contains the selected filter type
         /// </summary>
-        private String _selectedPeriodType;
+        private String _selectedPeriodType = "YTD";
         public String SelectedPeriodType
         {
             get

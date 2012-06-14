@@ -200,6 +200,7 @@
       <xs:sequence>
         <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="fundSelectionData" nillable="true" type="q23:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="period" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
