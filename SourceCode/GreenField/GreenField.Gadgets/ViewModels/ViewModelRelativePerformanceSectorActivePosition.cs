@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
 
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
+            Period = param.DashboardGadgetPayload.PeriodSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null)

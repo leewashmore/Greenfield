@@ -560,10 +560,9 @@ namespace GreenField.Gadgets.Views
                 PdfFormatProvider provider = new PdfFormatProvider();
                 using (Stream output = dialog.OpenFile())
                 {
-                    provider.Export(document, output);
+                    provider.Export(document, output); 
                 }
             }
-
         }
 
         private RadDocument CreateDocument(RadGridView grid)
@@ -592,13 +591,13 @@ namespace GreenField.Gadgets.Views
                 {
                     TableCell cell = new TableCell();
                     cell.Background = Colors.White;
-                    AddCellValue(cell, columns[i].UniqueName);
+                    AddCellValue(cell, columns[i].Header.ToString());
                     cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
                     headerRow.Cells.Add(cell);
                 }
 
                 table.Rows.Add(headerRow);
-            }
+            }         
 
             if (grid.Items.Groups != null)
             {
@@ -606,10 +605,25 @@ namespace GreenField.Gadgets.Views
                 {
                     AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
                 }
-            }
+            }            
             else
             {
                 AddDataRows(table, grid.Items, columns, grid);
+            }
+
+            if (grid.ShowColumnFooters)
+            {
+                TableRow footerRow = new TableRow();
+                for (int i = 0; i < columns.Count(); i++)
+                {
+                    TableCell cell = new TableCell();
+                    cell.Background = Colors.Gray;
+                    string value = ((columns[i].Footer) as TextBlock).Text.ToString();
+                    AddCellValue(cell, value != null ? value.ToString() : string.Empty);
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
+                    footerRow.Cells.Add(cell);
+                }
+                table.Rows.Add(footerRow);
             }
 
             return document;
@@ -630,10 +644,20 @@ namespace GreenField.Gadgets.Views
                 }
 
                 for (int j = 0; j < columns.Count(); j++)
-                {
+                {                    
                     TableCell cell = new TableCell();
+                    string value = null;
+                    if (j == 0)
+                    {
+                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).CountryId.ToString();
+                    }
+                    else if (j == columns.Count - 1)
+                    {
+                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString();
+                    }
 
-                    object value = columns[j].GetValueForItem(items[i]);
+                    else
+                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceCountrySpecificData).Alpha.ToString();
 
                     AddCellValue(cell, value != null ? value.ToString() : string.Empty);
 
