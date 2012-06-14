@@ -55,7 +55,6 @@ namespace GreenField.Gadgets.Views
         public void RetrieveCommodityDataCompletedEvent(RetrieveCommodityDataCompleteEventArgs e)
         {
             _commodityInfo = e.CommodityInfo;
-            //dgCommodity.ItemsSource = (ViewModelCommodityIndex)this.DataContext;
             if (_commodityInfo != null)
             {                
                 dgCommodity.Columns[5].Header = "Price(" + _NextYear.ToString() + ")";
