@@ -890,7 +890,7 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", snapshotPreferenceIdParameter);
         }
-        
+    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>

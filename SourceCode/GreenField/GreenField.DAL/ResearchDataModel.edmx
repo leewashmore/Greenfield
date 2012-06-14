@@ -363,7 +363,7 @@
           <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetCOMMODITY_FORECASTS" ReturnType="Collection(ResearchModel.CommodityResult)" >
-          <Parameter Name="CommodityID" Mode="In" Type="String" />
+            <Parameter Name="CommodityID" Mode="In" Type="String" />
           </FunctionImport>
           <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
             <End Role="tblMarketSnapshotGroupPreference" EntitySet="tblMarketSnapshotGroupPreferences" />
@@ -373,7 +373,7 @@
           <Parameter Name="country" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="COMMODITY_FORECASTS" EntityType="ResearchModel.COMMODITY_FORECASTS" />
-          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">          
+          <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
           <Parameter Name="SnapshotPreferenceId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateMarketSnapshotPreference" ReturnType="Collection(Int32)">
