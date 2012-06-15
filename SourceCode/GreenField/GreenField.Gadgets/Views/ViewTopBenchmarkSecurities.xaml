@@ -42,12 +42,12 @@
                                      UseLayoutRounding="True"
                                      FontSize="7"
                                      FontFamily="Arial"
-                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      AlternateRowBackground="#d8d5d4"
-                                      AlternationCount="2">
+                                     AlternationCount="2">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Security Name" 
                                                     DataMemberBinding="{Binding IssuerName}"  
@@ -63,9 +63,9 @@
                                                     DataMemberBinding="{Binding Weight}" 
                                                     DataFormatString="{}{0:n2}%"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="*" 
-                                                    HeaderTextAlignment="Left"
-                                                    TextAlignment="Left">                                                    
+                                                    Width="Auto" 
+                                                    HeaderTextAlignment="Right"
+                                                    TextAlignment="Right">                                                    
                         <telerik:GridViewDataColumn.AggregateFunctions>
                             <telerik:SumFunction SourceField="Weight" ResultFormatString="{}{0:n2}%"/>
                         </telerik:GridViewDataColumn.AggregateFunctions>
@@ -74,37 +74,37 @@
                                                  DataMemberBinding="{Binding OneDayReturn}"                                                     
                                                  DataFormatString="{}{0:n1}%"                                                     
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
-                                                 Width="*"                                                   
-                                                 HeaderTextAlignment="Left"                                                    
-                                                 TextAlignment="Left"/>
+                                                 Width="Auto"                                                   
+                                                 HeaderTextAlignment="Right"                                                    
+                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="WTD" 
                                                 DataMemberBinding="{Binding WTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                Width="*" 
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                Width="Auto"  
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="MTD" 
                                                 DataMemberBinding="{Binding MTD}"
                                                 DataFormatString="{}{0:n1}%"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                Width="Auto" 
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="QTD" 
                                                 DataMemberBinding="{Binding QTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                Width="Auto"  
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="YTD" 
                                                 DataMemberBinding="{Binding YTD}" 
                                                 DataFormatString="{}{0:n1}%"  
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="*" 
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>                   
+                                                Width="Auto" 
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right"/>                   
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>
