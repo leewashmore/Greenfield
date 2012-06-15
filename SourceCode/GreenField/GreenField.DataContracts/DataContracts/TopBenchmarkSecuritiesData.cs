@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace GreenField.DataContracts
 {
     [DataContract]
-    public class TopBenchmarkSecuritiesData
+    public class TopBenchmarkSecuritiesData : IEquatable<TopBenchmarkSecuritiesData>
     {
         [DataMember]
         public String IssuerName { get; set; }
@@ -30,6 +30,17 @@ namespace GreenField.DataContracts
         [DataMember]
         public Decimal? YTD { get; set; }
 
-      
+
+
+        public bool Equals(TopBenchmarkSecuritiesData other)
+        {
+            return other.IssuerName == this.IssuerName &&
+                other.Weight == this.Weight &&
+                other.OneDayReturn == this.OneDayReturn &&
+                other.MTD == this.MTD &&
+                other.QTD == this.QTD &&
+                other.WTD == this.WTD &&
+                other.YTD == this.YTD;
+        }
     }
 }

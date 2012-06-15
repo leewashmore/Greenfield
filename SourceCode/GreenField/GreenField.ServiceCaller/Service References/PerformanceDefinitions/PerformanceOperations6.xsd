@@ -74,14 +74,18 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="AdjustedDollarPrice" type="xs:decimal" />
       <xs:element minOccurs="0" name="AmountTraded" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CountryReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OneY" type="xs:decimal" />
       <xs:element minOccurs="0" name="Price" type="xs:decimal" />
       <xs:element minOccurs="0" name="PriceReturn" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SectorReturn" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SortId" type="xs:int" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WTD" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
@@ -152,6 +156,7 @@
       <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Entity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntityGroup" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FundWeight" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketValue" nillable="true" type="xs:decimal" />
     </xs:sequence>
@@ -242,11 +247,6 @@
       <xs:element minOccurs="0" name="BenchmarkPerformance" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="EffectiveDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="PortfolioID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PortfolioPerformance" nillable="true" type="xs:decimal" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="PerformanceGraphData" nillable="true" type="tns:PerformanceGraphData" />
-</xs:schema>
       <xs:element minOccurs="0" name="PortfolioPerformance" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>

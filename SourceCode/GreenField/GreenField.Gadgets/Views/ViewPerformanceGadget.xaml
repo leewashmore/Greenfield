@@ -92,7 +92,7 @@
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  telerik:StyleManager.Theme="Metro" Visibility="Visible"
-                                                 RowLoaded="dgPerformanceGadget_RowLoaded">                                
+                                 RowLoaded="dgPerformanceGadget_RowLoaded">                                
                             </telerik:RadGridView>
                         </Border>
                     </telerik:RadBusyIndicator>

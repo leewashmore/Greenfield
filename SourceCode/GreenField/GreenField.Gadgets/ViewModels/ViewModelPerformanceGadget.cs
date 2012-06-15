@@ -414,9 +414,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PlottedSeries.Clear();
-                    PlottedSeries.AddRange(result);
-                    if (result.Count != 0)
-                        //PlottedSecurityName = result[0].IssueName.ToString();
+                    PlottedSeries.AddRange(result);                   
                         if (null != performanceGraphDataLoadedEvent)
                             performanceGraphDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

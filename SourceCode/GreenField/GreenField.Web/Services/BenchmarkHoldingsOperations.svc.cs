@@ -1296,9 +1296,9 @@ namespace GreenField.Web.Services
 
             if (!isServiceUp)
 
-                throw new Exception();
+                throw new Exception();           
 
-            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();           
             if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
                 return result;
           
@@ -1317,6 +1317,7 @@ namespace GreenField.Web.Services
                     result.Add(entry);
                 }
 
+                //result = result.Distinct().Take(10).ToList();
                 return result;
             }
 
