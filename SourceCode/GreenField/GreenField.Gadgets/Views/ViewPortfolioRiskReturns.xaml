@@ -51,14 +51,15 @@
                                                 DataMemberBinding="{Binding PortfolioValue}" 
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                 Width="*"   
-                                                HeaderTextAlignment="Left"                                                    
+                                                HeaderTextAlignment="Right"   
+                                                 DataFormatString="{}{0:n2}"
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn x:Name="dgBenchMarkValue" 
                                                  Header="BenchMark" 
                                                  DataMemberBinding="{Binding BenchmarkValue}" 
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                  Width="*"   
-                                                 HeaderTextAlignment="Left"
+                                                 HeaderTextAlignment="Right"
                                                  DataFormatString="{}{0:n2}"
                                                  TextAlignment="Right"/>
                 </telerik:RadGridView.Columns>

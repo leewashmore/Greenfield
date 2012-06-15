@@ -49,7 +49,8 @@
                     <telerik:GridViewDataColumn Header="1D" 
                                                     DataMemberBinding="{Binding TopRcTwr1D}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    Width="Auto" 
+                                                    Width="Auto"                                                  
+                                                    DataFormatString="{}{0:n2}"
                                                     HeaderTextAlignment="Right"
                                                     TextAlignment="Right">
                     </telerik:GridViewDataColumn>
@@ -57,12 +58,14 @@
                                                  DataMemberBinding="{Binding TopRcTwr1W}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
                                                  Width="Auto"   
-                                                 HeaderTextAlignment="Right"                                                    
+                                                 HeaderTextAlignment="Right"                                                   
+                                                 DataFormatString="{}{0:n2}"
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="MTD"                                                     
                                                  DataMemberBinding="{Binding TopRcTwrMtd}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
-                                                 Width="Auto"   
+                                                 Width="Auto"                                                   
+                                                 DataFormatString="{}{0:n2}"
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="QTD" 

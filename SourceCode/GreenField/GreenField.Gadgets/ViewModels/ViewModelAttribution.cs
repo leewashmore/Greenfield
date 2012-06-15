@@ -69,7 +69,7 @@ namespace GreenField.Gadgets.ViewModels
             _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            if (_effectiveDate != null && _PortfolioSelectionData != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null)
             {
                 _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
             }
@@ -425,6 +425,8 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    AttributionDataInfo = result;
+                    SelectedPeriod = _selectedPeriod;
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     if (null != attributionDataLoadedEvent)
                         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });

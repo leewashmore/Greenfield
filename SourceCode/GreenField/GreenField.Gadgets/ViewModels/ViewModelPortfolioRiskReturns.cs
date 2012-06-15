@@ -77,7 +77,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
             }
 
-            if (_effectiveDate != null && _PortfolioSelectionData != null )
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null )
             {
                 _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
             }
@@ -343,7 +343,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
                     {
                         if (null != portfolioRiskReturnDataLoadedEvent)
                             portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -377,7 +377,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
                     {
                         if (null != portfolioRiskReturnDataLoadedEvent)
                             portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -387,41 +387,6 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        #endregion
-
-        #region Callback Methods
-
-        /// <summary>
-        /// Plots the result in the grid after getting the resulting collection
-        /// </summary>
-        /// <param name="result">Contains the Portfolio Risk Return Data</param>
-        public void RetrievePortfolioRiskReturnDataCallbackMethod(List<PortfolioRiskReturnData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
-                    if (null != portfolioRiskReturnDataLoadedEvent)
-                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
             }
             catch (Exception ex)
@@ -446,15 +411,30 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedPeriodType != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
-                        if (null != portfolioRiskReturnDataLoadedEvent)
-                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    SelectedPeriod = selectedPeriodType;
+                    _selectedPeriod = selectedPeriodType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    {
+                        if (PortfolioRiskReturnInfo.Count == 0)
+                        {
+                            if (null != portfolioRiskReturnDataLoadedEvent)
+                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+
+                        }
+                        else
+                        {
+                            if (null != portfolioRiskReturnDataLoadedEvent)
+                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            SelectedPeriod = selectedPeriodType;
+                        
+                        }
+                    }
 
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+
                 }
             }
             catch (Exception ex)
@@ -465,6 +445,46 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
+
+        #endregion
+
+        #region Callback Methods
+
+        /// <summary>
+        /// Plots the result in the grid after getting the resulting collection
+        /// </summary>
+        /// <param name="result">Contains the Portfolio Risk Return Data</param>
+        public void RetrievePortfolioRiskReturnDataCallbackMethod(List<PortfolioRiskReturnData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null && result.Count > 0)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
+                    SelectedPeriod = _selectedPeriod;
+                    if (null != portfolioRiskReturnDataLoadedEvent)
+                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+                else
+                {
+                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
+                    SelectedPeriod = _selectedPeriod;
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+       
 
         #endregion 
       
