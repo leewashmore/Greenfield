@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
- 
+using System.Linq; 
 using System.Runtime.Serialization;
 
 namespace GreenField.DataContracts
@@ -121,43 +120,6 @@ namespace GreenField.DataContracts
        public Decimal? FBm1AshAssetAlloc1y { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshSecSelec1y { get; set; }      
-
-       //[DataMember]
-       //public Decimal? PorRcAvgWgt5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? Bm1RcAvgWgt5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? FPorAshRcCtn5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshRcCtn5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshAssetAlloc5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshSecSelec5y { get; set; }
-
-       //[DataMember]
-       //public Decimal? PorRcAvgWgtSi { get; set; }
-
-       //[DataMember]
-       //public Decimal? Bm1RcAvgWgtSi { get; set; }
-
-       //[DataMember]
-       //public Decimal? FPorAshRcCtnSi { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshRcCtnSi { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshAssetAllocSi { get; set; }
-
-       //[DataMember]
-       //public Decimal? FBm1AshSecSelecSi { get; set; }
-      
+       public Decimal? FBm1AshSecSelec1y { get; set; }            
     }
 }

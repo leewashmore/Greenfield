@@ -25,7 +25,8 @@ namespace GreenField.App.Helpers
         REGION_SELECTOR,
         FILTER_SELECTOR,
         MKT_CAP_SELECTOR,
-        COMMODITY_SELECTOR
+        COMMODITY_SELECTOR,
+        REGIONFX_SELECTOR
     }
 
     public static class ToolBoxItemVisibility
@@ -43,6 +44,7 @@ namespace GreenField.App.Helpers
         public static Visibility FILTER_VALUE_SELECTOR_VISIBILITY = Visibility.Collapsed;
         public static Visibility MKT_CAP_VISIBILITY = Visibility.Collapsed;
         public static Visibility COMMODITY_SELECTOR_VISIBILTY = Visibility.Collapsed;
+        public static Visibility REGIONFX_SELECTOR_VISIBILITY = Visibility.Collapsed;
     }
 
     public static class ToolBoxSelecter
@@ -62,6 +64,7 @@ namespace GreenField.App.Helpers
                 Visibility filterValueSelectorVisibility = Visibility.Collapsed,
                 Visibility mktCapSelectorVisibility = Visibility.Collapsed,
                 Visibility commoditySelectorVisibility = Visibility.Collapsed,
+                Visibility regionFXSelectorVisibility = Visibility.Collapsed,
                 bool allVisible = false
             )
         {
@@ -78,6 +81,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : filterValueSelectorVisibility;
             ToolBoxItemVisibility.MKT_CAP_VISIBILITY = allVisible ? Visibility.Visible : mktCapSelectorVisibility;
             ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY = allVisible ? Visibility.Visible : commoditySelectorVisibility;
+            ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : regionFXSelectorVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -94,7 +98,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility();
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_EM_SUMMARY:
-                    UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(regionFXSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_MACROECONOMIC_COUNTRY_SUMMARY:
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);

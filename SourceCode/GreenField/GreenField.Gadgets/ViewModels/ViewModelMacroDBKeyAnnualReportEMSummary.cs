@@ -42,6 +42,8 @@ namespace GreenField.Gadgets.ViewModels
 
         private String _countryCode;
 
+        private List<String> _countryNames;
+
         #endregion
         #region Constructor
         /// <summary>
@@ -53,16 +55,18 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
+            _countryNames = param.DashboardGadgetPayload.RegionFXData;
             _countryCode = param.DashboardGadgetPayload.CountrySelectionData;
 
-            if (_countryCode != null)
+            if ( _countryNames!=null)
             {
-                _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode,_countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
             }
 
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<CountrySelectionSetEvent>().Subscribe(HandleCountryReferenceSetEvent);
+                //_eventAggregator.GetEvent<CountrySelectionSetEvent>().Subscribe(HandleCountryReferenceSetEvent);
+                _eventAggregator.GetEvent<RegionFXEvent>().Subscribe(HandleRegionCountryReferenceSetEvent);
             }
             
         }
@@ -103,7 +107,7 @@ namespace GreenField.Gadgets.ViewModels
                 MacroDatabaseKeyAnnualReportData m = new MacroDatabaseKeyAnnualReportData();
                 FiveYearDataModels entry = new FiveYearDataModels();
                 int valueOfCurrentYear = DateTime.Now.Year;
-                entry.CategoryName = macroCountryData[i].CATEGORY_NAME;
+                entry.CategoryName = macroCountryData[i].COUNTRY_NAME;
                 entry.CountryName = macroCountryData[i].COUNTRY_NAME;
                 entry.Description = macroCountryData[i].DESCRIPTION;
                 entry.DisplayType = macroCountryData[i].DISPLAY_TYPE;
@@ -233,23 +237,55 @@ namespace GreenField.Gadgets.ViewModels
         public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;
 
 
-        public void HandleCountryReferenceSetEvent(String CountryData)
+        //public void HandleCountryReferenceSetEvent(String CountryData)
+        //{
+
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(_logger, methodNamespace);
+        //    try
+        //    {
+        //        if (CountryData != null)
+        //        {
+        //            Logging.LogMethodParameter(_logger, methodNamespace, CountryData, 1);
+        //            _countryCode = CountryData;
+
+        //            if (_countryCode != null && _countryNames!=null)
+        //            {
+        //                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+        //                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+        //                _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode,_countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(_logger, ex);
+        //    }
+        //    Logging.LogEndMethod(_logger, methodNamespace);
+        //}
+
+        public void HandleRegionCountryReferenceSetEvent(List<String> countryValues)
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (CountryData != null)
+                if (countryValues != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, CountryData, 1);
-                    _countryCode = CountryData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, countryValues, 1);
+                    _countryNames = countryValues;
 
-                    if (_countryCode != null)
+                    if (_countryNames != null)
                     {
                         if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
                             macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
                     }
                 }
                 else

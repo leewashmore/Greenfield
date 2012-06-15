@@ -195,6 +195,7 @@ namespace GreenField.Gadgets.ViewModels
                 
                 else
                 {
+                    HeatMapInfo = result;
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     if (null != heatMapDataLoadedEvent)
                         heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });

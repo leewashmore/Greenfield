@@ -64,6 +64,8 @@ namespace GreenField.Common.Helper
         public string CommoditySelectedVal { get; set; }
 
         public String HeatMapCountryData { get; set; }
+
+        public List<String> RegionFXData { get; set; } 
         
     }
 }

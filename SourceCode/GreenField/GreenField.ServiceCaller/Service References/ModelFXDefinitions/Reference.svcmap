@@ -23,12 +23,14 @@
     <MetadataSource Address="http://localhost:59430/Services/ModelFXOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="ModelFXOperations.xsd" MetadataType="Schema" ID="2379d8f9-b8e7-402b-80fd-2db6cccd7761" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="ModelFXOperations1.xsd" MetadataType="Schema" ID="86875a7c-2c1c-4579-bd2c-5d21825760b8" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" />
     <MetadataFile FileName="ModelFXOperations2.xsd" MetadataType="Schema" ID="7736419d-121c-4309-a9c4-9316f4d83406" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd3" />
     <MetadataFile FileName="ModelFXOperations.disco" MetadataType="Disco" ID="54e9b967-a753-4eda-9833-327d61189f39" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?disco" />
     <MetadataFile FileName="ModelFXOperations3.xsd" MetadataType="Schema" ID="72bd0ad7-68c1-4520-a18a-2171904ba733" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="ModelFXOperations.wsdl" MetadataType="Wsdl" ID="8600af2b-417a-4c0e-a44b-799f946939fd" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?wsdl" />
-    <MetadataFile FileName="ModelFXOperations.xsd" MetadataType="Schema" ID="2379d8f9-b8e7-402b-80fd-2db6cccd7761" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="ModelFXOperations5.xsd" MetadataType="Schema" ID="3c790eca-5554-4e9d-a4de-ca4a35a3436b" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ModelFXOperations4.xsd" MetadataType="Schema" ID="d06291d1-c4f2-413b-9a31-2f9306567194" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -9,6 +9,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
 
 
 namespace GreenField.ServiceCaller
@@ -157,9 +158,11 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCountrySelectionData(Action<List<CountrySelectionData>> callback);
 
+        void RetrieveRegionSelectionData(Action<List<RegionSelectionData>> callback);
+
         void RetrieveMacroDatabaseKeyAnnualReportData(String countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
 
-        void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
+        void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, List<String> countryValues, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
         
         void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback);
 

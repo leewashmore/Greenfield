@@ -13,6 +13,7 @@ using System.ServiceModel;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.ServiceCaller
 {
@@ -1974,10 +1975,10 @@ namespace GreenField.ServiceCaller
 
         }
 
-        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, List<String> countryValues, Action<List<MacroDatabaseKeyAnnualReportData>> callback)
         {
             ModelFXOperationsClient client = new ModelFXOperationsClient();
-            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName);
+            client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryName, countryValues);
             client.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -2018,6 +2019,43 @@ namespace GreenField.ServiceCaller
             ModelFXOperationsClient client = new ModelFXOperationsClient();
             client.RetrieveCommoditySelectionDataAsync();
             client.RetrieveCommoditySelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        public void RetrieveRegionSelectionData(Action<List<RegionSelectionData>> callback)
+        {
+            ModelFXOperationsClient client = new ModelFXOperationsClient();
+            client.RetrieveRegionSelectionDataAsync();
+            client.RetrieveRegionSelectionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
@@ -2123,5 +2161,6 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
+       
     }
 }

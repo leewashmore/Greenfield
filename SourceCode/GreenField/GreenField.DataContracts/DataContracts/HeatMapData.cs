@@ -10,13 +10,13 @@ namespace GreenField.DataContracts
     public class HeatMapData
     {
         [DataMember]
-        public String CountryID;
+        public String CountryID { get; set; }
 
         [DataMember]
-        public PerformanceGrade CountryPerformance;
+        public PerformanceGrade CountryPerformance { get; set; }
 
         [DataMember]
-        public Decimal? CountryYTD;
+        public Decimal? CountryYTD { get; set; }
         
     }
 }

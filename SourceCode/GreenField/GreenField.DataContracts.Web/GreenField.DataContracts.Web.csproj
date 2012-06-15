@@ -125,6 +125,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\RegionBreakdownData.cs">
       <Link>DataContracts\RegionBreakdownData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\RegionSelectionData.cs">
+      <Link>DataContracts\RegionSelectionData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\RelativePerformanceActivePositionData.cs">
       <Link>DataContracts\RelativePerformanceActivePositionData.cs</Link>
     </Compile>

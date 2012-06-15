@@ -63,6 +63,8 @@ namespace GreenField.Common
 
     public class HeatMapClickEvent : CompositePresentationEvent<String> { }
 
+    public class RegionFXEvent : CompositePresentationEvent<List<String>> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }

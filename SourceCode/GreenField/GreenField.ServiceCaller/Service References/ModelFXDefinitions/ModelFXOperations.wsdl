@@ -6,6 +6,8 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportData_InputMessage">
@@ -26,6 +28,15 @@
   <wsdl:message name="ModelFXOperations_RetrieveCountrySelectionData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveRegionSelectionData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRegionSelectionData" />
+  </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveRegionSelectionData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRegionSelectionDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModelFXOperations_RetrieveRegionSelectionData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMacroDatabaseKeyAnnualReportDataEMSummary" />
   </wsdl:message>
@@ -33,7 +44,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryResponse" />
   </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveCommodityData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveCommodityData" />
@@ -42,7 +53,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveCommodityDataResponse" />
   </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveCommodityData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveCommoditySelectionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveCommoditySelectionData" />
@@ -51,7 +62,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveCommoditySelectionDataResponse" />
   </wsdl:message>
   <wsdl:message name="ModelFXOperations_RetrieveCommoditySelectionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="ModelFXOperations">
     <wsdl:operation name="RetrieveMacroDatabaseKeyAnnualReportData">
@@ -63,6 +74,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCountrySelectionData" message="tns:ModelFXOperations_RetrieveCountrySelectionData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCountrySelectionDataResponse" message="tns:ModelFXOperations_RetrieveCountrySelectionData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveCountrySelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:ModelFXOperations_RetrieveCountrySelectionData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRegionSelectionData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionData" message="tns:ModelFXOperations_RetrieveRegionSelectionData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionDataResponse" message="tns:ModelFXOperations_RetrieveRegionSelectionData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:ModelFXOperations_RetrieveRegionSelectionData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummary">
       <wsdl:input wsaw:Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSummary" message="tns:ModelFXOperations_RetrieveMacroDatabaseKeyAnnualReportDataEMSummary_InputMessage" />
@@ -96,6 +112,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveCountrySelectionData">
       <soap:operation soapAction="http://tempuri.org/ModelFXOperations/RetrieveCountrySelectionData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRegionSelectionData">
+      <soap:operation soapAction="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

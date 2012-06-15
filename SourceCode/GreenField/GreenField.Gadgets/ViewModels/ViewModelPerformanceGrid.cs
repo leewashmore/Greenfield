@@ -244,6 +244,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    PerformanceInfo = result;   
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

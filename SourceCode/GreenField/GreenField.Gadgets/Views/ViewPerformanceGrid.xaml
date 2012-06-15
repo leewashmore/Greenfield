@@ -59,6 +59,12 @@
                                                  Width="Auto"   
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
+                    <telerik:GridViewDataColumn Header="MTD"                                                     
+                                                 DataMemberBinding="{Binding TopRcTwrMtd}"          
+                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                 Width="Auto"   
+                                                 HeaderTextAlignment="Right"                                                    
+                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="QTD" 
                                                 DataMemberBinding="{Binding TopRcTwrQtd}"                                                
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 

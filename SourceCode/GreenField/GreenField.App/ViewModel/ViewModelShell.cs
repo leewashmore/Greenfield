@@ -25,6 +25,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.App.ViewModel
 {
@@ -478,6 +479,135 @@ namespace GreenField.App.ViewModel
         }
         #endregion
 
+        #region Region Selector
+        private List<RegionSelectionData> _regionTypeInfo;
+        public List<RegionSelectionData> RegionTypeInfo
+        {
+            get
+            {
+
+                return _regionTypeInfo;
+
+            }
+            set
+            {
+                _regionTypeInfo = value;
+                RegionFXNames = value.OrderBy(t => t.Region).Select(t => t.Region).Distinct().ToList();
+                //CountryName = value.OrderBy(t=>t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                RaisePropertyChanged(() => this.RegionTypeInfo);
+            }
+        }
+
+        private List<String> _regionFXNames;
+        public List<String> RegionFXNames
+        {
+            get
+            {
+                return _regionFXNames;
+
+            }
+            set
+            {
+                _regionFXNames = value;
+                RaisePropertyChanged(() => this.RegionFXNames);
+             
+
+            }
+        }
+
+        private List<String> _regionCountryNames;
+        public List<String> RegionCountryNames
+        {
+            get
+            {
+                return _regionCountryNames;
+
+            }
+            set
+            {
+                _regionCountryNames = value;
+                RaisePropertyChanged(() => this.RegionCountryNames);
+                _eventAggregator.GetEvent<RegionFXEvent>().Publish(value);
+
+            }
+        }
+        private List<String> regionFXCountryNames = new List<String>();
+        private String _selectedRegionFX;
+        public String SelectedRegionFX
+        {
+            get
+            {
+                return _selectedRegionFX;
+
+            }
+            set
+            {
+                _selectedRegionFX = value;
+                RaisePropertyChanged(() => this.SelectedRegionFX);
+                if (value != null)
+                {
+                    for (int i = 0; i < RegionTypeInfo.Count; i++)
+                    {
+                        if (RegionTypeInfo[i].Region == value)
+                        {
+                            String name = RegionTypeInfo[i].Country;
+                            regionFXCountryNames.Add(name);
+                        }
+                    }
+                    RegionCountryNames = regionFXCountryNames;
+
+                }
+
+            }
+        }
+
+
+
+        /// <summary>
+        /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
+        /// </summary>
+        //private string _regionSearchText;
+        //public string RegionSearchText
+        //{
+        //    get { return _regionSearchText; }
+        //    set
+        //    {
+        //        if (value != null)
+        //        {
+        //            _regionSearchText = value;
+        //            RaisePropertyChanged(() => this.RegionSearchText);
+        //            if (value != String.Empty && CountryTypeInfo != null)
+        //                CountryName = CountryTypeInfo
+        //                            .OrderBy(t => t.CountryName)
+        //                            .Where(record => record.CountryName.ToLower().Contains(value.ToLower()))
+        //                            .Select(record => record.CountryName).Distinct().ToList();
+        //            else
+        //                CountryName = CountryTypeInfo.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+        //        }
+        //    }
+        //}
+
+
+
+
+        /// <summary>
+        /// Stores visibility property of the country selector
+        /// </summary>
+        private Visibility _regionFXSelectorVisibility = Visibility.Collapsed;
+        public Visibility RegionFXSelectorVisibility
+        {
+            get { return _regionFXSelectorVisibility; }
+            set
+            {
+                _regionFXSelectorVisibility = value;
+                RaisePropertyChanged(() => this.RegionFXSelectorVisibility);
+                if (value == Visibility.Visible && RegionTypeInfo == null)
+                    _dbInteractivity.RetrieveRegionSelectionData(RetrieveRegionSelectionCallbackMethod);
+            }
+        }
+
+        #endregion
+        
         #region Country Selector
         private List<CountrySelectionData> _countryTypeInfo;
         public List<CountrySelectionData> CountryTypeInfo
@@ -491,7 +621,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.OrderBy(t=>t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }
@@ -3102,6 +3232,58 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    CountryTypeInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void RetrieveRegionSelectionCallbackMethod(List<RegionSelectionData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    RegionTypeInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
         #endregion
 
         #region Helper Methods
@@ -3153,6 +3335,7 @@ namespace GreenField.App.ViewModel
             FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
+            RegionFXSelectorVisibility = ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY;
 
         }
 
@@ -3197,31 +3380,7 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
-        private void RetrieveCountrySelectionCallbackMethod(List<CountrySelectionData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
-                    CountryTypeInfo = result;
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
+      
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

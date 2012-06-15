@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:element name="RetrieveMacroDatabaseKeyAnnualReportData">
     <xs:complexType>
       <xs:sequence>
@@ -27,17 +29,30 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveRegionSelectionData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRegionSelectionDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveRegionSelectionDataResult" nillable="true" type="q3:ArrayOfRegionSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummary">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="countryNameVal" nillable="true" type="xs:string" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="countryValues" nillable="true" type="q4:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryResult" nillable="true" type="q3:ArrayOfMacroDatabaseKeyAnnualReportData" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryResult" nillable="true" type="q5:ArrayOfMacroDatabaseKeyAnnualReportData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -51,7 +66,7 @@
   <xs:element name="RetrieveCommodityDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCommodityDataResult" nillable="true" type="q4:ArrayOfFXCommodityData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCommodityDataResult" nillable="true" type="q6:ArrayOfFXCommodityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -63,7 +78,7 @@
   <xs:element name="RetrieveCommoditySelectionDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCommoditySelectionDataResult" nillable="true" type="q5:ArrayOfFXCommodityData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCommoditySelectionDataResult" nillable="true" type="q7:ArrayOfFXCommodityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

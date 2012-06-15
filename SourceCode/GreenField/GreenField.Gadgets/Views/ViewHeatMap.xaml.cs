@@ -202,23 +202,6 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        //private void RadMap1_MapMouseClick(object sender, MapMouseRoutedEventArgs eventArgs)
-        //{
-        //    MapShape shape = sender as MapShape;
-        //    SelectorPayload.HeatMapCountryData = "Mexico";
-        //    //MapShape shape;
-        //    //var element =  this.informationLayer.ItemContainerGenerator.ContainerFromItem(shape) as Shape;
-        //   //var element = this.informationLayer.ItemContainerGenerator.ContainerFromItem(mapShape) as FrameworkElement; 
-        //    //var shape1 = element.F<Shape>(); 
-        //   //his.informationLayer.ma
-        //    Location loc = eventArgs.Location;
-        //    object a = sender;
-        // //this.informationLayer.Items.lo
-        //    FrameworkElement element = sender as FrameworkElement;
-        //    //element.Tag
-        //    _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
-        //}
-
         void shape_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             MapShape shape = sender as MapShape;

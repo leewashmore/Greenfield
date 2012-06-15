@@ -16,6 +16,7 @@ using GreenField.DAL;
 using System.Collections;
 using System.Data.Common;
 using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -68,55 +69,7 @@ namespace GreenField.Web.Services
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
                 result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveCTYSUMMARYDataReportPerCountry @country={0}", countryNameVal).ToList();
-                //foreach (var i in myList)
-                //{
-                //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
-                //    entry.CATEGORY_NAME = i.CATEGORY_NAME;
-                //    entry.CountryName = i.CountryName;
-                //    entry.Description = i.Description;
-                //    entry.DisplayType = i.DisplayType;
-                //    entry.FiveYEAR_Avg = i.FiveYEAR_Avg;
-                //    entry.YEAR_1987 = i.YEAR_1987;
-                //    entry.YEAR_1988 = i.YEAR_1988;
-                //    entry.YEAR_1989 = i.YEAR_1989;
-                //    entry.YEAR_1990 = i.YEAR_1990;
-                //    entry.YEAR_1991 = i.YEAR_1991;
-                //    entry.YEAR_1992 = i.YEAR_1992;
-                //    entry.YEAR_1993 = i.YEAR_1993;
-                //    entry.YEAR_1994 = i.YEAR_1994;
-                //    entry.YEAR_1995 = i.YEAR_1995;
-                //    entry.YEAR_1996 = i.YEAR_1996;
-                //    entry.YEAR_1997 = i.YEAR_1997;
-                //    entry.YEAR_1998 = i.YEAR_1998;
-                //    entry.YEAR_1999 = i.YEAR_1999;
-                //    entry.YEAR_2000 = i.YEAR_2000;
-                //    entry.YEAR_2001 = i.YEAR_2001;
-                //    entry.YEAR_2002 = i.YEAR_2002;
-                //    entry.YEAR_2003 = i.YEAR_2003;
-                //    entry.YEAR_2004 = i.YEAR_2004;
-                //    entry.YEAR_2005 = i.YEAR_2005;
-                //    entry.YEAR_2006 = i.YEAR_2006;
-                //    entry.YEAR_2007 = i.YEAR_2007;
-                //    entry.YEAR_2008 = i.YEAR_2008;
-                //    entry.YEAR_2009 = i.YEAR_2009;
-                //    entry.YEAR_2010 = i.YEAR_2010;
-                //    entry.YEAR_2011 = i.YEAR_2011;
-                //    entry.YEAR_2012 = i.YEAR_2012;
-                //    entry.YEAR_2013 = i.YEAR_2013;
-                //    entry.YEAR_2014 = i.YEAR_2014;
-                //    entry.YEAR_2015 = i.YEAR_2015;
-                //    entry.YEAR_2016 = i.YEAR_2016;
-                //    entry.YEAR_2017 = i.YEAR_2017;
-                //    entry.YEAR_2018 = i.YEAR_2018;
-                //    entry.YEAR_2019 = i.YEAR_2019;
-                //    entry.YEAR_2020 = i.YEAR_2020;
-                //    entry.YEAR_2021 = i.YEAR_2021;
-                //    entry.YEAR_2022 = i.YEAR_2022;
-                //    entry.YEAR_2023 = i.YEAR_2023;
-                //    entry.YEAR_2024 = i.YEAR_2024;
-                //    entry.YEAR_2025 = i.YEAR_2025;                  
-                //    result.Add(entry);
-                //}
+                
                 return result;
             }
             catch (Exception ex)
@@ -148,7 +101,26 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MacroDatabaseKeyAnnualReportData> RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryNameVal)
+        public List<RegionSelectionData> RetrieveRegionSelectionData()
+        {
+            List<RegionSelectionData> result = new List<RegionSelectionData>();
+            ResearchEntities research = new ResearchEntities();
+            List<Country_Master> countryData = new List<Country_Master>();
+            countryData = research.Country_Master.ToList();
+            for (int i = 0; i < countryData.Count; i++)
+            {
+                RegionSelectionData entry = new RegionSelectionData();
+                entry.Region = countryData[i].ASHEMM_PROPRIETARY_REGION_NAME;
+                entry.Country = countryData[i].COUNTRY_CODE;
+                result.Add(entry);
+            }
+            return result;
+        
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MacroDatabaseKeyAnnualReportData> RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryNameVal,List<String> countryValues)
         {
             try
             {
@@ -158,64 +130,27 @@ namespace GreenField.Web.Services
                 //if (!isServiceUp)
                 //    throw new Exception();
 
-                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();              
+                List<MacroDatabaseKeyAnnualReportData> result = new List<MacroDatabaseKeyAnnualReportData>();
+                List<MacroDatabaseKeyAnnualReportData> finalResult = new List<MacroDatabaseKeyAnnualReportData>();
                 //MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
                 DimensionEntitiesService.Entities entity = DimensionEntity;              
                 ResearchEntities research = new ResearchEntities();
                 //IList macroDatalist =  research.RetrieveCTYSUMMARYDataReport("AR").ToList();
-                result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", countryNameVal).ToList();
-                if (result.Count == 0 || result == null)
-                    return result;
-                //foreach (var i in myList)
-                //{
-                //    MacroDatabaseKeyAnnualReportData entry = new MacroDatabaseKeyAnnualReportData();
-                //    entry.CATEGORY_NAME = i.CATEGORY_NAME;
-                //    entry.CountryName = i.CountryName;
-                //    entry.Description = i.Description;
-                //    entry.DisplayType = i.DisplayType;
-                //    entry.FiveYEAR_Avg = i.FiveYEAR_Avg;
-                //    entry.YEAR_1987 = i.YEAR_1987;
-                //    entry.YEAR_1988 = i.YEAR_1988;
-                //    entry.YEAR_1989 = i.YEAR_1989;
-                //    entry.YEAR_1990 = i.YEAR_1990;
-                //    entry.YEAR_1991 = i.YEAR_1991;
-                //    entry.YEAR_1992 = i.YEAR_1992;
-                //    entry.YEAR_1993 = i.YEAR_1993;
-                //    entry.YEAR_1994 = i.YEAR_1994;
-                //    entry.YEAR_1995 = i.YEAR_1995;
-                //    entry.YEAR_1996 = i.YEAR_1996;
-                //    entry.YEAR_1997 = i.YEAR_1997;
-                //    entry.YEAR_1998 = i.YEAR_1998;
-                //    entry.YEAR_1999 = i.YEAR_1999;
-                //    entry.YEAR_2000 = i.YEAR_2000;
-                //    entry.YEAR_2001 = i.YEAR_2001;
-                //    entry.YEAR_2002 = i.YEAR_2002;
-                //    entry.YEAR_2003 = i.YEAR_2003;
-                //    entry.YEAR_2004 = i.YEAR_2004;
-                //    entry.YEAR_2005 = i.YEAR_2005;
-                //    entry.YEAR_2006 = i.YEAR_2006;
-                //    entry.YEAR_2007 = i.YEAR_2007;
-                //    entry.YEAR_2008 = i.YEAR_2008;
-                //    entry.YEAR_2009 = i.YEAR_2009;
-                //    entry.YEAR_2010 = i.YEAR_2010;
-                //    entry.YEAR_2011 = i.YEAR_2011;
-                //    entry.YEAR_2012 = i.YEAR_2012;
-                //    entry.YEAR_2013 = i.YEAR_2013;
-                //    entry.YEAR_2014 = i.YEAR_2014;
-                //    entry.YEAR_2015 = i.YEAR_2015;
-                //    entry.YEAR_2016 = i.YEAR_2016;
-                //    entry.YEAR_2017 = i.YEAR_2017;
-                //    entry.YEAR_2018 = i.YEAR_2018;
-                //    entry.YEAR_2019 = i.YEAR_2019;
-                //    entry.YEAR_2020 = i.YEAR_2020;
-                //    entry.YEAR_2021 = i.YEAR_2021;
-                //    entry.YEAR_2022 = i.YEAR_2022;
-                //    entry.YEAR_2023 = i.YEAR_2023;
-                //    entry.YEAR_2024 = i.YEAR_2024;
-                //    entry.YEAR_2025 = i.YEAR_2025;                  
-                //    result.Add(entry);
-                //}
-                return result;
+                foreach (String c in countryValues)
+                {
+                    result = research.ExecuteStoreQuery<MacroDatabaseKeyAnnualReportData>("exec RetrieveEMSummaryDataReportPerCountry @country={0}", c).ToList();
+                    if (result != null && result.Count != 0)
+                    {
+                        foreach (MacroDatabaseKeyAnnualReportData r in result)
+                        {
+                            finalResult.Add(r);
+                        }
+                    }
+                }
+                if (finalResult.Count == 0 || finalResult == null)
+                    return finalResult;
+
+                return finalResult;
             }
             catch (Exception ex)
             {
