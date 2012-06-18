@@ -49,7 +49,7 @@ namespace GreenField.ServiceCaller
         /// <param name="fundSelectionData">Selected Portfolio</param>
         /// <param name="effectiveDate">selected Date</param>
         /// <param name="callback">List of AssetAllocationData</param>
-        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, Action<List<AssetAllocationData>> callback);
+        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,bool lookThru, Action<List<AssetAllocationData>> callback);
 
         void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<SectorBreakdownData>> callback);
 

@@ -119,7 +119,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAssetAllocationData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveAssetAllocationDataRespons" +
             "e")]
-        System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.AssetAllocationData> EndRetrieveAssetAllocationData(System.IAsyncResult result);
         
@@ -1082,8 +1082,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, lookThruEnabled, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1094,7 +1094,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         private System.IAsyncResult OnBeginRetrieveAssetAllocationData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, callback, asyncState);
+            bool lookThruEnabled = ((bool)(inValues[2]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveAssetAllocationData(portfolioSelectionData, effectiveDate, lookThruEnabled, callback, asyncState);
         }
         
         private object[] OnEndRetrieveAssetAllocationData(System.IAsyncResult result) {
@@ -1110,11 +1111,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveAssetAllocationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate) {
-            this.RetrieveAssetAllocationDataAsync(portfolioSelectionData, effectiveDate, null);
+        public void RetrieveAssetAllocationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool lookThruEnabled) {
+            this.RetrieveAssetAllocationDataAsync(portfolioSelectionData, effectiveDate, lookThruEnabled, null);
         }
         
-        public void RetrieveAssetAllocationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, object userState) {
+        public void RetrieveAssetAllocationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool lookThruEnabled, object userState) {
             if ((this.onBeginRetrieveAssetAllocationDataDelegate == null)) {
                 this.onBeginRetrieveAssetAllocationDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveAssetAllocationData);
             }
@@ -1126,7 +1127,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveAssetAllocationDataDelegate, new object[] {
                         portfolioSelectionData,
-                        effectiveDate}, this.onEndRetrieveAssetAllocationDataDelegate, this.onRetrieveAssetAllocationDataCompletedDelegate, userState);
+                        effectiveDate,
+                        lookThruEnabled}, this.onEndRetrieveAssetAllocationDataDelegate, this.onRetrieveAssetAllocationDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1628,10 +1630,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRetrieveAssetAllocationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
+                _args[2] = lookThruEnabled;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveAssetAllocationData", _args, callback, asyncState);
                 return _result;
             }

@@ -54,6 +54,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
+        /// <summary>
+        /// Filter for checking LookThru
+        /// </summary>
+        private bool _enableLookThru = false;
+
         #endregion
 
         #region Constructor
@@ -67,20 +72,21 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-
+            _enableLookThru = param.DashboardGadgetPayload.IsLookThruEnabled;
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
 
             if ((_portfolioSelectionData != null) && (_effectiveDate != null))
             {
-                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
+                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSet);
             }
         }
 
@@ -118,9 +124,9 @@ namespace GreenField.Gadgets.ViewModels
         private bool _busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
-            get 
+            get
             {
-                return _busyIndicatorStatus; 
+                return _busyIndicatorStatus;
             }
             set
             {
@@ -128,7 +134,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
-        
+
 
         #endregion
         #endregion
@@ -161,7 +167,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -194,13 +200,37 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        public void HandleLookThruReferenceSet(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+
+                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                _enableLookThru = enableLookThru;
+                if (_effectiveDate != null && _portfolioSelectionData != null)
+                {
+                    BusyIndicatorStatus = true;
+                    _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
+                }
+
             }
             catch (Exception ex)
             {

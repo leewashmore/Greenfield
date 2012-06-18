@@ -670,7 +670,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">The Selected Date</param>
         /// <returns>List of AssetAllocationData</returns>
         [OperationContract]
-        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled)
         {
             try
             {
@@ -686,28 +686,63 @@ namespace GreenField.Web.Services
                 if (entity == null)
                     return result;
 
-                List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
-                    Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData;
+                List<GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData;
 
-                if (dimensionPortfolioHoldingsData.Count == 0)
-                    return result;
 
-                //Retrieve the Id of benchmark associated with the Portfolio
-                List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+                if (lookThruEnabled)
+                {
+                    #region LookThruEnabled
 
-                //If the DataBase doesn't return a single Benchmark for a Portfolio
-                if (benchmarkId.Count != 1)
-                    throw new InvalidOperationException();
+                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
+                                            Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
 
-                List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                    Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && ((a.PORTFOLIO_DATE) == effectiveDate.Date)).ToList();
-                result = AssetAllocationCalculations.CalculateAssetAllocationValues(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData, portfolioSelectionData);
+                    if (dimensionPortfolioHoldingsData.Count == 0)
+                        return result;
+
+                    //Retrieve the Id of benchmark associated with the Portfolio
+                    List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                    //If the DataBase doesn't return a single Benchmark for a Portfolio
+                    if (benchmarkId.Count != 1)
+                        throw new InvalidOperationException();
+
+                    List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && ((a.PORTFOLIO_DATE) == effectiveDate.Date)).ToList();
+                    result = AssetAllocationCalculations.CalculateAssetAllocationValues(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData, portfolioSelectionData);
+
+                    #endregion
+                }
+                else
+                {
+                    #region LookThruDisabled
+
+                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.
+                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                    if (dimensionPortfolioLTHoldingsData.Count == 0)
+                        return result;
+
+                    //Retrieve the Id of benchmark associated with the Portfolio
+                    List<string> benchmarkId = dimensionPortfolioLTHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
+
+                    //If the DataBase doesn't return a single Benchmark for a Portfolio
+                    if (benchmarkId.Count != 1)
+                        throw new InvalidOperationException();
+
+                    List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && ((a.PORTFOLIO_DATE) == effectiveDate.Date)).ToList();
+                    result = AssetAllocationCalculations.CalculateAssetAllocationValuesLT(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData, portfolioSelectionData);
+
+                    #endregion
+                }
                 return result;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
 
         }

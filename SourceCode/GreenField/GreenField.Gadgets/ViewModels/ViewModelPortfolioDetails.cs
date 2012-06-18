@@ -37,7 +37,7 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private PortfolioSelectionData _portfolioSelectionData;
         private DateTime? _effectiveDate;
-        private bool _lookThruEnabled;
+        private bool _lookThruEnabled = false;
 
 
         #endregion
@@ -732,6 +732,10 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
         public void HandleLookThruReferenceSetEvent(bool enableLookThru)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -746,7 +750,6 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorStatus = true;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
-
             }
             catch (Exception ex)
             {
