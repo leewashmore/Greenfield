@@ -18,46 +18,43 @@ using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// XAML.CS class for RelativePerformanceUI gadget
+    /// </summary>
     public partial class ViewRelativePerformanceUI : ViewBaseUserControl
     {
         #region PrivateVariables
 
+
+
+        #endregion
+
+        #region PropertyDeclaration
+
+        /// <summary>
+        /// Property of type View-Model
+        /// </summary>
+        private ViewModelRelativePeroformanceUI _dataContextRelativePerformanceUI;
+        public ViewModelRelativePeroformanceUI DataContextRelativePerformanceUI
+        {
+            get { return _dataContextRelativePerformanceUI; }
+            set { _dataContextRelativePerformanceUI = value; }
+        }
         
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Constructor that initialises the class
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewRelativePerformanceUI(ViewModelRelativePeroformanceUI dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.RelativePerformanceReturnDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_RelativePerformanceReturnDataLoadedEvent);
-        }
-        
-        #endregion
-
-        #region DataProgressIndicator
-
-        void dataContextSource_RelativePerformanceReturnDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicatorGrid.IsBusy = false;
-            }
-        }
-        
-        #endregion
-
-        #region EventsUnsubscribe
-
-        public override void Dispose()
-        {
-
+            this.DataContextRelativePerformanceUI = dataContextSource;
         }
 
         #endregion
@@ -70,9 +67,14 @@ namespace GreenField.Gadgets.Views
         double totalHeight;
         Canvas canvas;
         RadGridView grid;
-        
+
         #endregion
 
+        /// <summary>
+        /// Print Button Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             offsetY = 0d;
@@ -127,6 +129,11 @@ namespace GreenField.Gadgets.Views
             doc.Print("RadGridView print");
         }
 
+        /// <summary>
+        /// Prinitng Helper Method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
             e.PageVisual = canvas;
@@ -146,11 +153,19 @@ namespace GreenField.Gadgets.Views
 
         #region ExportToExcel
 
+        /// <summary>
+        /// Class Containing the Name of Exported File
+        /// </summary>
         private static class ExportTypes
         {
             public const string RELATIVE_PERFORMANCE_UI = "Relative Performance UI";
         }
-        
+
+        /// <summary>
+        /// Export Button Click Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -170,10 +185,32 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region ApplyStyles
+
+        /// <summary>
+        /// Applying Styles to Grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgRelativePerformanceUI_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            //GroupedGridRowLoadedHandler.Implement(e);
+            GroupedGridRowLoadedHandler.Implement(e);
         }
 
+        #endregion
+
+        #region EventsUnsubscribe
+
+        /// <summary>
+        /// Disposing UserControl
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextRelativePerformanceUI.Dispose();
+            this.DataContextRelativePerformanceUI = null;
+            this.DataContext = null;
+        }
+
+        #endregion
     }
 }

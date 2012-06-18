@@ -68,7 +68,7 @@
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1" Grid.Row="0">
                 <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0">
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadChart x:Name="chMultiLineBenchmarkChart" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding MultiLineBenchmarkUIChartData, Mode=TwoWay}" IsHitTestVisible="True" 
                                       DataBound="chMultiLineBenchmarkChart_DataBound">
@@ -140,7 +140,9 @@
                 </telerik:RadBusyIndicator>
             </Border>
 
-            <telerik:RadGridView Grid.Row="1" x:Name="dgBenchmarkUI" AutoGenerateColumns="False"
+            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" Grid.Row="1">
+                <telerik:RadGridView  x:Name="dgBenchmarkUI" AutoGenerateColumns="False"
                                  ItemsSource="{Binding MultiLineBenchmarUIGridData}"  CanUserSelect="True" 
                                  CanUserReorderColumns="False" 
                                  SelectionMode ="Single" SelectionUnit="FullRow" 
@@ -154,36 +156,37 @@
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
-                <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding Name}"
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding Name}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Left" TextAlignment="Left"/>
-                    <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n4}"
+                        <telerik:GridViewDataColumn Header="MTD" DataMemberBinding="{Binding MTD}" DataFormatString="{}{0:n4}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n4}"
+                        <telerik:GridViewDataColumn Header="QTD" DataMemberBinding="{Binding QTD}" DataFormatString="{}{0:n4}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n4}"
+                        <telerik:GridViewDataColumn Header="YTD" DataMemberBinding="{Binding YTD}" DataFormatString="{}{0:n4}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="{Binding PreviousYearDataColumnHeader, Mode=TwoWay}" 
+                        <telerik:GridViewDataColumn Header="{Binding PreviousYearDataColumnHeader, Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding PreviousYearData}" x:Name="previousYearColumn"
                                                 DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="{Binding TwoPreviousYearDataColumnHeader,Mode=TwoWay}"
+                        <telerik:GridViewDataColumn Header="{Binding TwoPreviousYearDataColumnHeader,Mode=TwoWay}"
                                                 DataMemberBinding="{Binding TwoPreviousYearData}" x:Name="twoPreviousYearColumn"
                                                 DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                    <telerik:GridViewDataColumn Header="{Binding ThreePreviousYearDataColumnHeader,Mode=TwoWay}" 
+                        <telerik:GridViewDataColumn Header="{Binding ThreePreviousYearDataColumnHeader,Mode=TwoWay}" 
                                                 DataMemberBinding="{Binding ThreePreviousYearData}" x:Name="threePreviousYearColumn"
                                                 DataFormatString="{}{0:n4}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 CellStyle="{StaticResource GridViewCellStyle}" 
                                                 HeaderTextAlignment="Right" TextAlignment="Right"/>
-                </telerik:RadGridView.Columns>
-            </telerik:RadGridView>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </telerik:RadBusyIndicator>
         </Grid>
     </Grid>
 </my:ViewBaseUserControl>

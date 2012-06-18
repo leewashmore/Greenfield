@@ -65,7 +65,9 @@ namespace GreenField.Common.Helper
 
         public String HeatMapCountryData { get; set; }
 
-        public List<String> RegionFXData { get; set; } 
-        
+        public List<String> RegionFXData { get; set; }
+
+        public bool IsLookThruEnabled { get; set; }
+
     }
 }

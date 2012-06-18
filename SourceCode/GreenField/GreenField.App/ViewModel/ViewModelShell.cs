@@ -149,6 +149,7 @@ namespace GreenField.App.ViewModel
         }
 
         #region Payload
+
         /// <summary>
         /// Stores payload to be published through aggregate events
         /// </summary>
@@ -166,6 +167,7 @@ namespace GreenField.App.ViewModel
                 _selectorPayload = value;
             }
         }
+
         #endregion
 
         #region ToolBox
@@ -325,7 +327,7 @@ namespace GreenField.App.ViewModel
                     {
                         SelectorPayload.PortfolioSelectionData = value;
                         _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
-                    }                    
+                    }
                 }
             }
         }
@@ -510,7 +512,7 @@ namespace GreenField.App.ViewModel
             {
                 _regionFXNames = value;
                 RaisePropertyChanged(() => this.RegionFXNames);
-             
+
 
             }
         }
@@ -607,7 +609,7 @@ namespace GreenField.App.ViewModel
         }
 
         #endregion
-        
+
         #region Country Selector
         private List<CountrySelectionData> _countryTypeInfo;
         public List<CountrySelectionData> CountryTypeInfo
@@ -1020,6 +1022,47 @@ namespace GreenField.App.ViewModel
         }
 
         #endregion
+
+        #region LookThruSelector
+
+        /// <summary>
+        /// Visibility of LookThru Selector
+        /// </summary>
+        private Visibility _lookThruSelectorVisibility;
+        public Visibility LookThruSelectorVisibility
+        {
+            get 
+            {
+                return _lookThruSelectorVisibility; 
+            }
+            set
+            {
+                _lookThruSelectorVisibility = value;
+                this.RaisePropertyChanged(() => this.LookThruSelectorVisibility);
+            }
+        }
+
+        /// <summary>
+        /// Stores checked/unchecked value of LookThru Selector
+        /// </summary>
+        private bool _isLookThruEnabled;
+        public bool IsLookThruEnabled
+        {
+            get
+            {
+                return _isLookThruEnabled; 
+            }
+            set
+            {
+                _isLookThruEnabled = value;
+                this.RaisePropertyChanged(() => this.IsLookThruEnabled);
+                _selectorPayload.IsLookThruEnabled = value;
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(value);
+            }
+        }
+        
+        #endregion
+
         #endregion
 
         #region COMMODITY
@@ -1064,7 +1107,7 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.SelCommodityId);
                 if (value != null)
                     //_selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper().Contains(value.ToUpper())).Select(rec => rec.CommodityID).ToString();
-                    if(CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
+                    if (CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
                     {
                         foreach (FXCommodityData item in CommodityTypeInfo)
                         {
@@ -3336,6 +3379,7 @@ namespace GreenField.App.ViewModel
             MktCapExCashSelectorVisibility = ToolBoxItemVisibility.MKT_CAP_VISIBILITY;
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
             RegionFXSelectorVisibility = ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY;
+            LookThruSelectorVisibility = ToolBoxItemVisibility.LOOK_THRU_VISIBILITY;
 
         }
 
@@ -3380,7 +3424,7 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
 
-      
+
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

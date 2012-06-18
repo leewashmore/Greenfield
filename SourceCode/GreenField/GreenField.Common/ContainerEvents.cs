@@ -65,6 +65,8 @@ namespace GreenField.Common
 
     public class RegionFXEvent : CompositePresentationEvent<List<String>> { }
 
+    public class LookThruFilterReferenceSetEvent : CompositePresentationEvent<bool> { }
+    
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }

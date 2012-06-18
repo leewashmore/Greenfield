@@ -18,9 +18,11 @@ using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for Slice-1 Chart Extension
+    /// </summary>
     public class ViewModelSlice1ChartExtension : NotificationObject
     {
-
         #region Fields
 
         //MEF Singletons
@@ -39,17 +41,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Instance of LoggerFacade
         /// </summary>
         private ILoggerFacade _logger;
-
-        /// <summary>
-        /// Details of Selected Portfolio
-        /// </summary>
-        private PortfolioSelectionData _portfolioSelectionData;
-
-        /// <summary>
-        /// Selected Date
-        /// </summary>
-        private DateTime? _effectiveDate;
-
+                
         /// <summary>
         /// Details of selected Security
         /// </summary>
@@ -65,6 +57,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Constructor
 
+        /// <summary>
+        /// Constructor that Initialises the class
+        /// </summary>
+        /// <param name="param"></param>
         public ViewModelSlice1ChartExtension(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
@@ -178,6 +174,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// ChartArea property bound to ChartArea of dgChartExtension 
+        /// </summary>
         private ChartArea _chartArea;
         public ChartArea ChartArea
         {
@@ -240,8 +239,7 @@ namespace GreenField.Gadgets.ViewModels
                     if ((SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY")) || (SelectedEntities.ContainsKey("SECURITY")))
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
-                        if (null != ChartExtensionDataLoadedEvent)
-                            ChartExtensionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 this.RaisePropertyChanged(() => this.SelectedTimeRange);
@@ -346,13 +344,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
-
-        #region Events
-
-        public event DataRetrievalProgressIndicatorEventHandler ChartExtensionDataLoadedEvent;
-
-        #endregion
-
+                
         #region ICommandMethods
 
         /// <summary>

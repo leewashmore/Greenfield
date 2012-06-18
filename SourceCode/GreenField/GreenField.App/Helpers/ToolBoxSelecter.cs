@@ -26,7 +26,8 @@ namespace GreenField.App.Helpers
         FILTER_SELECTOR,
         MKT_CAP_SELECTOR,
         COMMODITY_SELECTOR,
-        REGIONFX_SELECTOR
+        REGIONFX_SELECTOR,
+        LOOKTHRU_SELECTOR
     }
 
     public static class ToolBoxItemVisibility
@@ -45,6 +46,7 @@ namespace GreenField.App.Helpers
         public static Visibility MKT_CAP_VISIBILITY = Visibility.Collapsed;
         public static Visibility COMMODITY_SELECTOR_VISIBILTY = Visibility.Collapsed;
         public static Visibility REGIONFX_SELECTOR_VISIBILITY = Visibility.Collapsed;
+        public static Visibility LOOK_THRU_VISIBILITY = Visibility.Collapsed;
     }
 
     public static class ToolBoxSelecter
@@ -65,6 +67,7 @@ namespace GreenField.App.Helpers
                 Visibility mktCapSelectorVisibility = Visibility.Collapsed,
                 Visibility commoditySelectorVisibility = Visibility.Collapsed,
                 Visibility regionFXSelectorVisibility = Visibility.Collapsed,
+                Visibility lookThruVisibility = Visibility.Collapsed,
                 bool allVisible = false
             )
         {
@@ -82,6 +85,7 @@ namespace GreenField.App.Helpers
             ToolBoxItemVisibility.MKT_CAP_VISIBILITY = allVisible ? Visibility.Visible : mktCapSelectorVisibility;
             ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY = allVisible ? Visibility.Visible : commoditySelectorVisibility;
             ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY = allVisible ? Visibility.Visible : regionFXSelectorVisibility;
+            ToolBoxItemVisibility.LOOK_THRU_VISIBILITY = allVisible ? Visibility.Visible : lookThruVisibility;
         }
 
         public static void SetToolBoxItemVisibility(DashboardCategoryType dashboardType)
@@ -104,15 +108,15 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(countrySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.MARKETS_COMMODITIES_SUMMARY:
-                    UpdateToolBoxItemVisibility(commoditySelectorVisibility:Visibility.Visible);
+                    UpdateToolBoxItemVisibility(commoditySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , filterTypeSelectorVisibility: Visibility.Visible,filterValueSelectorVisibility : Visibility.Visible, mktCapSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
+                        , filterTypeSelectorVisibility: Visibility.Visible, filterValueSelectorVisibility: Visibility.Visible, mktCapSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , filterTypeSelectorVisibility: Visibility.Collapsed, filterValueSelectorVisibility: Visibility.Collapsed, mktCapSelectorVisibility: Visibility.Visible);
+                        , filterTypeSelectorVisibility: Visibility.Collapsed, filterValueSelectorVisibility: Visibility.Collapsed, mktCapSelectorVisibility: Visibility.Visible, lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
@@ -247,7 +251,7 @@ namespace GreenField.App.Helpers
                     break;
                 case DashboardCategoryType.MKT_CAP:
                     UpdateToolBoxItemVisibility();
-                    break;                
+                    break;
                 default:
                     break;
             }

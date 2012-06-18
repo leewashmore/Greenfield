@@ -149,6 +149,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!--Security Selector-->
@@ -553,6 +554,14 @@
                     </StackPanel>
                 </Grid>
 
+                <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <CheckBox Content="LookThru" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="7" 
+                          IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
+                    </StackPanel>
+                </Grid>
+                
+                
             </Grid>
         </ScrollViewer>
     </Grid>

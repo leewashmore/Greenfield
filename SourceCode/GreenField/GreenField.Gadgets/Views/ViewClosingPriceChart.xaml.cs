@@ -21,6 +21,9 @@ using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// XAML.CS class for ClosingPriceGadget
+    /// </summary>
     public partial class ViewClosingPriceChart : ViewBaseUserControl
     {
         #region Variables
@@ -70,6 +73,8 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Styling
+
         /// <summary>
         /// Formatting the chart
         /// </summary>
@@ -85,59 +90,16 @@ namespace GreenField.Gadgets.Views
             this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
             this.cmbAddSeries.CanAutocompleteSelectItems = false;
             this.cmbTime.SelectedValue = "1-Year";
-            this.chPricing.DefaultView.ChartArea.ItemToolTipOpening += new ItemToolTipEventHandler(ChartArea_ItemToolTipOpening);
-        }
-
-
-        /// <summary>
-        /// Flipping between Grid & Chart
-        /// Using the method FlipItem in class Flipper.cs
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFlip_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.grdRadGridView.Visibility == System.Windows.Visibility.Visible)
-            {
-                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
-            }
-            else
-            {
-                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
-            }
         }
 
         /// <summary>
-        /// Method to catch Click Event of Export to Excel
+        /// Applying styles to DataGrid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        private void dgPricing_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            try
-            {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-
-                if(grdRadChart.Visibility==Visibility.Visible)
-                {
-                RadExportOptionsInfo.Add(new RadExportOptions() 
-                    { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                RadExportOptionsInfo.Add(new RadExportOptions() 
-                { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                }
-
-                if (grdRadGridView.Visibility == Visibility.Visible)
-                {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                }
-                                               
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
-                childExportOptions.Show();
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog(ex.Message);
-            }
+            GroupedGridRowLoadedHandler.Implement(e);
         }
 
         /// <summary>
@@ -241,6 +203,63 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+
+        #region Flipping
+
+        /// <summary>
+        /// Flipping between Grid & Chart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.grdRadGridView.Visibility == System.Windows.Visibility.Visible)
+            {
+                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            }
+            else
+            {
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+            }
+        }
+
+        #endregion
+
+        #region ExportToExcel
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (grdRadChart.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CLOSING_PRICE_CHART, Element = this.chPricing, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.VOLUME_CHART, Element = this.chVolume, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                }
+
+                if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
         /// <summary>
         /// Event for Grid Export
         /// </summary>
@@ -250,6 +269,10 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
+
+        #endregion
+
+        #region HelperMethods
 
         private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
         {
@@ -265,7 +288,6 @@ namespace GreenField.Gadgets.Views
                     }
                 }
             }
-
             return String.Join(",", aggregates.ToArray());
         }
 
@@ -310,35 +332,17 @@ namespace GreenField.Gadgets.Views
 
         }
 
-        void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
-        {
-            //string ticker = Convert.ToString(e.DataPoint.LegendLabel);
-            //double dateOA = (double)(e.DataPoint.XValue);
-            //DateTime xAxisValue = DateTime.FromOADate(dateOA);
-            //if (ticker == "")
-            //{
-            //    ticker = this.DataContextClosingPriceChart.PlottedSeries.
-            //        Where(a => a.IndexedPrice == Convert.ToDecimal(e.DataPoint.YValue) && a.FromDate == xAxisValue.Date).Select(a => a.Ticker).FirstOrDefault();
-            //}
-            //tooltip.Content = "Security: " + ticker + " " + "Return: " + e.DataPoint.YValue.ToString() + "/Date: " + string.Format("{0:dd.MM.yyyy} \n {0}", DateTime.FromOADate(dateOA));
-            //e.DataSeries.LegendLabel + string.Format("{0:dd.MM.yyyy} \n {1}", DateTime.FromOADate(value), e.DataPoint.YValue);
-        }
+        #endregion
 
         #region RemoveEvents
 
         public override void Dispose()
         {
-            //this.DataContextClosingPriceChart.ClosingPriceDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSource_closingPriceDataLoadedEvent);
             this.DataContextClosingPriceChart.Dispose();
             this.DataContextClosingPriceChart = null;
             this.DataContext = null;
         }
 
         #endregion
-
-        private void dgPricing_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
     }
 }

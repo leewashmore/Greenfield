@@ -52,7 +52,7 @@
 
 
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                              DisplayAfter="0" Grid.Row="1">
+                                              DisplayAfter="0" Grid.Row="1" IsBusy="{Binding BusyIndicatorStatus}">
             <telerik:RadGridView x:Name="dgRelativePerformanceUI" 
                                  ItemsSource="{Binding RelativePerformanceReturnData}" 
                                  AutoGenerateColumns="False" 
@@ -65,11 +65,10 @@
                                  FontFamily="Arial" FontSize="7" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                 AlternateRowBackground="#d8d5d4"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  RowLoaded="dgRelativePerformanceUI_RowLoaded"
-                                         
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn  Header="Name" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding EntityName}" Width="*" HeaderTextAlignment="Left" 

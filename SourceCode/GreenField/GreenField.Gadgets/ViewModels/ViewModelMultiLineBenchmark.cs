@@ -14,7 +14,6 @@ using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using Telerik.Windows.Controls.Charting;
 using Telerik.Windows.Controls;
 using GreenField.DataContracts;
 
@@ -34,8 +33,7 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private IEventAggregator _eventAggregator;
-        private EntitySelectionData _entitySelectionData;
-        private PortfolioSelectionData _portfolioSelectionData;
+        private FilterSelectionData _filterSelectionData;
         private string _periodSelectionData;
 
         #endregion
@@ -54,21 +52,39 @@ namespace GreenField.Gadgets.ViewModels
                 _logger = param.LoggerFacade;
                 _eventAggregator = param.EventAggregator;
 
-                _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
                 _selectedPortfolio = param.DashboardGadgetPayload.PortfolioSelectionData;
                 _periodSelectionData = param.DashboardGadgetPayload.PeriodSelectionData;
+                _filterSelectionData = param.DashboardGadgetPayload.FilterSelectionData;
 
                 if (_eventAggregator != null)
                     SubscribeEvents(_eventAggregator);
 
-                if ((_entitySelectionData != null) && (_periodSelectionData != null) && (_entitySelectionData.LongName != null))
+                if ((_selectedPortfolio != null) && (_periodSelectionData != null))
                 {
                     Dictionary<string, string> objSelectedEntity = new Dictionary<string, string>();
-                    objSelectedEntity.Add("SECURITY", _entitySelectionData.LongName);
-                    if (_selectedPortfolio != null && _selectedPortfolio.PortfolioId != null)
+                    if (_selectedPortfolio.PortfolioId != null)
                         objSelectedEntity.Add("PORTFOLIO", _selectedPortfolio.PortfolioId);
 
-                    if (objSelectedEntity != null)
+                    if (_filterSelectionData != null && _filterSelectionData.FilterValues != null)
+                    {
+                        if (SelectedEntities.ContainsKey("COUNTRY"))
+                            SelectedEntities.Remove("COUNTRY");
+                        if (SelectedEntities.ContainsKey("SECTOR"))
+                            SelectedEntities.Remove("SECTOR");
+
+                        if (_filterSelectionData.Filtertype == "Country")
+                        {
+                            if (_filterSelectionData.FilterValues != null)
+                                SelectedEntities.Add("COUNTRY", _filterSelectionData.FilterValues);
+                        }
+                        else if (_filterSelectionData.Filtertype == "Sector")
+                        {
+                            if (_filterSelectionData.FilterValues != null)
+                                SelectedEntities.Add("SECTOR", _filterSelectionData.FilterValues);
+                        }
+                    }
+
+                    if (objSelectedEntity != null || objSelectedEntity.Count != 0)
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, RetrieveBenchmarkChartDataCallBackMethod);
                 }
             }
@@ -91,25 +107,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _chartEntityList = value;
                 this.RaisePropertyChanged(() => this.ChartEntityList);
-            }
-        }
-
-        /// <summary>
-        /// Selected Security
-        /// </summary>
-        private EntitySelectionData _selectedSecurity;
-        public EntitySelectionData SelectedSecurity
-        {
-            get
-            {
-                if (_selectedSecurity == null)
-                    _selectedSecurity = new EntitySelectionData();
-                return _entitySelectionData;
-            }
-            set
-            {
-                _entitySelectionData = value;
-                this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
 
@@ -168,16 +165,36 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Status of Busy Indicator
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
+
+
         #region ChartProperties
 
         /// <summary>
         /// Collection of Benchmark Data-Chart
         /// </summary>
-        private RangeObservableCollection<BenchmarkChartReturnData> _multiLineBenchmarkUIChartData = new RangeObservableCollection<BenchmarkChartReturnData>();
+        private RangeObservableCollection<BenchmarkChartReturnData> _multiLineBenchmarkUIChartData;
         public RangeObservableCollection<BenchmarkChartReturnData> MultiLineBenchmarkUIChartData
         {
             get
             {
+                if (_multiLineBenchmarkUIChartData == null)
+                    _multiLineBenchmarkUIChartData = new RangeObservableCollection<BenchmarkChartReturnData>();
                 return _multiLineBenchmarkUIChartData;
             }
             set
@@ -200,7 +217,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        
+
 
         private double _axisXMinValue;
         public double AxisXMinValue
@@ -310,7 +327,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Events
 
-        public event DataRetrievalProgressIndicatorEventHandler MultiLineBenchmarkDataLoadedEvent;
 
         #endregion
 
@@ -324,7 +340,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSet);
         }
 
         #endregion
@@ -370,26 +386,39 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Handle Security change Event
         /// </summary>
-        /// <param name="entitySelectionData">Details of Selected Security</param>
-        public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
+        /// <param name="filterSelectionData">Details of Selected Security</param>
+        public void HandleFilterReferenceSet(FilterSelectionData filterSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 //ArgumentNullException
-                if (entitySelectionData != null && entitySelectionData.LongName != null)
+                if (filterSelectionData != null)
                 {
-                    if (SelectedEntities.ContainsKey("SECURITY"))
-                        SelectedEntities.Remove("SECURITY");
+                    _filterSelectionData = filterSelectionData;
 
-                    SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
-                    if (SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY") && SelectedEntities.ContainsKey("PORTFOLIO"))
+                    if (SelectedEntities.ContainsKey("COUNTRY"))
+                        SelectedEntities.Remove("COUNTRY");
+                    if (SelectedEntities.ContainsKey("SECTOR"))
+                        SelectedEntities.Remove("SECTOR");
+
+                    if (filterSelectionData.Filtertype == "Country")
+                    {
+                        if (filterSelectionData.FilterValues != null)
+                            SelectedEntities.Add("COUNTRY", filterSelectionData.FilterValues);
+                    }
+                    else if (filterSelectionData.Filtertype == "Sector")
+                    {
+                        if (filterSelectionData.FilterValues != null)
+                            SelectedEntities.Add("SECTOR", filterSelectionData.FilterValues);
+                    }
+
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO"))
                     {
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
                         _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
-                        if (null != MultiLineBenchmarkDataLoadedEvent)
-                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -422,14 +451,12 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
 
                     SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
-                    if (SelectedEntities != null && SelectedEntities.ContainsKey("SECURITY") && SelectedEntities.ContainsKey("PORTFOLIO"))
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null)
                     {
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
                         _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
-                        if (null != MultiLineBenchmarkDataLoadedEvent)
-                            MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
-
                 }
                 else
                 {
@@ -457,13 +484,23 @@ namespace GreenField.Gadgets.ViewModels
                 //ArgumentNullException
                 if (periodSelectionData != null)
                 {
-                    if (null != MultiLineBenchmarkDataLoadedEvent)
-                        MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     _periodSelectionData = periodSelectionData;
-                    MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, periodSelectionData);
 
-                    if (null != MultiLineBenchmarkDataLoadedEvent)
-                        MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    if (MultiLineBenchmarkUIChartData.Count != 0)
+                    {
+                        BusyIndicatorStatus = true;
+                        MultiLineBenchmarkUIChartData = CalculateDataAccordingToPeriod(MultiLineBenchmarkUIChartData, periodSelectionData);
+                        BusyIndicatorStatus = false;
+                    }
+                    else
+                    {
+                        if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null)
+                        {
+                            _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                            _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                            BusyIndicatorStatus = true;
+                        }
+                    }
                 }
                 else
                 {
@@ -475,6 +512,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorStatus = false;
             }
         }
 
@@ -554,13 +592,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (null != MultiLineBenchmarkDataLoadedEvent)
-                    MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
         }
 
@@ -572,7 +612,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
-
             try
             {
                 if (result != null)
@@ -584,13 +623,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (null != MultiLineBenchmarkDataLoadedEvent)
-                    MultiLineBenchmarkDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
         }
 

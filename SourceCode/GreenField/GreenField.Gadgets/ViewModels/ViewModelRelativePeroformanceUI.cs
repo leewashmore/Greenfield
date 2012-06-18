@@ -23,6 +23,9 @@ using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for RelativePerformanceUI gadget
+    /// </summary>
     public class ViewModelRelativePeroformanceUI : NotificationObject
     {
         #region Private Fields
@@ -30,17 +33,43 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// MEF Singletons
         /// </summary>
+
+        ///Instance of Service Caller
         private IDBInteractivity _dbInteractivity;
+
+        /// <summary>
+        /// Instance of Logger Facade
+        /// </summary>
         private ILoggerFacade _logger;
+
+        /// <summary>
+        /// Instance of Event Aggregator
+        /// </summary>
         private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// Instance of PortfolioSelectionData
+        /// </summary>
         private PortfolioSelectionData _portfolioSelectionData;
+
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
         private EntitySelectionData _entitySelectionData;
+
+        /// <summary>
+        /// Selected Effective Date
+        /// </summary>
         private DateTime? _effectiveDate;
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Constructor that initialises the class.
+        /// </summary>
+        /// <param name="param">DashboardGadget payload</param>
         public ViewModelRelativePeroformanceUI(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
@@ -70,6 +99,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region PropertyDeclaration
 
+        /// <summary>
+        /// Selected Security
+        /// </summary>
         private EntitySelectionData _selectedSecurity;
         public EntitySelectionData SelectedSecurity
         {
@@ -84,6 +116,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected Portfolio
+        /// </summary>
         private PortfolioSelectionData _selectedPortfolio;
         public PortfolioSelectionData SelectedPortfolio
         {
@@ -98,6 +133,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores the value of Security & Portfolio selected
+        /// </summary>
         private Dictionary<string, string> _selectedEntityValues;
         public Dictionary<string, string> SelectedEntityValues
         {
@@ -114,6 +152,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected Date from the tool-bar
+        /// </summary>
         private DateTime _selectedDate;
         public DateTime SelectedDate
         {
@@ -128,6 +169,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Collection of type RelativePerformanceUIData, populates grid
+        /// </summary>
         private RangeObservableCollection<RelativePerformanceUIData> _relativePerformanceReturnData;
         public RangeObservableCollection<RelativePerformanceUIData> RelativePerformanceReturnData
         {
@@ -144,11 +188,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Status of Busy Indicator
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
+
+
         #endregion
 
         #region Events
-
-        public event DataRetrievalProgressIndicatorEventHandler RelativePerformanceReturnDataLoadedEvent;
 
         #endregion
 
@@ -176,8 +236,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (SelectedSecurity != null && SelectedDate != null && SelectedPortfolio != null && SelectedEntityValues != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
-                        if (null != RelativePerformanceReturnDataLoadedEvent)
-                            RelativePerformanceReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -218,8 +277,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (SelectedPortfolio != null && SelectedDate != null && SelectedSecurity != null && SelectedEntityValues != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
-                        if (null != RelativePerformanceReturnDataLoadedEvent)
-                            RelativePerformanceReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -252,8 +310,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (SelectedDate != null && SelectedEntityValues != null && SelectedSecurity != null && SelectedPortfolio != null)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
-                        if (null != RelativePerformanceReturnDataLoadedEvent)
-                            RelativePerformanceReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -273,15 +330,16 @@ namespace GreenField.Gadgets.ViewModels
 
         #region CallbackMethods
 
+        /// <summary>
+        /// Callback method, returns data from Service
+        /// </summary>
+        /// <param name="result">Collection of type RelativePerformanceUIData</param>
         private void RelativePerformanceUIDataCallbackMethod(List<RelativePerformanceUIData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (null != RelativePerformanceReturnDataLoadedEvent)
-                    RelativePerformanceReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
@@ -299,7 +357,26 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally
+            {
+                BusyIndicatorStatus = false;
+            }
             Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+        #endregion
+
+        #region UnsubscribeEvents
+
+        /// <summary>
+        /// Unsubscribing the Events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
 
         #endregion

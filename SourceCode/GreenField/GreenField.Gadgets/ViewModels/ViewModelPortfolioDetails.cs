@@ -25,6 +25,9 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for PortfolioDetailsUI
+    /// </summary>
     public class ViewModelPortfolioDetails : NotificationObject
     {
         #region PrivateFields
@@ -163,6 +166,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Bool to check whether to get Data of Benchmark
+        /// </summary>
         private bool _getBenchmarkData;
         public bool GetBenchmarkData
         {
@@ -376,7 +382,7 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IsoCountryCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
-                                
+
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IsoCountryCode == item).ToList())
                                 {
@@ -411,7 +417,7 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.ProprietaryRegionCode == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
-                               
+
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.ProprietaryRegionCode == item).ToList())
                                 {
@@ -448,7 +454,7 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SectorName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
-                               
+
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SectorName == item).ToList())
                                 {
@@ -483,7 +489,7 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.IndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
-                                
+
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.IndustryName == item).ToList())
                                 {
@@ -518,7 +524,7 @@ namespace GreenField.Gadgets.ViewModels
                                                                  where p.SubIndustryName == item
                                                                  select p.AshEmmModelWeight).ToList().Sum();
 
-                               
+
 
                                 foreach (PortfolioDetailsData data in SelectedPortfolioDetailsData.Where(w => w.SubIndustryName == item).ToList())
                                 {
@@ -549,7 +555,8 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
         }
 
@@ -574,7 +581,7 @@ namespace GreenField.Gadgets.ViewModels
                 sumModelWeight = portfolioDetailsData.Sum(a => Convert.ToDecimal(a.AshEmmModelWeight));
 
                 if (sumDirtyValuePC == 0 && sumModelWeight == 0)
-                    return portfolioDetailsData;               
+                    return portfolioDetailsData;
 
                 foreach (PortfolioDetailsData item in portfolioDetailsData)
                 {
@@ -608,18 +615,14 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
                 return new List<PortfolioDetailsData>();
             }
         }
 
         #endregion
-
-        #region Events
-
-        public event DataRetrievalProgressIndicatorEventHandler PortfolioDetailsDataLoadedEvent;
-
-        #endregion
-
+        
         #region EventHandlers
 
         /// <summary>
@@ -695,16 +698,14 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                if (isExCashSec != null)
-                {
-                    ExcludeCashSecurities = isExCashSec;
+                ExcludeCashSecurities = isExCashSec;
 
-                    if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null)
-                    {
-                        BusyIndicatorStatus = true;
-                        RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
-                    }
+                if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null)
+                {
+                    BusyIndicatorStatus = true;
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
+
             }
             catch (Exception ex)
             {
@@ -719,6 +720,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region EventUnsubscribe
 
+        /// <summary>
+        /// Unsubscribe Events
+        /// </summary>
         public void Dispose()
         {
             if (_eventAggregator != null)

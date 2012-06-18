@@ -56,9 +56,6 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-
-
-
         #endregion
 
         #region Constructor
@@ -71,7 +68,6 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.ChartExtensionDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ChartExtensionDataLoadedEvent);
             dataContextSource.ChartArea = this.chChartExtension.DefaultView.ChartArea;
             this.chChartExtension.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
@@ -100,34 +96,14 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        #region Events
-
-
-
-        #endregion
-
-        #region ProgressIndicator
-
-        /// <summary>
-        /// Data Progress Indicator Event
-        /// </summary>
-        /// <param name="e"></param>
-        void dataContextSource_ChartExtensionDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-
-        }
-
-        #endregion
-
+                
         #region EventsUnsubscribe
 
         /// <summary>
         /// UnSubscribing the Events
         /// </summary>
         public override void Dispose()
-        {
-            this.DataContextSlice1ChartExtension.ChartExtensionDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_ChartExtensionDataLoadedEvent);
+        {            
             this.DataContextSlice1ChartExtension.Dispose();
             this.DataContextSlice1ChartExtension = null;
             this.DataContext = null;
@@ -156,12 +132,14 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                    new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (grdRadChart.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                else if (grdRadGridView.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_CHART_EXTENTION);
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -177,8 +155,6 @@ namespace GreenField.Gadgets.Views
         private void ApplyChartStyles()
         {
             this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            //this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
-            //this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.TitleStyle = this.Resources["AxisTitleStyle"] as Style;
             this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
@@ -189,143 +165,7 @@ namespace GreenField.Gadgets.Views
 
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            //string timeInterval = Convert.ToString(cmbTime.SelectedValue);
-            //switch (timeInterval.ToString())
-            //{
-            //    case ("1-Month"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 5;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 1;
 
-            //            break;
-            //        }
-            //    case ("2-Months"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 7;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 1;
-
-            //            break;
-            //        }
-            //    case ("3-Months"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 1;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 1;
-
-            //            break;
-            //        }
-            //    case ("6-Months"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 6;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 1;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.5;
-
-            //            break;
-            //        }
-            //    case ("YTD"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 1;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.5;
-
-            //            break;
-            //        }
-            //    case ("1-Year"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 10;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.5;
-            //            break;
-            //        }
-            //    case ("2-Years"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 20;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.25;
-            //            break;
-            //        }
-            //    case ("3-Years"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 30;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.2;
-            //            break;
-            //        }
-            //    case ("4-Years"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            // this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 40;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.2;
-            //            break;
-            //        }
-            //    case ("5-Years"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 50;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.2;
-
-            //            break;
-            //        }
-            //    case ("10-Years"):
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.AutoRange = true;
-            //            //this.chChartExtension.DefaultView.ChartArea.AxisX.Step = 100;
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.LabelStep = 2;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            //            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.1;
-            //            break;
-            //        }
-            //    default:
-            //        {
-            //            this.chChartExtension.DefaultView.ChartArea.AxisX.DefaultLabelFormat = "d";
-            //            this.chChartExtension.DefaultView.ChartArea.SmartLabelsEnabled = true;
-            //            break;
-            //        }
-            //}
         }
 
         private void chChartExtension_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
@@ -345,7 +185,7 @@ namespace GreenField.Gadgets.Views
                     }
                 }
             }
-            
+
         }
 
         private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)

@@ -283,6 +283,24 @@ namespace GreenField.Gadgets.Views
 
         #region Printing the DataGrid
 
+        void doc_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            e.PageVisual = canvas;
+            if (totalHeight == 0)
+            {
+                totalHeight = grid.DesiredSize.Height;
+            }
+
+            Canvas.SetTop(grid, -offsetY);
+            offsetY += e.PrintableArea.Height;
+            e.HasMorePages = offsetY <= totalHeight;
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             offsetY = 0d;
@@ -318,7 +336,7 @@ namespace GreenField.Gadgets.Views
                 {
                     column.Width = originalColumn.ActualWidth;
                     column.DisplayIndex = originalColumn.DisplayIndex;
-                    
+
                 }
             }
 
@@ -335,19 +353,6 @@ namespace GreenField.Gadgets.Views
             canvas.Children.Add(grid);
             doc.PrintPage += this.doc_PrintPage;
             doc.Print("RadGridView print");
-        }
-
-        void doc_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.PageVisual = canvas;
-            if (totalHeight == 0)
-            {
-                totalHeight = grid.DesiredSize.Height;
-            }
-
-            Canvas.SetTop(grid, -offsetY);
-            offsetY += e.PrintableArea.Height;
-            e.HasMorePages = offsetY <= totalHeight;
         }
 
         #endregion

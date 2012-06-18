@@ -68,7 +68,6 @@ namespace GreenField.Gadgets.Views
             this.DataContextMultilineBenchmark = dataContextSource;
             dataContextSource.ChartAreaMultiLineBenchmark = this.chMultiLineBenchmarkChart.DefaultView.ChartArea;
             this.chMultiLineBenchmarkChart.DataBound += dataContextSource.ChartDataBound;
-            dataContextSource.MultiLineBenchmarkDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(dataContextSource_MultiLineBenchmarkDataLoadedEvent);
             this.AddGridHeader();
             this.ApplyChartStyles();
         }
@@ -77,21 +76,6 @@ namespace GreenField.Gadgets.Views
 
         #region ProgressIndicator
 
-        /// <summary>
-        /// Data Progress Indicator Event
-        /// </summary>
-        /// <param name="e"></param>
-        void dataContextSource_MultiLineBenchmarkDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.busyIndicator.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicator.IsBusy = false;
-            }
-        }
 
         #endregion
 
@@ -164,11 +148,10 @@ namespace GreenField.Gadgets.Views
         {
             this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chMultiLineBenchmarkChart.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
             this.chMultiLineBenchmarkChart.DefaultView.ChartLegend.Header = string.Empty;
             this.chMultiLineBenchmarkChart.DefaultView.ChartArea.AxisX.TicksDistance = 50;
         }
-
-        #endregion
 
         private void chMultiLineBenchmarkChart_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
@@ -190,5 +173,8 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+
+        #endregion
+    
     }
 }

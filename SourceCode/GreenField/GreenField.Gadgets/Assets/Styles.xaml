@@ -552,7 +552,7 @@
         <Setter Property="Padding"
             Value="0,0,0,0" />
         <Setter Property="Margin"
-            Value="0" />
+            Value="0.2,0.2,0.2,0.2" />
         <Setter Property="BorderBrush"
             Value="{StaticResource LegendBorderBrush}" />
         <Setter Property="BorderThickness"
@@ -606,14 +606,14 @@
                 <DataTemplate>
                     <Grid>
                         <TextBlock FontSize="7"
-                                HorizontalAlignment="Left"
-                                Height="Auto"
-                                Padding="0,0,0,0"
-                                TextWrapping="Wrap"
-                                Text="{Binding}"
-                                Visibility="{Binding Converter={StaticResource textToVisibilityConverter}}"
-                                Width="Auto" />
-                    </Grid>
+                                   HorizontalAlignment="Left"
+                                   Height="Auto"
+                                   Padding="0,0,0,0"
+                                   TextWrapping="Wrap"
+                                   Text="{Binding}"
+                                   Visibility="{Binding Converter={StaticResource textToVisibilityConverter}}"
+                                   Width="Auto" />
+                        </Grid>
                 </DataTemplate>
             </Setter.Value>
         </Setter>
