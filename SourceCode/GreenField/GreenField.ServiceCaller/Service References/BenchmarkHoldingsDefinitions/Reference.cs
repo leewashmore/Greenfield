@@ -113,7 +113,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "se")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrievePortfolioDetailsDataServic" +
             "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.PortfolioDetailsData> EndRetrievePortfolioDetailsData(System.IAsyncResult result);
         
@@ -1028,8 +1028,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, effectiveDate, excludeCash, objGetBenchmark, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, effectiveDate, lookThruEnabled, excludeCash, objGetBenchmark, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1040,9 +1040,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         private System.IAsyncResult OnBeginRetrievePortfolioDetailsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
-            bool excludeCash = ((bool)(inValues[2]));
-            bool objGetBenchmark = ((bool)(inValues[3]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, effectiveDate, excludeCash, objGetBenchmark, callback, asyncState);
+            bool lookThruEnabled = ((bool)(inValues[2]));
+            bool excludeCash = ((bool)(inValues[3]));
+            bool objGetBenchmark = ((bool)(inValues[4]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrievePortfolioDetailsData(objPortfolioIdentifier, effectiveDate, lookThruEnabled, excludeCash, objGetBenchmark, callback, asyncState);
         }
         
         private object[] OnEndRetrievePortfolioDetailsData(System.IAsyncResult result) {
@@ -1058,11 +1059,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrievePortfolioDetailsDataAsync(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool excludeCash, bool objGetBenchmark) {
-            this.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, effectiveDate, excludeCash, objGetBenchmark, null);
+        public void RetrievePortfolioDetailsDataAsync(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark) {
+            this.RetrievePortfolioDetailsDataAsync(objPortfolioIdentifier, effectiveDate, lookThruEnabled, excludeCash, objGetBenchmark, null);
         }
         
-        public void RetrievePortfolioDetailsDataAsync(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool excludeCash, bool objGetBenchmark, object userState) {
+        public void RetrievePortfolioDetailsDataAsync(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark, object userState) {
             if ((this.onBeginRetrievePortfolioDetailsDataDelegate == null)) {
                 this.onBeginRetrievePortfolioDetailsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePortfolioDetailsData);
             }
@@ -1075,6 +1076,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             base.InvokeAsync(this.onBeginRetrievePortfolioDetailsDataDelegate, new object[] {
                         objPortfolioIdentifier,
                         effectiveDate,
+                        lookThruEnabled,
                         excludeCash,
                         objGetBenchmark}, this.onEndRetrievePortfolioDetailsDataDelegate, this.onRetrievePortfolioDetailsDataCompletedDelegate, userState);
         }
@@ -1609,12 +1611,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginRetrievePortfolioDetailsData(GreenField.DataContracts.PortfolioSelectionData objPortfolioIdentifier, System.DateTime effectiveDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = objPortfolioIdentifier;
                 _args[1] = effectiveDate;
-                _args[2] = excludeCash;
-                _args[3] = objGetBenchmark;
+                _args[2] = lookThruEnabled;
+                _args[3] = excludeCash;
+                _args[4] = objGetBenchmark;
                 System.IAsyncResult _result = base.BeginInvoke("RetrievePortfolioDetailsData", _args, callback, asyncState);
                 return _result;
             }

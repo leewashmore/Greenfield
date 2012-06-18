@@ -119,6 +119,7 @@
       <xs:sequence>
         <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="objPortfolioIdentifier" nillable="true" type="q13:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
         <xs:element minOccurs="0" name="excludeCash" type="xs:boolean" />
         <xs:element minOccurs="0" name="objGetBenchmark" type="xs:boolean" />
       </xs:sequence>

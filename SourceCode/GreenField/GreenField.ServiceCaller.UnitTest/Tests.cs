@@ -297,7 +297,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             bool isCashExclude = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
 
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate,isCashExclude, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Top 10 Holdings Data Not Available");
                 EnqueueTestComplete();
@@ -315,7 +315,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate,isCashExclude, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -336,7 +336,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate,isCashExclude, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -357,7 +357,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveTopHoldingsData(portfolio, effectiveDate,isCashExclude, (List<TopHoldingsData> resultSet) =>
+            instance.RetrieveTopHoldingsData(portfolio, effectiveDate, isCashExclude, (List<TopHoldingsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Top 10 Holdings Should Be Empty");
                 EnqueueTestComplete();
@@ -502,7 +502,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate,isCashExclude, (List<RegionBreakdownData> resultSet) =>
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, isCashExclude, (List<RegionBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -523,7 +523,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate,isCashExclude, (List<RegionBreakdownData> resultSet) =>
+            instance.RetrieveRegionBreakdownData(portfolio, effectiveDate, isCashExclude, (List<RegionBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Region Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -544,7 +544,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude,(List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Sector Breakdown Data Not Available");
                 EnqueueTestComplete();
@@ -562,7 +562,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate,isCashExclude, (List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -583,7 +583,7 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool isCashExclude = false;
-            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate,isCashExclude, (List<SectorBreakdownData> resultSet) =>
+            instance.RetrieveSectorBreakdownData(portfolio, effectiveDate, isCashExclude, (List<SectorBreakdownData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Sector Breakdown Should Be Empty");
                 EnqueueTestComplete();
@@ -739,8 +739,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = null;
             bool getBenchmark = false;
             bool excludeCash = false;
+            bool lookThru = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate, lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -760,10 +761,11 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
+            bool lookThru=false;
             bool getBenchmark = false;
             bool excludeCash = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,lookThru, excludeCash, getBenchmark, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Portfolio Details Data should be Empty");
                 EnqueueTestComplete();
@@ -781,9 +783,10 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool lookThru=false;
             bool getBenchamrk = false;
             bool excludeCash = false;
-            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,excludeCash, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
+            instance.RetrievePortfolioDetailsData(portfolio, effectiveDate,lookThru, excludeCash, getBenchamrk, (List<PortfolioDetailsData> resultSet) =>
             {
                 Assert.AreEqual(0, resultSet.Count, "Portfolio Details Data Should Be Empty");
                 EnqueueTestComplete();
