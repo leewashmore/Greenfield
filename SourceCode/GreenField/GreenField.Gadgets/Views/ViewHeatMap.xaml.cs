@@ -18,6 +18,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
 using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Events;
+using System.ComponentModel;
 
 namespace GreenField.Gadgets.Views
 {
@@ -82,19 +83,8 @@ namespace GreenField.Gadgets.Views
             if (_heatMapInfo != null)
             {
                 foreach (MapShape _shape in _shapes)
-
                 {
-                    mapShape = _shape;
-                    string countryID = (string)_shape.ExtendedData.GetValue("ISO_2DIGIT");
-
-                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
-                    if (countryRecord != null)
-                    {
-                        _shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
-                        _shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
-                         AddColorizerToInformationLayer(_shape, countryRecord);
-                    }
-                  
+                    SetAdditionalData(_shape);
                 }
             }
           
@@ -130,6 +120,11 @@ namespace GreenField.Gadgets.Views
             {
                 foreach (MapShape shape in eventArgs.Items)
                 {
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = new ExtendedDataWraper() { Data = shape.ExtendedData };
+                    toolTip.ContentTemplate = this.Resources["CustomToolTipDataTemplate"] as DataTemplate;
+                    ToolTipService.SetToolTip(shape, toolTip);
+                    _shapes.Add(shape);
                     shape.MouseLeftButtonUp += new MouseButtonEventHandler(shape_MouseLeftButtonUp);
                     this.SetAdditionalData(shape);
                 }
@@ -143,20 +138,33 @@ namespace GreenField.Gadgets.Views
         /// <param name="shape">Map Shape</param>
         private void SetAdditionalData(MapShape shape)
         {
-            ExtendedData extendedData = shape.ExtendedData;
-            if (extendedData != null)
+            //ExtendedDataWraper a = new ExtendedDataWraper();
+            //a.Data = shape.ExtendedData;
+            ExtendedData data = shape.ExtendedData;
+
+            if (data != null)
             {
-                _shapes.Add(shape);               
-               
-                if (!extendedData.PropertySet.ContainsKey(COUNTRY_PERFORMANCE_FIELD))
+                if (!data.PropertySet.ContainsKey(COUNTRY_PERFORMANCE_FIELD))
                 {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_PERFORMANCE_FIELD, "CountryPerformance", typeof(int), 0);
+                    data.PropertySet.RegisterProperty(COUNTRY_PERFORMANCE_FIELD, "CountryPerformance", typeof(int), 0);
                 }
-                if (!extendedData.PropertySet.ContainsKey(COUNTRY_YTD_FIELD))
+                if (!data.PropertySet.ContainsKey(COUNTRY_YTD_FIELD))
                 {
-                    extendedData.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
-                }              
-            }
+                    data.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
+                }
+                if (_heatMapInfo != null)
+                {
+                    string countryID = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
+                    HeatMapData countryRecord = _heatMapInfo.Where(r => r.CountryID == countryID).FirstOrDefault();
+
+                    if (countryRecord != null)
+                    {
+                        shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
+                        shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
+                        AddColorizerToInformationLayer(shape, countryRecord);
+                    };
+                }
+            }            
         }
 
         /// <summary>
@@ -211,7 +219,6 @@ namespace GreenField.Gadgets.Views
             string country = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
             SelectorPayload.HeatMapCountryData = country;
             _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
-        }       
-
-    }
+        }  
+    }   
 }

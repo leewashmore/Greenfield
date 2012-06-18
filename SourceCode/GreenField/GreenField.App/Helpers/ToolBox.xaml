@@ -553,7 +553,6 @@
                         </telerik:RadComboBox>
                     </StackPanel>
                 </Grid>
-
                 <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Content="LookThru" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="7" 

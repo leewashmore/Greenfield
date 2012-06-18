@@ -1390,6 +1390,8 @@ namespace GreenField.Web.Services
                 throw new Exception();
 
             List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();
+                        
+
             if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
                 return result;
 
@@ -1673,7 +1675,6 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
                 throw new Exception();
 
-
             //List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = DimensionEntity.GF_PERF_TOPLEVELSTATS.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.CURRENCY == "USD" && t.RETURN_TYPE == "Gross").ToList();
 
             List<DimensionEntitiesService.GF_PERF_TOPLEVELSTATS> riskReturnData = (from p in DimensionEntity.GF_PERF_TOPLEVELSTATS
@@ -1682,20 +1683,6 @@ namespace GreenField.Web.Services
                                                                                    && p.CURRENCY == "USD"
                                                                                    && p.RETURN_TYPE == "Gross"
                                                                                    select p).ToList<GF_PERF_TOPLEVELSTATS>();
-
-
-            //DimensionEntitiesService.Entities entity = DimensionEntity;
-
-            //var data = from p in entity.GF_PERF_TOPLEVELSTATS
-            //           where p.TO_DATE == Convert.ToDateTime("12/31/2006")
-            //           && p.PORTFOLIO == "ABPEQ"
-            //           && p.CURRENCY == "USD"
-            //           && p.RETURN_TYPE == "Gross"
-            //           select p;
-
-            //var oneyearData = (from p in data
-            //                  where p.PORTYPE.StartsWith("Benchmark") && p.YEAR == "01 Year"
-            //                  select p.RC_ALPHA).First();
 
             if (riskReturnData == null || riskReturnData.Count == 0)
                 return result;
