@@ -41,7 +41,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveBenchmarkSelectionData(Action<List<BenchmarkSelectionData>> callback);
 
-        void RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback);
+        void RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, bool lookThruEnabled, Action<List<MarketCapitalizationData>> callback);
 
         /// <summary>
         /// Service Caller method for AssetAllocation gadget

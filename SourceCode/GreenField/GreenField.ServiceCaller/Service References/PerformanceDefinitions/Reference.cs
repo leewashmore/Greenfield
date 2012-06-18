@@ -588,7 +588,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             "")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrieveMarketCapitalizationDataServiceF" +
             "aultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.MarketCapitalizationData> EndRetrieveMarketCapitalizationData(System.IAsyncResult result);
         
@@ -2418,8 +2418,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2433,7 +2433,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             string filterType = ((string)(inValues[2]));
             string filterValue = ((string)(inValues[3]));
             bool isExCashSecurity = ((bool)(inValues[4]));
-            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, callback, asyncState);
+            bool lookThruEnabled = ((bool)(inValues[5]));
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrieveMarketCapitalizationData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled, callback, asyncState);
         }
         
         private object[] OnEndRetrieveMarketCapitalizationData(System.IAsyncResult result) {
@@ -2449,11 +2450,11 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             }
         }
         
-        public void RetrieveMarketCapitalizationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity) {
-            this.RetrieveMarketCapitalizationDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, null);
+        public void RetrieveMarketCapitalizationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, bool lookThruEnabled) {
+            this.RetrieveMarketCapitalizationDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled, null);
         }
         
-        public void RetrieveMarketCapitalizationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, object userState) {
+        public void RetrieveMarketCapitalizationDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, bool lookThruEnabled, object userState) {
             if ((this.onBeginRetrieveMarketCapitalizationDataDelegate == null)) {
                 this.onBeginRetrieveMarketCapitalizationDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketCapitalizationData);
             }
@@ -2468,7 +2469,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                         effectiveDate,
                         filterType,
                         filterValue,
-                        isExCashSecurity}, this.onEndRetrieveMarketCapitalizationDataDelegate, this.onRetrieveMarketCapitalizationDataCompletedDelegate, userState);
+                        isExCashSecurity,
+                        lookThruEnabled}, this.onEndRetrieveMarketCapitalizationDataDelegate, this.onRetrieveMarketCapitalizationDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2964,13 +2966,14 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[5];
+            public System.IAsyncResult BeginRetrieveMarketCapitalizationData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool isExCashSecurity, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = filterType;
                 _args[3] = filterValue;
                 _args[4] = isExCashSecurity;
+                _args[5] = lookThruEnabled;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketCapitalizationData", _args, callback, asyncState);
                 return _result;
             }

@@ -1595,32 +1595,51 @@ namespace GreenField.Web.Services
         /// <param name="selPortfolioID">Contains Selected Portfolio ID</param>
         /// <param name="selPortfolioDate">Effective Date selected by user</param>
         /// <returns>Consolidated list of portfolio and benchmark</returns>        
-        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
+        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity,bool lookThruEnabled)
         {
 
             List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
             //List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> filteredResult = new List<GF_PORTFOLIO_HOLDINGS>();
             DimensionEntitiesService.Entities entity = DimensionEntity;
             List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionServicePortfolioData = null;
+            List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionServicePortfolioLTData = null;
 
             if (entity.GF_PORTFOLIO_HOLDINGS == null && entity.GF_BENCHMARK_HOLDINGS.Count() == 0)
                 return null;
 
-            if (isExCashSecurity)
+            if (lookThruEnabled)
             {
-                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)
-                            && (portfolioList.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
+                if (isExCashSecurity)
+                {
+                    dimensionServicePortfolioLTData = entity.GF_PORTFOLIO_LTHOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)
+                                && (portfolioList.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
+                }
+                else
+                {
+                    dimensionServicePortfolioLTData = entity.GF_PORTFOLIO_LTHOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+                }
             }
             else
             {
-                dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+                if (isExCashSecurity)
+                {
+                    dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)
+                                && (portfolioList.SECURITYTHEMECODE.ToUpper() != GreenfieldConstants.CASH)).ToList();
+                }
+                else
+                {
+                    dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+                }
             }
-
-            if (dimensionServicePortfolioData == null || dimensionServicePortfolioData.Count == 0)
+            if ((dimensionServicePortfolioData == null || dimensionServicePortfolioData.Count == 0) && (dimensionServicePortfolioLTData == null || dimensionServicePortfolioLTData.Count == 0))
                 return result;
 
 
@@ -1630,44 +1649,79 @@ namespace GreenField.Web.Services
                 switch (filterType)
                 {
                     case GreenfieldConstants.REGION:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                        if (lookThruEnabled)
+                            dimensionServicePortfolioLTData = dimensionServicePortfolioLTData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
+                        else
+                            dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ASHEMM_PROP_REGION_CODE == filterValue)).ToList();
 
                         break;
                     case GreenfieldConstants.COUNTRY:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+                        if (lookThruEnabled)
+                            dimensionServicePortfolioLTData = dimensionServicePortfolioLTData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
+                        else
+                            dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.ISO_COUNTRY_CODE == filterValue)).ToList();
 
                         break;
                     case GreenfieldConstants.INDUSTRY:
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                        if (lookThruEnabled)
+                            dimensionServicePortfolioLTData = dimensionServicePortfolioLTData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
+                        else
+                            dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_INDUSTRY_NAME == filterValue)).ToList();
 
                         break;
                     case GreenfieldConstants.SECTOR:
+                        if (lookThruEnabled)
+                            dimensionServicePortfolioLTData = dimensionServicePortfolioLTData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+                        else
                         dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                         break;
                     case GreenfieldConstants.SHOW_EVERYTHING:
-                        dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
-                        .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
-                            && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+                        if (lookThruEnabled)
+                            dimensionServicePortfolioLTData = entity.GF_PORTFOLIO_LTHOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
+                        else
+                            dimensionServicePortfolioData = entity.GF_PORTFOLIO_HOLDINGS
+                            .Where(portfolioList => (portfolioList.PORTFOLIO_ID == portfolio_ID.PortfolioId)
+                                && (portfolioList.PORTFOLIO_DATE == effectiveDate)).ToList();
 
                         break;
                     //default:
                     //    break;
                 }
             }
-
-            for (int _index = 0; _index < dimensionServicePortfolioData.Count; _index++)
+            if (lookThruEnabled)
             {
-                MarketCapitalizationData mktCapData = new MarketCapitalizationData();
-                mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
-                mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
-                mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
-                mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
-                mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
-                mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
-                mktCapData.BenchmarkWeight = 0;
+                for (int _index = 0; _index < dimensionServicePortfolioLTData.Count; _index++)
+                {
+                    MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                    mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioLTData[_index].DIRTY_VALUE_PC;
+                    mktCapData.MarketCapitalInUSD = dimensionServicePortfolioLTData[_index].MARKET_CAP_IN_USD;
+                    mktCapData.SecurityThemeCode = dimensionServicePortfolioLTData[_index].SECURITYTHEMECODE;
+                    mktCapData.Benchmark_ID = dimensionServicePortfolioLTData[_index].BENCHMARK_ID;
+                    mktCapData.Portfolio_ID = dimensionServicePortfolioLTData[_index].PORTFOLIO_ID;
+                    mktCapData.AsecSecShortName = dimensionServicePortfolioLTData[_index].ASEC_SEC_SHORT_NAME;
+                    mktCapData.BenchmarkWeight = 0;
 
-                result.Add(mktCapData);
+                    result.Add(mktCapData);
+                }
+            }
+            else
+            {
+                for (int _index = 0; _index < dimensionServicePortfolioData.Count; _index++)
+                {
+                    MarketCapitalizationData mktCapData = new MarketCapitalizationData();
+                    mktCapData.PortfolioDirtyValuePC = dimensionServicePortfolioData[_index].DIRTY_VALUE_PC;
+                    mktCapData.MarketCapitalInUSD = dimensionServicePortfolioData[_index].MARKET_CAP_IN_USD;
+                    mktCapData.SecurityThemeCode = dimensionServicePortfolioData[_index].SECURITYTHEMECODE;
+                    mktCapData.Benchmark_ID = dimensionServicePortfolioData[_index].BENCHMARK_ID;
+                    mktCapData.Portfolio_ID = dimensionServicePortfolioData[_index].PORTFOLIO_ID;
+                    mktCapData.AsecSecShortName = dimensionServicePortfolioData[_index].ASEC_SEC_SHORT_NAME;
+                    mktCapData.BenchmarkWeight = 0;
+
+                    result.Add(mktCapData);
+                }
             }
             //List<MarketCapitalizationData> _portfolioBenchmarkData = RetrieveBenchmarkMktCapData(result, effectiveDate, filterType, filterValue, isExCashSecurity);
             return result;
@@ -1786,7 +1840,7 @@ namespace GreenField.Web.Services
         /// <returns>List of MarketCapitalizationData </returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketCapitalizationData> RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity)
+        public List<MarketCapitalizationData> RetrieveMarketCapitalizationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, bool lookThruEnabled)
         {
             try
             {
@@ -1799,7 +1853,7 @@ namespace GreenField.Web.Services
                 MarketCapitalizationData mktCapData = new MarketCapitalizationData();
 
 
-                portfollioData = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+                portfollioData = RetrievePortfolioMktCapData(portfolioSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled);
 
                 if (portfollioData == null || portfollioData.Count == 0)
                     return portfollioData;

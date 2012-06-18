@@ -1781,10 +1781,10 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">The filter type selected by the user</param>
         /// <param name="filterValue">The filter value selected by the user</param>
         /// <param name="callback"></param>  
-        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
+        public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, bool lookThruEnabled, Action<List<MarketCapitalizationData>> callback)
         {
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
+            client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity, lookThruEnabled);
             client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

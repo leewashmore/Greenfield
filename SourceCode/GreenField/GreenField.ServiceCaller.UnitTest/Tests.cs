@@ -475,7 +475,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
-            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            bool lookThru = false;
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, lookThru, (List<MarketCapitalizationData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Market Capitalization Data Not Available");
                 EnqueueTestComplete();
@@ -495,7 +496,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
-            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            bool lookThru = false;
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, lookThru, (List<MarketCapitalizationData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Market Capitalization Data Not Available");
                 EnqueueTestComplete();
@@ -517,8 +519,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
+            bool lookThru = false;
 
-            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, lookThru, (List<MarketCapitalizationData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
                 EnqueueTestComplete();
@@ -540,8 +543,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             string filterType = null;
             string filterValue = null;
             bool isExCash = false;
+            bool lookThru = false;
 
-            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, (List<MarketCapitalizationData> resultSet) =>
+            instance.RetrieveMarketCapitalizationData(portfolio, effectiveDate, filterType, filterValue, isExCash, lookThru, (List<MarketCapitalizationData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Market Capitalization Should Be Empty");
                 EnqueueTestComplete();
