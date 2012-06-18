@@ -1,10 +1,9 @@
 set noexec off
 
-
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00003'
-declare @CurrentScriptVersion as nvarchar(100) = '00004'
+declare @RequiredDBVersion as nvarchar(100) = '00001'
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -19,45 +18,37 @@ begin
 end
 
 GO
---PUT YOUR CODE HERE:
 
+SET ANSI_NULLS ON
+GO
 
+SET QUOTED_IDENTIFIER ON
+GO
 
-
-ALTER PROCEDURE [dbo].[DeleteMarketSnapshotEntityPreference] 
+CREATE PROCEDURE [dbo].[GetCOMMODITY_FORECASTS] (@CommodityID varchar(50) )
 	-- Add the parameters for the stored procedure here
-	  @entitypreferenceid int
+	
 AS
-
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	Delete from tblMarketSnapshotEntityPreference
-	where EntityPreferenceId = @entitypreferenceid
-	
-	Select @@ROWCOUNT
-    
+    IF( @CommodityID = 'ALL')
+    SELECT * from dbo.COMMODITY_FORECASTS
+    ELSE
+	SELECT * from dbo.COMMODITY_FORECASTS where COMMODITY_ID = @CommodityID
 END
-
 GO
 
 
-
-
-
-
---END OF YOUR CODE.
-
-
 --indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
+insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
-if @@error = 0
-begin
-	declare @CurrentScriptVersion as nvarchar(100) = '00004'
-	insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-end
+
+
+
 
 

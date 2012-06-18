@@ -1,11 +1,9 @@
 set noexec off
 
-
-
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00013'
-declare @CurrentScriptVersion as nvarchar(100) = '00014'
+declare @RequiredDBVersion as nvarchar(100) = '00001'
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -20,14 +18,13 @@ begin
 end
 
 GO
---PUT YOUR CODE HERE:
 
+SET ANSI_NULLS ON
+GO
 
--- =============================================
--- Author:		Rahul Vig
--- Create date: 28-05-2012
--- Description:	Post updates to market performance snapshot
--- =============================================
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[usp_UpdateMarketPerformanceSnapshot] 
 	@snapshotPreferenceId INT, 
 	@updateXML VARCHAR(MAX)
@@ -280,16 +277,12 @@ END
 GO
 
 
-
---END OF YOUR CODE.
-
-
 --indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
+insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
-if @@error = 0
-begin
-	declare @CurrentScriptVersion as nvarchar(100) = '00014'
-	insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-end
+
+
+
 
 

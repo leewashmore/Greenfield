@@ -1,10 +1,9 @@
 set noexec off
 
-
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00012'
-declare @CurrentScriptVersion as nvarchar(100) = '00013'
+declare @RequiredDBVersion as nvarchar(100) = '00001'
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -19,41 +18,40 @@ begin
 end
 
 GO
---PUT YOUR CODE HERE:
 
+SET ANSI_NULLS ON
+GO
 
-Alter PROCEDURE [dbo].[UpdateMarketSnapshotPreference] 
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[SetMarketSnapshotPreference] 
 	-- Add the parameters for the stored procedure here
-	  @userId NVARCHAR(100),
-	  @snapshotname NVARCHAR(max),
-	  @snapshotpreferenceid INT	  
+	  @userId nVARCHAR(100),
+	  @snapshotname NVARCHAR(max)
 AS
+DECLARE @OrderCount int 
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	Update tblMarketSnapshotPreference
-	SET SnapshotName = @snapshotname		
-	where UserId = @userId AND SnapshotPreferenceId = @snapshotpreferenceid
-	Select @@ROWCOUNT
+	Insert into tblMarketSnapshotPreference (UserId,SnapshotName)	
+	values (@userId , @snapshotname)
+	
+	Select SCOPE_IDENTITY()
 	
 END
-
 GO
 
 
-
---END OF YOUR CODE.
-
-
 --indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
+insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
-if @@error = 0
-begin
-	declare @CurrentScriptVersion as nvarchar(100) = '00013'
-	insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-end
+
+
+
 
 

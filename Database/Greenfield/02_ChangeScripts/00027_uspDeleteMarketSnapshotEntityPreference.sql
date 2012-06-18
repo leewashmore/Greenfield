@@ -1,10 +1,9 @@
 set noexec off
 
-
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00004'
-declare @CurrentScriptVersion as nvarchar(100) = '00005'
+declare @RequiredDBVersion as nvarchar(100) = '00001'
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -19,12 +18,16 @@ begin
 end
 
 GO
---PUT YOUR CODE HERE:
 
+SET ANSI_NULLS ON
+GO
 
-Alter PROCEDURE [dbo].[DeleteMarketSnapshotGroupPreference] 
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DeleteMarketSnapshotEntityPreference] 
 	-- Add the parameters for the stored procedure here
-	  @grouppreferenceid int
+	  @entitypreferenceid int
 AS
 
 BEGIN
@@ -33,31 +36,22 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	Delete from tblMarketSnapshotGroupPreference
-	where GroupPreferenceId = @grouppreferenceid
+	Delete from tblMarketSnapshotEntityPreference
+	where EntityPreferenceId = @entitypreferenceid
 	
 	Select @@ROWCOUNT
     
 END
 
-
 GO
 
 
-
-
-
-
-
---END OF YOUR CODE.
-
-
 --indicate thet current script is executed
+declare @CurrentScriptVersion as nvarchar(100) = '00002'
+insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
-if @@error = 0
-begin
-	declare @CurrentScriptVersion as nvarchar(100) = '00005'
-	insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
-end
+
+
+
 
 
