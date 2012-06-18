@@ -435,11 +435,12 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<SectorBreakdownData>> callback)
+        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<SectorBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity);
+            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -479,11 +480,12 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<RegionBreakdownData>> callback)
+        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<RegionBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity);
+            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -523,11 +525,12 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
         /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, Action<List<TopHoldingsData>> callback)
+        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<TopHoldingsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity);
+            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -566,11 +569,12 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="portfolioSelectionData"></param>
         /// <param name="effectiveDate"></param>
+        /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<IndexConstituentsData>> callback)
+        public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate,lookThruEnabled);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

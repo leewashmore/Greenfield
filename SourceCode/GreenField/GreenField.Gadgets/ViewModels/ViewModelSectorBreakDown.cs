@@ -46,6 +46,11 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member to store info about including or excluding cash securities
         /// </summary>
         private bool _isExCashSecurity = false;
+
+        /// <summary>
+        /// Private member to store info about look thru enabled or not
+        /// </summary>
+        private bool _lookThruEnabled = false;
         #endregion
 
         #region Constructor
@@ -62,9 +67,11 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
-            if (EffectiveDate != null && _PortfolioSelectionData != null && _isExCashSecurity != null)
+            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+
+            if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
             {
-                _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity, RetrieveSectorBreakdownDataCallbackMethod);
+                _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -72,6 +79,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
         }
         #endregion
@@ -149,12 +157,12 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _PortfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _isExCashSecurity != null)
-                    {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity, RetrieveSectorBreakdownDataCallbackMethod);
-                        if (SectorBreakdownDataLoadEvent != null)
+                   if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                   {
+                         _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                         if (SectorBreakdownDataLoadEvent != null)
                             SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    }
+                   }
                 }
                 else
                 {
@@ -183,9 +191,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && _isExCashSecurity != null)
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity, RetrieveSectorBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         if (SectorBreakdownDataLoadEvent != null)
                             SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -218,9 +226,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _isExCashSecurity = isExCashSec;
 
-                    if (_isExCashSecurity != null && _PortfolioSelectionData != null && _effectiveDate != null)
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
                     {
-                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, RetrieveSectorBreakdownDataCallbackMethod);
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
                         if (SectorBreakdownDataLoadEvent != null)
                             SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -233,6 +241,34 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
 
+        }
+
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
+        public void HandleLookThruReferenceSetEvent(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                _lookThruEnabled = enableLookThru;
+
+                if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                {
+                    _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                    if (SectorBreakdownDataLoadEvent != null)
+                        SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
 
@@ -333,6 +369,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Unsubscribe(HandleExCashSecuritySetEvent);
+            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
 
         #endregion

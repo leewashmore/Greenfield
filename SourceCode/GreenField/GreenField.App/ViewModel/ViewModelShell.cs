@@ -1028,7 +1028,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Visibility of LookThru Selector
         /// </summary>
-        private Visibility _lookThruSelectorVisibility;
+        private Visibility _lookThruSelectorVisibility = Visibility.Collapsed;
         public Visibility LookThruSelectorVisibility
         {
             get 
@@ -1045,7 +1045,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Stores checked/unchecked value of LookThru Selector
         /// </summary>
-        private bool _isLookThruEnabled;
+        private bool _isLookThruEnabled = false;
         public bool IsLookThruEnabled
         {
             get

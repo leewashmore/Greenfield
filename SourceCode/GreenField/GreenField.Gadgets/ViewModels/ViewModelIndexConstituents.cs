@@ -35,6 +35,11 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
 
+        /// <summary>
+        /// Private member to store info about look thru enabled or not
+        /// </summary>
+        private bool _lookThruEnabled = false;
+
         #endregion
 
         #region Constructor
@@ -50,15 +55,16 @@ namespace GreenField.Gadgets.ViewModels
 
             PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-
-            if (EffectiveDate != null && PortfolioSelectionData != null)
+            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+            if ((_portfolioSelectionData != null) && (EffectiveDate != null))
             {
-                _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
+                _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate),_lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
         }
         #endregion
@@ -157,7 +163,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDate;
                     if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate),_lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
                             IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -192,7 +198,7 @@ namespace GreenField.Gadgets.ViewModels
                     PortfolioSelectionData = portfolioSelectionData;
                     if (EffectiveDate != null && PortfolioSelectionData != null)
                     {
-                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveIndexConstituentsDataCallbackMethod);
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
                         if (IndexConstituentDataLoadEvent != null)
                             IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -202,6 +208,34 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
 
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
+        public void HandleLookThruReferenceSetEvent(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                _lookThruEnabled = enableLookThru;
+
+                if (EffectiveDate != null && PortfolioSelectionData != null)
+                {
+                    _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
+                    if (IndexConstituentDataLoadEvent != null)
+                        IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                }
             }
             catch (Exception ex)
             {
@@ -262,6 +296,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
 
         #endregion

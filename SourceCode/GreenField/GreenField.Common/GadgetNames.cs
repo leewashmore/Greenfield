@@ -69,7 +69,7 @@ namespace GreenField.Common
         #endregion
 
         #region Estimates Details
-        public static string EXTERNAL_RESEARCH_CONSENSUS_DETAIL = "Consensus Detail External Research 4.1.6.1";
+        public static string EXTERNAL_RESEARCH_CONSENSUS_DETAIL = "Consensus Estimates Details(4.1.6.1)";
         #endregion
 
         #region Estimates Comparison
