@@ -68,8 +68,9 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL,
-                Content = null
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                RestoredHeight = 300,
+                Content = new ViewConsensusEstimatesDetails(new ViewModelConsensusEstimatesDetails(param))
             });
             
         }

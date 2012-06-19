@@ -128,6 +128,7 @@
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
+    <Compile Include="Helpers\ExtendedDataWraper.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\DragStartedEventArgs.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
+    <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
@@ -192,6 +194,9 @@
     </Compile>
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
+      <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewFXEconomicData.xaml.cs">
       <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
@@ -306,6 +311,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewCommodityIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewConsensusEstimatesDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -475,6 +484,7 @@
     <Resource Include="Images\MoveBackward.png" />
     <Resource Include="Images\MoveForward.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

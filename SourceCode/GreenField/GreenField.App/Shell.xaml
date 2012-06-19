@@ -177,12 +177,12 @@
                                 </telerik:RadRibbonDropDownButton.DropDownContent>
                             </telerik:RadRibbonDropDownButton>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonGroup Header="" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
                             <telerik:RadRibbonDropDownButton Text="Estimates" LargeImage="Images/notes.png" Size="Large" Background="#9DA6C0" >
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                                         <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large" Background="#9DA6C0"/>
-                                        <telerik:RadRibbonButton Text="Detailed Estimates"  LargeImage="Images/mobilenotes.png" Size="Large" Background="#9DA6C0"/>
+                                        <telerik:RadRibbonButton Text="Detailed Estimates"  LargeImage="Images/mobilenotes.png" Size="Large" Background="#9DA6C0" Command="{Binding DashboardCompanyEstimatesDetailedCommand}"/>
                                         <telerik:RadRibbonButton Text="Comparison" LargeImage="Images/com.png" Size="Large" Background="#9DA6C0"/>
                                     </telerik:RadRibbonGroup>
                                 </telerik:RadRibbonDropDownButton.DropDownContent>
@@ -372,7 +372,7 @@
                             <TextBlock Text="Others" Foreground="White" FontSize="12" FontFamily="Arial" FontWeight="Bold"/>
                         </telerik:RadRibbonTab.Header>
                         <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonDropDownButton Text="Administration" LargeImage="Images/User.png" Size="Large" Background="#9DA6C0" >
+                            <telerik:RadRibbonDropDownButton Text="Administration" LargeImage="Images/User.png" Size="Large" Background="#9DA6C0" IsEnabled="True">
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >
                                         <telerik:RadRibbonButton Text="User Management" LargeImage="Images/User.png" Size="Large" Command="{Binding UserManagementCommand}" Background="#9DA6C0" />

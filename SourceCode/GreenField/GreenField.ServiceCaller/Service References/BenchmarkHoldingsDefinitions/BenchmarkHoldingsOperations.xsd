@@ -43,6 +43,7 @@
         <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q4:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="isExCashSecurity" type="xs:boolean" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -59,6 +60,7 @@
         <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q6:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="isExCashSecurity" type="xs:boolean" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -75,6 +77,7 @@
         <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q8:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="isExCashSecurity" type="xs:boolean" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -90,6 +93,7 @@
       <xs:sequence>
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q10:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -138,6 +142,7 @@
         <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolioSelectionData" nillable="true" type="q15:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
+        <xs:element minOccurs="0" name="excludeCash" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

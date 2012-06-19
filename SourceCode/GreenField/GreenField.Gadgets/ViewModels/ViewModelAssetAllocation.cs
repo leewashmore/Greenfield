@@ -76,10 +76,10 @@ namespace GreenField.Gadgets.ViewModels
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-
+            ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
             if ((_portfolioSelectionData != null) && (_effectiveDate != null))
             {
-                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
+                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru,ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
@@ -87,6 +87,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSet);
+                _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
             }
         }
 
@@ -135,6 +136,22 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Check to include Cash Securities
+        /// </summary>
+        private bool _excludeCashSecurities;
+        public bool ExcludeCashSecurities
+        {
+            get
+            {
+                return _excludeCashSecurities;
+            }
+            set
+            {
+                _excludeCashSecurities = value;
+                this.RaisePropertyChanged(() => this.ExcludeCashSecurities);
+            }
+        }
 
         #endregion
         #endregion
@@ -167,7 +184,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -200,7 +217,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
+                        _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
                     }
                 }
                 else
@@ -228,7 +245,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (_effectiveDate != null && _portfolioSelectionData != null)
                 {
                     BusyIndicatorStatus = true;
-                    _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, RetrieveAssetAllocationDataCallbackMethod);
+                    _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
                 }
 
             }
@@ -240,6 +257,29 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        public void HandleExCashSecuritySetEvent(bool excludeCash)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+
+                Logging.LogMethodParameter(_logger, methodNamespace, excludeCash, 1);
+                ExcludeCashSecurities = excludeCash;
+                if (_effectiveDate != null && _portfolioSelectionData != null)
+                {
+                    BusyIndicatorStatus = true;
+                    _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
         #endregion
 

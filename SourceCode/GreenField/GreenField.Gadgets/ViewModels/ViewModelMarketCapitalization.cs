@@ -73,6 +73,9 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member to store market cap gadget visibilty
         /// </summary>
+
+        private bool _lookThruEnabled = false;
+
         private Visibility _marketCapGadgetVisibility = Visibility.Collapsed;
         #endregion
 
@@ -88,6 +91,7 @@ namespace GreenField.Gadgets.ViewModels
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _mktCapDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
             IsExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
+            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
             //if (_effectiveDate != null && _PortfolioSelectionData != null && _benchmarkSelectionData != null)
             //{
@@ -95,7 +99,7 @@ namespace GreenField.Gadgets.ViewModels
             //}
             if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
             {
-                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, _lookThruEnabled, RetrieveMarketCapitalizationDataCallbackMethod);
             }
             if (_eventAggregator != null)
             {
@@ -104,6 +108,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
                 _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Subscribe(HandleExCashSecuritySetEvent);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
         }
         #endregion
@@ -208,6 +213,19 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        /// <summary>
+        /// Check to include LookThru or Not
+        /// </summary>
+        private bool _enableLookThru;
+        public bool EnableLookThru
+        {
+            get { return _enableLookThru; }
+            set
+            {
+                _enableLookThru = value;
+                this.RaisePropertyChanged(() => this.EnableLookThru);
+            }
+        }
 
 
         #endregion
@@ -241,9 +259,9 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
                     {
                         if (_mktCapDataFilter != null)
-                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
-                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                         if (MarketCapitalizationDataLoadEvent != null)
                             MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -278,9 +296,9 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && _portfolioSelectionData != null)// && _mktCapDataFilter != null)
                     {
                         if (_mktCapDataFilter != null)
-                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                         else
-                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                            _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                         if (MarketCapitalizationDataLoadEvent != null)
                             MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -314,7 +332,7 @@ namespace GreenField.Gadgets.ViewModels
                     _mktCapDataFilter = filterSelectionData;
                     if (_effectiveDate != null && _portfolioSelectionData != null && _mktCapDataFilter != null)
                     {
-                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity,  EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                         if (MarketCapitalizationDataLoadEvent != null)
                             MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     }
@@ -381,9 +399,9 @@ namespace GreenField.Gadgets.ViewModels
                         if (_effectiveDate != null && _portfolioSelectionData != null )//&& _mktCapDataFilter != null)
                     {
                             if(_mktCapDataFilter != null)
-                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
                             else
-                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, RetrieveMarketCapitalizationDataCallbackMethod);
+                                _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
 
                             if (MarketCapitalizationDataLoadEvent != null)
                             MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -398,6 +416,37 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
+        public void HandleLookThruReferenceSetEvent(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                EnableLookThru = enableLookThru;
+
+                if (_effectiveDate != null && _portfolioSelectionData != null)//&& _mktCapDataFilter != null)
+                {
+                    if (_mktCapDataFilter != null)
+                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
+                    else
+                        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
+
+                    if (MarketCapitalizationDataLoadEvent != null)
+                        MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                }     
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
         #endregion
 
         #region EventUnSubscribe
@@ -410,6 +459,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             _eventAggregator.GetEvent<MarketCapitalizationSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
             _eventAggregator.GetEvent<ExCashSecuritySetEvent>().Unsubscribe(HandleExCashSecuritySetEvent);
+            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
         }
 
         #endregion

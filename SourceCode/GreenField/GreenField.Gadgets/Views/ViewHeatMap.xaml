@@ -18,8 +18,8 @@
             <telerik:ExtendedDataConverter x:Key="ExtendedDataConverter" />
             <DataTemplate x:Key="CustomToolTipDataTemplate">
                 <StackPanel Margin="10,5">
-                    <TextBlock FontWeight="Bold" Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
-                    <TextBlock Text="{Binding Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD'}" />
+                    <TextBlock FontWeight="Bold" Text="{Binding Path=Data, Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
+                    <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD'}" />
                 </StackPanel>
             </DataTemplate>
         </Grid.Resources>
