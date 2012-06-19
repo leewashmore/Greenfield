@@ -41,4 +41,22 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />
+  <xs:complexType name="ArrayOfBasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BasicData" nillable="true" type="tns:BasicData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBasicData" nillable="true" type="tns:ArrayOfBasicData" />
+  <xs:complexType name="BasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AverageVolume" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BarraBeta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Beta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EnterpriseValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketCapitalization" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeekRange52" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasicData" nillable="true" type="tns:BasicData" />
 </xs:schema>

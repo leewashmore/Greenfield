@@ -35,4 +35,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveBasicData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q7:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveBasicDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveBasicDataResult" nillable="true" type="q8:ArrayOfBasicData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

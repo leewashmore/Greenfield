@@ -89,5 +89,60 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+        /// <summary>
+        /// Gets BAsic Data
+        /// </summary>
+        /// <param name="securityId"></param>
+        /// <returns>Basic data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<BasicData> RetrieveBasicData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<BasicData> result = new List<BasicData>();
+                if (entitySelectionData == null)
+                    return null;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();
+
+                if (data == null)
+                    return null;
+
+                BasicData basicData = new BasicData();
+                basicData.WeekRange52 = data.FIFTYTWO_WEEK_LOW - data.FIFTYTWO_WEEK_HIGH;
+                basicData.AverageVolume = data.SECURITY_VOLUME_AVG_6M;
+                basicData.SharesOutstanding = data.SHARES_OUTSTANDING;
+                //basicData.Beta = data.BETA;
+
+                //AverageVolume= basicData.;
+                //MarketCapitalization= basicData.;
+                //SharesOutstanding= basicData.;
+                //Beta= basicData.;
+                //BarraBeta = basicData .;               
+                result.Add(basicData);          
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
     }
 }

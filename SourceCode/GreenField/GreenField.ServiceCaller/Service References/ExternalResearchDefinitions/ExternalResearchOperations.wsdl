@@ -28,6 +28,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveFinancialStatement_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveBasicData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveBasicData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveBasicData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveBasicDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveBasicData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -38,6 +47,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatement" message="tns:ExternalResearchOperations_RetrieveFinancialStatement_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementResponse" message="tns:ExternalResearchOperations_RetrieveFinancialStatement_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveFinancialStatement_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveBasicData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicData" message="tns:ExternalResearchOperations_RetrieveBasicData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataResponse" message="tns:ExternalResearchOperations_RetrieveBasicData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveBasicData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -56,6 +70,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveFinancialStatement">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatement" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveBasicData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveBasicData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

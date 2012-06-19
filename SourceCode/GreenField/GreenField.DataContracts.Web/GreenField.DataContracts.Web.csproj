@@ -47,6 +47,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\AttributionData.cs">
       <Link>DataContracts\AttributionData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\BasicData.cs">
+      <Link>DataContracts\BasicData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\BenchmarkReturnData.cs">
       <Link>DataContracts\BenchmarkReturnData.cs</Link>
     </Compile>

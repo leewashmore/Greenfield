@@ -49,7 +49,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member stores commodity grid visibility
         /// </summary>
-        private Visibility _commodityGridVisibility = Visibility.Collapsed;
+        private Visibility _commodityGridVisibility = Visibility.Collapsed;       
 
         #endregion
         #region Constructor

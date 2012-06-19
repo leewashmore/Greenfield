@@ -129,7 +129,8 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_BASIC_DATA, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = null
+                RestoredHeight = 300,
+                Content = new ViewBasicData(new ViewModelBasicData(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

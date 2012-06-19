@@ -155,6 +155,7 @@
     <Compile Include="ViewModels\PortfolioPeriodData.cs" />
     <Compile Include="ViewModels\ViewModelAssetAllocation.cs" />
     <Compile Include="ViewModels\ViewModelAttribution.cs" />
+    <Compile Include="ViewModels\ViewModelBasicData.cs" />
     <Compile Include="ViewModels\ViewModelClosingPriceChart.cs" />
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
@@ -191,6 +192,9 @@
     </Compile>
     <Compile Include="Views\Market Performance\ViewMarketPerformanceSnapshot.xaml.cs">
       <DependentUpon>ViewMarketPerformanceSnapshot.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewBasicData.xaml.cs">
+      <DependentUpon>ViewBasicData.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
@@ -309,6 +313,10 @@
     <Page Include="Views\Market Performance\ViewMarketPerformanceSnapshot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewBasicData.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewCommodityIndex.xaml">
       <SubType>Designer</SubType>

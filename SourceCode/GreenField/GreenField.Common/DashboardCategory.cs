@@ -64,6 +64,7 @@ namespace GreenField.Common
         ADMIN_INVESTMENT_COMMITTEE_MEETING_DETAILS,
         ADMIN_BROKER_RESEARCH,
         USER_DASHBOARD,
-        MKT_CAP
+        MKT_CAP,
+        COMPANY_SNAPSHOT_BASICDATA_SUMMARY
     }
 }

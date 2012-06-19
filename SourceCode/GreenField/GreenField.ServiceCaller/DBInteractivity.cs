@@ -2162,6 +2162,44 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveBasicDataAsync(entitySelectionData);
+            client.RetrieveBasicDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+            };
+
+        }
         #endregion
 
 

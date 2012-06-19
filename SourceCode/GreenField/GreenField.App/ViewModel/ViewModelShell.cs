@@ -1366,7 +1366,7 @@ namespace GreenField.App.ViewModel
                 return new DelegateCommand<object>(RoleManagementCommandMethod);
             }
         }
-
+        
         #region Dashboard
         #region Company
         #region Snapshot
@@ -1383,6 +1383,13 @@ namespace GreenField.App.ViewModel
         public ICommand DashboardCompanySnapshotTearSheetCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanySnapshotTearSheetCommandMethod); }
+        }
+        public ICommand DashboardCompanyBasicDataCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(DashboardCompanySnapshotBasicDataCommandMethod);
+            }
         }
         #endregion
 
@@ -1716,6 +1723,25 @@ namespace GreenField.App.ViewModel
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_TEAR_SHEET);
                 UpdateToolBoxSelectorVisibility();
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotTearSheet", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanySnapshotBasicDataCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_BASICDATA_SUMMARY);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewBasicData", UriKind.Relative));
             }
             catch (Exception ex)
             {

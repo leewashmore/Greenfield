@@ -269,6 +269,9 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.MKT_CAP:
                     UpdateToolBoxItemVisibility();
                     break;
+                case DashboardCategoryType.COMPANY_SNAPSHOT_BASICDATA_SUMMARY:
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility : Visibility.Visible);
+                    break;
                 default:
                     break;
             }

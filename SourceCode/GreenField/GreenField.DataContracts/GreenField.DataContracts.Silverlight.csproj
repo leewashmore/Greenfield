@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="DataContracts\AssetAllocationData.cs" />
     <Compile Include="DataContracts\AttributionData.cs" />
+    <Compile Include="DataContracts\BasicData.cs" />
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
     <Compile Include="DataContracts\ChartExtensionData.cs" />
