@@ -49,7 +49,7 @@ namespace GreenField.ServiceCaller
         /// <param name="fundSelectionData">Selected Portfolio</param>
         /// <param name="effectiveDate">selected Date</param>
         /// <param name="callback">List of AssetAllocationData</param>
-        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,bool lookThru, Action<List<AssetAllocationData>> callback);
+        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash, Action<List<AssetAllocationData>> callback);
 
         void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<SectorBreakdownData>> callback);
 
@@ -119,13 +119,13 @@ namespace GreenField.ServiceCaller
 
         void RetrieveRelativePerformanceSecurityActivePositionData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, string period, Action<List<RelativePerformanceActivePositionData>> callback, string countryID = null, string sectorID = null);
 
-        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, String country, Action<List<PerformanceGraphData>> callback);
+        void RetrievePerformanceGraphData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, String country, Action<List<PerformanceGraphData>> callback);
 
-        void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String country, Action<List<PerformanceGridData>> callback);
+        void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country, Action<List<PerformanceGridData>> callback);
 
         void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
 
-        void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate,String period, Action<List<HeatMapData>> callback);
+        void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<HeatMapData>> callback);
 
         /// <summary>
         /// Service caller method to retrieve PortfolioDetails Data
@@ -133,7 +133,7 @@ namespace GreenField.ServiceCaller
         /// <param name="objPortfolioIdentifier">Portfolio Identifier</param>
         /// <param name="objSelectedDate">Selected Date</param>
         /// <param name="callback">collection of Portfolio Details Data</param>
-        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate,bool lookThruEnabled,bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
+        void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime objSelectedDate, bool lookThruEnabled, bool excludeCash, bool objGetBenchmark, Action<List<PortfolioDetailsData>> callback);
 
         /// <summary>
         /// Service caller method to retrieve Benchmark Return Data for MultiLineBenchmarkUI- Chart
@@ -163,7 +163,7 @@ namespace GreenField.ServiceCaller
         void RetrieveMacroDatabaseKeyAnnualReportData(String countryName, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
 
         void RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryName, List<String> countryValues, Action<List<MacroDatabaseKeyAnnualReportData>> callback);
-        
+
         void RetrieveChartExtensionData(Dictionary<string, string> objSelectedEntities, DateTime objEffectiveDate, Action<List<ChartExtensionData>> callback);
 
 

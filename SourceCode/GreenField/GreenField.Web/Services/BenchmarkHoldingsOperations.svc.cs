@@ -914,7 +914,7 @@ namespace GreenField.Web.Services
         /// <param name="effectiveDate">The Selected Date</param>
         /// <returns>List of AssetAllocationData</returns>
         [OperationContract]
-        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled)
+        public List<AssetAllocationData> RetrieveAssetAllocationData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, bool excludeCash)
         {
             try
             {
@@ -938,8 +938,19 @@ namespace GreenField.Web.Services
                 {
                     #region LookThruEnabled
 
-                    dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
-                                            Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    if (excludeCash)
+                    {
+                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
+                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).ToList();
+                    }
+                    else
+                    {
+                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.
+                                                            Where(a => (a.PORTFOLIO_ID.ToUpper().Trim() == portfolioSelectionData.PortfolioId.ToUpper().Trim()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    }
+
+                    if (dimensionPortfolioHoldingsData == null)
+                        return result;
 
                     if (dimensionPortfolioHoldingsData.Count == 0)
                         return result;
@@ -961,8 +972,17 @@ namespace GreenField.Web.Services
                 {
                     #region LookThruDisabled
 
-                    dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.
-                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    if (excludeCash)
+                    {
+                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.
+                                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).ToList();
+
+                    }
+                    else
+                    {
+                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.
+                                                Where(a => (a.PORTFOLIO_ID == portfolioSelectionData.PortfolioId) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    }
 
                     if (dimensionPortfolioLTHoldingsData.Count == 0)
                         return result;

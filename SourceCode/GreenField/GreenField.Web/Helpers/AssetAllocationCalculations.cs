@@ -53,18 +53,18 @@ namespace GreenField.Web.Helpers
                         return result;
 
                     modelWeight = dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeight = dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
                     modelWeightCash = modelWeightCash + dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeightCash = portfolioWeightCash + dimensionPortfolioHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
 
                     benchmarkWeight = dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
                     benchmarkWeightCash = benchmarkWeightCash + dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
 
                     activePosition = modelWeight - benchmarkWeight;
 
@@ -79,15 +79,19 @@ namespace GreenField.Web.Helpers
                     result.Add(data);
                 }
 
-                //Inclusing CASH values
-                AssetAllocationData dataCash = new AssetAllocationData();
-                dataCash.BenchmarkWeight = benchmarkWeight;
-                dataCash.Country = "CASH";
-                dataCash.ModelWeight = modelWeightCash;
-                dataCash.PortfolioWeight = portfolioWeightCash;
-                dataCash.PortfolioId = portfolioSelectionData.PortfolioId;
-                dataCash.ActivePosition = modelWeightCash - benchmarkWeightCash;
-                result.Add(dataCash);
+                //Including CASH values
+
+                if (dimensionPortfolioHoldingsData.Any(a => a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH"))
+                {
+                    AssetAllocationData dataCash = new AssetAllocationData();
+                    dataCash.BenchmarkWeight = benchmarkWeight;
+                    dataCash.Country = "CASH";
+                    dataCash.ModelWeight = modelWeightCash;
+                    dataCash.PortfolioWeight = portfolioWeightCash;
+                    dataCash.PortfolioId = portfolioSelectionData.PortfolioId;
+                    dataCash.ActivePosition = modelWeightCash - benchmarkWeightCash;
+                    result.Add(dataCash);
+                }
 
                 return result.OrderBy(a => a.Country).ToList();
             }
@@ -97,7 +101,6 @@ namespace GreenField.Web.Helpers
                 return null;
             }
         }
-
 
         /// <summary>
         /// Static Method calculating asset allocations-LookThru View
@@ -141,18 +144,18 @@ namespace GreenField.Web.Helpers
                         return result;
 
                     modelWeight = dimensionPortfolioLTHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeight = dimensionPortfolioLTHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
                     modelWeightCash = modelWeightCash + dimensionPortfolioLTHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.ASH_EMM_MODEL_WEIGHT)) / sumModelWeight;
                     portfolioWeightCash = portfolioWeightCash + dimensionPortfolioLTHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.DIRTY_VALUE_PC)) / sumDirtyValuePC;
 
                     benchmarkWeight = dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() != "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
                     benchmarkWeightCash = benchmarkWeightCash + dimensionBenchmarkHoldingsData.
-                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
+                        Where(a => (a.COUNTRYNAME == item) && (a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH")).Sum(a => Convert.ToDecimal(a.BENCHMARK_WEIGHT));
 
                     activePosition = modelWeight - benchmarkWeight;
 
@@ -168,15 +171,17 @@ namespace GreenField.Web.Helpers
                 }
 
                 //Inclusing CASH values
-                AssetAllocationData dataCash = new AssetAllocationData();
-                dataCash.BenchmarkWeight = benchmarkWeight;
-                dataCash.Country = "CASH";
-                dataCash.ModelWeight = modelWeightCash;
-                dataCash.PortfolioWeight = portfolioWeightCash;
-                dataCash.PortfolioId = portfolioSelectionData.PortfolioId;
-                dataCash.ActivePosition = modelWeightCash - benchmarkWeightCash;
-                result.Add(dataCash);
-
+                if (dimensionPortfolioLTHoldingsData.Any(a => a.SECURITYTHEMECODE.ToUpper().Trim() == "CASH"))
+                {
+                    AssetAllocationData dataCash = new AssetAllocationData();
+                    dataCash.BenchmarkWeight = benchmarkWeight;
+                    dataCash.Country = "CASH";
+                    dataCash.ModelWeight = modelWeightCash;
+                    dataCash.PortfolioWeight = portfolioWeightCash;
+                    dataCash.PortfolioId = portfolioSelectionData.PortfolioId;
+                    dataCash.ActivePosition = modelWeightCash - benchmarkWeightCash;
+                    result.Add(dataCash);
+                }
                 return result.OrderBy(a => a.Country).ToList();
             }
             catch (Exception ex)
