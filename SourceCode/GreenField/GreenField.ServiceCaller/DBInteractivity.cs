@@ -392,10 +392,10 @@ namespace GreenField.ServiceCaller
         /// <param name="fundSelectionData">Selected Portfolio</param>
         /// <param name="effectiveDate">selected Date</param>
         /// <param name="callback">List of AssetAllocationData</param>
-        public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, Action<List<AssetAllocationData>> callback)
+        public void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash, Action<List<AssetAllocationData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate, lookThru);
+            client.RetrieveAssetAllocationDataAsync(fundSelectionData, effectiveDate, lookThru, excludeCash);
             client.RetrieveAssetAllocationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

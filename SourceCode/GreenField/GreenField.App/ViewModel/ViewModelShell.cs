@@ -1031,9 +1031,9 @@ namespace GreenField.App.ViewModel
         private Visibility _lookThruSelectorVisibility = Visibility.Collapsed;
         public Visibility LookThruSelectorVisibility
         {
-            get 
+            get
             {
-                return _lookThruSelectorVisibility; 
+                return _lookThruSelectorVisibility;
             }
             set
             {
@@ -1050,7 +1050,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return _isLookThruEnabled; 
+                return _isLookThruEnabled;
             }
             set
             {
@@ -1060,7 +1060,7 @@ namespace GreenField.App.ViewModel
                 _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Publish(value);
             }
         }
-        
+
         #endregion
 
         #endregion

@@ -14,7 +14,7 @@ namespace GreenField.Gadgets.Helpers
     public class Flipper
     {
         public enum Direction { LeftToRight, RightToLeft }
-
+                
         /// <summary>
         /// Method to flip the Controls
         /// </summary>
@@ -27,7 +27,6 @@ namespace GreenField.Gadgets.Helpers
             // setup visible plane
             over.Visibility = Visibility.Visible;
             over.Projection = new PlaneProjection { CenterOfRotationY = 0 };
-
             // setup hidden plane
             under.Visibility = Visibility.Collapsed;
             under.Projection = new PlaneProjection { CenterOfRotationY = 0 };

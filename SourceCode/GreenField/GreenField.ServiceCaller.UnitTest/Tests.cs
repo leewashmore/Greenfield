@@ -282,9 +282,9 @@ namespace Greenfield.ServiceCaller.UnitTest
                     EnqueueTestComplete();
                 });
         }
-        
-        #endregion 
-        
+
+        #endregion
+
         #endregion
 
         #region Build 2
@@ -741,9 +741,10 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = null;
+            bool excludeCash = false;
             bool lookThru = false;
             DateTime effectiveDate = new DateTime(2012, 1, 31);
-            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, (List<AssetAllocationData> resultSet) =>
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, excludeCash, (List<AssetAllocationData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
                 EnqueueTestComplete();
@@ -763,8 +764,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool excludeCash = false;
             bool lookThru = false;
-            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, (List<AssetAllocationData> resultSet) =>
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, excludeCash, (List<AssetAllocationData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Asset Allocation Data should be Empty");
                 EnqueueTestComplete();
@@ -783,8 +785,9 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
+            bool excludeCash = false;
             bool lookThru = false;
-            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, (List<AssetAllocationData> resultSet) =>
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, excludeCash, (List<AssetAllocationData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Asset Allocation Data should not be empty");
                 EnqueueTestComplete();
@@ -804,7 +807,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABC" };
             DateTime effectiveDate = new DateTime(2012, 1, 31);
             bool lookThru = false;
-            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, (List<AssetAllocationData> resultSet) =>
+            bool excludeCash = false;
+            instance.RetrieveAssetAllocationData(portfolio, effectiveDate, lookThru, excludeCash, (List<AssetAllocationData> resultSet) =>
             {
                 Assert.AreEqual(0, resultSet.Count, "Asset Allocation Data Should Be Empty");
                 EnqueueTestComplete();
