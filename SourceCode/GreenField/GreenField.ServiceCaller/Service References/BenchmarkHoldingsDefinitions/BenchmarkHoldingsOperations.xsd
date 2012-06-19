@@ -159,6 +159,7 @@
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -176,6 +177,7 @@
         <xs:element minOccurs="0" name="effectiveDate" type="xs:dateTime" />
         <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

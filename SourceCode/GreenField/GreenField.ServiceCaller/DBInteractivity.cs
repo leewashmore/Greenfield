@@ -616,10 +616,10 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">The filter type selected by the user</param>
         /// <param name="filterValue">The filter value selected by the user</param>
         /// <param name="callback"></param>   
-        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
+        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue);
+            client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataForRegionCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -661,10 +661,10 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">The filter type selected by the user</param>
         /// <param name="filterValue">The filter value selected by the user</param>
         /// <param name="callback"></param>  
-        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, Action<List<HoldingsPercentageData>> callback)
+        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue);
+            client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
             client.RetrieveHoldingsPercentageDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

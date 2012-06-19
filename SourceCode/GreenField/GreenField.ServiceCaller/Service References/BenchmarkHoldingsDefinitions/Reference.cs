@@ -127,7 +127,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHoldingsPercentageDataServ" +
             "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.HoldingsPercentageData> EndRetrieveHoldingsPercentageData(System.IAsyncResult result);
         
@@ -136,7 +136,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "egionResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveHoldingsPercentageDataForR" +
             "egionServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.HoldingsPercentageData> EndRetrieveHoldingsPercentageDataForRegion(System.IAsyncResult result);
         
@@ -1140,8 +1140,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1154,7 +1154,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
             string filterType = ((string)(inValues[2]));
             string filterValue = ((string)(inValues[3]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+            bool lookThruEnabled = ((bool)(inValues[4]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHoldingsPercentageData(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
         }
         
         private object[] OnEndRetrieveHoldingsPercentageData(System.IAsyncResult result) {
@@ -1170,11 +1171,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveHoldingsPercentageDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
-            this.RetrieveHoldingsPercentageDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, null);
+        public void RetrieveHoldingsPercentageDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled) {
+            this.RetrieveHoldingsPercentageDataAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, null);
         }
         
-        public void RetrieveHoldingsPercentageDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
+        public void RetrieveHoldingsPercentageDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, object userState) {
             if ((this.onBeginRetrieveHoldingsPercentageDataDelegate == null)) {
                 this.onBeginRetrieveHoldingsPercentageDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHoldingsPercentageData);
             }
@@ -1188,12 +1189,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                         portfolioSelectionData,
                         effectiveDate,
                         filterType,
-                        filterValue}, this.onEndRetrieveHoldingsPercentageDataDelegate, this.onRetrieveHoldingsPercentageDataCompletedDelegate, userState);
+                        filterValue,
+                        lookThruEnabled}, this.onEndRetrieveHoldingsPercentageDataDelegate, this.onRetrieveHoldingsPercentageDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1206,7 +1208,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
             string filterType = ((string)(inValues[2]));
             string filterValue = ((string)(inValues[3]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, callback, asyncState);
+            bool lookThruEnabled = ((bool)(inValues[4]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveHoldingsPercentageDataForRegion(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
         }
         
         private object[] OnEndRetrieveHoldingsPercentageDataForRegion(System.IAsyncResult result) {
@@ -1222,11 +1225,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue) {
-            this.RetrieveHoldingsPercentageDataForRegionAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, null);
+        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled) {
+            this.RetrieveHoldingsPercentageDataForRegionAsync(portfolioSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled, null);
         }
         
-        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, object userState) {
+        public void RetrieveHoldingsPercentageDataForRegionAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, object userState) {
             if ((this.onBeginRetrieveHoldingsPercentageDataForRegionDelegate == null)) {
                 this.onBeginRetrieveHoldingsPercentageDataForRegionDelegate = new BeginOperationDelegate(this.OnBeginRetrieveHoldingsPercentageDataForRegion);
             }
@@ -1240,7 +1243,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                         portfolioSelectionData,
                         effectiveDate,
                         filterType,
-                        filterValue}, this.onEndRetrieveHoldingsPercentageDataForRegionDelegate, this.onRetrieveHoldingsPercentageDataForRegionCompletedDelegate, userState);
+                        filterValue,
+                        lookThruEnabled}, this.onEndRetrieveHoldingsPercentageDataForRegionDelegate, this.onRetrieveHoldingsPercentageDataForRegionCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1657,12 +1661,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginRetrieveHoldingsPercentageData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = filterType;
                 _args[3] = filterValue;
+                _args[4] = lookThruEnabled;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveHoldingsPercentageData", _args, callback, asyncState);
                 return _result;
             }
@@ -1673,12 +1678,13 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[4];
+            public System.IAsyncResult BeginRetrieveHoldingsPercentageDataForRegion(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
                 _args[0] = portfolioSelectionData;
                 _args[1] = effectiveDate;
                 _args[2] = filterType;
                 _args[3] = filterValue;
+                _args[4] = lookThruEnabled;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveHoldingsPercentageDataForRegion", _args, callback, asyncState);
                 return _result;
             }

@@ -52,6 +52,11 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member containing the Key Value Pair
         /// </summary>
         private FilterSelectionData _holdingDataFilter;
+
+        /// <summary>
+        /// Private member to store info about look thru enabled or not
+        /// </summary>
+        private bool _lookThruEnabled = false;
       
         #endregion
 
@@ -68,15 +73,16 @@ namespace GreenField.Gadgets.ViewModels
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
+            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
             if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
             if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
             {
-                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate),"Show Everything"," ", RetrieveHoldingsPercentageDataCallbackMethod);
+                _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate),"Show Everything"," ",_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -84,6 +90,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSetEvent);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateReferenceSetEvent);
                 _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }           
 
         }
@@ -139,7 +146,7 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDateString = Convert.ToDateTime(EffectiveDate).ToLongDateString();
                     if (_PortfolioSelectionData != null && EffectiveDate != null && _holdingDataFilter !=null)
                     {
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
 
                     }
 
@@ -190,14 +197,14 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
 
                     if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ",_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -233,14 +240,14 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
 
                     if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ",_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -274,7 +281,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartDataLoadedEvent)
                             holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveHoldingsPercentageDataCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues,_lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
                     }
                 }
                 else
@@ -289,8 +296,43 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);       
         }
-    
 
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
+        public void HandleLookThruReferenceSetEvent(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                
+                    Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                    _lookThruEnabled = enableLookThru;
+
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
+
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null)
+                    {
+                        if (null != holdingsPieChartDataLoadedEvent)
+                            holdingsPieChartDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveHoldingsPercentageData(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), "Show Everything", " ", _lookThruEnabled, RetrieveHoldingsPercentageDataCallbackMethod);
+                    }
+                
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
         #endregion
 
@@ -341,6 +383,8 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSetEvent);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateReferenceSetEvent);
             _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
+            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
+
         }
 
         #endregion

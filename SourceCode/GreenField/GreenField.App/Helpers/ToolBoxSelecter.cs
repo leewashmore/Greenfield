@@ -137,8 +137,13 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_SUMMARY:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible
-                        , filterTypeSelectorVisibility: Visibility.Visible, filterValueSelectorVisibility: Visibility.Visible, securitySelectorVisibility: Visibility.Visible, periodSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
+                    effectiveDateSelectorVisibility: Visibility.Visible,
+                         filterTypeSelectorVisibility: Visibility.Visible,
+                        filterValueSelectorVisibility: Visibility.Visible,
+                        securitySelectorVisibility: Visibility.Visible, 
+                        periodSelectorVisibility: Visibility.Visible,
+                        lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_COMPOSITION:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, 
