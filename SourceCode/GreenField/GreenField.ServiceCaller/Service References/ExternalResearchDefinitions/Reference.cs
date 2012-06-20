@@ -17,20 +17,65 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="IssuerReferenceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class IssuerReferenceData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private string DescriptionField;
+        private string CountryCodeField;
+        
+        private string CountryNameField;
+        
+        private System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> CurrencyReferenceDataField;
+        
+        private string IssuerIdField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
+        public string CountryCode {
             get {
-                return this.DescriptionField;
+                return this.CountryCodeField;
             }
             set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
+                if ((object.ReferenceEquals(this.CountryCodeField, value) != true)) {
+                    this.CountryCodeField = value;
+                    this.RaisePropertyChanged("CountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryName {
+            get {
+                return this.CountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryNameField, value) != true)) {
+                    this.CountryNameField = value;
+                    this.RaisePropertyChanged("CountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> CurrencyReferenceData {
+            get {
+                return this.CurrencyReferenceDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyReferenceDataField, value) != true)) {
+                    this.CurrencyReferenceDataField = value;
+                    this.RaisePropertyChanged("CurrencyReferenceData");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
                 }
             }
         }
@@ -47,6 +92,68 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CurrencySelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class CurrencySelectionData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
+        
+        private string CurrencyCodeField;
+        
+        private string CurrencyNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrencyCode {
+            get {
+                return this.CurrencyCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyCodeField, value) != true)) {
+                    this.CurrencyCodeField = value;
+                    this.RaisePropertyChanged("CurrencyCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrencyName {
+            get {
+                return this.CurrencyNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyNameField, value) != true)) {
+                    this.CurrencyNameField = value;
+                    this.RaisePropertyChanged("CurrencyName");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData))]
+    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData))]
+    public partial class ComplexObject : GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FinancialStatementData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class FinancialStatementData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
         
@@ -57,6 +164,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private string BOLD_FONTField;
         
         private string CALCULATION_DIAGRAMField;
+        
+        private string CURRENCYField;
         
         private string DATA_DESCField;
         
@@ -69,6 +178,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private string PERIODField;
         
         private string PERIOD_TYPEField;
+        
+        private System.Nullable<int> REPORTED_MONTHField;
         
         private string ROOT_SOURCEField;
         
@@ -124,6 +235,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.CALCULATION_DIAGRAMField, value) != true)) {
                     this.CALCULATION_DIAGRAMField = value;
                     this.RaisePropertyChanged("CALCULATION_DIAGRAM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CURRENCY {
+            get {
+                return this.CURRENCYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CURRENCYField, value) != true)) {
+                    this.CURRENCYField = value;
+                    this.RaisePropertyChanged("CURRENCY");
                 }
             }
         }
@@ -207,6 +331,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> REPORTED_MONTH {
+            get {
+                return this.REPORTED_MONTHField;
+            }
+            set {
+                if ((this.REPORTED_MONTHField.Equals(value) != true)) {
+                    this.REPORTED_MONTHField = value;
+                    this.RaisePropertyChanged("REPORTED_MONTH");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ROOT_SOURCE {
             get {
                 return this.ROOT_SOURCEField;
@@ -248,10 +385,23 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
-    public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+    public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
         
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
         
@@ -263,35 +413,30 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
-    public partial class ComplexObject : GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject {
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ExternalResearchDefinitions.ExternalResearchOperations")]
     public interface ExternalResearchOperations {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerIdResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerIdServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveIssuerId(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerReferenceData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerReferenceDataResponse" +
+            "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerReferenceDataServiceF" +
+            "aultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveIssuerReferenceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        string EndRetrieveIssuerId(System.IAsyncResult result);
+        GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData EndRetrieveIssuerReferenceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatement", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementServiceFa" +
             "ultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> EndRetrieveFinancialStatement(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> EndRetrieveFinancialStatement(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveBasicData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> EndRetrieveBasicData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.BasicData> EndRetrieveBasicData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -300,19 +445,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveIssuerIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveIssuerReferenceDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveIssuerIdCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveIssuerReferenceDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public string Result {
+        public GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((string)(this.results[0]));
+                return ((GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData)(this.results[0]));
             }
         }
     }
@@ -328,10 +473,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             this.results = results;
         }
         
-        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>)(this.results[0]));
             }
         }
     }
@@ -347,10 +492,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             this.results = results;
         }
         
-        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.BasicData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.BasicData>)(this.results[0]));
             }
         }
     }
@@ -359,11 +504,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
-        private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
+        private BeginOperationDelegate onBeginRetrieveIssuerReferenceDataDelegate;
         
-        private EndOperationDelegate onEndRetrieveIssuerIdDelegate;
+        private EndOperationDelegate onEndRetrieveIssuerReferenceDataDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveIssuerIdCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveIssuerReferenceDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveFinancialStatementDelegate;
         
@@ -430,7 +575,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public event System.EventHandler<RetrieveIssuerIdCompletedEventArgs> RetrieveIssuerIdCompleted;
+        public event System.EventHandler<RetrieveIssuerReferenceDataCompletedEventArgs> RetrieveIssuerReferenceDataCompleted;
         
         public event System.EventHandler<RetrieveFinancialStatementCompletedEventArgs> RetrieveFinancialStatementCompleted;
         
@@ -441,58 +586,58 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveIssuerId(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveIssuerId(entitySelectionData, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveIssuerReferenceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveIssuerReferenceData(entitySelectionData, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        string GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveIssuerId(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveIssuerId(result);
+        GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveIssuerReferenceData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveIssuerReferenceData(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveIssuerId(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginRetrieveIssuerReferenceData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveIssuerId(entitySelectionData, callback, asyncState);
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveIssuerReferenceData(entitySelectionData, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveIssuerId(System.IAsyncResult result) {
-            string retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveIssuerId(result);
+        private object[] OnEndRetrieveIssuerReferenceData(System.IAsyncResult result) {
+            GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveIssuerReferenceData(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveIssuerIdCompleted(object state) {
-            if ((this.RetrieveIssuerIdCompleted != null)) {
+        private void OnRetrieveIssuerReferenceDataCompleted(object state) {
+            if ((this.RetrieveIssuerReferenceDataCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveIssuerIdCompleted(this, new RetrieveIssuerIdCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveIssuerReferenceDataCompleted(this, new RetrieveIssuerReferenceDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveIssuerIdAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
-            this.RetrieveIssuerIdAsync(entitySelectionData, null);
+        public void RetrieveIssuerReferenceDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveIssuerReferenceDataAsync(entitySelectionData, null);
         }
         
-        public void RetrieveIssuerIdAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
-            if ((this.onBeginRetrieveIssuerIdDelegate == null)) {
-                this.onBeginRetrieveIssuerIdDelegate = new BeginOperationDelegate(this.OnBeginRetrieveIssuerId);
+        public void RetrieveIssuerReferenceDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveIssuerReferenceDataDelegate == null)) {
+                this.onBeginRetrieveIssuerReferenceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveIssuerReferenceData);
             }
-            if ((this.onEndRetrieveIssuerIdDelegate == null)) {
-                this.onEndRetrieveIssuerIdDelegate = new EndOperationDelegate(this.OnEndRetrieveIssuerId);
+            if ((this.onEndRetrieveIssuerReferenceDataDelegate == null)) {
+                this.onEndRetrieveIssuerReferenceDataDelegate = new EndOperationDelegate(this.OnEndRetrieveIssuerReferenceData);
             }
-            if ((this.onRetrieveIssuerIdCompletedDelegate == null)) {
-                this.onRetrieveIssuerIdCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveIssuerIdCompleted);
+            if ((this.onRetrieveIssuerReferenceDataCompletedDelegate == null)) {
+                this.onRetrieveIssuerReferenceDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveIssuerReferenceDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveIssuerIdDelegate, new object[] {
-                        entitySelectionData}, this.onEndRetrieveIssuerIdDelegate, this.onRetrieveIssuerIdCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currency, callback, asyncState);
+            base.InvokeAsync(this.onBeginRetrieveIssuerReferenceDataDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveIssuerReferenceDataDelegate, this.onRetrieveIssuerReferenceDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveFinancialStatement(System.IAsyncResult result) {
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currencyreferenceData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveFinancialStatement(System.IAsyncResult result) {
             return base.Channel.EndRetrieveFinancialStatement(result);
         }
         
@@ -502,12 +647,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[2]));
             GreenField.DataContracts.FinancialStatementFiscalType fiscalType = ((GreenField.DataContracts.FinancialStatementFiscalType)(inValues[3]));
             GreenField.DataContracts.FinancialStatementStatementType statementType = ((GreenField.DataContracts.FinancialStatementStatementType)(inValues[4]));
-            string currency = ((string)(inValues[5]));
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currency, callback, asyncState);
+            System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData = ((System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData>)(inValues[5]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currencyreferenceData, callback, asyncState);
         }
         
         private object[] OnEndRetrieveFinancialStatement(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveFinancialStatement(result);
+            System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveFinancialStatement(result);
             return new object[] {
                     retVal};
         }
@@ -519,11 +664,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency) {
-            this.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency, null);
+        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData) {
+            this.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currencyreferenceData, null);
         }
         
-        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, object userState) {
+        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData, object userState) {
             if ((this.onBeginRetrieveFinancialStatementDelegate == null)) {
                 this.onBeginRetrieveFinancialStatementDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFinancialStatement);
             }
@@ -539,7 +684,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         periodType,
                         fiscalType,
                         statementType,
-                        currency}, this.onEndRetrieveFinancialStatementDelegate, this.onRetrieveFinancialStatementCompletedDelegate, userState);
+                        currencyreferenceData}, this.onEndRetrieveFinancialStatementDelegate, this.onRetrieveFinancialStatementCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -548,7 +693,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveBasicData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.BasicData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveBasicData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveBasicData(result);
         }
         
@@ -558,7 +703,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         private object[] OnEndRetrieveBasicData(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveBasicData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.BasicData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveBasicData(result);
             return new object[] {
                     retVal};
         }
@@ -664,34 +809,34 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginRetrieveIssuerId(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveIssuerReferenceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = entitySelectionData;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveIssuerId", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveIssuerReferenceData", _args, callback, asyncState);
                 return _result;
             }
             
-            public string EndRetrieveIssuerId(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData EndRetrieveIssuerReferenceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                string _result = ((string)(base.EndInvoke("RetrieveIssuerId", _args, result)));
+                GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData _result = ((GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData)(base.EndInvoke("RetrieveIssuerReferenceData", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.CurrencySelectionData> currencyreferenceData, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[6];
                 _args[0] = issuerID;
                 _args[1] = dataSource;
                 _args[2] = periodType;
                 _args[3] = fiscalType;
                 _args[4] = statementType;
-                _args[5] = currency;
+                _args[5] = currencyreferenceData;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveFinancialStatement", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> EndRetrieveFinancialStatement(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> EndRetrieveFinancialStatement(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>)(base.EndInvoke("RetrieveFinancialStatement", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>)(base.EndInvoke("RetrieveFinancialStatement", _args, result)));
                 return _result;
             }
             
@@ -702,9 +847,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> EndRetrieveBasicData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.BasicData> EndRetrieveBasicData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData>)(base.EndInvoke("RetrieveBasicData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.BasicData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.BasicData>)(base.EndInvoke("RetrieveBasicData", _args, result)));
                 return _result;
             }
         }

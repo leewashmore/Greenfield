@@ -63,19 +63,7 @@ namespace GreenField.Common
         public static Int32 FATAL_LEVEL = 1;
     }
 
-    public delegate void PeriodColumnNavigationEventHandler();
-    public static class PeriodColumn
-    {
-        public static event PeriodColumnNavigationEventHandler NavigationCompleted = delegate { };
-        public static void RaiseNavigationCompleted()
-        {
-            PeriodColumnNavigationEventHandler navigationEvent = NavigationCompleted;
-            if (navigationEvent != null)
-            {
-                navigationEvent();
-            }
-        }
-    }
+    
 
     public delegate void DataRetrievalProgressIndicatorEventHandler(DataRetrievalProgressIndicatorEventArgs e);
     public class DataRetrievalProgressIndicatorEventArgs : EventArgs

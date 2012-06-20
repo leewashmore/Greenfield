@@ -48,7 +48,7 @@ namespace GreenField.Gadgets.Helpers
         private FontWeight _highlightedFontWeight = FontWeights.Bold;
 
         private TextAlignment _defaultTextAlignment = TextAlignment.Left;
-        private TextAlignment _highlightedTextAlignment = TextAlignment.Center; 
+        private TextAlignment _highlightedTextAlignment = TextAlignment.Center;
         #endregion
 
         #region Properties
@@ -58,7 +58,7 @@ namespace GreenField.Gadgets.Helpers
         public FontFamily ExportElementFontFamily { get; set; }
         public double ExportElementFontSize { get; set; }
         public FontWeight ExportElementFontWeight { get; set; }
-        public TextAlignment ExportElementTextAlignment { get; set; } 
+        public TextAlignment ExportElementTextAlignment { get; set; }
         #endregion
 
         #region Constructors
@@ -116,7 +116,7 @@ namespace GreenField.Gadgets.Helpers
             ExportElementFontSize = _defaultFontSize;
             ExportElementFontWeight = _defaultFontWeight;
             ExportElementTextAlignment = _defaultTextAlignment;
-        } 
+        }
         #endregion
     }
 
@@ -306,7 +306,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
         public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
-            , bool showGroupFooters = true)
+            , bool showGroupFooters = true, List<int> hideColumnIndex = null)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
             if (element != null)
@@ -320,6 +320,21 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.VerticalAlignment = VerticalAlignment.Center;
                 exportElement.FontWeight = element.ExportElementFontWeight;
                 exportElement.TextAlignment = element.ExportElementTextAlignment;
+            }
+
+            if (hideColumnIndex != null)
+            {
+                GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
+
+                if (exportElement.Element == ExportElement.Cell || exportElement.Element == ExportElement.FooterCell ||
+                    exportElement.Element == ExportElement.GroupFooterCell || exportElement.Element == ExportElement.GroupHeaderCell ||
+                    exportElement.Element == ExportElement.GroupIndentCell || exportElement.Element == ExportElement.HeaderCell)
+                {
+                    if (hideColumnIndex.Contains(column.DisplayIndex))
+                    {
+                        exportElement.Cancel = true;
+                    }
+                }
             }
 
             if (exportElement.Element == ExportElement.GroupFooterRow || exportElement.Element == ExportElement.GroupFooterCell)

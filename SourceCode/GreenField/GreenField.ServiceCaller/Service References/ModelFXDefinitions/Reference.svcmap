@@ -29,7 +29,6 @@
     <MetadataFile FileName="ModelFXOperations.disco" MetadataType="Disco" ID="54e9b967-a753-4eda-9833-327d61189f39" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?disco" />
     <MetadataFile FileName="ModelFXOperations3.xsd" MetadataType="Schema" ID="72bd0ad7-68c1-4520-a18a-2171904ba733" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="ModelFXOperations.wsdl" MetadataType="Wsdl" ID="8600af2b-417a-4c0e-a44b-799f946939fd" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?wsdl" />
-    <MetadataFile FileName="ModelFXOperations5.xsd" MetadataType="Schema" ID="3c790eca-5554-4e9d-a4de-ca4a35a3436b" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="ModelFXOperations4.xsd" MetadataType="Schema" ID="d06291d1-c4f2-413b-9a31-2f9306567194" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>

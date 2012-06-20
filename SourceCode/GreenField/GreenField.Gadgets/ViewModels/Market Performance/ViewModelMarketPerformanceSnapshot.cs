@@ -64,10 +64,10 @@ namespace GreenField.Gadgets.ViewModels
             SelectedMarketSnapshotSelectionInfo = param.DashboardGadgetPayload.MarketSnapshotSelectionData;
 
             //RetrieveEntitySelectionData Service Call
-            if (_dbInteractivity != null && EntitySelectionInfo == null)
+            if (SelectionData.EntitySelectionData != null && EntitySelectionInfo == null)
             {
                 BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
-                _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallbackMethod);
+                RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
             }
 
             //Subscribe to MarketPerformanceSnapshotNameReferenceSetEvent to receive snapshot selection from shell
@@ -325,7 +325,15 @@ namespace GreenField.Gadgets.ViewModels
             {
                 //Cases Where EntitySelectionInfo Data Asychronous call thread is still active
                 if (EntitySelectionInfo == null)
+                {
+                    if (SelectionData.EntitySelectionData != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
+                        RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
+                    }
                     return;
+                }
+                    
 
                 //Get all group names present in the snapshot
                 List<string> snapshotGroupNames = new List<string>();
@@ -484,7 +492,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 //Cases Where EntitySelectionInfo Data Asychronous call thread is still active
                 if (EntitySelectionInfo == null)
+                {
+                    if (SelectionData.EntitySelectionData != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Entity Selection Data ...");
+                        RetrieveEntitySelectionDataCallbackMethod(SelectionData.EntitySelectionData);
+                    }
                     return;
+                }
 
                 //Get all entities present in the snapshot
                 List<string> snapshotEntityNames = new List<string>();

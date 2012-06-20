@@ -344,5 +344,13 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        private void cmbAddSeries_DropDownOpened(object sender, EventArgs e)
+        {
+            if (SelectionData.EntitySelectionData != null && _dataContextClosingPriceChart.SeriesReferenceSource == null)
+            {
+                _dataContextClosingPriceChart.RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
+            }
+        }
     }
 }

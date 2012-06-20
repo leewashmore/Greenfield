@@ -69,6 +69,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CountrySelectionData" nillable="true" type="tns:CountrySelectionData" />
+  <xs:complexType name="ArrayOfRegionSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RegionSelectionData" nillable="true" type="tns:RegionSelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRegionSelectionData" nillable="true" type="tns:ArrayOfRegionSelectionData" />
+  <xs:complexType name="RegionSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegionSelectionData" nillable="true" type="tns:RegionSelectionData" />
   <xs:complexType name="ArrayOfFXCommodityData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />

@@ -19,20 +19,14 @@ using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewFinancialStatements : ViewBaseUserControl
+    public partial class ViewPeriodPricing : ViewBaseUserControl
     {
         #region Property
-        private ViewModelFinancialStatements _dataContextFinancialStatements;
-        public ViewModelFinancialStatements DataContextFinancialStatements
+        private ViewModelPeriodPricing _dataContextFinancialStatements;
+        public ViewModelPeriodPricing DataContextFinancialStatements
         {
-            get
-            {
-                return _dataContextFinancialStatements;
-            }
-            set
-            {
-                _dataContextFinancialStatements = value;
-            }
+            get { return _dataContextFinancialStatements; }
+            set { _dataContextFinancialStatements = value; }
         }
         #endregion
 
@@ -40,7 +34,7 @@ namespace GreenField.Gadgets.Views
         private bool _periodIsYearly = true;
         
         #region Constructor
-        public ViewFinancialStatements(ViewModelFinancialStatements dataContextSource)
+        public ViewPeriodPricing(ViewModelPeriodPricing dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
@@ -55,7 +49,7 @@ namespace GreenField.Gadgets.Views
             
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
-                if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName)
+                if (e.PeriodColumnNamespace == typeof(ViewModelPeriodPricing).FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, e);
                     _entitySelectionData = e.EntitySelectionData;
@@ -80,7 +74,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelPeriodPricing).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
             });
             e.Handled = true;
@@ -90,7 +84,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelPeriodPricing).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
             });
             e.Handled = true;
@@ -128,13 +122,13 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            String elementName = "Balance Sheet - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
+            String elementName = "Pricing - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
                 (_periodIsYearly ? this.dgFinancialReport.Columns[2].Header : this.dgFinancialReport.Columns[8].Header) + " - " +
                 (_periodIsYearly ? this.dgFinancialReport.Columns[7].Header : this.dgFinancialReport.Columns[13].Header);
             RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = elementName, Element = this.dgFinancialReport
                 , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET);
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_PRICING);
             childExportOptions.Show();
         }
 

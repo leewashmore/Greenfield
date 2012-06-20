@@ -69,7 +69,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             "", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveRegionSelectionData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSu" +
             "mmary", ReplyAction="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSu" +
@@ -147,10 +147,10 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData>)(this.results[0]));
             }
         }
     }
@@ -417,7 +417,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveRegionSelectionData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveRegionSelectionData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveRegionSelectionData(result);
         }
         
@@ -426,7 +426,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         private object[] OnEndRetrieveRegionSelectionData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveRegionSelectionData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveRegionSelectionData(result);
             return new object[] {
                     retVal};
         }
@@ -700,9 +700,9 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.RegionSelectionData>)(base.EndInvoke("RetrieveRegionSelectionData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData>)(base.EndInvoke("RetrieveRegionSelectionData", _args, result)));
                 return _result;
             }
             

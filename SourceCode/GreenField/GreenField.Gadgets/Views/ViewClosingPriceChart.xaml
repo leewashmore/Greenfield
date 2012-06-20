@@ -205,7 +205,8 @@
                                              ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
-                                             IsTextSearchEnabled="False" >
+                                             IsTextSearchEnabled="False"
+                                             DropDownOpened="cmbAddSeries_DropDownOpened">
                             <telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />

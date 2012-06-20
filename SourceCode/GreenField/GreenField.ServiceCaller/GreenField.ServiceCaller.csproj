@@ -153,6 +153,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.IndexConstituentsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.IssuerReferenceData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.MacroDatabaseKeyAnnualReportData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.MarketCapitalizationData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.MembershipUserInfo.datasource" />
@@ -163,6 +164,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.PortfolioSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.PricingReferenceData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RegionBreakdownData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceActivePositionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceSectorData.datasource" />
@@ -210,7 +212,13 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
@@ -231,9 +239,6 @@
     <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
     <None Include="Service References\ModelFXDefinitions\configuration.svcinfo" />
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ModelFXDefinitions\ModelFXOperations5.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\Reference.svcmap">

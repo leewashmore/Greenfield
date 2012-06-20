@@ -14,7 +14,7 @@ namespace GreenField.Gadgets.Models
     /// <summary>
     /// Financial Statement display data for six year annual and quarter period.
     /// </summary>
-    public class FinancialStatementDisplayData
+    public class PeriodColumnDisplayData
     {
         /// <summary>
         /// Data Description
@@ -52,6 +52,11 @@ namespace GreenField.Gadgets.Models
         public Decimal? YEAR_SIX { get; set; }
 
         /// <summary>
+        /// Data - Year Seven annual
+        /// </summary>
+        public Decimal? YEAR_SEVEN { get; set; }
+
+        /// <summary>
         /// Data - Quarter one
         /// </summary>
         public Decimal? QUARTER_ONE { get; set; }
@@ -82,48 +87,51 @@ namespace GreenField.Gadgets.Models
         public Decimal? QUARTER_SIX { get; set; }
     }
 
-    public static class PeriodRecord
+    public class PeriodRecord
     {
-        public static int YearOne;
-        public static bool YearOneIsHistorical;
+        public int YearOne;
+        public bool YearOneIsHistorical;
 
-        public static int YearTwo;
-        public static bool YearTwoIsHistorical;
+        public int YearTwo;
+        public bool YearTwoIsHistorical;
 
-        public static int YearThree;
-        public static bool YearThreeIsHistorical;
+        public int YearThree;
+        public bool YearThreeIsHistorical;
 
-        public static int YearFour;
-        public static bool YearFourIsHistorical;
+        public int YearFour;
+        public bool YearFourIsHistorical;
 
-        public static int YearFive;
-        public static bool YearFiveIsHistorical;
+        public int YearFive;
+        public bool YearFiveIsHistorical;
 
-        public static int YearSix;
-        public static bool YearSixIsHistorical;
+        public int YearSix;
+        public bool YearSixIsHistorical;
 
-        public static int QuarterOneYear;
-        public static int QuarterOneQuarter;
-        public static bool QuarterOneIsHistorical;
+        public int YearSeven;
+        public bool YearSevenIsHistorical;
 
-        public static int QuarterTwoYear;
-        public static int QuarterTwoQuarter;
-        public static bool QuarterTwoIsHistorical;
+        public int QuarterOneYear;
+        public int QuarterOneQuarter;
+        public bool QuarterOneIsHistorical;
 
-        public static int QuarterThreeYear;
-        public static int QuarterThreeQuarter;
-        public static bool QuarterThreeIsHistorical;
+        public int QuarterTwoYear;
+        public int QuarterTwoQuarter;
+        public bool QuarterTwoIsHistorical;
 
-        public static int QuarterFourYear;
-        public static int QuarterFourQuarter;
-        public static bool QuarterFourIsHistorical;
+        public int QuarterThreeYear;
+        public int QuarterThreeQuarter;
+        public bool QuarterThreeIsHistorical;
 
-        public static int QuarterFiveYear;
-        public static int QuarterFiveQuarter;
-        public static bool QuarterFiveIsHistorical;
+        public int QuarterFourYear;
+        public int QuarterFourQuarter;
+        public bool QuarterFourIsHistorical;
 
-        public static int QuarterSixYear;
-        public static int QuarterSixQuarter;
-        public static bool QuarterSixIsHistorical;
+        public int QuarterFiveYear;
+        public int QuarterFiveQuarter;
+        public bool QuarterFiveIsHistorical;
+
+        public int QuarterSixYear;
+        public int QuarterSixQuarter;
+        public bool QuarterSixIsHistorical;
     }
 }

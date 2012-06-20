@@ -46,8 +46,14 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
-            _dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
+            if (SelectionData.EntitySelectionData != null && SeriesReferenceSource == null)
+            {
+                RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
+            }
+
+            //_dbInteractivity.RetrieveEntitySelectionData(RetrieveEntitySelectionDataCallBackMethod);
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
+
             if (_entitySelectionData != null)
             {
                 HandleSecurityReferenceSet(_entitySelectionData);
@@ -710,7 +716,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method for Entity Reference Service call - Updates AutoCompleteBox
         /// </summary>
         /// <param name="result">EntityReferenceData Collection</param>
-        private void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
+        public void RetrieveEntitySelectionDataCallBackMethod(List<EntitySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

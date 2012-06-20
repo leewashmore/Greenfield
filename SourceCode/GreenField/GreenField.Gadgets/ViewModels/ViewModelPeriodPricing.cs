@@ -23,7 +23,7 @@ using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelFinancialStatements : NotificationObject
+    public class ViewModelPeriodPricing : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelFinancialStatements(DashboardGadgetParam param)
+        public ViewModelPeriodPricing(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
                     PeriodRecord = PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT ? --Iterator : ++Iterator);
                     PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
-                    FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
+                    PeriodColumnDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(null, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
                     BusyIndicatorNotification();
                 }
             };
@@ -64,35 +64,35 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region Financial Statement Information
-        private List<PeriodColumnDisplayData> _financialStatementDisplayInfo;
-        public List<PeriodColumnDisplayData> FinancialStatementDisplayInfo
+        private List<PeriodColumnDisplayData> _periodColumnDisplayData;
+        public List<PeriodColumnDisplayData> PeriodColumnDisplayInfo
         {
-            get { return _financialStatementDisplayInfo; }
+            get { return _periodColumnDisplayData; }
             set
             {
-                _financialStatementDisplayInfo = value;
-                RaisePropertyChanged(() => this.FinancialStatementDisplayInfo);
+                _periodColumnDisplayData = value;
+                RaisePropertyChanged(() => this.PeriodColumnDisplayInfo);
             }
         }
 
-        private List<FinancialStatementData> _financialStatementInfo;
-        public List<FinancialStatementData> FinancialStatementInfo
-        {
-            get
-            {
-                if (_financialStatementInfo == null)
-                    _financialStatementInfo = new List<FinancialStatementData>();
-                return _financialStatementInfo;
-            }
-            set
-            {
-                if (_financialStatementInfo != value)
-                {
-                    _financialStatementInfo = value;
-                    SetFinancialStatementDisplayInfo();
-                }
-            }
-        }
+        //private List<FinancialStatementData> _financialStatementInfo;
+        //public List<FinancialStatementData> FinancialStatementInfo
+        //{
+        //    get
+        //    {
+        //        if (_financialStatementInfo == null)
+        //            _financialStatementInfo = new List<FinancialStatementData>();
+        //        return _financialStatementInfo;
+        //    }
+        //    set
+        //    {
+        //        if (_financialStatementInfo != value)
+        //        {
+        //            _financialStatementInfo = value;
+        //            SetFinancialStatementDisplayInfo();
+        //        }
+        //    }
+        //}
         #endregion
 
         #region Period Information
@@ -326,8 +326,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_entitySelectionData != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
-                        _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
+                        //BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        //_dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
                 else
@@ -353,7 +353,7 @@ namespace GreenField.Gadgets.ViewModels
         public void SetFinancialStatementDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating Financial Statement Information based on selected preference");
-            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
+            PeriodColumnDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(null, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
             BusyIndicatorNotification();
             //PeriodColumn.NavigationCompleted -= new PeriodColumnNavigationEventHandler(SetFinancialStatementDisplayInfo);
         }
@@ -461,7 +461,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedCurrencySource = CurrencySource.IndexOf(CurrencySource.Where(record => record != "USD").FirstOrDefault());
                     }
                     
-                    FinancialStatementInfo = result;
+                    //FinancialStatementInfo = result;
                 }
                 else
                 {

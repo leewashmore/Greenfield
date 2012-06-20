@@ -124,6 +124,7 @@
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Helpers\GroupedGridRowLoadedHandler.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
+    <Compile Include="Helpers\PeriodColumns.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
@@ -150,6 +152,7 @@
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ViewModelPeriodPricing.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
     <Compile Include="ViewModels\PortfolioPeriodData.cs" />
@@ -160,6 +163,7 @@
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
+    <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
@@ -184,6 +188,9 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
+    <Compile Include="Views\ViewPeriodPricing.xaml.cs">
+      <DependentUpon>ViewPeriodPricing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Market Performance\ChildViewInsertSnapshot.xaml.cs">
       <DependentUpon>ChildViewInsertSnapshot.xaml</DependentUpon>
     </Compile>
@@ -198,6 +205,9 @@
     </Compile>
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFinancialStatements.xaml.cs">
+      <DependentUpon>ViewFinancialStatements.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
       <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
@@ -302,6 +312,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ViewPeriodPricing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Market Performance\ChildViewInsertSnapshot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -321,6 +335,10 @@
     <Page Include="Views\ViewCommodityIndex.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewFinancialStatements.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewConsensusEstimatesDetails.xaml">
       <SubType>Designer</SubType>

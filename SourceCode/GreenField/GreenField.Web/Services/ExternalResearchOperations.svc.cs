@@ -13,6 +13,7 @@ using GreenField.DAL;
 using System.Data.Objects;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
+using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -42,17 +43,29 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public string RetrieveIssuerId(EntitySelectionData entitySelectionData)
+        public IssuerReferenceData RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData)
         {
             try
             {
-                string result = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
-                        record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
-                        record.ISSUE_NAME == entitySelectionData.LongName &&
-                        record.TICKER == entitySelectionData.ShortName)
-                    .Select(record => record.ISSUER_ID).FirstOrDefault();
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                
+                GF_PORTFOLIO_HOLDINGS issuerHolding = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
+                    record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                    record.ISSUE_NAME == entitySelectionData.LongName &&
+                    record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
 
-                return result == null ? String.Empty : result;
+                if (issuerHolding == null)
+                    return new IssuerReferenceData();
+
+                IssuerReferenceData result = new IssuerReferenceData()
+                {
+                    IssuerId = issuerHolding.ISSUER_ID,
+                    CountryCode = issuerHolding.ISO_COUNTRY_CODE,
+                    CountryName = issuerHolding.COUNTRYNAME,
+                    CurrencyReferenceData = entity.Get_Currency(issuerHolding.ISO_COUNTRY_CODE).ToList()
+                };
+                
+                return result;
             }
             catch (Exception ex)
             {
@@ -66,7 +79,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency)
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData)
         {
             try
             {
@@ -76,11 +89,56 @@ namespace GreenField.Web.Services
                 string _statementType = EnumUtils.ToString(statementType);
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                ObjectResult<FinancialStatementData> result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency);
+
+                List<FinancialStatementData> result = null;
+
+                foreach (CurrencySelectionData currency in currencyreferenceData)
+                {
+                    result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency.CurrencyCode).ToList();
+                    if (result.Count().Equals(0))
+                        continue;
+                    break;
+                }
+                
                 if (result == null)
                     return null;
 
-                return result.ToList();                
+                string recordCurrency = result.First().CURRENCY;
+
+                if (recordCurrency.ToUpper() != "USD")
+                {
+                    DateTime lastMonthEndDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddDays(-1);
+                    Decimal? fxRate = entity.FX_RATES.Where(record => record.CURRENCY == recordCurrency &&
+                        record.FX_DATE == lastMonthEndDate).FirstOrDefault().FX_RATE;
+
+                    if (fxRate != null && fxRate != 0)
+                    {
+                        int netRecords = result.Count();
+                        for (int i = 0; i < netRecords; i++)
+                        {
+                            result.Add(new FinancialStatementData()
+                            {
+                                AMOUNT = result[i].AMOUNT / fxRate,
+                                AMOUNT_TYPE = result[i].AMOUNT_TYPE,
+                                BOLD_FONT = result[i].BOLD_FONT,
+                                CALCULATION_DIAGRAM = result[i].CALCULATION_DIAGRAM,
+                                CURRENCY = "USD",
+                                REPORTED_MONTH = result[i].REPORTED_MONTH,
+                                DATA_DESC = result[i].DATA_DESC,
+                                DATA_ID = result[i].DATA_ID,
+                                DECIMALS = result[i].DECIMALS,
+                                GROUP_NAME = result[i].GROUP_NAME,
+                                PERIOD = result[i].PERIOD,
+                                PERIOD_TYPE = result[i].PERIOD_TYPE,
+                                ROOT_SOURCE = result[i].ROOT_SOURCE,
+                                ROOT_SOURCE_DATE = result[i].ROOT_SOURCE_DATE,
+                                SORT_ORDER = result[i].SORT_ORDER                                
+                            });
+                        }
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -89,6 +147,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
         /// <summary>
         /// Gets BAsic Data
         /// </summary>

@@ -9,7 +9,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
-using GreenField.DataContracts.DataContracts;
+
 
 
 namespace GreenField.ServiceCaller
@@ -178,11 +178,11 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Slice 5 - External Research
-
-        void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback);
+        
+        void RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData, Action<IssuerReferenceData> callback);
 
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback);
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData, Action<List<FinancialStatementData>> callback);
 
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 

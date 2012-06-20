@@ -62,22 +62,18 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.SECURITY_OVERVIEW, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-
                 Content = new ViewSecurityOverview(new ViewModelSecurityOverview(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = null
+                Content = new ViewPeriodPricing(new ViewModelPeriodPricing(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_PRICING_DETAILED, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-
                 Content = null
             });
 

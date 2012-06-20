@@ -25,7 +25,6 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
-using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.App.ViewModel
 {
@@ -3139,9 +3138,8 @@ namespace GreenField.App.ViewModel
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-                    EntitySelectionInfo = result
-                            .OrderBy(t => t.LongName)
-                            .ToList();
+                    EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
+                    SelectionData.EntitySelectionData = result.OrderBy(t => t.LongName).ToList();
                 }
                 else
                 {
@@ -3198,6 +3196,7 @@ namespace GreenField.App.ViewModel
                     //FundReference.Source = FundReferenceSource;
 
                     PortfolioSelectionInfo = result.OrderBy(o => o.PortfolioId).ToList();
+                    //SelectionData.PortfolioSelectionData = result.OrderBy(o => o.PortfolioId).ToList();
 
                 }
                 else

@@ -13,7 +13,7 @@ using System.ServiceModel;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using GreenField.DataContracts.DataContracts;
+
 
 namespace GreenField.ServiceCaller
 {
@@ -2094,11 +2094,11 @@ namespace GreenField.ServiceCaller
 
         #region Slice 5 - External Research
 
-        public void RetrieveIssuerId(EntitySelectionData entitySelectionData, Action<String> callback)
+        public void RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData, Action<IssuerReferenceData> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveIssuerIdAsync(entitySelectionData);
-            client.RetrieveIssuerIdCompleted += (se, e) =>
+            client.RetrieveIssuerReferenceDataAsync(entitySelectionData);
+            client.RetrieveIssuerReferenceDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
@@ -2125,10 +2125,10 @@ namespace GreenField.ServiceCaller
         }
 
         public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, string currency, Action<List<FinancialStatementData>> callback)
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData, Action<List<FinancialStatementData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
+            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currencyreferenceData);
             client.RetrieveFinancialStatementCompleted += (se, e) =>
             {
                 if (e.Error == null)

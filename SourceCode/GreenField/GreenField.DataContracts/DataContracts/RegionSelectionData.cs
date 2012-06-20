@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq; 
 using System.Runtime.Serialization;
 
-namespace GreenField.DataContracts.DataContracts
+namespace GreenField.DataContracts
 { 
     [DataContract]
     public class RegionSelectionData
