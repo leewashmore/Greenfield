@@ -30,6 +30,7 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_ASSET_QUALITY_CASH_FLOW = "Asset Quality / Cash Flow Information External Research 4.1.3.5 / 4.1.3.6 / 4.4.3";
         public static string INTERNAL_RESEARCH_VALUATIONS_DETAILED = "Valuations Detailed Internal Research 5.1.1.2";
         public static string EXTERNAL_RESEARCH_PROFITABILITY = "Profitability Information External Research 4.1.3.7 / 4.4.3";
+        public static string INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY = "Internal Research Consensus Estimates Summary";
         #endregion
 
         #region Snapshot company Profile

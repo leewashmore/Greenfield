@@ -1398,6 +1398,14 @@ namespace GreenField.App.ViewModel
                 return new DelegateCommand<object>(DashboardCompanySnapshotBasicDataCommandMethod);
             }
         }
+
+        public ICommand DashboardConsensusEstimateSummaryCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(DashboardConsensusEstimateSummaryCommandMethod);
+            }
+        }
         #endregion
 
         #region Financials
@@ -1748,6 +1756,26 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        private void DashboardConsensusEstimateSummaryCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_SNAPSHOT_SUMMARY);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanySnapshotSummary", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+
         private void DashboardCompanySnapshotBasicDataCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -1766,6 +1794,8 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+
         #endregion
 
         #region Financials
