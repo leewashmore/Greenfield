@@ -40,8 +40,8 @@ namespace GreenField.App
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
             // If the app is running outside of the debugger then report the exception using
-            // the browser's exception mechanism. On IE this will display it a yellow alert 
-            // icon in the status bar and Firefox will display a script error.
+            // the browser's exception mechanism. On IE this will display it propertyName yellow alert 
+            // icon in the status bar and Firefox will display propertyName script error.
             if (!System.Diagnostics.Debugger.IsAttached)
             {
 

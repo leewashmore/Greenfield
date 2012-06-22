@@ -169,6 +169,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceSectorData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceSecurityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceUIData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RiskIndexExposuresData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SectorBreakdownData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SecurityOverviewData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.Session.datasource" />

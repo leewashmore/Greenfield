@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 18-Jun-12 11:49:52 AM
+// Generation date: 6/22/2012 6:20:22 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -109,6 +109,40 @@ namespace GreenField.Web.DimensionEntitiesService
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_EQUITYKEYS> _GF_EQUITYKEYS;
+        /// <summary>
+        /// There are no comments for GF_EXTRACT_STATS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_EXTRACT_STATS> GF_EXTRACT_STATS
+        {
+            get
+            {
+                if ((this._GF_EXTRACT_STATS == null))
+                {
+                    this._GF_EXTRACT_STATS = base.CreateQuery<GF_EXTRACT_STATS>("GF_EXTRACT_STATS");
+                }
+                return this._GF_EXTRACT_STATS;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_EXTRACT_STATS> _GF_EXTRACT_STATS;
+        /// <summary>
+        /// There are no comments for GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIB_DIST_BM> GF_PERF_DAILY_ATTRIB_DIST_BM
+        {
+            get
+            {
+                if ((this._GF_PERF_DAILY_ATTRIB_DIST_BM == null))
+                {
+                    this._GF_PERF_DAILY_ATTRIB_DIST_BM = base.CreateQuery<GF_PERF_DAILY_ATTRIB_DIST_BM>("GF_PERF_DAILY_ATTRIB_DIST_BM");
+                }
+                return this._GF_PERF_DAILY_ATTRIB_DIST_BM;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_PERF_DAILY_ATTRIB_DIST_BM> _GF_PERF_DAILY_ATTRIB_DIST_BM;
         /// <summary>
         /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
         /// </summary>
@@ -336,6 +370,22 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_EQUITYKEYS(GF_EQUITYKEYS gF_EQUITYKEYS)
         {
             base.AddObject("GF_EQUITYKEYS", gF_EQUITYKEYS);
+        }
+        /// <summary>
+        /// There are no comments for GF_EXTRACT_STATS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_EXTRACT_STATS(GF_EXTRACT_STATS gF_EXTRACT_STATS)
+        {
+            base.AddObject("GF_EXTRACT_STATS", gF_EXTRACT_STATS);
+        }
+        /// <summary>
+        /// There are no comments for GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_PERF_DAILY_ATTRIB_DIST_BM(GF_PERF_DAILY_ATTRIB_DIST_BM gF_PERF_DAILY_ATTRIB_DIST_BM)
+        {
+            base.AddObject("GF_PERF_DAILY_ATTRIB_DIST_BM", gF_PERF_DAILY_ATTRIB_DIST_BM);
         }
         /// <summary>
         /// There are no comments for GF_PERF_DAILY_ATTRIBUTION in the schema.
@@ -1798,6 +1848,195 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _EQKEY28_PBETEWLD;
         partial void OnEQKEY28_PBETEWLDChanging(global::System.Nullable<decimal> value);
         partial void OnEQKEY28_PBETEWLDChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_EXTRACT_STATS in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// GF_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
+    public partial class GF_EXTRACT_STATS
+    {
+        /// <summary>
+        /// Create a new GF_EXTRACT_STATS object.
+        /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_EXTRACT_STATS CreateGF_EXTRACT_STATS(decimal gF_ID)
+        {
+            GF_EXTRACT_STATS gF_EXTRACT_STATS = new GF_EXTRACT_STATS();
+            gF_EXTRACT_STATS.GF_ID = gF_ID;
+            return gF_EXTRACT_STATS;
+        }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
+        /// <summary>
+        /// There are no comments for Property EXTRACT_NAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string EXTRACT_NAME
+        {
+            get
+            {
+                return this._EXTRACT_NAME;
+            }
+            set
+            {
+                this.OnEXTRACT_NAMEChanging(value);
+                this._EXTRACT_NAME = value;
+                this.OnEXTRACT_NAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _EXTRACT_NAME;
+        partial void OnEXTRACT_NAMEChanging(string value);
+        partial void OnEXTRACT_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property MAX_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> MAX_DATE
+        {
+            get
+            {
+                return this._MAX_DATE;
+            }
+            set
+            {
+                this.OnMAX_DATEChanging(value);
+                this._MAX_DATE = value;
+                this.OnMAX_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _MAX_DATE;
+        partial void OnMAX_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnMAX_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property ROW_COUNT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> ROW_COUNT
+        {
+            get
+            {
+                return this._ROW_COUNT;
+            }
+            set
+            {
+                this.OnROW_COUNTChanging(value);
+                this._ROW_COUNT = value;
+                this.OnROW_COUNTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _ROW_COUNT;
+        partial void OnROW_COUNTChanging(global::System.Nullable<decimal> value);
+        partial void OnROW_COUNTChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// GF_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
+    public partial class GF_PERF_DAILY_ATTRIB_DIST_BM
+    {
+        /// <summary>
+        /// Create a new GF_PERF_DAILY_ATTRIB_DIST_BM object.
+        /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_PERF_DAILY_ATTRIB_DIST_BM CreateGF_PERF_DAILY_ATTRIB_DIST_BM(decimal gF_ID)
+        {
+            GF_PERF_DAILY_ATTRIB_DIST_BM gF_PERF_DAILY_ATTRIB_DIST_BM = new GF_PERF_DAILY_ATTRIB_DIST_BM();
+            gF_PERF_DAILY_ATTRIB_DIST_BM.GF_ID = gF_ID;
+            return gF_PERF_DAILY_ATTRIB_DIST_BM;
+        }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
+        /// <summary>
+        /// There are no comments for Property BM in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BM
+        {
+            get
+            {
+                return this._BM;
+            }
+            set
+            {
+                this.OnBMChanging(value);
+                this._BM = value;
+                this.OnBMChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BM;
+        partial void OnBMChanging(string value);
+        partial void OnBMChanged();
+        /// <summary>
+        /// There are no comments for Property BMNAME in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string BMNAME
+        {
+            get
+            {
+                return this._BMNAME;
+            }
+            set
+            {
+                this.OnBMNAMEChanging(value);
+                this._BMNAME = value;
+                this.OnBMNAMEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _BMNAME;
+        partial void OnBMNAMEChanging(string value);
+        partial void OnBMNAMEChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PERF_DAILY_ATTRIBUTION in the schema.
@@ -15121,9 +15360,8 @@ namespace GreenField.Web.DimensionEntitiesService
     /// </summary>
     /// <KeyProperties>
     /// GF_ID
-    /// TYPE
     /// </KeyProperties>
-    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID", "TYPE")]
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
     public partial class GF_SELECTION_BASEVIEW
     {
         /// <summary>

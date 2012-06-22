@@ -281,7 +281,7 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
-        /// Method to get count of entities within a group
+        /// Method to get count of entities within propertyName group
         /// </summary>
         /// <param name="dataContext">List of MarketPerformanceSnapshotData</param>
         /// <param name="groupPreferenceId">GroupPreferenceId value</param>

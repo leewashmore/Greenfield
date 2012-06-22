@@ -3353,7 +3353,7 @@ namespace GreenField.App.ViewModel
         /// <summary>
         /// Callback method that assigns value to ValueTypes
         /// </summary>
-        /// <param name="result">Contains the list of value types for a selected region</param>
+        /// <param name="result">Contains the list of value types for propertyName selected region</param>
         public void RetrieveFilterSelectionDataCallbackMethod(List<FilterSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

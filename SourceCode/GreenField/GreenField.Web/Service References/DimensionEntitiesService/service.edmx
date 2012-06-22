@@ -5,6 +5,8 @@
         <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="Model.GF_BENCHMARK_HOLDINGS" />
         <EntitySet Name="GF_CTY_CUR" EntityType="Model.GF_CTY_CUR" />
         <EntitySet Name="GF_EQUITYKEYS" EntityType="Model.GF_EQUITYKEYS" />
+        <EntitySet Name="GF_EXTRACT_STATS" EntityType="Model.GF_EXTRACT_STATS" />
+        <EntitySet Name="GF_PERF_DAILY_ATTRIB_DIST_BM" EntityType="Model.GF_PERF_DAILY_ATTRIB_DIST_BM" />
         <EntitySet Name="GF_PERF_DAILY_ATTRIBUTION" EntityType="Model.GF_PERF_DAILY_ATTRIBUTION" />
         <EntitySet Name="GF_PERF_TOPLEVELMONTH" EntityType="Model.GF_PERF_TOPLEVELMONTH" />
         <EntitySet Name="GF_PERF_TOPLEVELPERIOD" EntityType="Model.GF_PERF_TOPLEVELPERIOD" />
@@ -94,6 +96,23 @@
         <Property Name="EQKEY26_LIQUID" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY27_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY28_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+      </EntityType>
+      <EntityType Name="GF_EXTRACT_STATS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="EXTRACT_NAME" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="MAX_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ROW_COUNT" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_PERF_DAILY_ATTRIB_DIST_BM">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="BM" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
         <Key>
@@ -773,7 +792,6 @@
       <EntityType Name="GF_SELECTION_BASEVIEW">
         <Key>
           <PropertyRef Name="GF_ID" />
-          <PropertyRef Name="TYPE" />
         </Key>
         <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
         <Property Name="SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />

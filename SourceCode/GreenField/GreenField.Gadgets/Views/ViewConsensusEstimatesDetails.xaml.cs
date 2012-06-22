@@ -10,15 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewConsensusEstimatesDetails : UserControl
+    public partial class ViewConsensusEstimatesDetails : ViewBaseUserControl
     {
         public ViewConsensusEstimatesDetails(ViewModelConsensusEstimatesDetails dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
         }
+
+        public override void Dispose()
+        { }
     }
 }

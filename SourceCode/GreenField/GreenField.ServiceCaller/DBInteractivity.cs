@@ -609,6 +609,53 @@ namespace GreenField.ServiceCaller
         }
 
         /// <summary>
+        /// service call method for RiskIndexExposures gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="filterType"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="callback"></param>
+        public void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback)
+        {
+            BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
+            client.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled, filterType, filterValue);
+            client.RetrieveRiskIndexExposuresDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
         /// Method that calls the  RetrieveHoldingsPercentageDataForRegion method of the service and provides interation between the Viewmodel and Service.
         /// </summary>
         /// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>

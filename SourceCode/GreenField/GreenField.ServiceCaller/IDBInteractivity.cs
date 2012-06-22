@@ -59,7 +59,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback);
 
-        void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
+        void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback);
+       
+         void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
 
         void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
 

@@ -87,7 +87,7 @@ namespace GreenField.Gadgets.ViewModels
         #region UI Fields
 
         /// <summary>
-        /// Collection that contains all the data for a particular portfolio and date
+        /// Collection that contains all the data for propertyName particular portfolio and date
         /// </summary>
         private List<AttributionData> _attributionDataInfo;
         public List<AttributionData> AttributionDataInfo

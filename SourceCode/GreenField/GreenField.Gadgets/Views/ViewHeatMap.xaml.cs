@@ -138,8 +138,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="shape">Map Shape</param>
         private void SetAdditionalData(MapShape shape)
         {
-            //ExtendedDataWraper a = new ExtendedDataWraper();
-            //a.Data = shape.ExtendedData;
+            //ExtendedDataWraper propertyName = new ExtendedDataWraper();
+            //propertyName.Data = shape.ExtendedData;
             ExtendedData data = shape.ExtendedData;
 
             if (data != null)

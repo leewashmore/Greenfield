@@ -261,8 +261,8 @@ namespace GreenField.DashboardModule.Views
         }
 
         /// <summary>
-        /// Construct content within a dashboard gadget. It is assumed that view consists of a
-        /// constructor that takes viewmodel instance and view model class consists od a cons-
+        /// Construct content within propertyName dashboard gadget. It is assumed that view consists of propertyName
+        /// constructor that takes viewmodel instance and view model class consists od propertyName cons-
         /// tructor that takes IEventAggregator, IDBInteractivity and ILoggerFacade instance.
         /// </summary>
         /// <param name="gadgetViewClassName">Gadget view Type</param>

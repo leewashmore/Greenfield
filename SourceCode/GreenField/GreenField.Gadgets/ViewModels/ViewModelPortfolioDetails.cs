@@ -341,7 +341,7 @@ namespace GreenField.Gadgets.ViewModels
         #region HelperMethods
 
         /// <summary>
-        /// Service call to Retrieve the Details for a Portfolio
+        /// Service call to Retrieve the Details for propertyName Portfolio
         /// </summary>
         /// <param name="objPortfolioId">PortfolioName</param>
         private void RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioId, DateTime objSelectedDate, bool objgetBenchmark, Action<List<PortfolioDetailsData>> callback)

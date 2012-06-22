@@ -64,15 +64,16 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                
-                Content = new ViewTopHoldings(new ViewModelTopHoldings(param))
+                Content = new ViewTopHoldings(new ViewModelTopHoldings(param)),
+                RestoredHeight = 300
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUE_GROWTH, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = null
+
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_RELATIVE_RISK, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Content = new ViewRiskIndexExposures(new ViewModelRiskIndexExposures(param)),
+                RestoredHeight = 300
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

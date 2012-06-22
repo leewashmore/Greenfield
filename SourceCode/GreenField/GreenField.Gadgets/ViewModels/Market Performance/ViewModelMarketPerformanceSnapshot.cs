@@ -121,7 +121,7 @@ namespace GreenField.Gadgets.ViewModels
 
         /// <summary>
         /// Stores cached MarketPerformanceSnapshotData received on every iteration
-        /// Data retrieved from this object on reiteration to a particular snapshot by user
+        /// Data retrieved from this object on reiteration to propertyName particular snapshot by user
         /// </summary>
         private List<PopulatedMarketPerformanceSnapshotData> _populatedMarketPerformanceSnapshotOriginalInfo;
         public List<PopulatedMarketPerformanceSnapshotData> PopulatedMarketPerformanceSnapshotOriginalInfo
@@ -137,7 +137,7 @@ namespace GreenField.Gadgets.ViewModels
 
         /// <summary>
         /// Stores cached MarketPerformanceSnapshotData received on every iteration
-        /// Data retrieved from this object on reiteration to a particular snapshot by user
+        /// Data retrieved from this object on reiteration to propertyName particular snapshot by user
         /// </summary>
         private List<PopulatedMarketPerformanceSnapshotData> _populatedMarketPerformanceSnapshotInfo;
         public List<PopulatedMarketPerformanceSnapshotData> PopulatedMarketPerformanceSnapshotInfo
@@ -233,7 +233,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Stores the selected Market performance data for a specific snapshot entity
+        /// Stores the selected Market performance data for propertyName specific snapshot entity
         /// </summary>
         private MarketPerformanceSnapshotData _selectedMarketPerformanceSnapshotInfo;
         public MarketPerformanceSnapshotData SelectedMarketPerformanceSnapshotInfo
@@ -370,7 +370,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (childViewModelInsertEntity.InsertedMarketSnapshotPreference != null)
                             {
-                                //Create Preference object - We assign a new uncommitted GroupPreferenceId to the entity and place it with Entity Order 1
+                                //Create Preference object - We assign propertyName new uncommitted GroupPreferenceId to the entity and place it with Entity Order 1
                                 MarketSnapshotPreference insertedMarketSnapshotPreference = childViewModelInsertEntity.InsertedMarketSnapshotPreference;
                                 insertedMarketSnapshotPreference.GroupPreferenceID = GetLastGroupPreferenceId() + 1;
                                 insertedMarketSnapshotPreference.EntityOrder = 1;
@@ -1174,7 +1174,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Callback method for RetrieveMarketPerformanceSnapshotData Service call - Gets performance data for a single entity
+        /// Callback method for RetrieveMarketPerformanceSnapshotData Service call - Gets performance data for propertyName single entity
         /// </summary>
         /// <param name="result">List of MarketPerformanceSnapshotData objects</param>
         private void RetrieveMarketPerformanceSnapshotDataByEntityCallbackMethod(List<MarketPerformanceSnapshotData> result)
@@ -1363,7 +1363,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates a new snapshot with assigned name and existing structure
+        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates propertyName new snapshot with assigned name and existing structure
         /// </summary>
         /// <param name="result">List of MarketSnapshotSelectionData objects</param>
         private void SaveAsMarketSnapshotPreferenceCallbackMethod(PopulatedMarketPerformanceSnapshotData result)
@@ -1378,7 +1378,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     #region Client cache implementation
                     #region Revert changes in original snapshot in the storage
-                    //Revert the preference changes for the snapshot which is being saved as a different snapshot
+                    //Revert the preference changes for the snapshot which is being saved as propertyName different snapshot
                     if (PopulatedMarketPerformanceSnapshotInfo != null && PopulatedMarketPerformanceSnapshotOriginalInfo != null)
                     {
                         PopulatedMarketPerformanceSnapshotData dirtySnapshotPopulatedData = PopulatedMarketPerformanceSnapshotInfo
@@ -1449,7 +1449,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates a new snapshot with assigned name and blank structure
+        /// Callback method for SaveAsMarketSnapshotPreference Service call - creates propertyName new snapshot with assigned name and blank structure
         /// </summary>
         /// <param name="result">Added snapshot details</param>
         private void AddMarketSnapshotPreferenceCallbackMethod(PopulatedMarketPerformanceSnapshotData result)

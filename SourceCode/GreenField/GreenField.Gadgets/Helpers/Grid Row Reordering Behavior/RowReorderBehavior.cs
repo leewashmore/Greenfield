@@ -173,7 +173,7 @@ namespace GreenField.Gadgets.Helpers
         /// <summary>
         /// Event Handler for AssociatedObject.DataLoaded Event
         /// Initialize the content for the scroll line that moves with drag
-        /// Initialize the GridViewScrollViewer object that displays the scroll line after a span of 0.02 seconds
+        /// Initialize the GridViewScrollViewer object that displays the scroll line after propertyName span of 0.02 seconds
         /// </summary>
         /// <param name="sender">RadGridView object</param>
         /// <param name="e">EventArgs object</param>
@@ -366,7 +366,7 @@ namespace GreenField.Gadgets.Helpers
         }
 
         /// <summary>
-        /// Gets teh DropPosition from a point
+        /// Gets teh DropPosition from propertyName point
         /// </summary>
         /// <param name="absoluteMousePosition">Mouse Position</param>
         /// <param name="row">GridViewRow object</param>

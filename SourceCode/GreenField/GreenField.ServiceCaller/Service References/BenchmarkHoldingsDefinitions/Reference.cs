@@ -101,6 +101,14 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.IndexConstituentsData> EndRetrieveIndexConstituentsData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRiskIndexExposuresData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRiskIndexExposuresDataResp" +
+            "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveRiskIndexExposuresDataServ" +
+            "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveRiskIndexExposuresData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> EndRetrieveRiskIndexExposuresData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveFilterSelectionData", ReplyAction="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveFilterSelectionDataRespons" +
             "e")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveFilterSelectionDataService" +
@@ -286,6 +294,25 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.Generic.List<GreenField.DataContracts.IndexConstituentsData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveRiskIndexExposuresDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveRiskIndexExposuresDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData>)(this.results[0]));
             }
         }
     }
@@ -507,6 +534,12 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveIndexConstituentsDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveRiskIndexExposuresDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveRiskIndexExposuresDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveRiskIndexExposuresDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveFilterSelectionDataDelegate;
         
         private EndOperationDelegate onEndRetrieveFilterSelectionDataDelegate;
@@ -627,6 +660,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         public event System.EventHandler<RetrieveTopHoldingsDataCompletedEventArgs> RetrieveTopHoldingsDataCompleted;
         
         public event System.EventHandler<RetrieveIndexConstituentsDataCompletedEventArgs> RetrieveIndexConstituentsDataCompleted;
+        
+        public event System.EventHandler<RetrieveRiskIndexExposuresDataCompletedEventArgs> RetrieveRiskIndexExposuresDataCompleted;
         
         public event System.EventHandler<RetrieveFilterSelectionDataCompletedEventArgs> RetrieveFilterSelectionDataCompleted;
         
@@ -987,6 +1022,62 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                         portfolioSelectionData,
                         effectiveDate,
                         lookThruEnabled}, this.onEndRetrieveIndexConstituentsDataDelegate, this.onRetrieveIndexConstituentsDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveRiskIndexExposuresData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveRiskIndexExposuresData(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.EndRetrieveRiskIndexExposuresData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveRiskIndexExposuresData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveRiskIndexExposuresData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            System.DateTime effectiveDate = ((System.DateTime)(inValues[1]));
+            bool isExCashSecurity = ((bool)(inValues[2]));
+            bool lookThruEnabled = ((bool)(inValues[3]));
+            string filterType = ((string)(inValues[4]));
+            string filterValue = ((string)(inValues[5]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveRiskIndexExposuresData(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveRiskIndexExposuresData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> retVal = ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).EndRetrieveRiskIndexExposuresData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveRiskIndexExposuresDataCompleted(object state) {
+            if ((this.RetrieveRiskIndexExposuresDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveRiskIndexExposuresDataCompleted(this, new RetrieveRiskIndexExposuresDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveRiskIndexExposuresDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue) {
+            this.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue, null);
+        }
+        
+        public void RetrieveRiskIndexExposuresDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, object userState) {
+            if ((this.onBeginRetrieveRiskIndexExposuresDataDelegate == null)) {
+                this.onBeginRetrieveRiskIndexExposuresDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRiskIndexExposuresData);
+            }
+            if ((this.onEndRetrieveRiskIndexExposuresDataDelegate == null)) {
+                this.onEndRetrieveRiskIndexExposuresDataDelegate = new EndOperationDelegate(this.OnEndRetrieveRiskIndexExposuresData);
+            }
+            if ((this.onRetrieveRiskIndexExposuresDataCompletedDelegate == null)) {
+                this.onRetrieveRiskIndexExposuresDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveRiskIndexExposuresDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveRiskIndexExposuresDataDelegate, new object[] {
+                        portfolioSelectionData,
+                        effectiveDate,
+                        isExCashSecurity,
+                        lookThruEnabled,
+                        filterType,
+                        filterValue}, this.onEndRetrieveRiskIndexExposuresDataDelegate, this.onRetrieveRiskIndexExposuresDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1615,6 +1706,24 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.IndexConstituentsData> EndRetrieveIndexConstituentsData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.IndexConstituentsData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.IndexConstituentsData>)(base.EndInvoke("RetrieveIndexConstituentsData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveRiskIndexExposuresData(GreenField.DataContracts.PortfolioSelectionData portfolioSelectionData, System.DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
+                _args[0] = portfolioSelectionData;
+                _args[1] = effectiveDate;
+                _args[2] = isExCashSecurity;
+                _args[3] = lookThruEnabled;
+                _args[4] = filterType;
+                _args[5] = filterValue;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveRiskIndexExposuresData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> EndRetrieveRiskIndexExposuresData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.RiskIndexExposuresData>)(base.EndInvoke("RetrieveRiskIndexExposuresData", _args, result)));
                 return _result;
             }
             

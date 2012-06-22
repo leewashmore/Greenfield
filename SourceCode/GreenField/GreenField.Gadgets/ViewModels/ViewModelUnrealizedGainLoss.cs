@@ -223,9 +223,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region CallBack Methods        
 
-        /// Method that calls the service Method through a call to Service Caller
+        /// Method that calls the service Method through propertyName call to Service Caller
         /// </summary>
-        /// <param name="Ticker">Unique Identifier for a security</param>
+        /// <param name="Ticker">Unique Identifier for propertyName security</param>
         /// <param name="callback">Callback for this method</param>
         private void RetrieveUnrealizedGainLossData(EntitySelectionData entitySelectionData, Action<List<UnrealizedGainLossData>> callback)
         {

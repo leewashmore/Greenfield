@@ -109,6 +109,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IndexConstituentsData" nillable="true" type="tns:IndexConstituentsData" />
+  <xs:complexType name="ArrayOfRiskIndexExposuresData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RiskIndexExposuresData" nillable="true" type="tns:RiskIndexExposuresData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRiskIndexExposuresData" nillable="true" type="tns:ArrayOfRiskIndexExposuresData" />
+  <xs:complexType name="RiskIndexExposuresData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EntityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Growth" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Leverage" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Liquidity" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Momentum" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SizeNonLinear" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Volatility" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RiskIndexExposuresData" nillable="true" type="tns:RiskIndexExposuresData" />
   <xs:complexType name="ArrayOfFilterSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FilterSelectionData" nillable="true" type="tns:FilterSelectionData" />

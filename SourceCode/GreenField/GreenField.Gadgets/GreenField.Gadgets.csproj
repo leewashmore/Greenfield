@@ -150,6 +150,7 @@
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
+    <Compile Include="Models\RiskIndexExposuresChartData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="ViewModels\ViewModelRelativePerformanceSectorActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformanceSecurityActivePosition.cs" />
     <Compile Include="ViewModels\ViewModelRelativePeroformanceUI.cs" />
+    <Compile Include="ViewModels\ViewModelRiskIndexExposures.cs" />
     <Compile Include="ViewModels\ViewModelSectorBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelSecurityOverview.cs" />
     <Compile Include="ViewModels\ViewModelSlice1ChartExtension.cs" />
@@ -291,6 +293,9 @@
     </Compile>
     <Compile Include="Views\ViewRelativePerformanceUI.xaml.cs">
       <DependentUpon>ViewRelativePerformanceUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewRiskIndexExposures.xaml.cs">
+      <DependentUpon>ViewRiskIndexExposures.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewSectorBreakdown.xaml.cs">
       <DependentUpon>ViewSectorBreakdown.xaml</DependentUpon>
@@ -453,6 +458,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewRelativePerformanceUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewRiskIndexExposures.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -90,6 +90,7 @@
     <Compile Include="DataContracts\RelativePerformanceData.cs" />
     <Compile Include="DataContracts\RelativePerformanceSecurityData.cs" />
     <Compile Include="DataContracts\RelativePerformanceUIData.cs" />
+    <Compile Include="DataContracts\RiskIndexExposuresData.cs" />
     <Compile Include="DataContracts\SectorBreakdownData.cs" />
     <Compile Include="DataContracts\SecurityOverviewData.cs" />
     <Compile Include="DataContracts\Session.cs">
