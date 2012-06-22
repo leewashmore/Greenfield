@@ -231,10 +231,10 @@
                             <TextBlock Text="Screening" Foreground="White" FontSize="12" FontFamily="Arial" FontWeight="Bold" />
                         </telerik:RadRibbonTab.Header>
                         <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Stock" Size="Large" Background="#9DA6C0"/>
+                            <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Stock" Size="Large" Background="#9DA6C0"  />
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Quarterly Comparison" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Quarterly Comparison" Size="Large" Background="#9DA6C0" Command="{Binding DashboardQuarterlyResultsComparisonCommand}"/>
                         </telerik:RadRibbonGroup>
                     </telerik:RadRibbonTab>
                     <telerik:RadRibbonTab Style="{StaticResource RadRibbonTabStyle1}">

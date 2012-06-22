@@ -1350,6 +1350,14 @@ namespace GreenField.App.ViewModel
             }
         }
 
+        public ICommand QuarterlyComparisonCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(QuarterlyComparisonCommandMethod);
+            }
+        }
+
         public ICommand UserManagementCommand
         {
             get
@@ -1575,6 +1583,15 @@ namespace GreenField.App.ViewModel
         public ICommand DashboardPortfolioBenchmarkComponentsCommand
         {
             get { return new DelegateCommand<object>(DashboardPortfolioBenchmarkComponentsCommandMethod); }
+        }
+        #endregion
+        #endregion
+
+        #region Screening
+        #region QuarterlyResultsComparison
+        public ICommand DashboardQuarterlyResultsComparisonCommand
+        {
+            get { return new DelegateCommand<object>(DashboardQuarterlyResultsComparisonCommandMethod); }
         }
         #endregion
         #endregion
@@ -2370,6 +2387,52 @@ namespace GreenField.App.ViewModel
         }
         #endregion
         #endregion
+
+        #region Screening
+        #region Quarterly Comparison
+   
+        private void QuarterlyComparisonCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.QUARTERLY_RESULTS_COMPARISON,
+                            DashboardTileObject = new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
+        #endregion
+
+        private void DashboardQuarterlyResultsComparisonCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.SCREENING_QUARTERLY_COMPARISON);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardQuarterlyResultsComparison", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        
+        }
         #endregion
 
         #region ToolBox

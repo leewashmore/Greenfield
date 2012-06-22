@@ -36,7 +36,6 @@ namespace GreenField.Gadgets.Views
             dataContextSource.macroDBKeyAnnualReportCountryDataLoadedEvent +=
            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_macroDBKeyAnnualReportCountryDataLoadedEvent);
             SetGridColumnHeaders();
-
         }
 
         /// <summary>

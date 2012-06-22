@@ -14,6 +14,8 @@ using System.ComponentModel.Composition;
 using GreenField.DashboardModule.Views;
 using GreenField.Common;
 using Microsoft.Practices.Prism.Modularity;
+using GreenField.Gadgets.Views;
+using GreenField.DashBoardModule.Views.Screening;
 
 namespace GreenField.DashboardModule
 {
@@ -113,8 +115,14 @@ namespace GreenField.DashboardModule
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardPortfolioSnapshot));
             #endregion            
             #endregion
-            
-            
+
+            #region Screening
+            #region Quarterly Comparison
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardQuarterlyResultsComparison));
+            #endregion
+
+            #endregion
+
         }
     }
 }

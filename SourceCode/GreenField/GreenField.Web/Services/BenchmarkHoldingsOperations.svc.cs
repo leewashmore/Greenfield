@@ -2137,12 +2137,6 @@ namespace GreenField.Web.Services
 
         }
 
-        #region Performance
-
-
-
-        #endregion
-
         #region Heat Map Operation Contract
 
         /// <summary>

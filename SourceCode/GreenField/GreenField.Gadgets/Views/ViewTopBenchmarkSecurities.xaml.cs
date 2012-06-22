@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -21,6 +23,13 @@ namespace GreenField.Gadgets.Views
     public partial class ViewTopBenchmarkSecurities : ViewBaseUserControl
     {
 
+        /// <summary>
+        /// Export Types to be passed to the ExportOptions class
+        /// </summary>
+        private static class ExportTypes
+        {         
+            public const string BENCHMARK_GRID = "Top Ten Benchmark Securities Grid";
+        }
         /// <summary>
         /// Property of type ViewModelTopBenchmarkSecurities
         /// </summary>
@@ -63,6 +72,42 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+
+        /// <summary>
+        /// Event for Grid Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                   
+                    new RadExportOptions() { ElementName = ExportTypes.BENCHMARK_GRID, Element = this.dgTopTenSecurities, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },                    
+                    
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS);
+                    childExportOptions.Show(); 
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+
         #endregion       
     
         #region RemoveEvents
