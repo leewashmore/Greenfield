@@ -877,146 +877,146 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        /// <summary>
-        /// service call method to add user preferred group in “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="snapshotPreferenceId"></param>
-        /// <param name="groupName"></param>
-        /// <param name="callback"></param>
-        public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
-            client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-                else
-                {
-                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
+        ///// <summary>
+        ///// service call method to add user preferred group in “Market Performance Snapshot”
+        ///// </summary>
+        ///// <param name="snapshotPreferenceId"></param>
+        ///// <param name="groupName"></param>
+        ///// <param name="callback"></param>
+        //public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
+        //{
+        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
+        //    client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
+        //    client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //    };
+        //}
 
-        /// <summary>
-        ///  service call method to remove user preferred group from “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="groupPreferenceId"></param>
-        /// <param name="callback"></param>
-        public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
-            client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-                else
-                {
-                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
+        ///// <summary>
+        /////  service call method to remove user preferred group from “Market Performance Snapshot”
+        ///// </summary>
+        ///// <param name="groupPreferenceId"></param>
+        ///// <param name="callback"></param>
+        //public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
+        //{
+        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
+        //    client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
+        //    client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //    };
+        //}
 
-        /// <summary>
-        /// service call method to add user preferred entity in “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-            client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-                else
-                {
-                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
+        ///// <summary>
+        ///// service call method to add user preferred entity in “Market Performance Snapshot”
+        ///// </summary>
+        ///// <param name="marketSnapshotPreference"></param>
+        ///// <param name="callback"></param>
+        //public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
+        //{
+        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
+        //    client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+        //    client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //    };
+        //}
 
-        /// <summary>
-        ///  service call method to remove user preferred entity from “Market Performance Snapshot”
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        /// <param name="callback"></param>
-        public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        {
-            PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-            client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-            {
-                if (e.Error == null)
-                {
-                    if (callback != null)
-                    {
-                        callback(e.Result);
-                    }
-                }
-                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-                {
-                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-                else
-                {
-                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-                    if (callback != null)
-                        callback(false);
-                }
-            };
-        }
+        ///// <summary>
+        /////  service call method to remove user preferred entity from “Market Performance Snapshot”
+        ///// </summary>
+        ///// <param name="marketSnapshotPreference"></param>
+        ///// <param name="callback"></param>
+        //public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
+        //{
+        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
+        //    client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
+        //    client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                callback(e.Result);
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(false);
+        //        }
+        //    };
+        //}
 
         /// <summary>
         ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”

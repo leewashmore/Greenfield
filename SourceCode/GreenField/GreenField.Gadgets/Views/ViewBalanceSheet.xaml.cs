@@ -19,11 +19,11 @@ using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewFinancialStatements : ViewBaseUserControl
+    public partial class ViewBalanceSheet : ViewBaseUserControl
     {
         #region Property
-        private ViewModelFinancialStatements _dataContextFinancialStatements;
-        public ViewModelFinancialStatements DataContextFinancialStatements
+        private ViewModelBalanceSheet _dataContextFinancialStatements;
+        public ViewModelBalanceSheet DataContextFinancialStatements
         {
             get
             {
@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.Views
         private bool _periodIsYearly = true;
         
         #region Constructor
-        public ViewFinancialStatements(ViewModelFinancialStatements dataContextSource)
+        public ViewBalanceSheet(ViewModelBalanceSheet dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.Views
             
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
-                if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName)
+                if (e.PeriodColumnNamespace == typeof(ViewModelBalanceSheet).FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, e);
                     _entitySelectionData = e.EntitySelectionData;
@@ -80,7 +80,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelBalanceSheet).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
             });
             e.Handled = true;
@@ -90,7 +90,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelBalanceSheet).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
             });
             e.Handled = true;

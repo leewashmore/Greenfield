@@ -69,60 +69,6 @@
   <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformance" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotPerformanceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_InputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformance" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_OutputMessage">
-    <wsdl:part name="parameters" element="tns:UpdateMarketSnapshotPerformanceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_UpdateMarketSnapshotPerformance_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreference" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotGroupPreferenceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreference" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotGroupPreferenceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_InputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreference" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:AddMarketSnapshotEntityPreferenceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_AddMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreference" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotEntityPreferenceResponse" />
-  </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
-  </wsdl:message>
   <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveMarketSnapshotPreference" />
   </wsdl:message>
@@ -130,7 +76,7 @@
     <wsdl:part name="parameters" element="tns:SaveMarketSnapshotPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_SaveAsMarketSnapshotPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:SaveAsMarketSnapshotPreference" />
@@ -139,7 +85,7 @@
     <wsdl:part name="parameters" element="tns:SaveAsMarketSnapshotPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_SaveAsMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_InputMessage">
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotPreference" />
@@ -148,7 +94,7 @@
     <wsdl:part name="parameters" element="tns:RemoveMarketSnapshotPreferenceResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RemoveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorData" />
@@ -157,7 +103,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceData" />
@@ -166,7 +112,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionData" />
@@ -175,7 +121,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceCountryActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceCountryActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q17:ServiceFault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionData" />
@@ -184,7 +130,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSectorActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSectorActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q18:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionData" />
@@ -193,7 +139,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityActivePositionDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityActivePositionData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q19:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityData" />
@@ -202,7 +148,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRelativePerformanceSecurityDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveRelativePerformanceSecurityData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q20:ServiceFault" />
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveMarketCapitalizationData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveMarketCapitalizationData" />
@@ -211,7 +157,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveMarketCapitalizationDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrieveMarketCapitalizationData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q21:ServiceFault" />
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrievePerformanceGridData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGridData" />
@@ -220,7 +166,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGridDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrievePerformanceGridData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q22:ServiceFault" />
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphData" />
@@ -229,7 +175,7 @@
     <wsdl:part name="parameters" element="tns:RetrievePerformanceGraphDataResponse" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_RetrievePerformanceGraphData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q23:ServiceFault" />
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q17:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="PerformanceOperations">
     <wsdl:operation name="RetrieveRelativePerformanceUIData">
@@ -264,36 +210,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataResponse" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotPerformance">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformance" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformanceResponse" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformanceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotPerformance_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="UpdateMarketSnapshotPerformance">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformance" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformanceResponse" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformanceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_UpdateMarketSnapshotPerformance_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotGroupPreference">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreference" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreferenceResponse" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotGroupPreference_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotEntityPreference">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreference" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreferenceResponse" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_AddMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreference" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreferenceResponse" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RemoveMarketSnapshotEntityPreference_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveMarketSnapshotPreference">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreference" message="tns:PerformanceOperations_SaveMarketSnapshotPreference_InputMessage" />
@@ -426,78 +342,6 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
       <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotPerformance">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotPerformance" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="UpdateMarketSnapshotPerformance">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/UpdateMarketSnapshotPerformance" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotGroupPreference">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotGroupPreference" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveMarketSnapshotGroupPreference">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotGroupPreference" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="AddMarketSnapshotEntityPreference">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/AddMarketSnapshotEntityPreference" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="ServiceFaultFault">
-        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveMarketSnapshotEntityPreference">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotEntityPreference" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

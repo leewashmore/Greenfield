@@ -75,13 +75,13 @@ namespace GreenField.ServiceCaller
 
         void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback);
 
-        void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
+        //void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
 
-        void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback);
+        //void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback);
 
-        void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
+        //void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
-        void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
+        //void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
         /// <summary>
         /// Save changes in a specific user snapshot

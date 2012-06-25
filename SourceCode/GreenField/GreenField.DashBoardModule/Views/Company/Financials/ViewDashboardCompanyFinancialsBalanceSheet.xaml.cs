@@ -54,7 +54,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = new ViewFinancialStatements(new ViewModelFinancialStatements(param));
+            this.cctrDashboardContent.Content = new ViewBalanceSheet(new ViewModelBalanceSheet(param));
         }
     }
 }

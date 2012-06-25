@@ -16,6 +16,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller.PerformanceDefinitions;
 
 namespace Greenfield.ServiceCaller.UnitTest
 {
@@ -1140,6 +1141,413 @@ namespace Greenfield.ServiceCaller.UnitTest
             });
         }
 
+        #endregion
+
+        #region Market Performance Snapshot
+
+        #region RetrieveMarketSnapshotSelectionData
+        /// <summary>
+        /// RetrieveMarketSnapshotSelectionData Test Method - preference for userName exists  - should  return Empty set
+        /// userName - rvig
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotSelectionDataUserNamePreferenceExists()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotSelectionData("rvig", (List<MarketSnapshotSelectionData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreNotEqual<int>(0, resultSet.Count, "MarketSnapshotSelectionData should not be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketSnapshotSelectionData Test Method - no preference for the userName exista - should  return Empty set
+        /// userName - sverma
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotSelectionDataUserNamePreferenceNotExists()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotSelectionData("sverma", (List<MarketSnapshotSelectionData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketSnapshotSelectionData should be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketSnapshotSelectionData Test Method - userName as null or Empty - should  return Empty set
+        /// userName - null and empty
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotSelectionDataUserNameNullOrEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotSelectionData(null, (List<MarketSnapshotSelectionData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketSnapshotSelectionData should be empty");
+                instance.RetrieveMarketSnapshotSelectionData(String.Empty, (List<MarketSnapshotSelectionData> resultSet2) =>
+                {
+                    Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                    Assert.AreEqual<int>(0, resultSet2.Count, "MarketSnapshotSelectionData should be empty");
+                    EnqueueTestComplete();
+                });
+            });
+        } 
+        #endregion
+
+        #region RetrieveMarketSnapshotPreference
+        /// <summary>
+        /// RetrieveMarketSnapshotPreference Test Method - SnapshotId does not exists  - should  return Empty set
+        /// SnapshotId - 1000
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotPreferenceSnapshotIdNotExists()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotPreference(1000, (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketSnapshotPreference should be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketSnapshotPreference Test Method - SnapshotId exists without data - should  return Empty set
+        /// SnapshotId - 71
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotPreferenceSnapshotIdExistsNoPreference()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotPreference(71, (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketSnapshotPreference should be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketSnapshotPreference Test Method - SnapshotId exists without data - should  return Empty set
+        /// SnapshotId - 71
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketSnapshotPreferenceSnapshotIdExistsWithPreference()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketSnapshotPreference(74, (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotSelectionData should not be null");
+                Assert.AreNotEqual<int>(0, resultSet.Count, "MarketSnapshotSelectionData should not be empty");
+                EnqueueTestComplete();
+            });
+        } 
+        #endregion
+
+        #region RetrieveMarketPerformanceSnapshotData
+        /// <summary>
+        /// RetrieveMarketPerformanceSnapshotData Test Method - marketSnapshotPreference is null or empty  - should  return Empty set
+        /// marketSnapshotPreference - Null and Empty
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketPerformanceSnapshotDataPreferenceIsNullOrEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.RetrieveMarketPerformanceSnapshotData(null, (List<MarketPerformanceSnapshotData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketPerformanceSnapshotData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketPerformanceSnapshotData should be empty");
+                instance.RetrieveMarketPerformanceSnapshotData(new List<MarketSnapshotPreference>(), (List<MarketPerformanceSnapshotData> resultSet2) =>
+                {
+                    Assert.IsNotNull(resultSet2, "MarketPerformanceSnapshotData should not be null");
+                    Assert.AreEqual<int>(0, resultSet2.Count, "MarketPerformanceSnapshotData should be empty");
+                    EnqueueTestComplete();
+                });
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketPerformanceSnapshotData Test Method - marketSnapshotPreference Incorrect EntityName  - should  return null values
+        /// marketSnapshotPreference - InvalidName
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketPerformanceSnapshotDataPreferenceInvalidName()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            List<MarketSnapshotPreference> marketPerformanceSnapshotData = new List<MarketSnapshotPreference>();
+            marketPerformanceSnapshotData.Add(new MarketSnapshotPreference()
+            {
+                EntityName = "InvalidName",
+                EntityOrder = 1,
+                EntityPreferenceId = 1,
+                EntityReturnType = "Price",
+                EntityType = "SECURITY",
+                GroupName = "Group1",
+                GroupPreferenceID = 1
+            });
+
+            instance.RetrieveMarketPerformanceSnapshotData(marketPerformanceSnapshotData, (List<MarketPerformanceSnapshotData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketPerformanceSnapshotData should not be null");
+                Assert.AreEqual(null, resultSet[0].DateToDateReturn, "DateToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].LastYearReturn, "LastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].MonthToDateReturn, "MonthToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].QuarterToDateReturn, "QuarterToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].SecondLastYearReturn, "SecondLastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].ThirdLastYearReturn, "ThirdLastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].WeekToDateReturn, "WeekToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].YearToDateReturn, "YearToDateReturn should be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketPerformanceSnapshotData Test Method - marketSnapshotPreference Incorrect ReturnType  - should  return null values
+        /// marketSnapshotPreference - InvalidReturnType
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketPerformanceSnapshotDataPreferenceInvalidReturnType()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            List<MarketSnapshotPreference> marketPerformanceSnapshotData = new List<MarketSnapshotPreference>();
+            marketPerformanceSnapshotData.Add(new MarketSnapshotPreference()
+            {
+                EntityName = "BOSHIWA INTERNATIONAL HOLDIN",
+                EntityOrder = 1,
+                EntityPreferenceId = 1,
+                EntityReturnType = "InvalidReturnType",
+                EntityType = "SECURITY",
+                GroupName = "Group1",
+                GroupPreferenceID = 1
+            });
+
+            instance.RetrieveMarketPerformanceSnapshotData(marketPerformanceSnapshotData, (List<MarketPerformanceSnapshotData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketPerformanceSnapshotData should not be null");
+                Assert.AreEqual(null, resultSet[0].DateToDateReturn, "DateToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].LastYearReturn, "LastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].MonthToDateReturn, "MonthToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].QuarterToDateReturn, "QuarterToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].SecondLastYearReturn, "SecondLastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].ThirdLastYearReturn, "ThirdLastYearReturn should be null");
+                Assert.AreEqual(null, resultSet[0].WeekToDateReturn, "WeekToDateReturn should be null");
+                Assert.AreEqual(null, resultSet[0].YearToDateReturn, "YearToDateReturn should be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketPerformanceSnapshotData Test Method - marketSnapshotPreference Incorrect EntityType  - should  return Empty set
+        /// marketSnapshotPreference - InvalidType
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketPerformanceSnapshotDataPreferenceInvalidType()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            List<MarketSnapshotPreference> marketPerformanceSnapshotData = new List<MarketSnapshotPreference>();
+            marketPerformanceSnapshotData.Add(new MarketSnapshotPreference()
+            {
+                EntityName = "BOSHIWA INTERNATIONAL HOLDIN",
+                EntityOrder = 1,
+                EntityPreferenceId = 1,
+                EntityReturnType = "Price",
+                EntityType = "InvalidType",
+                GroupName = "Group1",
+                GroupPreferenceID = 1
+            });
+
+            instance.RetrieveMarketPerformanceSnapshotData(marketPerformanceSnapshotData, (List<MarketPerformanceSnapshotData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketPerformanceSnapshotData should not be null");
+                Assert.AreEqual<int>(0, resultSet.Count, "MarketPerformanceSnapshotData should be empty");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// RetrieveMarketPerformanceSnapshotData Test Method - marketSnapshotPreference valid data  - should not return Empty set
+        /// marketSnapshotPreference - InvalidType
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void RetrieveMarketPerformanceSnapshotDataPreferenceValidInput()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            List<MarketSnapshotPreference> marketPerformanceSnapshotData = new List<MarketSnapshotPreference>();
+            marketPerformanceSnapshotData.Add(new MarketSnapshotPreference()
+            {
+                EntityName = "BOSHIWA INTERNATIONAL HOLDIN",
+                EntityOrder = 1,
+                EntityPreferenceId = 1,
+                EntityReturnType = "Price",
+                EntityType = "SECURITY",
+                GroupName = "Group1",
+                GroupPreferenceID = 1
+            });
+
+            instance.RetrieveMarketPerformanceSnapshotData(marketPerformanceSnapshotData, (List<MarketPerformanceSnapshotData> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketPerformanceSnapshotData should not be null");
+                Assert.AreNotEqual<int>(0, resultSet.Count, "MarketPerformanceSnapshotData should not be empty");
+                EnqueueTestComplete();
+            });
+        } 
+        #endregion
+
+        #region SaveMarketSnapshotPreference
+        /// <summary>
+        /// SaveMarketSnapshotPreference Test Method - SnapshotPreferenceId does not exists  - should return null
+        /// SnapshotPreferenceId - Null and Empty
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveMarketSnapshotPreferenceSnapshotPreferenceIdNotExists()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveMarketSnapshotPreference(1000, "<Root></Root>", (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNull(resultSet, "MarketSnapshotPreference should be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// SaveMarketSnapshotPreference Test Method - updateXML xml format errors  - should return null
+        /// updateXML - #Root##/Root#
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveMarketSnapshotPreferenceUpdateXMLFormatErrors()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveMarketSnapshotPreference(74, "#Root##/Root#", (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNull(resultSet, "MarketSnapshotPreference should be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// SaveMarketSnapshotPreference Test Method - updateXML is null or empty  - should return null
+        /// updateXML - Null and Empty
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveMarketSnapshotPreferenceUpdateXMLNullOrEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveMarketSnapshotPreference(74, null, (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotPreference should not be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// SaveMarketSnapshotPreference Test Method - valid data  - should not return null
+        /// updateXML - #Root##/Root#
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveMarketSnapshotPreferenceValidData()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveMarketSnapshotPreference(74, "<Root></Root>", (List<MarketSnapshotPreference> resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "MarketSnapshotPreference should not be null");
+                EnqueueTestComplete();
+            });
+        } 
+        #endregion
+
+        #region SaveAsMarketSnapshotPreference
+        /// <summary>
+        /// SaveAsMarketSnapshotPreference Test Method - updateXML is corrupt  - should return null
+        /// updateXML - #root##/root#
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveAsMarketSnapshotPreferenceupdateXMLFormatErrors()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", "#root##/root#", (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            {
+                Assert.IsNull(resultSet, "PopulatedMarketPerformanceSnapshotData should be null");
+                EnqueueTestComplete();
+            });
+        }
+
+        /// <summary>
+        /// SaveAsMarketSnapshotPreference Test Method - updateXML is null or empty  - should create empty snapshot
+        /// updateXML - Null and Empty
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveAsMarketSnapshotPreferenceUpdateXMLNullOrEmpty()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", null, (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            {
+                Assert.AreEqual<int>(0, resultSet.MarketPerformanceSnapshotInfo.Count, "MarketPerformanceSnapshotInfo should be empty");
+                Assert.IsNotNull(resultSet.MarketSnapshotSelectionInfo, "MarketSnapshotSelectionInfo should not be null");
+                instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", String.Empty, (PopulatedMarketPerformanceSnapshotData resultSet2) =>
+                {
+                    Assert.AreEqual<int>(0, resultSet.MarketPerformanceSnapshotInfo.Count, "MarketPerformanceSnapshotInfo should be empty");
+                    Assert.IsNotNull(resultSet.MarketSnapshotSelectionInfo, "MarketSnapshotSelectionInfo should not be null");
+                    EnqueueTestComplete();
+                });
+            });
+        }
+
+        /// <summary>
+        /// SaveAsMarketSnapshotPreference Test Method - valid data  - should return null
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("MarketPerformanceSnapshot")]
+        public void SaveAsMarketSnapshotPreferenceValidData()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", "<root></root>", (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            {
+                Assert.IsNotNull(resultSet, "PopulatedMarketPerformanceSnapshotData should not be null");
+                EnqueueTestComplete();
+            });
+        }
+        #endregion
         #endregion
 
         #region RelativePerformanceUI

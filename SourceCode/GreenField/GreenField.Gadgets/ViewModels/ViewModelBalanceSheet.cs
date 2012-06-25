@@ -23,7 +23,7 @@ using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelFinancialStatements : NotificationObject
+    public class ViewModelBalanceSheet : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        public ViewModelFinancialStatements(DashboardGadgetParam param)
+        public ViewModelBalanceSheet(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;

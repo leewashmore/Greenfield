@@ -491,8 +491,8 @@ namespace GreenField.Web.Services
         {
             try
             {
-                if (userName == null)
-                    return null;
+                if (String.IsNullOrEmpty(userName))
+                    return new List<MarketSnapshotSelectionData>();
 
                 ResearchEntities entity = new ResearchEntities();
                 List<MarketSnapshotSelectionData> userPreference = (entity.GetMarketSnapshotSelectionData(userName))
@@ -561,8 +561,11 @@ namespace GreenField.Web.Services
                     case "Total":
                         pricingRecordValue = pricingRecord.DAILY_GROSS_RETURN;
                         break;
-                    default:
+                    case null:
                         pricingRecordValue = pricingRecord.DAILY_CLOSING_PRICE;
+                        break;
+                    default:
+                        pricingRecordValue = null;
                         break;
                 }
             }
@@ -634,15 +637,27 @@ namespace GreenField.Web.Services
                 List<MarketPerformanceSnapshotData> result = new List<MarketPerformanceSnapshotData>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
+                if (marketSnapshotPreference == null)
+                    return result;
+
+
                 foreach (MarketSnapshotPreference preference in marketSnapshotPreference)
                 {
-                    if (preference.EntityType != "BENCHMARK")
+                    if (preference.EntityType == "SECURITY" || preference.EntityType == "COMMODITY" || preference.EntityType == "INDEX")
                     {
-                        string entityInstrumentId = entity.GF_SELECTION_BASEVIEW
+                        GF_SELECTION_BASEVIEW entityRecord = entity.GF_SELECTION_BASEVIEW
                             .Where(record => record.LONG_NAME == preference.EntityName
                                 && record.TYPE == preference.EntityType)
-                            .FirstOrDefault()
-                            .INSTRUMENT_ID;
+                            .FirstOrDefault();
+
+                        if (entityRecord == null)
+                        {
+                            result.Add(new MarketPerformanceSnapshotData());
+                            continue;
+                        }
+
+
+                        string entityInstrumentId = entityRecord.INSTRUMENT_ID;
 
                         #region Last Date Pricing Data
                         DateTime lastBusinessDate = DateTime.Today;
@@ -721,7 +736,7 @@ namespace GreenField.Web.Services
                             ThirdLastYearReturn = thirdLastYearReturn
                         });
                     }
-                    else
+                    else if (preference.EntityType == "BENCHMARK")
                     {
                         GF_PERF_DAILY_ATTRIB_DIST_BM benchmarkDetails = entity.GF_PERF_DAILY_ATTRIB_DIST_BM.
                             Where(record => record.BMNAME == preference.EntityName).FirstOrDefault();
@@ -771,151 +786,151 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
-        /// adding new market performance snapshot created by user
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="snapshotName"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool AddMarketSnapshotPerformance(string userId, string snapshotName)
-        {
-            try
-            {
-                ResearchEntities entity = new ResearchEntities();
-                entity.SetMarketSnapshotPreference(userId, snapshotName);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        ///// <summary>
+        ///// adding new market performance snapshot created by user
+        ///// </summary>
+        ///// <param name="userId"></param>
+        ///// <param name="snapshotName"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool AddMarketSnapshotPerformance(string userId, string snapshotName)
+        //{
+        //    try
+        //    {
+        //        ResearchEntities entity = new ResearchEntities();
+        //        entity.SetMarketSnapshotPreference(userId, snapshotName);
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
-        /// <summary>
-        /// updating the market performance snapshot name for a particular user
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="snapshotName"></param>
-        /// <param name="snapshotPreferenceId"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool UpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId)
-        {
-            try
-            {
-                ResearchEntities entity = new ResearchEntities();
-                entity.UpdateMarketSnapshotPreference(userId, snapshotName, snapshotPreferenceId);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        ///// <summary>
+        ///// updating the market performance snapshot name for a particular user
+        ///// </summary>
+        ///// <param name="userId"></param>
+        ///// <param name="snapshotName"></param>
+        ///// <param name="snapshotPreferenceId"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool UpdateMarketSnapshotPerformance(string userId, string snapshotName, int snapshotPreferenceId)
+        //{
+        //    try
+        //    {
+        //        ResearchEntities entity = new ResearchEntities();
+        //        entity.UpdateMarketSnapshotPreference(userId, snapshotName, snapshotPreferenceId);
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
-        /// <summary>
-        /// adding user preferred groups in market performance snapshot gadget
-        /// </summary>
-        /// <param name="snapshotPreferenceId"></param>
-        /// <param name="groupName"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName)
-        {
-            ResearchEntities entity = new ResearchEntities();
-            try
-            {
-                entity.SetMarketSnapshotGroupPreference(snapshotPreferenceId, groupName);
-                return true;
-            }
+        ///// <summary>
+        ///// adding user preferred groups in market performance snapshot gadget
+        ///// </summary>
+        ///// <param name="snapshotPreferenceId"></param>
+        ///// <param name="groupName"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName)
+        //{
+        //    ResearchEntities entity = new ResearchEntities();
+        //    try
+        //    {
+        //        entity.SetMarketSnapshotGroupPreference(snapshotPreferenceId, groupName);
+        //        return true;
+        //    }
 
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
-        /// <summary>
-        /// removing user preferred groups from market performance snapshot gadget
-        /// </summary>
-        /// <param name="grouppreferenceId"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool RemoveMarketSnapshotGroupPreference(int groupPreferenceId)
-        {
-            try
-            {
-                ResearchEntities entity = new ResearchEntities();
-                entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
-                return true;
-            }
+        ///// <summary>
+        ///// removing user preferred groups from market performance snapshot gadget
+        ///// </summary>
+        ///// <param name="grouppreferenceId"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool RemoveMarketSnapshotGroupPreference(int groupPreferenceId)
+        //{
+        //    try
+        //    {
+        //        ResearchEntities entity = new ResearchEntities();
+        //        entity.DeleteMarketSnapshotGroupPreference(groupPreferenceId);
+        //        return true;
+        //    }
 
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
-        /// <summary>
-        /// adding user preferred entities in groups in market performance snapshot gadget
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
-        {
-            ResearchEntities entity = new ResearchEntities();
-            try
-            {
-                entity.SetMarketSnapshotEntityPreference(marketSnapshotPreference.GroupPreferenceID,
-                                                            marketSnapshotPreference.EntityName,
-                                                                marketSnapshotPreference.EntityReturnType,
-                                                                    marketSnapshotPreference.EntityType,
-                                                                        marketSnapshotPreference.EntityOrder);
-                return true;
-            }
+        ///// <summary>
+        ///// adding user preferred entities in groups in market performance snapshot gadget
+        ///// </summary>
+        ///// <param name="marketSnapshotPreference"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
+        //{
+        //    ResearchEntities entity = new ResearchEntities();
+        //    try
+        //    {
+        //        entity.SetMarketSnapshotEntityPreference(marketSnapshotPreference.GroupPreferenceID,
+        //                                                    marketSnapshotPreference.EntityName,
+        //                                                        marketSnapshotPreference.EntityReturnType,
+        //                                                            marketSnapshotPreference.EntityType,
+        //                                                                marketSnapshotPreference.EntityOrder);
+        //        return true;
+        //    }
 
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
-        /// <summary>
-        ///  removing user preferred entities from groups in market performance snapshot gadget
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public bool RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
-        {
-            ResearchEntities entity = new ResearchEntities();
-            try
-            {
-                int? affectedRows = entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId).FirstOrDefault();
-                if (affectedRows == null || affectedRows == 0)
-                    return false;
-                return true;
-            }
+        ///// <summary>
+        /////  removing user preferred entities from groups in market performance snapshot gadget
+        ///// </summary>
+        ///// <param name="marketSnapshotPreference"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public bool RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference)
+        //{
+        //    ResearchEntities entity = new ResearchEntities();
+        //    try
+        //    {
+        //        int? affectedRows = entity.DeleteMarketSnapshotEntityPreference(marketSnapshotPreference.EntityPreferenceId).FirstOrDefault();
+        //        if (affectedRows == null || affectedRows == 0)
+        //            return false;
+        //        return true;
+        //    }
 
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
 
         /// <summary>
         ///  save user preference in market performance snapshot gadget
@@ -934,6 +949,8 @@ namespace GreenField.Web.Services
                 {
                     case 0:
                         break;
+                    case -1:
+                        throw new NotImplementedException("specified snapshot does not exists in database");
                     case 1:
                         throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
                     case 2:
@@ -989,6 +1006,8 @@ namespace GreenField.Web.Services
                 {
                     case 0:
                         break;
+                    case -1:
+                        throw new NotImplementedException("specified snapshot does not exists in database");
                     case 1:
                         throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
                     case 2:
@@ -1004,30 +1023,6 @@ namespace GreenField.Web.Services
                     default:
                         break;
                 }
-
-                //snapshotPreference = snapshotPreference
-                //    .OrderBy(record => record.GroupPreferenceID)
-                //    .ThenBy(record => record.EntityOrder)
-                //    .ToList();
-
-                //string insertedGroupName = String.Empty;
-                //Decimal? groupPreferenceId = 0;
-
-
-
-                //foreach (MarketSnapshotPreference preference in snapshotPreference)
-                //{
-                //    if (preference.GroupName != insertedGroupName)
-                //    {
-                //        groupPreferenceId = entity.SetMarketSnapshotGroupPreference(Convert.ToInt32(snapshotID), preference.GroupName).FirstOrDefault();
-                //        insertedGroupName = preference.GroupName;
-                //    }
-
-                //    entity.SetMarketSnapshotEntityPreference(Convert.ToInt32(groupPreferenceId), preference.EntityName, preference.EntityReturnType,
-                //        preference.EntityType, preference.EntityOrder);
-                //}
-
-
 
                 MarketSnapshotSelectionData marketSnapshotSelectionData = RetrieveMarketSnapshotSelectionData(userName)
                     .Where(record => record.SnapshotName == snapshotName).FirstOrDefault();
