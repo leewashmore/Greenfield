@@ -110,18 +110,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _entitySelectionEnteredText = value;
                 RaisePropertyChanged(() => this.EntitySelectionEnteredText);
-                //if (EntitySelectionGroupInfoSource != null)
-                //{
-                //    if (value != String.Empty)
-                //    {
-                //        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource
-                //            .Where(record => record.ShortName.ToLower().Contains(value.ToLower())
-                //                || record.LongName.ToLower().Contains(value.ToLower()));
-                //    }
-                //    else
-                //        EntitySelectionGroupInfo.Source = EntitySelectionGroupInfoSource;
-                //}
-
+                
                 if (EntitySelectionInfo != null)
                 {
                     if (value != String.Empty && value != null)
@@ -185,6 +174,7 @@ namespace GreenField.Gadgets.ViewModels
                         .Where(record => record.Type == EntityType.SECURITY)
                         .ToList();
                     BenchmarkToggleChecked = !value;
+                    IndexToggleChecked = !value;
                     CommodityToggleChecked = !value;
                 }
             }
@@ -204,10 +194,34 @@ namespace GreenField.Gadgets.ViewModels
                 if (value == true)
                 {
                     EntitySelectionInfo = EntitySelectionInfoSource
+                                .Where(record => record.Type == EntityType.BENCHMARK)
+                                .ToList();
+                    SecurityToggleChecked = !value;
+                    IndexToggleChecked = !value;
+                    CommodityToggleChecked = !value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// BenchmarkToggle IsChecked
+        /// </summary>
+        private bool? _indexToggleChecked = false;
+        public bool? IndexToggleChecked
+        {
+            get { return _indexToggleChecked; }
+            set
+            {
+                _indexToggleChecked = value;
+                RaisePropertyChanged(() => this.IndexToggleChecked);
+                if (value == true)
+                {
+                    EntitySelectionInfo = EntitySelectionInfoSource
                                 .Where(record => record.Type == EntityType.INDEX)
                                 .ToList();
                     SecurityToggleChecked = !value;
-                    CommodityToggleChecked = !value;
+                    BenchmarkToggleChecked = !value;
+                    CommodityToggleChecked = !value;                    
                 }
             }
         }
@@ -230,6 +244,7 @@ namespace GreenField.Gadgets.ViewModels
                                 .ToList();
                     SecurityToggleChecked = !value;
                     BenchmarkToggleChecked = !value;
+                    IndexToggleChecked = !value;
                 }
             }
         } 

@@ -464,6 +464,24 @@ namespace GreenField.Web.Services
                     }
                 }
 
+                List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM.ToList();
+                if (benchmarkData != null)
+                {
+                    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM record in benchmarkData)
+                    {
+                        
+                        result.Add(new EntitySelectionData()
+                        {
+
+                            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
+                            ShortName = record.BM == null ? String.Empty : record.BM,
+                            LongName = record.BMNAME == null ? String.Empty : record.BMNAME,
+                            InstrumentID = record.BM == null ? String.Empty : record.BM,
+                            Type = "BENCHMARK",
+                            SecurityType = null
+                        });
+                    }
+                }
                 return result;
             }
             catch (Exception ex)
@@ -486,33 +504,36 @@ namespace GreenField.Web.Services
             {
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
                
-                List<BenchmarkSelectionData> benchmarkSelectionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
-                    .Where(record => record.TO_DATE == Convert.ToDateTime("30/4/2012"))
-                    .Select(record => new BenchmarkSelectionData()
-                    {
-                        BenchmarkId = record.BM,
-                        BenchmarkName = record.BMNAME
-                    })
-                    .ToList();
+                //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkSelectionData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM
+                //    .OrderBy(record => record.BM).ToList();
 
-                benchmarkSelectionData = benchmarkSelectionData.Distinct().ToList();
 
-                if (benchmarkSelectionData != null)
-                {
-                    foreach (BenchmarkSelectionData record in benchmarkSelectionData)
-                    {
-                        result.Add(new EntitySelectionData()
-                        {
+                //    .Where(record => record.TO_DATE == Convert.ToDateTime("30/4/2012"))
+                //    .Select(record => new BenchmarkSelectionData()
+                //    {
+                //        BenchmarkId = record.BM,
+                //        BenchmarkName = record.BMNAME
+                //    })
+                //    .ToList();
 
-                            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
-                            ShortName = record.BenchmarkId,
-                            LongName = record.BenchmarkName,
-                            InstrumentID = null,
-                            Type = "BENCHMARK",
-                            SecurityType = null
-                        });
-                    }
-                }
+                //benchmarkSelectionData = benchmarkSelectionData.Distinct().ToList();
+
+                //if (benchmarkSelectionData != null)
+                //{
+                //    foreach (BenchmarkSelectionData record in benchmarkSelectionData)
+                //    {
+                //        result.Add(new EntitySelectionData()
+                //        {
+
+                //            SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
+                //            ShortName = record.BenchmarkId,
+                //            LongName = record.BenchmarkName,
+                //            InstrumentID = null,
+                //            Type = "BENCHMARK",
+                //            SecurityType = null
+                //        });
+                //    }
+                //}
 
                 return result;
             }

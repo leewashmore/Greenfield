@@ -27,11 +27,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>            
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <telerik:RadToggleButton Grid.Column="0" Content="Security" FontSize="7" FontFamily="Arial" IsChecked="{Binding SecurityToggleChecked, Mode=TwoWay}"/>
-            <telerik:RadToggleButton Grid.Column="1" Content="Benchmark / Index" FontSize="7" FontFamily="Arial" IsChecked="{Binding BenchmarkToggleChecked, Mode=TwoWay}"/>
-            <telerik:RadToggleButton Grid.Column="2" Content="Commodity" FontSize="7" FontFamily="Arial" IsChecked="{Binding CommodityToggleChecked, Mode=TwoWay}"/>            
+            <telerik:RadToggleButton Grid.Column="1" Content="Benchmark" FontSize="7" FontFamily="Arial" IsChecked="{Binding BenchmarkToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadToggleButton Grid.Column="2" Content="Index" FontSize="7" FontFamily="Arial" IsChecked="{Binding IndexToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadToggleButton Grid.Column="3" Content="Commodity" FontSize="7" FontFamily="Arial" IsChecked="{Binding CommodityToggleChecked, Mode=TwoWay}"/>            
         </Grid>
         <Grid Grid.Row="2" Margin="0,2,0,0">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
@@ -39,8 +41,8 @@
                 <!--ItemContainerStyleSelector="{StaticResource ItemStyleSelector}"-->
                 <telerik:RadComboBox x:Name="cmbEntitySelection" Width="382" FontSize="7" FontFamily="Arial"
                                      ItemsSource="{Binding EntityFilterSelectionInfo}" SelectionChanged="cmbEntitySelection_SelectionChanged"
-                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}" 
-                                     SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"                                     
+                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}"
+                                     SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
                                      IsEditable="True" telerik:TextSearch.TextPath="LongName" EmptyText="Search Entity..." 
                                      CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False"
                                      OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed"
