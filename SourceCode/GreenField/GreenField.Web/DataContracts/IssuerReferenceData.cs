@@ -19,7 +19,10 @@ namespace GreenField.Web.DataContracts
         public String CountryName { get; set; }
 
         [DataMember]
-        public List<CurrencySelectionData> CurrencyReferenceData { get; set; }
+        public String CurrencyCode { get; set; }
+
+        [DataMember]
+        public String CurrencyName { get; set; }
     }
 
     

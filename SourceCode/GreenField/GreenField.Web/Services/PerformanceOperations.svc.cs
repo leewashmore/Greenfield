@@ -480,8 +480,6 @@ namespace GreenField.Web.Services
 
         #region Market Performance Snapshot Operation Contracts
 
-
-
         /// <summary>
         /// retrieving list of market performance snapshots for particular user
         /// </summary>
@@ -572,6 +570,56 @@ namespace GreenField.Web.Services
             return pricingRecordValue;
         }
 
+        private DateTime GetWeekBeginDate(DateTime date)
+        {
+            int weekDay = -1;
+            switch (date.DayOfWeek)
+            {
+                case DayOfWeek.Friday:
+                    weekDay = 5;
+                    break;
+                case DayOfWeek.Monday:
+                    weekDay = 1;
+                    break;
+                case DayOfWeek.Saturday:
+                    weekDay = 6;
+                    break;
+                case DayOfWeek.Sunday:
+                    weekDay = 7;
+                    break;
+                case DayOfWeek.Thursday:
+                    weekDay = 4;
+                    break;
+                case DayOfWeek.Tuesday:
+                    weekDay = 2;
+                    break;
+                case DayOfWeek.Wednesday:
+                    weekDay = 3;
+                    break;
+                default:
+                    weekDay = -1;
+                    break;
+            }
+
+            if (weekDay >= 6)
+                return date.AddDays(-1 * (weekDay - 6));
+            else
+                return date.AddDays(-1 * (weekDay + 1));
+
+        }
+
+        private DateTime GetQuarterBeginDate(DateTime date)
+        {
+            if (date.Month >= 1 && date.Month <= 3)
+                return new DateTime(date.Year, 1, 1);
+            if (date.Month >= 4 && date.Month <= 6)
+                return new DateTime(date.Year, 4, 1);
+            if (date.Month >= 7 && date.Month <= 9)
+                return new DateTime(date.Year, 7, 1);
+            else
+                return new DateTime(date.Year, 10, 1);
+        }
+
         /// <summary>
         /// retrieving entity data for market performance snapshot gadget based on user preference
         /// </summary>
@@ -594,14 +642,8 @@ namespace GreenField.Web.Services
                         .FirstOrDefault()
                         .INSTRUMENT_ID;
 
-                    #region Today's Pricing Data
-                    DateTime presentBusinessDate = DateTime.Today;
-                    Decimal? presentBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                        , preference.EntityReturnType, presentBusinessDate, out presentBusinessDate);
-                    #endregion
-
                     #region Last Date Pricing Data
-                    DateTime lastBusinessDate = presentBusinessDate;
+                    DateTime lastBusinessDate = DateTime.Today;
                     Decimal? lastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastBusinessDate, out lastBusinessDate);
                     #endregion
@@ -613,58 +655,68 @@ namespace GreenField.Web.Services
                     #endregion
 
                     #region Last Week Date Pricing Data
-                    DateTime lastWeekBusinessDate = DateTime.Today.AddDays(-7);
+                    DateTime lastWeekBusinessDate = GetWeekBeginDate(DateTime.Today);
                     Decimal? lastWeekBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastWeekBusinessDate, out lastWeekBusinessDate);
                     #endregion
 
                     #region Last Month Date Pricing Data
-                    DateTime lastMonthBusinessDate = DateTime.Today.AddMonths(-1);
+                    DateTime lastMonthBusinessDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
                     Decimal? lastMonthBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastMonthBusinessDate, out lastMonthBusinessDate);
                     #endregion
 
                     #region Last Quarter Date Pricing Data
-                    DateTime lastQuarterBusinessDate = DateTime.Today.AddMonths(-3);
+                    DateTime lastQuarterBusinessDate = GetQuarterBeginDate(DateTime.Today);
                     Decimal? lastQuarterBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastQuarterBusinessDate, out lastQuarterBusinessDate);
                     #endregion
 
                     #region Last Year Date Pricing Data
-                    DateTime lastYearBusinessDate = new DateTime(DateTime.Today.Year - 1, 12, 31);
+                    DateTime lastYearBusinessDate = new DateTime(DateTime.Today.Year, 1, 1);
                     Decimal? lastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, lastYearBusinessDate, out lastYearBusinessDate);
                     #endregion
 
                     #region Second Last Year Date Pricing Data
-                    DateTime secondLastYearBusinessDate = new DateTime(DateTime.Today.Year - 2, 12, 31);
+                    DateTime secondLastYearBusinessDate = new DateTime(DateTime.Today.Year - 1, 1, 1);
                     Decimal? secondLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, secondLastYearBusinessDate, out secondLastYearBusinessDate);
                     #endregion
 
                     #region Third Last Year Date Pricing Data
-                    DateTime thirdLastYearBusinessDate = new DateTime(DateTime.Today.Year - 3, 12, 31);
+                    DateTime thirdLastYearBusinessDate = new DateTime(DateTime.Today.Year - 2, 1, 1);
                     Decimal? thirdLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, thirdLastYearBusinessDate, out thirdLastYearBusinessDate);
                     #endregion
 
                     #region Fourth Last Year Date Pricing Data
-                    DateTime fourthLastYearBusinessDate = new DateTime(DateTime.Today.Year - 4, 12, 31);
+                    DateTime fourthLastYearBusinessDate = new DateTime(DateTime.Today.Year - 3, 1, 1);
                     Decimal? fourthLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
                         , preference.EntityReturnType, fourthLastYearBusinessDate, out fourthLastYearBusinessDate);
                     #endregion
 
+
+                    Decimal? dateToDateReturn = secondLastBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - secondLastBusinessDatePrice) / (secondLastBusinessDatePrice)) * 100;
+                    Decimal? weekToDateReturn = lastWeekBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastWeekBusinessDatePrice) / (lastWeekBusinessDatePrice)) * 100;
+                    Decimal? monthToDateReturn = lastMonthBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastMonthBusinessDatePrice) / (lastMonthBusinessDatePrice)) * 100;
+                    Decimal? quarterToDateReturn = lastQuarterBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastQuarterBusinessDatePrice) / (lastQuarterBusinessDatePrice)) * 100;
+                    Decimal? yearToDateReturn = lastYearBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastYearBusinessDatePrice) / (lastYearBusinessDatePrice)) * 100;
+                    Decimal? lastYearReturn = secondLastYearBusinessDatePrice == 0 ? 0 : ((lastYearBusinessDatePrice - secondLastYearBusinessDatePrice) / (secondLastYearBusinessDatePrice)) * 100;
+                    Decimal? secondLastYearReturn = thirdLastYearBusinessDatePrice == 0 ? 0 : ((secondLastYearBusinessDatePrice - thirdLastYearBusinessDatePrice) / (thirdLastYearBusinessDatePrice)) * 100;
+                    Decimal? thirdLastYearReturn = fourthLastYearBusinessDatePrice == 0 ? 0 : ((thirdLastYearBusinessDatePrice - fourthLastYearBusinessDatePrice) / (fourthLastYearBusinessDatePrice)) * 100;
+
                     result.Add(new MarketPerformanceSnapshotData()
                     {
                         MarketSnapshotPreferenceInfo = preference,
-                        DateToDateReturn = ((lastBusinessDatePrice - secondLastBusinessDatePrice) / (secondLastBusinessDatePrice == 0 ? null : secondLastBusinessDatePrice)) * 100,
-                        WeekToDateReturn = ((presentBusinessDatePrice - lastWeekBusinessDatePrice) / (lastWeekBusinessDatePrice == 0 ? null : lastWeekBusinessDatePrice)) * 100,
-                        MonthToDateReturn = ((presentBusinessDatePrice - lastMonthBusinessDatePrice) / (lastMonthBusinessDatePrice == 0 ? null : lastMonthBusinessDatePrice)) * 100,
-                        QuarterToDateReturn = ((presentBusinessDatePrice - lastQuarterBusinessDatePrice) / (lastQuarterBusinessDatePrice == 0 ? null : lastQuarterBusinessDatePrice)) * 100,
-                        YearToDateReturn = ((presentBusinessDatePrice - lastYearBusinessDatePrice) / (lastYearBusinessDatePrice == 0 ? null : lastYearBusinessDatePrice)) * 100,
-                        LastYearReturn = ((lastYearBusinessDatePrice - secondLastYearBusinessDatePrice) / (secondLastYearBusinessDatePrice == 0 ? null : secondLastYearBusinessDatePrice)) * 100,
-                        SecondLastYearReturn = ((secondLastYearBusinessDatePrice - thirdLastYearBusinessDatePrice) / (thirdLastYearBusinessDatePrice == 0 ? null : thirdLastYearBusinessDatePrice)) * 100,
-                        ThirdLastYearReturn = ((thirdLastYearBusinessDatePrice - fourthLastYearBusinessDatePrice) / (fourthLastYearBusinessDatePrice == 0 ? null : fourthLastYearBusinessDatePrice)) * 100
+                        DateToDateReturn = dateToDateReturn,
+                        WeekToDateReturn = weekToDateReturn,
+                        MonthToDateReturn = monthToDateReturn,
+                        QuarterToDateReturn = quarterToDateReturn,
+                        YearToDateReturn = yearToDateReturn,
+                        LastYearReturn = lastYearReturn,
+                        SecondLastYearReturn = secondLastYearReturn,
+                        ThirdLastYearReturn = thirdLastYearReturn
                     });
 
                 }
@@ -861,7 +913,9 @@ namespace GreenField.Web.Services
                 List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId))
                     .ToList<MarketSnapshotPreference>();
 
-                return userPreference;
+                return userPreference.OrderBy(record => record.GroupPreferenceID)
+                    .ThenBy(record => record.EntityOrder)
+                    .ToList();
             }
 
             catch (Exception ex)
@@ -942,7 +996,9 @@ namespace GreenField.Web.Services
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
 
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
-                result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData;
+                result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData.OrderBy(record => record.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+                                                        .ThenBy(record => record.MarketSnapshotPreferenceInfo.EntityOrder)
+                                                        .ToList();
                 return result;
             }
 

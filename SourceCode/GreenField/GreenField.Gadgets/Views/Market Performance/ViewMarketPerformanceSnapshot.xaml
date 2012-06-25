@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="GreenField.Gadgets.Views.ViewMarketPerformanceSnapshot"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMarketPerformanceSnapshot"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +9,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
-    <UserControl.Resources>
+    <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
@@ -37,8 +37,8 @@
                     </Style>                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>        
-    </UserControl.Resources>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
 
     <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
@@ -50,8 +50,14 @@
                 </Grid.RowDefinitions>
 
                 <!--gadget header-->
-                <TextBlock Grid.Row="0" Text="{Binding MorningSnapshotHeader}" HorizontalAlignment="Center"
+                <Grid Grid.Row="0">
+                    <TextBlock Text="{Binding MorningSnapshotHeader}" HorizontalAlignment="Center" x:Name="txtHeader"
                        VerticalAlignment="Center" FontSize="11" FontWeight="Bold"/>
+                    <telerik:RadButton Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True" Margin="1"
+                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
+                    </telerik:RadButton>
+                </Grid>
 
                 <!--grid containing benchmark data-->
                 <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2" AlternateRowBackground="#d8d5d4"
@@ -61,7 +67,7 @@
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
                                  ItemsSource="{Binding MarketPerformanceSnapshotInfo}" IsFilteringAllowed="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedMarketPerformanceSnapshotInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False"
-                                     RowLoaded="radGridSnapshot_RowLoaded"                                     
+                                     RowLoaded="radGridSnapshot_RowLoaded" ElementExporting="radGridSnapshot_ElementExporting"                                  
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
@@ -159,4 +165,4 @@
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>
-</UserControl>
+</helpers:ViewBaseUserControl>

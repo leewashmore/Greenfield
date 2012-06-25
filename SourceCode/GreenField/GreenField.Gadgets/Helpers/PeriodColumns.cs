@@ -291,36 +291,36 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
-        public static void RadRadioButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            RadRadioButton radioButton = sender as RadRadioButton;
-            if (radioButton != null)
-                radioButton.Foreground = new SolidColorBrush(Colors.Black);
-        }
+        //public static void RadRadioButton_MouseEnter(object sender, MouseEventArgs e)
+        //{
+        //    RadRadioButton radioButton = sender as RadRadioButton;
+        //    if (radioButton != null)
+        //        radioButton.Foreground = new SolidColorBrush(Colors.Black);
+        //}
 
-        public static void RadRadioButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            RadRadioButton radioButton = sender as RadRadioButton;
-            if (radioButton != null)
-                if (radioButton.IsChecked == false || radioButton.IsChecked == null)
-                    radioButton.Foreground = new SolidColorBrush(Colors.White);
-        }
+        //public static void RadRadioButton_MouseLeave(object sender, MouseEventArgs e)
+        //{
+        //    RadRadioButton radioButton = sender as RadRadioButton;
+        //    if (radioButton != null)
+        //        if (radioButton.IsChecked == false || radioButton.IsChecked == null)
+        //            radioButton.Foreground = new SolidColorBrush(Colors.White);
+        //}
 
-        public static void RadRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender == null)
-                return;
-            RadRadioButton radioButton = sender as RadRadioButton;
+        //public static void RadRadioButton_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    if (sender == null)
+        //        return;
+        //    RadRadioButton radioButton = sender as RadRadioButton;
 
-            if (radioButton == null)
-                return;
+        //    if (radioButton == null)
+        //        return;
 
-            if (radioButton.IsChecked == null)
-                return;
+        //    if (radioButton.IsChecked == null)
+        //        return;
 
-            radioButton.Foreground = Convert.ToBoolean(radioButton.IsChecked)
-                ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.White);
-        }        
+        //    radioButton.Foreground = Convert.ToBoolean(radioButton.IsChecked)
+        //        ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.White);
+        //}        
 
         private static int GetQuarter(int month)
         {

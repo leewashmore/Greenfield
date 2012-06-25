@@ -2172,10 +2172,10 @@ namespace GreenField.ServiceCaller
         }
 
         public void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData, Action<List<FinancialStatementData>> callback)
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currencyreferenceData);
+            client.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency);
             client.RetrieveFinancialStatementCompleted += (se, e) =>
             {
                 if (e.Error == null)

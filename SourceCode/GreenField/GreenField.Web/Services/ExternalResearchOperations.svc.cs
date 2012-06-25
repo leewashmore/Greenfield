@@ -49,20 +49,38 @@ namespace GreenField.Web.Services
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
                 
-                GF_PORTFOLIO_HOLDINGS issuerHolding = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
-                    record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
-                    record.ISSUE_NAME == entitySelectionData.LongName &&
-                    record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
 
-                if (issuerHolding == null)
+                if (securityDetails == null)
                     return new IssuerReferenceData();
 
+                String issuerId = securityDetails.ISSUER_ID;
+                String countryCode = securityDetails.ISO_COUNTRY_CODE;
+                String countryName = securityDetails.ASEC_SEC_COUNTRY_NAME;
+                String currencyCode = null;
+                String currencyName = null;
+
+                External_Country_Master countryDetails = entity.External_Country_Master
+                    .Where(record => record.COUNTRY_CODE == countryCode &&
+                        record.COUNTRY_NAME == countryName)
+                    .FirstOrDefault();
+
+                if (countryDetails != null)
+                {
+                    currencyCode = countryDetails.CURRENCY_CODE;
+                    currencyName = countryDetails.CURRENCY_NAME;
+                }
+                
                 IssuerReferenceData result = new IssuerReferenceData()
                 {
-                    IssuerId = issuerHolding.ISSUER_ID,
-                    CountryCode = issuerHolding.ISO_COUNTRY_CODE,
-                    CountryName = issuerHolding.COUNTRYNAME,
-                    CurrencyReferenceData = entity.Get_Currency(issuerHolding.ISO_COUNTRY_CODE).ToList()
+                    IssuerId = issuerId,
+                    CountryCode = countryCode,
+                    CountryName = countryName,
+                    CurrencyCode = currencyCode,
+                    CurrencyName = currencyName
                 };
                 
                 return result;
@@ -79,7 +97,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData)
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency)
         {
             try
             {
@@ -92,16 +110,13 @@ namespace GreenField.Web.Services
 
                 List<FinancialStatementData> result = null;
 
-                foreach (CurrencySelectionData currency in currencyreferenceData)
-                {
-                    result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency.CurrencyCode).ToList();
-                    if (result.Count().Equals(0))
-                        continue;
-                    break;
-                }
+                result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
                 
                 if (result == null)
                     return null;
+
+                if (result.Count().Equals(0))
+                    return result;
 
                 string recordCurrency = result.First().CURRENCY;
 

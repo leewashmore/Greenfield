@@ -19,10 +19,11 @@ using GreenField.Gadgets.Helpers;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.Gadgets.Models;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewMarketPerformanceSnapshot : UserControl
+    public partial class ViewMarketPerformanceSnapshot : ViewBaseUserControl
     {
         #region Fields
         private ViewModelMarketPerformanceSnapshot _dataContextSource; 
@@ -153,7 +154,7 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             this.radGridSnapshot.Rebind();
-            //_dataContextSource.abc();
+            _dataContextSource.TestEntityOrdering();
 
         }
 
@@ -495,5 +496,33 @@ namespace GreenField.Gadgets.Views
             }
         } 
         #endregion
+
+        #region Event Unsubscribe
+        public override void Dispose()
+        {
+            this._dataContextSource.Dispose();
+            this._dataContextSource = null;
+            this.DataContext = null;
+        }
+        #endregion
+
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = this.txtHeader.Text,
+                Element = this.radGridSnapshot,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
+            childExportOptions.Show();
+        }
+
+        private void radGridSnapshot_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
     }
 }

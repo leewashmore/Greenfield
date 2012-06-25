@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
                     PeriodRecord = PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT ? --Iterator : ++Iterator);
                     PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
-                    FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
+                    FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrency], ReportedMonth);
                     BusyIndicatorNotification();
                 }
             };
@@ -58,6 +58,11 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+            }
+
+            if (_entitySelectionData != null)
+            {
+                HandleSecurityReferenceSetEvent(_entitySelectionData);
             }
         } 
         #endregion
@@ -140,34 +145,60 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        public IssuerReferenceData IssuerReferenceInfo { get; set; }
+
+        private Int32 _selectedDataSource;
+        public Int32 SelectedDataSource
+        {
+            get { return _selectedDataSource; }
+            set 
+            {
+                _selectedDataSource = value;
+                RaisePropertyChanged(() => this.SelectedDataSource);
+                RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceInfo);
+            }
+        }
+
+        private Int32 _selectedPeriodType;
+        public Int32 SelectedPeriodType
+        {
+            get { return _selectedPeriodType; }
+            set
+            {
+                _selectedPeriodType = value;
+                RaisePropertyChanged(() => this.SelectedPeriodType);
+                RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceInfo);
+            }
+        }
+
         #region Calendarization Option
         public Int32? ReportedMonth { get; set; }
         public Int32? OriginalReportedMonth { get; set; }
 
-        private List<String> _calendarSource;
-        public List<String> CalendarSource
+        private List<String> _fiscalTypeInfo;
+        public List<String> FiscalTypeInfo
         {
-            get { return _calendarSource; }
+            get { return _fiscalTypeInfo; }
             set
             {
-                if (_calendarSource != value)
+                if (_fiscalTypeInfo != value)
                 {
-                    _calendarSource = value;
-                    RaisePropertyChanged(() => this.CalendarSource);
+                    _fiscalTypeInfo = value;
+                    RaisePropertyChanged(() => this.FiscalTypeInfo);
                 }
             }
         }
 
-        private Int32 _selectedCalendarSource;
-        public Int32 SelectedCalendarSource
+        private Int32 _selectedFiscalType;
+        public Int32 SelectedFiscalType
         {
-            get { return _selectedCalendarSource; }
+            get { return _selectedFiscalType; }
             set
             {
-                if (_selectedCalendarSource != value)
+                if (_selectedFiscalType != value)
                 {
-                    _selectedCalendarSource = value;
-                    RaisePropertyChanged(() => this.SelectedCalendarSource);
+                    _selectedFiscalType = value;
+                    RaisePropertyChanged(() => this.SelectedFiscalType);
                     ReportedMonth = value == 0 ? OriginalReportedMonth : 12;
                     SetFinancialStatementDisplayInfo();
                 }
@@ -190,16 +221,16 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Int32 _selectedCurrencySource;
-        public Int32 SelectedCurrencySource
+        private Int32 _selectedCurrency;
+        public Int32 SelectedCurrency
         {
-            get { return _selectedCurrencySource; }
+            get { return _selectedCurrency; }
             set
             {
-                if (_selectedCurrencySource != value)
+                if (_selectedCurrency != value)
                 {
-                    _selectedCurrencySource = value;
-                    RaisePropertyChanged(() => this.SelectedCurrencySource);
+                    _selectedCurrency = value;
+                    RaisePropertyChanged(() => this.SelectedCurrency);
                     SetFinancialStatementDisplayInfo();
                 }
             }
@@ -353,7 +384,10 @@ namespace GreenField.Gadgets.ViewModels
         public void SetFinancialStatementDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating Financial Statement Information based on selected preference");
-            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrencySource], ReportedMonth);
+            if (CurrencySource != null)
+                FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, PeriodRecord, CurrencySource[SelectedCurrency], ReportedMonth);
+            else
+                FinancialStatementDisplayInfo = null;
             BusyIndicatorNotification();
             //PeriodColumn.NavigationCompleted -= new PeriodColumnNavigationEventHandler(SetFinancialStatementDisplayInfo);
         }
@@ -406,18 +440,26 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    if (result.Equals(String.Empty))
-                    {
-                        Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
-                        return;
-                    }
+                    if (IssuerReferenceInfo != result)
+                        IssuerReferenceInfo = result;
 
                     BusyIndicatorNotification(true, "Retrieving Financial Statement Data for ");
-                    _dbInteractivity.RetrieveFinancialStatementData(result.IssuerId, FinancialStatementDataSource.REUTERS
-                        , FinancialStatementPeriodType.ANNUAL, FinancialStatementFiscalType.FISCAL, FinancialStatementStatementType.BALANCE_SHEET, result.CurrencyReferenceData, RetrieveFinancialStatementDataCallbackMethod);
+                    FinancialStatementDataSource selectedFinancialStatementDataSource = SelectedDataSource == 0 
+                        ? FinancialStatementDataSource.REUTERS
+                        : ( SelectedDataSource == 1 
+                            ? FinancialStatementDataSource.PRIMARY
+                            : FinancialStatementDataSource.INDUSTRY );
+
+                    FinancialStatementPeriodType selectedFinancialStatementPeriodType = SelectedPeriodType == 0
+                        ? FinancialStatementPeriodType.ANNUAL
+                        : FinancialStatementPeriodType.QUARTERLY;
+
+                    _dbInteractivity.RetrieveFinancialStatementData(result.IssuerId, selectedFinancialStatementDataSource
+                        , selectedFinancialStatementPeriodType, FinancialStatementFiscalType.FISCAL, FinancialStatementStatementType.BALANCE_SHEET, result.CurrencyCode, RetrieveFinancialStatementDataCallbackMethod);
                 }
                 else
                 {
+                    Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
                 BusyIndicatorNotification();
@@ -441,24 +483,33 @@ namespace GreenField.Gadgets.ViewModels
                     PeriodRecord = PeriodColumns.SetPeriodRecord(Iterator);
                     PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
 
-                    if(result.Count != 0)
+                    if (result.Count != 0)
                     {
                         if (result[0].REPORTED_MONTH == 12)
                         {
-                            CalendarSource = new List<string> { "Calendar End Date" };
-                            SelectedCalendarSource = 0;
+                            FiscalTypeInfo = new List<string> { "Calendar End Date" };
+                            SelectedFiscalType = 0;
                             ReportedMonth = 12;
                             OriginalReportedMonth = 12;
                         }
                         else
                         {
-                            CalendarSource = new List<string> { "Reported End Date (" + GetMonth(result[0].REPORTED_MONTH) + ")", "Calendar End Date" };
-                            SelectedCalendarSource = 0;
+                            FiscalTypeInfo = new List<string> { "Reported End Date (" + GetMonth(result[0].REPORTED_MONTH) + ")", "Calendar End Date" };
+                            SelectedFiscalType = 0;
                             ReportedMonth = result[0].REPORTED_MONTH;
                             OriginalReportedMonth = result[0].REPORTED_MONTH;
                         }
                         CurrencySource = result.OrderBy(record => record.CURRENCY).Select(record => record.CURRENCY).Distinct().ToList();
-                        SelectedCurrencySource = CurrencySource.IndexOf(CurrencySource.Where(record => record != "USD").FirstOrDefault());
+                        SelectedCurrency = CurrencySource.IndexOf(CurrencySource.Where(record => record != "USD").FirstOrDefault());
+                    }
+                    else
+                    {
+                        FiscalTypeInfo = null;
+                        SelectedFiscalType = 0;
+                        ReportedMonth = 12;
+                        OriginalReportedMonth = 12;
+                        CurrencySource = null;
+                        SelectedCurrency = 0;
                     }
                     
                     FinancialStatementInfo = result;

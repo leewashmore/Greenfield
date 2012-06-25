@@ -388,7 +388,7 @@ namespace GreenField.Gadgets.ViewModels
                                     .ThenBy(record => record.EntityOrder)
                                     .ToList();
 
-                                //abc();
+                                TestEntityOrdering();
 
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
@@ -465,6 +465,9 @@ namespace GreenField.Gadgets.ViewModels
                             }
                         }
                         #endregion
+                        
+                        BusyIndicatorNotification();
+                        TestEntityOrdering();
                     }
                 });
 
@@ -477,7 +480,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
             BusyIndicatorNotification();
-            //abc();
+            
         }
 
         /// <summary>
@@ -558,7 +561,7 @@ namespace GreenField.Gadgets.ViewModels
                                     .ThenBy(record => record.EntityOrder)
                                     .ToList();
 
-                                //abc();
+                                TestEntityOrdering();
 
                                 //Service call to receive Market Performance Snapshot Data
                                 if (_dbInteractivity != null)
@@ -641,7 +644,7 @@ namespace GreenField.Gadgets.ViewModels
                                     }
                                 }
                                 #endregion
-                                //abc();
+                                TestEntityOrdering();
                             }
                             catch (Exception ex)
                             {
@@ -1316,6 +1319,8 @@ namespace GreenField.Gadgets.ViewModels
                             MarketSnapshotSelectionInfo = MarketSnapshotSelectionInfo,
                         });
                     #endregion
+
+                    TestEntityOrdering();
                 }
                 else
                 {
@@ -1946,20 +1951,37 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        //public void abc()
-        //{
-        //    string A = String.Empty;
-        //    foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceInfo)
-        //    {
-        //        if (record.EntityName != null)
-        //        {
-        //            A = A + record.EntityName + " " +
-        //                record.GroupPreferenceID.ToString() + " " +
-        //                ((int)record.EntityOrder).ToString() + "\n";
-        //        }
-        //    }
-        //    Prompt.ShowDialog(A);
-        //}
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<MarketPerformanceSnapshotReferenceSetEvent>().Unsubscribe(HandleMarketPerformanceSnapshotNameReferenceSetEvent);
+            _eventAggregator.GetEvent<MarketPerformanceSnapshotActionEvent>().Unsubscribe(HandleMarketPerformanceSnapshotActionEvent);
+        }
+
+        public void TestEntityOrdering()
+        {
+            //string A = "Preference ";
+            //foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceInfo)
+            //{
+            //    if (record.EntityName != null)
+            //    {
+            //        A = A + record.EntityName + "\t" +
+            //            record.GroupPreferenceID.ToString() + "\t" +
+            //            ((int)record.EntityOrder).ToString() + "\n";
+            //    }
+            //}
+            
+            //A = A + "\n\nOriginal Preference ";
+            //foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceOriginalInfo)
+            //{
+            //    if (record.EntityName != null)
+            //    {
+            //        A = A + record.EntityName + "\t" +
+            //            record.GroupPreferenceID.ToString() + "\t" +
+            //            ((int)record.EntityOrder).ToString() + "\n";
+            //    }
+            //}
+            //Prompt.ShowDialog(A);
+        }
 
 
 

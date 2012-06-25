@@ -184,7 +184,7 @@ namespace GreenField.ServiceCaller
         void RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData, Action<IssuerReferenceData> callback);
 
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, List<CurrencySelectionData> currencyreferenceData, Action<List<FinancialStatementData>> callback);
+            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 
