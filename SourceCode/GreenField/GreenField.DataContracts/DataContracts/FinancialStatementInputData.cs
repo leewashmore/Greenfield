@@ -24,11 +24,11 @@ namespace GreenField.DataContracts
     [DataContract(Name = "FinancialStatementPeriodType")]
     public enum FinancialStatementPeriodType
     {
-        [EnumMember(Value = "A")]
-        [DescriptionAttribute("A")]
+        [EnumMember(Value = "ANNUAL")]
+        [DescriptionAttribute("ANNUAL")]
         ANNUAL,
-        [EnumMember(Value = "Q")]
-        [DescriptionAttribute("Q")]
+        [EnumMember(Value = "QUARTER")]
+        [DescriptionAttribute("QUARTER")]
         QUARTERLY
     }
 

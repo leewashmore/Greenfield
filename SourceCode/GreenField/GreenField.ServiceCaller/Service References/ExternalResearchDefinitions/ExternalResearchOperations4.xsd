@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="EntitySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+  <xs:simpleType name="FinancialStatementDataSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REUTERS" />
+      <xs:enumeration value="PRIMARY" />
+      <xs:enumeration value="INDUSTRY" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementDataSource" nillable="true" type="tns:FinancialStatementDataSource" />
+  <xs:simpleType name="FinancialStatementPeriodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ANNUAL" />
+      <xs:enumeration value="QUARTER" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementPeriodType" nillable="true" type="tns:FinancialStatementPeriodType" />
+  <xs:simpleType name="FinancialStatementFiscalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FISCAL" />
+      <xs:enumeration value="CALENDAR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementFiscalType" nillable="true" type="tns:FinancialStatementFiscalType" />
+  <xs:simpleType name="FinancialStatementStatementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BAL" />
+      <xs:enumeration value="CAS" />
+      <xs:enumeration value="INC" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />
+  <xs:complexType name="ArrayOfBasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BasicData" nillable="true" type="tns:BasicData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBasicData" nillable="true" type="tns:ArrayOfBasicData" />
+  <xs:complexType name="BasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AverageVolume" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BarraBeta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Beta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EnterpriseValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketCapitalization" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeekRange52" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasicData" nillable="true" type="tns:BasicData" />
+  <xs:complexType name="ArrayOfTargetPriceCEData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TargetPriceCEData" nillable="true" type="tns:TargetPriceCEData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTargetPriceCEData" nillable="true" type="tns:ArrayOfTargetPriceCEData" />
+  <xs:complexType name="TargetPriceCEData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsensusRecommendation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentPrice" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MedianTargetPrice" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoOfEstimates" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TargetPriceCEData" nillable="true" type="tns:TargetPriceCEData" />
+</xs:schema>

@@ -21,21 +21,6 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewBalanceSheet : ViewBaseUserControl
     {
-        #region Property
-        private ViewModelBalanceSheet _dataContextFinancialStatements;
-        public ViewModelBalanceSheet DataContextFinancialStatements
-        {
-            get
-            {
-                return _dataContextFinancialStatements;
-            }
-            set
-            {
-                _dataContextFinancialStatements = value;
-            }
-        }
-        #endregion
-
         private EntitySelectionData _entitySelectionData;
         private bool _periodIsYearly = true;
         
@@ -44,8 +29,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            this.DataContextFinancialStatements = dataContextSource;
-
+            
             PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, new PeriodColumns.PeriodColumnUpdateEventArg()
             {
                 PeriodRecord = PeriodColumns.SetPeriodRecord(),
@@ -114,8 +98,7 @@ namespace GreenField.Gadgets.Views
             //this.rbtnQuarterly.Checked -= PeriodColumns.RadRadioButton_Checked;
             //this.rbtnYearly.Checked -= PeriodColumns.RadRadioButton_Checked;
 
-            this.DataContextFinancialStatements.Dispose();
-            this.DataContextFinancialStatements = null;
+            (this.DataContext as ViewModelBalanceSheet).Dispose();
             this.DataContext = null;
         }
         #endregion

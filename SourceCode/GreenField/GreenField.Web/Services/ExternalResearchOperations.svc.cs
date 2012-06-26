@@ -125,7 +125,7 @@ namespace GreenField.Web.Services
             try
             {
                 string _dataSource = EnumUtils.ToString(dataSource);
-                string _periodType = EnumUtils.ToString(periodType);
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
                 string _fiscalType = EnumUtils.ToString(fiscalType);
                 string _statementType = EnumUtils.ToString(statementType);
 

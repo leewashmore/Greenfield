@@ -127,6 +127,7 @@
     <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
+    <Compile Include="Helpers\EnumUtils.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\ExtendedDataWraper.cs" />

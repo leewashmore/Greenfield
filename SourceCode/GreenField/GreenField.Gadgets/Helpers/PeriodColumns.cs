@@ -71,6 +71,11 @@ namespace GreenField.Gadgets.Helpers
         } 
         #endregion
 
+        /// <summary>
+        /// Set the period record consisting of six years and quarters based on iteration
+        /// </summary>
+        /// <param name="incrementFactor">increment factor of iteration in period column year quarter calculation</param>
+        /// <returns>PeriodRecord object</returns>
         public static PeriodRecord SetPeriodRecord(int incrementFactor = 0)
         {
             PeriodRecord periodRecord = new PeriodRecord();
@@ -157,104 +162,351 @@ namespace GreenField.Gadgets.Helpers
             return periodColumnHeader;
         }
 
-        private static List<PeriodColumnDisplayData> GetCalendarizedPeriodColumnDisplayInfo(List<PeriodColumnDisplayData> displayData, int month)
+        public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo(object periodColumnInfo, out PeriodRecord periodRecord, PeriodRecord periodRecordInfo, String currency = "USD")
         {
             List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
-            Decimal pastMonthFactor = Convert.ToDecimal(month)/12;
-            Decimal postMonthFactor = (12 - Convert.ToDecimal(month)) / 12;
-            foreach (PeriodColumnDisplayData info in displayData)
-            {
-
-                result.Add(new PeriodColumnDisplayData()
-                {
-                    DATA_DESC = info.DATA_DESC,
-                    YEAR_ONE = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_TWO * postMonthFactor),
-                    YEAR_TWO = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_THREE * postMonthFactor),
-                    YEAR_THREE = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_FOUR * postMonthFactor),
-                    YEAR_FOUR = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_FIVE * postMonthFactor),
-                    YEAR_FIVE = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_SIX * postMonthFactor),
-                    YEAR_SIX = (info.YEAR_ONE * pastMonthFactor) + (info.YEAR_SEVEN * postMonthFactor),
-                    QUARTER_ONE = info.QUARTER_ONE,
-                    QUARTER_TWO = info.QUARTER_TWO,
-                    QUARTER_THREE = info.QUARTER_THREE,
-                    QUARTER_FOUR = info.QUARTER_FOUR,
-                    QUARTER_FIVE = info.QUARTER_FIVE,
-                    QUARTER_SIX = info.QUARTER_SIX,
-                });
-            }
-
-            return result;
-        }
-
-        public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo(object periodColumnInfo, PeriodRecord periodRecord, String currency = "USD", Int32? calendarizeMonth = 12)
-        {
-            List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
-            calendarizeMonth = calendarizeMonth == null ? 12 : calendarizeMonth;
-
-
+            PeriodRecord period = periodRecordInfo;
+            
             if (periodColumnInfo is List<FinancialStatementData>)
             {
                 List<FinancialStatementData> financialStatementInfo = (periodColumnInfo as List<FinancialStatementData>)
                     .OrderBy(record => record.SORT_ORDER)
                     .ThenBy(record => record.PERIOD_TYPE)
                     .ThenBy(record => record.PERIOD)
-                    .ToList(); ;
+                    .ToList();
 
                 List<String> distinctDataDescriptors = financialStatementInfo.Select(record => record.DATA_DESC).Distinct().ToList();
 
                 foreach (string dataDesc in distinctDataDescriptors)
                 {
-                    FinancialStatementData yearOneData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearOne.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearOneIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    #region Annual
+                    #region Year One
+                    FinancialStatementData yearOneData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData yearTwoData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearTwo.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearTwoIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearOneData == null)
+                    {
+                        yearOneData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearOneData != null)
+                        {
+                            period.YearOneIsHistorical = !(period.YearOneIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData yearThreeData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearThree.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearThreeIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Two
+                    FinancialStatementData yearTwoData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearTwo.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData yearFourData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearFour.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearFourIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearTwoData == null)
+                    {
+                        yearTwoData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearTwo.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearTwoData != null)
+                        {
+                            period.YearTwoIsHistorical = !(period.YearTwoIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData yearFiveData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearFive.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearFiveIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Three
+                    FinancialStatementData yearThreeData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearThree.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData yearSixData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearSix.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearSixIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearThreeData == null)
+                    {
+                        yearThreeData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearThree.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearThreeData != null)
+                        {
+                            period.YearThreeIsHistorical = !(period.YearThreeIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData yearSevenData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.YearSeven.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.YearSevenIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "A" && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Four
+                    FinancialStatementData yearFourData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearFour.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData quarterOneData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterOneYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterOneIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterOneQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearFourData == null)
+                    {
+                        yearFourData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearFour.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearFourData != null)
+                        {
+                            period.YearFourIsHistorical = !(period.YearFourIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData quarterTwoData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterTwoYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterTwoIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterTwoQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Five
+                    FinancialStatementData yearFiveData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearFive.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData quarterThreeData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterThreeYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterThreeIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterThreeQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearFiveData == null)
+                    {
+                        yearFiveData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearFive.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearFiveData != null)
+                        {
+                            period.YearFiveIsHistorical = !(period.YearFiveIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData quarterFourData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterFourYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterFourIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterFourQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Six
+                    FinancialStatementData yearSixData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearSix.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
 
-                    FinancialStatementData quarterFiveData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterFiveYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterFiveIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterFiveQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    if (yearSixData == null)
+                    {
+                        yearSixData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearSix.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearSixData != null)
+                        {
+                            period.YearSixIsHistorical = !(period.YearSixIsHistorical);
+                        }
+                    }
+                    #endregion
 
-                    FinancialStatementData quarterSixData = financialStatementInfo.Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                            record.PERIOD.ToUpper().Trim() == periodRecord.QuarterSixYear.ToString().ToUpper().Trim() && record.AMOUNT_TYPE.ToUpper().Trim() == (periodRecord.QuarterSixIsHistorical ? "A" : "E")
-                            && record.PERIOD_TYPE.ToUpper().Trim() == "Q" + periodRecord.QuarterSixQuarter.ToString().ToUpper().Trim() && record.CURRENCY == currency).FirstOrDefault();
+                    #region Year Seven
+                    FinancialStatementData yearSevenData = financialStatementInfo
+                                    .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.YearSeven.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSevenIsHistorical ? "A" : "E") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+
+                    if (yearSevenData == null)
+                    {
+                        yearSevenData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD.ToUpper().Trim() == period.YearSeven.ToString().ToUpper().Trim() &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSevenIsHistorical ? "E" : "A") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
+                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                            .FirstOrDefault();
+                        if (yearSevenData != null)
+                        {
+                            period.YearSevenIsHistorical = !(period.YearSevenIsHistorical);
+                        }
+                    }
+                    #endregion 
+                    #endregion
+
+                    #region Quarterly
+                    #region Quarter One
+                    FinancialStatementData quarterOneData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterOneData == null)
+                    {
+                        quarterOneData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterOneData != null)
+                        {
+                            period.QuarterOneIsHistorical = !(period.QuarterOneIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Two
+                    FinancialStatementData quarterTwoData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterTwoYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterTwoData == null)
+                    {
+                        quarterTwoData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterTwoYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterTwoData != null)
+                        {
+                            period.QuarterTwoIsHistorical = !(period.QuarterTwoIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Three
+                    FinancialStatementData quarterThreeData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterThreeYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterThreeData == null)
+                    {
+                        quarterThreeData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterThreeYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterThreeData != null)
+                        {
+                            period.QuarterThreeIsHistorical = !(period.QuarterThreeIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Four
+                    FinancialStatementData quarterFourData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterFourYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterFourData == null)
+                    {
+                        quarterFourData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterFourYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterFourData != null)
+                        {
+                            period.QuarterFourIsHistorical = !(period.QuarterFourIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Five
+                    FinancialStatementData quarterFiveData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterFiveYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterFiveData == null)
+                    {
+                        quarterFiveData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterFiveYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterFiveData != null)
+                        {
+                            period.QuarterFiveIsHistorical = !(period.QuarterFiveIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Six
+                    FinancialStatementData quarterSixData = financialStatementInfo
+                                                .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD.ToUpper().Trim() == period.QuarterSixYear.ToString().ToUpper().Trim() &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "A" : "E") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim() &&
+                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                .FirstOrDefault();
+
+                    if (quarterSixData == null)
+                    {
+                        quarterSixData = financialStatementInfo
+                            .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD.ToUpper().Trim() == period.QuarterSixYear.ToString().ToUpper().Trim() &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "E" : "A") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim() &&
+                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                    .FirstOrDefault();
+                        if (quarterSixData != null)
+                        {
+                            period.QuarterSixIsHistorical = !(period.QuarterSixIsHistorical);
+                        }
+                    }
+                    #endregion 
+                    #endregion
 
                     result.Add(new PeriodColumnDisplayData()
                     {
@@ -273,12 +525,10 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_FIVE = quarterFiveData != null ? quarterFiveData.AMOUNT : null,
                         QUARTER_SIX = quarterSixData != null ? quarterSixData.AMOUNT : null,
                     });
-                }
-
-                if (calendarizeMonth != financialStatementInfo[0].REPORTED_MONTH)
-                    return GetCalendarizedPeriodColumnDisplayInfo(result, Convert.ToInt32(calendarizeMonth));
+                }                
             }
 
+            periodRecord = period;
             return result;
         }
 
@@ -289,38 +539,7 @@ namespace GreenField.Gadgets.Helpers
                 gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
                 gridView.Columns[i + 2].IsVisible = i < 6 ? e.PeriodIsYearly : !(e.PeriodIsYearly);
             }
-        }
-
-        //public static void RadRadioButton_MouseEnter(object sender, MouseEventArgs e)
-        //{
-        //    RadRadioButton radioButton = sender as RadRadioButton;
-        //    if (radioButton != null)
-        //        radioButton.Foreground = new SolidColorBrush(Colors.Black);
-        //}
-
-        //public static void RadRadioButton_MouseLeave(object sender, MouseEventArgs e)
-        //{
-        //    RadRadioButton radioButton = sender as RadRadioButton;
-        //    if (radioButton != null)
-        //        if (radioButton.IsChecked == false || radioButton.IsChecked == null)
-        //            radioButton.Foreground = new SolidColorBrush(Colors.White);
-        //}
-
-        //public static void RadRadioButton_Checked(object sender, RoutedEventArgs e)
-        //{
-        //    if (sender == null)
-        //        return;
-        //    RadRadioButton radioButton = sender as RadRadioButton;
-
-        //    if (radioButton == null)
-        //        return;
-
-        //    if (radioButton.IsChecked == null)
-        //        return;
-
-        //    radioButton.Foreground = Convert.ToBoolean(radioButton.IsChecked)
-        //        ? new SolidColorBrush(Colors.Black) : new SolidColorBrush(Colors.White);
-        //}        
+        }        
 
         private static int GetQuarter(int month)
         {
