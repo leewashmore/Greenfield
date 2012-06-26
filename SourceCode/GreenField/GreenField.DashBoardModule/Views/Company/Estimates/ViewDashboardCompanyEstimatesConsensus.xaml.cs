@@ -76,7 +76,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE,
-                Content = null
+                Content = new ViewTargetPrice(new ViewModelTargetPrice(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

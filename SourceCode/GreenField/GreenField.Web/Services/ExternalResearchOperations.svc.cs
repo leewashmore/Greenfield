@@ -241,9 +241,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-
-
+                
         #region ConsensusEstimatesGadgets
 
         /// <summary>
@@ -268,6 +266,9 @@ namespace GreenField.Web.Services
             result.Add(data);
             return result;
         }
+
+
+
 
         #endregion
 
