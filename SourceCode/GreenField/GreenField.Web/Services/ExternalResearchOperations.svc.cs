@@ -14,6 +14,7 @@ using System.Data.Objects;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using GreenField.Web.DataContracts;
+using System.Data;
 
 namespace GreenField.Web.Services
 {
@@ -198,6 +199,8 @@ namespace GreenField.Web.Services
             try
             {
                 List<BasicData> result = new List<BasicData>();
+                List<GetBasicData_Result> resultDB = new List<GetBasicData_Result>();
+                ExternalResearchEntities extResearch = new ExternalResearchEntities();
                 if (entitySelectionData == null)
                     return null;
 
@@ -208,7 +211,8 @@ namespace GreenField.Web.Services
 
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
-
+                
+                //Retrieving data from security view
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
@@ -223,13 +227,45 @@ namespace GreenField.Web.Services
                 basicData.WeekRange52 = data.FIFTYTWO_WEEK_LOW - data.FIFTYTWO_WEEK_HIGH;
                 basicData.AverageVolume = data.SECURITY_VOLUME_AVG_6M;
                 basicData.SharesOutstanding = data.SHARES_OUTSTANDING;
-                //basicData.Beta = data.BETA;
+                if (data.BARRA_BETA != null)
+                {
+                    basicData.Beta = data.BARRA_BETA;
+                    basicData.BetaSource = "BARRA";
+                }
+                else
+                {
+                    decimal convertedString;
+                    basicData.BetaSource = "BLOOMBERG";
+                    //if (data.BETA != null && data.BETA != string.Empty)
+                    //{
+                    if (decimal.TryParse(data.BETA, out convertedString))
+                        basicData.Beta = convertedString;
 
-                //AverageVolume= basicData.;
-                //MarketCapitalization= basicData.;
-                //SharesOutstanding= basicData.;
-                //Beta= basicData.;
-                //BarraBeta = basicData .;               
+                    else
+                    {
+                        basicData.Beta = null;
+                        LoggingOperations _logging = new LoggingOperations();
+                        string userName = null;
+
+                        if (System.Web.HttpContext.Current.Session["Session"] != null)
+                        {
+                            userName = (System.Web.HttpContext.Current.Session["Session"] as Session).UserName;
+                        }
+                        //Calling method to log error in text file
+                        _logging.LogToFile("|User[(" + userName.Replace(Environment.NewLine, " ")
+                         + ")]|Type[(Exception"
+                         + ")]|Message[(" + "Conversion from string to decimal failed."
+                         + ")]", "Exception", "Medium");
+                    }
+                }
+             
+                ////Retrieving data from Period Financials table
+                resultDB= extResearch.ExecuteStoreQuery<GetBasicData_Result>("exec GetBasicData @SecurityID={0}",Convert.ToString(data.SECURITY_ID)).ToList();
+
+
+                
+                basicData.MarketCapitalization = resultDB[0].MARKET_CAPITALIZATION;
+                basicData.EnterpriseValue = resultDB[0].ENTERPRISE_VALUE;
                 result.Add(basicData);
 
                 return result;

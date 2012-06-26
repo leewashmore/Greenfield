@@ -33,7 +33,7 @@
             </Border>
             <!--52 Week Range-->
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="2,0,0,0" Text="52 Week Range" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
-            <TextBlock Grid.Row="1" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
 
 
             <!--Average Volume – 6 Month-->
@@ -41,31 +41,31 @@
                 <TextBlock  Margin="2,0,0,0" Text="Average Volume – 6 Month" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
             </Border>
             <Border  Background="#d8d5d4" Grid.Row="2" Grid.Column="1">
-                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.AverageVolume, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.AverageVolume, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
             </Border>
             <!--Market Capitalization-->
             <TextBlock Grid.Row="3" Grid.Column="0" Margin="2,0,0,0" Text="Market Capitalization" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
-            <TextBlock Grid.Row="3" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.MarketCapitalization, Mode=TwoWay, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            <TextBlock Grid.Row="3" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.MarketCapitalization, Mode=TwoWay, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
 
             <!--Enterprise Value-->
             <Border Background="#d8d5d4" Grid.Row="4" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="Enterprise Value" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7" />
             </Border>
             <Border Background="#d8d5d4" Grid.Row="4" Grid.Column="1">
-                <TextBlock Grid.Row="4" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.EnterpriseValue, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+                <TextBlock Grid.Row="4" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.EnterpriseValue, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
             </Border>
             <!--Shares Outstanding-->
             <TextBlock Grid.Row="5" Grid.Column="0" Margin="2,0,0,0" Text="Shares Outstanding" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
-            <TextBlock Grid.Row="5" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.SharesOutstanding, Mode=TwoWay, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            <TextBlock Grid.Row="5" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.SharesOutstanding, Mode=TwoWay, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
 
             <!--Beta-->
             <StackPanel Grid.Row="6" Grid.Column="0" Margin="2,0,0,0" Orientation="Horizontal"  Background="#d8d5d4">
                 <TextBlock Text="Beta (" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
-                <TextBlock Text="{Binding BasicDataInfo.BarraBeta, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+                <TextBlock Text="{Binding BasicDataInfo.BetaSource, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
                 <TextBlock Text=")" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
             </StackPanel>
             <Border Background="#d8d5d4" Grid.Row="6" Grid.Column="1">
-                <TextBlock Grid.Row="6" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.Beta, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+                <TextBlock Grid.Row="6" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.Beta, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
             </Border>
             
         </Grid>
