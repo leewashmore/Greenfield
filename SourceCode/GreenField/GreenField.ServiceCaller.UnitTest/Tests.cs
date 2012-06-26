@@ -2419,5 +2419,72 @@ namespace Greenfield.ServiceCaller.UnitTest
         #endregion
         #endregion
         #endregion
+        #region Commodity
+        /// <summary>
+        /// RetrieveCommodityData test method - Sample Data
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Commodity")]
+        public void RetrieveCommodityDataTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string CommodityId = "ALL";
+            instance.RetrieveCommodityData(CommodityId, (List<FXCommodityData> resultset) =>
+                {
+                    Assert.IsNotNull(resultset, "Commodity Data Not Available");
+                    EnqueueTestComplete();
+                });
+        }
+        /// <summary>
+        /// RetrieveCommodityData test method - Sample Data Which Does Not Retrieves Any Data - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Commodity")]
+        public void RetrieveCommodityDataNotAvailbleTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string CommodityId = "ABC";
+            instance.RetrieveCommodityData(CommodityId, (List<FXCommodityData> resultset) =>
+            {
+                Assert.IsNotNull(resultset, "Commodity data not available");
+                EnqueueTestComplete();
+            });
+        }
+        /// <summary>
+        /// RetrieveCommodityData test method - CommodityId as null - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Commodity")]
+        public void RetrieveCommodityDataCommodityIdNullTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string CommodityId = null;
+            instance.RetrieveCommodityData(CommodityId, (List<FXCommodityData> resultset) =>
+            {
+                Assert.AreEqual<int>(0,resultset.Count, "Commodity Data should be empty");
+                EnqueueTestComplete();
+            });
+        }
+        /// <summary>
+        /// RetrieveCommodityData test method - CommodityId as Empty - should return an empty result set
+        /// </summary>
+        [TestMethod]
+        [Asynchronous]
+        [Tag("Commodity")]
+        public void RetrieveCommodityDataCommodityIdEmptyTestMethod()
+        {
+            DBInteractivity instance = new DBInteractivity();
+            string CommodityId = string.Empty;
+            instance.RetrieveCommodityData(CommodityId, (List<FXCommodityData> resultset) =>
+            {
+                Assert.AreEqual<int>(0, resultset.Count, "Commodity Data should be empty");
+                EnqueueTestComplete();
+            });
+        }
+        #endregion
+
     }
 }

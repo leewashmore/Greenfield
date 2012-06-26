@@ -26,7 +26,7 @@ namespace GreenField.DataContracts
         public decimal? Beta { get; set; }
 
         [DataMember]
-        public decimal?  BarraBeta{ get; set; }
+        public string  BetaSource{ get; set; }
 
 
 

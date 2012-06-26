@@ -571,6 +571,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityID">No Metadata Documentation available.</param>
+        public ObjectResult<GetBasicData_Result> GetBasicData(global::System.String securityID)
+        {
+            ObjectParameter securityIDParameter;
+            if (securityID != null)
+            {
+                securityIDParameter = new ObjectParameter("SecurityID", securityID);
+            }
+            else
+            {
+                securityIDParameter = new ObjectParameter("SecurityID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<GetBasicData_Result>("GetBasicData", securityIDParameter);
+        }
 
         #endregion
     }
@@ -5299,6 +5318,67 @@ namespace GreenField.DAL
         private global::System.String _CALCULATION_DIAGRAM;
         partial void OnCALCULATION_DIAGRAMChanging(global::System.String value);
         partial void OnCALCULATION_DIAGRAMChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetBasicData_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class GetBasicData_Result : ComplexObject
+    {
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> MARKET_CAPITALIZATION
+        {
+            get
+            {
+                return _MARKET_CAPITALIZATION;
+            }
+            set
+            {
+                OnMARKET_CAPITALIZATIONChanging(value);
+                ReportPropertyChanging("MARKET_CAPITALIZATION");
+                _MARKET_CAPITALIZATION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MARKET_CAPITALIZATION");
+                OnMARKET_CAPITALIZATIONChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _MARKET_CAPITALIZATION;
+        partial void OnMARKET_CAPITALIZATIONChanging(Nullable<global::System.Decimal> value);
+        partial void OnMARKET_CAPITALIZATIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ENTERPRISE_VALUE
+        {
+            get
+            {
+                return _ENTERPRISE_VALUE;
+            }
+            set
+            {
+                OnENTERPRISE_VALUEChanging(value);
+                ReportPropertyChanging("ENTERPRISE_VALUE");
+                _ENTERPRISE_VALUE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ENTERPRISE_VALUE");
+                OnENTERPRISE_VALUEChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ENTERPRISE_VALUE;
+        partial void OnENTERPRISE_VALUEChanging(Nullable<global::System.Decimal> value);
+        partial void OnENTERPRISE_VALUEChanged();
 
         #endregion
     }

@@ -592,6 +592,9 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SecurityID" Type="varchar" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -624,6 +627,9 @@
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
+            <Parameter Name="SecurityID" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">
@@ -965,6 +971,10 @@
           <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="GetBasicData_Result">
+          <Property Type="Decimal" Name="MARKET_CAPITALIZATION" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="ENTERPRISE_VALUE" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1165,6 +1175,14 @@
                 <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
                 <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
                 <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBasicData" FunctionName="ExternalResearchModel.Store.GetBasicData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetBasicData_Result">
+                <ScalarProperty Name="MARKET_CAPITALIZATION" ColumnName="MARKET_CAPITALIZATION" />
+                <ScalarProperty Name="ENTERPRISE_VALUE" ColumnName="ENTERPRISE_VALUE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -50,8 +50,8 @@
   <xs:complexType name="BasicData">
     <xs:sequence>
       <xs:element minOccurs="0" name="AverageVolume" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BarraBeta" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Beta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BetaSource" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EnterpriseValue" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketCapitalization" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />

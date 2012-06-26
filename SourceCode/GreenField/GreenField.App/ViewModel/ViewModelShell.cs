@@ -481,8 +481,8 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Region Selector
-        private List<RegionSelectionData> _regionTypeInfo;
-        public List<RegionSelectionData> RegionTypeInfo
+        private List<GreenField.DataContracts.RegionSelectionData> _regionTypeInfo;
+        public List<GreenField.DataContracts.RegionSelectionData> RegionTypeInfo
         {
             get
             {
@@ -3419,7 +3419,7 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        private void RetrieveRegionSelectionCallbackMethod(List<RegionSelectionData> result)
+        private void RetrieveRegionSelectionCallbackMethod(List<GreenField.DataContracts.RegionSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
