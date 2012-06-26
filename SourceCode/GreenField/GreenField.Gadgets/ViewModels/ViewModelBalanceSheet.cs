@@ -64,7 +64,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 HandleSecurityReferenceSetEvent(_entitySelectionData);
             }
-        } 
+        }
         #endregion
 
         #region Properties
@@ -113,7 +113,7 @@ namespace GreenField.Gadgets.ViewModels
                 return _periodRecord;
             }
             set { _periodRecord = value; }
-        }        
+        }
         #endregion
 
         #region Period Column Headers
@@ -151,7 +151,7 @@ namespace GreenField.Gadgets.ViewModels
         public Int32 SelectedDataSource
         {
             get { return _selectedDataSource; }
-            set 
+            set
             {
                 _selectedDataSource = value;
                 RaisePropertyChanged(() => this.SelectedDataSource);
@@ -338,7 +338,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion
         #endregion
 
         #region Event Handlers
@@ -372,7 +372,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
         #endregion
 
         #region Helper Methods
@@ -426,10 +426,10 @@ namespace GreenField.Gadgets.ViewModels
                 case 11:
                     return "Nov";
                 default:
-                    throw new InvalidCastException();                    
+                    throw new InvalidCastException();
             }
         }
-        #endregion        
+        #endregion
 
         #region Callback Methods
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
@@ -444,11 +444,11 @@ namespace GreenField.Gadgets.ViewModels
                         IssuerReferenceInfo = result;
 
                     BusyIndicatorNotification(true, "Retrieving Financial Statement Data for ");
-                    FinancialStatementDataSource selectedFinancialStatementDataSource = SelectedDataSource == 0 
+                    FinancialStatementDataSource selectedFinancialStatementDataSource = SelectedDataSource == 0
                         ? FinancialStatementDataSource.REUTERS
-                        : ( SelectedDataSource == 1 
+                        : (SelectedDataSource == 1
                             ? FinancialStatementDataSource.PRIMARY
-                            : FinancialStatementDataSource.INDUSTRY );
+                            : FinancialStatementDataSource.INDUSTRY);
 
                     FinancialStatementPeriodType selectedFinancialStatementPeriodType = SelectedPeriodType == 0
                         ? FinancialStatementPeriodType.ANNUAL
@@ -511,7 +511,7 @@ namespace GreenField.Gadgets.ViewModels
                         CurrencySource = null;
                         SelectedCurrency = 0;
                     }
-                    
+
                     FinancialStatementInfo = result;
                 }
                 else
@@ -526,7 +526,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
         #endregion
     }
 }

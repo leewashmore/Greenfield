@@ -178,12 +178,12 @@ namespace GreenField.Web.Helpers
                     data.SortId = 4;
                 }
                 data.ToDate = (DateTime)item.TO_DATE;
-                data.OneD = Convert.ToDecimal(item.POR_RC_AVG_WGT_1D);
-                data.WTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_1W);
-                data.MTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_MTD);
-                data.QTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_QTD);
-                data.YTD = Convert.ToDecimal(item.POR_RC_AVG_WGT_YTD);
-                data.OneY = Convert.ToDecimal(item.POR_RC_AVG_WGT_1Y);
+                data.OneD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1D) * 100;
+                data.WTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1W) * 100;
+                data.MTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_MTD) * 100;
+                data.QTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_QTD) * 100;
+                data.YTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_YTD) * 100;
+                data.OneY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1Y) * 100;
                 result.Add(data);
             }
 

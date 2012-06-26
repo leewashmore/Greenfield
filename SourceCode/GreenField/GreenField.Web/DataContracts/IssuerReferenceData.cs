@@ -25,5 +25,5 @@ namespace GreenField.Web.DataContracts
         public String CurrencyName { get; set; }
     }
 
-    
+
 }

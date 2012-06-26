@@ -181,7 +181,7 @@
                             <telerik:RadRibbonDropDownButton Text="Estimates" LargeImage="Images/notes.png" Size="Large" Background="#9DA6C0" >
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                                        <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large" Background="#9DA6C0"/>
+                                        <telerik:RadRibbonButton Text="Consensus Estimates" LargeImage="Images/notes.png" Size="Large" Background="#9DA6C0" Command="{Binding DashboardCompanyEstimatesConsensusCommand}"/>
                                         <telerik:RadRibbonButton Text="Detailed Estimates"  LargeImage="Images/mobilenotes.png" Size="Large" Background="#9DA6C0" Command="{Binding DashboardCompanyEstimatesDetailedCommand}"/>
                                         <telerik:RadRibbonButton Text="Comparison" LargeImage="Images/com.png" Size="Large" Background="#9DA6C0"/>
                                     </telerik:RadRibbonGroup>

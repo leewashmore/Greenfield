@@ -86,6 +86,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region CONSTRUCTOR
         public ViewModelBasicData(DashboardGadgetParam param)
         {

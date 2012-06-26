@@ -71,7 +71,7 @@
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn  Header="Name" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                 DataMemberBinding="{Binding EntityName}" Width="*" HeaderTextAlignment="Left" 
+                                                 DataMemberBinding="{Binding EntityName}" Width="Auto" HeaderTextAlignment="Left" 
                                                  CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  Header="MTD" TextAlignment="Right"
@@ -86,12 +86,12 @@
                     <telerik:GridViewDataColumn  Header="1-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
                                                  Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
-                    <telerik:GridViewDataColumn  Header="3-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                    <!--<telerik:GridViewDataColumn  Header="3-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding ThreeYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
                                                  Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="5-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding FiveYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
-                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>-->
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>

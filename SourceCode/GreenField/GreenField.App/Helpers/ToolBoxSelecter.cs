@@ -113,18 +113,18 @@ namespace GreenField.App.Helpers
                 case DashboardCategoryType.PORTFOLIO_SNAPSHOT:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
                                                 effectiveDateSelectorVisibility: Visibility.Visible,
-                                                filterTypeSelectorVisibility: Visibility.Visible, 
+                                                filterTypeSelectorVisibility: Visibility.Visible,
                                                 filterValueSelectorVisibility: Visibility.Visible,
-                                                mktCapSelectorVisibility: Visibility.Visible, 
+                                                mktCapSelectorVisibility: Visibility.Visible,
                                                 periodSelectorVisibility: Visibility.Visible,
-                                                lookThruVisibility:Visibility.Visible);
+                                                lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_HOLDINGS:
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
                                                 effectiveDateSelectorVisibility: Visibility.Visible,
-                                                filterTypeSelectorVisibility: Visibility.Collapsed, 
-                                                filterValueSelectorVisibility: Visibility.Collapsed, 
-                                                mktCapSelectorVisibility: Visibility.Visible, 
+                                                filterTypeSelectorVisibility: Visibility.Collapsed,
+                                                filterValueSelectorVisibility: Visibility.Collapsed,
+                                                mktCapSelectorVisibility: Visibility.Visible,
                                                 lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_PERFORMANCE_SUMMARY:
@@ -146,9 +146,9 @@ namespace GreenField.App.Helpers
                         lookThruVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.PORTFOLIO_BENCHMARK_COMPOSITION:
-                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible, 
+                    UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
                                                 effectiveDateSelectorVisibility: Visibility.Visible,
-                                                filterTypeSelectorVisibility: Visibility.Collapsed, 
+                                                filterTypeSelectorVisibility: Visibility.Collapsed,
                                                 filterValueSelectorVisibility: Visibility.Collapsed,
                                                 lookThruVisibility: Visibility.Visible);
                     break;
@@ -192,7 +192,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.COMPANY_ESTIMATES_CONSENSUS:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.COMPANY_ESTIMATES_DETAILED:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);

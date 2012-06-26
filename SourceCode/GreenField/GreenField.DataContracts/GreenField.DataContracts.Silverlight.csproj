@@ -96,6 +96,7 @@
     <Compile Include="DataContracts\Session.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataContracts\TargetPriceCEData.cs" />
     <Compile Include="DataContracts\TopBenchmarkSecuritiesData.cs" />
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />

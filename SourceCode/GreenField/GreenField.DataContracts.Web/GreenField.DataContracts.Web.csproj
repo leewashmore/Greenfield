@@ -155,6 +155,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\Session.cs">
       <Link>DataContracts\Session.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\TargetPriceCEData.cs">
+      <Link>DataContracts\TargetPriceCEData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\TopBenchmarkSecuritiesData.cs">
       <Link>DataContracts\TopBenchmarkSecuritiesData.cs</Link>
     </Compile>

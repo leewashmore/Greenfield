@@ -43,12 +43,34 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
+        public string RetrieveIssuerId(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                string result = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record =>
+                        record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName)
+                    .Select(record => record.ISSUER_ID).FirstOrDefault();
+
+                return result == null ? String.Empty : result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
         public IssuerReferenceData RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData)
         {
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                
+
                 GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
                     .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
                         record.ISSUE_NAME == entitySelectionData.LongName &&
@@ -73,7 +95,7 @@ namespace GreenField.Web.Services
                     currencyCode = countryDetails.CURRENCY_CODE;
                     currencyName = countryDetails.CURRENCY_NAME;
                 }
-                
+
                 IssuerReferenceData result = new IssuerReferenceData()
                 {
                     IssuerId = issuerId,
@@ -82,7 +104,7 @@ namespace GreenField.Web.Services
                     CurrencyCode = currencyCode,
                     CurrencyName = currencyName
                 };
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -92,6 +114,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
 
 
         [OperationContract]
@@ -111,7 +134,7 @@ namespace GreenField.Web.Services
                 List<FinancialStatementData> result = null;
 
                 result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
-                
+
                 if (result == null)
                     return null;
 
@@ -147,7 +170,7 @@ namespace GreenField.Web.Services
                                 PERIOD_TYPE = result[i].PERIOD_TYPE,
                                 ROOT_SOURCE = result[i].ROOT_SOURCE,
                                 ROOT_SOURCE_DATE = result[i].ROOT_SOURCE_DATE,
-                                SORT_ORDER = result[i].SORT_ORDER                                
+                                SORT_ORDER = result[i].SORT_ORDER
                             });
                         }
                     }
@@ -207,7 +230,7 @@ namespace GreenField.Web.Services
                 //SharesOutstanding= basicData.;
                 //Beta= basicData.;
                 //BarraBeta = basicData .;               
-                result.Add(basicData);          
+                result.Add(basicData);
 
                 return result;
             }
@@ -218,5 +241,35 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+
+
+        #region ConsensusEstimatesGadgets
+
+        /// <summary>
+        /// Service Method for ConsensusEstimatesGadget-TargetPrice
+        /// </summary>
+        /// <returns>Collection of TargetPriceCEData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<TargetPriceCEData> RetrieveTargetPriceData()
+        {
+            List<TargetPriceCEData> result = new List<TargetPriceCEData>();
+            TargetPriceCEData data = new TargetPriceCEData();
+            data.ConsensusRecommendation = "BUY";
+            data.CurrentPrice = 35.56.ToString();
+            data.High = Convert.ToDecimal(12.34);
+            data.LastUpdate = DateTime.Today;
+            data.Low = 13;
+            data.MedianTargetPrice = 13.56.ToString();
+            data.NoOfEstimates = 3;
+            data.StandardDeviation = Convert.ToDecimal(13);
+            data.Ticker = "INDIA";
+            result.Add(data);
+            return result;
+        }
+
+        #endregion
+
     }
 }

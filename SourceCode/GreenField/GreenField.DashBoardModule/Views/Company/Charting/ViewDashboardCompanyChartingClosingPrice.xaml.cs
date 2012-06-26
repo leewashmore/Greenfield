@@ -20,7 +20,7 @@ using GreenField.Common.Helper;
 
 namespace GreenField.DashboardModule.Views
 {
-    [Export]
+    [Export, PartCreationPolicy(CreationPolicy.Shared)]
     public partial class ViewDashboardCompanyChartingClosingPrice : UserControl
     {
         #region Fields
@@ -30,8 +30,7 @@ namespace GreenField.DashboardModule.Views
         #endregion
 
         [ImportingConstructor]
-        public ViewDashboardCompanyChartingClosingPrice(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+        public ViewDashboardCompanyChartingClosingPrice(ILoggerFacade logger, IEventAggregator eventAggregator, IDBInteractivity dbInteractivity)
         {
             InitializeComponent();
 

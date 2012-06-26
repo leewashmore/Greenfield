@@ -11,7 +11,6 @@ using System.Windows.Shapes;
 using System.Windows.Interactivity;
 using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
-using Telerik.Windows.Controls.TreeView;
 using Telerik.Windows.Controls.GridView;
 using Telerik.Windows.Controls.DragDrop;
 using System.Windows.Threading;
@@ -21,6 +20,7 @@ using System.Collections;
 using System.Globalization;
 using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
+using Telerik.Windows.Controls.TreeView;
 
 namespace GreenField.Gadgets.Helpers
 {

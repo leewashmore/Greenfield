@@ -125,9 +125,13 @@ namespace GreenField.Web.Services
                     ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
                     && a.TO_DATE == objEffectiveDate.Date).ToList().Distinct().ToList();
 
+                #region Comparator
+                
+                //To Remove Duplicates
                 IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
-                dimensionDailyPerfData = dimensionDailyPerfData.Distinct(customComparer).ToList(); 
-
+                dimensionDailyPerfData = dimensionDailyPerfData.Distinct(customComparer).ToList();
+                
+                #endregion
 
                 GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
                     Where(a => a.BMNAME == benchmarkName.First() && a.TO_DATE == objEffectiveDate.Date).FirstOrDefault());
@@ -233,7 +237,7 @@ namespace GreenField.Web.Services
                 //Checking contents of Data fetched from Dimension
                 if (dimensionBenchmarkReturnData == null || dimensionBenchmarkReturnData.Count == 0)
                     return result;
-                                
+
                 result = MultiLineBenchmarkUICalculations.RetrieveBenchmarkChartData(dimensionDailyPerfData, dimensionBenchmarkReturnData);
 
                 if (result == null)
@@ -457,11 +461,20 @@ namespace GreenField.Web.Services
                 //Sector & Country Return Data
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.TO_DATE > objStartDate.Date && ((a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))).ToList();
 
+                #region Comparator
+
+                //To Remove Duplicates
+                IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
+                dimensionSectorCountryReturnData = dimensionSectorCountryReturnData.Distinct(customComparer).ToList();
+
+                #endregion
+
+
                 if (dimensionSectorCountryReturnData == null)
                     return result;
                 if (dimensionSectorCountryReturnData.Count == 0)
                     return result;
-
+                
                 List<ChartExtensionData> sectorCountryReturnData = ChartExtensionCalculations.CalculateSectorCountryReturnValues(dimensionSectorCountryReturnData);
                 if (sectorCountryReturnData != null || sectorCountryReturnData.Count != 0)
                     result.AddRange(sectorCountryReturnData);
@@ -1686,7 +1699,7 @@ namespace GreenField.Web.Services
         /// <param name="selPortfolioID">Contains Selected Portfolio ID</param>
         /// <param name="selPortfolioDate">Effective Date selected by user</param>
         /// <returns>Consolidated list of portfolio and benchmark</returns>        
-        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity,bool lookThruEnabled)
+        private List<MarketCapitalizationData> RetrievePortfolioMktCapData(PortfolioSelectionData portfolio_ID, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, bool lookThruEnabled)
         {
 
             List<MarketCapitalizationData> result = new List<MarketCapitalizationData>();
@@ -1764,7 +1777,7 @@ namespace GreenField.Web.Services
                         if (lookThruEnabled)
                             dimensionServicePortfolioLTData = dimensionServicePortfolioLTData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
                         else
-                        dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
+                            dimensionServicePortfolioData = dimensionServicePortfolioData.Where(list => (list.GICS_SECTOR_NAME == filterValue)).ToList();
 
                         break;
                     case GreenfieldConstants.SHOW_EVERYTHING:
@@ -2322,9 +2335,10 @@ namespace GreenField.Web.Services
                         for (int i = previousYearDate.Day; i <= nextMonthEnd.Day; i++)
                         {
                             DateTime newDate = new DateTime(previousYearDate.Year, nextMonthEnd.Month, i);
-                            startingStubDates.Add(newDate);                        }
+                            startingStubDates.Add(newDate);
+                        }
 
-                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y;                
+                        List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y;
                         List<Decimal?> portfolioReturns = new List<decimal?>();
                         List<Decimal?> benchmarkReturns = new List<decimal?>();
                         foreach (DateTime d in startingStubDates)
@@ -2346,7 +2360,7 @@ namespace GreenField.Web.Services
                             Decimal? mul = 1;
                             foreach (Decimal? ret in portfolioReturns)
                             {
-                                 mul = ret * mul;
+                                mul = ret * mul;
                             }
                             mul = (mul - 1) * 100;
 
@@ -2359,15 +2373,15 @@ namespace GreenField.Web.Services
                                 mulBenchmark = ret * mulBenchmark;
                             }
                             mulBenchmark = (mulBenchmark - 1) * 100;
-                              entry = new PerformanceGraphData();
-                              entry.PortfolioID = fundSelectionData.PortfolioId;
-                              entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
-                              entry.BenchmarkPerformance = mulBenchmark;
-                              entry.PortfolioPerformance = mul;
-                              entry.EffectiveDate = d;
-                              result.Add(entry);                           
+                            entry = new PerformanceGraphData();
+                            entry.PortfolioID = fundSelectionData.PortfolioId;
+                            entry.BenchmarkID = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == fundSelectionData.PortfolioId).FirstOrDefault().BENCHMARK_ID;
+                            entry.BenchmarkPerformance = mulBenchmark;
+                            entry.PortfolioPerformance = mul;
+                            entry.EffectiveDate = d;
+                            result.Add(entry);
                         }
-                       
+
 
                         //MTD for month ends between beginning stub and ending stub
                         for (int i = nextMonthEnd.Month + 1; i <= 12; i++)
@@ -2380,7 +2394,7 @@ namespace GreenField.Web.Services
                             DateTime newDate = new DateTime(effectiveDate.Year, i, DateTime.DaysInMonth(effectiveDate.Year, i));
                             listOfEffectiveDates1YMTD.Add(newDate);
                         }
-                     
+
                         foreach (DateTime d in listOfEffectiveDates1YMTD)
                         {
                             if (Country == "NoFiltering")
@@ -2408,7 +2422,7 @@ namespace GreenField.Web.Services
 
                         for (int i = 1; i <= effectiveDate.Day; i++)
                         {
-                            DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month,i);
+                            DateTime newDate = new DateTime(effectiveDate.Year, effectiveDate.Month, i);
                             endingStubDates.Add(newDate);
                         }
 
@@ -2469,8 +2483,11 @@ namespace GreenField.Web.Services
             }
         }
 
-        #region Comparator
+        #region Comparator-GF_PERF_DAILY_ATTRIBUTION
 
+        /// <summary>
+        /// Comparator to remove duplicates from GF_PERF_DAILY_ATTRIBUTION
+        /// </summary>
         public class GF_PERF_DAILY_ATTRIBUTION_Comparer : IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION>
         {
             public bool Equals(GF_PERF_DAILY_ATTRIBUTION row1, GF_PERF_DAILY_ATTRIBUTION row2)
@@ -2482,20 +2499,21 @@ namespace GreenField.Web.Services
                 if ((row1 != null) && (row2 == null))
                     return false;
 
-                return (row1.AGG_LVL_1_LONG_NAME.Equals(row2.AGG_LVL_1_LONG_NAME))
+                return (row1.AGG_LVL_1_LONG_NAME.ToUpper().Trim().Equals(row2.AGG_LVL_1_LONG_NAME.ToUpper().Trim()))
                     && (row1.TO_DATE.Equals(row2.TO_DATE))
-                    && (row1.NODE_NAME.Equals(row2.NODE_NAME));
+                    && (row1.NODE_NAME.ToUpper().Trim().Equals(row2.NODE_NAME.ToUpper().Trim()) && (row1.PORTFOLIO.ToUpper().Trim() == row2.PORTFOLIO.ToUpper().Trim()));
             }
 
-            public  int GetHashCode(GF_PERF_DAILY_ATTRIBUTION data)
+            public int GetHashCode(GF_PERF_DAILY_ATTRIBUTION data)
             {
                 int hCodeName = data.AGG_LVL_1_LONG_NAME.GetHashCode();
                 int hCodeDate = data.TO_DATE.GetHashCode();
                 int hCodeNode = data.NODE_NAME.GetHashCode();
-                return hCodeDate ^ hCodeName ^ hCodeNode;
+                int hCodePortfolio = data.PORTFOLIO.GetHashCode();
+                return hCodeDate ^ hCodeName ^ hCodeNode ^ hCodePortfolio;
             }
-        } 
-        
+        }
+
         #endregion
 
     }

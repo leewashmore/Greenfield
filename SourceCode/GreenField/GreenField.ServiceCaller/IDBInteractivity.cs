@@ -60,10 +60,10 @@ namespace GreenField.ServiceCaller
         void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback);
 
         void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback);
-       
-         void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
 
-        void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
+        void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
+
+        void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundmarkSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
 
         void RetrieveTopBenchmarkSecuritiesData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<TopBenchmarkSecuritiesData>> callback);
 
@@ -180,13 +180,21 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Slice 5 - External Research
-        
+
         void RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData, Action<IssuerReferenceData> callback);
 
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
+        #region ConsensusEstimatesGadgets
+        
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
+
+        void RetrieveTargetPriceData(Action<List<TargetPriceCEData>> callback);
+
+        #endregion
+
+
 
         #endregion
     }

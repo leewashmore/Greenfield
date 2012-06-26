@@ -110,7 +110,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_RELATIVE_PERFORMANCE, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
+                RestoredHeight = 200,
                 Content = new ViewRelativePerformanceUI(new ViewModelRelativePeroformanceUI(param))
             });
 

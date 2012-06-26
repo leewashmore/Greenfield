@@ -38,11 +38,11 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -60,35 +60,35 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_RECOMMENDATION,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_VALUATIONS,
                 Content = null
             });

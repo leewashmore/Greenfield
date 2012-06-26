@@ -440,7 +440,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<SectorBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
+            client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -485,7 +485,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<RegionBreakdownData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
+            client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -530,7 +530,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<TopHoldingsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled);
+            client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -574,7 +574,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate,lookThruEnabled);
+            client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate, lookThruEnabled);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -621,7 +621,7 @@ namespace GreenField.ServiceCaller
         public void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity,lookThruEnabled, filterType, filterValue);
+            client.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue);
             client.RetrieveRiskIndexExposuresDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -663,7 +663,7 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">The filter type selected by the user</param>
         /// <param name="filterValue">The filter value selected by the user</param>
         /// <param name="callback"></param>   
-        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
+        public void RetrieveHoldingsPercentageDataForRegion(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataForRegionAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
@@ -708,7 +708,7 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">The filter type selected by the user</param>
         /// <param name="filterValue">The filter value selected by the user</param>
         /// <param name="callback"></param>  
-        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue,bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
+        public void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback)
         {
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveHoldingsPercentageDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, lookThruEnabled);
@@ -2247,6 +2247,94 @@ namespace GreenField.ServiceCaller
             };
 
         }
+
+        #region ConsensusEstimates
+
+        /// <summary>
+        /// Service Caller Method to Retrieve Data for TargetPriceGadget(ConsensusEstimates)
+        /// </summary>
+        /// <param name="callback"></param>
+        public void RetrieveTargetPriceData(Action<List<TargetPriceCEData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveTargetPriceDataAsync();
+            client.RetrieveTargetPriceDataCompleted += (se, e) =>
+            {
+                if (callback != null)
+                {
+                    if (e.Result != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault =
+                        e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+
+        //public void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback)
+        //{
+        //    ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+        //    client.RetrieveBasicDataAsync(entitySelectionData);
+        //    client.RetrieveBasicDataCompleted += (se, e) =>
+        //    {
+        //        if (e.Error == null)
+        //        {
+        //            if (callback != null)
+        //            {
+        //                if (e.Result != null)
+        //                {
+        //                    callback(e.Result.ToList());
+        //                }
+        //                else
+        //                {
+        //                    callback(null);
+        //                }
+        //            }
+        //        }
+        //        else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+        //        {
+        //            FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+        //                = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+        //        else
+        //        {
+        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+        //            if (callback != null)
+        //                callback(null);
+        //        }
+
+        //    };
+
+        //}
+
+
+        #endregion
+
+
+
+
+
         #endregion
 
 
