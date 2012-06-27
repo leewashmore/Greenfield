@@ -482,20 +482,20 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="countryCode">No Metadata Documentation available.</param>
-        public ObjectResult<CurrencySelectionData> Get_Currency(global::System.String countryCode)
+        /// <param name="securityID">No Metadata Documentation available.</param>
+        public ObjectResult<GetBasicData_Result> GetBasicData(global::System.String securityID)
         {
-            ObjectParameter countryCodeParameter;
-            if (countryCode != null)
+            ObjectParameter securityIDParameter;
+            if (securityID != null)
             {
-                countryCodeParameter = new ObjectParameter("CountryCode", countryCode);
+                securityIDParameter = new ObjectParameter("SecurityID", securityID);
             }
             else
             {
-                countryCodeParameter = new ObjectParameter("CountryCode", typeof(global::System.String));
+                securityIDParameter = new ObjectParameter("SecurityID", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<CurrencySelectionData>("Get_Currency", countryCodeParameter);
+            return base.ExecuteFunction<GetBasicData_Result>("GetBasicData", securityIDParameter);
         }
     
         /// <summary>
@@ -570,25 +570,6 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="securityID">No Metadata Documentation available.</param>
-        public ObjectResult<GetBasicData_Result> GetBasicData(global::System.String securityID)
-        {
-            ObjectParameter securityIDParameter;
-            if (securityID != null)
-            {
-                securityIDParameter = new ObjectParameter("SecurityID", securityID);
-            }
-            else
-            {
-                securityIDParameter = new ObjectParameter("SecurityID", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<GetBasicData_Result>("GetBasicData", securityIDParameter);
         }
 
         #endregion
@@ -1730,6 +1711,54 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ANNUAL
+        {
+            get
+            {
+                return _ANNUAL;
+            }
+            set
+            {
+                OnANNUALChanging(value);
+                ReportPropertyChanging("ANNUAL");
+                _ANNUAL = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ANNUAL");
+                OnANNUALChanged();
+            }
+        }
+        private global::System.String _ANNUAL;
+        partial void OnANNUALChanging(global::System.String value);
+        partial void OnANNUALChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CURRENT
+        {
+            get
+            {
+                return _CURRENT;
+            }
+            set
+            {
+                OnCURRENTChanging(value);
+                ReportPropertyChanging("CURRENT");
+                _CURRENT = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CURRENT");
+                OnCURRENTChanged();
+            }
+        }
+        private global::System.String _CURRENT;
+        partial void OnCURRENTChanging(global::System.String value);
+        partial void OnCURRENTChanged();
 
         #endregion
     
@@ -4843,83 +4872,6 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="CurrencySelectionData")]
-    [DataContractAttribute(IsReference=true)]
-    [Serializable()]
-    public partial class CurrencySelectionData : ComplexObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new CurrencySelectionData object.
-        /// </summary>
-        /// <param name="currencyCode">Initial value of the CurrencyCode property.</param>
-        /// <param name="currencyName">Initial value of the CurrencyName property.</param>
-        public static CurrencySelectionData CreateCurrencySelectionData(global::System.String currencyCode, global::System.String currencyName)
-        {
-            CurrencySelectionData currencySelectionData = new CurrencySelectionData();
-            currencySelectionData.CurrencyCode = currencyCode;
-            currencySelectionData.CurrencyName = currencyName;
-            return currencySelectionData;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CurrencyCode
-        {
-            get
-            {
-                return _CurrencyCode;
-            }
-            set
-            {
-                OnCurrencyCodeChanging(value);
-                ReportPropertyChanging("CurrencyCode");
-                _CurrencyCode = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CurrencyCode");
-                OnCurrencyCodeChanged();
-            }
-        }
-        private global::System.String _CurrencyCode;
-        partial void OnCurrencyCodeChanging(global::System.String value);
-        partial void OnCurrencyCodeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CurrencyName
-        {
-            get
-            {
-                return _CurrencyName;
-            }
-            set
-            {
-                OnCurrencyNameChanging(value);
-                ReportPropertyChanging("CurrencyName");
-                _CurrencyName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CurrencyName");
-                OnCurrencyNameChanged();
-            }
-        }
-        private global::System.String _CurrencyName;
-        partial void OnCurrencyNameChanging(global::System.String value);
-        partial void OnCurrencyNameChanged();
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinancialStatementData")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -4931,8 +4883,7 @@ namespace GreenField.DAL
         /// Create a new FinancialStatementData object.
         /// </summary>
         /// <param name="gROUP_NAME">Initial value of the GROUP_NAME property.</param>
-        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
-        /// <param name="cURRENCY">Initial value of the CURRENCY property.</param>
+        /// <param name="data_ID">Initial value of the Data_ID property.</param>
         /// <param name="bOLD_FONT">Initial value of the BOLD_FONT property.</param>
         /// <param name="sORT_ORDER">Initial value of the SORT_ORDER property.</param>
         /// <param name="dATA_DESC">Initial value of the DATA_DESC property.</param>
@@ -4940,12 +4891,11 @@ namespace GreenField.DAL
         /// <param name="dECIMALS">Initial value of the DECIMALS property.</param>
         /// <param name="rOOT_SOURCE">Initial value of the ROOT_SOURCE property.</param>
         /// <param name="rOOT_SOURCE_DATE">Initial value of the ROOT_SOURCE_DATE property.</param>
-        public static FinancialStatementData CreateFinancialStatementData(global::System.String gROUP_NAME, global::System.Int32 dATA_ID, global::System.String cURRENCY, global::System.String bOLD_FONT, global::System.Int32 sORT_ORDER, global::System.String dATA_DESC, global::System.String pERIOD_TYPE, global::System.Int32 dECIMALS, global::System.String rOOT_SOURCE, global::System.DateTime rOOT_SOURCE_DATE)
+        public static FinancialStatementData CreateFinancialStatementData(global::System.String gROUP_NAME, global::System.Int32 data_ID, global::System.String bOLD_FONT, global::System.Int32 sORT_ORDER, global::System.String dATA_DESC, global::System.String pERIOD_TYPE, global::System.Int32 dECIMALS, global::System.String rOOT_SOURCE, global::System.DateTime rOOT_SOURCE_DATE)
         {
             FinancialStatementData financialStatementData = new FinancialStatementData();
             financialStatementData.GROUP_NAME = gROUP_NAME;
-            financialStatementData.DATA_ID = dATA_ID;
-            financialStatementData.CURRENCY = cURRENCY;
+            financialStatementData.Data_ID = data_ID;
             financialStatementData.BOLD_FONT = bOLD_FONT;
             financialStatementData.SORT_ORDER = sORT_ORDER;
             financialStatementData.DATA_DESC = dATA_DESC;
@@ -4988,48 +4938,24 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 DATA_ID
+        public global::System.Int32 Data_ID
         {
             get
             {
-                return _DATA_ID;
+                return _Data_ID;
             }
             set
             {
-                OnDATA_IDChanging(value);
-                ReportPropertyChanging("DATA_ID");
-                _DATA_ID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("DATA_ID");
-                OnDATA_IDChanged();
+                OnData_IDChanging(value);
+                ReportPropertyChanging("Data_ID");
+                _Data_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Data_ID");
+                OnData_IDChanged();
             }
         }
-        private global::System.Int32 _DATA_ID;
-        partial void OnDATA_IDChanging(global::System.Int32 value);
-        partial void OnDATA_IDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CURRENCY
-        {
-            get
-            {
-                return _CURRENCY;
-            }
-            set
-            {
-                OnCURRENCYChanging(value);
-                ReportPropertyChanging("CURRENCY");
-                _CURRENCY = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CURRENCY");
-                OnCURRENCYChanged();
-            }
-        }
-        private global::System.String _CURRENCY;
-        partial void OnCURRENCYChanging(global::System.String value);
-        partial void OnCURRENCYChanged();
+        private global::System.Int32 _Data_ID;
+        partial void OnData_IDChanging(global::System.Int32 value);
+        partial void OnData_IDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5102,30 +5028,6 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESC;
         partial void OnDATA_DESCChanging(global::System.String value);
         partial void OnDATA_DESCChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> REPORTED_MONTH
-        {
-            get
-            {
-                return _REPORTED_MONTH;
-            }
-            set
-            {
-                OnREPORTED_MONTHChanging(value);
-                ReportPropertyChanging("REPORTED_MONTH");
-                _REPORTED_MONTH = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("REPORTED_MONTH");
-                OnREPORTED_MONTHChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _REPORTED_MONTH;
-        partial void OnREPORTED_MONTHChanging(Nullable<global::System.Int32> value);
-        partial void OnREPORTED_MONTHChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

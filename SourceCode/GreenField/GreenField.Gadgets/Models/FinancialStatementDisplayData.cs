@@ -16,6 +16,8 @@ namespace GreenField.Gadgets.Models
     /// </summary>
     public class PeriodColumnDisplayData
     {
+        public Int32 DATA_ID { get; set; }
+
         /// <summary>
         /// Data Description
         /// </summary>

@@ -15,14 +15,12 @@
           <xs:element minOccurs="0" name="AMOUNT_TYPE" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="BOLD_FONT" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CALCULATION_DIAGRAM" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CURRENCY" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="DATA_DESC" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DATA_ID" type="xs:int" />
           <xs:element minOccurs="0" name="DECIMALS" type="xs:int" />
+          <xs:element minOccurs="0" name="Data_ID" type="xs:int" />
           <xs:element minOccurs="0" name="GROUP_NAME" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PERIOD" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PERIOD_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="REPORTED_MONTH" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="ROOT_SOURCE" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ROOT_SOURCE_DATE" type="xs:dateTime" />
           <xs:element minOccurs="0" name="SORT_ORDER" type="xs:int" />

@@ -162,7 +162,7 @@ namespace GreenField.Gadgets.Helpers
             return periodColumnHeader;
         }
 
-        public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo(object periodColumnInfo, out PeriodRecord periodRecord, PeriodRecord periodRecordInfo, String currency = "USD")
+        public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo(object periodColumnInfo, out PeriodRecord periodRecord, PeriodRecord periodRecordInfo)
         {
             List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
             PeriodRecord period = periodRecordInfo;
@@ -179,14 +179,17 @@ namespace GreenField.Gadgets.Helpers
 
                 foreach (string dataDesc in distinctDataDescriptors)
                 {
+                    FinancialStatementData recordData = financialStatementInfo.Where(record => record.DATA_DESC == dataDesc).FirstOrDefault();
+
+                    Int32 dataId = recordData == null ? -1 : recordData.Data_ID;
+                    
                     #region Annual
                     #region Year One
                     FinancialStatementData yearOneData = financialStatementInfo
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A")
                                     .FirstOrDefault();
 
                     if (yearOneData == null)
@@ -195,8 +198,7 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A")
                             .FirstOrDefault();
                         if (yearOneData != null)
                         {
@@ -210,8 +212,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearTwo.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearTwoData == null)
@@ -220,8 +222,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearTwo.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearTwoData != null)
                         {
@@ -235,8 +237,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearThree.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearThreeData == null)
@@ -245,8 +247,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearThree.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearThreeData != null)
                         {
@@ -260,8 +262,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearFour.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearFourData == null)
@@ -270,8 +272,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearFour.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearFourData != null)
                         {
@@ -285,8 +287,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearFive.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearFiveData == null)
@@ -295,8 +297,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearFive.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearFiveData != null)
                         {
@@ -310,8 +312,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearSix.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearSixData == null)
@@ -320,8 +322,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearSix.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearSixData != null)
                         {
@@ -335,8 +337,8 @@ namespace GreenField.Gadgets.Helpers
                                     .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.YearSeven.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSevenIsHistorical ? "A" : "E") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
                                     .FirstOrDefault();
 
                     if (yearSevenData == null)
@@ -345,8 +347,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                 record.PERIOD.ToUpper().Trim() == period.YearSeven.ToString().ToUpper().Trim() &&
                                 record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSevenIsHistorical ? "E" : "A") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A" &&
-                                record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
                             .FirstOrDefault();
                         if (yearSevenData != null)
                         {
@@ -362,8 +364,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterOneData == null)
@@ -372,8 +374,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterOneData != null)
                         {
@@ -387,8 +389,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterTwoYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterTwoData == null)
@@ -397,8 +399,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterTwoYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterTwoData != null)
                         {
@@ -412,8 +414,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterThreeYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterThreeData == null)
@@ -422,8 +424,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterThreeYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterThreeData != null)
                         {
@@ -437,8 +439,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterFourYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterFourData == null)
@@ -447,8 +449,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterFourYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterFourData != null)
                         {
@@ -462,8 +464,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterFiveYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterFiveData == null)
@@ -472,8 +474,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterFiveYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterFiveData != null)
                         {
@@ -487,8 +489,8 @@ namespace GreenField.Gadgets.Helpers
                                                 .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                                     record.PERIOD.ToUpper().Trim() == period.QuarterSixYear.ToString().ToUpper().Trim() &&
                                                     record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "A" : "E") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim() &&
-                                                    record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                                                    )
                                                 .FirstOrDefault();
 
                     if (quarterSixData == null)
@@ -497,8 +499,8 @@ namespace GreenField.Gadgets.Helpers
                             .Where(record => record.DATA_DESC.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
                                         record.PERIOD.ToUpper().Trim() == period.QuarterSixYear.ToString().ToUpper().Trim() &&
                                         record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "E" : "A") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim() &&
-                                        record.CURRENCY.ToUpper().Trim() == currency.ToUpper().Trim())
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                                        )
                                     .FirstOrDefault();
                         if (quarterSixData != null)
                         {
@@ -510,6 +512,7 @@ namespace GreenField.Gadgets.Helpers
 
                     result.Add(new PeriodColumnDisplayData()
                     {
+                        DATA_ID = dataId,
                         DATA_DESC = dataDesc,
                         YEAR_ONE = yearOneData != null ? yearOneData.AMOUNT : null,
                         YEAR_TWO = yearTwoData != null ? yearTwoData.AMOUNT : null,

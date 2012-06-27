@@ -54,8 +54,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, out periodRecord, 
                         PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT 
-                            ? --Iterator : ++Iterator), 
-                        SelectedCurrency);
+                            ? --Iterator : ++Iterator));
 
                     PeriodRecord = periodRecord;
                     PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
@@ -89,6 +88,26 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _financialStatementDisplayInfo = value;
                 RaisePropertyChanged(() => this.FinancialStatementDisplayInfo);
+                FinancialStatementExtDisplayInfo = value
+                    .Where(record => record.DATA_ID == 147 ||
+                        record.DATA_ID == 149 ||
+                        record.DATA_ID == 132 ||
+                        record.DATA_ID == 133)
+                    .ToList();
+            }
+        }
+
+        private List<PeriodColumnDisplayData> _financialStatementExtDisplayInfo;
+        public List<PeriodColumnDisplayData> FinancialStatementExtDisplayInfo
+        {
+            get { return _financialStatementExtDisplayInfo; }
+            set
+            {
+                if (_financialStatementExtDisplayInfo != value)
+                {
+                    _financialStatementExtDisplayInfo = value;
+                    RaisePropertyChanged(() => this.FinancialStatementExtDisplayInfo);
+                }
             }
         }
 
@@ -113,6 +132,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        
         #endregion
 
         #region Period Information
@@ -288,7 +308,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Reported issuer domicile currency and "USD"
         /// </summary>
-        private ObservableCollection<String> _currencyInfo;
+        private ObservableCollection<String> _currencyInfo = new ObservableCollection<string> { "USD" };
         public ObservableCollection<String> CurrencyInfo
         {
             get { return _currencyInfo; }
@@ -305,7 +325,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected currency
         /// </summary>
-        private String _selectedCurrency;
+        private String _selectedCurrency = "USD";
         public String SelectedCurrency
         {
             get { return _selectedCurrency; }
@@ -461,7 +481,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveFinancialStatementData()
         {
             _dbInteractivity.RetrieveFinancialStatementData(IssuerReferenceInfo.IssuerId, SelectedDataSource, SelectedPeriodType, SelectedFiscalType,
-                        FinancialStatementStatementType.BALANCE_SHEET, IssuerReferenceInfo.CurrencyCode, RetrieveFinancialStatementDataCallbackMethod);
+                        FinancialStatementStatementType.BALANCE_SHEET, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
         }
 
         public void SetFinancialStatementDisplayInfo()
@@ -470,7 +490,7 @@ namespace GreenField.Gadgets.ViewModels
             
             PeriodRecord periodRecord = new PeriodRecord();
             FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo,out periodRecord,
-                PeriodColumns.SetPeriodRecord(Iterator), SelectedCurrency);
+                PeriodColumns.SetPeriodRecord(Iterator));
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
             

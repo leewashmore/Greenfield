@@ -148,21 +148,17 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string CALCULATION_DIAGRAMField;
         
-        private string CURRENCYField;
-        
         private string DATA_DESCField;
         
-        private int DATA_IDField;
-        
         private int DECIMALSField;
+        
+        private int Data_IDField;
         
         private string GROUP_NAMEField;
         
         private string PERIODField;
         
         private string PERIOD_TYPEField;
-        
-        private System.Nullable<int> REPORTED_MONTHField;
         
         private string ROOT_SOURCEField;
         
@@ -223,19 +219,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CURRENCY {
-            get {
-                return this.CURRENCYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CURRENCYField, value) != true)) {
-                    this.CURRENCYField = value;
-                    this.RaisePropertyChanged("CURRENCY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DATA_DESC {
             get {
                 return this.DATA_DESCField;
@@ -249,19 +232,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DATA_ID {
-            get {
-                return this.DATA_IDField;
-            }
-            set {
-                if ((this.DATA_IDField.Equals(value) != true)) {
-                    this.DATA_IDField = value;
-                    this.RaisePropertyChanged("DATA_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public int DECIMALS {
             get {
                 return this.DECIMALSField;
@@ -270,6 +240,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((this.DECIMALSField.Equals(value) != true)) {
                     this.DECIMALSField = value;
                     this.RaisePropertyChanged("DECIMALS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Data_ID {
+            get {
+                return this.Data_IDField;
+            }
+            set {
+                if ((this.Data_IDField.Equals(value) != true)) {
+                    this.Data_IDField = value;
+                    this.RaisePropertyChanged("Data_ID");
                 }
             }
         }
@@ -309,19 +292,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.PERIOD_TYPEField, value) != true)) {
                     this.PERIOD_TYPEField = value;
                     this.RaisePropertyChanged("PERIOD_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> REPORTED_MONTH {
-            get {
-                return this.REPORTED_MONTHField;
-            }
-            set {
-                if ((this.REPORTED_MONTHField.Equals(value) != true)) {
-                    this.REPORTED_MONTHField = value;
-                    this.RaisePropertyChanged("REPORTED_MONTH");
                 }
             }
         }
