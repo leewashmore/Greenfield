@@ -35,7 +35,6 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private IRegionManager _regionManager;
 
         /// <summary>
         /// DashboardGadgetPayLoad fields
@@ -68,7 +67,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _regionManager = param.RegionManager;
 
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;

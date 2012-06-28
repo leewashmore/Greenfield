@@ -117,8 +117,6 @@ namespace GreenField.Web.Services
             }
         }
 
-
-
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
@@ -148,7 +146,38 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Gets BAsic Data
+        /// Get data for Consensus Estimate Detailed gadget
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <param name="currentYear"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimateDetailedData> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
+        {
+            try
+            {
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
+               
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                List<ConsensusEstimateDetailedData> result = null;
+
+                result = entity.GetConsensusEstimateDetailedData(issuerId, _periodType, currency).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Gets Basic Data
         /// </summary>
         /// <param name="securityId"></param>
         /// <returns>Basic data</returns>

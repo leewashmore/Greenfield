@@ -151,9 +151,7 @@ namespace GreenField.Web.Services
                     if (data.Count.Equals(0))
                         return result;
 
-                    Decimal? netPortfolioValuation = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                            && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                    Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                         throw new InvalidOperationException();
@@ -212,9 +210,7 @@ namespace GreenField.Web.Services
                     if (data.Count.Equals(0))
                         return result;
 
-                    Decimal? netPortfolioValuation = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                            && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                    Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                         throw new InvalidOperationException();
@@ -307,9 +303,7 @@ namespace GreenField.Web.Services
                     if (data.Count.Equals(0))
                         return result;
 
-                    Decimal? netPortfolioValuation = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                            && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                    Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                         throw new InvalidOperationException();
@@ -365,9 +359,7 @@ namespace GreenField.Web.Services
                     if (data.Count.Equals(0))
                         return result;
 
-                    Decimal? netPortfolioValuation = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                            && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                    Decimal? netPortfolioValuation = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
 
                     if (netPortfolioValuation == 0 || netPortfolioValuation == null)
                         throw new InvalidOperationException();
@@ -453,9 +445,14 @@ namespace GreenField.Web.Services
                 {
                     #region Look - Through Enabled
                     //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare
-                    sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                    sumMarketValuePortfolio = isExCashSecurity
+                                                  ? DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                            && t.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                            && t.SECURITYTHEMECODE != "CASH").ToList()
+                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC))
+                                                  : DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
                                                                                                             && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                                                                                                            .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));                                                      
                     //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
                     if (sumMarketValuePortfolio == 0)
                         return result;
@@ -507,9 +504,14 @@ namespace GreenField.Web.Services
                 {
                     #region Look - Through disabled
                     //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare on the basis of SECURITYTHEMECODE
-                    sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                                && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                                .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+                    sumMarketValuePortfolio = isExCashSecurity
+                                                              ? DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                          && record.PORTFOLIO_DATE == effectiveDate.Date
+                                                                                                          && record.SECURITYTHEMECODE != "CASH").ToList()
+                                                                                                          .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC))
+                                                              : DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
+                                                                                                          && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
+                                                                                                          .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
                     //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
                     if (sumMarketValuePortfolio == 0)
                         return result;
@@ -753,21 +755,20 @@ namespace GreenField.Web.Services
 
                 if (lookThruEnabled)
                 {
-                    #region Look thru disabled
-
-                    //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
-                    decimal? sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                       && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                       .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
-                    //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
-                    if (sumMarketValuePortfolio == 0 && sumMarketValuePortfolio == null)
-                        return result;
+                    #region Look thru enabled                             
 
                     //Retrieve GF_PORTFOLIO_HOLDINGS data 
                     List<GF_PORTFOLIO_LTHOLDINGS> data = GetFilteredRiskIndexListWithLookThru(portfolioSelectionData, effectiveDate, isExCashSecurity, filterType, filterValue);
 
                     if (data == null)
                         throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+
+                    //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
+                    decimal? sumMarketValuePortfolio = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+
+                    //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
+                    if (sumMarketValuePortfolio == 0 && sumMarketValuePortfolio == null)
+                        return result;
 
                     //Retrieve the Id of benchmark associated with the Portfolio
                     List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();
@@ -815,19 +816,20 @@ namespace GreenField.Web.Services
                 {
                     #region Look thru disabled
 
-                    //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
-                    decimal? sumMarketValuePortfolio = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId
-                                                                                                       && t.PORTFOLIO_DATE == effectiveDate.Date).ToList()
-                                                                                                       .Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
-                    //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
-                    if (sumMarketValuePortfolio == 0 && sumMarketValuePortfolio == null)
-                        return result;
-
+                    
                     //Retrieve GF_PORTFOLIO_HOLDINGS data 
                     List<GF_PORTFOLIO_HOLDINGS> data = GetFilteredRiskIndexListWithoutLookThru(portfolioSelectionData, effectiveDate, isExCashSecurity, filterType, filterValue);
 
                     if (data == null)
                         throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+
+                    //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
+                    decimal? sumMarketValuePortfolio = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
+
+                    //if sum of DIRTY_VALUE_PC for criterion is zero, empty set is returned
+                    if (sumMarketValuePortfolio == 0 && sumMarketValuePortfolio == null)
+                        return result;
+
 
                     //Retrieve the Id of benchmark associated with the Portfolio
                     List<string> benchmarkId = data.Select(a => a.BENCHMARK_ID).Distinct().ToList();

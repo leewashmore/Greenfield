@@ -24,6 +24,11 @@ namespace GreenField.Gadgets.Models
         public String DATA_DESC { get; set; }
 
         /// <summary>
+        /// Data Description
+        /// </summary>
+        public String SUB_DATA_DESC { get; set; }
+
+        /// <summary>
         /// Data - Year one annual
         /// </summary>
         public Decimal? YEAR_ONE { get; set; }

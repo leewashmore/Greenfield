@@ -51,17 +51,33 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveConsensusEstimateDetailedData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="periodType" type="q9:FinancialStatementPeriodType" />
+        <xs:element minOccurs="0" name="currency" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveConsensusEstimateDetailedDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveConsensusEstimateDetailedDataResult" nillable="true" type="q10:ArrayOfConsensusEstimateDetailedData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveBasicData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q9:EntitySelectionData" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q11:EntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveBasicDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveBasicDataResult" nillable="true" type="q10:ArrayOfBasicData" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveBasicDataResult" nillable="true" type="q12:ArrayOfBasicData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -75,7 +91,7 @@
   <xs:element name="RetrieveTargetPriceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveTargetPriceDataResult" nillable="true" type="q12:ArrayOfTargetPriceCEData" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveTargetPriceDataResult" nillable="true" type="q13:ArrayOfTargetPriceCEData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
