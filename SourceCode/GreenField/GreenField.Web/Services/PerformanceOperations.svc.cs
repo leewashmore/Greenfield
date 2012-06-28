@@ -122,15 +122,15 @@ namespace GreenField.Web.Services
                 #endregion
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
-                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
+                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
                     && a.TO_DATE == objEffectiveDate.Date).ToList().Distinct().ToList();
 
                 #region Comparator
-                
+
                 //To Remove Duplicates
                 IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GF_PERF_DAILY_ATTRIBUTION_Comparer();
                 dimensionDailyPerfData = dimensionDailyPerfData.Distinct(customComparer).ToList();
-                
+
                 #endregion
 
                 GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData = (entity.GF_PERF_DAILY_ATTRIBUTION.
@@ -145,7 +145,7 @@ namespace GreenField.Web.Services
                     throw new InvalidOperationException
                         ("Method Name: CalculateRelativePerformanceUIData, Class: GreenField.Web.Helpers.RelativePerformanceUICalculations, Result Null Exception");
 
-                return result;
+                return result.OrderBy(a => a.SortId).ToList();
             }
             catch (Exception ex)
             {
@@ -474,7 +474,7 @@ namespace GreenField.Web.Services
                     return result;
                 if (dimensionSectorCountryReturnData.Count == 0)
                     return result;
-                
+
                 List<ChartExtensionData> sectorCountryReturnData = ChartExtensionCalculations.CalculateSectorCountryReturnValues(dimensionSectorCountryReturnData);
                 if (sectorCountryReturnData != null || sectorCountryReturnData.Count != 0)
                     result.AddRange(sectorCountryReturnData);
@@ -756,13 +756,13 @@ namespace GreenField.Web.Services
 
                         if (benchmarkDetails == null)
                             continue;
-                        
-                        
+
+
                         GF_PERF_DAILY_ATTRIBUTION benchmarkPerfRecord = entity.GF_PERF_DAILY_ATTRIBUTION
-                            .Where(g=>g.NODE_NAME == "GICS Level 5" && g.AGG_LVL_1 == "Undefined" &&
+                            .Where(g => g.NODE_NAME == "GICS Level 5" && g.AGG_LVL_1 == "Undefined" &&
                                 g.BM == benchmarkDetails.BM && g.BMNAME == benchmarkDetails.BMNAME).FirstOrDefault();
 
-                        if(benchmarkPerfRecord == null)
+                        if (benchmarkPerfRecord == null)
                             continue;
 
                         Decimal? dateToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_1D * 100;
@@ -773,7 +773,7 @@ namespace GreenField.Web.Services
                         Decimal? lastYearReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_1Y * 100;
                         Decimal? secondLastYearReturn = null;
                         Decimal? thirdLastYearReturn = null;
-                        
+
                         result.Add(new MarketPerformanceSnapshotData()
                         {
                             MarketSnapshotPreferenceInfo = preference,

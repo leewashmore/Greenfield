@@ -41,7 +41,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Instance of LoggerFacade
         /// </summary>
         private ILoggerFacade _logger;
-                
+
         /// <summary>
         /// Details of selected Security
         /// </summary>
@@ -88,19 +88,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Collection of ChartExtensionData
         /// </summary>
-        private RangeObservableCollection<ChartExtensionData> _chartExtensionData;
-        public RangeObservableCollection<ChartExtensionData> ChartExtensionData
+        private RangeObservableCollection<ChartExtensionData> _chartExtensionPlottedData;
+        public RangeObservableCollection<ChartExtensionData> ChartExtensionPlottedData
         {
             get
             {
-                if (_chartExtensionData == null)
-                    _chartExtensionData = new RangeObservableCollection<ChartExtensionData>();
-                return _chartExtensionData;
+                if (_chartExtensionPlottedData == null)
+                    _chartExtensionPlottedData = new RangeObservableCollection<ChartExtensionData>();
+                return _chartExtensionPlottedData;
             }
             set
             {
-                _chartExtensionData = value;
-                this.RaisePropertyChanged(() => this.ChartExtensionData);
+                _chartExtensionPlottedData = value;
+                this.RaisePropertyChanged(() => this.ChartExtensionPlottedData);
             }
         }
 
@@ -252,9 +252,9 @@ namespace GreenField.Gadgets.ViewModels
         private string _transactionLegendLabel;
         public string TransactionLegendLabel
         {
-            get 
+            get
             {
-                return _transactionLegendLabel; 
+                return _transactionLegendLabel;
             }
             set
             {
@@ -262,7 +262,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.TransactionLegendLabel);
             }
         }
-        
+
 
         /// <summary>
         /// Minimum Value for X-Axis of Chart
@@ -344,7 +344,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
-                
+
         #region ICommandMethods
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
                     _period = period;
-                    if (ChartExtensionData.Count != 0)
+                    if (ChartExtensionPlottedData.Count != 0)
                     {
                         RetrieveChartAccordingDataPeriod(_period);
                     }
@@ -551,7 +551,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (chartExtensionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, chartExtensionData, 1);
-                    ChartExtensionData.Clear();
+                    ChartExtensionPlottedData.Clear();
                     if (chartExtensionData.Any(a => a.AmountTraded != null))
                     {
                         TransactionLegendLabel = chartExtensionData.Where(a => a.Type == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
@@ -560,7 +560,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         TransactionLegendLabel = " ";
                     }
-                    ChartExtensionData.AddRange(chartExtensionData.OrderBy(a => a.SortId).ToList());
+                    ChartExtensionPlottedData.AddRange(chartExtensionData.OrderBy(a => a.SortId).ToList());
                     RetrieveChartAccordingDataPeriod(_period);
                 }
                 else
@@ -593,29 +593,31 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (selectedPeriod == null)
                 return;
-            if (ChartExtensionData == null)
+            if (ChartExtensionPlottedData == null)
                 return;
-            if (ChartExtensionData.Count == 0)
+            if (ChartExtensionPlottedData.Count == 0)
                 return;
+
+            List<ChartExtensionData> data = ChartExtensionPlottedData.ToList();
 
             switch (selectedPeriod)
             {
                 case ("1D"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.OneD;
                             }
                         }
                         break;
                     }
-                case ("WTD"):
+                case ("1W"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.WTD;
                             }
@@ -624,9 +626,9 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 case ("MTD"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.MTD;
                             }
@@ -635,9 +637,9 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 case ("QTD"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.QTD;
                             }
@@ -646,9 +648,9 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 case ("YTD"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.YTD;
                             }
@@ -657,9 +659,9 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 case ("1Y"):
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.OneY;
                             }
@@ -669,9 +671,9 @@ namespace GreenField.Gadgets.ViewModels
 
                 default:
                     {
-                        foreach (ChartExtensionData item in ChartExtensionData)
+                        foreach (ChartExtensionData item in data)
                         {
-                            if (item.Type.ToUpper().Trim() == "GICS LEVEL 5" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
                             {
                                 item.PriceReturn = item.OneD;
                             }
@@ -679,6 +681,9 @@ namespace GreenField.Gadgets.ViewModels
                         break;
                     }
             }
+            ChartExtensionPlottedData.Clear();
+            ChartExtensionPlottedData.AddRange(data);
+            this.RaisePropertyChanged(() => this.ChartExtensionPlottedData);
         }
 
         /// <summary>

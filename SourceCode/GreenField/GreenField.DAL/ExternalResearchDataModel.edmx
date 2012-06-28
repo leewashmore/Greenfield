@@ -16,7 +16,10 @@
       [CONSENSUS_MASTER].[BANK] AS [BANK], 
       [CONSENSUS_MASTER].[INSURANCE] AS [INSURANCE], 
       [CONSENSUS_MASTER].[UTILITY] AS [UTILITY], 
-      [CONSENSUS_MASTER].[ESTIMATE_DESC] AS [ESTIMATE_DESC]
+      [CONSENSUS_MASTER].[ESTIMATE_DESC] AS [ESTIMATE_DESC], 
+      [CONSENSUS_MASTER].[ANNUAL] AS [ANNUAL], 
+      [CONSENSUS_MASTER].[QUARTERLY] AS [QUARTERLY], 
+      [CONSENSUS_MASTER].[CURRENT] AS [CURRENT]
       FROM [dbo].[CONSENSUS_MASTER] AS [CONSENSUS_MASTER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="Country_Master" EntityType="ExternalResearchModel.Store.Country_Master" store:Type="Tables" store:Schema="dbo" store:Name="Country_Master">
@@ -210,9 +213,26 @@
       [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
       FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="tblCETargetPrice" EntityType="ExternalResearchModel.Store.tblCETargetPrice" store:Type="Tables" store:Schema="dbo" store:Name="tblCETargetPrice">
+            <DefiningQuery>SELECT 
+      [tblCETargetPrice].[XRef] AS [XRef], 
+      [tblCETargetPrice].[StartDate] AS [StartDate], 
+      [tblCETargetPrice].[EndDate] AS [EndDate], 
+      [tblCETargetPrice].[OriginalDate] AS [OriginalDate], 
+      [tblCETargetPrice].[ExpirationDate] AS [ExpirationDate], 
+      [tblCETargetPrice].[Unit] AS [Unit], 
+      [tblCETargetPrice].[NumOfEsts] AS [NumOfEsts], 
+      [tblCETargetPrice].[High] AS [High], 
+      [tblCETargetPrice].[Low] AS [Low], 
+      [tblCETargetPrice].[Mean] AS [Mean], 
+      [tblCETargetPrice].[StdDev] AS [StdDev], 
+      [tblCETargetPrice].[Median] AS [Median], 
+      [tblCETargetPrice].[Currency] AS [Currency]
+      FROM [dbo].[tblCETargetPrice] AS [tblCETargetPrice]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -234,9 +254,12 @@
           <Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="ESTIMATE_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ANNUAL" Type="char" MaxLength="1" />
+          <Property Name="QUARTERLY" Type="char" MaxLength="1" />
+          <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -255,7 +278,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -296,7 +319,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -325,7 +348,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -340,7 +363,7 @@
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.INTERNAL_DATA_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_DATA_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_DATA_ANNUAL">
           <Key>
@@ -357,7 +380,7 @@
           <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.INTERNAL_DATA_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_DATA_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_DATA_INTERIM">
           <Key>
@@ -374,7 +397,7 @@
           <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -387,7 +410,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.INTERNAL_STATEMENT_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_STATEMENT_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_STATEMENT_ANNUAL">
           <Key>
@@ -412,7 +435,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.INTERNAL_STATEMENT_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_STATEMENT_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_STATEMENT_INTERIM">
           <Key>
@@ -441,7 +464,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -454,7 +477,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -465,7 +488,7 @@
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
@@ -483,7 +506,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -504,7 +527,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -542,7 +565,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -566,7 +589,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Database.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_LatestData.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="REUTERS_XREF">
           <Key>
@@ -582,6 +605,29 @@
           <Property Name="NAME" Type="varchar" MaxLength="100" />
           <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_LatestData.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="tblCETargetPrice">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="Unit" Type="varchar" MaxLength="2" />
+          <Property Name="NumOfEsts" Type="int" />
+          <Property Name="High" Type="real" />
+          <Property Name="Low" Type="real" />
+          <Property Name="Mean" Type="real" />
+          <Property Name="StdDev" Type="real" />
+          <Property Name="Median" Type="real" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+        </EntityType>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
@@ -592,6 +638,12 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SecurityID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="XRef" Type="int" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -626,6 +678,10 @@
             <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
+          <FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
+            <Parameter Name="XRef" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -647,6 +703,9 @@
           <Property Name="INSURANCE" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
           <Property Name="UTILITY" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
           <Property Name="ESTIMATE_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="QUARTERLY" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="External_Country_Master">
           <Key>
@@ -966,6 +1025,41 @@
           <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="tblCETargetPrice">
+          <Key>
+            <PropertyRef Name="XRef" />
+            <PropertyRef Name="StartDate" />
+            <PropertyRef Name="OriginalDate" />
+          </Key>
+          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" />
+          <Property Type="DateTime" Name="OriginalDate" Nullable="false" />
+          <Property Type="DateTime" Name="ExpirationDate" />
+          <Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="NumOfEsts" />
+          <Property Type="Single" Name="High" />
+          <Property Type="Single" Name="Low" />
+          <Property Type="Single" Name="Mean" />
+          <Property Type="Single" Name="StdDev" />
+          <Property Type="Single" Name="Median" />
+          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="GetTargetPrice_Result">
+          <Property Type="String" Name="Xref" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="Ticker" Nullable="true" MaxLength="15" />
+          <Property Type="Single" Name="CurrentPrice" Nullable="true" />
+          <Property Type="DateTime" Name="CurrentPriceDate" Nullable="true" Precision="16" />
+          <Property Type="String" Name="Currency" Nullable="true" MaxLength="3" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="Single" Name="Median" Nullable="true" />
+          <Property Type="String" Name="TargetCurrency" Nullable="true" MaxLength="3" />
+          <Property Type="Int32" Name="NumOfEsts" Nullable="true" />
+          <Property Type="Single" Name="High" Nullable="true" />
+          <Property Type="Single" Name="Low" Nullable="true" />
+          <Property Type="Single" Name="StdDev" Nullable="true" />
+          <Property Type="String" Name="MeanLabel" Nullable="true" MaxLength="20" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -973,7 +1067,10 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ExternalResearchModelStoreContainer" CdmEntityContainer="ExternalResearchEntities">
           <EntitySetMapping Name="CONSENSUS_MASTER"><EntityTypeMapping TypeName="ExternalResearchModel.CONSENSUS_MASTER"><MappingFragment StoreEntitySet="CONSENSUS_MASTER">
-            <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+            <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
+                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
             <ScalarProperty Name="ESTIMATE_TYPE" ColumnName="ESTIMATE_TYPE" />
             <ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
             <ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
@@ -1161,6 +1258,44 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblCETargetPrices">
+            <EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
+              <MappingFragment StoreEntitySet="tblCETargetPrice">
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Median" ColumnName="Median" />
+                <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+                <ScalarProperty Name="Mean" ColumnName="Mean" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="XRef" ColumnName="XRef" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetTargetPrice" FunctionName="ExternalResearchModel.Store.GetTargetPrice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetTargetPrice_Result">
+                <ScalarProperty Name="Xref" ColumnName="Xref" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Median" ColumnName="Median" />
+                <ScalarProperty Name="TargetCurrency" ColumnName="TargetCurrency" />
+                <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+                <ScalarProperty Name="MeanLabel" ColumnName="MeanLabel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1199,6 +1334,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExternalResearchModel.tblCETargetPrice" Width="1.5" PointX="7.375" PointY="10.75" Height="3.5186979166666674" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -17,7 +17,8 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="dimensionDailyPerfData">Collection of type GF_PERF_DAILY_ATTRIBUTION retrieved from Dimension</param>
         /// <returns>List of RelativePerformanceUIData</returns>
-        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData, GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData)
+        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData, 
+            GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData)
         {
             try
             {
@@ -39,19 +40,24 @@ namespace GreenField.Web.Helpers
                             {
                                 data.EntityType = item.NODE_NAME;
                                 data.EntityName = item.AGG_LVL_1_LONG_NAME;
-                                data.QTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_QTD);
-                                data.MTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_MTD);
-                                data.YTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_YTD);
-                                data.OneYearReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_1Y);
+                                data.QTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_QTD) * 100;
+                                data.MTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_MTD) * 100;
+                                data.YTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_YTD) * 100;
+                                data.OneYearReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_1Y) * 100;
+                                data.SortId = 1;
                             }
                             else
                             {
                                 data.EntityType = item.NODE_NAME;
                                 data.EntityName = item.AGG_LVL_1_LONG_NAME;
-                                data.MTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_MTD);
-                                data.QTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_QTD);
-                                data.YTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_YTD);
-                                data.OneYearReturn = Convert.ToDecimal(item.BM1_RC_TWR_1Y);
+                                data.MTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_MTD) * 100;
+                                data.QTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_QTD) * 100;
+                                data.YTDReturn = Convert.ToDecimal(item.BM1_RC_TWR_YTD) * 100;
+                                data.OneYearReturn = Convert.ToDecimal(item.BM1_RC_TWR_1Y) * 100;
+                                if (item.NODE_NAME.ToUpper().Trim() == "COUNTRY")
+                                    data.SortId = 3;
+                                else
+                                    data.SortId = 4;
                             }
                             result.Add(data);
                         }
@@ -66,10 +72,11 @@ namespace GreenField.Web.Helpers
                         data = new RelativePerformanceUIData();
                         data.EntityType = "BENCHMARK";
                         data.EntityName = Convert.ToString(dimensionBenchmarkReturnData.BMNAME);
-                        data.MTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_MTD);
-                        data.QTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_QTD);
-                        data.YTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_YTD);
-                        data.OneYearReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_1Y);
+                        data.MTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_MTD) * 100;
+                        data.QTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_QTD) * 100;
+                        data.YTDReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_YTD) * 100;
+                        data.OneYearReturn = Convert.ToDecimal(dimensionBenchmarkReturnData.BM1_TOP_RC_TWR_1Y) * 100;
+                        data.SortId = 2;
                         result.Add(data);
                     }
                 }

@@ -42,6 +42,9 @@ namespace GreenField.DataContracts
         [DataMember]
         public decimal FiveYearReturn { get; set; }
 
+        [DataMember]
+        public int SortId { get; set; }
+
     }
 
 }

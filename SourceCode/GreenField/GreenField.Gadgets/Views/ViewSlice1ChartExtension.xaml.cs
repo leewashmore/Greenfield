@@ -96,14 +96,14 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-                
+
         #region EventsUnsubscribe
 
         /// <summary>
         /// UnSubscribing the Events
         /// </summary>
         public override void Dispose()
-        {            
+        {
             this.DataContextSlice1ChartExtension.Dispose();
             this.DataContextSlice1ChartExtension = null;
             this.DataContext = null;
@@ -157,8 +157,6 @@ namespace GreenField.Gadgets.Views
             this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionStart = 0;
-            this.chChartExtension.DefaultView.ChartArea.ZoomScrollSettingsX.SliderSelectionEnd = 0.5;
         }
 
         #endregion
@@ -172,17 +170,18 @@ namespace GreenField.Gadgets.Views
         {
             if (this.DataContext as ViewModelSlice1ChartExtension != null)
             {
-                if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData != null)
+                if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData != null)
                 {
-                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMinValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData.OrderBy(a => a.ToDate)).
+                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMinValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderBy(a => a.ToDate)).
                         Select(a => a.ToDate).FirstOrDefault()).ToOADate();
-                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData.OrderByDescending(a => a.ToDate)).
+                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderByDescending(a => a.ToDate)).
                         Select(a => a.ToDate).FirstOrDefault()).ToOADate();
-                    int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionData.Count;
+                    int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.Count;
                     if (dataCount != 0)
                     {
                         this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
                     }
+
                 }
             }
 

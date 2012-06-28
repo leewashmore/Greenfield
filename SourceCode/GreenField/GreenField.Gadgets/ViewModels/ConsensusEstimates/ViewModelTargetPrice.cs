@@ -16,6 +16,7 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -243,15 +244,17 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-
-
+        
         #endregion
 
         #region UnsubscribeEvents
 
+        /// <summary>
+        /// UnSubscribe the EventHandlers
+        /// </summary>
         public void Dispose()
-        { 
-            
+        {
+
         }
 
         #endregion

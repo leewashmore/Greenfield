@@ -101,10 +101,10 @@
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" >
                     <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False"
-                                         ItemsSource="{Binding ChartExtensionData}"  CanUserSelect="True" CanUserReorderColumns="False" 
+                                         ItemsSource="{Binding ChartExtensionPlottedData}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                          SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                          CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
-                                         CanUserSortColumns="True" ScrollMode="Deferred" 
+                                         CanUserSortColumns="True" ScrollMode="RealTime" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -113,8 +113,6 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True"
                                          ColumnWidth="*"
                                          AlternationCount="2"
                                          RowLoaded="dgChartExtension_RowLoaded">
@@ -151,7 +149,8 @@
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
-                                          ItemsSource="{Binding ChartExtensionData, Mode=TwoWay}" IsHitTestVisible="True" DataBound="chChartExtension_DataBound" Loaded="chChartExtension_Loaded">
+                                          ItemsSource="{Binding ChartExtensionPlottedData, Mode=TwoWay}" IsHitTestVisible="True"
+                                          DataBound="chChartExtension_DataBound" Loaded="chChartExtension_Loaded">
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
@@ -166,8 +165,8 @@
                                 <telerik:ChartDefaultView ChartLegendPosition="Right" >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea  SmartLabelsEnabled="True" 
-                                                            EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
-                                                            ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chChartExtensionLegend" >
+                                                            EnableAnimations="False" NoDataString="No Data Available" Margin="0,0.5,0,0" 
+                                                            LegendName="chChartExtensionLegend" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
@@ -186,8 +185,8 @@
                                                 </telerik:AxisX>
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
-                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" >
+                                                <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible" 
+                                                               AutoRange="True" ExtendDirection="None" >
                                                     <telerik:AxisY.AxisStyles>
                                                         <telerik:AxisStyles TitleStyle="{StaticResource AxisTitleStyle}"                                                               
                                                                 ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
@@ -197,7 +196,7 @@
                                             </telerik:ChartArea.AxisY>
                                             <telerik:ChartArea.AdditionalYAxes>
                                                 <telerik:AxisY x:Name="Secondary" AxisName="Secondary" Title="Transaction"  
-                                                                AutoRange="True" >
+                                                               AutoRange="True" >
                                                     <telerik:AxisY.AxisStyles>
                                                         <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                     </telerik:AxisY.AxisStyles>
@@ -237,7 +236,7 @@
                                     </telerik:SeriesMapping.GroupingSettings>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
-                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
+                                                                      EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
                                                                       ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>

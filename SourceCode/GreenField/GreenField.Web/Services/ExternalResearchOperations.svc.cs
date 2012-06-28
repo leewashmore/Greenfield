@@ -259,11 +259,25 @@ namespace GreenField.Web.Services
             data.StandardDeviation = Convert.ToDecimal(13);
             data.Ticker = "INDIA";
             result.Add(data);
+
+            //if (entitySelectionData == null)
+            //    return new List<TargetPriceCEData>();
+            DimensionEntitiesService.Entities dimensionEntity = DimensionEntity;
+
+           // int? XRef=dimensionEntity.GF_SECURITY_BASEVIEW.Where(a=>a.
+
+
+            //List<GetTargetPrice_Result> dbResult = new List<GetTargetPrice_Result>();
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            //dbResult=entity.GetTargetPrice(
+
+
+
+
             return result;
         }
 
-
-
+        
 
         #endregion
 
