@@ -170,7 +170,7 @@ namespace GreenField.Web.Services
 
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
-                
+
                 //Retrieving data from security view
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
@@ -217,12 +217,12 @@ namespace GreenField.Web.Services
                          + ")]", "Exception", "Medium");
                     }
                 }
-             
+
                 ////Retrieving data from Period Financials table
-                resultDB= extResearch.ExecuteStoreQuery<GetBasicData_Result>("exec GetBasicData @SecurityID={0}",Convert.ToString(data.SECURITY_ID)).ToList();
+                resultDB = extResearch.ExecuteStoreQuery<GetBasicData_Result>("exec GetBasicData @SecurityID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
 
 
-                
+
                 basicData.MarketCapitalization = resultDB[0].MARKET_CAPITALIZATION;
                 basicData.EnterpriseValue = resultDB[0].ENTERPRISE_VALUE;
                 result.Add(basicData);
@@ -236,7 +236,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-                
+
         #region ConsensusEstimatesGadgets
 
         /// <summary>
@@ -245,39 +245,55 @@ namespace GreenField.Web.Services
         /// <returns>Collection of TargetPriceCEData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<TargetPriceCEData> RetrieveTargetPriceData()
+        public List<TargetPriceCEData> RetrieveTargetPriceData(EntitySelectionData entitySelectionData)
         {
             List<TargetPriceCEData> result = new List<TargetPriceCEData>();
             TargetPriceCEData data = new TargetPriceCEData();
-            data.ConsensusRecommendation = "BUY";
-            data.CurrentPrice = 35.56.ToString();
-            data.High = Convert.ToDecimal(12.34);
-            data.LastUpdate = DateTime.Today;
-            data.Low = 13;
-            data.MedianTargetPrice = 13.56.ToString();
-            data.NoOfEstimates = 3;
-            data.StandardDeviation = Convert.ToDecimal(13);
-            data.Ticker = "INDIA";
-            result.Add(data);
-
-            //if (entitySelectionData == null)
-            //    return new List<TargetPriceCEData>();
+            
+            if (entitySelectionData == null)
+                return new List<TargetPriceCEData>();
             DimensionEntitiesService.Entities dimensionEntity = DimensionEntity;
 
-           // int? XRef=dimensionEntity.GF_SECURITY_BASEVIEW.Where(a=>a.
+            List<GF_SECURITY_BASEVIEW> securityData = (dimensionEntity.GF_SECURITY_BASEVIEW.
+                Where(a => a.ISSUE_NAME.ToUpper().Trim() == entitySelectionData.LongName.ToUpper().Trim()).ToList());
+            if (securityData == null)
+                return result;
 
+            string XRef = securityData.Select(a => a.XREF).FirstOrDefault();
 
-            //List<GetTargetPrice_Result> dbResult = new List<GetTargetPrice_Result>();
+            if (XRef == null)
+                return result;
+
+            List<GetTargetPrice_Result> dbResult = new List<GetTargetPrice_Result>();
             ExternalResearchEntities entity = new ExternalResearchEntities();
-            //dbResult=entity.GetTargetPrice(
+            dbResult = entity.GetTargetPrice(XRef).ToList();
 
+            if (dbResult == null)
+                return result;
+            if (dbResult.Count == 0)
+                return result;
 
-
-
+            foreach (GetTargetPrice_Result item in dbResult)
+            {
+                data = new TargetPriceCEData();
+                data.Ticker = (item.Ticker == null) ? "N/A" : item.Ticker;
+                data.ConsensusRecommendation = item.MeanLabel;
+                data.CurrentPrice = ((item.CurrentPrice == null) ? "N/A" : item.CurrentPrice.ToString()).ToString() +
+                    "( " + ((item.Currency == null) ? "N/A" : (item.Currency.ToString())).ToString() + " )";
+                data.MedianTargetPrice = ((item.Median == null) ? "N/A" : item.Median.ToString()) + 
+                    " ( " + ((item.TargetCurrency == null) ? "N/A" : item.TargetCurrency.ToString()) + " )";
+                data.LastUpdate = Convert.ToDateTime(item.StartDate);
+                data.NoOfEstimates = (item.NumOfEsts == null) ? "N/A" : (Convert.ToString(item.NumOfEsts));
+                data.High = (item.High == null) ? "N/A" : (Convert.ToString(item.High));
+                data.Low = (item.Low == null) ? "N/A" : (Convert.ToString(item.Low));
+                data.StandardDeviation = (item.StdDev == null) ? "N/A" : (Convert.ToString(item.StdDev));
+                result.Add(data);
+            }
+            
             return result;
         }
 
-        
+
 
         #endregion
 

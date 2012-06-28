@@ -25,7 +25,7 @@
                              FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21" >
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn x:Name="dgcTicker" Header="Ticker" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
-                                            DataMemberBinding="{Binding Ticker}" Width="*" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                            DataMemberBinding="{Binding Ticker}" Width="Auto" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
                 <telerik:GridViewDataColumn x:Name="dgcCurrentPrice" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             Header="Current Price" TextAlignment="Right"
                                             DataMemberBinding="{Binding CurrentPrice}" 
@@ -34,8 +34,8 @@
                                             DataMemberBinding="{Binding MedianTargetPrice}" TextAlignment="Right"
                                             Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                 <telerik:GridViewDataColumn x:Name="dgcLastUpdate" Header="Last Update" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            DataMemberBinding="{Binding LastUpdate}" TextAlignment="Right"
-                                            Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                            DataMemberBinding="{Binding LastUpdate}" TextAlignment="Left"
+                                            Width="Auto" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
                 <telerik:GridViewDataColumn x:Name="dgcNoOfEstimates" Header="# Of Estimates" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             DataMemberBinding="{Binding NoOfEstimates}" TextAlignment="Right"
                                             Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -49,8 +49,8 @@
                                             DataMemberBinding="{Binding StandardDeviation}" TextAlignment="Right"
                                             Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                 <telerik:GridViewDataColumn x:Name="dgcConsensusRecommendation" Header="Consensus Recommendation" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            DataMemberBinding="{Binding ConsensusRecommendation}" TextAlignment="Right"
-                                            Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                            DataMemberBinding="{Binding ConsensusRecommendation}" TextAlignment="Left"
+                                            Width="Auto" HeaderTextAlignment="Left" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
             </telerik:RadGridView.Columns>
         </telerik:RadGridView>
     </Grid>

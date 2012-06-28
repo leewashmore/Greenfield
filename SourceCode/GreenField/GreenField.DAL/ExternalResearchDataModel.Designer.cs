@@ -600,16 +600,16 @@ namespace GreenField.DAL
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="xRef">No Metadata Documentation available.</param>
-        public ObjectResult<GetTargetPrice_Result> GetTargetPrice(Nullable<global::System.Int32> xRef)
+        public ObjectResult<GetTargetPrice_Result> GetTargetPrice(global::System.String xRef)
         {
             ObjectParameter xRefParameter;
-            if (xRef.HasValue)
+            if (xRef != null)
             {
                 xRefParameter = new ObjectParameter("XRef", xRef);
             }
             else
             {
-                xRefParameter = new ObjectParameter("XRef", typeof(global::System.Int32));
+                xRefParameter = new ObjectParameter("XRef", typeof(global::System.String));
             }
     
             return base.ExecuteFunction<GetTargetPrice_Result>("GetTargetPrice", xRefParameter);

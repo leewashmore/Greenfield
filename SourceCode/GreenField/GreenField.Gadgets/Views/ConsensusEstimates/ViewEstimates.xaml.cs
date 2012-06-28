@@ -11,7 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 
-namespace GreenField.Gadgets.Views.ConsensusEstimates
+namespace GreenField.Gadgets.Views
 {
     public partial class ViewEstimates : ViewBaseUserControl
     {

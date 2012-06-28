@@ -187,10 +187,10 @@ namespace GreenField.ServiceCaller
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
         #region ConsensusEstimatesGadgets
-        
+
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 
-        void RetrieveTargetPriceData(Action<List<TargetPriceCEData>> callback);
+        void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback);
 
         #endregion
 

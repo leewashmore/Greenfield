@@ -69,12 +69,12 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ConsensusRecommendation" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrentPrice" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="High" type="xs:decimal" />
-      <xs:element minOccurs="0" name="LastUpdate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="High" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Low" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="MedianTargetPrice" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="NoOfEstimates" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NoOfEstimates" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

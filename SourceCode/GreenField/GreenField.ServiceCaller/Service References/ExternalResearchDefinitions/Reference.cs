@@ -394,7 +394,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveTargetPriceData(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveTargetPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> EndRetrieveTargetPriceData(System.IAsyncResult result);
     }
@@ -794,8 +794,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveTargetPriceData(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveTargetPriceData(callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveTargetPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveTargetPriceData(entitySelectionData, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -804,7 +804,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveTargetPriceData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveTargetPriceData(callback, asyncState);
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveTargetPriceData(entitySelectionData, callback, asyncState);
         }
         
         private object[] OnEndRetrieveTargetPriceData(System.IAsyncResult result) {
@@ -820,11 +821,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrieveTargetPriceDataAsync() {
-            this.RetrieveTargetPriceDataAsync(null);
+        public void RetrieveTargetPriceDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveTargetPriceDataAsync(entitySelectionData, null);
         }
         
-        public void RetrieveTargetPriceDataAsync(object userState) {
+        public void RetrieveTargetPriceDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
             if ((this.onBeginRetrieveTargetPriceDataDelegate == null)) {
                 this.onBeginRetrieveTargetPriceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveTargetPriceData);
             }
@@ -834,7 +835,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             if ((this.onRetrieveTargetPriceDataCompletedDelegate == null)) {
                 this.onRetrieveTargetPriceDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveTargetPriceDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveTargetPriceDataDelegate, null, this.onEndRetrieveTargetPriceDataDelegate, this.onRetrieveTargetPriceDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveTargetPriceDataDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveTargetPriceDataDelegate, this.onRetrieveTargetPriceDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -970,8 +972,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveTargetPriceData(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginRetrieveTargetPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveTargetPriceData", _args, callback, asyncState);
                 return _result;
             }

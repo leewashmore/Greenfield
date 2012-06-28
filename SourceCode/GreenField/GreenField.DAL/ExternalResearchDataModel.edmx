@@ -643,7 +643,7 @@
           <Parameter Name="SecurityID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="XRef" Type="int" Mode="In" />
+          <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -680,7 +680,7 @@
           </FunctionImport>
           <EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
           <FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-            <Parameter Name="XRef" Mode="In" Type="Int32" />
+            <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">

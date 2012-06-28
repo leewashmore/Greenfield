@@ -33,7 +33,6 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private EntitySelectionData _entitySelectionData;
-        private DateTime? _effectiveDate;
         private IEventAggregator _eventAggregator;
 
         #endregion
@@ -50,17 +49,15 @@ namespace GreenField.Gadgets.ViewModels
             this._dbInteractivity = param.DBInteractivity;
             this._logger = param.LoggerFacade;
             this.SelectedSecurity = param.DashboardGadgetPayload.EntitySelectionData;
-            this.SelectedDate = param.DashboardGadgetPayload.EffectiveDate;
             this._eventAggregator = param.EventAggregator;
-            if (SelectedSecurity != null && SelectedDate != null)
+            if (SelectedSecurity != null)
             {
-                _dbInteractivity.RetrieveTargetPriceData(RetrieveTargetPriceDataCallbackMethod);
+                _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
         }
 
@@ -85,22 +82,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Selected Date from the ToolBar
-        /// </summary>
-        private DateTime? _selectedDate;
-        public DateTime? SelectedDate
-        {
-            get
-            {
-                return _selectedDate;
-            }
-            set
-            {
-                _selectedDate = value;
-                this.RaisePropertyChanged(() => this.SelectedDate);
-            }
-        }
 
         /// <summary>
         /// Collection of TargetPriceCEData, showing data in DataGrid
@@ -158,9 +139,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     SelectedSecurity = entitySelectionData;
-                    if (SelectedSecurity != null && SelectedDate != null)
+                    if (SelectedSecurity != null)
                     {
-                        _dbInteractivity.RetrieveTargetPriceData(RetrieveTargetPriceDataCallbackMethod);
+                        _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -177,40 +158,7 @@ namespace GreenField.Gadgets.ViewModels
             }
 
         }
-
-        /// <summary>
-        /// Handle Date Change Event
-        /// </summary>
-        /// <param name="effectiveDate">Effective Date</param>
-        public void HandleEffectiveDateSet(DateTime effectiveDate)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (effectiveDate != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
-                    SelectedDate = effectiveDate;
-                    if (SelectedSecurity != null && SelectedDate != null)
-                    {
-                        _dbInteractivity.RetrieveTargetPriceData(RetrieveTargetPriceDataCallbackMethod);
-                        BusyIndicatorStatus = true;
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
+                
 
         #endregion
 
@@ -244,7 +192,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        
+
         #endregion
 
         #region UnsubscribeEvents

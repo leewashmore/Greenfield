@@ -16,19 +16,19 @@ namespace GreenField.DataContracts
         public string MedianTargetPrice { get; set; }
 
         [DataMember]
-        public DateTime LastUpdate { get; set; }
+        public DateTime? LastUpdate { get; set; }
 
         [DataMember]
-        public decimal NoOfEstimates { get; set; }
+        public string NoOfEstimates { get; set; }
 
         [DataMember]
-        public decimal High { get; set; }
+        public string High { get; set; }
 
         [DataMember]
-        public decimal Low { get; set; }
+        public string Low { get; set; }
 
         [DataMember]
-        public decimal StandardDeviation { get; set; }
+        public string StandardDeviation { get; set; }
 
         [DataMember]
         public string ConsensusRecommendation { get; set; }

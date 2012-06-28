@@ -2254,10 +2254,10 @@ namespace GreenField.ServiceCaller
         /// Service Caller Method to Retrieve Data for TargetPriceGadget(ConsensusEstimates)
         /// </summary>
         /// <param name="callback"></param>
-        public void RetrieveTargetPriceData(Action<List<TargetPriceCEData>> callback)
+        public void RetrieveTargetPriceData(EntitySelectionData entitySelectionData,Action<List<TargetPriceCEData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveTargetPriceDataAsync();
+            client.RetrieveTargetPriceDataAsync(entitySelectionData);
             client.RetrieveTargetPriceDataCompleted += (se, e) =>
             {
                 if (callback != null)

@@ -66,13 +66,15 @@
   </xs:element>
   <xs:element name="RetrieveTargetPriceData">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q11:EntitySelectionData" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveTargetPriceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveTargetPriceDataResult" nillable="true" type="q11:ArrayOfTargetPriceCEData" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveTargetPriceDataResult" nillable="true" type="q12:ArrayOfTargetPriceCEData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
