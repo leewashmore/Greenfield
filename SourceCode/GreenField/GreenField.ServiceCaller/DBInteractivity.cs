@@ -13,6 +13,7 @@ using System.ServiceModel;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using GreenField.DataContracts.DataContracts;
 
 
 namespace GreenField.ServiceCaller
@@ -2335,6 +2336,47 @@ namespace GreenField.ServiceCaller
 
 
 
+        #endregion
+
+        #region Internal Research
+
+        public void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData,Action<List<ConsensusEstimatesSummaryData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveConsensusEstimatesSummaryDataAsync(entitySelectionData);
+            client.RetrieveConsensusEstimatesSummaryDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+            };
+        }
         #endregion
 
 

@@ -59,6 +59,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\ChartExtensionData.cs">
       <Link>DataContracts\ChartExtensionData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimatesSummaryData.cs">
+      <Link>DataContracts\ConsensusEstimatesSummaryData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\CountrySelectionData.cs">
       <Link>DataContracts\CountrySelectionData.cs</Link>
     </Compile>

@@ -9,6 +9,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
 
 
 
@@ -186,15 +187,20 @@ namespace GreenField.ServiceCaller
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
-        #region ConsensusEstimatesGadgets
 
+        #region ConsensusEstimatesGadgets
+        
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 
         void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback);
 
         #endregion
 
+        #endregion
 
+        #region Internal Research
+
+        void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
     }

@@ -9,6 +9,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ExternalResearchOperations_RetrieveIssuerId_InputMessage">
@@ -56,6 +57,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveTargetPriceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesSummaryData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesSummaryDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -81,6 +91,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceData" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataResponse" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveConsensusEstimatesSummaryData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDataResponse" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -135,6 +150,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveTargetPriceData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveConsensusEstimatesSummaryData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -397,6 +397,15 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveTargetPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> EndRetrieveTargetPriceData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDa" +
+            "ta", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDa" +
+            "taResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDa" +
+            "taServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveConsensusEstimatesSummaryData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> EndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -500,6 +509,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveConsensusEstimatesSummaryDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveConsensusEstimatesSummaryDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -531,6 +559,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private EndOperationDelegate onEndRetrieveTargetPriceDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveTargetPriceDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveConsensusEstimatesSummaryDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveConsensusEstimatesSummaryDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveConsensusEstimatesSummaryDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -594,6 +628,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveBasicDataCompletedEventArgs> RetrieveBasicDataCompleted;
         
         public event System.EventHandler<RetrieveTargetPriceDataCompletedEventArgs> RetrieveTargetPriceDataCompleted;
+        
+        public event System.EventHandler<RetrieveConsensusEstimatesSummaryDataCompletedEventArgs> RetrieveConsensusEstimatesSummaryDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -839,6 +875,52 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         entitySelectionData}, this.onEndRetrieveTargetPriceDataDelegate, this.onRetrieveTargetPriceDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimatesSummaryData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveConsensusEstimatesSummaryData(entityIdentifier, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveConsensusEstimatesSummaryData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveConsensusEstimatesSummaryData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entityIdentifier = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveConsensusEstimatesSummaryData(entityIdentifier, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveConsensusEstimatesSummaryData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveConsensusEstimatesSummaryDataCompleted(object state) {
+            if ((this.RetrieveConsensusEstimatesSummaryDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveConsensusEstimatesSummaryDataCompleted(this, new RetrieveConsensusEstimatesSummaryDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveConsensusEstimatesSummaryDataAsync(GreenField.DataContracts.EntitySelectionData entityIdentifier) {
+            this.RetrieveConsensusEstimatesSummaryDataAsync(entityIdentifier, null);
+        }
+        
+        public void RetrieveConsensusEstimatesSummaryDataAsync(GreenField.DataContracts.EntitySelectionData entityIdentifier, object userState) {
+            if ((this.onBeginRetrieveConsensusEstimatesSummaryDataDelegate == null)) {
+                this.onBeginRetrieveConsensusEstimatesSummaryDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveConsensusEstimatesSummaryData);
+            }
+            if ((this.onEndRetrieveConsensusEstimatesSummaryDataDelegate == null)) {
+                this.onEndRetrieveConsensusEstimatesSummaryDataDelegate = new EndOperationDelegate(this.OnEndRetrieveConsensusEstimatesSummaryData);
+            }
+            if ((this.onRetrieveConsensusEstimatesSummaryDataCompletedDelegate == null)) {
+                this.onRetrieveConsensusEstimatesSummaryDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveConsensusEstimatesSummaryDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveConsensusEstimatesSummaryDataDelegate, new object[] {
+                        entityIdentifier}, this.onEndRetrieveConsensusEstimatesSummaryDataDelegate, this.onRetrieveConsensusEstimatesSummaryDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -982,6 +1064,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> EndRetrieveTargetPriceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData>)(base.EndInvoke("RetrieveTargetPriceData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveConsensusEstimatesSummaryData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entityIdentifier;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveConsensusEstimatesSummaryData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> EndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>)(base.EndInvoke("RetrieveConsensusEstimatesSummaryData", _args, result)));
                 return _result;
             }
         }

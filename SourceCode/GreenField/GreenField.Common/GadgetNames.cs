@@ -199,6 +199,7 @@ namespace GreenField.Common
         public static string BENCHMARK_INDEX_CONSTITUENTS = "Index Constituents"; 
         #endregion
         #endregion
+
         #region Screening
         #region Quarterly Comparison
         public static string QUARTERLY_RESULTS_COMPARISON = "Quarterly Results Comparison"; 

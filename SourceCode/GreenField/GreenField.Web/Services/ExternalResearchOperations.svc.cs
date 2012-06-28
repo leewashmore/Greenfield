@@ -15,6 +15,7 @@ using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using GreenField.Web.DataContracts;
 using System.Data;
+using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -292,9 +293,28 @@ namespace GreenField.Web.Services
             
             return result;
         }
+        #endregion
 
-
-
+        #region Consensus Estimates Summary Gadget
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData(EntitySelectionData entityIdentifier)
+        {
+            try
+            {
+            List<ConsensusEstimatesSummaryData> result = new List<ConsensusEstimatesSummaryData>();
+            DimensionEntitiesService.Entities entity = DimensionEntity;
+            ExternalResearchEntities research = new ExternalResearchEntities();
+            result = research.ExecuteStoreQuery<ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+            return result;   
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         #endregion
 
     }
