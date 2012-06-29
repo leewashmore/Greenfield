@@ -24,7 +24,7 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_GROWTH = "Growth Information External Research 4.1.3.9 / 4.4.3";
         public static string BENCHMARK_RELATIVE_PERFORMANCE = "Relative Performance Benchmarks 4.1.1.5";
         public static string EXTERNAL_RESEARCH_MARGINS = "Margins Information External Research 4.1.3.2 / 4.4.3";
-        public static string EXTERNAL_RESEARCH_BASIC_DATA = "Basic Data Information External Research 4.1.4.1";
+        public static string EXTERNAL_RESEARCH_BASIC_DATA = "Basic Data";// Information External Research 4.1.4.1";
         public static string EXTERNAL_RESEARCH_LEVERAGE_CAPITAL_FINANCIAL_STRENGTH = "Leverage/Capital Structure / Financial Strength External Research 4.1.3.3 / 4.1.3.4 / 4.4.3";
         public static string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION = "Fair Value Composition 4.2.2";
         public static string EXTERNAL_RESEARCH_ASSET_QUALITY_CASH_FLOW = "Asset Quality / Cash Flow Information External Research 4.1.3.5 / 4.1.3.6 / 4.4.3";
@@ -114,6 +114,13 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL = "Historical Valuation Charts Industrial External Research 4.4.1";
         public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE = "Historical Valuation Charts Insurance External Research 4.4.1";
         public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY = "Historical Valuation Charts Utility External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE = "Historical Valuation Charts P/Revenue External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA = "Historical Valuation Charts EV/EBITDA External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE = "Historical Valuation Charts P/CE External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE = "Historical Valuation Charts P/E External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV = "Historical Valuation Charts P/BV External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield = "Historical Valuation Charts FCF Yield External Research 4.4.1";
+        public static string EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield = "Historical Valuation Charts Dividend Yield External Research 4.4.1";
         #endregion
         #endregion
 
@@ -150,7 +157,7 @@ namespace GreenField.Common
         #endregion
 
         #region Commodities Summary
-        public static string MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN = "Commodity Index Returns Models, FX and Macro Economic Data 4.2.2"; 
+        public static string MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN = "Commodity Index ";//Returns Models, FX and Macro Economic Data 4.2.2"; 
         #endregion
         #endregion
 
