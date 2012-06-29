@@ -230,6 +230,36 @@
       [tblCETargetPrice].[Currency] AS [Currency]
       FROM [dbo].[tblCETargetPrice] AS [tblCETargetPrice]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="tblCompanyInfo" EntityType="ExternalResearchModel.Store.tblCompanyInfo" store:Type="Tables" store:Schema="dbo" store:Name="tblCompanyInfo">
+            <DefiningQuery>SELECT 
+      [tblCompanyInfo].[XRef] AS [XRef], 
+      [tblCompanyInfo].[ReportNumber] AS [ReportNumber], 
+      [tblCompanyInfo].[Name] AS [Name], 
+      [tblCompanyInfo].[Country] AS [Country], 
+      [tblCompanyInfo].[Ticker] AS [Ticker], 
+      [tblCompanyInfo].[CUSIP] AS [CUSIP], 
+      [tblCompanyInfo].[ISIN] AS [ISIN], 
+      [tblCompanyInfo].[SEDOL] AS [SEDOL], 
+      [tblCompanyInfo].[VALOREN] AS [VALOREN], 
+      [tblCompanyInfo].[RIC] AS [RIC], 
+      [tblCompanyInfo].[DisplayRIC] AS [DisplayRIC], 
+      [tblCompanyInfo].[RecentSplitDate] AS [RecentSplitDate], 
+      [tblCompanyInfo].[RecentCapitalAdjDate] AS [RecentCapitalAdjDate], 
+      [tblCompanyInfo].[Consensus] AS [Consensus], 
+      [tblCompanyInfo].[Estimate] AS [Estimate], 
+      [tblCompanyInfo].[Earnings] AS [Earnings], 
+      [tblCompanyInfo].[Periodicity] AS [Periodicity], 
+      [tblCompanyInfo].[CurrentPeriod] AS [CurrentPeriod], 
+      [tblCompanyInfo].[pEndDate] AS [pEndDate], 
+      [tblCompanyInfo].[fYearEnd] AS [fYearEnd], 
+      [tblCompanyInfo].[fPeriodEnd] AS [fPeriodEnd], 
+      [tblCompanyInfo].[CurrentPrice] AS [CurrentPrice], 
+      [tblCompanyInfo].[CurrentPriceDate] AS [CurrentPriceDate], 
+      [tblCompanyInfo].[Currency] AS [Currency], 
+      [tblCompanyInfo].[OutstandingShares] AS [OutstandingShares], 
+      [tblCompanyInfo].[Active] AS [Active]
+      FROM [dbo].[tblCompanyInfo] AS [tblCompanyInfo]</DefiningQuery>
+          </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_LatestData.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -628,6 +658,40 @@
           <Property Name="Median" Type="real" />
           <Property Name="Currency" Type="char" MaxLength="3" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_LatestData.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="tblCompanyInfo">
+          <Key>
+            <PropertyRef Name="XRef" />
+          </Key>
+          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
+          <Property Name="ReportNumber" Type="varchar" MaxLength="5" />
+          <Property Name="Name" Type="varchar" MaxLength="80" />
+          <Property Name="Country" Type="char" MaxLength="3" />
+          <Property Name="Ticker" Type="varchar" MaxLength="15" />
+          <Property Name="CUSIP" Type="varchar" MaxLength="12" />
+          <Property Name="ISIN" Type="varchar" MaxLength="12" />
+          <Property Name="SEDOL" Type="varchar" MaxLength="12" />
+          <Property Name="VALOREN" Type="varchar" MaxLength="12" />
+          <Property Name="RIC" Type="varchar" MaxLength="21" />
+          <Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
+          <Property Name="RecentSplitDate" Type="datetime" />
+          <Property Name="RecentCapitalAdjDate" Type="datetime" />
+          <Property Name="Consensus" Type="varchar" MaxLength="20" />
+          <Property Name="Estimate" Type="varchar" MaxLength="10" />
+          <Property Name="Earnings" Type="varchar" MaxLength="10" />
+          <Property Name="Periodicity" Type="varchar" MaxLength="2" />
+          <Property Name="CurrentPeriod" Type="char" MaxLength="2" />
+          <Property Name="pEndDate" Type="smalldatetime" />
+          <Property Name="fYearEnd" Type="char" MaxLength="6" />
+          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
+          <Property Name="CurrentPrice" Type="real" />
+          <Property Name="CurrentPriceDate" Type="smalldatetime" />
+          <Property Name="Currency" Type="char" MaxLength="3" />
+          <Property Name="OutstandingShares" Type="decimal" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
@@ -639,15 +703,26 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
-        <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SecurityID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetConsensusEstimatesSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Security" Type="varchar" Mode="In" />
+        <Function Name="GetConsensusEstimateDetailedData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Issuer_Id" Type="nvarchar" Mode="In" />
+          <Parameter Name="periodType" Type="nvarchar" Mode="In" />
+          <Parameter Name="currency" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
+        <!--Errors Found During Generation:
+      warning 6013: The table/view 'AIMS_LatestData.dbo.tblConsensusRecommendation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblConsensusRecommendation">
+        <Property Name="XRef" Type="nvarchar" MaxLength="9" />
+        <Property Name="StartDate" Type="datetime" />
+        <Property Name="EndDate" Type="datetime" />
+        <Property Name="OriginalDate" Type="datetime" />
+        <Property Name="ExpirationDate" Type="datetime" />
+        <Property Name="MeanRating" Type="real" />
+        <Property Name="MeanLabel" Type="nvarchar" MaxLength="20" />
+      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -681,12 +756,15 @@
             <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
-          <FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-          <Parameter Name="XRef" Mode="In" Type="String" />
+          <FunctionImport Name="GetConsensusEstimateDetailedData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailedData)">
+            <Parameter Name="Issuer_Id" Mode="In" Type="String" />
+            <Parameter Name="periodType" Mode="In" Type="String" />
+            <Parameter Name="currency" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusSummaryData)">
-          <Parameter Name="Security" Mode="In" Type="String" />
+          <EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
+          <EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
+          <FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
+            <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">
@@ -1031,6 +1109,26 @@
           <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
           <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <ComplexType Name="ConsensusEstimateDetailedData">
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="ESTIMATE_TYPE" Nullable="false" MaxLength="8" />
+          <Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
+          <Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
+          <Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
+        </ComplexType>
         <EntityType Name="tblCETargetPrice">
           <Key>
             <PropertyRef Name="XRef" />
@@ -1051,6 +1149,37 @@
           <Property Type="Single" Name="Median" />
           <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
         </EntityType>
+        <EntityType Name="tblCompanyInfo">
+          <Key>
+            <PropertyRef Name="XRef" />
+          </Key>
+          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ReportNumber" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Name" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Country" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="Ticker" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CUSIP" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISIN" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SEDOL" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VALOREN" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="RIC" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DisplayRIC" MaxLength="21" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="RecentSplitDate" />
+          <Property Type="DateTime" Name="RecentCapitalAdjDate" />
+          <Property Type="String" Name="Consensus" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Estimate" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Earnings" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Periodicity" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CurrentPeriod" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="pEndDate" />
+          <Property Type="String" Name="fYearEnd" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Type="Single" Name="CurrentPrice" />
+          <Property Type="DateTime" Name="CurrentPriceDate" />
+          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="OutstandingShares" Precision="18" Scale="0" />
+          <Property Type="Boolean" Name="Active" />
+        </EntityType>
         <ComplexType Name="GetTargetPrice_Result">
           <Property Type="String" Name="Xref" Nullable="false" MaxLength="9" />
           <Property Type="String" Name="Ticker" Nullable="true" MaxLength="15" />
@@ -1065,14 +1194,6 @@
           <Property Type="Single" Name="Low" Nullable="true" />
           <Property Type="Single" Name="StdDev" Nullable="true" />
           <Property Type="String" Name="MeanLabel" Nullable="true" MaxLength="20" />
-        </ComplexType>
-        <ComplexType Name="ConsensusSummaryData" >
-          <Property Type="String" Name="NetIncome" Nullable="true" />
-          <Property Type="String" Name="YEAR1" Nullable="true" />
-          <Property Type="String" Name="YEAR2" Nullable="true" />
-          <Property Type="String" Name="YEAR3" Nullable="true" />
-          <Property Type="String" Name="YEAR4" Nullable="true" />
-          <Property Type="String" Name="YEAR5" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1272,6 +1393,30 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetConsensusEstimateDetailedData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimateDetailedData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateDetailedData">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="ESTIMATE_TYPE" ColumnName="ESTIMATE_TYPE" />
+                <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
+                <ScalarProperty Name="LOW" ColumnName="LOW" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="tblCETargetPrices">
             <EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
               <MappingFragment StoreEntitySet="tblCETargetPrice">
@@ -1287,6 +1432,38 @@
                 <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="XRef" ColumnName="XRef" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCompanyInfoes">
+            <EntityTypeMapping TypeName="ExternalResearchModel.tblCompanyInfo">
+              <MappingFragment StoreEntitySet="tblCompanyInfo">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+                <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+                <ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
+                <ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
+                <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+                <ScalarProperty Name="Earnings" ColumnName="Earnings" />
+                <ScalarProperty Name="Estimate" ColumnName="Estimate" />
+                <ScalarProperty Name="Consensus" ColumnName="Consensus" />
+                <ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
+                <ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
+                <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
+                <ScalarProperty Name="RIC" ColumnName="RIC" />
+                <ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
+                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
                 <ScalarProperty Name="XRef" ColumnName="XRef" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1310,18 +1487,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusSummaryData">
-                <ScalarProperty Name="NetIncome" ColumnName="NetIncome" />
-                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
-                <ScalarProperty Name="YEAR2" ColumnName="YEAR2" />
-                <ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
-                <ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
-                <ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1342,7 +1507,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="ExternalResearchDataModel" ZoomLevel="99">
+      <Diagram Name="ExternalResearchDataModel">
         <EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="2.75" PointY="0.75" Height="2.3648893229166665" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
@@ -1361,6 +1526,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="ExternalResearchModel.tblCETargetPrice" Width="1.5" PointX="7.375" PointY="10.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.tblCompanyInfo" Width="1.5" PointX="9.375" PointY="10.75" Height="6.0186165364583317" />
       </Diagram>
     </Diagrams>
   </Designer>

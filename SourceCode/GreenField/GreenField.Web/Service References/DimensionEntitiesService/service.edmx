@@ -6,6 +6,7 @@
         <EntitySet Name="GF_CTY_CUR" EntityType="Model.GF_CTY_CUR" />
         <EntitySet Name="GF_EQUITYKEYS" EntityType="Model.GF_EQUITYKEYS" />
         <EntitySet Name="GF_EXTRACT_STATS" EntityType="Model.GF_EXTRACT_STATS" />
+        <EntitySet Name="GF_FX_FORWARD_RATES_TICS" EntityType="Model.GF_FX_FORWARD_RATES_TICS" />
         <EntitySet Name="GF_PERF_DAILY_ATTRIB_DIST_BM" EntityType="Model.GF_PERF_DAILY_ATTRIB_DIST_BM" />
         <EntitySet Name="GF_PERF_DAILY_ATTRIBUTION" EntityType="Model.GF_PERF_DAILY_ATTRIBUTION" />
         <EntitySet Name="GF_PERF_TOPLEVELMONTH" EntityType="Model.GF_PERF_TOPLEVELMONTH" />
@@ -74,6 +75,7 @@
         <Property Name="CURRENCY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="COUNTRY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
         <Property Name="COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CTY_CTYFC1" Type="Edm.String" Nullable="true" MaxLength="32" Unicode="false" FixedLength="false" />
       </EntityType>
       <EntityType Name="GF_EQUITYKEYS">
         <Key>
@@ -105,6 +107,39 @@
         <Property Name="EXTRACT_NAME" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
         <Property Name="MAX_DATE" Type="Edm.DateTime" Nullable="true" />
         <Property Name="ROW_COUNT" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_FX_FORWARD_RATES_TICS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="CURRENCY_CROSS" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CROSS_INVERTED" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="false" FixedLength="false" />
+        <Property Name="FXRATES_PRICE_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="FX_SPOT_RATE_INVERTED" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="FX_SPOT_RATE_NON_INVERTED" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_1W" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_1M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_2M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_3M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_6M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_9M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_12M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_2Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_3Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_4Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_5Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_1W" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_1M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_2M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_3M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_6M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_9M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_12M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_2Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_3Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_4Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_5Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
       </EntityType>
       <EntityType Name="GF_PERF_DAILY_ATTRIB_DIST_BM">
         <Key>

@@ -480,8 +480,11 @@ namespace GreenField.Gadgets.ViewModels
 
         private void RetrieveFinancialStatementData()
         {
-            _dbInteractivity.RetrieveFinancialStatementData(IssuerReferenceInfo.IssuerId, SelectedDataSource, SelectedPeriodType, SelectedFiscalType,
-                        FinancialStatementStatementType.BALANCE_SHEET, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
+            if (IssuerReferenceInfo != null)
+            {
+                _dbInteractivity.RetrieveFinancialStatementData(IssuerReferenceInfo.IssuerId, SelectedDataSource, SelectedPeriodType, SelectedFiscalType,
+                            FinancialStatementStatementType.BALANCE_SHEET, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
+            }
         }
 
         public void SetFinancialStatementDisplayInfo()

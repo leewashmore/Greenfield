@@ -220,6 +220,9 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

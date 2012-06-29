@@ -47,15 +47,6 @@ namespace GreenField.Gadgets.Views
                     this.btnExportExcel.IsEnabled = true;
                 }
             };
-
-            //this.rbtnQuarterly.MouseEnter += PeriodColumns.RadRadioButton_MouseEnter;
-            //this.rbtnYearly.MouseEnter += PeriodColumns.RadRadioButton_MouseEnter;
-
-            //this.rbtnQuarterly.MouseLeave += PeriodColumns.RadRadioButton_MouseLeave;
-            //this.rbtnYearly.MouseLeave += PeriodColumns.RadRadioButton_MouseLeave;
-
-            //this.rbtnQuarterly.Checked += PeriodColumns.RadRadioButton_Checked;
-            //this.rbtnYearly.Checked += PeriodColumns.RadRadioButton_Checked;
         }
         #endregion
 

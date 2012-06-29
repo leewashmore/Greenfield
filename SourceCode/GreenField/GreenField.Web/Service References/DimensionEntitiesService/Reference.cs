@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 28-Jun-12 12:17:15 PM
+// Generation date: 6/28/2012 5:36:24 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -126,6 +126,23 @@ namespace GreenField.Web.DimensionEntitiesService
         }
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_EXTRACT_STATS> _GF_EXTRACT_STATS;
+        /// <summary>
+        /// There are no comments for GF_FX_FORWARD_RATES_TICS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_FX_FORWARD_RATES_TICS> GF_FX_FORWARD_RATES_TICS
+        {
+            get
+            {
+                if ((this._GF_FX_FORWARD_RATES_TICS == null))
+                {
+                    this._GF_FX_FORWARD_RATES_TICS = base.CreateQuery<GF_FX_FORWARD_RATES_TICS>("GF_FX_FORWARD_RATES_TICS");
+                }
+                return this._GF_FX_FORWARD_RATES_TICS;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_FX_FORWARD_RATES_TICS> _GF_FX_FORWARD_RATES_TICS;
         /// <summary>
         /// There are no comments for GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.
         /// </summary>
@@ -378,6 +395,14 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_EXTRACT_STATS(GF_EXTRACT_STATS gF_EXTRACT_STATS)
         {
             base.AddObject("GF_EXTRACT_STATS", gF_EXTRACT_STATS);
+        }
+        /// <summary>
+        /// There are no comments for GF_FX_FORWARD_RATES_TICS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_FX_FORWARD_RATES_TICS(GF_FX_FORWARD_RATES_TICS gF_FX_FORWARD_RATES_TICS)
+        {
+            base.AddObject("GF_FX_FORWARD_RATES_TICS", gF_FX_FORWARD_RATES_TICS);
         }
         /// <summary>
         /// There are no comments for GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.
@@ -1470,6 +1495,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _COUNTRY_NAME;
         partial void OnCOUNTRY_NAMEChanging(string value);
         partial void OnCOUNTRY_NAMEChanged();
+        /// <summary>
+        /// There are no comments for Property CTY_CTYFC1 in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CTY_CTYFC1
+        {
+            get
+            {
+                return this._CTY_CTYFC1;
+            }
+            set
+            {
+                this.OnCTY_CTYFC1Changing(value);
+                this._CTY_CTYFC1 = value;
+                this.OnCTY_CTYFC1Changed();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CTY_CTYFC1;
+        partial void OnCTY_CTYFC1Changing(string value);
+        partial void OnCTY_CTYFC1Changed();
     }
     /// <summary>
     /// There are no comments for Model.GF_EQUITYKEYS in the schema.
@@ -1953,6 +1999,615 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _ROW_COUNT;
         partial void OnROW_COUNTChanging(global::System.Nullable<decimal> value);
         partial void OnROW_COUNTChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_FX_FORWARD_RATES_TICS in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// GF_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
+    public partial class GF_FX_FORWARD_RATES_TICS
+    {
+        /// <summary>
+        /// Create a new GF_FX_FORWARD_RATES_TICS object.
+        /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_FX_FORWARD_RATES_TICS CreateGF_FX_FORWARD_RATES_TICS(decimal gF_ID)
+        {
+            GF_FX_FORWARD_RATES_TICS gF_FX_FORWARD_RATES_TICS = new GF_FX_FORWARD_RATES_TICS();
+            gF_FX_FORWARD_RATES_TICS.GF_ID = gF_ID;
+            return gF_FX_FORWARD_RATES_TICS;
+        }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
+        /// <summary>
+        /// There are no comments for Property CURRENCY_CROSS in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CURRENCY_CROSS
+        {
+            get
+            {
+                return this._CURRENCY_CROSS;
+            }
+            set
+            {
+                this.OnCURRENCY_CROSSChanging(value);
+                this._CURRENCY_CROSS = value;
+                this.OnCURRENCY_CROSSChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CURRENCY_CROSS;
+        partial void OnCURRENCY_CROSSChanging(string value);
+        partial void OnCURRENCY_CROSSChanged();
+        /// <summary>
+        /// There are no comments for Property CROSS_INVERTED in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CROSS_INVERTED
+        {
+            get
+            {
+                return this._CROSS_INVERTED;
+            }
+            set
+            {
+                this.OnCROSS_INVERTEDChanging(value);
+                this._CROSS_INVERTED = value;
+                this.OnCROSS_INVERTEDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CROSS_INVERTED;
+        partial void OnCROSS_INVERTEDChanging(string value);
+        partial void OnCROSS_INVERTEDChanged();
+        /// <summary>
+        /// There are no comments for Property FXRATES_PRICE_DATE in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<global::System.DateTime> FXRATES_PRICE_DATE
+        {
+            get
+            {
+                return this._FXRATES_PRICE_DATE;
+            }
+            set
+            {
+                this.OnFXRATES_PRICE_DATEChanging(value);
+                this._FXRATES_PRICE_DATE = value;
+                this.OnFXRATES_PRICE_DATEChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<global::System.DateTime> _FXRATES_PRICE_DATE;
+        partial void OnFXRATES_PRICE_DATEChanging(global::System.Nullable<global::System.DateTime> value);
+        partial void OnFXRATES_PRICE_DATEChanged();
+        /// <summary>
+        /// There are no comments for Property FX_SPOT_RATE_INVERTED in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> FX_SPOT_RATE_INVERTED
+        {
+            get
+            {
+                return this._FX_SPOT_RATE_INVERTED;
+            }
+            set
+            {
+                this.OnFX_SPOT_RATE_INVERTEDChanging(value);
+                this._FX_SPOT_RATE_INVERTED = value;
+                this.OnFX_SPOT_RATE_INVERTEDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _FX_SPOT_RATE_INVERTED;
+        partial void OnFX_SPOT_RATE_INVERTEDChanging(global::System.Nullable<decimal> value);
+        partial void OnFX_SPOT_RATE_INVERTEDChanged();
+        /// <summary>
+        /// There are no comments for Property FX_SPOT_RATE_NON_INVERTED in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> FX_SPOT_RATE_NON_INVERTED
+        {
+            get
+            {
+                return this._FX_SPOT_RATE_NON_INVERTED;
+            }
+            set
+            {
+                this.OnFX_SPOT_RATE_NON_INVERTEDChanging(value);
+                this._FX_SPOT_RATE_NON_INVERTED = value;
+                this.OnFX_SPOT_RATE_NON_INVERTEDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _FX_SPOT_RATE_NON_INVERTED;
+        partial void OnFX_SPOT_RATE_NON_INVERTEDChanging(global::System.Nullable<decimal> value);
+        partial void OnFX_SPOT_RATE_NON_INVERTEDChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_1W
+        {
+            get
+            {
+                return this._INVERTED_FWD_1W;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_1WChanging(value);
+                this._INVERTED_FWD_1W = value;
+                this.OnINVERTED_FWD_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_1W;
+        partial void OnINVERTED_FWD_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_1WChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_1M
+        {
+            get
+            {
+                return this._INVERTED_FWD_1M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_1MChanging(value);
+                this._INVERTED_FWD_1M = value;
+                this.OnINVERTED_FWD_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_1M;
+        partial void OnINVERTED_FWD_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_1MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_2M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_2M
+        {
+            get
+            {
+                return this._INVERTED_FWD_2M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_2MChanging(value);
+                this._INVERTED_FWD_2M = value;
+                this.OnINVERTED_FWD_2MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_2M;
+        partial void OnINVERTED_FWD_2MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_2MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_3M
+        {
+            get
+            {
+                return this._INVERTED_FWD_3M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_3MChanging(value);
+                this._INVERTED_FWD_3M = value;
+                this.OnINVERTED_FWD_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_3M;
+        partial void OnINVERTED_FWD_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_3MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_6M
+        {
+            get
+            {
+                return this._INVERTED_FWD_6M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_6MChanging(value);
+                this._INVERTED_FWD_6M = value;
+                this.OnINVERTED_FWD_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_6M;
+        partial void OnINVERTED_FWD_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_6MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_9M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_9M
+        {
+            get
+            {
+                return this._INVERTED_FWD_9M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_9MChanging(value);
+                this._INVERTED_FWD_9M = value;
+                this.OnINVERTED_FWD_9MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_9M;
+        partial void OnINVERTED_FWD_9MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_9MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_12M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_12M
+        {
+            get
+            {
+                return this._INVERTED_FWD_12M;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_12MChanging(value);
+                this._INVERTED_FWD_12M = value;
+                this.OnINVERTED_FWD_12MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_12M;
+        partial void OnINVERTED_FWD_12MChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_12MChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_2Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_2Y
+        {
+            get
+            {
+                return this._INVERTED_FWD_2Y;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_2YChanging(value);
+                this._INVERTED_FWD_2Y = value;
+                this.OnINVERTED_FWD_2YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_2Y;
+        partial void OnINVERTED_FWD_2YChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_2YChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_3Y
+        {
+            get
+            {
+                return this._INVERTED_FWD_3Y;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_3YChanging(value);
+                this._INVERTED_FWD_3Y = value;
+                this.OnINVERTED_FWD_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_3Y;
+        partial void OnINVERTED_FWD_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_3YChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_4Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_4Y
+        {
+            get
+            {
+                return this._INVERTED_FWD_4Y;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_4YChanging(value);
+                this._INVERTED_FWD_4Y = value;
+                this.OnINVERTED_FWD_4YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_4Y;
+        partial void OnINVERTED_FWD_4YChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_4YChanged();
+        /// <summary>
+        /// There are no comments for Property INVERTED_FWD_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> INVERTED_FWD_5Y
+        {
+            get
+            {
+                return this._INVERTED_FWD_5Y;
+            }
+            set
+            {
+                this.OnINVERTED_FWD_5YChanging(value);
+                this._INVERTED_FWD_5Y = value;
+                this.OnINVERTED_FWD_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _INVERTED_FWD_5Y;
+        partial void OnINVERTED_FWD_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnINVERTED_FWD_5YChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_1W in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_1W
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_1W;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_1WChanging(value);
+                this._NON_INVERTED_FWD_1W = value;
+                this.OnNON_INVERTED_FWD_1WChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_1W;
+        partial void OnNON_INVERTED_FWD_1WChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_1WChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_1M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_1M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_1M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_1MChanging(value);
+                this._NON_INVERTED_FWD_1M = value;
+                this.OnNON_INVERTED_FWD_1MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_1M;
+        partial void OnNON_INVERTED_FWD_1MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_1MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_2M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_2M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_2M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_2MChanging(value);
+                this._NON_INVERTED_FWD_2M = value;
+                this.OnNON_INVERTED_FWD_2MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_2M;
+        partial void OnNON_INVERTED_FWD_2MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_2MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_3M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_3M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_3M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_3MChanging(value);
+                this._NON_INVERTED_FWD_3M = value;
+                this.OnNON_INVERTED_FWD_3MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_3M;
+        partial void OnNON_INVERTED_FWD_3MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_3MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_6M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_6M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_6M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_6MChanging(value);
+                this._NON_INVERTED_FWD_6M = value;
+                this.OnNON_INVERTED_FWD_6MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_6M;
+        partial void OnNON_INVERTED_FWD_6MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_6MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_9M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_9M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_9M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_9MChanging(value);
+                this._NON_INVERTED_FWD_9M = value;
+                this.OnNON_INVERTED_FWD_9MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_9M;
+        partial void OnNON_INVERTED_FWD_9MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_9MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_12M in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_12M
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_12M;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_12MChanging(value);
+                this._NON_INVERTED_FWD_12M = value;
+                this.OnNON_INVERTED_FWD_12MChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_12M;
+        partial void OnNON_INVERTED_FWD_12MChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_12MChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_2Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_2Y
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_2Y;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_2YChanging(value);
+                this._NON_INVERTED_FWD_2Y = value;
+                this.OnNON_INVERTED_FWD_2YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_2Y;
+        partial void OnNON_INVERTED_FWD_2YChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_2YChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_3Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_3Y
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_3Y;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_3YChanging(value);
+                this._NON_INVERTED_FWD_3Y = value;
+                this.OnNON_INVERTED_FWD_3YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_3Y;
+        partial void OnNON_INVERTED_FWD_3YChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_3YChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_4Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_4Y
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_4Y;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_4YChanging(value);
+                this._NON_INVERTED_FWD_4Y = value;
+                this.OnNON_INVERTED_FWD_4YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_4Y;
+        partial void OnNON_INVERTED_FWD_4YChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_4YChanged();
+        /// <summary>
+        /// There are no comments for Property NON_INVERTED_FWD_5Y in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> NON_INVERTED_FWD_5Y
+        {
+            get
+            {
+                return this._NON_INVERTED_FWD_5Y;
+            }
+            set
+            {
+                this.OnNON_INVERTED_FWD_5YChanging(value);
+                this._NON_INVERTED_FWD_5Y = value;
+                this.OnNON_INVERTED_FWD_5YChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _NON_INVERTED_FWD_5Y;
+        partial void OnNON_INVERTED_FWD_5YChanging(global::System.Nullable<decimal> value);
+        partial void OnNON_INVERTED_FWD_5YChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_PERF_DAILY_ATTRIB_DIST_BM in the schema.

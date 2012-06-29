@@ -41,7 +41,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 periodColumnUpdationEvent(e);
             }
-        } 
+        }
         #endregion
 
         #region Period Column Navigation Event
@@ -68,7 +68,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 periodColumnNavigationEvent(e);
             }
-        } 
+        }
         #endregion
 
         /// <summary>
@@ -139,25 +139,25 @@ namespace GreenField.Gadgets.Helpers
             return periodRecord;
         }
 
-        public static List<String> SetColumnHeaders(PeriodRecord periodRecord = null)
+        public static List<String> SetColumnHeaders(PeriodRecord periodRecord = null, bool showHistorical = true)
         {
             if (periodRecord == null)
                 periodRecord = SetPeriodRecord();
-            
+
             List<String> periodColumnHeader = new List<string>();
 
-            periodColumnHeader.Add(periodRecord.YearOne.ToString() + " " + (periodRecord.YearOneIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.YearTwo.ToString() + " " + (periodRecord.YearTwoIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.YearThree.ToString() + " " + (periodRecord.YearThreeIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.YearFour.ToString() + " " + (periodRecord.YearFourIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.YearFive.ToString() + " " + (periodRecord.YearFiveIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.YearSix.ToString() + " " + (periodRecord.YearSixIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterOneYear.ToString() + " Q" + periodRecord.QuarterOneQuarter.ToString() + " " + (periodRecord.QuarterOneIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterTwoYear.ToString() + " Q" + periodRecord.QuarterTwoQuarter.ToString() + " " + (periodRecord.QuarterTwoIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterThreeYear.ToString() + " Q" + periodRecord.QuarterThreeQuarter.ToString() + " " + (periodRecord.QuarterThreeIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterFourYear.ToString() + " Q" + periodRecord.QuarterFourQuarter.ToString() + " " + (periodRecord.QuarterFourIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterFiveYear.ToString() + " Q" + periodRecord.QuarterFiveQuarter.ToString() + " " + (periodRecord.QuarterFiveIsHistorical ? "A" : "E"));
-            periodColumnHeader.Add(periodRecord.QuarterSixYear.ToString() + " Q" + periodRecord.QuarterSixQuarter.ToString() + " " + (periodRecord.QuarterSixIsHistorical ? "A" : "E"));
+            periodColumnHeader.Add(periodRecord.YearOne.ToString() + (showHistorical ? " " + (periodRecord.YearOneIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.YearTwo.ToString() + (showHistorical ? " " + (periodRecord.YearTwoIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.YearThree.ToString() + (showHistorical ? " " + (periodRecord.YearThreeIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.YearFour.ToString() + (showHistorical ? " " + (periodRecord.YearFourIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.YearFive.ToString() + (showHistorical ? " " + (periodRecord.YearFiveIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.YearSix.ToString() + (showHistorical ? " " + (periodRecord.YearSixIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterOneYear.ToString() + " Q" + periodRecord.QuarterOneQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterOneIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterTwoYear.ToString() + " Q" + periodRecord.QuarterTwoQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterTwoIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterThreeYear.ToString() + " Q" + periodRecord.QuarterThreeQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterThreeIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterFourYear.ToString() + " Q" + periodRecord.QuarterFourQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterFourIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterFiveYear.ToString() + " Q" + periodRecord.QuarterFiveQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterFiveIsHistorical ? "A" : "E") : ""));
+            periodColumnHeader.Add(periodRecord.QuarterSixYear.ToString() + " Q" + periodRecord.QuarterSixQuarter.ToString() + (showHistorical ? " " + (periodRecord.QuarterSixIsHistorical ? "A" : "E") : ""));
 
             return periodColumnHeader;
         }
@@ -166,7 +166,8 @@ namespace GreenField.Gadgets.Helpers
         {
             List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
             PeriodRecord period = periodRecordInfo;
-            
+
+            #region Financial Statements
             if (periodColumnInfo is List<FinancialStatementData>)
             {
                 List<FinancialStatementData> financialStatementInfo = (periodColumnInfo as List<FinancialStatementData>)
@@ -182,7 +183,7 @@ namespace GreenField.Gadgets.Helpers
                     FinancialStatementData recordData = financialStatementInfo.Where(record => record.DATA_DESC == dataDesc).FirstOrDefault();
 
                     Int32 dataId = recordData == null ? -1 : recordData.Data_ID;
-                    
+
                     #region Annual
                     #region Year One
                     FinancialStatementData yearOneData = financialStatementInfo
@@ -355,7 +356,7 @@ namespace GreenField.Gadgets.Helpers
                             period.YearSevenIsHistorical = !(period.YearSevenIsHistorical);
                         }
                     }
-                    #endregion 
+                    #endregion
                     #endregion
 
                     #region Quarterly
@@ -507,7 +508,7 @@ namespace GreenField.Gadgets.Helpers
                             period.QuarterSixIsHistorical = !(period.QuarterSixIsHistorical);
                         }
                     }
-                    #endregion 
+                    #endregion
                     #endregion
 
                     result.Add(new PeriodColumnDisplayData()
@@ -528,21 +529,420 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_FIVE = quarterFiveData != null ? quarterFiveData.AMOUNT : null,
                         QUARTER_SIX = quarterSixData != null ? quarterSixData.AMOUNT : null,
                     });
-                }                
+                }
             }
+            #endregion
+
+            #region Consensus Estimate Detail
+            if (periodColumnInfo is List<ConsensusEstimateDetailedData>)
+            {
+                List<ConsensusEstimateDetailedData> consensusEstimateDetailedData = (periodColumnInfo as List<ConsensusEstimateDetailedData>);
+
+                List<String> distinctDataDescriptors = consensusEstimateDetailedData.Select(record => record.ESTIMATE_TYPE).Distinct().ToList();
+
+                foreach (string dataDesc in distinctDataDescriptors)
+                {
+                    //ConsensusEstimateDetailedData recordData = consensusEstimateDetailedData.Where(record => record.ESTIMATE_TYPE == dataDesc).FirstOrDefault();
+
+                    #region Annual
+                    #region Year One
+
+                    //ConsensusEstimateDetailedData yearOneData = consensusEstimateDetailedData
+                    //                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                    //                    record.PERIOD_YEAR.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
+                    //                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                    //                    record.PERIOD_TYPE.ToUpper().Trim() == "A")
+                    //                .FirstOrDefault();
+
+                    //if (yearOneData == null)
+                    //{
+                    //    yearOneData = consensusEstimateDetailedData
+                    //        .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                    //            record.PERIOD_YEAR.ToUpper().Trim() == period.YearOne.ToString().ToUpper().Trim() &&
+                    //            record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearOneIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                    //            record.PERIOD_TYPE.ToUpper().Trim() == "A")
+                    //        .FirstOrDefault();
+                    //    if (yearOneData != null)
+                    //    {
+                    //        period.YearOneIsHistorical = !(period.YearOneIsHistorical);
+                    //    }
+                    //}
+                    #endregion
+
+                    #region Year Two
+                    ConsensusEstimateDetailedData yearTwoData = consensusEstimateDetailedData
+                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.YearTwo &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
+                                    .FirstOrDefault();
+
+                    if (yearTwoData == null)
+                    {
+                        yearTwoData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD_YEAR == period.YearTwo &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
+                            .FirstOrDefault();
+                        if (yearTwoData != null)
+                        {
+                            period.YearTwoIsHistorical = !(period.YearTwoIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Year Three
+                    ConsensusEstimateDetailedData yearThreeData = consensusEstimateDetailedData
+                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.YearThree &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
+                                    .FirstOrDefault();
+
+                    if (yearThreeData == null)
+                    {
+                        yearThreeData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD_YEAR == period.YearThree &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
+                            .FirstOrDefault();
+                        if (yearThreeData != null)
+                        {
+                            period.YearThreeIsHistorical = !(period.YearThreeIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Year Four
+                    ConsensusEstimateDetailedData yearFourData = consensusEstimateDetailedData
+                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.YearFour &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
+                                    .FirstOrDefault();
+
+                    if (yearFourData == null)
+                    {
+                        yearFourData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD_YEAR == period.YearFour &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
+                            .FirstOrDefault();
+                        if (yearFourData != null)
+                        {
+                            period.YearFourIsHistorical = !(period.YearFourIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Year Five
+                    ConsensusEstimateDetailedData yearFiveData = consensusEstimateDetailedData
+                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.YearFive &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
+                                    .FirstOrDefault();
+
+                    if (yearFiveData == null)
+                    {
+                        yearFiveData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD_YEAR == period.YearFive &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
+                            .FirstOrDefault();
+                        if (yearFiveData != null)
+                        {
+                            period.YearFiveIsHistorical = !(period.YearFiveIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Year Six
+                    ConsensusEstimateDetailedData yearSixData = consensusEstimateDetailedData
+                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.YearSix &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                        )
+                                    .FirstOrDefault();
+
+                    if (yearSixData == null)
+                    {
+                        yearSixData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PERIOD_YEAR == period.YearSix &&
+                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                                )
+                            .FirstOrDefault();
+                        if (yearSixData != null)
+                        {
+                            period.YearSixIsHistorical = !(period.YearSixIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #endregion
+
+                    #region Quarterly
+                    #region Quarter One
+                    //ConsensusEstimateDetailedData quarterOneData = consensusEstimateDetailedData
+                    //                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                    //                                record.PERIOD_YEAR.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
+                    //                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                    //                                record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim()
+                    //                                )
+                    //                            .FirstOrDefault();
+
+                    //if (quarterOneData == null)
+                    //{
+                    //    quarterOneData = consensusEstimateDetailedData
+                    //        .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                    //                    record.PERIOD_YEAR.ToUpper().Trim() == period.QuarterOneYear.ToString().ToUpper().Trim() &&
+                    //                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterOneIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                    //                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterOneQuarter.ToString().ToUpper().Trim()
+                    //                    )
+                    //                .FirstOrDefault();
+                    //    if (quarterOneData != null)
+                    //    {
+                    //        period.QuarterOneIsHistorical = !(period.QuarterOneIsHistorical);
+                    //    }
+                    //}
+                    #endregion
+
+                    #region Quarter Two
+                    ConsensusEstimateDetailedData quarterTwoData = consensusEstimateDetailedData
+                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD_YEAR == period.QuarterTwoYear &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                                                    )
+                                                .FirstOrDefault();
+
+                    if (quarterTwoData == null)
+                    {
+                        quarterTwoData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.QuarterTwoYear &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                                        )
+                                    .FirstOrDefault();
+                        if (quarterTwoData != null)
+                        {
+                            period.QuarterTwoIsHistorical = !(period.QuarterTwoIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Three
+                    ConsensusEstimateDetailedData quarterThreeData = consensusEstimateDetailedData
+                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD_YEAR == period.QuarterThreeYear &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                                                    )
+                                                .FirstOrDefault();
+
+                    if (quarterThreeData == null)
+                    {
+                        quarterThreeData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.QuarterThreeYear &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                                        )
+                                    .FirstOrDefault();
+                        if (quarterThreeData != null)
+                        {
+                            period.QuarterThreeIsHistorical = !(period.QuarterThreeIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Four
+                    ConsensusEstimateDetailedData quarterFourData = consensusEstimateDetailedData
+                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD_YEAR == period.QuarterFourYear &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                                                    )
+                                                .FirstOrDefault();
+
+                    if (quarterFourData == null)
+                    {
+                        quarterFourData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.QuarterFourYear &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                                        )
+                                    .FirstOrDefault();
+                        if (quarterFourData != null)
+                        {
+                            period.QuarterFourIsHistorical = !(period.QuarterFourIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Five
+                    ConsensusEstimateDetailedData quarterFiveData = consensusEstimateDetailedData
+                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD_YEAR == period.QuarterFiveYear &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                                                    )
+                                                .FirstOrDefault();
+
+                    if (quarterFiveData == null)
+                    {
+                        quarterFiveData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.QuarterFiveYear &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                                        )
+                                    .FirstOrDefault();
+                        if (quarterFiveData != null)
+                        {
+                            period.QuarterFiveIsHistorical = !(period.QuarterFiveIsHistorical);
+                        }
+                    }
+                    #endregion
+
+                    #region Quarter Six
+                    ConsensusEstimateDetailedData quarterSixData = consensusEstimateDetailedData
+                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PERIOD_YEAR == period.QuarterSixYear &&
+                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                                                    )
+                                                .FirstOrDefault();
+
+                    if (quarterSixData == null)
+                    {
+                        quarterSixData = consensusEstimateDetailedData
+                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PERIOD_YEAR == period.QuarterSixYear &&
+                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                                        )
+                                    .FirstOrDefault();
+                        if (quarterSixData != null)
+                        {
+                            period.QuarterSixIsHistorical = !(period.QuarterSixIsHistorical);
+                        }
+                    }
+                    #endregion
+                    #endregion
+
+                    #region Result Addition
+
+                    #region #Estimates
+                    PeriodColumnDisplayData estimatePeriodColumnData = new PeriodColumnDisplayData()
+                                {
+                                    DATA_DESC = dataDesc,
+                                    SUB_DATA_DESC = "# Of Estimates",
+                                };
+
+
+                    if (yearTwoData != null)
+                        estimatePeriodColumnData.YEAR_TWO = yearTwoData.NUMBER_OF_ESTIMATES;
+                    if (yearThreeData != null)
+                        estimatePeriodColumnData.YEAR_THREE = yearThreeData.NUMBER_OF_ESTIMATES;
+                    if (yearFourData != null)
+                        estimatePeriodColumnData.YEAR_FOUR = yearFourData.NUMBER_OF_ESTIMATES;
+                    if (yearFiveData != null)
+                        estimatePeriodColumnData.YEAR_FIVE = yearFiveData.NUMBER_OF_ESTIMATES;
+                    if (yearSixData != null)
+                        estimatePeriodColumnData.YEAR_SIX = yearSixData.NUMBER_OF_ESTIMATES;
+                    if (quarterTwoData != null)
+                        estimatePeriodColumnData.QUARTER_TWO = quarterTwoData.NUMBER_OF_ESTIMATES;
+                    if (quarterThreeData != null)
+                        estimatePeriodColumnData.QUARTER_THREE = quarterThreeData.NUMBER_OF_ESTIMATES;
+                    if (quarterFourData != null)
+                        estimatePeriodColumnData.QUARTER_FOUR = quarterFourData.NUMBER_OF_ESTIMATES;
+                    if (quarterFiveData != null)
+                        estimatePeriodColumnData.QUARTER_FIVE = quarterFiveData.NUMBER_OF_ESTIMATES;
+                    if (quarterSixData != null)
+                        estimatePeriodColumnData.QUARTER_SIX = quarterSixData.NUMBER_OF_ESTIMATES;
+
+                    result.Add(estimatePeriodColumnData); 
+                    #endregion
+
+                    #region High
+                    PeriodColumnDisplayData highPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "High",
+                    };
+
+
+                    if (yearTwoData != null)
+                        highPeriodColumnData.YEAR_TWO = yearTwoData.HIGH;
+                    if (yearThreeData != null)
+                        highPeriodColumnData.YEAR_THREE = yearThreeData.HIGH;
+                    if (yearFourData != null)
+                        highPeriodColumnData.YEAR_FOUR = yearFourData.HIGH;
+                    if (yearFiveData != null)
+                        highPeriodColumnData.YEAR_FIVE = yearFiveData.HIGH;
+                    if (yearSixData != null)
+                        highPeriodColumnData.YEAR_SIX = yearSixData.HIGH;
+                    if (quarterTwoData != null)
+                        highPeriodColumnData.QUARTER_TWO = quarterTwoData.HIGH;
+                    if (quarterThreeData != null)
+                        highPeriodColumnData.QUARTER_THREE = quarterThreeData.HIGH;
+                    if (quarterFourData != null)
+                        highPeriodColumnData.QUARTER_FOUR = quarterFourData.HIGH;
+                    if (quarterFiveData != null)
+                        highPeriodColumnData.QUARTER_FIVE = quarterFiveData.HIGH;
+                    if (quarterSixData != null)
+                        highPeriodColumnData.QUARTER_SIX = quarterSixData.HIGH;
+
+                    result.Add(highPeriodColumnData);
+                    #endregion
+
+                    #endregion
+                }
+            }
+            #endregion
 
             periodRecord = period;
             return result;
         }
 
-        public static void UpdateColumnInformation(RadGridView gridView, PeriodColumnUpdateEventArg e)
+        public static void UpdateColumnInformation(RadGridView gridView, PeriodColumnUpdateEventArg e, bool IsFinancial = true)
         {
-            for (int i = 0; i < 12; i++)
+            if (IsFinancial)
             {
-                gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
-                gridView.Columns[i + 2].IsVisible = i < 6 ? e.PeriodIsYearly : !(e.PeriodIsYearly);
+                for (int i = 0; i < 12; i++)
+                {
+                    gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
+                    gridView.Columns[i + 2].IsVisible = i < 6 ? e.PeriodIsYearly : !(e.PeriodIsYearly);
+                }
             }
-        }        
+            else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i + (i < 5 ? 1 : 2)];
+                    gridView.Columns[i + 2].IsVisible = i < 5 ? e.PeriodIsYearly : !(e.PeriodIsYearly);
+                }
+            }
+            
+        }
 
         private static int GetQuarter(int month)
         {
