@@ -50,28 +50,56 @@
                             x:Name="dgcCommodityID" 
                             Width="*"  
                             Header="Commodity/Index" 
-                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                
-                            DataMemberBinding="{Binding CommodityID}" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"   
+                            TextAlignment="Left"
+                            DataMemberBinding="{Binding CommodityID}" 
+                            HeaderTextAlignment="Left" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn 
-                            x:Name="dgcYTD" Width="*" 
+                            x:Name="dgcYTD" 
+                            Width="*" 
                             Header="YTD" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    DataMemberBinding="{Binding YTD, StringFormat=\{0:n1\}%}" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                            TextAlignment="Right"                       
+                            DataMemberBinding="{Binding YTD, StringFormat=\{0:n1\}%}" 
+                            HeaderTextAlignment="Right" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn 
-                            x:Name="dgcYear1" Width="*" Header="1 Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    DataMemberBinding="{Binding Year1, StringFormat=\{0:n1\}%}" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcYear3" Width="*" Header="3 Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                    DataMemberBinding="{Binding Year3, StringFormat=\{0:n1\}%}" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcCURRENT_YEAR_END" Width="*" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Header="Current P" 
-                                                DataMemberBinding="{Binding CurrentYearEnd, StringFormat=\{0:n1\}}" 
-                                                HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcLASTUPDATE" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding NextYearEnd, StringFormat=\{0:n1\}}" 
-                                                Width="*" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcLONG_TERM" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                DataMemberBinding="{Binding LongTerm, StringFormat=\{0:n1\}}" 
-                                                Width="*" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>                       
+                            x:Name="dgcYear1" 
+                            Width="*" 
+                            Header="1 Year" 
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                            TextAlignment="Right"
+                            DataMemberBinding="{Binding Year1, StringFormat=\{0:n1\}%}" 
+                            HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcYear3" Width="*" Header="3 Year" 
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                            TextAlignment="Right"
+                            DataMemberBinding="{Binding Year3, StringFormat=\{0:n1\}%}" 
+                            HeaderTextAlignment="Right" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcCURRENT_YEAR_END" 
+                            Width="*" 
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                            Header="Current P" 
+                            TextAlignment="Right"
+                            DataMemberBinding="{Binding CurrentYearEnd, StringFormat=\{0:n1\}}" 
+                            HeaderTextAlignment="Right" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcLASTUPDATE"
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                            TextAlignment="Right"
+                            DataMemberBinding="{Binding NextYearEnd, StringFormat=\{0:n1\}}" 
+                            Width="*" 
+                            HeaderTextAlignment="Right" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn x:Name="dgcLONG_TERM" 
+                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                            TextAlignment="Right"
+                            DataMemberBinding="{Binding LongTerm, StringFormat=\{0:n1\}}" 
+                            Width="*" 
+                            HeaderTextAlignment="Right" 
+                            CellStyle="{StaticResource GridViewCellStyle}"/>                       
                     </telerik:RadGridView.Columns>
 
                 </telerik:RadGridView>
