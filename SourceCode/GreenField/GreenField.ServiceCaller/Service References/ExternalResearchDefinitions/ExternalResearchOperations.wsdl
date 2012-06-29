@@ -73,7 +73,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesSummaryDataResponse" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">

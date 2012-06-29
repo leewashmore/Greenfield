@@ -708,21 +708,12 @@
           <Parameter Name="periodType" Type="nvarchar" Mode="In" />
           <Parameter Name="currency" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetConsensusEstimatesSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Security" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
-        <!--Errors Found During Generation:
-      warning 6013: The table/view 'AIMS_LatestData.dbo.tblConsensusRecommendation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-      
-      <EntityType Name="tblConsensusRecommendation">
-        <Property Name="XRef" Type="nvarchar" MaxLength="9" />
-        <Property Name="StartDate" Type="datetime" />
-        <Property Name="EndDate" Type="datetime" />
-        <Property Name="OriginalDate" Type="datetime" />
-        <Property Name="ExpirationDate" Type="datetime" />
-        <Property Name="MeanRating" Type="real" />
-        <Property Name="MeanLabel" Type="nvarchar" MaxLength="20" />
-      </EntityType>-->
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -764,7 +755,10 @@
           <EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
           <EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
           <FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-            <Parameter Name="XRef" Mode="In" Type="String" />
+          <Parameter Name="XRef" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
+            <Parameter Name="Security" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">
@@ -1195,6 +1189,14 @@
           <Property Type="Single" Name="StdDev" Nullable="true" />
           <Property Type="String" Name="MeanLabel" Nullable="true" MaxLength="20" />
         </ComplexType>
+        <ComplexType Name="ConsensusEstimatesSummaryData" >
+          <Property Type="String" Name="NetIncome" Nullable="true" />
+          <Property Type="String" Name="YEAR1" Nullable="true" />
+          <Property Type="String" Name="YEAR2" Nullable="true" />
+          <Property Type="String" Name="YEAR3" Nullable="true" />
+          <Property Type="String" Name="YEAR4" Nullable="true" />
+          <Property Type="String" Name="YEAR5" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1484,6 +1486,18 @@
                 <ScalarProperty Name="Low" ColumnName="Low" />
                 <ScalarProperty Name="StdDev" ColumnName="StdDev" />
                 <ScalarProperty Name="MeanLabel" ColumnName="MeanLabel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimatesSummaryData">
+                <ScalarProperty Name="NetIncome" ColumnName="NetIncome" />
+                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
+                <ScalarProperty Name="YEAR2" ColumnName="YEAR2" />
+                <ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
+                <ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
+                <ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

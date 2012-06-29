@@ -327,14 +327,14 @@ namespace GreenField.Web.Services
         #region Consensus Estimates Summary Gadget
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData(EntitySelectionData entityIdentifier)
+        public List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> RetrieveConsensusEstimatesSummaryData(EntitySelectionData entityIdentifier)
         {
             try
             {
-            List<ConsensusEstimatesSummaryData> result = new List<ConsensusEstimatesSummaryData>();
+            List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
             DimensionEntitiesService.Entities entity = DimensionEntity;
             ExternalResearchEntities research = new ExternalResearchEntities();
-            result = research.ExecuteStoreQuery<ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+            result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
             return result;   
             }
             catch (Exception ex)

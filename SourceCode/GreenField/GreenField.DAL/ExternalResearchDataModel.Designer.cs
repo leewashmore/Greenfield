@@ -679,6 +679,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<GetTargetPrice_Result>("GetTargetPrice", xRefParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="security">No Metadata Documentation available.</param>
+        public ObjectResult<ConsensusEstimatesSummaryData> GetConsensusEstimatesSummaryData(global::System.String security)
+        {
+            ObjectParameter securityParameter;
+            if (security != null)
+            {
+                securityParameter = new ObjectParameter("Security", security);
+            }
+            else
+            {
+                securityParameter = new ObjectParameter("Security", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ConsensusEstimatesSummaryData>("GetConsensusEstimatesSummaryData", securityParameter);
+        }
 
         #endregion
     }
@@ -6546,6 +6565,163 @@ namespace GreenField.DAL
         private global::System.String _AMOUNT_TYPE;
         partial void OnAMOUNT_TYPEChanging(global::System.String value);
         partial void OnAMOUNT_TYPEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimatesSummaryData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class ConsensusEstimatesSummaryData : ComplexObject
+    {
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String NetIncome
+        {
+            get
+            {
+                return _NetIncome;
+            }
+            set
+            {
+                OnNetIncomeChanging(value);
+                ReportPropertyChanging("NetIncome");
+                _NetIncome = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("NetIncome");
+                OnNetIncomeChanged();
+            }
+        }
+        private global::System.String _NetIncome;
+        partial void OnNetIncomeChanging(global::System.String value);
+        partial void OnNetIncomeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YEAR1
+        {
+            get
+            {
+                return _YEAR1;
+            }
+            set
+            {
+                OnYEAR1Changing(value);
+                ReportPropertyChanging("YEAR1");
+                _YEAR1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YEAR1");
+                OnYEAR1Changed();
+            }
+        }
+        private global::System.String _YEAR1;
+        partial void OnYEAR1Changing(global::System.String value);
+        partial void OnYEAR1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YEAR2
+        {
+            get
+            {
+                return _YEAR2;
+            }
+            set
+            {
+                OnYEAR2Changing(value);
+                ReportPropertyChanging("YEAR2");
+                _YEAR2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YEAR2");
+                OnYEAR2Changed();
+            }
+        }
+        private global::System.String _YEAR2;
+        partial void OnYEAR2Changing(global::System.String value);
+        partial void OnYEAR2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YEAR3
+        {
+            get
+            {
+                return _YEAR3;
+            }
+            set
+            {
+                OnYEAR3Changing(value);
+                ReportPropertyChanging("YEAR3");
+                _YEAR3 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YEAR3");
+                OnYEAR3Changed();
+            }
+        }
+        private global::System.String _YEAR3;
+        partial void OnYEAR3Changing(global::System.String value);
+        partial void OnYEAR3Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YEAR4
+        {
+            get
+            {
+                return _YEAR4;
+            }
+            set
+            {
+                OnYEAR4Changing(value);
+                ReportPropertyChanging("YEAR4");
+                _YEAR4 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YEAR4");
+                OnYEAR4Changed();
+            }
+        }
+        private global::System.String _YEAR4;
+        partial void OnYEAR4Changing(global::System.String value);
+        partial void OnYEAR4Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YEAR5
+        {
+            get
+            {
+                return _YEAR5;
+            }
+            set
+            {
+                OnYEAR5Changing(value);
+                ReportPropertyChanging("YEAR5");
+                _YEAR5 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YEAR5");
+                OnYEAR5Changed();
+            }
+        }
+        private global::System.String _YEAR5;
+        partial void OnYEAR5Changing(global::System.String value);
+        partial void OnYEAR5Changed();
 
         #endregion
     }

@@ -9,11 +9,11 @@
   <xs:complexType name="ConsensusEstimatesSummaryData">
     <xs:sequence>
       <xs:element minOccurs="0" name="NetIncome" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="YEAR1" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YEAR2" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YEAR3" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YEAR4" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="YEAR5" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YEAR2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YEAR3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YEAR4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="YEAR5" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimatesSummaryData" nillable="true" type="tns:ConsensusEstimatesSummaryData" />
