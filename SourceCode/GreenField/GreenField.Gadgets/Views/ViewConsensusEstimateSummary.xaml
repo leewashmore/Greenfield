@@ -62,14 +62,14 @@
                                                     DataMemberBinding="{Binding YEAR1}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
+                                                    TextAlignment="Right"                                                   
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcYear2"                                                     
                                                     DataMemberBinding="{Binding YEAR2}" 
                                                      Width="Auto"
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
+                                                    TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -77,7 +77,7 @@
                                                     DataMemberBinding="{Binding YEAR3}" 
                                                     Width="Auto" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
+                                                    TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -85,7 +85,7 @@
                                                     DataMemberBinding="{Binding YEAR4}" 
                                                     Width="Auto" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
+                                                    TextAlignment="Right"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -93,7 +93,7 @@
                                                     DataMemberBinding="{Binding YEAR5}" 
                                                     Width="Auto" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
+                                                    TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>             
                     </telerik:RadGridView.Columns>

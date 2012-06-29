@@ -15,18 +15,18 @@ namespace GreenField.DataContracts.DataContracts
         public String NetIncome { get; set; }
 
         [DataMember]
-        public Decimal? YEAR1 { get; set; }
+        public String YEAR1 { get; set; }
 
         [DataMember]
-        public Decimal? YEAR2 { get; set; }
+        public String YEAR2 { get; set; }
 
         [DataMember]
-        public Decimal? YEAR3 { get; set; }
+        public String YEAR3 { get; set; }
 
         [DataMember]
-        public Decimal? YEAR4 { get; set; }
+        public String YEAR4 { get; set; }
 
         [DataMember]
-        public Decimal? YEAR5 { get; set; }
+        public String YEAR5 { get; set; }
     }
 }
