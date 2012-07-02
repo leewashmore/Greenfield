@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -20,6 +21,48 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextQuarterlyResultsComparison = dataContextSource; 
+            dataContextSource.quarterlyResultsComoarisonDataLoadedEvent +=
+           new DataRetrievalProgressIndicatorEventHandler(dataContextSource_quarterlyResultsComoarisonDataLoadedEvent);
         }
+
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void dataContextSource_quarterlyResultsComoarisonDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
+
+        #region RemoveEvents
+        /// <summary>
+        /// Disposing events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextQuarterlyResultsComparison.quarterlyResultsComoarisonDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_quarterlyResultsComoarisonDataLoadedEvent);            
+            this.DataContextQuarterlyResultsComparison = null;
+            this.DataContext = null;
+        }
+        #endregion
+
+        /// <summary>
+        /// Property of the type of View Model for this view
+        /// </summary>
+        private ViewModelQuarterlyResultsComparison _dataContextQuarterlyResultsComparison;
+        public ViewModelQuarterlyResultsComparison DataContextQuarterlyResultsComparison
+        {
+            get { return _dataContextQuarterlyResultsComparison; }
+            set { _dataContextQuarterlyResultsComparison = value; }
+        }
+
     }
 }

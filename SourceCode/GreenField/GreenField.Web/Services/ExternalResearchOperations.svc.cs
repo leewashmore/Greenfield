@@ -346,5 +346,33 @@ namespace GreenField.Web.Services
         }
         #endregion
 
+        #region Quarterly Comparision Results
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue,int yearValue)
+        {
+            try
+            {
+                int dataID;
+                List<QuarterlyResultsData> result = new List<QuarterlyResultsData>();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                if (fieldValue == "Revenue")
+                    dataID = 11;
+                else
+                    dataID = 44;
+                result = research.ExecuteStoreQuery<QuarterlyResultsData>("exec usp_GetQuarterlyResults @DataId={0}, @PeriodYear = {1}", dataID, yearValue).ToList();
+                
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        #endregion
+
     }
 }

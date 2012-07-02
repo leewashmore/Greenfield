@@ -17,4 +17,38 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimatesSummaryData" nillable="true" type="tns:ConsensusEstimatesSummaryData" />
+  <xs:complexType name="ArrayOfQuarterlyResultsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="QuarterlyResultsData" nillable="true" type="tns:QuarterlyResultsData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfQuarterlyResultsData" nillable="true" type="tns:ArrayOfQuarterlyResultsData" />
+  <xs:complexType name="QuarterlyResultsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Annual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Brokers" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="Consensus" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ConsensusPercentage" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ConsensusUpdate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="High" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IssuerName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Low" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Q1" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Q2" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Q3" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Q4" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QuarterlySum" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QuarterlySumPercentage" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sector" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="XREF" nillable="true" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="QuarterlyResultsData" nillable="true" type="tns:QuarterlyResultsData" />
 </xs:schema>

@@ -714,6 +714,10 @@
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataId" Type="int" Mode="In" />
+          <Parameter Name="PeriodYear" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -758,7 +762,11 @@
           <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
-            <Parameter Name="Security" Mode="In" Type="String" />
+          <Parameter Name="Security" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
+            <Parameter Name="DataId" Mode="In" Type="Int32" />
+            <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CONSENSUS_MASTER">
@@ -1197,6 +1205,31 @@
           <Property Type="String" Name="YEAR4" Nullable="true" />
           <Property Type="String" Name="YEAR5" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="QuarterlyResults" >
+          <Property Type="String" Name="ISSUER_ID" Nullable="true" />
+          <Property Type="String" Name="IssuerName" Nullable="true" />
+          <Property Type="String" Name="Region" Nullable="true" />
+          <Property Type="String" Name="Country" Nullable="true" />
+          <Property Type="String" Name="Sector" Nullable="true" />
+          <Property Type="String" Name="Industry" Nullable="true" />
+          <Property Type="String" Name="Currency" Nullable="true" />
+          <Property Type="DateTime" Name="LastUpdate" Nullable="true" />
+          <Property Type="Decimal" Name="Q1" Nullable="true" />
+          <Property Type="Decimal" Name="Q2" Nullable="true" />
+          <Property Type="Decimal" Name="Q3" Nullable="true" />
+          <Property Type="Decimal" Name="Q4" Nullable="true" />
+          <Property Type="Decimal" Name="Annual" Nullable="true" />
+          <Property Type="DateTime" Name="QuarterlySum" Nullable="true" />
+          <Property Type="Decimal" Name="QuarterlySumPercentage" Nullable="true" />
+          <Property Type="Decimal" Name="Consensus" Nullable="true" />
+          <Property Type="Decimal" Name="ConsensusPercentage" Nullable="true" />
+          <Property Type="Decimal" Name="High" Nullable="true" />
+          <Property Type="Decimal" Name="Low" Nullable="true" />
+          <Property Type="Int32" Name="Brokers" Nullable="true" />
+          <Property Type="Int32" Name="EstimateId" Nullable="true" />
+          <Property Type="DateTime" Name="ConsensusUpdate" Nullable="true" />
+          <Property Type="Double" Name="XREF" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1498,6 +1531,35 @@
                 <ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
                 <ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
                 <ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetQuarterlyResults" FunctionName="ExternalResearchModel.Store.usp_GetQuarterlyResults">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.QuarterlyResults">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="Q1" ColumnName="Q1" />
+                <ScalarProperty Name="Q2" ColumnName="Q2" />
+                <ScalarProperty Name="Q3" ColumnName="Q3" />
+                <ScalarProperty Name="Q4" ColumnName="Q4" />
+                <ScalarProperty Name="Annual" ColumnName="Annual" />
+                <ScalarProperty Name="QuarterlySum" ColumnName="QuarterlySum" />
+                <ScalarProperty Name="QuarterlySumPercentage" ColumnName="QuarterlySumPercentage" />
+                <ScalarProperty Name="Consensus" ColumnName="Consensus" />
+                <ScalarProperty Name="ConsensusPercentage" ColumnName="ConsensusPercentage" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="Brokers" ColumnName="Brokers" />
+                <ScalarProperty Name="EstimateId" ColumnName="EstimateId" />
+                <ScalarProperty Name="ConsensusUpdate" ColumnName="ConsensusUpdate" />
+                <ScalarProperty Name="XREF" ColumnName="XREF" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

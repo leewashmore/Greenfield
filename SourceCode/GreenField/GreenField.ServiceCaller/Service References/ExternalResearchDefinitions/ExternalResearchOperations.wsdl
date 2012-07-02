@@ -75,6 +75,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveQuarterlyResultsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveQuarterlyResultsData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveQuarterlyResultsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveQuarterlyResultsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveQuarterlyResultsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -110,6 +119,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDataResponse" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveQuarterlyResultsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsData" message="tns:ExternalResearchOperations_RetrieveQuarterlyResultsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsDataResponse" message="tns:ExternalResearchOperations_RetrieveQuarterlyResultsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveQuarterlyResultsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -188,6 +202,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveConsensusEstimatesSummaryData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveQuarterlyResultsData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

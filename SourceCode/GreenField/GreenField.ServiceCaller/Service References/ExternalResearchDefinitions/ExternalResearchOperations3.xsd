@@ -109,4 +109,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveQuarterlyResultsData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fieldValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="yearValue" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveQuarterlyResultsDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveQuarterlyResultsDataResult" nillable="true" type="q17:ArrayOfQuarterlyResultsData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -84,6 +84,7 @@
     <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
     <Compile Include="DataContracts\PortfolioSelectionData.cs" />
     <Compile Include="DataContracts\PricingReferenceData.cs" />
+    <Compile Include="DataContracts\QuarterlyResultsData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />
     <Compile Include="DataContracts\RegionBreakdownData.cs" />
     <Compile Include="DataContracts\RegionSelectionData.cs" />

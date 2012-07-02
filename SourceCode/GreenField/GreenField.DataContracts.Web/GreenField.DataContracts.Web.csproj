@@ -125,6 +125,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\PricingReferenceData.cs">
       <Link>DataContracts\PricingReferenceData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\QuarterlyResultsData.cs">
+      <Link>DataContracts\QuarterlyResultsData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\ReferenceData.cs">
       <Link>DataContracts\ReferenceData.cs</Link>
     </Compile>

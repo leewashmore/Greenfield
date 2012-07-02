@@ -693,6 +693,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveConsensusEstimatesSummaryData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> EndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsDataRespons" +
+            "e")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveQuarterlyResultsDataService" +
+            "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveQuarterlyResultsData(string fieldValue, int yearValue, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> EndRetrieveQuarterlyResultsData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -834,6 +842,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveQuarterlyResultsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveQuarterlyResultsDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -877,6 +904,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private EndOperationDelegate onEndRetrieveConsensusEstimatesSummaryDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveConsensusEstimatesSummaryDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveQuarterlyResultsDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveQuarterlyResultsDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveQuarterlyResultsDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -944,6 +977,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveTargetPriceDataCompletedEventArgs> RetrieveTargetPriceDataCompleted;
         
         public event System.EventHandler<RetrieveConsensusEstimatesSummaryDataCompletedEventArgs> RetrieveConsensusEstimatesSummaryDataCompleted;
+        
+        public event System.EventHandler<RetrieveQuarterlyResultsDataCompletedEventArgs> RetrieveQuarterlyResultsDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1285,6 +1320,54 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         entityIdentifier}, this.onEndRetrieveConsensusEstimatesSummaryDataDelegate, this.onRetrieveConsensusEstimatesSummaryDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveQuarterlyResultsData(string fieldValue, int yearValue, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveQuarterlyResultsData(fieldValue, yearValue, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveQuarterlyResultsData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveQuarterlyResultsData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveQuarterlyResultsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string fieldValue = ((string)(inValues[0]));
+            int yearValue = ((int)(inValues[1]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveQuarterlyResultsData(fieldValue, yearValue, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveQuarterlyResultsData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveQuarterlyResultsData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveQuarterlyResultsDataCompleted(object state) {
+            if ((this.RetrieveQuarterlyResultsDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveQuarterlyResultsDataCompleted(this, new RetrieveQuarterlyResultsDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveQuarterlyResultsDataAsync(string fieldValue, int yearValue) {
+            this.RetrieveQuarterlyResultsDataAsync(fieldValue, yearValue, null);
+        }
+        
+        public void RetrieveQuarterlyResultsDataAsync(string fieldValue, int yearValue, object userState) {
+            if ((this.onBeginRetrieveQuarterlyResultsDataDelegate == null)) {
+                this.onBeginRetrieveQuarterlyResultsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveQuarterlyResultsData);
+            }
+            if ((this.onEndRetrieveQuarterlyResultsDataDelegate == null)) {
+                this.onEndRetrieveQuarterlyResultsDataDelegate = new EndOperationDelegate(this.OnEndRetrieveQuarterlyResultsData);
+            }
+            if ((this.onRetrieveQuarterlyResultsDataCompletedDelegate == null)) {
+                this.onRetrieveQuarterlyResultsDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveQuarterlyResultsDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveQuarterlyResultsDataDelegate, new object[] {
+                        fieldValue,
+                        yearValue}, this.onEndRetrieveQuarterlyResultsDataDelegate, this.onRetrieveQuarterlyResultsDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1456,6 +1539,20 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> EndRetrieveConsensusEstimatesSummaryData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>)(base.EndInvoke("RetrieveConsensusEstimatesSummaryData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveQuarterlyResultsData(string fieldValue, int yearValue, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = fieldValue;
+                _args[1] = yearValue;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveQuarterlyResultsData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> EndRetrieveQuarterlyResultsData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData>)(base.EndInvoke("RetrieveQuarterlyResultsData", _args, result)));
                 return _result;
             }
         }
