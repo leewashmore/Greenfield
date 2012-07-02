@@ -30,7 +30,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <telerik:RadButton x:Name="btnExportExcel" Grid.Column="0" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0"  ToolTipService.ToolTip="Export">
+                                       Margin="5,0,0,0"  ToolTipService.ToolTip="Export"  Click="btnExportExcel_Click">
                         <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                 </Grid>
@@ -49,7 +49,7 @@
                         <TextBlock Grid.Column="0" Text="Field" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                         <telerik:RadComboBox x:Name="cmbField" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
                                      HorizontalAlignment="Stretch" ItemsSource="{Binding FieldValues}"
-                                             SelectedValue="{Binding FieldValue,Mode=TwoWay}"/>
+                                             SelectedValue="{Binding FieldValue,Mode=TwoWay}" />
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,2,2,0">
                         <Grid.ColumnDefinitions>
@@ -74,6 +74,7 @@
                                              IsReadOnly="True"
                                              CanUserSortColumns="True"
                                              ScrollMode="Deferred" 
+                                             ElementExporting="dgQuarterlyResults_ElementExporting"
                                              RowIndicatorVisibility="Collapsed"  
                                              ShowGroupPanel="False"
                                              telerik:StyleManager.Theme="Metro" 

@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 6/28/2012 5:36:24 PM
+// Generation date: 7/2/2012 11:48:06 AM
 namespace GreenField.Web.DimensionEntitiesService
 {
     

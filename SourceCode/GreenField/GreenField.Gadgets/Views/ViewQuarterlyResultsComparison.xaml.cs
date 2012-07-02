@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -63,6 +64,29 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextQuarterlyResultsComparison; }
             set { _dataContextQuarterlyResultsComparison = value; }
         }
+
+        #region Export To Excel Methods
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ChildExportOptions childExportOptions = new ChildExportOptions
+                (
+                new List<RadExportOptions>
+                {
+                    new RadExportOptions() 
+                    {
+                        Element = this.dgQuarterlyComparison,
+                        ElementName = "Quarterly Comparison Results",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    } 
+                }, "Export Options: " + GadgetNames.QUARTERLY_RESULTS_COMPARISON);
+            childExportOptions.Show();
+        }
+        private void dgQuarterlyResults_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
+
+        #endregion
 
     }
 }
