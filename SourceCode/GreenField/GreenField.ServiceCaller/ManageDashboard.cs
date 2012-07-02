@@ -15,6 +15,7 @@ using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.Logging;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
+using GreenField.UserSession;
 
 
 namespace GreenField.ServiceCaller
@@ -46,6 +47,9 @@ namespace GreenField.ServiceCaller
         /// <param name="callback"> DashboardPreferences</param>
         public void GetDashboardPreferenceByUserName(string userName, Action<List<tblDashboardPreference>> callback)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
+
             DashboardOperationsClient client = new DashboardOperationsClient();
             client.GetDashboardPreferenceByUserNameAsync(userName);
             client.GetDashboardPreferenceByUserNameCompleted += (se, e) =>
@@ -74,6 +78,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(null);
                 }
+                ServiceLog.LogServiceCallback(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
             };
         }
 
@@ -84,6 +89,9 @@ namespace GreenField.ServiceCaller
         /// <param name="callback">True/False</param>
         public void SetDashboardPreference(ObservableCollection<tblDashboardPreference> dashBoardPreference, string userName, Action<bool?> callback)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
+
             DashboardOperationsClient client = new DashboardOperationsClient();
             client.SetDashboardPreferenceAsync(dashBoardPreference, userName);
             client.SetDashboardPreferenceCompleted += (se, e) =>
@@ -107,6 +115,7 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                         callback(null);
                 }
+                ServiceLog.LogServiceCallback(_logger, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION.UserName);
             };
         }
     }

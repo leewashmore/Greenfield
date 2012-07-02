@@ -14,6 +14,7 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
+using GreenField.UserSession;
 
 namespace GreenField.DashBoardModule.Helpers
 {

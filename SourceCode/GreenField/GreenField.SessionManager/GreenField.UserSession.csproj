@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</ProjectGuid>
+    <ProjectGuid>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</ProjectGuid>
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GreenField.Common</RootNamespace>
-    <AssemblyName>GreenField.Common</AssemblyName>
+    <RootNamespace>GreenField.SessionManager</RootNamespace>
+    <AssemblyName>GreenField.SessionManager</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -46,47 +46,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Browser" />
-    <Reference Include="Telerik.Windows.Controls, Version=2011.2.712.1040, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helper\Common.cs" />
-    <Compile Include="ContainerEvents.cs" />
-    <Compile Include="DashboardCategory.cs" />
-    <Compile Include="GadgetNames.cs" />
-    <Compile Include="Helper\DashboardGadgetPayLoad.cs" />
-    <Compile Include="Helper\RangeObservableCollection.cs" />
-    <Compile Include="Logging.cs" />
+    <Compile Include="SessionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SelectionData.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
       <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
       <Name>GreenField.DataContracts.Silverlight</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
-      <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
-      <Name>GreenField.ServiceCaller</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
-      <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
-      <Name>GreenField.UserSession</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />

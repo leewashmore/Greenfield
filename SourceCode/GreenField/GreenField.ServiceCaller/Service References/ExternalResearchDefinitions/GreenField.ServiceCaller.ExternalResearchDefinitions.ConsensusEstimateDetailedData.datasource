@@ -6,5 +6,5 @@
     cause the file to be unrecognizable by the program.
 -->
 <GenericObjectDataSource DisplayName="ConsensusEstimateDetailedData" Version="1.0" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
-   <TypeInfo>GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData, Service References.ExternalResearchDefinitions.Reference.cs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
+   <TypeInfo>GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData, GreenField.ServiceCaller, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</TypeInfo>
 </GenericObjectDataSource>

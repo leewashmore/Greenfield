@@ -22,6 +22,7 @@ using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.LoginModule.Controls;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.UserSession;
 
 namespace GreenField.LoginModule.ViewModel
 {

@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Text;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.UserSession;
 
 namespace GreenField.Common
 {
@@ -37,7 +38,8 @@ namespace GreenField.Common
                 {
                     logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ") 
                         + ")]|Type[(BeginMethod"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ") 
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
                         + ")]", Category.Info, Priority.None);
                 }
             }
@@ -46,6 +48,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
                         + ")]|Type[(BeginMethod" 
                         + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
                         + ")]", Category.Info, Priority.None);                
             }
         }
@@ -61,6 +64,7 @@ namespace GreenField.Common
                         + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
                         + ")]", Category.Debug, Priority.None);
                 }
             }
@@ -71,6 +75,7 @@ namespace GreenField.Common
                         + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
                         + ")]", Category.Debug, Priority.None);
             }
         }
@@ -85,7 +90,9 @@ namespace GreenField.Common
                         + ")]|Type[(MethodParameter"
                         + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
-                        + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
+                        + ")]|ArgumentValue[(Null"
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
+                        + ")]", Category.Debug, Priority.None);
                 }
             }
             else
@@ -96,7 +103,9 @@ namespace GreenField.Common
                         + ")]|Type[(MethodParameter"
                         + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
-                        + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
+                        + ")]|ArgumentValue[(Null"
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                        + ")]", Category.Debug, Priority.None);
                 }
             }
         }
@@ -109,7 +118,8 @@ namespace GreenField.Common
                 {
                     logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                         + ")]|Type[(EndMethod"
-                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ") 
+                        + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                         + ")]", Category.Info, Priority.None);
                 }
             }
@@ -118,6 +128,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
                         + ")]|Type[(EndMethod"
                         + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                         + ")]", Category.Info, Priority.None);
             }
         }
@@ -132,7 +143,9 @@ namespace GreenField.Common
                         + ")]|Type[(MethodParameter"
                         + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
-                        + ")]|ArgumentValue[(False)]", Category.Debug, Priority.None);
+                        + ")]|ArgumentValue[(False"
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                        + ")]", Category.Debug, Priority.None);
                 }
             }
             else
@@ -141,7 +154,9 @@ namespace GreenField.Common
                         + ")]|Type[(MethodParameter"
                         + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                         + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
-                        + ")]|ArgumentValue[(False)]", Category.Debug, Priority.None);
+                        + ")]|ArgumentValue[(False"
+                        + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
+                        + ")]", Category.Debug, Priority.None);
             }
         }
         #endregion
@@ -155,6 +170,7 @@ namespace GreenField.Common
                     + ")]|Type[(Exception"
                     + ")]|Message[(" + exception.Message.Replace(Environment.NewLine, " ") 
                     + ")]|StackTrace[(" + StackTraceToString(exception)
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Exception, Priority.Medium);                
             }
         }
@@ -167,6 +183,7 @@ namespace GreenField.Common
             {
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(SessionBegin"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -175,6 +192,7 @@ namespace GreenField.Common
         {
             logger.Log("|User[(" + userName.Replace(Environment.NewLine, " ")
                 + ")]|Type[(SessionEnd"
+                + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                 + ")]", Category.Info, Priority.None);
         }
         #endregion
@@ -187,6 +205,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(RoleCreation"
                     + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -198,6 +217,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(RoleCreationFailed"
                     + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -209,6 +229,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(RoleDeletion"
                     + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -220,6 +241,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(RoleDeletionFailed"
                     + ")]|Role[(" + roleName.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -233,6 +255,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountActivation"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -244,6 +267,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountActivationFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -255,6 +279,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountBlock"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -266,6 +291,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountBlockFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -277,6 +303,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountLockRelease"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -288,6 +315,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountLockReleaseFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -299,6 +327,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountDeletion"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -310,6 +339,7 @@ namespace GreenField.Common
                 logger.Log("|User[(" + SessionManager.SESSION.UserName.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountDeletionFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -322,6 +352,7 @@ namespace GreenField.Common
                     + ")]|Type[(AccountRoleAssignment"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
                     + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -334,6 +365,7 @@ namespace GreenField.Common
                     + ")]|Type[(AccountRoleAssignmentFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
                     + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -346,6 +378,7 @@ namespace GreenField.Common
                     + ")]|Type[(AccountRoleRemoval"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
                     + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -358,6 +391,7 @@ namespace GreenField.Common
                     + ")]|Type[(AccountRoleRemovalFailed"
                     + ")]|Account[(" + user.Replace(Environment.NewLine, " ")
                     + ")]|Role[(" + role.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -370,6 +404,7 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountInactiveLoginAttempt"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -380,6 +415,7 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountLockedLoginAttempt"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -390,6 +426,7 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountInvalidLoginAttempt"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -401,6 +438,7 @@ namespace GreenField.Common
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(BeginMethod"
                     + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -412,6 +450,7 @@ namespace GreenField.Common
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(EndMethod"
                     + ")]|MethodNameSpace[(" + methodNamespace.Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -425,6 +464,7 @@ namespace GreenField.Common
                     + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                     + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
                     + ")]|ArgumentValue[(" + parameter.ToString().Replace(Environment.NewLine, " ")
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Debug, Priority.None);
             }
         }
@@ -437,7 +477,9 @@ namespace GreenField.Common
                     + ")]|Type[(MethodParameter"
                     + ")]|MethodNameSpace[(" + methodName.ToString().Replace(Environment.NewLine, " ")
                     + ")]|ArgumentIndex[(" + index.ToString().Replace(Environment.NewLine, " ")
-                    + ")]|ArgumentValue[(Null)]", Category.Debug, Priority.None);
+                    + ")]|ArgumentValue[(Null"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ") 
+                    + ")]", Category.Debug, Priority.None);
             }
         }
 
@@ -446,6 +488,7 @@ namespace GreenField.Common
             logger.Log("|User[(Null)]|Exception[(" + exception.Message.Replace(Environment.NewLine, " ")
                 + ")]|Type[(Exception"
                 + ")]|StackTrace[(" + StackTraceToString(exception).Replace(Environment.NewLine, " ")
+                + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                 + ")]", Category.Exception, Priority.Medium);
         }
 
@@ -455,6 +498,7 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountRegistration"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -465,6 +509,7 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountPasswordChange"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
@@ -475,9 +520,10 @@ namespace GreenField.Common
             {
                 logger.Log("|LoginID[(" + loginId.Replace(Environment.NewLine, " ")
                     + ")]|Type[(AccountPasswordReset"
+                    + ")]|TimeStamp[(" + DateTime.Now.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss,fff").Replace(Environment.NewLine, " ")
                     + ")]", Category.Info, Priority.None);
             }
         }
-        #endregion
+        #endregion        
     }
 }

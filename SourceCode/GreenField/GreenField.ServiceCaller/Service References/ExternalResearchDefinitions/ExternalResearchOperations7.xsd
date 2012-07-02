@@ -26,13 +26,13 @@
   <xs:complexType name="QuarterlyResultsData">
     <xs:sequence>
       <xs:element minOccurs="0" name="Annual" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Brokers" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="Brokers" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="Consensus" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ConsensusPercentage" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ConsensusUpdate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="EstimateId" nillable="true" type="xs:long" />
+      <xs:element minOccurs="0" name="EstimateId" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="High" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Industry" nillable="true" type="xs:string" />

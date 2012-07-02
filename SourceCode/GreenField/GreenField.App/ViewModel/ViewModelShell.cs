@@ -25,6 +25,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using Telerik.Windows.Controls;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
+using GreenField.UserSession;
 
 namespace GreenField.App.ViewModel
 {

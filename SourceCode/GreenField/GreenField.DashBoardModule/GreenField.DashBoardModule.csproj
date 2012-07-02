@@ -244,6 +244,10 @@
       <Name>GreenField.ServiceCaller</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
+      <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
+      <Name>GreenField.UserSession</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Assets\DashboardStyle.xaml">

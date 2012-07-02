@@ -26,6 +26,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.Gadgets.Models;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
+using GreenField.UserSession;
 
 
 namespace GreenField.Gadgets.ViewModels

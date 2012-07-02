@@ -8,17 +8,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
-using System.IO;
-using GreenField.ServiceCaller.SessionDefinitions;
 using GreenField.DataContracts;
 
-namespace GreenField.Common
+namespace GreenField.UserSession
 {
     public static class SessionManager
     {
-        public static Session SESSION;
+        public static Session SESSION { get; set; }
     }
 }
