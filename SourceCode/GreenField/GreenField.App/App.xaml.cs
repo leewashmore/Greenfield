@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Telerik.Windows.Controls;
+using System.Net.Browser;
 
 namespace GreenField.App
 {
@@ -27,6 +28,7 @@ namespace GreenField.App
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
             Bootstrapper bootStrapper = new Bootstrapper();
             bootStrapper.Run();            
 
