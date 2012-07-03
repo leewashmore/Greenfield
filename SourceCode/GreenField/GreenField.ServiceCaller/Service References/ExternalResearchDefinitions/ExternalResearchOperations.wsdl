@@ -66,6 +66,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveTargetPriceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesMedianData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesMedianDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesSummaryData" />
   </wsdl:message>
@@ -73,7 +82,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveConsensusEstimatesSummaryDataResponse" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveQuarterlyResultsData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveQuarterlyResultsData" />
@@ -82,7 +91,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveQuarterlyResultsDataResponse" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveQuarterlyResultsData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
@@ -114,6 +123,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceData" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataResponse" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveTargetPriceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveConsensusEstimatesMedianData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianData" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianDataResponse" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesMedianData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveConsensusEstimatesSummaryData">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" message="tns:ExternalResearchOperations_RetrieveConsensusEstimatesSummaryData_InputMessage" />
@@ -190,6 +204,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveTargetPriceData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveTargetPriceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveConsensusEstimatesMedianData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
