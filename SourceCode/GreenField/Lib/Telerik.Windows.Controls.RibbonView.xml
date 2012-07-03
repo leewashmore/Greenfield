@@ -42,6 +42,11 @@
             The only purpose is to close an internal popup if any.
             </summary>
         </member>
+        <member name="M:Telerik.Windows.Controls.ApplicationMenu.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
         <member name="M:Telerik.Windows.Controls.ApplicationMenu.OnMouseLeftButtonDown(System.Windows.Input.MouseButtonEventArgs)">
             <summary>
             The MouseLeftButtonDown callback.
@@ -54,6 +59,11 @@
             </summary>
             <param name="element">Element used to display the specified item.</param>
             <param name="item">Specified item.</param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.ApplicationMenu.ClearContainerForItemOverride(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            When overridden in a derived class, undoes the effects of the <see cref="M:System.Windows.Controls.ItemsControl.PrepareContainerForItemOverride(System.Windows.DependencyObject,System.Object)"/> method.
+            </summary>
         </member>
         <member name="P:Telerik.Windows.Controls.ApplicationMenu.Content">
             <summary>
@@ -69,6 +79,384 @@
             <summary>
             Gets or sets the right pane Visibility.
             </summary>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer">
+            <summary>
+            Automation peer class for Application Button Element.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.#ctor(System.Windows.Controls.Button,Telerik.Windows.Controls.RadRibbonView)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer"/> class.
+            </summary>
+            <param name="owner"></param>
+            <param name="ribbonOwner"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the AutomationPeer that is the parent of this AutomationPeer.
+            </summary>
+            <param name="patternInterface"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.Collapse">
+            <summary>
+            Implementation of the Collapse method from the IExpandCollapseProvider interface.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.Expand">
+            <summary>
+            Implementation of the Expand method from the IExpandCollapseProvider interface.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets a human readable name that, in addition to AutomationControlType, differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.GetNameCore">
+            <summary>
+            Gets the text label of the <see cref="T:Telerik.Windows.Controls.RadDropDownButton"/> that
+            is associated with this <see cref="T:Telerik.Windows.Controls.ApplicationButtonAutomationPeer"/>.
+            Called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetName"/>.
+            </summary>
+            <returns>
+            The text label of the element that is associated with this automation peer.
+            </returns>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonView.AutomationPeers.ApplicationButtonAutomationPeer.ExpandCollapseState">
+            <summary>
+            Gets the expand/collapse state.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.QuickAccessToolBarAutomationPeer">
+            <summary>
+            Automation peer class for QuickAccessToolBar class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.QuickAccessToolBarAutomationPeer.#ctor(Telerik.Windows.Controls.QuickAccessToolBar)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.QuickAccessToolBarAutomationPeer"/> class.
+            </summary>
+            <param name="owner"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.QuickAccessToolBarAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets a human readable name that, in addition to AutomationControlType, differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.QuickAccessToolBarAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the element that is associated with the UI Automation peer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer">
+            <summary>
+            Automation peer class for RadRibbonGroup class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.#ctor(Telerik.Windows.Controls.RadRibbonGroup)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer"/> class.
+            </summary>
+            <param name="owner"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the AutomationPeer that is the parent of this AutomationPeer.
+            </summary>
+            <param name="patternInterface"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the element that is associated with the UI Automation peer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.GetChildrenCore">
+            <summary>
+            Returns child elements collection of the item that is associated with this
+            <see cref="T:Telerik.Windows.Controls.RibbonGroupAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetChildren"/>.
+            </summary>
+            <returns>
+            A list of child <see cref="T:System.Windows.Automation.Peers.AutomationPeer"/> elements.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets a human readable name that, in addition to AutomationControlType, differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonGroupAutomationPeer.GetNameCore">
+            <summary>
+            Gets the text label of the ContentElement that is associated with this ContentElementAutomationPeer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer">
+            <summary>
+            TODO: Update summary.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.#ctor(Telerik.Windows.Controls.RadRibbonTab)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer"/> class.
+            </summary>
+            <param name="owner">
+            The <see cref="T:Telerik.Windows.Controls.RadRibbonTab"/> that will be associated with newly created
+            <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/> object.
+            </param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the control pattern for the <see cref="T:Telerik.Windows.Controls.RadRibbonTab"/>
+            that is associated with this <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            </summary>
+            <returns>
+            The object that implements the pattern interface, or null.
+            </returns>
+            <param name="patternInterface">
+            One of the enumeration values.
+            </param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetItem">
+            <summary>
+            Gets the item in the that is associated with this <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            </summary>
+            <returns>
+            The data item.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.AddToSelection">
+            <summary>
+            ISelectionItemProvider implementation.
+            Adds the current element to the collection of selected items.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.RemoveFromSelection">
+            <summary>
+            ISelectionItemProvider implementation.
+            Removes the current element from the collection of selected items.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.Select">
+            <summary>
+            ISelectionItemProvider implementation.
+            Deselects any selected items and then selects the current element.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetNameCore">
+            <summary>
+            Returns the text label of the <see cref="T:System.Windows.UIElement"/> associated with this AutomationPeer.
+            Called by AutomationPeer.GetName.
+            </summary>
+            <returns>A text label of the element associated with this Automation Peer.</returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetChildrenCore">
+            <summary>
+            Returns child elements collection of the item that is associated with this
+            <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetChildren"/>.
+            </summary>
+            <returns>
+            A list of child <see cref="T:System.Windows.Automation.Peers.AutomationPeer"/> elements.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the <see cref="T:Telerik.Windows.Controls.RadRibbonTab"/> that is
+            associated with this <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType"/>.
+            </summary>
+            <returns>
+            The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.TabItem"/> enumeration value.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:Telerik.Windows.Controls.RadRibbonTab"/> that is associated
+            with this <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            A "RadTabItem" string.
+            </returns>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.IsSelected">
+            <summary>
+            ISelectionItemProvider implementation.
+            Gets a value that indicates whether an item is selected. 
+            </summary>
+            <returns>true if the element is selected; otherwise false.
+            </returns>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonTabAutomationPeer.SelectionContainer">
+            <summary>
+            ISelectionItemProvider implementation.
+            Gets the UI Automation provider that implements <see cref="T:System.Windows.Automation.Provider.ISelectionProvider"/>
+            and acts as the container for the calling object.
+            </summary>
+            <returns>
+            The provider that supports <see cref="T:System.Windows.Automation.Provider.ISelectionProvider"/>.
+            </returns>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer">
+            <summary>
+            Automation peer for the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.#ctor(Telerik.Windows.Controls.RadRibbonView)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer"/> class.
+            </summary>
+            <param name="owner">
+            The <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> that will be associated with newly created
+            <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/> object.
+            </param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetPattern(System.Windows.Automation.Peers.PatternInterface)">
+            <summary>
+            Gets the control pattern for the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/>
+            that is associated with this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            </summary>
+            <returns>
+            The object that implements the pattern interface, or null.
+            </returns>
+            <param name="patternInterface">
+            One of the enumeration values.
+            </param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetSelection">
+            <summary>
+            ISelectionProvider implementation.
+            Retrieves a UI Automation provider for each child element that is selected.
+            </summary>
+            <returns>
+            An array of UI Automation providers. 
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetNameCore">
+            <summary>
+            Gets the text label of the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> that
+            is associated with this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            Called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetName"/>.
+            </summary>
+            <returns>
+            The text label of the element that is associated with this automation peer.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.CreateItemAutomationPeer(System.Object)">
+            <summary>
+            When overridden in a derived class, creates a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>
+            for a data item in the <see cref="P:System.Windows.Controls.ItemsControl.Items"/>
+            collection of this <see cref="T:System.Windows.Controls.ItemsControl"/>.
+            </summary>
+            <param name="item">
+            The data item that is associated with this <see cref="T:Telerik.Windows.Controls.RibbonTabAutomationPeer"/>.
+            </param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the <see cref="T:System.Windows.UIElement"/> that is
+            associated with this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType"/>.
+            </summary>
+            <returns>
+            The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.Tab"/> enumeration value.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets the name of the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> that is associated
+            with this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName"/>.
+            </summary>
+            <returns>
+            A "RadTabControl" string.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetClickablePointCore">
+            <summary>
+            Gets a <see cref="T:System.Windows.Point"/> that represents the clickable space
+            that is on the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> that is associated with
+            this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClickablePoint"/>.
+            </summary>
+            <returns>
+            The <see cref="T:System.Windows.Point"/> on the element that allows a click.
+            The point values are (<see cref="F:System.Double.NaN"/>, <see cref="F:System.Double.NaN"/>)
+            if the element is not both a <see cref="T:System.Windows.Interop.HwndSource"/>
+            and a <see cref="T:System.Windows.PresentationSource"/>.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.GetChildrenCore">
+            <summary>
+            Gets the collection of <see cref="T:Telerik.Windows.Controls.AutomationPeer"/> elements that are associated with
+            children <see cref="T:Telerik.Windows.Controls.RadRibbonTab"/> elements of the owner
+            <see cref="T:Telerik.Windows.Controls.RadRibbonView"/>.
+            This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetChildren"/>.
+            </summary>
+            <returns>
+            The collection of child elements.
+            </returns>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.IsSelectionRequired">
+            <summary>
+            ISelectionProvider implementation.
+            Gets a value that specifies whether the UI Automation provider requires at least
+            one child element to be selected.
+            </summary>
+            <returns>true if selection is required; otherwise false.
+            </returns>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonView.AutomationPeers.RibbonViewAutomationPeer.CanSelectMultiple">
+            <summary>
+            ISelectionProvider implementation.
+            Gets a value that specifies whether the UI Automation provider allows more than
+            one child element to be selected concurrently.
+            </summary>
+            <returns>true if multiple selection is allowed; otherwise false.
+            </returns>
+        </member>
+        <member name="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer">
+            <summary>
+            Automation peer class for WindowTitle class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer.#ctor(Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer"/> class.
+            </summary>
+            <param name="owner"></param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer.GetNameCore">
+            <summary>
+            Gets the text label of the <see cref="T:Telerik.Windows.Controls.RadRibbonView"/> that
+            is associated with this <see cref="T:Telerik.Windows.Controls.RibbonViewAutomationPeer"/>.
+            Called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetName"/>.
+            </summary>
+            <returns>
+            The text label of the element that is associated with this automation peer.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer.GetClassNameCore">
+            <summary>
+            Gets a human readable name that, in addition to AutomationControlType, differentiates the control represented by this AutomationPeer.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.AutomationPeers.WindowTitleAutomationPeer.GetAutomationControlTypeCore">
+            <summary>
+            Gets the control type for the element that is associated with the UI Automation peer.
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Telerik.Windows.Controls.BackstageContainerStyle">
             <summary>
@@ -1010,6 +1398,21 @@
             This is a dependency property.
             </summary>
         </member>
+        <member name="T:Telerik.Windows.Controls.RibbonCommands">
+            <summary>
+            Available Ribbon Routed commands.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonCommands.MinimizeRibbonCommand">
+            <summary>
+            Gets the Minimize ribbon routed command.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RibbonCommands.ToggleQATPositionCommand">
+            <summary>
+            Gets the Toggle ribbon's QAT position routed command.
+            </summary>
+        </member>
         <member name="T:Telerik.Windows.Controls.RibbonView.KeyTipActivation">
             <summary>
             Class used to attach event handlers to execute when key tip is activated.
@@ -1034,6 +1437,20 @@
             <summary>
             Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.KeyTips.KeyTipControl"/> class.
             </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.KeyTips.KeyTipControl.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.KeyTips.KeyTipControl.MeasureOverride(System.Windows.Size)">
+            <summary>
+            Called to remeasure a control.
+            </summary>
+            <param name="constraint">The maximum size that the method can return.</param>
+            <returns>
+            The size of the control, up to the maximum specified by <paramref name="constraint"/>.
+            </returns>
         </member>
         <member name="T:Telerik.Windows.Controls.RibbonView.KeyTipService">
             <summary>
@@ -1296,9 +1713,14 @@
             Identifies the IsContextualTabVisible property.
             </summary>
         </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonTab.HeaderVisibilityProperty">
+            <summary>
+            Identifies the HeaderVisibility property.
+            </summary>
+        </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonTab.IsSelectedProperty">
             <summary>
-                Identifies the <c cref="P:Telerik.Windows.Controls.RadRibbonTab.IsSelected"/> property.
+            Identifies the <c cref="P:Telerik.Windows.Controls.RadRibbonTab.IsSelected"/> property.
             </summary>
             <seealso cref="P:Telerik.Windows.Controls.RadTabItem.IsSelected"/>
         </member>
@@ -1337,6 +1759,11 @@
         <member name="M:Telerik.Windows.Controls.RadRibbonTab.OnUnselected(Telerik.Windows.RadRoutedEventArgs)">
             <summary>
             Called when the item is unselected.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonTab.ResetTheme">
+            <summary>
+            Resets the theme.
             </summary>
         </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonTab.ChangeVisualState(System.Boolean)">
@@ -1378,6 +1805,12 @@
             <param name="element">Element used to display the specified item.</param>
             <param name="item">Specified item.</param>
         </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonTab.OnCreateAutomationPeer">
+            <summary>
+            Creates a RadTabItemAutoamtionPeer.
+            </summary>
+            <returns>A new isntance of the RadTabItemAutomationPeer.</returns>
+        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonTab.GetContainerForItemOverride">
             <summary>
             Creates or identifies the element that is used to display the given item.
@@ -1389,6 +1822,11 @@
         <member name="M:Telerik.Windows.Controls.RadRibbonTab.IsItemItsOwnContainerOverride(System.Object)">
             <summary>
             Determines if the specified item is (or is eligible to be) its own container.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonTab.HeaderVisibility">
+            <summary>
+            Gets or sets a value indicating whether the header of the tab will be visible.
             </summary>
         </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonTab.MinimizedBackground">
@@ -1557,6 +1995,12 @@
             </summary>
             <param name="e">The data for the event.</param>
         </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonBackstageItem.OnMouseMove(System.Windows.Input.MouseEventArgs)">
+            <summary>
+            Called before the <see cref="E:System.Windows.UIElement.MouseMove"/> event occurs.
+            </summary>
+            <param name="e">The data for the event.</param>
+        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonBackstageItem.OnMouseLeave(System.Windows.Input.MouseEventArgs)">
             <summary>
             Called before the <see cref="E:System.Windows.UIElement.MouseLeave"/> event occurs.
@@ -1663,6 +2107,16 @@
             Identifies the IsActive property.
             </summary>
         </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonContextualGroup.IsFixedSizeProperty">
+            <summary>
+            Identifies the IsFixedSize property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonContextualGroup.SelectFirstTabOnActivationProperty">
+            <summary>
+            Identifies the SelectFirstTabOnActivation property.
+            </summary>
+        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonContextualGroup.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RadRibbonContextualGroup"/> class.
@@ -1696,7 +2150,17 @@
         </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonContextualGroup.IsActive">
             <summary>
-            Gets or sets the base color used for the tabs header and content background brush.
+            Gets or sets whether the group is active (visible) or not.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonContextualGroup.IsFixedSize">
+            <summary>
+            Gets or sets whether the group's size is fixed by the contextual tabs' size.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonContextualGroup.SelectFirstTabOnActivation">
+            <summary>
+            Gets or sets whether the first contextual tab should be selected on activation of the group.
             </summary>
         </member>
         <member name="T:Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle">
@@ -1728,6 +2192,20 @@
             <summary>
             Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle"/> class.
             </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.
+            </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle.OnCreateAutomationPeer">
+            <summary>
+            Creates an appropriate WindowTitleAutomationPeer for this control as part of the WPF/Silverlight infrastructure. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Telerik.Windows.Controls.RibbonView.Primitives.WindowTitle.ApplicationName">
             <summary>
@@ -1780,6 +2258,11 @@
         <member name="M:Telerik.Windows.Controls.RadRibbonComboBox.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.RadRibbonComboBox"/> class.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonComboBox.ResetTheme">
+            <summary>
+            Resets the theme.
             </summary>
         </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonComboBox.GetContainerForItemOverride">
@@ -1877,6 +2360,12 @@
             <returns>
             The size that this object determines it needs during layout, based on its calculations of child object allotted sizes.
             </returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadCollapsiblePanel.OnCreateAutomationPeer">
+            <summary>
+            Creates default FrameworkElementAutomationPeer for the panel. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Telerik.Windows.Controls.RadGallery">
             <summary>
@@ -2093,10 +2582,27 @@
             Represents a variant for a Group control. 
             </summary>
         </member>
+        <member name="F:Telerik.Windows.Controls.GroupVariant.PriorityProperty">
+            <summary>
+            Identifies the Priority property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.GroupVariant.VariantProperty">
+            <summary>
+            Identifies the Variant property.
+            </summary>
+        </member>
         <member name="M:Telerik.Windows.Controls.GroupVariant.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.GroupVariant"/> class.
             </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.GroupVariant.#ctor(Telerik.Windows.Controls.RibbonGroupVariant,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Telerik.Windows.Controls.GroupVariant"/> class.
+            </summary>
+            <param name="variant">The variant.</param>
+            <param name="priority">The priority.</param>
         </member>
         <member name="M:Telerik.Windows.Controls.GroupVariant.#ctor(Telerik.Windows.Controls.RadRibbonGroup,Telerik.Windows.Controls.RibbonGroupVariant,System.Int32)">
             <summary>
@@ -2215,6 +2721,11 @@
             When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass) call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>.
             </summary>
         </member>
+        <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.RibbonScrollViewer.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
         <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.RibbonScrollViewer.MeasureOverride(System.Windows.Size)">
             <summary>
             Called when the control is measured.
@@ -2259,12 +2770,6 @@
             Raises the <see cref="E:LaunchDialog"/> event.
             </summary>
             <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.GroupChrome.OnCreateAutomationPeer">
-            <summary>
-            Creates Automation Peer for a GroupChrome.
-            </summary>
-            <returns></returns>
         </member>
         <member name="M:Telerik.Windows.Controls.RibbonView.Primitives.GroupChrome.OnMouseEnter(System.Windows.Input.MouseEventArgs)">
             <summary>
@@ -2384,6 +2889,31 @@
             When overridden in a derived class, is invoked whenever application code or internal processes (such as a rebuilding layout pass)
             call <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>.
             </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.QuickAccessToolBar.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.QuickAccessToolBar.PrepareContainerForItemOverride(System.Windows.DependencyObject,System.Object)">
+            <summary>
+            Prepares the specified element to display the specified item.
+            </summary>
+            <param name="element">Element used to display the specified item.</param>
+            <param name="item">Specified item.</param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.QuickAccessToolBar.OnIsOverflowOpened(System.Boolean,System.Boolean)">
+            <summary>
+            Called when IsOverflowOpen property changes.
+            </summary>
+            <param name="oldValue">The old value of the property.</param>
+            <param name="newValue">The new value of the property.</param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.QuickAccessToolBar.OnCreateAutomationPeer">
+            <summary>
+            Creates an appropriate QuickAccessToolBarAutomationPeer for this control as part of the WPF/Silverlight infrastructure. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:Telerik.Windows.Controls.QuickAccessToolBar.Position">
             <summary>
@@ -2598,6 +3128,11 @@
             Identifies the SeparatorStyle property.
             </summary>
         </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonGroup.VariantsSourceProperty">
+            <summary>
+            Identifies the VariantsSource property.
+            </summary>
+        </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonGroup.LaunchDialogEvent">
             <summary>
             Identifies the LaunchDialog routed event.
@@ -2615,11 +3150,22 @@
             <see cref="M:System.Windows.Controls.Control.ApplyTemplate"/>.
             </summary>
         </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonGroup.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonGroup.OnLaunchDialog(Telerik.Windows.RadRoutedEventArgs)">
             <summary>
             Raises the <see cref="E:LaunchDialog"/> event.
             </summary>
             <param name="e">The <see cref="T:Telerik.Windows.RadRoutedEventArgs"/> instance containing the event data.</param>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonGroup.OnCreateAutomationPeer">
+            <summary>
+            Creates an appropriate RibbonGroupAutomationPeer for this control as part of the WPF/Silverlight infrastructure. 
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonGroup.MeasureOverride(System.Windows.Size)">
             <summary>
@@ -2672,6 +3218,12 @@
             </summary>
             <value>The variants.</value>
         </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonGroup.VariantsSource">
+            <summary>
+            Gets the variants source.
+            </summary>
+            <value>The variants source.</value>
+        </member>
         <member name="T:Telerik.Windows.Controls.RadRibbonView">
             <summary>
             Represents a Ribbon control.
@@ -2686,6 +3238,11 @@
             <summary>
             When overridden in a derived class, is invoked whenever application code
             or internal processes (such as a rebuilding layout pass) call System.Windows.Controls.Control.ApplyTemplate().
+            </summary>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonView.ResetTheme">
+            <summary>
+            Resets the theme.
             </summary>
         </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonView.OnToolBarPositionChanged(Telerik.Windows.RadRoutedEventArgs)">
@@ -2735,12 +3292,6 @@
             </summary>
             <param name="item">The item to check.</param>
         </member>
-        <member name="M:Telerik.Windows.Controls.RadRibbonView.UpdateSelectedContentProperties">
-            <summary>
-            Updates the selected content properties. This method must be implemented appropriately in the deriving class.
-            Selected content properties are used when representing the content of selected tab item.
-            </summary>
-        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonView.PrepareContainerForItemOverride(System.Windows.DependencyObject,System.Object)">
             <summary>
             Prepares the specified element to display the specified item.
@@ -2761,6 +3312,12 @@
             </summary>
             <param name="e"></param>
         </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonView.OnItemsChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Called when the value of the <see cref="P:System.Windows.Controls.ItemsControl.Items"/> property changes.
+            </summary>
+            <param name="e">A <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> that contains the event data.</param>
+        </member>
         <member name="M:Telerik.Windows.Controls.RadRibbonView.OnKeyUp(System.Windows.Input.KeyEventArgs)">
             <summary>
             Called when any Key have been pressed.
@@ -2772,6 +3329,27 @@
             Returns a new instance of the control that implements the <see cref="T:Telerik.Windows.Controls.TabControl.IRadTabItem"/> interface.
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Telerik.Windows.Controls.RadRibbonView.OnCreateAutomationPeer">
+            <summary>
+            Creates a <see cref="T:Telerik.Windows.Controls.RadTabControlAutomationPeer"/> peer associated with this object.
+            </summary>
+            <returns> An instance of the <see cref="T:Telerik.Windows.Controls.RadTabControlAutomationPeer"/>.</returns>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonView.HelpCommandProperty">
+            <summary>
+            Identifies the HelpCommand dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonView.HelpCommandParameterProperty">
+            <summary>
+            Identifies the HelpCommandParameter dependency property.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonView.HelpCommandTargetProperty">
+            <summary>
+            Identifies the HelpCommandTarget dependency property.
+            </summary>
         </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonView.SelectedTabProperty">
             <summary>
@@ -2923,11 +3501,6 @@
             Identifies the Title property.
             </summary>
         </member>
-        <member name="F:Telerik.Windows.Controls.RadRibbonView.TitleBarStyleProperty">
-            <summary>
-            Identifies the TitleStyle Dependency Property.
-            </summary>        
-        </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonView.TabStripAdditionalContentProperty">
             <summary>
             Identifies the TabStripAdditionalContent property.
@@ -2943,6 +3516,11 @@
             Identifies the ContextualTabsStyleProperty property.
             </summary>
         </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonView.ContextualGroupsStyleProperty">
+            <summary>
+            Identifies the ContextualGroupsStyleProperty property.
+            </summary>
+        </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonView.HelpRequestedEvent">
             <summary>
             Identifies the HelpRequested routed event.
@@ -2956,6 +3534,11 @@
         <member name="F:Telerik.Windows.Controls.RadRibbonView.MinimizedChangedEvent">
             <summary>
             Identifies the MinimizedChanged routed event.
+            </summary>
+        </member>
+        <member name="F:Telerik.Windows.Controls.RadRibbonView.PreviewMinimizedChangedEvent">
+            <summary>
+            Identifies the PreviewMinimizedChanged routed event.
             </summary>
         </member>
         <member name="F:Telerik.Windows.Controls.RadRibbonView.MinimizedPopupStateChangedEvent">
@@ -2998,6 +3581,11 @@
             Occurs when ribbon bar minimized state has changed.
             </summary>
         </member>
+        <member name="E:Telerik.Windows.Controls.RadRibbonView.PreviewMinimizedChanged">
+            <summary>
+            Occurs before ribbon bar minimized state has changed.
+            </summary>
+        </member>
         <member name="E:Telerik.Windows.Controls.RadRibbonView.MinimizedPopupOpenStateChanged">
             <summary>
             Occurs when ribbon bar minimized popup open state has changed.
@@ -3036,6 +3624,21 @@
         <member name="E:Telerik.Windows.Controls.RadRibbonView.DropDownClosed">
             <summary>
             This property does not apply to RibbonView. 
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonView.HelpCommand">
+            <summary>
+            Gets or sets the command that will be executed when the command source is invoked.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonView.HelpCommandParameter">
+            <summary>
+            Represents a user defined data value that can be passed to the command when it is executed.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonView.HelpCommandTarget">
+            <summary>
+            The object that the command is being executed on.
             </summary>
         </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonView.IsMinimized">
@@ -3175,11 +3778,6 @@
             This property does not apply to RibbonView. 
             </summary>
         </member>
-        <member name="P:Telerik.Windows.Controls.RadRibbonView.PropagateItemDataContextToContent">
-            <summary>
-            This property does not apply to RibbonView. 
-            </summary>
-        </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonView.ReorderTabRows">
             <summary>
             This property does not apply to RibbonView. 
@@ -3234,7 +3832,13 @@
             <summary>
             Gets or sets the contextual tab's style.
             </summary>
-            <value>The HelpButtonStyle.</value>
+            <value>The ContextualTabsStyle.</value>
+        </member>
+        <member name="P:Telerik.Windows.Controls.RadRibbonView.ContextualGroupsStyle">
+            <summary>
+            Gets or sets the contextual group's style.
+            </summary>
+            <value>The ContextualGroupsStyle.</value>
         </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonView.MinimizeButtonStyle">
             <summary>
@@ -3270,11 +3874,6 @@
             Gets or sets the title bar Visibility.
             </summary>
             <value>The title bar Visibility.</value>
-        </member>
-        <member name="P:Telerik.Windows.Controls.RadRibbonView.TitleBarStyle">
-            <summary>
-            Gets or sets the style used by the TitleBar area, including the ApplicationName.
-            </summary>
         </member>
         <member name="P:Telerik.Windows.Controls.RadRibbonView.MinimizeButtonVisibility">
             <summary>
@@ -3523,6 +4122,11 @@
             Builds the visual tree for the <see cref="T:System.Windows.Controls.ToolTip"/> when a new template is applied.
             </summary>
         </member>
+        <member name="M:Telerik.Windows.Controls.ScreenTip.ResetTheme">
+            <summary>
+            Resets the theme.
+            </summary>
+        </member>
         <member name="P:Telerik.Windows.Controls.ScreenTip.Description">
             <summary>
             Gets or sets the description.
@@ -3611,6 +4215,12 @@
             The size that this object determines it needs during layout, based on its calculations of child object allotted sizes.
             </returns>
         </member>
+        <member name="M:Telerik.Windows.Controls.RadOrderedWrapPanel.OnCreateAutomationPeer">
+            <summary>
+            Creates default FrameworkElementAutomationPeer for the panel. 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Telerik.Windows.Controls.RadOrderedWrapPanel.CompressedThreshold">
             <summary>
             Gets or sets the compressed threshold.
@@ -3639,6 +4249,42 @@
             The value of this prioperty is ignored when in compressed state.
             </remarks>
             <value>The item spacing.</value>
+        </member>
+        <member name="T:Telerik.Windows.Controls.strings">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.RibbonViewQATCustomize">
+            <summary>
+              Looks up a localized string similar to Customize Quick Access Toolbar.
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.RibbonViewQATMinimize">
+            <summary>
+              Looks up a localized string similar to Minimize the Ribbon..
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.RibbonViewQATShowBelow">
+            <summary>
+              Looks up a localized string similar to Show Below the Ribbon..
+            </summary>
+        </member>
+        <member name="P:Telerik.Windows.Controls.strings.RibbonViewQATMaximize">
+            <summary>
+              Looks up a localized string similar to Maximize the Ribbon..
+            </summary>
         </member>
     </members>
 </doc>
