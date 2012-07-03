@@ -63,17 +63,7 @@
                         HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" >
                         <Image Source="../Images/Print.png" />
-                    </Button>
-                    <!--Zoom Controls-->
-                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="15" Width="15" HorizontalAlignment="Center" 
-                               Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In" >
-                        <Image Source="../Images/zoom_in.png"  />
-                    </telerik:RadButton>
-
-                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="15" Width="15" HorizontalAlignment="Center" 
-                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
-                        <Image Source="../Images/zoom_out.png"  />
-                    </telerik:RadButton>
+                    </Button>                   
                 </Grid>
             </telerik:RadExpander.Header>
             <telerik:RadExpander.Content>
@@ -82,11 +72,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                    <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                         HorizontalAlignment="Stretch" 
-                                         ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}" 
-                                         SelectionChanged="cmbTime_SelectionChanged"/>
+                   
                 </Grid>
             </telerik:RadExpander.Content>
         </telerik:RadExpander>

@@ -1557,30 +1557,31 @@
           
           <FunctionImportMapping FunctionImportName="GetConsensusEstimateData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimateData">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateMedianData">
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
-                <ScalarProperty Name="ESTIMATE_TYPE" ColumnName="ESTIMATE_TYPE" />
-                <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
-                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
-                <ScalarProperty Name="LOW" ColumnName="LOW" />
-                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
-                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
-                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+				<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateMedianData">
+					<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+					<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+					<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+					<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+					<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+					<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+					<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+					<ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+					<ScalarProperty Name="ESTIMATE_TYPE" ColumnName="ESTIMATE_TYPE" />
+					<ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+					<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+					<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+					<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+					<ScalarProperty Name="HIGH" ColumnName="HIGH" />
+					<ScalarProperty Name="LOW" ColumnName="LOW" />
+					<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+					<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+					<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+				</ComplexTypeMapping>
 </ResultMapping>
 </FunctionImportMapping>
           
           <FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
-            <ResultMapping>
+           
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimatesSummaryData">
                 <ScalarProperty Name="NetIncome" ColumnName="NetIncome" />

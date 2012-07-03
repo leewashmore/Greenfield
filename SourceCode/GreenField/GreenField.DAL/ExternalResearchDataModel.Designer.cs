@@ -683,50 +683,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="issuer_Id">No Metadata Documentation available.</param>
-        /// <param name="periodType">No Metadata Documentation available.</param>
-        /// <param name="currency">No Metadata Documentation available.</param>
-        public ObjectResult<ConsensusEstimateMedianData> GetConsensusEstimateData(global::System.String issuer_Id, global::System.String periodType, global::System.String currency)
-        {
-            ObjectParameter issuer_IdParameter;
-            if (issuer_Id != null)
-            {
-                issuer_IdParameter = new ObjectParameter("Issuer_Id", issuer_Id);
-            }
-            else
-            {
-                issuer_IdParameter = new ObjectParameter("Issuer_Id", typeof(global::System.String));
-            }
-    
-            ObjectParameter periodTypeParameter;
-            if (periodType != null)
-            {
-                periodTypeParameter = new ObjectParameter("periodType", periodType);
-            }
-            else
-            {
-                periodTypeParameter = new ObjectParameter("periodType", typeof(global::System.String));
-            }
-    
-            ObjectParameter currencyParameter;
-            if (currency != null)
-            {
-                currencyParameter = new ObjectParameter("currency", currency);
-            }
-            else
-            {
-                currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<ConsensusEstimateMedianData>("GetConsensusEstimateData", issuer_IdParameter, periodTypeParameter, currencyParameter);
-        }
-
-        
-        
-        
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="security">No Metadata Documentation available.</param>
         public ObjectResult<ConsensusEstimatesSummaryData> GetConsensusEstimatesSummaryData(global::System.String security)
         {
@@ -771,6 +727,47 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<QuarterlyResults>("usp_GetQuarterlyResults", dataIdParameter, periodYearParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuer_Id">No Metadata Documentation available.</param>
+        /// <param name="periodType">No Metadata Documentation available.</param>
+        /// <param name="currency">No Metadata Documentation available.</param>
+        public ObjectResult<ConsensusEstimateMedianData> GetConsensusEstimateData(global::System.String issuer_Id, global::System.String periodType, global::System.String currency)
+        {
+            ObjectParameter issuer_IdParameter;
+            if (issuer_Id != null)
+            {
+                issuer_IdParameter = new ObjectParameter("Issuer_Id", issuer_Id);
+            }
+            else
+            {
+                issuer_IdParameter = new ObjectParameter("Issuer_Id", typeof(global::System.String));
+            }
+    
+            ObjectParameter periodTypeParameter;
+            if (periodType != null)
+            {
+                periodTypeParameter = new ObjectParameter("periodType", periodType);
+            }
+            else
+            {
+                periodTypeParameter = new ObjectParameter("periodType", typeof(global::System.String));
+            }
+    
+            ObjectParameter currencyParameter;
+            if (currency != null)
+            {
+                currencyParameter = new ObjectParameter("currency", currency);
+            }
+            else
+            {
+                currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ConsensusEstimateMedianData>("GetConsensusEstimateData", issuer_IdParameter, periodTypeParameter, currencyParameter);
         }
 
         #endregion
