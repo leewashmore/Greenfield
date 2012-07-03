@@ -81,6 +81,13 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorStatus = true;
             }
 
+            else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+            {
+                _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                        "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                BusyIndicatorStatus = true;
+            }
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
@@ -219,6 +226,12 @@ namespace GreenField.Gadgets.ViewModels
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
 
                     else
                     {
@@ -255,6 +268,12 @@ namespace GreenField.Gadgets.ViewModels
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
                 }
                 else
                 {
@@ -289,6 +308,12 @@ namespace GreenField.Gadgets.ViewModels
                                                        _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
             }
             catch (Exception ex)
             {
@@ -318,6 +343,12 @@ namespace GreenField.Gadgets.ViewModels
                                                          _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                     BusyIndicatorStatus = true;
                 }
+                else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                {
+                    _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                            "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
             }
             catch (Exception ex)
             {
@@ -345,6 +376,12 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
