@@ -299,7 +299,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion  
         #endregion
 
         #region Event Handlers

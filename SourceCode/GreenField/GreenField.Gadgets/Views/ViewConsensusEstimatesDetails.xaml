@@ -46,7 +46,8 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator>
+    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
+                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" FontFamily="Arial" FontSize="7">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
