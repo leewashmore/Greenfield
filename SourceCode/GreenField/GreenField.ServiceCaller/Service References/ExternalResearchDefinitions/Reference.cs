@@ -685,6 +685,15 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> EndRetrieveTargetPriceData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianDat" +
+            "a", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianDat" +
+            "aResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianDat" +
+            "aServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveConsensusEstimatesMedianData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> EndRetrieveConsensusEstimatesMedianData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDa" +
             "ta", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryDa" +
             "taResponse")]
@@ -823,6 +832,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveConsensusEstimatesMedianDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveConsensusEstimatesMedianDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveConsensusEstimatesSummaryDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -898,6 +926,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private EndOperationDelegate onEndRetrieveTargetPriceDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveTargetPriceDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveConsensusEstimatesMedianDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveConsensusEstimatesMedianDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveConsensusEstimatesMedianDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveConsensusEstimatesSummaryDataDelegate;
         
@@ -975,6 +1009,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveBasicDataCompletedEventArgs> RetrieveBasicDataCompleted;
         
         public event System.EventHandler<RetrieveTargetPriceDataCompletedEventArgs> RetrieveTargetPriceDataCompleted;
+        
+        public event System.EventHandler<RetrieveConsensusEstimatesMedianDataCompletedEventArgs> RetrieveConsensusEstimatesMedianDataCompleted;
         
         public event System.EventHandler<RetrieveConsensusEstimatesSummaryDataCompletedEventArgs> RetrieveConsensusEstimatesSummaryDataCompleted;
         
@@ -1275,6 +1311,56 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimatesMedianData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveConsensusEstimatesMedianData(issuerId, periodType, currency, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveConsensusEstimatesMedianData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveConsensusEstimatesMedianData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveConsensusEstimatesMedianData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string issuerId = ((string)(inValues[0]));
+            GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[1]));
+            string currency = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveConsensusEstimatesMedianData(issuerId, periodType, currency, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveConsensusEstimatesMedianData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveConsensusEstimatesMedianData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveConsensusEstimatesMedianDataCompleted(object state) {
+            if ((this.RetrieveConsensusEstimatesMedianDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveConsensusEstimatesMedianDataCompleted(this, new RetrieveConsensusEstimatesMedianDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveConsensusEstimatesMedianDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency) {
+            this.RetrieveConsensusEstimatesMedianDataAsync(issuerId, periodType, currency, null);
+        }
+        
+        public void RetrieveConsensusEstimatesMedianDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, object userState) {
+            if ((this.onBeginRetrieveConsensusEstimatesMedianDataDelegate == null)) {
+                this.onBeginRetrieveConsensusEstimatesMedianDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveConsensusEstimatesMedianData);
+            }
+            if ((this.onEndRetrieveConsensusEstimatesMedianDataDelegate == null)) {
+                this.onEndRetrieveConsensusEstimatesMedianDataDelegate = new EndOperationDelegate(this.OnEndRetrieveConsensusEstimatesMedianData);
+            }
+            if ((this.onRetrieveConsensusEstimatesMedianDataCompletedDelegate == null)) {
+                this.onRetrieveConsensusEstimatesMedianDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveConsensusEstimatesMedianDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveConsensusEstimatesMedianDataDelegate, new object[] {
+                        issuerId,
+                        periodType,
+                        currency}, this.onEndRetrieveConsensusEstimatesMedianDataDelegate, this.onRetrieveConsensusEstimatesMedianDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimatesSummaryData(GreenField.DataContracts.EntitySelectionData entityIdentifier, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveConsensusEstimatesSummaryData(entityIdentifier, callback, asyncState);
         }
@@ -1526,6 +1612,21 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> EndRetrieveTargetPriceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData>)(base.EndInvoke("RetrieveTargetPriceData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveConsensusEstimatesMedianData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = issuerId;
+                _args[1] = periodType;
+                _args[2] = currency;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveConsensusEstimatesMedianData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> EndRetrieveConsensusEstimatesMedianData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian>)(base.EndInvoke("RetrieveConsensusEstimatesMedianData", _args, result)));
                 return _result;
             }
             

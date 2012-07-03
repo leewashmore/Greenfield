@@ -196,6 +196,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback);
 
+        void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback);
+
         #endregion
         
 

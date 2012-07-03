@@ -160,7 +160,7 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-               
+
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 List<ConsensusEstimateDetailedData> result = null;
@@ -279,7 +279,7 @@ namespace GreenField.Web.Services
         {
             List<TargetPriceCEData> result = new List<TargetPriceCEData>();
             TargetPriceCEData data = new TargetPriceCEData();
-            
+
             if (entitySelectionData == null)
                 return new List<TargetPriceCEData>();
             DimensionEntitiesService.Entities dimensionEntity = DimensionEntity;
@@ -310,7 +310,7 @@ namespace GreenField.Web.Services
                 data.ConsensusRecommendation = item.MeanLabel;
                 data.CurrentPrice = ((item.CurrentPrice == null) ? "N/A" : item.CurrentPrice.ToString()).ToString() +
                     "( " + ((item.Currency == null) ? "N/A" : (item.Currency.ToString())).ToString() + " )";
-                data.MedianTargetPrice = ((item.Median == null) ? "N/A" : item.Median.ToString()) + 
+                data.MedianTargetPrice = ((item.Median == null) ? "N/A" : item.Median.ToString()) +
                     " ( " + ((item.TargetCurrency == null) ? "N/A" : item.TargetCurrency.ToString()) + " )";
                 data.LastUpdate = Convert.ToDateTime(item.StartDate);
                 data.NoOfEstimates = (item.NumOfEsts == null) ? "N/A" : (Convert.ToString(item.NumOfEsts));
@@ -319,9 +319,66 @@ namespace GreenField.Web.Services
                 data.StandardDeviation = (item.StdDev == null) ? "N/A" : (Convert.ToString(item.StdDev));
                 result.Add(data);
             }
-            
+
             return result;
         }
+
+        /// <summary>
+        /// Service Method for ConsensusEstimateGadget - Median
+        /// </summary>
+        /// <param name="issuerId">Issuer ID</param>
+        /// <param name="periodType">Period Type: A/Q</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <returns>Collection of ConsensusEstimateMedianData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimateMedian> RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, string currency)
+        {
+            List<ConsensusEstimateMedian> result = new List<ConsensusEstimateMedian>();
+            List<ConsensusEstimateMedianData> dbResult = new List<ConsensusEstimateMedianData>();
+            try
+            {
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                dbResult = entity.GetConsensusEstimateData(issuerId, _periodType, currency).ToList();
+
+                ConsensusEstimateMedian data = new ConsensusEstimateMedian();
+
+                foreach (ConsensusEstimateMedianData item in dbResult)
+                {
+                    data = new ConsensusEstimateMedian();
+                    data.Amount = item.AMOUNT;
+                    data.AmountType = item.AMOUNT_TYPE;
+                    data.Currency = item.CURRENCY;
+                    data.DataSource = item.DATA_SOURCE;
+                    data.DataSourceDate = item.DATA_SOURCE_DATE;
+                    data.EstimateDesc = item.ESTIMATE_DESC;
+                    data.EstimateType = item.ESTIMATE_TYPE;
+                    data.FiscalType = item.FISCAL_TYPE;
+                    data.High = item.HIGH;
+                    data.IssuerId = item.ISSUER_ID;
+                    data.Low = item.LOW;
+                    data.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                    data.PeriodEndDate = item.PERIOD_END_DATE;
+                    data.PeriodType = item.PERIOD_TYPE;
+                    data.PeriodYear = item.PERIOD_YEAR;
+                    data.SecrityId = item.SECURITY_ID;
+                    data.SourceCurrency = item.SOURCE_CURRENCY;
+                    data.StandardDeviation = item.STANDARD_DEVIATION;
+                    result.Add(data);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         #endregion
 
         #region Consensus Estimates Summary Gadget
@@ -332,8 +389,8 @@ namespace GreenField.Web.Services
             try
             {
             List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
-            DimensionEntitiesService.Entities entity = DimensionEntity;
-            ExternalResearchEntities research = new ExternalResearchEntities();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities research = new ExternalResearchEntities();
             result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
             return result;   
             }

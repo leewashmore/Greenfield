@@ -14,6 +14,9 @@ using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// Code- behind for Target Price
+    /// </summary>
     public partial class ViewTargetPrice : ViewBaseUserControl
     {
         #region Constructor

@@ -2458,7 +2458,7 @@ namespace GreenField.ServiceCaller
         /// Service Caller Method to Retrieve Data for TargetPriceGadget(ConsensusEstimates)
         /// </summary>
         /// <param name="callback"></param>
-        public void RetrieveTargetPriceData(EntitySelectionData entitySelectionData,Action<List<TargetPriceCEData>> callback)
+        public void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -2496,6 +2496,49 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// ServiceCaller Method for ConsesnsuEstimatesGadget- Median
+        /// </summary>
+        /// <param name="issuerId">Issuer ID</param>
+        /// <param name="periodType">Selected Period Type</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <param name="callback">Collection of ConsensusEstimateMedian</param>
+        public void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveConsensusEstimatesMedianDataAsync(issuerId, periodType, currency);
+            client.RetrieveConsensusEstimatesMedianDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
 
         //public void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback)
         //{
@@ -2545,7 +2588,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveConsensusEstimateDetailedDataAsync(issuerId,periodType,currency);
+            client.RetrieveConsensusEstimateDetailedDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimateDetailedDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -2626,7 +2669,7 @@ namespace GreenField.ServiceCaller
 
         #region Internal Research
 
-        public void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData,Action<List<ConsensusEstimatesSummaryData>> callback)
+        public void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

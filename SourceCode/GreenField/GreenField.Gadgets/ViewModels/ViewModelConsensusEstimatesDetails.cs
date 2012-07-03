@@ -118,6 +118,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Issuer Details
+
         /// <summary>
         /// Stores Issuer related data
         /// </summary>
@@ -305,6 +306,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
+
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -334,11 +336,11 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
         #endregion
-
-        
-
+                
         #region Callback Methods
+
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

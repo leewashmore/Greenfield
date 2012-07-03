@@ -79,4 +79,33 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TargetPriceCEData" nillable="true" type="tns:TargetPriceCEData" />
+  <xs:complexType name="ArrayOfConsensusEstimateMedian">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimateMedian" nillable="true" type="tns:ArrayOfConsensusEstimateMedian" />
+  <xs:complexType name="ConsensusEstimateMedian">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EstimateDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FiscalType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PeriodEndDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SecrityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
 </xs:schema>
