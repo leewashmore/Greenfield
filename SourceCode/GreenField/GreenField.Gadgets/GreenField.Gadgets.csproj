@@ -180,6 +180,7 @@
     <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioRiskReturns.cs" />
+    <Compile Include="ViewModels\ViewModelPRevenue.cs" />
     <Compile Include="ViewModels\ViewModelQuarterlyResultsComparison.cs" />
     <Compile Include="ViewModels\ViewModelRegionBreakdown.cs" />
     <Compile Include="ViewModels\ViewModelRelativePerformance.cs" />
@@ -244,6 +245,9 @@
     </Compile>
     <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
       <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPRevenue.xaml.cs">
+      <DependentUpon>ViewPRevenue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewQuarterlyResultsComparison.xaml.cs">
       <DependentUpon>ViewQuarterlyResultsComparison.xaml</DependentUpon>
@@ -397,6 +401,10 @@
     <Page Include="Views\ViewPortfolioDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewPRevenue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewQuarterlyResultsComparison.xaml">
       <SubType>Designer</SubType>
