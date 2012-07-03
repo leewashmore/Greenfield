@@ -2293,7 +2293,7 @@ namespace GreenField.Web.Services
                         int noOfMonths = effectiveDate.Month;
                         for (int i = 1; i < noOfMonths; i++)
                         {
-                            DateTime newDate = new DateTime(effectiveDate.Year, noOfMonths, DateTime.DaysInMonth(effectiveDate.Year, noOfMonths));
+                            DateTime newDate = new DateTime(effectiveDate.Year, i, DateTime.DaysInMonth(effectiveDate.Year, i));
                             listOfEffectiveDatesYTD.Add(newDate);
                         }
                         if (!listOfEffectiveDatesYTD.Contains(effectiveDate))
