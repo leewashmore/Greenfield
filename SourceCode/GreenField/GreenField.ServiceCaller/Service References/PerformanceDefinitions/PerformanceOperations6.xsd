@@ -16,6 +16,7 @@
       <xs:element minOccurs="0" name="MTDReturn" type="xs:decimal" />
       <xs:element minOccurs="0" name="OneYearReturn" type="xs:decimal" />
       <xs:element minOccurs="0" name="QTDReturn" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SortId" type="xs:int" />
       <xs:element minOccurs="0" name="ThreeYearReturn" type="xs:decimal" />
       <xs:element minOccurs="0" name="YTDReturn" type="xs:decimal" />
     </xs:sequence>

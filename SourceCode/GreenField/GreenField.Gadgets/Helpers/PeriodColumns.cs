@@ -889,7 +889,6 @@ namespace GreenField.Gadgets.Helpers
                         SUB_DATA_DESC = "High",
                     };
 
-
                     if (yearTwoData != null)
                         highPeriodColumnData.YEAR_TWO = yearTwoData.HIGH;
                     if (yearThreeData != null)
@@ -912,6 +911,99 @@ namespace GreenField.Gadgets.Helpers
                         highPeriodColumnData.QUARTER_SIX = quarterSixData.HIGH;
 
                     result.Add(highPeriodColumnData);
+                    #endregion
+
+                    #region Low
+                    PeriodColumnDisplayData lowPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Low",
+                    };
+
+                    if (yearTwoData != null)
+                        lowPeriodColumnData.YEAR_TWO = yearTwoData.LOW;
+                    if (yearThreeData != null)
+                        lowPeriodColumnData.YEAR_THREE = yearThreeData.LOW;
+                    if (yearFourData != null)
+                        lowPeriodColumnData.YEAR_FOUR = yearFourData.LOW;
+                    if (yearFiveData != null)
+                        lowPeriodColumnData.YEAR_FIVE = yearFiveData.LOW;
+                    if (yearSixData != null)
+                        lowPeriodColumnData.YEAR_SIX = yearSixData.LOW;
+                    if (quarterTwoData != null)
+                        lowPeriodColumnData.QUARTER_TWO = quarterTwoData.LOW;
+                    if (quarterThreeData != null)
+                        lowPeriodColumnData.QUARTER_THREE = quarterThreeData.LOW;
+                    if (quarterFourData != null)
+                        lowPeriodColumnData.QUARTER_FOUR = quarterFourData.LOW;
+                    if (quarterFiveData != null)
+                        lowPeriodColumnData.QUARTER_FIVE = quarterFiveData.LOW;
+                    if (quarterSixData != null)
+                        lowPeriodColumnData.QUARTER_SIX = quarterSixData.LOW;
+
+                    result.Add(lowPeriodColumnData);
+                    #endregion
+
+                    #region Std. Dev
+                    PeriodColumnDisplayData stdDevPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Std Dev",
+                    };
+
+                    if (yearTwoData != null)
+                        stdDevPeriodColumnData.YEAR_TWO = yearTwoData.STANDARD_DEVIATION;
+                    if (yearThreeData != null)
+                        stdDevPeriodColumnData.YEAR_THREE = yearThreeData.STANDARD_DEVIATION;
+                    if (yearFourData != null)
+                        stdDevPeriodColumnData.YEAR_FOUR = yearFourData.STANDARD_DEVIATION;
+                    if (yearFiveData != null)
+                        stdDevPeriodColumnData.YEAR_FIVE = yearFiveData.STANDARD_DEVIATION;
+                    if (yearSixData != null)
+                        stdDevPeriodColumnData.YEAR_SIX = yearSixData.STANDARD_DEVIATION;
+                    if (quarterTwoData != null)
+                        stdDevPeriodColumnData.QUARTER_TWO = quarterTwoData.STANDARD_DEVIATION;
+                    if (quarterThreeData != null)
+                        stdDevPeriodColumnData.QUARTER_THREE = quarterThreeData.STANDARD_DEVIATION;
+                    if (quarterFourData != null)
+                        stdDevPeriodColumnData.QUARTER_FOUR = quarterFourData.STANDARD_DEVIATION;
+                    if (quarterFiveData != null)
+                        stdDevPeriodColumnData.QUARTER_FIVE = quarterFiveData.STANDARD_DEVIATION;
+                    if (quarterSixData != null)
+                        stdDevPeriodColumnData.QUARTER_SIX = quarterSixData.STANDARD_DEVIATION;
+
+                    result.Add(stdDevPeriodColumnData);
+                    #endregion
+
+                    #region Consensus Median
+                    PeriodColumnDisplayData consensusMedianPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Consensus Median",
+                    };
+
+                    if (yearTwoData != null)
+                        consensusMedianPeriodColumnData.YEAR_TWO = yearTwoData.AMOUNT;
+                    if (yearThreeData != null)
+                        consensusMedianPeriodColumnData.YEAR_THREE = yearThreeData.AMOUNT;
+                    if (yearFourData != null)
+                        consensusMedianPeriodColumnData.YEAR_FOUR = yearFourData.AMOUNT;
+                    if (yearFiveData != null)
+                        consensusMedianPeriodColumnData.YEAR_FIVE = yearFiveData.AMOUNT;
+                    if (yearSixData != null)
+                        consensusMedianPeriodColumnData.YEAR_SIX = yearSixData.AMOUNT;
+                    if (quarterTwoData != null)
+                        consensusMedianPeriodColumnData.QUARTER_TWO = quarterTwoData.AMOUNT;
+                    if (quarterThreeData != null)
+                        consensusMedianPeriodColumnData.QUARTER_THREE = quarterThreeData.AMOUNT;
+                    if (quarterFourData != null)
+                        consensusMedianPeriodColumnData.QUARTER_FOUR = quarterFourData.AMOUNT;
+                    if (quarterFiveData != null)
+                        consensusMedianPeriodColumnData.QUARTER_FIVE = quarterFiveData.AMOUNT;
+                    if (quarterSixData != null)
+                        consensusMedianPeriodColumnData.QUARTER_SIX = quarterSixData.AMOUNT;
+
+                    result.Add(consensusMedianPeriodColumnData);
                     #endregion
 
                     #endregion

@@ -253,15 +253,12 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return _selectedCurrency; }
             set
-            {
+            {               
                 if (_selectedCurrency != value)
                 {
-                    if (_selectedCurrency != value)
-                    {
-                        _selectedCurrency = value;
-                        RaisePropertyChanged(() => this.SelectedCurrency);
-                        RetrieveConsensusEstimatesDetailsData();
-                    }
+                    _selectedCurrency = value;
+                    RaisePropertyChanged(() => this.SelectedCurrency);
+                    RetrieveConsensusEstimatesDetailsData();
                 }
             }
         }
@@ -302,7 +299,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion  
         #endregion
 
         #region Event Handlers

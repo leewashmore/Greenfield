@@ -240,6 +240,18 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="RetrieveConsensusEstimatesMedianData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesMedianData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="RetrieveConsensusEstimatesSummaryData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesSummaryData" style="document" />
       <wsdl:input>
