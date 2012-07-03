@@ -430,6 +430,54 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+        #region Historical Valuation Multiples Gadget
+        /// <summary>
+        /// Gets P/Revenue Data
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <returns>P/Revenue Data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PRevenueData> RetrievePRevenueData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<PRevenueData> result = new List<PRevenueData>();
+                string issuerId = string.Empty;
 
+                ExternalResearchEntities extResearch = new ExternalResearchEntities();
+                if (entitySelectionData == null)
+                    return null;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                //Retrieving data from security view
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();
+
+                if (data == null)
+                    return null;
+                issuerId = data.ISSUER_ID;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        #endregion
     }
 }

@@ -140,4 +140,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrievePRevenueData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q20:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePRevenueDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrievePRevenueDataResult" nillable="true" type="q21:ArrayOfPRevenueData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

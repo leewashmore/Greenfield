@@ -311,7 +311,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Filter Descriptor in Grid
         /// </summary>
-        private string _filterDescriptor;
+        private string _filterDescriptor = " ";
         public string FilterDescriptor
         {
             get

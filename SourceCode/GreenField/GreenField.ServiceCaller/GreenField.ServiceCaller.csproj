@@ -148,6 +148,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
