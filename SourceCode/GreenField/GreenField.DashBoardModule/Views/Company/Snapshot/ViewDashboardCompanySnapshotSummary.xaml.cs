@@ -126,7 +126,8 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_BASIC_DATA, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
-                Content = new ViewBasicData(new ViewModelBasicData(param))
+                Content = null
+                //new ViewBasicData(new ViewModelBasicData(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
@@ -168,7 +169,8 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
-                Content = new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
+                Content = null
+                //new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
             });
         }
     }

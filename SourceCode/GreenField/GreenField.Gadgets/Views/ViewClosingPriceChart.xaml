@@ -364,8 +364,8 @@
                                 <telerik:ChartDefaultView ChartLegendPosition="Right" >
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea  SmartLabelsEnabled="True" LegendName="chPricingLegend"
-                                                            EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
-                                                            ItemOverlapPercent="0" ItemWidthPercent="100" >
+                                                            EnableAnimations="False" NoDataString="No Data Available" 
+                                                            ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1,1,1,1" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />

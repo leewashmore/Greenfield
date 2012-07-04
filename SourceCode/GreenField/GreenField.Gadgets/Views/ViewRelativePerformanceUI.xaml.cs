@@ -24,9 +24,7 @@ namespace GreenField.Gadgets.Views
     public partial class ViewRelativePerformanceUI : ViewBaseUserControl
     {
         #region PrivateVariables
-
-
-
+        
         #endregion
 
         #region PropertyDeclaration
