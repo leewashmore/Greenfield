@@ -95,17 +95,33 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveConsensusEstimatesMedianData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="periodType" type="q15:FinancialStatementPeriodType" />
+        <xs:element minOccurs="0" name="currency" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveConsensusEstimatesMedianDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveConsensusEstimatesMedianDataResult" nillable="true" type="q16:ArrayOfConsensusEstimateMedian" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveConsensusEstimatesSummaryData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entityIdentifier" nillable="true" type="q15:EntitySelectionData" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entityIdentifier" nillable="true" type="q17:EntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveConsensusEstimatesSummaryDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveConsensusEstimatesSummaryDataResult" nillable="true" type="q16:ArrayOfConsensusEstimatesSummaryData" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveConsensusEstimatesSummaryDataResult" nillable="true" type="q18:ArrayOfConsensusEstimatesSummaryData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -120,7 +136,21 @@
   <xs:element name="RetrieveQuarterlyResultsDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveQuarterlyResultsDataResult" nillable="true" type="q17:ArrayOfQuarterlyResultsData" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveQuarterlyResultsDataResult" nillable="true" type="q19:ArrayOfQuarterlyResultsData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePRevenueData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q20:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePRevenueDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrievePRevenueDataResult" nillable="true" type="q21:ArrayOfPRevenueData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

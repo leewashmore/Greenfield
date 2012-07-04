@@ -62,6 +62,7 @@
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
     <Compile Include="DataContracts\ChartExtensionData.cs" />
+    <Compile Include="DataContracts\ConsensusEstimateMedian.cs" />
     <Compile Include="DataContracts\ConsensusEstimatesSummaryData.cs" />
     <Compile Include="DataContracts\CountrySelectionData.cs" />
     <Compile Include="DataContracts\EntitySelectionData.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="DataContracts\PortfolioDetailsData.cs" />
     <Compile Include="DataContracts\PortfolioRiskReturnData.cs" />
     <Compile Include="DataContracts\PortfolioSelectionData.cs" />
+    <Compile Include="DataContracts\PRevenueData.cs" />
     <Compile Include="DataContracts\PricingReferenceData.cs" />
     <Compile Include="DataContracts\QuarterlyResultsData.cs" />
     <Compile Include="DataContracts\ReferenceData.cs" />

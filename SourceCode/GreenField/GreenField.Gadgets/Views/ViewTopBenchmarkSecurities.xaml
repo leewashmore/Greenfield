@@ -36,7 +36,7 @@
                                      ShowColumnFooters="True"
                                      ItemsSource="{Binding TopBenchmarkSecuritiesInfo}" 
                                      CanUserSelect="True" 
-                                     ElementExporting="ElementExportingEvent"
+                                     ElementExporting="dgTopTenBenchmarkSecurities_ElementExporting"
                                      CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" 
                                      CanUserInsertRows="False" 

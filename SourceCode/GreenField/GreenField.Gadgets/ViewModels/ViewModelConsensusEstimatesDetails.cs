@@ -118,6 +118,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Issuer Details
+
         /// <summary>
         /// Stores Issuer related data
         /// </summary>
@@ -252,15 +253,12 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return _selectedCurrency; }
             set
-            {
+            {               
                 if (_selectedCurrency != value)
                 {
-                    if (_selectedCurrency != value)
-                    {
-                        _selectedCurrency = value;
-                        RaisePropertyChanged(() => this.SelectedCurrency);
-                        RetrieveConsensusEstimatesDetailsData();
-                    }
+                    _selectedCurrency = value;
+                    RaisePropertyChanged(() => this.SelectedCurrency);
+                    RetrieveConsensusEstimatesDetailsData();
                 }
             }
         }
@@ -301,10 +299,11 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion  
         #endregion
 
         #region Event Handlers
+
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -334,11 +333,11 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
         #endregion
-
-        
-
+                
         #region Callback Methods
+
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

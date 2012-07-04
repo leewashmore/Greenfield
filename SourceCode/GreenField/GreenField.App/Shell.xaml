@@ -188,7 +188,7 @@
                                 </telerik:RadRibbonDropDownButton.DropDownContent>
                             </telerik:RadRibbonDropDownButton>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                        <telerik:RadRibbonGroup Header="" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
                             <telerik:RadRibbonDropDownButton Text="Valuation" LargeImage="Images/mobilenotes.png" Size="Large" Background="#9DA6C0">
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}" >

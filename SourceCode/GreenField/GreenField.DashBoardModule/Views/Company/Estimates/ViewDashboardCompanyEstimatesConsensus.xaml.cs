@@ -83,7 +83,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES,
-                Content = null
+                Content = new ViewEstimates(new ViewModelEstimates(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

@@ -188,13 +188,15 @@ namespace GreenField.ServiceCaller
             , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
         void RetrieveQuarterlyResultsData(String fieldValue, int yearValue, Action<List<QuarterlyResultsData>> callback);
-
+        void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback);
 
         #region ConsensusEstimatesGadgets
         
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 
         void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback);
+
+        void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback);
 
         #endregion
         

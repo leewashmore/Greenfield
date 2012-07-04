@@ -164,6 +164,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Callback Methods
 
+        /// <summary>
+        /// Callback method for TargetPriceData service
+        /// </summary>
+        /// <param name="result"></param>
         public void RetrieveTargetPriceDataCallbackMethod(List<TargetPriceCEData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

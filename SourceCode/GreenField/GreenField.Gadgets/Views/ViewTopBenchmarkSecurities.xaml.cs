@@ -73,42 +73,31 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        /// <summary>
-        /// Event for Grid Export
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
-        {
-            RadGridView_ElementExport.ElementExporting(e);
-        }
-
-        /// <summary>
-        /// Method to catch Click Event of Export to Excel
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        #endregion  
+     
+        #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+            ChildExportOptions childExportOptions = new ChildExportOptions
+                (
+                new List<RadExportOptions>
                 {
-                   
-                    new RadExportOptions() { ElementName = ExportTypes.BENCHMARK_GRID, Element = this.dgTopTenSecurities, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },                    
-                    
-                };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS);
-                    childExportOptions.Show(); 
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog(ex.Message);
-            }
+                    new RadExportOptions() 
+                    {
+                        Element = this.dgTopTenSecurities,
+                        ElementName = "Top Ten Benchmark Securities",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    } 
+                }, "Export Options: " + GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS);
+            childExportOptions.Show();
         }
 
+        private void dgTopTenBenchmarkSecurities_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
 
-        #endregion       
+        #endregion
     
         #region RemoveEvents
 

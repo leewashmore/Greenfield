@@ -92,6 +92,7 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
+                                         ElementExporting="dgPortfolioDetails_ElementExporting"
                                          ScrollMode="RealTime"
                                          AlternationCount="2"
                                          MinColumnWidth="70"

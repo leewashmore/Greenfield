@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7d67fc76-2065-4f67-a139-8f54a3e9a2ba" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e1859d50-c4ca-45c7-804c-2e99a133928d" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,16 +23,16 @@
     <MetadataSource Address="http://localhost:59430/Services/ExternalResearchOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="ExternalResearchOperations.xsd" MetadataType="Schema" ID="df41203b-9b19-4d4d-9bc7-5414695f557e" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="ExternalResearchOperations.wsdl" MetadataType="Wsdl" ID="78a08b53-b1d5-4539-8439-7775c541d368" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?wsdl" />
-    <MetadataFile FileName="ExternalResearchOperations1.xsd" MetadataType="Schema" ID="df72cc95-7cd1-41da-bea7-d1cff56349be" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd3" />
-    <MetadataFile FileName="ExternalResearchOperations2.xsd" MetadataType="Schema" ID="bcf993ce-67c4-4272-b7c7-5d0f21a5e016" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="ExternalResearchOperations3.xsd" MetadataType="Schema" ID="79b1f2a3-edbd-4950-b6f2-2f4d6ce43cae" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd0" />
-    <MetadataFile FileName="ExternalResearchOperations7.xsd" MetadataType="Schema" ID="ebd5c439-6ed8-4eca-a455-6d36b1ff868c" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" />
-    <MetadataFile FileName="ExternalResearchOperations4.xsd" MetadataType="Schema" ID="fa25d91b-f6ff-49c1-99ad-86143dff9c51" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="ExternalResearchOperations5.xsd" MetadataType="Schema" ID="fb3e60d0-397b-41b2-bdac-bf7320ae9a1e" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" />
-    <MetadataFile FileName="ExternalResearchOperations.disco" MetadataType="Disco" ID="e4048b1b-6948-4602-92fb-31135ee9f46b" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?disco" />
-    <MetadataFile FileName="ExternalResearchOperations6.xsd" MetadataType="Schema" ID="93879a63-f303-4820-8f90-51278bd6a824" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd6" />
+    <MetadataFile FileName="ExternalResearchOperations.xsd" MetadataType="Schema" ID="83bf0a55-1a27-4a0d-b4c6-4ede26e92dc4" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="ExternalResearchOperations.wsdl" MetadataType="Wsdl" ID="c8135bf8-ade6-4166-80b5-f71837474c93" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?wsdl" />
+    <MetadataFile FileName="ExternalResearchOperations1.xsd" MetadataType="Schema" ID="badbbe0a-b335-4f3f-b8ff-3d87cf481db1" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="ExternalResearchOperations2.xsd" MetadataType="Schema" ID="90422f6e-b75b-4f1f-9b81-83f9623be1ae" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="ExternalResearchOperations3.xsd" MetadataType="Schema" ID="f0d560d5-130a-47e8-a0b1-aaaf255d753e" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="ExternalResearchOperations4.xsd" MetadataType="Schema" ID="d90dc281-d2bc-4e3b-b72e-86b0b6f456db" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" />
+    <MetadataFile FileName="ExternalResearchOperations5.xsd" MetadataType="Schema" ID="f9c89b5f-a8f5-4731-8d71-01900f28cf54" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="ExternalResearchOperations6.xsd" MetadataType="Schema" ID="3a0b8dde-986c-4913-ab3e-37195b4fd25f" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" />
+    <MetadataFile FileName="ExternalResearchOperations.disco" MetadataType="Disco" ID="2f77d71a-4363-4067-aa23-321fdab5785d" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?disco" />
+    <MetadataFile FileName="ExternalResearchOperations7.xsd" MetadataType="Schema" ID="97c33fc5-712c-4221-bf0a-be0828347381" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd6" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
