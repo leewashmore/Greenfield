@@ -170,6 +170,11 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive { get; set; }
         #endregion
 
         #region CallbackMethods
@@ -236,7 +241,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (PortfolioSelectionData != null)
+                if (PortfolioSelectionData != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
@@ -271,7 +276,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (effectiveDate != null)
+                if (effectiveDate != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
@@ -307,7 +312,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (selectedPeriodType != null)
+                if (selectedPeriodType != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
                     _selectedPeriod = selectedPeriodType;

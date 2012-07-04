@@ -28,24 +28,37 @@ namespace GreenField.Gadgets.Views
     public partial class ViewHeatMap : ViewBaseUserControl
 
     {
-      /// <summary>
-      /// Constant String for country performance
-      /// </summary>
-       private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
         /// <summary>
-       ///  Constant String for country YTD
+        /// Constant String for country performance
         /// </summary>
-       private const string COUNTRY_YTD_FIELD = "CountryYTD";
+        private const string COUNTRY_PERFORMANCE_FIELD = "CountryPerformance";
+        /// <summary>
+        ///  Constant String for country YTD
+        /// </summary>
+        private const string COUNTRY_YTD_FIELD = "CountryYTD";
         /// <summary>
         /// Private Collection of type Heat Map Data
         /// </summary>
-       private List<HeatMapData> _heatMapInfo;
+        private List<HeatMapData> _heatMapInfo;
         /// <summary>
         /// Private Collection of type Map Shape
         /// </summary>
-       private List<MapShape> _shapes = new List<MapShape>();
-       public MapShape mapShape;
-       private IEventAggregator _eventAggregator;
+        private List<MapShape> _shapes = new List<MapShape>();
+        public MapShape mapShape;
+        private IEventAggregator _eventAggregator;
+
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set 
+            {
+                _isActive = value;
+                if (DataContextHeatMap != null)
+                    DataContextHeatMap.IsActive = _isActive;
+            }
+        }
+
        #region Constructor
        /// <summary>
        /// Constructor
