@@ -2383,7 +2383,7 @@ namespace GreenField.Web.Services
                 {
                     case "YTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_YTD * 100;
                         Decimal? diff = data[i].F_POR_ASH_RC_CTN_YTD - data[i].F_BM1_ASH_RC_CTN_YTD;
                         CalculateHeatMapDiff(diff, ref entry);
 
@@ -2396,7 +2396,7 @@ namespace GreenField.Web.Services
                         break;
                     case "MTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_MTD;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_MTD * 100;
                         Decimal? diff1 = data[i].F_POR_ASH_RC_CTN_MTD - data[i].F_BM1_ASH_RC_CTN_MTD;
 
                         CalculateHeatMapDiff(diff1, ref entry);
@@ -2411,7 +2411,7 @@ namespace GreenField.Web.Services
 
                     case "1D":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1D;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1D * 100;
                         Decimal? diff2 = data[i].F_POR_ASH_RC_CTN_1D - data[i].F_BM1_ASH_RC_CTN_1D;
 
                         CalculateHeatMapDiff(diff2, ref entry);
@@ -2426,7 +2426,7 @@ namespace GreenField.Web.Services
 
                     case "1W":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1W;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1W  * 100;
                         Decimal? diff3 = data[i].F_POR_ASH_RC_CTN_1W - data[i].F_BM1_ASH_RC_CTN_1W;
 
                         CalculateHeatMapDiff(diff3, ref entry);
@@ -2441,7 +2441,7 @@ namespace GreenField.Web.Services
 
                     case "QTD":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_QTD;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_QTD * 100;
                         Decimal? diff4 = data[i].F_POR_ASH_RC_CTN_QTD - data[i].F_BM1_ASH_RC_CTN_QTD;
                         CalculateHeatMapDiff(diff4, ref entry);
 
@@ -2455,7 +2455,7 @@ namespace GreenField.Web.Services
 
                     case "1Y":
                         entry.CountryID = data[i].AGG_LVL_1;
-                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1Y;
+                        entry.CountryYTD = data[i].F_POR_ASH_RC_CTN_1Y * 100;
                         Decimal? diff5 = data[i].F_POR_ASH_RC_CTN_1Y - data[i].F_BM1_ASH_RC_CTN_1Y;
                         CalculateHeatMapDiff(diff5, ref entry);
 
