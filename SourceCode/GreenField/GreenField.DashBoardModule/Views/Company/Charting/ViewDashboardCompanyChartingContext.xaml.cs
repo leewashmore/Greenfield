@@ -62,7 +62,7 @@ namespace GreenField.DashboardModule.Views
             {
                  
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_BANK,
-                Content = null
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem

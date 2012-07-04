@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+	<Data Ratio="P/Revenue" Period="Trailing" DataId="206" EstimateId="206"/>
+	<Data Ratio="P/Revenue" Period="Forward" DataId="197" EstimateId="197"/>
+	<Data Ratio="P/Revenue" Period="Year" DataId="170" EstimateId="170"/>
+	<Data Ratio="P/Revenue" Period="Year + 1" DataId="170" EstimateId="170"/>
+	<Data Ratio="P/Revenue" Period="Year + 2" DataId="170" EstimateId="170"/>
+	<Data Ratio="P/Revenue" Period="Year + 3" DataId="170" EstimateId="170"/>
+
+	<Data Ratio="P/E" Period="Trailing" DataId="207" EstimateId="207"/>
+	<Data Ratio="P/E" Period="Forward" DataId="187" EstimateId="187"/>
+	<Data Ratio="P/E" Period="Year" DataId="166" EstimateId="166"/>
+	<Data Ratio="P/E" Period="Year + 1" DataId="166" EstimateId="166"/>
+	<Data Ratio="P/E" Period="Year + 2" DataId="166" EstimateId="166"/>
+	<Data Ratio="P/E" Period="Year + 3" DataId="166" EstimateId="166"/>
+
+	<Data Ratio="EV/EBITDA" Period="Trailing" DataId="208" EstimateId=""/>
+	<Data Ratio="EV/EBITDA" Period="Forward" DataId="198" EstimateId=""/>
+	<Data Ratio="EV/EBITDA" Period="Year" DataId="193" EstimateId=""/>
+	<Data Ratio="EV/EBITDA" Period="Year + 1" DataId="193" EstimateId=""/>
+	<Data Ratio="EV/EBITDA" Period="Year + 2" DataId="193" EstimateId=""/>
+	<Data Ratio="EV/EBITDA" Period="Year + 3" DataId="193" EstimateId=""/>
+
+	<Data Ratio="P/BV" Period="Trailing" DataId="209" EstimateId="209"/>
+	<Data Ratio="P/BV" Period="Forward" DataId="188" EstimateId="188"/>
+	<Data Ratio="P/BV" Period="Year" DataId="164" EstimateId="164"/>
+	<Data Ratio="P/BV" Period="Year + 1" DataId="164" EstimateId="164"/>
+	<Data Ratio="P/BV" Period="Year + 2" DataId="164" EstimateId="164"/>
+	<Data Ratio="P/BV" Period="Year + 3" DataId="164" EstimateId="164"/>
+
+	<Data Ratio="P/CE" Period="Trailing" DataId="210" EstimateId="210"/>
+	<Data Ratio="P/CE" Period="Forward" DataId="189" EstimateId="189"/>
+	<Data Ratio="P/CE" Period="Year" DataId="171" EstimateId="171"/>
+	<Data Ratio="P/CE" Period="Year + 1" DataId="171" EstimateId="171"/>
+	<Data Ratio="P/CE" Period="Year + 2" DataId="171" EstimateId="171"/>
+	<Data Ratio="P/CE" Period="Year + 3" DataId="171" EstimateId="171"/>
+
+	<Data Ratio="Free Cash Flow Yield" Period="Trailing" DataId="211" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Yield" Period="Forward" DataId="199" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Yield" Period="Year" DataId="167" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Yield" Period="Year + 1" DataId="167" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Yield" Period="Year + 2" DataId="167" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Yield" Period="Year + 3" DataId="167" EstimateId=""/>
+	
+	<Data Ratio="ROE" Period="Trailing" DataId="212" EstimateId="212"/>
+	<Data Ratio="ROE" Period="Forward" DataId="200" EstimateId="200"/>
+	<Data Ratio="ROE" Period="Year" DataId="133" EstimateId="19"/>
+	<Data Ratio="ROE" Period="Year + 1" DataId="133" EstimateId="19"/>
+	<Data Ratio="ROE" Period="Year + 2" DataId="133" EstimateId="19"/>
+	<Data Ratio="ROE" Period="Year + 3" DataId="133" EstimateId="19"/>
+
+	<Data Ratio="Revenue Growth" Period="Trailing" DataId="213" EstimateId="213"/>
+	<Data Ratio="Revenue Growth" Period="Forward" DataId="201" EstimateId="201"/>
+	<Data Ratio="Revenue Growth" Period="Year" DataId="178" EstimateId="178"/>
+	<Data Ratio="Revenue Growth" Period="Year + 1" DataId="178" EstimateId="178"/>
+	<Data Ratio="Revenue Growth" Period="Year + 2" DataId="178" EstimateId="178"/>
+	<Data Ratio="Revenue Growth" Period="Year + 3" DataId="178" EstimateId="178"/>
+
+	<Data Ratio="Net Income Growth" Period="Trailing" DataId="214" EstimateId="214"/>
+	<Data Ratio="Net Income Growth" Period="Forward" DataId="202" EstimateId="202"/>
+	<Data Ratio="Net Income Growth" Period="Year" DataId="177" EstimateId="177"/>
+	<Data Ratio="Net Income Growth" Period="Year + 1" DataId="177" EstimateId="177"/>
+	<Data Ratio="Net Income Growth" Period="Year + 2" DataId="177" EstimateId="177"/>
+	<Data Ratio="Net Income Growth" Period="Year + 3" DataId="177" EstimateId="177"/>
+
+	<Data Ratio="Net Debt/Equity" Period="Trailing" DataId="215" EstimateId="215"/>
+	<Data Ratio="Net Debt/Equity" Period="Forward" DataId="203" EstimateId="203"/>
+	<Data Ratio="Net Debt/Equity" Period="Year" DataId="149" EstimateId="149"/>
+	<Data Ratio="Net Debt/Equity" Period="Year + 1" DataId="149" EstimateId="149"/>
+	<Data Ratio="Net Debt/Equity" Period="Year + 2" DataId="149" EstimateId="149"/>
+	<Data Ratio="Net Debt/Equity" Period="Year + 3" DataId="149" EstimateId="149"/>
+	
+	<Data Ratio="ROE Growth" Period="Trailing" DataId="216" EstimateId="216"/>
+	<Data Ratio="ROE Growth" Period="Forward" DataId="204" EstimateId="204"/>
+	<Data Ratio="ROE Growth" Period="Year" DataId="163" EstimateId="163"/>
+	<Data Ratio="ROE Growth" Period="Year + 1" DataId="163" EstimateId="163"/>
+	<Data Ratio="ROE Growth" Period="Year + 2" DataId="163" EstimateId="163"/>
+	<Data Ratio="ROE Growth" Period="Year + 3" DataId="163" EstimateId="163"/>
+
+	<Data Ratio="Free Cash Flow Margin" Period="Trailing" DataId="217" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Margin" Period="Forward" DataId="205" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Margin" Period="Year" DataId="146" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Margin" Period="Year + 1" DataId="146" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Margin" Period="Year + 2" DataId="146" EstimateId=""/>
+	<Data Ratio="Free Cash Flow Margin" Period="Year + 3" DataId="146" EstimateId=""/>
+</Root>

@@ -209,7 +209,8 @@
                                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Unrealized G/L"  LargeImage="Images/context.png" Size="Large" 
                                                              Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" Background="#9DA6C0"/>
-                                        <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large" IsEnabled="False" Background="#9DA6C0"/>
+                                        <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large"
+                                                                 Command="{Binding DashboardCompanyChartingContextCommand}" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False" Background="#9DA6C0"/>
                                     </telerik:RadRibbonGroup>
                                 </telerik:RadRibbonDropDownButton.DropDownContent>

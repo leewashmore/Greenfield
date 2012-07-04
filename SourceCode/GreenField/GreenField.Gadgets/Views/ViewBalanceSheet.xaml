@@ -6,6 +6,7 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    xmlns:common="clr-namespace:GreenField.Common;assembly=GreenField.Common"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
    
@@ -15,7 +16,7 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
                     <helpers:ReportedCurrencyConverter x:Key="ReportedCurrencyConverter"/>
-                    <helpers:EnumDisplayConverter x:Key="EnumDisplayConverter"/>
+                    <common:EnumDisplayConverter x:Key="EnumDisplayConverter"/>
                     <!--GRID Buttons-->
                     <!--LeftButton-->
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellLeftButtonStyle">

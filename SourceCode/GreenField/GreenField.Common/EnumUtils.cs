@@ -14,7 +14,7 @@ using System.Linq;
 using System.ComponentModel;
 using System.Windows.Data;
 
-namespace GreenField.Gadgets.Helpers
+namespace GreenField.Common
 {
     public class EnumUtils
     {
@@ -37,7 +37,45 @@ namespace GreenField.Gadgets.Helpers
             }
 
             return result;
-        }        
+        }
+
+        public static T GetEnumFromDescription<T>(String desc)
+        {
+            Type type = typeof(T);
+
+            if (!type.IsEnum)
+                throw new ArgumentException("Type ‘" + type.Name + "’ is not an enum");
+
+            foreach (var field in type.GetFields()) 
+            { 
+                var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute; 
+                if (attribute != null)
+                {
+                    if (attribute.Description == desc) 
+                        return (T)field.GetValue(null);
+                }
+                else 
+                {
+                    if (field.Name == desc) 
+                        return (T)field.GetValue(null);
+                }
+            } 
+            
+            throw new ArgumentException("Not found.", "description"); 
+        }
+
+        public static string GetDescriptionFromEnumValue<T> (object value) 
+        {
+            Type type = typeof(T);
+
+            if (!type.IsEnum)
+                throw new ArgumentException("Type ‘" + type.Name + "’ is not an enum");
+
+            DescriptionAttribute attribute = type.GetField(((T)value).ToString())
+                .GetCustomAttributes(typeof(DescriptionAttribute), false).SingleOrDefault() as DescriptionAttribute;
+
+            return attribute == null ? ((T)value).ToString() : attribute.Description; 
+        }
     }
 
     public class EnumDisplayConverter : IValueConverter
