@@ -54,7 +54,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member to store info about look thru enabled or not
         /// </summary>
-        private bool _lookThruEnabled = false;
+        private bool _lookThruEnabled;
 
         #endregion
 
@@ -327,7 +327,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (null != holdingsPieChartForRegionDataLoadedEvent)
                             holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
+                        _dbInteractivity.RetrieveHoldingsPercentageDataForRegion(_PortfolioSelectionData, Convert.ToDateTime(EffectiveDate),"Show Everything", " ", _lookThruEnabled, RetrieveHoldingsPercentageDataForRegionCallbackMethod);
                     }
                 
                

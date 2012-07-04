@@ -2317,7 +2317,11 @@ namespace GreenField.Web.Services
 
                 throw new Exception();
 
-            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).ToList();
+
+            IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+
+            topTenBenchmarkData = topTenBenchmarkData.Distinct(customComparer).Take(10).ToList();         
 
 
             if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
@@ -2329,12 +2333,12 @@ namespace GreenField.Web.Services
                 {
                     TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
                     entry.IssuerName = topTenBenchmarkData[i].SEC_NAME.ToString();
-                    entry.Weight = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_WGT_EOD);
-                    entry.OneDayReturn = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1D);
-                    entry.WTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1W);
-                    entry.MTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_MTD);
-                    entry.QTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_QTD);
-                    entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD);
+                    entry.Weight = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_WGT_EOD) * 100;
+                    entry.OneDayReturn = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1D) * 100;
+                    entry.WTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1W) * 100;
+                    entry.MTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_MTD) * 100;
+                    entry.QTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_QTD) * 100;
+                    entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD) * 100;
                     result.Add(entry);
                 }
 

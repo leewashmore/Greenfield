@@ -13,9 +13,9 @@
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml" x:Name="BaseStyles"/>                
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>   
         <Style x:Key="ItemLabelStyle"
        TargetType="TextBlock">
         <Setter Property="Foreground"
@@ -43,56 +43,53 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Grid Grid.Column="0">              
-
-                <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
-                             telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
-                    <telerik:RadExpander.Header>
+            <Grid Grid.Column="0">
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
-                            <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
-                            <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                            <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                          </Grid.RowDefinitions>
+                            
+                            <telerik:RadButton x:Name="btnFlip" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                                 <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </telerik:RadButton>
-                            <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+                    <telerik:RadButton x:Name="btnExportExcel" Grid.Row="1" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
                                 <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </telerik:RadButton>
-                            <Rectangle Margin="5,0,0,0" Grid.Column="4" Width="1" Stroke="Gray" Opacity="0.2"/>
-                            <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
+                    <telerik:RadButton x:Name="btnZoomIn" Grid.Row="2"  Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
                                 <Image Source="../Images/zoom_in.png" Width="16" Height="16" Margin="3" />
                             </telerik:RadButton>
-                            <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
+                    <telerik:RadButton x:Name="btnZoomOut" Grid.Row="3"  Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
                                 <Image Source="../Images/zoom_out.png" Width="16" Height="16" Margin="3" />
                             </telerik:RadButton>
-                        </Grid>
-                    </telerik:RadExpander.Header>                   
-                </telerik:RadExpander>
+                        </Grid>                   
 
             </Grid>
             <Grid Grid.Column="1">
                 <Grid x:Name="grdRadGridView" >
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="True"
+                            <telerik:RadGridView Name="dgPerformanceGadget" AutoGenerateColumns="False"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                 telerik:StyleManager.Theme="Metro" Visibility="Visible"
-                                 RowLoaded="dgPerformanceGadget_RowLoaded">                                
+                                 telerik:StyleManager.Theme="Metro" Visibility="Visible" 
+                                 ElementExporting ="dgPerformanceGraph_ElementExporting"
+                                 RowLoaded="dgPerformanceGadget_RowLoaded"
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                        
+                                 AlternateRowBackground="#d8d5d4"
+                                 AlternationCount="2">                                
                             </telerik:RadGridView>
                         </Border>
                     </telerik:RadBusyIndicator>
