@@ -19,7 +19,7 @@
             <DataTemplate x:Key="CustomToolTipDataTemplate">
                 <StackPanel Margin="10,5">
                     <TextBlock FontWeight="Bold" Text="{Binding Path=Data, Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
-                    <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD'}" />
+                    <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD',StringFormat='P'}"   />
                 </StackPanel>
             </DataTemplate>
         </Grid.Resources>
@@ -35,7 +35,6 @@
                         Grid.Column="0" 
                         Grid.Row="0"
                         MouseLeftButtonUp="shape_MouseLeftButtonUp">
-
                 <telerik:RadMap.Provider>
                     <telerik:EmptyProvider />
                 </telerik:RadMap.Provider>
