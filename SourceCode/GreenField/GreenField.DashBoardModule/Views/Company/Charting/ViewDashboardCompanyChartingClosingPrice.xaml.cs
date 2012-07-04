@@ -17,11 +17,13 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Common.Helper;
+using Microsoft.Practices.Prism.Regions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashboardModule.Views
 {
     [Export, PartCreationPolicy(CreationPolicy.Shared)]
-    public partial class ViewDashboardCompanyChartingClosingPrice : UserControl
+    public partial class ViewDashboardCompanyChartingClosingPrice : UserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -54,6 +56,23 @@ namespace GreenField.DashboardModule.Views
             };
 
             this.cctrDashboardContent.Content = new ViewClosingPriceChart(new ViewModelClosingPriceChart(param));
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = false;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = true;
         }
     }
 }

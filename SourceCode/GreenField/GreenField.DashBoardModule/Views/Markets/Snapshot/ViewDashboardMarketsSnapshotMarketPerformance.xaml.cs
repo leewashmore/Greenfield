@@ -18,11 +18,12 @@ using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Regions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardMarketsSnapshotMarketPerformance : UserControl//, INavigationAware, IConfirmNavigationRequest
+    public partial class ViewDashboardMarketsSnapshotMarketPerformance : UserControl, INavigationAware//, IConfirmNavigationRequest
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -68,11 +69,15 @@ namespace GreenField.DashboardModule.Views
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = false;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = true;
         }
         #endregion
 
