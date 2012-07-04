@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 7/3/2012 2:45:34 PM
+// Generation date: 04-Jul-12 12:04:10 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -365,6 +365,23 @@ namespace GreenField.Web.DimensionEntitiesService
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
         private global::System.Data.Services.Client.DataServiceQuery<GF_TRANSACTIONS> _GF_TRANSACTIONS;
         /// <summary>
+        /// There are no comments for GF_ENVIRONMENT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Data.Services.Client.DataServiceQuery<GF_ENVIRONMENT> GF_ENVIRONMENT
+        {
+            get
+            {
+                if ((this._GF_ENVIRONMENT == null))
+                {
+                    this._GF_ENVIRONMENT = base.CreateQuery<GF_ENVIRONMENT>("GF_ENVIRONMENT");
+                }
+                return this._GF_ENVIRONMENT;
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Data.Services.Client.DataServiceQuery<GF_ENVIRONMENT> _GF_ENVIRONMENT;
+        /// <summary>
         /// There are no comments for GF_BENCHMARK_HOLDINGS in the schema.
         /// </summary>
         [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
@@ -507,6 +524,14 @@ namespace GreenField.Web.DimensionEntitiesService
         public void AddToGF_TRANSACTIONS(GF_TRANSACTIONS gF_TRANSACTIONS)
         {
             base.AddObject("GF_TRANSACTIONS", gF_TRANSACTIONS);
+        }
+        /// <summary>
+        /// There are no comments for GF_ENVIRONMENT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public void AddToGF_ENVIRONMENT(GF_ENVIRONMENT gF_ENVIRONMENT)
+        {
+            base.AddObject("GF_ENVIRONMENT", gF_ENVIRONMENT);
         }
     }
     /// <summary>
@@ -16725,5 +16750,68 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _VALUE_SC;
         partial void OnVALUE_SCChanging(global::System.Nullable<decimal> value);
         partial void OnVALUE_SCChanged();
+    }
+    /// <summary>
+    /// There are no comments for Model.GF_ENVIRONMENT in the schema.
+    /// </summary>
+    /// <KeyProperties>
+    /// GF_ID
+    /// </KeyProperties>
+    [global::System.Data.Services.Common.DataServiceKeyAttribute("GF_ID")]
+    public partial class GF_ENVIRONMENT
+    {
+        /// <summary>
+        /// Create a new GF_ENVIRONMENT object.
+        /// </summary>
+        /// <param name="gF_ID">Initial value of GF_ID.</param>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public static GF_ENVIRONMENT CreateGF_ENVIRONMENT(decimal gF_ID)
+        {
+            GF_ENVIRONMENT gF_ENVIRONMENT = new GF_ENVIRONMENT();
+            gF_ENVIRONMENT.GF_ID = gF_ID;
+            return gF_ENVIRONMENT;
+        }
+        /// <summary>
+        /// There are no comments for Property GF_ID in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public decimal GF_ID
+        {
+            get
+            {
+                return this._GF_ID;
+            }
+            set
+            {
+                this.OnGF_IDChanging(value);
+                this._GF_ID = value;
+                this.OnGF_IDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private decimal _GF_ID;
+        partial void OnGF_IDChanging(decimal value);
+        partial void OnGF_IDChanged();
+        /// <summary>
+        /// There are no comments for Property ENVIRONMENT in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string ENVIRONMENT
+        {
+            get
+            {
+                return this._ENVIRONMENT;
+            }
+            set
+            {
+                this.OnENVIRONMENTChanging(value);
+                this._ENVIRONMENT = value;
+                this.OnENVIRONMENTChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _ENVIRONMENT;
+        partial void OnENVIRONMENTChanging(string value);
+        partial void OnENVIRONMENTChanged();
     }
 }

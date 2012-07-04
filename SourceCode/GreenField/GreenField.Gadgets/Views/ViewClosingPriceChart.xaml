@@ -401,7 +401,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="#DATAITEM.IssueName"/>
+                                                                      ItemToolTipFormat="Return: #Y /Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>

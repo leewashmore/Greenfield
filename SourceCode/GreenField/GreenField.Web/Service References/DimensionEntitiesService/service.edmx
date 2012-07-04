@@ -20,6 +20,7 @@
         <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="Model.GF_SECURITY_BASEVIEW" />
         <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="Model.GF_SELECTION_BASEVIEW" />
         <EntitySet Name="GF_TRANSACTIONS" EntityType="Model.GF_TRANSACTIONS" />
+        <EntitySet Name="GF_ENVIRONMENT" EntityType="Model.GF_ENVIRONMENT" />
       </EntityContainer>
       <EntityType Name="GF_BENCHMARK_HOLDINGS">
         <Key>
@@ -865,6 +866,13 @@
         <Property Name="VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_ENVIRONMENT">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="ENVIRONMENT" Type="Edm.String" Nullable="true" MaxLength="6" Unicode="false" FixedLength="true" />
       </EntityType>
     </Schema>
   </edmx:DataServices>
