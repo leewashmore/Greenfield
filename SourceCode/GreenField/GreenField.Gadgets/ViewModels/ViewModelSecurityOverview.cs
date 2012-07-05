@@ -35,6 +35,29 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private EntitySelectionData _entitySelectionData;
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (_isActive && _entitySelectionData != null)
+                    {
+                        HandleSecurityReferenceSet(_entitySelectionData);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -73,7 +96,24 @@ namespace GreenField.Gadgets.ViewModels
                 _busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
-        }        
+        }
+
+        /// <summary>
+        /// property to contain status value for busy indicator of the gadget
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get { return _busyIndicatorStatus; }
+            set
+            {
+                if (_busyIndicatorStatus != value)
+                {
+                    _busyIndicatorStatus = value;
+                    RaisePropertyChanged(() => BusyIndicatorStatus);
+                }
+            }
+        }
 
         /// <summary>
         /// IssueName Property
@@ -255,10 +295,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _dbInteractivity.RetrieveSecurityOverviewData(entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
-                    BusyIndicatorContent = "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'";
-                    if (SecurityOverviewDataLoadEvent != null)
-                        SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    if (IsActive)
+                    {
+                        _dbInteractivity.RetrieveSecurityOverviewData(entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
+                        BusyIndicatorContent = "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'";
+                        BusyIndicatorStatus = true;
+                    }
                 }
                 else
                 {
@@ -268,20 +310,11 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                if (SecurityOverviewDataLoadEvent != null)
-                    SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                Logging.LogException(_logger, ex);                
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler SecurityOverviewDataLoadEvent;
-        #endregion
+        #endregion             
 
         #region CallBack Method
         /// <summary>
@@ -319,9 +352,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
-            if (SecurityOverviewDataLoadEvent != null)
-                SecurityOverviewDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            finally
+            {
+                BusyIndicatorStatus = false;
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);            
         }
 
         #endregion

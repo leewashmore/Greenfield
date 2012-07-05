@@ -28,6 +28,21 @@ namespace GreenField.Gadgets.Views
             set { _dataContextRelativePerformanceCountryActivePosition = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRelativePerformanceCountryActivePosition != null) //DataContext instance
+                    DataContextRelativePerformanceCountryActivePosition.IsActive = _isActive;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -35,23 +50,8 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.CountryActivePositionDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceCountryActivePositionLoadEvent);
             this.DataContextRelativePerformanceCountryActivePosition = dataContextSource;
         } 
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRelativePerformanceCountryActivePositionLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
         #endregion
 
         #region Dispose Method
@@ -61,7 +61,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRelativePerformanceCountryActivePosition.Dispose();
-            this.DataContextRelativePerformanceCountryActivePosition.CountryActivePositionDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceCountryActivePositionLoadEvent);
             this.DataContextRelativePerformanceCountryActivePosition = null;
             this.DataContext = null;
         }

@@ -26,7 +26,22 @@ namespace GreenField.Gadgets.Views
     public partial class ViewMarketPerformanceSnapshot : ViewBaseUserControl
     {
         #region Fields
-        private ViewModelMarketPerformanceSnapshot _dataContextSource; 
+        private ViewModelMarketPerformanceSnapshot _dataContextSource;
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (_dataContextSource != null) //DataContext instance
+                    _dataContextSource.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor

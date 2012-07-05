@@ -33,6 +33,20 @@ namespace GreenField.Gadgets.Views
             set { _dataContextIndexConstituents = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextIndexConstituents != null) //DataContext instance
+                    DataContextIndexConstituents.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -44,24 +58,12 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.IndexConstituentDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = dataContextSource;
         }
         #endregion
 
         #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceIndexConstituentLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
-
+       
         /// <summary>
         /// Handling row loaded event of grid
         /// </summary>
@@ -103,7 +105,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextIndexConstituents.Dispose();
-            this.DataContextIndexConstituents.IndexConstituentDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceIndexConstituentLoadEvent);
             this.DataContextIndexConstituents = null;
             this.DataContext = null;
         }

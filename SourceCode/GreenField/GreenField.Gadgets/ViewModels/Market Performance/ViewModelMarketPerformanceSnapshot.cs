@@ -277,6 +277,31 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (_dbInteractivity != null && SelectedMarketSnapshotSelectionInfo != null && _isActive)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving preference structure for selected snapshot ...");
+                        _dbInteractivity.RetrieveMarketSnapshotPreference(SelectedMarketSnapshotSelectionInfo.SnapshotPreferenceId
+                            , RetrieveMarketSnapshotPreferenceCallbackMethod);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region ICommand
@@ -392,7 +417,7 @@ namespace GreenField.Gadgets.ViewModels
                                 TestEntityOrdering();
 
                                 //Service call to receive Market Performance Snapshot Data
-                                if (_dbInteractivity != null)
+                                if (_dbInteractivity != null && IsActive)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving performance data for inserted entity ...");
                                     _dbInteractivity.RetrieveMarketPerformanceSnapshotData(new List<MarketSnapshotPreference> { insertedMarketSnapshotPreference }
@@ -565,7 +590,7 @@ namespace GreenField.Gadgets.ViewModels
                                 TestEntityOrdering();
 
                                 //Service call to receive Market Performance Snapshot Data
-                                if (_dbInteractivity != null)
+                                if (_dbInteractivity != null && IsActive)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving performance data for inserted entity ...");
                                     _dbInteractivity.RetrieveMarketPerformanceSnapshotData(new List<MarketSnapshotPreference> { insertedMarketSnapshotPreference }
@@ -724,7 +749,7 @@ namespace GreenField.Gadgets.ViewModels
                     #endregion
 
                     #region RetrieveMarketSnapshotPreference Service Call
-                    if (_dbInteractivity != null && SelectedMarketSnapshotSelectionInfo != null)
+                    if (_dbInteractivity != null && SelectedMarketSnapshotSelectionInfo != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving preference structure for selected snapshot ...");
                         _dbInteractivity.RetrieveMarketSnapshotPreference(SelectedMarketSnapshotSelectionInfo.SnapshotPreferenceId

@@ -40,6 +40,29 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private bool _lookThruEnabled = false;
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive 
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _isActive)
+                    {
+                        _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -56,9 +79,10 @@ namespace GreenField.Gadgets.ViewModels
             PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
-            if ((_portfolioSelectionData != null) && (EffectiveDate != null))
+            if ((_portfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
             {
                 _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate),_lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
+                BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
             {
@@ -140,7 +164,23 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        
+
+        /// <summary>
+        /// property to contain status value for busy indicator of the gadget
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get { return _busyIndicatorStatus; }
+            set
+            {
+                if (_busyIndicatorStatus != value)
+                {
+                    _busyIndicatorStatus = value;
+                    RaisePropertyChanged(() => BusyIndicatorStatus);
+                }
+            }
+        }
 
         #endregion
         #endregion
@@ -161,11 +201,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && PortfolioSelectionData != null)
+                    if (EffectiveDate != null && PortfolioSelectionData != null && IsActive)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate),_lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
-                        if (IndexConstituentDataLoadEvent != null)
-                            IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -196,11 +235,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     PortfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && PortfolioSelectionData != null)
+                    if (EffectiveDate != null && PortfolioSelectionData != null && IsActive)
                     {
                         _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
-                        if (IndexConstituentDataLoadEvent != null)
-                            IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -230,11 +268,10 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
                 _lookThruEnabled = enableLookThru;
 
-                if (EffectiveDate != null && PortfolioSelectionData != null)
+                if (EffectiveDate != null && PortfolioSelectionData != null && IsActive)
                 {
                     _dbInteractivity.RetrieveIndexConstituentsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, RetrieveIndexConstituentsDataCallbackMethod);
-                    if (IndexConstituentDataLoadEvent != null)
-                        IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    BusyIndicatorStatus = true;
                 }
             }
             catch (Exception ex)
@@ -267,26 +304,20 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-                if (IndexConstituentDataLoadEvent != null)
-                    IndexConstituentDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }               
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally
+            {
+                BusyIndicatorStatus = false;
+            }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler IndexConstituentDataLoadEvent;
-
-        #endregion
+        #endregion             
 
         #region Dispose Method
         /// <summary>

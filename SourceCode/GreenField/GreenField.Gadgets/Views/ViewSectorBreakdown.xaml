@@ -68,7 +68,7 @@
             </Border>
             <!--grid containing data-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView Name="dgSectorBreakdown" 
                                          Background="White"
                                          AutoGenerateColumns="False" 

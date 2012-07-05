@@ -16,7 +16,7 @@
     <Grid x:Name="LayoutRoot">
         <telerik:RadBusyIndicator x:Name="gridBusyIndicator"                                  
                                   BusyContent="{Binding BusyIndicatorContent}"                                                        
-                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

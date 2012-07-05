@@ -28,6 +28,20 @@ namespace GreenField.Gadgets.Views
             set { _dataContextViewModelTopHoldings = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextViewModelTopHoldings != null) //DataContext instance
+                    DataContextViewModelTopHoldings.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor

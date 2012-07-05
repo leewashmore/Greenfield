@@ -32,8 +32,7 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         //Selection Data
-       PortfolioSelectionData _PortfolioSelectionData;
-       
+       PortfolioSelectionData _PortfolioSelectionData;       
         #endregion
 
         #region Constructor
@@ -51,9 +50,10 @@ namespace GreenField.Gadgets.ViewModels
            EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
            Period = param.DashboardGadgetPayload.PeriodSelectionData;
 
-           if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
+           if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
            {
                _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period,RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+              BusyIndicatorStatus = true;
            }            
             
             if (_eventAggregator != null)
@@ -158,16 +158,50 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => Period);
                 }
             }
-        }        
-        #endregion
-        #endregion
+        }
 
-        #region Events
         /// <summary>
-        /// event handling for data retrieval progress indicator
+        /// property to contain status value for busy indicator of the gadget
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler SecurityActivePositionDataLoadEvent;
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get { return _busyIndicatorStatus; }
+            set
+            {
+                if (_busyIndicatorStatus != value)
+                {
+                    _busyIndicatorStatus = value;
+                    RaisePropertyChanged(() => BusyIndicatorStatus);
+                }
+            }
+        }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && _isActive)
+                    {
+                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                }
+            }
+        }
+       
+        #endregion
         #endregion
 
         #region Event Handlers
@@ -186,12 +220,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _PortfolioSelectionData = portfolioSelectionData;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
-
-                        if (SecurityActivePositionDataLoadEvent != null)
-                            SecurityActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -221,12 +253,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
-
-                        if (SecurityActivePositionDataLoadEvent != null)
-                            SecurityActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -256,12 +286,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, period, 1);
                     Period = period;
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null)
+                    if (EffectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
                     {
                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod);
-
-                        if (SecurityActivePositionDataLoadEvent != null)
-                            SecurityActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                       BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -290,11 +318,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (filter != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
-                        if (SecurityActivePositionDataLoadEvent != null)
-                            SecurityActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }                    
                 }
                 else
@@ -330,14 +357,16 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-                if (SecurityActivePositionDataLoadEvent != null)
-                    SecurityActivePositionDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }               
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
