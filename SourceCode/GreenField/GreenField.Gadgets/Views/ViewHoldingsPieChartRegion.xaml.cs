@@ -56,6 +56,21 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextHoldingsPieChartRegion != null)
+                    DataContextHoldingsPieChartRegion.IsActive = _isActive;
+            }
+        }
+
+        /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
         /// <param name="e"></param>

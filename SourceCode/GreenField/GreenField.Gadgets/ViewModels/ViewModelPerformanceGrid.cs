@@ -73,7 +73,7 @@ namespace GreenField.Gadgets.ViewModels
             _country = param.DashboardGadgetPayload.HeatMapCountryData;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
 
-            if (_effectiveDate != null && _PortfolioSelectionData != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && IsActive)
             {
                 _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
             }          
@@ -110,6 +110,28 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private bool _isActive;
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_PortfolioSelectionData != null && _effectiveDate != null && _isActive)
+                {
+                    if (_country != null)
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _country);
+                    else
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), "NoFiltering");
+                }
+            }
+        }
 
 
         #endregion
@@ -138,11 +160,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null)
-                    {
-                        if (null != performanceGridDataLoadedEvent)
-                            performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && IsActive)
+                    {                        
+                        BeginWebServiceCall(PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), "NoFiltering");
                     }
                 }
                 else
@@ -169,11 +189,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null)
-                    {
-                        if (null != performanceGridDataLoadedEvent)
-                            performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),"NoFiltering", RetrievePerformanceGridDataCallbackMethod);
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && IsActive)
+                    {                        
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), "NoFiltering");
                     }
                 }
                 else
@@ -201,11 +219,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, country, 1);
                     _country = country;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _country!=null)
-                    {
-                        if (null != performanceGridDataLoadedEvent)
-                            performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePerformanceGridData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), country, RetrievePerformanceGridDataCallbackMethod);
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _country !=null && IsActive)
+                    {                        
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), country);
                     }
                 }
                 else
@@ -220,6 +236,13 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
 
+        }
+
+        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate, String country)
+        {
+            if (null != performanceGridDataLoadedEvent)
+                performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            _dbInteractivity.RetrievePerformanceGridData(PortfolioSelectionData, effectiveDate, country, RetrievePerformanceGridDataCallbackMethod);
         }
 
         #endregion

@@ -33,6 +33,22 @@ namespace GreenField.Gadgets.Views
 
         private ViewModelUnrealizedGainLoss _dataContextUnrealizedGainLossChart;
 
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextUnrealizedGainLossChart != null)
+                    DataContextUnrealizedGainLossChart.IsActive = _isActive;
+            }
+        }
+
+
         public ViewModelUnrealizedGainLoss DataContextUnrealizedGainLossChart
         {
             get { return _dataContextUnrealizedGainLossChart; }

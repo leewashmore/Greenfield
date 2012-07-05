@@ -32,6 +32,23 @@ namespace GreenField.Gadgets.Views
         }
         #endregion 
 
+        #region Properties
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (this.DataContext != null)
+                    ((ViewModelPerformanceGadget)this.DataContext).IsActive = _isActive;
+            }
+        }
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Constructor for the class having ViewModelPerformanceGadget as its data context

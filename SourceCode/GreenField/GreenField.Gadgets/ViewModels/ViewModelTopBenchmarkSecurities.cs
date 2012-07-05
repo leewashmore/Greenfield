@@ -53,6 +53,26 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
+        private bool _isActive;
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_effectiveDate != null && _portfolioSelectionData != null && _isActive)
+                {
+                    BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                }
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -76,7 +96,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
             }
 
-            if (_effectiveDate != null && _portfolioSelectionData != null)
+            if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
             {
                 _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
             }
@@ -125,11 +145,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                     {
-                        if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
-                            topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
+                        BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -159,11 +177,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _portfolioSelectionData = portfolioSelectionData;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                     {
-                        if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
-                            topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveTopSecuritiesDataCallbackMethod);
+                        BeginWebServiceCall(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -179,6 +195,16 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
+
+        private void BeginWebServiceCall(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
+        {
+            if (_effectiveDate != null && _portfolioSelectionData != null)
+            {
+                if (null != topTenBenchmarkSecuritiesDataLoadedEvent)
+                    topTenBenchmarkSecuritiesDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
+            }
+        }
 
         #region Callback Methods
 

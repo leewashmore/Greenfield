@@ -33,6 +33,20 @@ namespace GreenField.Gadgets.Views
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
 
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRiskReturn != null)
+                    DataContextRiskReturn.IsActive = _isActive;
+            }
+        }
 
         #region Private Methods
         /// <summary>

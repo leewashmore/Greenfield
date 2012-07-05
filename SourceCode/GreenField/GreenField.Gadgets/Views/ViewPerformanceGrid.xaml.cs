@@ -51,6 +51,21 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (this.DataContext != null)
+                    ((ViewModelPerformanceGrid)DataContext).IsActive = _isActive;
+            }
+        }
         #endregion
 
         public override void Dispose()

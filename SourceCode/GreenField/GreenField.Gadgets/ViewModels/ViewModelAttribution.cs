@@ -69,7 +69,7 @@ namespace GreenField.Gadgets.ViewModels
             _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null && IsActive)
             {
                 _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
             }
@@ -272,6 +272,25 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion      
 
+        private bool _isActive;
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _isActive)
+                {
+                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));                    
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -296,11 +315,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
-                    {
-                        if (null != attributionDataLoadedEvent)
-                            attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive)
+                    {                        
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -332,11 +349,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
-                    {
-                        if (null != attributionDataLoadedEvent)
-                            attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive)
+                    {                        
+                       BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -369,12 +384,9 @@ namespace GreenField.Gadgets.ViewModels
                     _selectedPeriod = selectedPeriodType;
                     if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
                     {
-                        if (AttributionDataInfo.Count==0)
-                        {
-                            if (null != attributionDataLoadedEvent)
-                                attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                            _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
-                            //SelectedPeriod = selectedPeriodType;
+                        if (AttributionDataInfo.Count==0 && IsActive)
+                        {                            
+                            BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));                            //SelectedPeriod = selectedPeriodType;
                         }
 
                         else 
@@ -400,7 +412,12 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-
+        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate)
+        {
+            if (null != attributionDataLoadedEvent)
+                attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            _dbInteractivity.RetrieveAttributionData(PortfolioSelectionData, effectiveDate, RetrieveAttributionDataCallBackMethod);
+        }
 
         #endregion
 
