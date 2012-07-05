@@ -106,7 +106,8 @@ namespace GreenField.DashboardModule.Views
             foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                control.IsActive = value;
+                if (control != null)
+                    control.IsActive = value;
             }
         }
     }
