@@ -418,7 +418,7 @@
         <Setter Property="Padding"
             Value="0,0,0,0" />
         <Setter Property="Margin"
-            Value="0,0,0,0" />
+            Value="0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="telerik:ChartLegendItem">
@@ -581,12 +581,13 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+                                
                                 <ContentControl ContentTemplate="{TemplateBinding HeaderTemplate}"
                                         Content="{TemplateBinding Header}"
                                         Foreground="{TemplateBinding Foreground}"
                                         FontWeight="{TemplateBinding HeaderFontWeight}" />
                                 <ItemsPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            Grid.Row="1"
+                                            Grid.Row="1" 
                                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                             </Grid>
                         </telerik:LayoutTransformControl>

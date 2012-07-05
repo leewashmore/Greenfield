@@ -83,6 +83,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextSlice1ChartExtension = dataContextSource;
             dataContextSource.ChartArea = this.chChartExtension.DefaultView.ChartArea;
             this.chChartExtension.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();

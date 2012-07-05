@@ -60,7 +60,6 @@ namespace GreenField.Gadgets.ViewModels
                 if (_entitySelectionData != null && _isActive)
                 {
                     HandleSecurityReferenceSet(_entitySelectionData);
-                    BusyIndicatorStatus = true;
                 }
             }
         }
@@ -895,7 +894,7 @@ namespace GreenField.Gadgets.ViewModels
                             PlottedSeries.Clear();
                             PrimaryPlottedSeries.Clear();
                         }
-
+                        _entitySelectionData = entitySelectionData;
                         ChartEntityList.Clear();
                         ChartEntityList.Add(entitySelectionData);
 
