@@ -443,6 +443,9 @@ namespace GreenField.Gadgets.ViewModels
 
                         if (sumAshEmmModelWeight != 0)
                             data.ReAshEmmModelWeight = data.AshEmmModelWeight / sumAshEmmModelWeight * 100;
+
+                        data.ActivePosition = Convert.ToDecimal(data.RePortfolioWeight) - Convert.ToDecimal(data.ReBenchmarkWeight);
+
                     }
                 }
 
