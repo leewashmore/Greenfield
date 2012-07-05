@@ -48,6 +48,9 @@ namespace GreenField.DashBoardModule.Views.Screening
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
+            if (this.cctrDashboardContent.Content != null)
+                return;
+
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
                 DashboardGadgetPayload = payload,
