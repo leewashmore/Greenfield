@@ -20,14 +20,35 @@ namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelClosingPriceChart : NotificationObject
     {
-        #region Private Fields
         /// <summary>
         /// MEF Singletons
         /// </summary>
+        #region Private Fields
+
+
+        //Instance of IDBInteractivity
         private IDBInteractivity _dbInteractivity;
+
+        /// <summary>
+        /// Instance of ILoggerFacade
+        /// </summary>
         private ILoggerFacade _logger;
+
+        /// <summary>
+        /// Instance of IEventAggregator
+        /// </summary>
         private IEventAggregator _eventAggregator;
+
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
         private EntitySelectionData _entitySelectionData;
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive { get; set; }
+
         #endregion
 
         #region Constructor
@@ -849,7 +870,6 @@ namespace GreenField.Gadgets.ViewModels
                 //ArgumentNullException
                 if (entitySelectionData != null)
                 {
-
                     //Check if security reference data is already present
                     if (PrimaryPlottedSeries.Where(p => p.InstrumentID == entitySelectionData.InstrumentID).Count().Equals(0))
                     {
@@ -865,10 +885,12 @@ namespace GreenField.Gadgets.ViewModels
                         ChartEntityList.Add(entitySelectionData);
 
                         //Retrieve Pricing Data for Primary Security Reference
-                        BusyIndicatorStatus = true;
-                        RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-
-                        SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
+                        if (IsActive)
+                        {
+                            BusyIndicatorStatus = true;
+                            RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+                            SelectedBaseSecurity = entitySelectionData.ShortName.ToString();
+                        }
                     }
                     else
                     {

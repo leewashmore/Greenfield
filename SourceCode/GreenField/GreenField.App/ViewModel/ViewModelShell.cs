@@ -3090,6 +3090,10 @@ namespace GreenField.App.ViewModel
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewRelativePerformance", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Portfolio Details navigation Method
+        /// </summary>
+        /// <param name="param"></param>
         private void PortfolioDetailsCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3111,6 +3115,10 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Asset Allocation navigation Method
+        /// </summary>
+        /// <param name="param"></param>
         private void AssetAllocationCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3501,8 +3509,7 @@ namespace GreenField.App.ViewModel
             LookThruSelectorVisibility = ToolBoxItemVisibility.LOOK_THRU_VISIBILITY;
 
         }
-
-
+        
         private void RetrieveMarketSnapshotSelectionData()
         {
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -3542,8 +3549,7 @@ namespace GreenField.App.ViewModel
 
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
-
-
+        
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
