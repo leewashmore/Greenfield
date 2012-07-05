@@ -29,6 +29,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextEstimates = dataContextSource;
 
             PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumns.PeriodColumnUpdateEventArg()
             {
@@ -54,7 +55,31 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private EntitySelectionData _entitySelectionData;
         private bool _periodIsYearly = true;
-                
+
+        /// <summary>
+        /// To check whether the Dashboard is Active or not
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextEstimates != null)
+                    DataContextEstimates.IsActive = _isActive;
+            }
+        }
+
+        private ViewModelEstimates _dataContextEstimates;
+
+        public ViewModelEstimates DataContextEstimates
+        {
+            get { return _dataContextEstimates; }
+            set { _dataContextEstimates = value; }
+        }
+        
+
         /// <summary>
         /// Left Navigation Button Click
         /// </summary>

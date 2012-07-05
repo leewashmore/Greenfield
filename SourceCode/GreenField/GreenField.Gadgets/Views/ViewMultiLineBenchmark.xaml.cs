@@ -53,6 +53,21 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// To check whether the Dashboard is Active or not
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextMultilineBenchmark != null)
+                    DataContextMultilineBenchmark.IsActive = _isActive;
+            }
+        }
+
         #endregion
 
         #region Constructor

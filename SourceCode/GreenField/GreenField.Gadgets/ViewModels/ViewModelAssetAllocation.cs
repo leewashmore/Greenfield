@@ -59,6 +59,12 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private bool _enableLookThru = false;
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive { get; set; }
+
+
         #endregion
 
         #region Constructor
@@ -79,7 +85,7 @@ namespace GreenField.Gadgets.ViewModels
             ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
             if ((_portfolioSelectionData != null) && (_effectiveDate != null))
             {
-                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru,ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
+                _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
@@ -166,6 +172,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
+
         /// <summary>
         /// Handle Fund Change Event
         /// </summary>
@@ -181,7 +188,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _portfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorStatus = true;
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
@@ -214,7 +221,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _portfolioSelectionData != null)
+                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorStatus = true;
                         _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
@@ -233,6 +240,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Handle the LookThru Event set
+        /// </summary>
+        /// <param name="enableLookThru">LookThruEnabled/Disabled</param>
         public void HandleLookThruReferenceSet(bool enableLookThru)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -242,7 +253,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
                 _enableLookThru = enableLookThru;
-                if (_effectiveDate != null && _portfolioSelectionData != null)
+                if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
                     _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
@@ -257,6 +268,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// Handle the ExcludeCash Event
+        /// </summary>
+        /// <param name="excludeCash">Exclude/Include Cash Securities</param>
         public void HandleExCashSecuritySetEvent(bool excludeCash)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -266,7 +281,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 Logging.LogMethodParameter(_logger, methodNamespace, excludeCash, 1);
                 ExcludeCashSecurities = excludeCash;
-                if (_effectiveDate != null && _portfolioSelectionData != null)
+                if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
                     _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
