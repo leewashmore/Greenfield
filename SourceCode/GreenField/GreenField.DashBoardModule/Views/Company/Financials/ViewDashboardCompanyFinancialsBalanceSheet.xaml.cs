@@ -23,7 +23,7 @@ using GreenField.Gadgets.Helpers;
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardCompanyFinancialsBalanceSheet : UserControl, INavigationAware
+    public partial class ViewDashboardCompanyFinancialsBalanceSheet : ViewBaseUserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -74,7 +74,10 @@ namespace GreenField.DashboardModule.Views
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = true;
+            if (control != null)
+            {
+                control.IsActive = true; 
+            }
         }
     }
 }
