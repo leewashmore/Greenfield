@@ -18,11 +18,13 @@ using GreenField.ServiceCaller;
 using GreenField.Common;
 using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
+using Microsoft.Practices.Prism.Regions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardMarketsCommoditiesSummary : UserControl
+    public partial class ViewDashboardMarketsCommoditiesSummary : UserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -56,6 +58,23 @@ namespace GreenField.DashboardModule.Views
             };
 
             this.cctrDashboardContent.Content = new ViewCommodityIndex(new ViewModelCommodityIndex(param));
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = false;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = true;
         }
     }
 }

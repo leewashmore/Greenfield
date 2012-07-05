@@ -17,11 +17,13 @@ using GreenField.Common;
 using GreenField.Common.Helper;
 using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
+using Microsoft.Practices.Prism.Regions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashBoardModule.Views.Screening
 {
     [Export]
-    public partial class ViewDashboardQuarterlyResultsComparison : UserControl
+    public partial class ViewDashboardQuarterlyResultsComparison : UserControl, INavigationAware
     {
 
         #region Fields
@@ -56,6 +58,23 @@ namespace GreenField.DashBoardModule.Views.Screening
 
             this.cctrDashboardContent.Content = null;
                 //new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = false;
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            control.IsActive = true;
         }
     }
 }
