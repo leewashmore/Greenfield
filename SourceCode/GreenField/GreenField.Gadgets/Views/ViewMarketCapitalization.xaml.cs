@@ -11,17 +11,48 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewMarketCapitalization : UserControl
+    public partial class ViewMarketCapitalization : ViewBaseUserControl
     {
-        public ViewMarketCapitalization(ViewModelMarketCapitalization DataContextSource)
+
+        #region CONSTRUCTOR
+        public ViewMarketCapitalization(ViewModelMarketCapitalization dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = DataContextSource;            
-            DataContextSource.MarketCapitalizationDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceMarketCapitalizationLoadEvent);
+            this.DataContext = dataContextSource;
+            this.DataContextSource = dataContextSource;
+            dataContextSource.MarketCapitalizationDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceMarketCapitalizationLoadEvent);
         }
+        #endregion
+
+        private ViewModelMarketCapitalization _dataContextSource = null;
+        public ViewModelMarketCapitalization DataContextSource
+        {
+            get
+            {
+                return _dataContextSource;
+            }
+            set
+            {
+                if (value != null)
+                _dataContextSource = value;
+            }
+        }
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSource != null) //DataContext instance
+                    DataContextSource.IsActive = _isActive;
+            }
+        }
+
 
         #region Event
         /// <summary>
