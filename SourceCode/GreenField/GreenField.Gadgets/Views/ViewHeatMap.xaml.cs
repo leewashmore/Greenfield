@@ -102,8 +102,7 @@ namespace GreenField.Gadgets.Views
                 {
                     SetAdditionalData(_shape);
                 }
-            }
-          
+            }            
         }
         /// <summary>
         /// Adding Colour to Each Shape
@@ -123,6 +122,15 @@ namespace GreenField.Gadgets.Views
                      else
                          if ((int)(countryRecord.CountryPerformance) == 0)
                              _shape.Fill = new SolidColorBrush(Colors.White);                     
+         }
+
+         /// <summary>
+         /// Adding default Colour to  Shape with no values
+         /// </summary>
+         /// <param name="_shape">Shape</param>         
+         private void AddTransparentColorizerToInformationLayer(MapShape _shape)
+         {
+             _shape.Fill = new SolidColorBrush(Colors.Transparent);             
          }
 
         /// <summary>
@@ -168,6 +176,7 @@ namespace GreenField.Gadgets.Views
                 {
                     data.PropertySet.RegisterProperty(COUNTRY_YTD_FIELD, "CountryYTD", typeof(Decimal), Convert.ToDecimal(0));
                 }
+               
                 if (_heatMapInfo != null)
                 {
                     string countryID = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
@@ -178,7 +187,13 @@ namespace GreenField.Gadgets.Views
                         shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, (int)(countryRecord.CountryPerformance));
                         shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, countryRecord.CountryYTD);
                         AddColorizerToInformationLayer(shape, countryRecord);
-                    };
+                    }
+                    else
+                    {
+                        shape.ExtendedData.SetValue(COUNTRY_PERFORMANCE_FIELD, null);
+                        shape.ExtendedData.SetValue(COUNTRY_YTD_FIELD, null);
+                        AddTransparentColorizerToInformationLayer(shape);
+                    }
                 }
             }            
         }
