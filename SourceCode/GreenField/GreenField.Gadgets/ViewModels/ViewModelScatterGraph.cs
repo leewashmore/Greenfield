@@ -19,7 +19,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             Int32? dataId = RatioPeriodMapping.GetEstimationId(ScatterGraphFinancialRatio.NET_DEBT_TO_EQUITY, ScatterGraphPeriod.TRAILING);
 
-            MessageBox.Show(dataId.ToString());
         }
     }
 }
