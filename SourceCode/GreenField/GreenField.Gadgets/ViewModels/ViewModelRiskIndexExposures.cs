@@ -332,20 +332,22 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                _isExCashSecurity = isExCashSec;
-
-                if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
+                if (_isExCashSecurity != isExCashSec)
+                {
+                    _isExCashSecurity = isExCashSec;
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                        _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
-                else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                                 "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
+                }
             }
             catch (Exception ex)
             {
@@ -446,13 +448,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (riskIndexExposuresData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, riskIndexExposuresData, 1);
-                    RiskIndexExposuresInfo = new ObservableCollection<RiskIndexExposuresData>(riskIndexExposuresData);
-                     if (RiskIndexExposuresChartInfo == null)
-                        {
-                            RiskIndexExposuresChartInfo = new ObservableCollection<RiskIndexExposuresChartData>();
-                        }
-
-                     RiskIndexExposuresData data = new RiskIndexExposuresData();
+                    RiskIndexExposuresInfo = new ObservableCollection<RiskIndexExposuresData>(riskIndexExposuresData);                   
+                    RiskIndexExposuresChartInfo = new ObservableCollection<RiskIndexExposuresChartData>();
                      
                      foreach (RiskIndexExposuresData item in RiskIndexExposuresInfo)
                      {                        

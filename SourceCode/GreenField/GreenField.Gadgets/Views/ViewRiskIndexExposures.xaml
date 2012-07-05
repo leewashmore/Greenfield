@@ -62,7 +62,7 @@
                                         </telerikCharting:ChartArea.AxisX>
                                         
                                         <telerikCharting:ChartArea.AxisY>
-                                            <telerikCharting:AxisY AutoRange="False" IsZeroBased="False" MaxValue="{Binding AxisXMaxValue}"
+                                            <telerikCharting:AxisY AutoRange="False" IsZeroBased="true" MaxValue="{Binding AxisXMaxValue}"
                                                                    MinValue="{Binding AxisXMinValue}" MinorTicksVisibility="Collapsed" 
                                                                    MajorTicksVisibility="Visible" Title="Exposures">
                                                 <telerikCharting:AxisY.AxisStyles>

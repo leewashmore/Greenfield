@@ -151,7 +151,7 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
-                                    <local:BenchmarkWeightFunction SourceField="ReAshEmmModelWeight" ResultFormatString="{}{0:n4}%" />
+                                    <telerik:SumFunction SourceField="ReAshEmmModelWeight" ResultFormatString="{}{0:n4}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
@@ -159,7 +159,7 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
-                                    <local:BenchmarkWeightFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n4}%" />
+                                    <telerik:SumFunction SourceField="RePortfolioWeight" ResultFormatString="{}{0:n4}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
@@ -167,7 +167,7 @@
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
-                                    <local:BenchmarkWeightFunction SourceField="ReBenchmarkWeight" ResultFormatString="{}{0:n4}%" />
+                                    <telerik:SumFunction SourceField="ReBenchmarkWeight" ResultFormatString="{}{0:n4}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Active Position %" DataMemberBinding="{Binding ActivePosition}" 

@@ -10,10 +10,11 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
+            <helpers:PercentageValueConverterOneDec x:Key="ConvertPercVAlOneDecPlace"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>        
     </helpers:ViewBaseUserControl.Resources>
     
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
@@ -61,7 +62,7 @@
                             Header="YTD" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"                       
-                            DataMemberBinding="{Binding YTD, StringFormat=\{0:n1\}%}" 
+                            DataMemberBinding="{Binding YTD, Converter={StaticResource ConvertPercVAlOneDecPlace}}" 
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn 
@@ -70,12 +71,12 @@
                             Header="1 Year" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"
-                            DataMemberBinding="{Binding Year1, StringFormat=\{0:n1\}%}" 
+                            DataMemberBinding="{Binding Year1, Converter={StaticResource ConvertPercVAlOneDecPlace}}" 
                             HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcYear3" Width="*" Header="3 Year" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"
-                            DataMemberBinding="{Binding Year3, StringFormat=\{0:n1\}%}" 
+                            DataMemberBinding="{Binding Year3, Converter={StaticResource ConvertPercVAlOneDecPlace}}"  
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcCURRENT_YEAR_END" 

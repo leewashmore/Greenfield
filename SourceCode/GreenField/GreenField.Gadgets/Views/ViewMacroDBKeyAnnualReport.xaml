@@ -75,7 +75,7 @@
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
                                          CanUserSortColumns="False" 
-                                         ScrollMode="Deferred"
+                                         ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 
@@ -90,7 +90,9 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          AutoExpandGroups="True"
-                                         RowLoaded="dgMacroDBKeyReport_RowLoaded">
+                                         RowLoaded="dgMacroDBKeyReport_RowLoaded"
+                                         EnableRowVirtualization="False"
+                                     EnableColumnVirtualization="False">
                     <telerik:RadGridView.Columns>
                         
                         <telerik:GridViewDataColumn x:Name="dgcDescription" 

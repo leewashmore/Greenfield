@@ -468,7 +468,10 @@ namespace GreenField.Web.Services
                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date)
                                                                                                           .OrderByDescending(record => record.DIRTY_VALUE_PC).Take(10).ToList();
                     if (data == null)
-                        throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+                        return result;
+
+                    if (data.Count.Equals(0))
+                        return result;
 
                     foreach (GF_PORTFOLIO_LTHOLDINGS record in data)
                     {
@@ -526,7 +529,10 @@ namespace GreenField.Web.Services
                                                                                                           && record.PORTFOLIO_DATE == effectiveDate.Date)
                                                                                                           .OrderByDescending(record => record.DIRTY_VALUE_PC).Take(10).ToList();
                     if (data == null)
-                        throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+                        return result;
+
+                    if (data.Count.Equals(0))
+                        return result;
 
                     foreach (GF_PORTFOLIO_HOLDINGS record in data)
                     {
@@ -611,6 +617,12 @@ namespace GreenField.Web.Services
                     {
                         List<GF_BENCHMARK_HOLDINGS> data = DimensionEntity.GF_BENCHMARK_HOLDINGS
                             .Where(t => (t.BENCHMARK_ID == benchmarkId) && (t.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+
+                        if (data == null)
+                            return result;
+
+                        if (data.Count.Equals(0))
+                            return result;
 
                         if (data != null)
                         {
@@ -761,7 +773,10 @@ namespace GreenField.Web.Services
                     List<GF_PORTFOLIO_LTHOLDINGS> data = GetFilteredRiskIndexListWithLookThru(portfolioSelectionData, effectiveDate, isExCashSecurity, filterType, filterValue);
 
                     if (data == null)
-                        throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+                        return result;
+
+                    if (data.Count.Equals(0))
+                        return result;
 
                     //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
                     decimal? sumMarketValuePortfolio = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
@@ -821,7 +836,10 @@ namespace GreenField.Web.Services
                     List<GF_PORTFOLIO_HOLDINGS> data = GetFilteredRiskIndexListWithoutLookThru(portfolioSelectionData, effectiveDate, isExCashSecurity, filterType, filterValue);
 
                     if (data == null)
-                        throw new InvalidOperationException(ServiceFaultResourceManager.GetString("ServiceNullResultSet").ToString());
+                        return result;
+
+                    if (data.Count.Equals(0))
+                        return result;
 
                     //get the summation of DIRTY_VALUE_PC used to calculate the holding's PortfolioShare 
                     decimal? sumMarketValuePortfolio = data.Sum(t => Convert.ToDecimal(t.DIRTY_VALUE_PC));
