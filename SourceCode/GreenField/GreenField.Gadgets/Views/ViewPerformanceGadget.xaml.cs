@@ -66,23 +66,40 @@ namespace GreenField.Gadgets.Views
                 Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
         }
 
-       /// <summary>
-       /// Exporting the grid or chart to excel.
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                if (this.grdRadChart.Visibility == Visibility.Visible)
                 {
-                    new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_CHART, Element = this.dgPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                    new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_DATA, Element = this.chPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                  
+                    new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_CHART, Element = this.chPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER },                    
                     
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
-                childExportOptions.Show();
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
+                    childExportOptions.Show();
+                }
+                else
+                {
+                    if (this.grdRadGridView.Visibility == Visibility.Visible)
+                    {
+                        List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                  
+                      new RadExportOptions() { ElementName = ExportTypes.PERFORMANCE_GADGET_DATA, Element = this.dgPerformanceGadget, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    
+                };
+                        ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRAPH);
+                        childExportOptions.Show();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -117,6 +134,11 @@ namespace GreenField.Gadgets.Views
         private void dgPerformanceGadget_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             //GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        private void dgPerformanceGraph_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
         }
     }
 }

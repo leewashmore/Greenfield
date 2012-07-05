@@ -54,7 +54,8 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
+            this.cctrDashboardContent.Content = null;
+                //new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
         }
     }
 }

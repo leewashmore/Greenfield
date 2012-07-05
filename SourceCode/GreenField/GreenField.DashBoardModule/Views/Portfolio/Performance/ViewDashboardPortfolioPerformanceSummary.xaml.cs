@@ -38,11 +38,11 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -61,14 +61,14 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_HEAT_MAP, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight=300,
+                RestoredHeight = 300,
                 //Content = new ViewHeatMap(new ViewModelHeatMap(param))
                 Content = null
-            }); 
+            });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                
+
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRAPH, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewPerformanceGadget(new ViewModelPerformanceGadget(param))
@@ -76,9 +76,9 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                
+
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRID, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
+                RestoredHeight = 100,
                 Content = new ViewPerformanceGrid(new ViewModelPerformanceGrid(param))
             });
         }

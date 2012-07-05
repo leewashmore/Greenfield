@@ -102,6 +102,16 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
+        /// Element Exporting Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
+
+        /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
         /// <param name="sender"></param>
@@ -419,15 +429,11 @@ namespace GreenField.Gadgets.Views
                 }
                 Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
                 DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
-
-                //this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
-                //this.dgPortfolioDetails.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             }
             else
             {
                 DataContextPortfolioDetails.GroupingColumn = "No Grouping";
             }
-            SetGroupedData();
             this.dgPortfolioDetails.GroupPanelItemStyle = this.Resources["GridViewGroupPanelItemStyle"] as Style;
 
         }
@@ -440,6 +446,8 @@ namespace GreenField.Gadgets.Views
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
             IColumnFilterDescriptor filterDescriptor = e.ColumnFilterDescriptor as IColumnFilterDescriptor;
+            DataContextPortfolioDetails.FilterDescriptor = e.ColumnFilterDescriptor.DistinctFilter.Member;
+            //e.ColumnFilterDescriptor.Column.UniqueName;
         }
 
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
@@ -484,9 +492,5 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
-        {
-            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
-        }
     }
 }

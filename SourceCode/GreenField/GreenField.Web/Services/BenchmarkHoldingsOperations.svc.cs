@@ -2317,7 +2317,11 @@ namespace GreenField.Web.Services
 
                 throw new Exception();
 
-            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).Take(10).ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> topTenBenchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.BM1_RC_WGT_EOD != null && t.BM1_RC_WGT_EOD > 0).OrderByDescending(t => t.BM1_RC_WGT_EOD).ToList();
+
+            IEqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
+
+            topTenBenchmarkData = topTenBenchmarkData.Distinct(customComparer).Take(10).ToList();         
 
 
             if (topTenBenchmarkData.Count == 0 || topTenBenchmarkData == null)
@@ -2329,12 +2333,12 @@ namespace GreenField.Web.Services
                 {
                     TopBenchmarkSecuritiesData entry = new TopBenchmarkSecuritiesData();
                     entry.IssuerName = topTenBenchmarkData[i].SEC_NAME.ToString();
-                    entry.Weight = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_WGT_EOD);
-                    entry.OneDayReturn = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1D);
-                    entry.WTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1W);
-                    entry.MTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_MTD);
-                    entry.QTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_QTD);
-                    entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD);
+                    entry.Weight = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_WGT_EOD) * 100;
+                    entry.OneDayReturn = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1D) * 100;
+                    entry.WTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_1W) * 100;
+                    entry.MTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_MTD) * 100;
+                    entry.QTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_QTD) * 100;
+                    entry.YTD = Convert.ToDecimal(topTenBenchmarkData[i].BM1_RC_TWR_YTD) * 100;
                     result.Add(entry);
                 }
 
@@ -2528,37 +2532,37 @@ namespace GreenField.Web.Services
                     entry.CountryName = attributionData[i].COUNTRY_NAME;
                     entry.PorRcAvgWgt1w = attributionData[i].POR_RC_AVG_WGT_1W;
                     entry.Bm1RcAvgWgt1w = attributionData[i].BM1_RC_AVG_WGT_1W;
-                    entry.FPorAshRcCtn1w = attributionData[i].ADJ_RTN_POR_RC_TWR_1W;
+                    entry.FPorAshRcCtn1w = attributionData[i].F_POR_ASH_RC_CTN_1W;
                     entry.FBm1AshRcCtn1w = attributionData[i].F_BM1_ASH_RC_CTN_1W;
                     entry.FBm1AshAssetAlloc1w = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1W;
                     entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
                     entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
                     entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
-                    entry.FPorAshRcCtn1d = attributionData[i].ADJ_RTN_POR_RC_TWR_1D;
+                    entry.FPorAshRcCtn1d = attributionData[i].F_POR_ASH_RC_CTN_1D;
                     entry.FBm1AshRcCtn1d = attributionData[i].F_BM1_ASH_RC_CTN_1D;
                     entry.FBm1AshAssetAlloc1d = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1D;
                     entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
                     entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
                     entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
-                    entry.FPorAshRcCtnMtd = attributionData[i].ADJ_RTN_POR_RC_TWR_MTD;
+                    entry.FPorAshRcCtnMtd = attributionData[i].F_POR_ASH_RC_CTN_MTD;
                     entry.FBm1AshRcCtnMtd = attributionData[i].F_BM1_ASH_RC_CTN_MTD;
                     entry.FBm1AshAssetAllocMtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_MTD;
                     entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
-                    entry.FPorAshRcCtnQtd = attributionData[i].ADJ_RTN_POR_RC_TWR_QTD;
+                    entry.FPorAshRcCtnQtd = attributionData[i].F_POR_ASH_RC_CTN_QTD;
                     entry.FBm1AshRcCtnQtd = attributionData[i].F_BM1_ASH_RC_CTN_QTD;
                     entry.FBm1AshAssetAllocQtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_QTD;
                     entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
                     entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
                     entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
-                    entry.FPorAshRcCtnYtd = attributionData[i].ADJ_RTN_POR_RC_TWR_YTD;
+                    entry.FPorAshRcCtnYtd = attributionData[i].F_POR_ASH_RC_CTN_YTD;
                     entry.FBm1AshRcCtnYtd = attributionData[i].F_BM1_ASH_RC_CTN_YTD;
                     entry.FBm1AshAssetAllocYtd = attributionData[i].F_BM1_ASH_ASSET_ALLOC_YTD;
                     entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
                     entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
                     entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
-                    entry.FPorAshRcCtn1y = attributionData[i].ADJ_RTN_POR_RC_TWR_1Y;
+                    entry.FPorAshRcCtn1y = attributionData[i].F_POR_ASH_RC_CTN_1Y;
                     entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
                     entry.FBm1AshAssetAlloc1y = attributionData[i].F_BM1_ASH_ASSET_ALLOC_1Y;
                     entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;

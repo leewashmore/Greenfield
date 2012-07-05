@@ -88,7 +88,8 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                Content = new ViewPRevenue(new ViewModelPRevenue(param))
+                Content =null
+                // new ViewPRevenue(new ViewModelPRevenue(param))
             });
         }
     }

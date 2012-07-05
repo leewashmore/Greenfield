@@ -56,7 +56,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member to store info about look thru enabled or not
         /// </summary>
-        private bool _lookThruEnabled = false;
+        private bool _lookThruEnabled;
       
         #endregion
 

@@ -445,6 +445,8 @@ namespace GreenField.Gadgets.ViewModels
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
 
+       
+
         #endregion
 
 
