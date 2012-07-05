@@ -36,6 +36,7 @@ namespace GreenField.ServiceCaller
         public ILoggerFacade LoggerFacade { get; set; }
 
         #endregion
+
         #region Build1
 
         /// <summary>

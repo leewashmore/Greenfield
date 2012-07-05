@@ -52,6 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private string _period;
 
+       
 
         #endregion
 
@@ -74,8 +75,12 @@ namespace GreenField.Gadgets.ViewModels
                 Dictionary<string, string> objDictionary = new Dictionary<string, string>();
                 objDictionary.Add("SECURITY", _entitySelectionData.LongName);
                 DateTime startDate = DateTime.Today.AddYears(-1);
-                _dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
-                BusyIndicatorStatus = true;
+
+                if (IsActive)
+                {
+                    _dbInteractivity.RetrieveChartExtensionData(objDictionary, startDate, RetrieveChartExtensionDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
             }
             if (_eventAggregator != null)
                 SubscribeEvents(_eventAggregator);
@@ -306,6 +311,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive 
+        {
+            get
+            {
+                return _isActive;
+            }
+            set 
+            {
+                _isActive = value;
+                if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && _isActive)
+                {
+                    _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
+            }
+        }
+
         #region ICommand
 
         /// <summary>
@@ -428,7 +454,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
                     SelectedEntities.Add("PORTFOLIO", PortfolioSelectionData.PortfolioId);
 
-                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null)
+                    if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && IsActive)
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
@@ -464,7 +490,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("SECURITY");
                     SelectedEntities.Add("SECURITY", entitySelectionData.LongName);
 
-                    if (SelectedStartDate != null && SelectedEntities != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO"))
+                    if (SelectedStartDate != null && SelectedEntities != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && IsActive)
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;
@@ -503,7 +529,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         RetrieveChartAccordingDataPeriod(_period);
                     }
-                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY"))
+                    else if (SelectedEntities != null && SelectedStartDate != null && _period != null && SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && IsActive)
                     {
                         _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
                         BusyIndicatorStatus = true;

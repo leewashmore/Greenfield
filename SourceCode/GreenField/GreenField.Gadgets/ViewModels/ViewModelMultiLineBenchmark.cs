@@ -35,6 +35,8 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private FilterSelectionData _filterSelectionData;
         private string _periodSelectionData;
+        
+        
 
         #endregion
 
@@ -84,8 +86,11 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
 
-                    if (objSelectedEntity != null || objSelectedEntity.Count != 0)
+                    if (objSelectedEntity != null || objSelectedEntity.Count != 0 && IsActive)
+                    {
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(objSelectedEntity, RetrieveBenchmarkChartDataCallBackMethod);
+                        BusyIndicatorStatus = true;
+                    }
                 }
             }
         }
@@ -182,6 +187,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _isActive)
+                {
+                    _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                    _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                    BusyIndicatorStatus = true;
+                }
+            }
+        }
 
         #region ChartProperties
 
@@ -414,7 +440,7 @@ namespace GreenField.Gadgets.ViewModels
                             SelectedEntities.Add("SECTOR", filterSelectionData.FilterValues);
                     }
 
-                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO"))
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && IsActive)
                     {
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
                         _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
@@ -451,7 +477,7 @@ namespace GreenField.Gadgets.ViewModels
                         SelectedEntities.Remove("PORTFOLIO");
 
                     SelectedEntities.Add("PORTFOLIO", portfolioSelectionData.PortfolioId);
-                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null)
+                    if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null && IsActive)
                     {
                         _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
                         _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
@@ -494,7 +520,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null)
+                        if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _periodSelectionData != null && IsActive)
                         {
                             _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
                             _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);

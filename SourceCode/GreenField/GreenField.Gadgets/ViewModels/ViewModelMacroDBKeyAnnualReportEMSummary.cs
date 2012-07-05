@@ -234,40 +234,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;
-
-
-        //public void HandleCountryReferenceSetEvent(String CountryData)
-        //{
-
-        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-        //    Logging.LogBeginMethod(_logger, methodNamespace);
-        //    try
-        //    {
-        //        if (CountryData != null)
-        //        {
-        //            Logging.LogMethodParameter(_logger, methodNamespace, CountryData, 1);
-        //            _countryCode = CountryData;
-
-        //            if (_countryCode != null && _countryNames!=null)
-        //            {
-        //                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-        //                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-        //                _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode,_countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-        //        Logging.LogException(_logger, ex);
-        //    }
-        //    Logging.LogEndMethod(_logger, methodNamespace);
-        //}
+        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;        
 
         public void HandleRegionCountryReferenceSetEvent(List<String> countryValues)
         {

@@ -88,7 +88,7 @@ namespace GreenField.Gadgets.ViewModels
             _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             this.ShapefileSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", ShapeExtension), UriKind.Relative);
             this.ShapefileDataSourceUri = new Uri(string.Format(ShapeRelativeUriFormat, "world", DbfExtension), UriKind.Relative);
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null && IsActive)
             {
                 _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrieveHeatMapDataCallbackMethod);
             }
@@ -171,10 +171,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private bool _isActive;
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _isActive)
+                {
+                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod);
+                }
+            }
+        }
         #endregion
 
         #region CallbackMethods
@@ -241,15 +256,13 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (PortfolioSelectionData != null && IsActive)
+                if (PortfolioSelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod !=null )
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
                     {
-                        if (null != heatMapDataLoadedEvent)
-                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod,RetrieveHeatMapDataCallbackMethod);
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod);
                     }
                 }
                 else
@@ -276,15 +289,13 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (effectiveDate != null && IsActive)
+                if (effectiveDate != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
                     {
-                        if (null != heatMapDataLoadedEvent)
-                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_selectedPeriod, RetrieveHeatMapDataCallbackMethod);
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod);
                     }
                 }
                 else
@@ -312,16 +323,13 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (selectedPeriodType != null && IsActive)
+                if (selectedPeriodType != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
                     _selectedPeriod = selectedPeriodType;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
                     {
-                        if (null != heatMapDataLoadedEvent)
-                            heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod, RetrieveHeatMapDataCallbackMethod);
-                            //SelectedPeriod = selectedPeriodType;
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _selectedPeriod);
                     }
                 }
                 else
@@ -337,6 +345,25 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
+
+        /// <summary>
+        /// Calls the webservice to retrieve the data
+        /// </summary>
+        /// <param name="PortfolioSelectionData">Selected Portfolio</param>
+        /// <param name="effectiveDate">Selected Effective Date</param>
+        /// <param name="selectedPeriodType">Selected Period Type</param>
+        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate,
+            String selectedPeriodType)
+        {
+            if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+            {
+                if (null != heatMapDataLoadedEvent)
+                    heatMapDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                _dbInteractivity.RetrieveHeatMapData(PortfolioSelectionData, effectiveDate, selectedPeriodType, RetrieveHeatMapDataCallbackMethod);
+                //SelectedPeriod = selectedPeriodType;
+            }
+        }
+
         #endregion
         #region EventUnSubscribe
         /// <summary>

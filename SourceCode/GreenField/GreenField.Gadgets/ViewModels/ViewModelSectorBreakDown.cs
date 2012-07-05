@@ -51,6 +51,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member to store info about look thru enabled or not
         /// </summary>
         private bool _lookThruEnabled = false;
+                
         #endregion
 
         #region Constructor
@@ -69,9 +70,10 @@ namespace GreenField.Gadgets.ViewModels
             _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
             _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+            if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
             {
                 _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                BusyIndicatorStatus = true;
             }
 
             if (_eventAggregator != null)
@@ -138,6 +140,46 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// property to contain status value for busy indicator of the gadget
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get { return _busyIndicatorStatus; }
+            set
+            {
+                if (_busyIndicatorStatus != value)
+                {
+                    _busyIndicatorStatus = value;
+                    RaisePropertyChanged(() => BusyIndicatorStatus);
+                }
+            }
+        }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && _isActive)
+                    {
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                }
+            }
+        }
         #endregion
         #endregion
 
@@ -157,11 +199,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _PortfolioSelectionData = portfolioSelectionData;
-                   if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
                    {
                          _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_isExCashSecurity,_lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
-                         if (SectorBreakdownDataLoadEvent != null)
-                            SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                         BusyIndicatorStatus = true;
                    }
                 }
                 else
@@ -191,11 +232,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
                     {
                         _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
-                        if (SectorBreakdownDataLoadEvent != null)
-                            SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
                 else
@@ -226,11 +266,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _isExCashSecurity = isExCashSec;
 
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
                     {
                         _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
-                        if (SectorBreakdownDataLoadEvent != null)
-                            SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        BusyIndicatorStatus = true;
                     }
                 }
             }
@@ -256,11 +295,10 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
                 _lookThruEnabled = enableLookThru;
 
-                if ((_PortfolioSelectionData != null) && (EffectiveDate != null))
+                if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
                 {
                     _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
-                    if (SectorBreakdownDataLoadEvent != null)
-                        SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    BusyIndicatorStatus = true;
                 }
             }
             catch (Exception ex)
@@ -270,15 +308,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler SectorBreakdownDataLoadEvent;
-
-        #endregion
+        #endregion              
 
         #region Callback Methods
         /// <summary>
@@ -326,14 +356,16 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-                if (SectorBreakdownDataLoadEvent != null)
-                    SectorBreakdownDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }              
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorStatus = false;
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }

@@ -78,7 +78,7 @@
         </Style>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <!--<RowDefinition Height="Auto"/>-->
@@ -99,7 +99,7 @@
                         <Image Source="../Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print">
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print" Click="btnPrint_Click">
                         <Image Source="../Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnToggle" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"

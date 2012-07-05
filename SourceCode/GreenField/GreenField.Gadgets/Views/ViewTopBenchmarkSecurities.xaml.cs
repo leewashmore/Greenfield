@@ -41,6 +41,21 @@ namespace GreenField.Gadgets.Views
             set { _dataContextTopBenchmarkSecurities = value; }
         }
 
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextTopBenchmarkSecurities != null)
+                    DataContextTopBenchmarkSecurities.IsActive = _isActive;
+            }
+        }
+
         #region Constructor
         /// <summary>
         /// Constructor for the class having ViewModelTopBenchmarkSecurities as its data context

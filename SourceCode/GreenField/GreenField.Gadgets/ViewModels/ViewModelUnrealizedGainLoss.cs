@@ -63,11 +63,10 @@ namespace GreenField.Gadgets.ViewModels
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet, false);
             if (_entitySelectionData != null)
-
             {
                 if (null != unrealizedGainLossDataLoadedEvent)
                     unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
+                RetrieveUnrealizedGainLossData(_entitySelectionData);
             }
         }
         #endregion
@@ -114,30 +113,30 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+       
+        private bool _isActive;
         /// <summary>
-        /// Property to change the status of busy Indicator
+        /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _busyIndicatorStatus;
-        public bool BusyIndicatorStatus
+        public bool IsActive
         {
-            get 
+            get
             {
-                return _busyIndicatorStatus; 
+                return _isActive;
             }
             set
             {
-                _busyIndicatorStatus = value;
-                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+                _isActive = value;
+                if (_entitySelectionData != null && _isActive)
+                    RetrieveUnrealizedGainLossData(_entitySelectionData);
             }
         }
-        
 
 
         #region Time Period Selection and Frequency Selection
         /// <summary>
         /// Collection of Time Range options
-        /// </summary>
-        private ObservableCollection<String> _timeRange;
+        /// </summary>        
         public ObservableCollection<String> TimeRange
         {
             get
@@ -149,8 +148,7 @@ namespace GreenField.Gadgets.ViewModels
 
         /// <summary>
         /// Collection of Frequency Range Options
-        /// </summary>
-        private ObservableCollection<String> _frequencyRange;
+        /// </summary>        
         public ObservableCollection<String> FrequencyRange
         {
             get
@@ -173,7 +171,7 @@ namespace GreenField.Gadgets.ViewModels
                     _selectedTimeRange = value;
 
                     if (_entitySelectionData != null)
-                        RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
+                        RetrieveUnrealizedGainLossData(_entitySelectionData);
                     RaisePropertyChanged(() => this.SelectedTimeRange);
                 }
             }
@@ -194,7 +192,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_entitySelectionData != null)
 
-                        RetrieveUnrealizedGainLossData(_entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
+                        RetrieveUnrealizedGainLossData(_entitySelectionData);
                     RaisePropertyChanged(() => this.SelectedFrequencyRange);
                 }
             }
@@ -227,7 +225,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         /// <param name="Ticker">Unique Identifier for propertyName security</param>
         /// <param name="callback">Callback for this method</param>
-        private void RetrieveUnrealizedGainLossData(EntitySelectionData entitySelectionData, Action<List<UnrealizedGainLossData>> callback)
+        private void RetrieveUnrealizedGainLossData(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -236,19 +234,17 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    if (callback != null)
-                    {
-                        Logging.LogMethodParameter(_logger, methodNamespace, callback, 2);
-                        DateTime periodStartDate;
-                        DateTime periodEndDate;
-                        GetPeriod(out periodStartDate, out periodEndDate);
-                        BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrieveUnrealizedGainLossData(entitySelectionData, periodStartDate, periodEndDate, SelectedFrequencyRange, callback);
+                    PlottedSecurityName = entitySelectionData.LongName;
+                    DateTime periodStartDate;
+                    DateTime periodEndDate;
+                    GetPeriod(out periodStartDate, out periodEndDate);
+                    if (IsActive)
+                    {                        
+                        if (null != unrealizedGainLossDataLoadedEvent)
+                            unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveUnrealizedGainLossData(entitySelectionData, periodStartDate, periodEndDate, SelectedFrequencyRange, RetrieveUnrealizedGainLossDataCallBackMethod);
                     }
-                    else
-                    {
-                        Logging.LogMethodParameterNull(_logger, methodNamespace, 2);
-                    }
+                   
                 }
                 else
                 {
@@ -452,7 +448,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _entitySelectionData = entitySelectionData;
-                    RetrieveUnrealizedGainLossData(entitySelectionData, RetrieveUnrealizedGainLossDataCallBackMethod);
+                    RetrieveUnrealizedGainLossData(entitySelectionData);
                 }
                 else
                 {
@@ -484,9 +480,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PlottedSeries.Clear();
-                    PlottedSeries.AddRange(result);
-                    if (result.Count != 0)
-                        PlottedSecurityName = result[0].IssueName.ToString();
+                    PlottedSeries.AddRange(result);                    
                     if (null != unrealizedGainLossDataLoadedEvent)
                         unrealizedGainLossDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
@@ -501,11 +495,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-            }
-            finally
-            {
-                BusyIndicatorStatus = false;
-            }
+            }            
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 

@@ -28,6 +28,21 @@ namespace GreenField.Gadgets.Views
             set { _dataContextRelativePerformanceSecurityActivePosition = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRelativePerformanceSecurityActivePosition != null) //DataContext instance
+                    DataContextRelativePerformanceSecurityActivePosition.IsActive = _isActive;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -35,25 +50,10 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.SecurityActivePositionDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSecurityActivePositionLoadEvent);
             this.DataContextRelativePerformanceSecurityActivePosition = dataContextSource;
         } 
         #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRelativePerformanceSecurityActivePositionLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
-        #endregion
-
+       
         #region Dispose Method
         /// <summary>
         /// method to dispose all running events
@@ -61,7 +61,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRelativePerformanceSecurityActivePosition.Dispose();
-            this.DataContextRelativePerformanceSecurityActivePosition.SecurityActivePositionDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSecurityActivePositionLoadEvent);
             this.DataContextRelativePerformanceSecurityActivePosition = null;
             this.DataContext = null;
         }

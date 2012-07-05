@@ -75,7 +75,7 @@
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
                                          CanUserSortColumns="False" 
-                                         ScrollMode="Deferred"
+                                         ScrollMode="RealTime"
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 

@@ -43,6 +43,7 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime? _effectiveDate;
         private bool _lookThruEnabled = false;
 
+
         #endregion
 
         #region Constructor
@@ -63,7 +64,7 @@ namespace GreenField.Gadgets.ViewModels
             ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
             _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null)
+            if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null && IsActive)
             {
                 BusyIndicatorStatus = true;
                 _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
@@ -325,6 +326,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedPortfolioId != null && _effectiveDate != null && _isActive)
+                {
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                }
+            }
+        }
 
         #endregion
 
@@ -378,6 +398,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, objSelectedDate, 1);
                     Logging.LogMethodParameter(_logger, methodNamespace, objPortfolioId, 1);
                     _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, EnableLookThru, ExcludeCashSecurities, GetBenchmarkData, callback);
+                    BusyIndicatorStatus = true;
                 }
                 else
                 {
@@ -511,7 +532,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     SelectedPortfolioId = PortfolioSelectionData;
-                    if (SelectedPortfolioId != null && _effectiveDate != null)
+                    if (SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                     {
                         BusyIndicatorStatus = true;
                         RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
@@ -540,7 +561,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && SelectedPortfolioId != null)
+                    if (_effectiveDate != null && SelectedPortfolioId != null && IsActive)
                     {
                         BusyIndicatorStatus = true;
                         _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
@@ -572,7 +593,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
                 ExcludeCashSecurities = isExCashSec;
 
-                if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null)
+                if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
@@ -601,7 +622,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
                 EnableLookThru = enableLookThru;
 
-                if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null)
+                if (_dbInteractivity != null && SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);

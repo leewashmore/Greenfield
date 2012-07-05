@@ -34,6 +34,11 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private EntitySelectionData _entitySelectionData;
         private IEventAggregator _eventAggregator;
+        
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive { get; set; }
 
         #endregion
 

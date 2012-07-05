@@ -29,6 +29,42 @@ namespace GreenField.Gadgets.Helpers
                 return result;
             else
                 return null;           
+        }        
+    }
+    public class PercentageValueConverterOneDec : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value == null ? null : String.Format("{0:n1}%", value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            double result;
+            bool parseValidation = double.TryParse((value as string).Replace("%", ""), out result);
+            if (parseValidation)
+                return result;
+            else
+                return null;
         }
     }
+    public class PercentageValConverterFourDec : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value == null ? null : String.Format("{0:n4}%", value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            double result;
+            bool parseValidation = double.TryParse((value as string).Replace("%", ""), out result);
+            if (parseValidation)
+                return result;
+            else
+                return null;
+        }
+    }
+
+
 }

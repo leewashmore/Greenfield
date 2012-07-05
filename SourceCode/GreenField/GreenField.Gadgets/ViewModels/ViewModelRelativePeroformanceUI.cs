@@ -62,6 +62,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
+        
+
         #endregion
 
         #region Constructor
@@ -205,6 +207,26 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive 
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedSecurity != null && SelectedDate != null && SelectedPortfolio != null && SelectedEntityValues != null && _isActive)
+                {
+                    _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
+            }
+        }
 
         #endregion
 
@@ -233,7 +255,7 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedPortfolio = PortfolioSelectionData;
                     SelectedEntityValues.Add("PORTFOLIO", PortfolioSelectionData.PortfolioId);
 
-                    if (SelectedSecurity != null && SelectedDate != null && SelectedPortfolio != null && SelectedEntityValues != null)
+                    if (SelectedSecurity != null && SelectedDate != null && SelectedPortfolio != null && SelectedEntityValues != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
                         BusyIndicatorStatus = true;
@@ -274,7 +296,7 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedSecurity = entitySelectionData;
                     SelectedEntityValues.Add("SECURITY", entitySelectionData.LongName);
 
-                    if (SelectedPortfolio != null && SelectedDate != null && SelectedSecurity != null && SelectedEntityValues != null)
+                    if (SelectedPortfolio != null && SelectedDate != null && SelectedSecurity != null && SelectedEntityValues != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
                         BusyIndicatorStatus = true;
@@ -307,7 +329,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     SelectedDate = effectiveDate;
-                    if (SelectedDate != null && SelectedEntityValues != null && SelectedSecurity != null && SelectedPortfolio != null)
+                    if (SelectedDate != null && SelectedEntityValues != null && SelectedSecurity != null && SelectedPortfolio != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
                         BusyIndicatorStatus = true;

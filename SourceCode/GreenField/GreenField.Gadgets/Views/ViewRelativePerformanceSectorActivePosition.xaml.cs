@@ -28,6 +28,21 @@ namespace GreenField.Gadgets.Views
             set { _dataContextRelativePerformanceSectorActivePosition = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRelativePerformanceSectorActivePosition != null) //DataContext instance
+                    DataContextRelativePerformanceSectorActivePosition.IsActive = _isActive;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -39,23 +54,8 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.SectorActivePositionDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSectorActivePositionLoadEvent);
             this.DataContextRelativePerformanceSectorActivePosition = dataContextSource;
         } 
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRelativePerformanceSectorActivePositionLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
         #endregion
 
         #region Dispose Method
@@ -65,7 +65,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRelativePerformanceSectorActivePosition.Dispose();
-            this.DataContextRelativePerformanceSectorActivePosition.SectorActivePositionDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceSectorActivePositionLoadEvent);
             this.DataContextRelativePerformanceSectorActivePosition = null;
             this.DataContext = null;
         }

@@ -22,7 +22,22 @@ namespace GreenField.Gadgets.Views
         {
             get { return _dataContextRegionBreakdown; }
             set { _dataContextRegionBreakdown = value; }
-        } 
+        }
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRegionBreakdown != null) //DataContext instance
+                    DataContextRegionBreakdown.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -35,24 +50,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextRegionBreakdown = dataContextSource;
-            dataContextSource.RegionBreakdownDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRegionBreakdownLoadEvent);
         } 
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRegionBreakdownLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
-
-        
         #endregion
 
         /// <summary>
@@ -80,7 +78,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRegionBreakdown.Dispose();
-            this.DataContextRegionBreakdown.RegionBreakdownDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRegionBreakdownLoadEvent);
             this.DataContextRegionBreakdown = null;
             this.DataContext = null;
         } 

@@ -77,7 +77,7 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
             }
 
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null )
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null && IsActive)
             {
                 _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
             }
@@ -318,6 +318,26 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+
+        private bool _isActive;
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null && _isActive)
+                {
+                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -343,11 +363,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null && IsActive)
                     {
-                        if (null != portfolioRiskReturnDataLoadedEvent)
-                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -377,11 +395,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod != null && IsActive)
                     {
-                        if (null != portfolioRiskReturnDataLoadedEvent)
-                            portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData,Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                     }
                 }
                 else
@@ -416,10 +432,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (PortfolioRiskReturnInfo.Count == 0)
                         {
-                            if (null != portfolioRiskReturnDataLoadedEvent)
-                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                            _dbInteractivity.RetrievePortfolioRiskReturnData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
-
+                            BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
                         }
                         else
                         {
@@ -444,6 +457,13 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
 
+        }
+
+        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate)
+        {
+            if (null != portfolioRiskReturnDataLoadedEvent)
+                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+            _dbInteractivity.RetrievePortfolioRiskReturnData(PortfolioSelectionData, Convert.ToDateTime(effectiveDate), RetrievePortfolioRiskReturnDataCallbackMethod);
         }
 
         #endregion

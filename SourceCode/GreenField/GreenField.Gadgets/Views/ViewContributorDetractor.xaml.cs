@@ -27,6 +27,21 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextContributorDetractor; }
             set { _dataContextContributorDetractor = value; }
         }
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextContributorDetractor != null) //DataContext instance
+                    DataContextContributorDetractor.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -34,24 +49,9 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.ContributorDetractorDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceContributorDetractorLoadEvent);
             this.DataContextContributorDetractor = dataContextSource;
         } 
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceContributorDetractorLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
-        #endregion
+        #endregion       
 
         #region Dispose Method
         /// <summary>
@@ -60,7 +60,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextContributorDetractor.Dispose();
-            this.DataContextContributorDetractor.ContributorDetractorDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceContributorDetractorLoadEvent);
             this.DataContextContributorDetractor = null;
             this.DataContext = null;
         }

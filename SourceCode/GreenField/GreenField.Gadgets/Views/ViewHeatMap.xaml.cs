@@ -47,6 +47,9 @@ namespace GreenField.Gadgets.Views
         public MapShape mapShape;
         private IEventAggregator _eventAggregator;
 
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
         private bool _isActive;
         public override bool IsActive
         {

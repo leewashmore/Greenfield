@@ -29,6 +29,7 @@ using System.IO;
 using System.Collections;
 using GreenField.DataContracts;
 using System.Windows.Data;
+using System.Windows.Printing;
 
 namespace GreenField.Gadgets.Views
 {
@@ -42,6 +43,26 @@ namespace GreenField.Gadgets.Views
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
 
+        //private details
+        Canvas canvas;
+        double totalHeight;
+        RadGridView grid;
+        double offsetY;
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRelativePerformance != null) //DataContext instance
+                    DataContextRelativePerformance.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -53,7 +74,6 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.RelativePerformanceDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
             dataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
             dataContextSource.RelativePerformanceToggledSectorGridBuildEvent += new RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEvent);
             this.DataContextRelativePerformance = dataContextSource;
@@ -89,18 +109,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event Handlers
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceRelativePerformanceLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
-
+       
         /// <summary>
         /// setting tooltip on grid cells when is getting grid loaded with data
         /// </summary>
@@ -745,6 +754,82 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Printing the DataGrid
+
+        void doc_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            e.PageVisual = canvas;
+            if (totalHeight == 0)
+            {
+                totalHeight = grid.DesiredSize.Height;
+            }
+
+            Canvas.SetTop(grid, -offsetY);
+            offsetY += e.PrintableArea.Height;
+            e.HasMorePages = offsetY <= totalHeight;
+        }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            offsetY = 0d;
+            totalHeight = 0d;
+
+            grid = new RadGridView();
+            grid.DataContext = dgRelativePerformance.DataContext;
+            grid.ItemsSource = dgRelativePerformance.ItemsSource;
+            grid.RowIndicatorVisibility = Visibility.Collapsed;
+            grid.ShowGroupPanel = false;
+            grid.CanUserFreezeColumns = false;
+            grid.IsFilteringAllowed = false;
+            grid.AutoExpandGroups = true;
+            grid.AutoGenerateColumns = false;
+            grid.FontFamily = new FontFamily("Arial");
+            grid.FontSize = 7;
+
+
+            foreach (GridViewDataColumn column in dgRelativePerformance.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn newColumn = new GridViewDataColumn();
+                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
+                grid.Columns.Add(newColumn);
+            }
+
+            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
+            {
+                GridViewDataColumn currentColumn = column;
+                GridViewDataColumn originalColumn = (from c in dgRelativePerformance.Columns.OfType<GridViewDataColumn>()
+                                                     where c.UniqueName == currentColumn.UniqueName
+                                                     select c).FirstOrDefault();
+                if (originalColumn != null)
+                {
+                    column.Width = originalColumn.ActualWidth;
+                    column.DisplayIndex = originalColumn.DisplayIndex;
+
+                }
+            }
+
+            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgRelativePerformance));
+
+            grid.SortDescriptors.AddRange(dgRelativePerformance.SortDescriptors);
+            grid.GroupDescriptors.AddRange(dgRelativePerformance.GroupDescriptors);
+            grid.FilterDescriptors.AddRange(dgRelativePerformance.FilterDescriptors);
+
+            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            PrintDocument doc = new PrintDocument();
+            canvas = new Canvas();
+            canvas.Children.Add(grid);
+            doc.PrintPage += this.doc_PrintPage;
+            doc.Print("RadGridView print");
+        }
+
+        #endregion
+
         #region Dispose Method
         /// <summary>
         /// method to dispose all running events
@@ -752,7 +837,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextRelativePerformance.Dispose();
-            this.DataContextRelativePerformance.RelativePerformanceDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRelativePerformanceLoadEvent);
             this.DataContextRelativePerformance.RelativePerformanceGridBuildEvent -= new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
             this.DataContextRelativePerformance= null;
             this.DataContext = null;

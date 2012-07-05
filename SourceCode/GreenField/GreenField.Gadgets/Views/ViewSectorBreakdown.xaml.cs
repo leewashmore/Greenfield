@@ -28,8 +28,21 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextSectorBreakdown; }
             set { _dataContextSectorBreakdown = value; }
         }
-        
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSectorBreakdown != null) //DataContext instance
+                    DataContextSectorBreakdown.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -42,22 +55,10 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSectorBreakdown = dataContextSource;
-            dataContextSource.SectorBreakdownDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSectorBreakdownLoadEvent);
         } 
         #endregion
 
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceSectorBreakdownLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
+        #region Event       
 
         /// <summary>
         /// Disabling the indentation when grouping is applied in the grid
@@ -98,7 +99,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextSectorBreakdown.Dispose();
-            this.DataContextSectorBreakdown.SectorBreakdownDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSectorBreakdownLoadEvent);
             this.DataContextSectorBreakdown = null;
             this.DataContext = null;
         } 

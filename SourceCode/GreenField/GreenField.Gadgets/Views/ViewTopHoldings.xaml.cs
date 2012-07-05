@@ -26,7 +26,22 @@ namespace GreenField.Gadgets.Views
         {
             get { return _dataContextViewModelTopHoldings; }
             set { _dataContextViewModelTopHoldings = value; }
-        }        
+        }
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextViewModelTopHoldings != null) //DataContext instance
+                    DataContextViewModelTopHoldings.IsActive = _isActive;
+            }
+        }
 
         #endregion
 
@@ -39,26 +54,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.TopHoldingsDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceTopHoldingsLoadedevent);
             this.DataContextViewModelTopHoldings = dataContextSource;
-        } 
-        #endregion
-
-        #region Event
-        /// <summary>
-        ///  event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceTopHoldingsLoadedevent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-            {
-                this.gridBusyIndicator.IsBusy = true;
-            }
-            else
-            {
-                this.gridBusyIndicator.IsBusy = false;
-            }
         } 
         #endregion
 
@@ -69,7 +65,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextViewModelTopHoldings.Dispose();
-            this.DataContextViewModelTopHoldings.TopHoldingsDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceTopHoldingsLoadedevent);
             this.DataContextViewModelTopHoldings = null;
             this.DataContext = null;
         } 

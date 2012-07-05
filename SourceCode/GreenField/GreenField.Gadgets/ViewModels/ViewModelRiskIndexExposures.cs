@@ -55,6 +55,38 @@ namespace GreenField.Gadgets.ViewModels
         /// Private member to store info about look thru enabled or not
         /// </summary>
         private bool _lookThruEnabled;
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && _isActive)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && _isActive)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Constructor
@@ -74,14 +106,14 @@ namespace GreenField.Gadgets.ViewModels
             _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
             _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null)
+            if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
             {
                 _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, 
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
 
-            else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+            else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
             {
                 _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                         "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
@@ -220,13 +252,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
                     _portfolioSelectionData = portfolioSelectionData;
-                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null)
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
-                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                                 "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
@@ -262,13 +294,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     EffectiveDate = effectiveDate;
-                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null)
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
-                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                                 "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
@@ -302,13 +334,13 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
                 _isExCashSecurity = isExCashSec;
 
-                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null)
+                if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                        _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
-                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                                 "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
@@ -337,13 +369,13 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
                 _lookThruEnabled = enableLookThru;
 
-                if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null)
+                if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && IsActive)
                 {
                     _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                          _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                     BusyIndicatorStatus = true;
                 }
-                else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                 {
                     _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                             "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
@@ -372,13 +404,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, filterSelectionData, 1);
                     _holdingDataFilter = filterSelectionData;
-                    if (EffectiveDate != null && _portfolioSelectionData != null && _holdingDataFilter != null)
+                    if (EffectiveDate != null && _portfolioSelectionData != null && _holdingDataFilter != null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                         _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
-                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null)
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && IsActive)
                     {
                         _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
                                                                 "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);

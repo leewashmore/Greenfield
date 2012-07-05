@@ -29,6 +29,20 @@ namespace GreenField.Gadgets.Views
             set { _dataContextSecurityOverview = value; }
         }
 
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSecurityOverview != null) //DataContext instance
+                    DataContextSecurityOverview.IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -40,22 +54,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            dataContextSource.SecurityOverviewDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSecurityOverviewLoadEvent);
             this.DataContextSecurityOverview = dataContextSource;
-        }
-        #endregion
-
-        #region Event
-        /// <summary>
-        /// event to handle RadBusyIndicator
-        /// </summary>
-        /// <param name="e"></param>
-        void DataContextSourceSecurityOverviewLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
         }
         #endregion
 
@@ -66,7 +65,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextSecurityOverview.Dispose();
-            this.DataContextSecurityOverview.SecurityOverviewDataLoadEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceSecurityOverviewLoadEvent);
             this.DataContextSecurityOverview = null;
             this.DataContext = null;
         }
