@@ -25,5 +25,5 @@ namespace GreenField.Gadgets.Helpers
         {
             throw new NotImplementedException();
         }
-    }
+    }    
 }
