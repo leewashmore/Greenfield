@@ -13,6 +13,7 @@ namespace GreenField.Gadgets.Helpers
 {
     public partial class ViewBaseUserControl : UserControl, IDisposable
     {
+        public virtual bool IsActive { get; set; }
         public virtual void Dispose(){}
     }
 }

@@ -19,11 +19,13 @@ using GreenField.Common;
 using GreenField.DashBoardModule.Helpers;
 using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
+using Microsoft.Practices.Prism.Regions;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardCompanyChartingContext : UserControl
+    public partial class ViewDashboardCompanyChartingContext : UserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -85,6 +87,30 @@ namespace GreenField.DashboardModule.Views
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY,
                 Content = null
             });
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            SetIsActiveOnDahsboardItems(false);
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SetIsActiveOnDahsboardItems(true);
+        }
+
+        private void SetIsActiveOnDahsboardItems(bool value)
+        {
+            foreach (RadTileViewItem item in this.rtvDashboard.Items)
+            {
+                ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
+                control.IsActive = value;
+            }
         }
     }
 }
