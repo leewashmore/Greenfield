@@ -35,10 +35,8 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private FilterSelectionData _filterSelectionData;
         private string _periodSelectionData;
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive { get; set; }
+        
+        
 
         #endregion
 
@@ -189,6 +187,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedEntities != null && SelectedEntities.ContainsKey("PORTFOLIO") && _isActive)
+                {
+                    _dbInteractivity.RetrieveBenchmarkChartReturnData(SelectedEntities, RetrieveBenchmarkChartDataCallBackMethod);
+                    _dbInteractivity.RetrieveBenchmarkGridReturnData(SelectedEntities, RetrieveBenchmarkGridDataCallBackMethod);
+                    BusyIndicatorStatus = true;
+                }
+            }
+        }
 
         #region ChartProperties
 

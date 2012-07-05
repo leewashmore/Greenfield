@@ -62,7 +62,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        public bool IsActive { get; set; }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_effectiveDate != null && _portfolioSelectionData != null && _isActive)
+                {
+                    BusyIndicatorStatus = true;
+                    _dbInteractivity.RetrieveAssetAllocationData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _enableLookThru, ExcludeCashSecurities, RetrieveAssetAllocationDataCallbackMethod);
+                }
+            }
+        }
 
 
         #endregion
@@ -160,6 +176,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #endregion
 
         #region Events

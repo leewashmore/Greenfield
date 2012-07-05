@@ -62,10 +62,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive { get; set; }
+        
 
         #endregion
 
@@ -210,6 +207,26 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive 
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedSecurity != null && SelectedDate != null && SelectedPortfolio != null && SelectedEntityValues != null && _isActive)
+                {
+                    _dbInteractivity.RetrieveRelativePerformanceUIData(SelectedEntityValues, SelectedDate, RelativePerformanceUIDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
+            }
+        }
 
         #endregion
 

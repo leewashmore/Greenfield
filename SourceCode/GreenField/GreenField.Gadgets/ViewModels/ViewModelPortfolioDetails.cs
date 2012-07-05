@@ -42,10 +42,7 @@ namespace GreenField.Gadgets.ViewModels
         private PortfolioSelectionData _portfolioSelectionData;
         private DateTime? _effectiveDate;
         private bool _lookThruEnabled = false;
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive { get; set; }
+
 
         #endregion
 
@@ -329,6 +326,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (SelectedPortfolioId != null && _effectiveDate != null && _isActive)
+                {
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                }
+            }
+        }
 
         #endregion
 
@@ -382,6 +398,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, objSelectedDate, 1);
                     Logging.LogMethodParameter(_logger, methodNamespace, objPortfolioId, 1);
                     _dbInteractivity.RetrievePortfolioDetailsData(objPortfolioId, objSelectedDate, EnableLookThru, ExcludeCashSecurities, GetBenchmarkData, callback);
+                    BusyIndicatorStatus = true;
                 }
                 else
                 {

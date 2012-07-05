@@ -52,10 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private string _period;
 
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive { get; set; }
+       
 
         #endregion
 
@@ -311,6 +308,27 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _axisXStep = value;
 
+            }
+        }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive 
+        {
+            get
+            {
+                return _isActive;
+            }
+            set 
+            {
+                _isActive = value;
+                if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && _isActive)
+                {
+                    _dbInteractivity.RetrieveChartExtensionData(SelectedEntities, Convert.ToDateTime(SelectedStartDate), RetrieveChartExtensionDataCallbackMethod);
+                    BusyIndicatorStatus = true;
+                }
             }
         }
 
