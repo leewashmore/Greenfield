@@ -428,7 +428,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
                     _selectedPeriod = selectedPeriodType;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
                     {
                         if (PortfolioRiskReturnInfo.Count == 0)
                         {

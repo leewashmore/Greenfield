@@ -42,16 +42,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private PortfolioSelectionData _PortfolioSelectionData;
 
-        /// <summary>
-        /// Private member to store info about including or excluding cash securities
-        /// </summary>
-        private bool _isExCashSecurity = false;
-
-        /// <summary>
-        /// Private member to store info about look thru enabled or not
-        /// </summary>
-        private bool _lookThruEnabled = false;
-
+       
         #endregion
 
         #region Constructor
@@ -67,8 +58,8 @@ namespace GreenField.Gadgets.ViewModels
 
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-            _isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
-            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+            IsExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
+            LookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
             if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
             {
@@ -88,6 +79,41 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
         #region UI Fields
+
+        /// <summary>
+        /// Private member to store info about including or excluding cash securities
+        /// </summary>
+        private bool _isExCashSecurity = false;
+        public bool  IsExCashSecurity
+        {
+            get { return _isExCashSecurity; }
+            set
+            {
+                if (_isExCashSecurity != value)
+                {
+                    _isExCashSecurity = value;
+                    RaisePropertyChanged(() => IsExCashSecurity);
+                }
+            }
+        }
+        
+
+        /// <summary>
+        /// Private member to store info about look thru enabled or not
+        /// </summary>
+        private bool _lookThruEnabled = false;
+        public bool LookThruEnabled
+        {
+            get { return _lookThruEnabled; }
+            set
+            {
+                if (_lookThruEnabled != value)
+                {
+                    _lookThruEnabled = value;
+                    RaisePropertyChanged(() => LookThruEnabled);
+                }
+            }
+        }
 
         /// <summary>
         /// contains data for the grid in the gadget
@@ -266,15 +292,15 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                if (isExCashSec != null)
-                {
-                    _isExCashSecurity = isExCashSec;
-
-                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                if (IsExCashSecurity != isExCashSec)
                     {
-                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveRegionBreakdownDataCallbackMethod);
-                        BusyIndicatorStatus = true;
-                    }
+                        IsExCashSecurity = isExCashSec;
+
+                        if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                        {
+                            _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveRegionBreakdownDataCallbackMethod);
+                            BusyIndicatorStatus = true;
+                        }
                 }
             }
             catch (Exception ex)
@@ -297,12 +323,14 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                _lookThruEnabled = enableLookThru;
-
-                if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                if (LookThruEnabled != enableLookThru)
                 {
-                    _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveRegionBreakdownDataCallbackMethod);
-                    BusyIndicatorStatus = true;
+                    LookThruEnabled = enableLookThru;
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    {
+                        _dbInteractivity.RetrieveRegionBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveRegionBreakdownDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
                 }
             }
             catch (Exception ex)

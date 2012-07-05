@@ -50,8 +50,8 @@ namespace GreenField.DashboardModule.Views
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            //if (this.rtvDashboard.Items.Count > 0)
-            //    return;
+            if (this.rtvDashboard.Items.Count > 0)
+                return;
 
             DashboardGadgetParam param = new DashboardGadgetParam()
             {
@@ -200,7 +200,7 @@ namespace GreenField.DashboardModule.Views
                 if (control != null)
                     control.IsActive = value;
             }
-           
+
         }
     }
 }

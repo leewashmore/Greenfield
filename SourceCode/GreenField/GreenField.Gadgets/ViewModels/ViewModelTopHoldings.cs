@@ -256,7 +256,7 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                if (isExCashSec != null)
+                if (_isExCashSecurity != isExCashSec)
                 {
                     _isExCashSecurity = isExCashSec;
 
@@ -287,12 +287,15 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                _lookThruEnabled = enableLookThru;
-
-                if ((_portfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                if (_lookThruEnabled != enableLookThru)
                 {
-                    _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
-                    BusyIndicatorStatus = true;
+                    _lookThruEnabled = enableLookThru;
+
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    {
+                        _dbInteractivity.RetrieveTopHoldingsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
                 }
             }
             catch (Exception ex)

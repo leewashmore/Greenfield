@@ -60,14 +60,15 @@ namespace GreenField.Gadgets.ViewModels
             this._eventAggregator = param.EventAggregator;
             this._logger = param.LoggerFacade;
             _portfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
+            SelectedPortfolioId = _portfolioSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
             ExcludeCashSecurities = param.DashboardGadgetPayload.IsExCashSecurityData;
             _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
 
-            if (_eventAggregator != null && _effectiveDate != null && _portfolioSelectionData != null && IsActive)
+            if (_eventAggregator != null && _effectiveDate != null && SelectedPortfolioId != null && IsActive)
             {
                 BusyIndicatorStatus = true;
-                _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
+                _dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), _lookThruEnabled, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
             }
 
             if (_eventAggregator != null)
@@ -564,7 +565,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (_effectiveDate != null && SelectedPortfolioId != null && IsActive)
                     {
                         BusyIndicatorStatus = true;
-                        _dbInteractivity.RetrievePortfolioDetailsData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
+                        _dbInteractivity.RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), EnableLookThru, ExcludeCashSecurities, false, RetrievePortfolioDetailsDataCallbackMethod);
                     }
                 }
                 else

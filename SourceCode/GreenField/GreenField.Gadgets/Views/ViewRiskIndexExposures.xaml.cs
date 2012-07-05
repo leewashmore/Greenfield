@@ -99,11 +99,11 @@ namespace GreenField.Gadgets.Views
                         Select(a => a.Value).FirstOrDefault());
                     (this.DataContext as ViewModelRiskIndexExposures).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.OrderByDescending(a => a.Value)).
                         Select(a => a.Value).FirstOrDefault());
-                    int dataCount = (this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.Count;
-                    if (dataCount != 0)
-                    {
-                        this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = dataCount / 4;
-                    }
+                    //int dataCount = (this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.Count;
+                    //if (dataCount != 0)
+                    //{
+                    this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = 10;
+                    //}
                 }
             }
         }
