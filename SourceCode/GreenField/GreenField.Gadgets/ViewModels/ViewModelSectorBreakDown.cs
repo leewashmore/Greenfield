@@ -262,7 +262,7 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                if (isExCashSec != null)
+                if (_isExCashSecurity != isExCashSec)
                 {
                     _isExCashSecurity = isExCashSec;
 
@@ -293,12 +293,14 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
-                _lookThruEnabled = enableLookThru;
-
-                if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                if (_lookThruEnabled != enableLookThru)
                 {
-                    _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
-                    BusyIndicatorStatus = true;
+                    _lookThruEnabled = enableLookThru;
+                    if ((_PortfolioSelectionData != null) && (EffectiveDate != null) && IsActive)
+                    {
+                        _dbInteractivity.RetrieveSectorBreakdownData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled, RetrieveSectorBreakdownDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
                 }
             }
             catch (Exception ex)
