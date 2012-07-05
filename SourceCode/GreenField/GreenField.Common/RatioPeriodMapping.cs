@@ -71,9 +71,9 @@ namespace GreenField.Common
         /// <summary>
         /// Get DataId value of a ratio for a specific period
         /// </summary>
-        /// <param name="ratio">ScatterValuationRatio or ScatterFinancialRatio</param>
-        /// <param name="period"></param>
-        /// <returns></returns>
+        /// <param name="ratio">ScatterGraphValuationRatio or ScatterGraphFinancialRatio</param>
+        /// <param name="period">ScatterGraphPeriod</param>
+        /// <returns>DataId</returns>
         public static Int32? GetDataId(object ratio, ScatterGraphPeriod period)
         {
             String desc = ratio.ToString();
@@ -91,6 +91,12 @@ namespace GreenField.Common
 
         }
 
+        /// <summary>
+        /// Get EstimationId value of a ratio for a specific period
+        /// </summary>
+        /// <param name="ratio">ScatterGraphValuationRatio or ScatterGraphFinancialRatio</param>
+        /// <param name="period">ScatterGraphPeriod</param>
+        /// <returns>EstimationId</returns>
         public static Int32? GetEstimationId(object ratio, ScatterGraphPeriod period)
         {
             String desc = ratio.ToString();

@@ -62,7 +62,8 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_HEAT_MAP, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight=300,
-                Content = new ViewHeatMap(new ViewModelHeatMap(param))
+                //Content = new ViewHeatMap(new ViewModelHeatMap(param))
+                Content = null
             }); 
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
