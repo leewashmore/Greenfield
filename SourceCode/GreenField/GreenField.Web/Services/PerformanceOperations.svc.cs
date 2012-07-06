@@ -2061,21 +2061,21 @@ namespace GreenField.Web.Services
                 {
                     PerformanceGridData entry = new PerformanceGridData();
                     entry.Name = portfolioID;
-                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D;
-                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W;
-                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD;
-                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD;
-                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD;
-                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y;
+                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D * 100;
+                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W * 100;
+                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD * 100;
+                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD * 100;
+                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD * 100;
+                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y * 100;
                     result.Add(entry);
                     entry = new PerformanceGridData();
                     entry.Name = benchmarkID;
-                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D;
-                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W;
-                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD;
-                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD;
-                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD;
-                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y;
+                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D * 100;
+                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W * 100;
+                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD * 100;
+                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD * 100;
+                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD * 100;
+                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y * 100;
                     result.Add(entry);
                 }
                 return result;
