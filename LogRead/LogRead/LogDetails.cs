@@ -24,6 +24,6 @@ namespace LogRead
         public String LogAccountDetail { get; set; }
         public String LogRoleDetail { get; set; }
 
-
+        public String LogTimeStamp { get; set; }
     }
 }

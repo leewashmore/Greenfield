@@ -10,6 +10,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ExternalResearchOperations_RetrieveIssuerId_InputMessage">
@@ -102,6 +103,24 @@
   <wsdl:message name="ExternalResearchOperations_RetrievePRevenueData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioComparisonData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRatioComparisonData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioComparisonData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRatioComparisonDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioComparisonData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRatioSecurityReferenceData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveRatioSecurityReferenceDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -152,6 +171,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueData" message="tns:ExternalResearchOperations_RetrievePRevenueData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueDataResponse" message="tns:ExternalResearchOperations_RetrievePRevenueData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrievePRevenueData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRatioComparisonData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioComparisonData" message="tns:ExternalResearchOperations_RetrieveRatioComparisonData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioComparisonDataResponse" message="tns:ExternalResearchOperations_RetrieveRatioComparisonData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioComparisonDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveRatioComparisonData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRatioSecurityReferenceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceData" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceDataResponse" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -266,6 +295,30 @@
     </wsdl:operation>
     <wsdl:operation name="RetrievePRevenueData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRatioComparisonData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveRatioComparisonData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveRatioSecurityReferenceData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -51,11 +51,7 @@
      openTimeout="00:10:00" receiveTimeout="00:10:00" sendTimeout="00:10:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>
-    <binding name="BasicHttpBinding_ExternalResearchOperations1"
-     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
+    </binding>    
    </basicHttpBinding>
   </bindings>
 
@@ -87,7 +83,7 @@
     binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
     contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
    <endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ExternalResearchOperations1"
+    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ExternalResearchOperations"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="BasicHttpBinding_ExternalResearchOperations" />
   </client>

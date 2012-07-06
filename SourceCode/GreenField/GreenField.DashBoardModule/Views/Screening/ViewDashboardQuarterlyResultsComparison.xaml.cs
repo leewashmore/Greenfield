@@ -71,13 +71,19 @@ namespace GreenField.DashBoardModule.Views.Screening
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = false;
+            if (control != null)
+            {
+                control.IsActive = false; 
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = true;
+            if (control != null)
+            {
+                control.IsActive = true; 
+            }
         }
     }
 }

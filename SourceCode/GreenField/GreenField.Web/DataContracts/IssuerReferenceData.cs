@@ -23,6 +23,21 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public String CurrencyName { get; set; }
+
+        [DataMember]
+        public String RegionCode { get; set; }
+
+        [DataMember]
+        public String SectorCode { get; set; }
+
+        [DataMember]
+        public String SectorName { get; set; }
+
+        [DataMember]
+        public String IndustryCode { get; set; }
+
+        [DataMember]
+        public String IndustryName { get; set; }
     }
 
 

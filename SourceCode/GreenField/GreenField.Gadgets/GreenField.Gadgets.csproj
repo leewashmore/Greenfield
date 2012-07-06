@@ -566,6 +566,9 @@
     <Resource Include="Images\MoveBackward.png" />
     <Resource Include="Images\MoveForward.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Flip.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

@@ -202,6 +202,10 @@ namespace GreenField.ServiceCaller
         
 
         void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback);
+
+        void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
+
+        void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, Action<List<GF_SECURITY_BASEVIEW>> callback);
         #endregion
 
         #region Internal Research

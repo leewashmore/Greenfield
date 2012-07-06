@@ -84,6 +84,11 @@ namespace GreenField.Web.Services
                 String issuerId = securityDetails.ISSUER_ID;
                 String countryCode = securityDetails.ISO_COUNTRY_CODE;
                 String countryName = securityDetails.ASEC_SEC_COUNTRY_NAME;
+                String regionCode = securityDetails.ASHEMM_PROPRIETARY_REGION_CODE;
+                String sectorCode = securityDetails.GICS_SECTOR;
+                String sectorName = securityDetails.GICS_SECTOR_NAME;
+                String industryCode = securityDetails.GICS_INDUSTRY;
+                String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
                 String currencyCode = null;
                 String currencyName = null;
 
@@ -104,7 +109,12 @@ namespace GreenField.Web.Services
                     CountryCode = countryCode,
                     CountryName = countryName,
                     CurrencyCode = currencyCode,
-                    CurrencyName = currencyName
+                    CurrencyName = currencyName,
+                    RegionCode = regionCode,
+                    SectorCode = sectorCode,
+                    SectorName = sectorName,
+                    IndustryCode = industryCode,
+                    IndustryName = industryName
                 };
 
                 return result;
@@ -430,6 +440,7 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
         #region Historical Valuation Multiples Gadget
         /// <summary>
         /// Gets P/Revenue Data
@@ -478,6 +489,59 @@ namespace GreenField.Web.Services
             }
         }
 
+        #endregion
+
+        #region Scatter Graph Gadget
+        /// <summary>
+        /// Gets Ratio Comparison Data
+        /// </summary>
+        /// <param name="contextSecurityXML">xml script for security list for a particular context</param>
+        /// <returns>RatioComparisonData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RatioComparisonData> RetrieveRatioComparisonData(String contextSecurityXML)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<RatioComparisonData> result = entity.usp_RetrieveRatioComparisonData(contextSecurityXML).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<GF_SECURITY_BASEVIEW> RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails)
+        {
+            try
+            {
+                switch (context)
+                {
+                    case ScatterGraphContext.REGION:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASHEMM_PROPRIETARY_REGION_CODE == issuerDetails.RegionCode).ToList();
+                    case ScatterGraphContext.COUNTRY:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ISO_COUNTRY_CODE == issuerDetails.CountryCode).ToList();
+                    case ScatterGraphContext.SECTOR:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR == issuerDetails.SectorCode).ToList();
+                    case ScatterGraphContext.INDUSTRY:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY == issuerDetails.IndustryCode).ToList();
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         #endregion
     }
 }

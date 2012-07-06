@@ -62,4 +62,24 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ConsensusEstimateDetailedData" nillable="true" type="tns:ConsensusEstimateDetailedData" />
+  <xs:complexType name="ArrayOfRatioComparisonData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RatioComparisonData" nillable="true" type="tns:RatioComparisonData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRatioComparisonData" nillable="true" type="tns:ArrayOfRatioComparisonData" />
+  <xs:complexType name="RatioComparisonData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FINANCIAL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISSUE_NAME" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SECURITY_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VALUATION" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="RatioComparisonData" nillable="true" type="tns:RatioComparisonData" />
 </xs:schema>

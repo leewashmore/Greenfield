@@ -108,4 +108,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
+  <xs:simpleType name="ScatterGraphContext">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Region" />
+      <xs:enumeration value="Country" />
+      <xs:enumeration value="Sector" />
+      <xs:enumeration value="Industry" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ScatterGraphContext" nillable="true" type="tns:ScatterGraphContext" />
 </xs:schema>

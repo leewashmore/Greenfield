@@ -278,6 +278,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Gadget Active Check
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -301,7 +302,8 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-        }
+        } 
+        #endregion
         #endregion
 
         #region ICommand
