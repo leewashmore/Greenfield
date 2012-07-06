@@ -4,6 +4,7 @@
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" />
   <xs:element name="RetrieveIssuerId">
     <xs:complexType>
       <xs:sequence>
@@ -151,6 +152,35 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrievePRevenueDataResult" nillable="true" type="q21:ArrayOfPRevenueData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRatioComparisonData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="contextSecurityXML" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRatioComparisonDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveRatioComparisonDataResult" nillable="true" type="q22:ArrayOfRatioComparisonData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRatioSecurityReferenceData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="context" type="q23:ScatterGraphContext" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="issuerDetails" nillable="true" type="q24:IssuerReferenceData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveRatioSecurityReferenceDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" minOccurs="0" name="RetrieveRatioSecurityReferenceDataResult" nillable="true" type="q25:ArrayOfGF_SECURITY_BASEVIEW" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

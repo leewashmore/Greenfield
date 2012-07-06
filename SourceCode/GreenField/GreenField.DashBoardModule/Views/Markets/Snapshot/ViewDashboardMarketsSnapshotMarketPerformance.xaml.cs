@@ -69,34 +69,52 @@ namespace GreenField.DashboardModule.Views
             return true;
         }
 
+        //public void OnNavigatedFrom(NavigationContext navigationContext)
+        //{
+        //    _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+        //    ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+        //    control.IsActive = false;
+        //}
+
+        //public void OnNavigatedTo(NavigationContext navigationContext)
+        //{
+        //    _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
+        //    ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+        //    control.IsActive = true;
+        //}
+        //#endregion
+
+        //#region IConfirmNavigationRequest Method
+        //public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
+        //{
+        //    Prompt.ShowDialog("On navigation any unsaved changes might be lost. Are you sure you want to navigate", "", MessageBoxButton.OKCancel, (messageResult) =>
+        //    {
+        //        if (messageResult == MessageBoxResult.OK)
+        //        {
+        //            continuationCallback(true);
+        //            return;
+        //        }
+        //        continuationCallback(false);
+        //    });
+        //} 
+
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = false;
+            if (control != null)
+            {
+                control.IsActive = false;
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Publish(new MarketPerformanceSnapshotActionPayload() { ActionType = MarketPerformanceSnapshotActionType.SNAPSHOT_PAGE_NAVIGATION });
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = true;
-        }
-        #endregion
-
-        #region IConfirmNavigationRequest Method
-        public void ConfirmNavigationRequest(NavigationContext navigationContext, Action<bool> continuationCallback)
-        {
-            Prompt.ShowDialog("On navigation any unsaved changes might be lost. Are you sure you want to navigate", "", MessageBoxButton.OKCancel, (messageResult) =>
+            if (control != null)
             {
-                if (messageResult == MessageBoxResult.OK)
-                {
-                    continuationCallback(true);
-                    return;
-                }
-                continuationCallback(false);
-            });
-        } 
+                control.IsActive = true;
+            }
+        }
         #endregion
     }
 }
