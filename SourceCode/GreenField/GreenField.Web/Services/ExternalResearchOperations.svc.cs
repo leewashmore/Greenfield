@@ -389,6 +389,39 @@ namespace GreenField.Web.Services
             }
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimatesValuations> RetrieveConsensusEstimatesValuationData(string issuerId, FinancialStatementPeriodType periodType, string currency)
+        {
+            List<ConsensusEstimatesValuations> result = new List<ConsensusEstimatesValuations>();
+            List<ConsensusEstimateValuation> dbResult = new List<ConsensusEstimateValuation>();
+            try
+            {
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+               // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
+                dbResult = entity.GetConsensusEstimatesValuation("223340", "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
+
+                ConsensusEstimateMedian data = new ConsensusEstimateMedian();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+
+
+
+            return result;
+        }
+
+
         #endregion
 
         #region Consensus Estimates Summary Gadget
@@ -398,11 +431,11 @@ namespace GreenField.Web.Services
         {
             try
             {
-            List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
+                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
-            result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
-            return result;   
+                result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+                return result;
             }
             catch (Exception ex)
             {
@@ -416,7 +449,7 @@ namespace GreenField.Web.Services
         #region Quarterly Comparision Results
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue,int yearValue)
+        public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue, int yearValue)
         {
             try
             {
@@ -429,7 +462,7 @@ namespace GreenField.Web.Services
                 else
                     dataID = 44;
                 result = research.ExecuteStoreQuery<QuarterlyResultsData>("exec usp_GetQuarterlyResults @DataId={0}, @PeriodYear = {1}", dataID, yearValue).ToList();
-                
+
                 return result;
             }
             catch (Exception ex)

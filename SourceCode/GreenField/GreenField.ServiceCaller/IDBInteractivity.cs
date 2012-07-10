@@ -198,6 +198,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback);
 
+        void RetrieveConsensusEstimatesValuationsData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback);
+
+
         #endregion
         
 

@@ -140,8 +140,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(portfolioSelectorVisibility: Visibility.Visible,
                     effectiveDateSelectorVisibility: Visibility.Visible,
                          filterTypeSelectorVisibility: Visibility.Visible,
-                        filterValueSelectorVisibility: Visibility.Visible,
-                        securitySelectorVisibility: Visibility.Visible, 
+                        filterValueSelectorVisibility: Visibility.Visible, 
                         periodSelectorVisibility: Visibility.Visible,
                         lookThruVisibility: Visibility.Visible);
                     break;

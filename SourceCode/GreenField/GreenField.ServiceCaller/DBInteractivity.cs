@@ -2453,7 +2453,7 @@ namespace GreenField.ServiceCaller
 
         }
 
-        #region ConsensusEstimates
+        #region ConsensusEstimates Gadgets
 
         /// <summary>
         /// Service Caller Method to Retrieve Data for TargetPriceGadget(ConsensusEstimates)
@@ -2509,6 +2509,50 @@ namespace GreenField.ServiceCaller
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
             client.RetrieveConsensusEstimatesMedianDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimatesMedianDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// ServiceCaller Method for ConsesnsuEstimatesGadget- Valuations
+        /// </summary>
+        /// <param name="issuerId">Issuer ID</param>
+        /// <param name="periodType">Selected Period Type</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <param name="callback">Collection of ConsensusEstimateValuations</param>
+        public void RetrieveConsensusEstimatesValuationsData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveConsensusEstimatesValuationDataAsync(issuerId, periodType, currency);
+            client.RetrieveConsensusEstimatesValuationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {

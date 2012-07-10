@@ -506,7 +506,7 @@
           </Key>
           <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="SHARES_DATE" Type="datetime" Nullable="false" />
-          <Property Name="SHARES_OUTSTANDING" Type="int" Nullable="false" />
+          <Property Name="SHARES_OUTSTANDING" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -694,6 +694,15 @@
           <Property Name="OutstandingShares" Type="decimal" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <Function Name="Get_ConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+        </Function>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
@@ -704,6 +713,20 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetConsensusEstimateData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Issuer_Id" Type="nvarchar" Mode="In" />
+          <Parameter Name="periodType" Type="nvarchar" Mode="In" />
+          <Parameter Name="currency" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
         </Function>
         <Function Name="usp_RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
@@ -734,7 +757,7 @@
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
 					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -763,8 +786,27 @@
 						<Parameter Name="periodType" Mode="In" Type="String" />
 						<Parameter Name="currency" Mode="In" Type="String" />
 					</FunctionImport>
-          <FunctionImport Name="usp_RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-            <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+					<FunctionImport Name="Get_ConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+						<Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+					</FunctionImport>
+					<FunctionImport Name="usp_RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
+					<Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          </FunctionImport>
+
+					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
           </FunctionImport>
 
 				</EntityContainer>
@@ -871,7 +913,7 @@
 					<Property Name="COA_TYPE" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
 					<Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
 				</EntityType>
 				<EntityType Name="FX_RATES">
 					<Key>
@@ -1250,13 +1292,34 @@
 					<Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
 					<Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
 				</ComplexType>
-        <ComplexType Name="RatioComparisonData" >
-          <Property Type="String" Name="SECURITY_ID" Nullable="true" />
-          <Property Type="String" Name="ISSUER_ID" Nullable="true" />
-          <Property Type="String" Name="ISSUE_NAME" Nullable="true" />
-          <Property Type="String" Name="FINANCIAL" Nullable="true" />
-          <Property Type="String" Name="VALUATION" Nullable="true" />
-        </ComplexType>
+
+				<ComplexType Name="RatioComparisonData" >
+					<Property Type="String" Name="SECURITY_ID" Nullable="true" />
+					<Property Type="String" Name="ISSUER_ID" Nullable="true" />
+					<Property Type="String" Name="ISSUE_NAME" Nullable="true" />
+					<Property Type="String" Name="FINANCIAL" Nullable="true" />
+					<Property Type="String" Name="VALUATION" Nullable="true" />
+				</ComplexType>
+
+
+				<ComplexType Name="ConsensusEstimateValuation" >
+					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="ESTIMATE_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100" />
+					<Property Type="String" Name="PERIOD" Nullable="false" MaxLength="100" />
+					<Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="ASHMOREEMM_AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
+					<Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
+					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
+				</ComplexType>
 
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1322,7 +1385,7 @@
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
 							<MappingFragment StoreEntitySet="DATA_MASTER">
 								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
-                <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
+								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
 								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
 								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
 								<ScalarProperty Name="COA" ColumnName="COA" />
@@ -1576,19 +1639,68 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.usp_RetrieveRatioComparisonData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
-                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="usp_RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.usp_RetrieveRatioComparisonData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+								<ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
+								<ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
 
-					</EntityContainerMapping>
+					<FunctionImportMapping FunctionImportName="GetConsensusEstimateData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimateData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateMedianData">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+								<ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+								<ScalarProperty Name="ESTIMATE_TYPE" ColumnName="ESTIMATE_TYPE" />
+								<ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+								<ScalarProperty Name="HIGH" ColumnName="HIGH" />
+								<ScalarProperty Name="LOW" ColumnName="LOW" />
+								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+								<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					
+					
+					<FunctionImportMapping FunctionImportName="GetConsensusEstimatesValuation" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesValuation">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateValuation">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+								<ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="ASHMOREEMM_AMOUNT" ColumnName="ASHMOREEMM_AMOUNT" />
+								<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+								<ScalarProperty Name="HIGH" ColumnName="HIGH" />
+								<ScalarProperty Name="LOW" ColumnName="LOW" />
+								<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+
+				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
 	</edmx:Runtime>
@@ -1608,7 +1720,7 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ExternalResearchDataModel">
+			<Diagram Name="ExternalResearchDataModel" ZoomLevel="82">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="2.75" PointY="0.75" Height="2.3648893229166665" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
