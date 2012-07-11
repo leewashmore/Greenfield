@@ -37,6 +37,8 @@ namespace GreenField.Common
 
     public class PeriodReferenceSetEvent : CompositePresentationEvent<String> { }
 
+    public class NodeNameReferenceSetEvent : CompositePresentationEvent<String> { }
+
     public class CountrySelectionSetEvent : CompositePresentationEvent<String> { }
 
     public class BenchmarkReferenceSetEvent : CompositePresentationEvent<BenchmarkSelectionData> { }

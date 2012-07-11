@@ -69,5 +69,19 @@ namespace GreenField.Common.Helper
 
         public bool IsLookThruEnabled { get; set; }
 
+        private String nodeNameSelectionData = "Country";
+
+        public String NodeNameSelectionData
+        {
+            get
+            {
+                return nodeNameSelectionData;
+            }
+            set
+            {
+                nodeNameSelectionData = value;
+            }
+        }
+
     }
 }

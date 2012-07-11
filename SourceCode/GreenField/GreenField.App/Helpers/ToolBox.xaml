@@ -150,6 +150,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!--Security Selector-->
@@ -366,82 +367,7 @@
                             </telerik:RadComboBox.ItemsPanel>
                         </telerik:RadComboBox>
                     </StackPanel>
-                </Grid>
-
-                <!--Sector Selector-->
-                <!--<Grid Margin="5,0,0,0" Visibility="{Binding SectorSelectorVisibility}" Grid.Column="5">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock Text="Sector" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                <telerik:RadComboBox x:Name="cbSectorSelector"
-                                         EmptyText="Search Sector..." 
-                                         Width="150" 
-                                         Margin="5,0,0,0"
-                                         IsEditable="True"
-                                         CanAutocompleteSelectItems="True" 
-                                         CanKeyboardNavigationSelectItems="False" 
-                                         HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"
-                                         TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False">
-                    <telerik:RadComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </telerik:RadComboBox.ItemsPanel>
-                </telerik:RadComboBox>
-            </StackPanel>
-        </Grid>-->
-
-                <!--Industry Selector-->
-                <!--<Grid Margin="5,0,0,0" Visibility="{Binding IndustrySelectorVisibility}" Grid.Column="6">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock Text="Industry" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                <telerik:RadComboBox x:Name="cbIndustrySelector"
-                                         EmptyText="Search Industry..." 
-                                         Width="150" 
-                                         Margin="5,0,0,0"
-                                         IsEditable="True"
-                                         CanAutocompleteSelectItems="True" 
-                                         CanKeyboardNavigationSelectItems="False" 
-                                         HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"
-                                         TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False">
-                    <telerik:RadComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </telerik:RadComboBox.ItemsPanel>
-                </telerik:RadComboBox>
-            </StackPanel>
-        </Grid>-->
-
-                <!--Region Selector-->
-                <!--<Grid Margin="5,0,0,0" Visibility="{Binding RegionSelectorVisibility}" Grid.Column="7">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                <telerik:RadComboBox x:Name="cbRegionSelector"
-                                         EmptyText="Search Region..." 
-                                         Width="150" 
-                                         Margin="5,0,0,0"
-                                         IsEditable="True"
-                                         CanAutocompleteSelectItems="True" 
-                                         CanKeyboardNavigationSelectItems="False" 
-                                         HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"
-                                         TextOptions.TextHintingMode="Fixed"
-                                         IsTextSearchEnabled="False">
-                    <telerik:RadComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </telerik:RadComboBox.ItemsPanel>
-                </telerik:RadComboBox>
-            </StackPanel>
-        </Grid>-->
+                </Grid>               
 
                 <!--Snapshot Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="8">
@@ -559,8 +485,37 @@
                           IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
                     </StackPanel>
                 </Grid>
-                
-                
+
+                <!--NodeName Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding NodeSelectorVisibility}" Grid.Column="14">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Filter Node" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbNodeNameSelector"
+                                         EmptyText="Select Node..." 
+                                         ItemsSource="{Binding NodeNameInfo}"
+                                         SelectedValue="{Binding SelectedNodeName,Mode=TwoWay}"    
+                                         Width="auto"                                          
+                                         FontSize="7"
+                                         FontFamily="Arial"                                        
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+
             </Grid>
         </ScrollViewer>
     </Grid>

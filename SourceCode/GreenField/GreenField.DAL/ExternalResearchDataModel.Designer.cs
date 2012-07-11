@@ -116,22 +116,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<DATA_MASTER> DATA_MASTER
-        {
-            get
-            {
-                if ((_DATA_MASTER == null))
-                {
-                    _DATA_MASTER = base.CreateObjectSet<DATA_MASTER>("DATA_MASTER");
-                }
-                return _DATA_MASTER;
-            }
-        }
-        private ObjectSet<DATA_MASTER> _DATA_MASTER;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<FX_RATES> FX_RATES
         {
             get
@@ -368,6 +352,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<tblCompanyInfo> _tblCompanyInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<DATA_MASTER> DATA_MASTER
+        {
+            get
+            {
+                if ((_DATA_MASTER == null))
+                {
+                    _DATA_MASTER = base.CreateObjectSet<DATA_MASTER>("DATA_MASTER");
+                }
+                return _DATA_MASTER;
+            }
+        }
+        private ObjectSet<DATA_MASTER> _DATA_MASTER;
 
         #endregion
         #region AddTo Methods
@@ -394,14 +394,6 @@ namespace GreenField.DAL
         public void AddToCURRENT_CONSENSUS_ESTIMATES(CURRENT_CONSENSUS_ESTIMATES cURRENT_CONSENSUS_ESTIMATES)
         {
             base.AddObject("CURRENT_CONSENSUS_ESTIMATES", cURRENT_CONSENSUS_ESTIMATES);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DATA_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDATA_MASTER(DATA_MASTER dATA_MASTER)
-        {
-            base.AddObject("DATA_MASTER", dATA_MASTER);
         }
     
         /// <summary>
@@ -522,6 +514,14 @@ namespace GreenField.DAL
         public void AddTotblCompanyInfoes(tblCompanyInfo tblCompanyInfo)
         {
             base.AddObject("tblCompanyInfoes", tblCompanyInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DATA_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDATA_MASTER(DATA_MASTER dATA_MASTER)
+        {
+            base.AddObject("DATA_MASTER", dATA_MASTER);
         }
 
         #endregion

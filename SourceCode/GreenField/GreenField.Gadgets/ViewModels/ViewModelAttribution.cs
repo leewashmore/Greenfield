@@ -52,6 +52,10 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Effective Date selected by the user
         /// </summary>
         private DateTime? _effectiveDate;
+        /// <summary>
+        /// stores Node Name Filter selected by the user 
+        /// </summary>
+        private String _nodeName;
 
         #endregion
 
@@ -68,16 +72,19 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _selectedPeriod = param.DashboardGadgetPayload.PeriodSelectionData;
             _eventAggregator = param.EventAggregator;
+            _nodeName = param.DashboardGadgetPayload.NodeNameSelectionData;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
-            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null && IsActive)
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null && IsActive && _nodeName!=null)
             {
-                _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveAttributionDataCallBackMethod);
+                _dbInteractivity.RetrieveAttributionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName, RetrieveAttributionDataCallBackMethod);
             }
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet, false);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet, false);
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
+                _eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Subscribe(HandleNodeNameReferenceSet, false);
+
             }          
         }
 
@@ -285,9 +292,9 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _isActive)
+                if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _isActive && _nodeName!=null)
                 {
-                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));                    
+                    BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName);                    
                 }
             }
         }
@@ -315,9 +322,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
                     _PortfolioSelectionData = PortfolioSelectionData;
-                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive)
+                    if (PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive && _nodeName!=null)
                     {                        
-                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName);
                     }
                 }
                 else
@@ -349,9 +356,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod!=null && IsActive && _nodeName!=null)
                     {                        
-                       BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
+                       BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName);
                     }
                 }
                 else
@@ -382,11 +389,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
                     _selectedPeriod = selectedPeriodType;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null)
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && _nodeName!=null)
                     {
                         if (AttributionDataInfo.Count==0 && IsActive)
                         {                            
-                            BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));                            //SelectedPeriod = selectedPeriodType;
+                            BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName); //SelectedPeriod = selectedPeriodType;
                         }
 
                         else 
@@ -412,11 +419,42 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate)
+       public void HandleNodeNameReferenceSet(String selectedNodeType)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (selectedNodeType != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, selectedNodeType, 1);
+                    _nodeName = selectedNodeType;
+                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive && _nodeName!=null)
+                    {
+                        BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_nodeName);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
+
+        private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate,String nodeName)
         {
             if (null != attributionDataLoadedEvent)
                 attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-            _dbInteractivity.RetrieveAttributionData(PortfolioSelectionData, effectiveDate, RetrieveAttributionDataCallBackMethod);
+            _dbInteractivity.RetrieveAttributionData(PortfolioSelectionData, effectiveDate, nodeName, RetrieveAttributionDataCallBackMethod);
         }
 
         #endregion
@@ -469,6 +507,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            _eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Unsubscribe(HandleNodeNameReferenceSet);
         }
 
         #endregion

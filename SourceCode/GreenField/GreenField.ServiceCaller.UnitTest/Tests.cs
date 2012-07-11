@@ -1821,9 +1821,10 @@ namespace Greenfield.ServiceCaller.UnitTest
         {
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "ABPEQ" };
+            String nodeName = "Country";
             DateTime effectiveDate = new DateTime(2012, 2, 29);
 
-            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
+            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "Attribution Data Not Available");
                 EnqueueTestComplete();
@@ -1840,7 +1841,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData() { PortfolioId = "UBEF" };
             DateTime effectiveDate = new DateTime(2012, 2, 29);
-            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
+            String nodeName = "Country";
+            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -1859,8 +1861,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = null;
             DateTime effectiveDate = new DateTime(2012, 2, 29);
-
-            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
+            String nodeName = "Country";
+            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
@@ -1879,7 +1881,8 @@ namespace Greenfield.ServiceCaller.UnitTest
             DBInteractivity instance = new DBInteractivity();
             PortfolioSelectionData portfolio = new PortfolioSelectionData();
             DateTime effectiveDate = new DateTime(2012, 2, 29);
-            instance.RetrieveAttributionData(portfolio, effectiveDate, (List<AttributionData> resultSet) =>
+            String nodeName = "Country";
+            instance.RetrieveAttributionData(portfolio, effectiveDate,nodeName, (List<AttributionData> resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.Count, "Attribution Data Should Be Empty");
                 EnqueueTestComplete();
