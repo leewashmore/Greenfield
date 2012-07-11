@@ -124,13 +124,13 @@
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Left"/>
+                                                TextAlignment="Right"/>
                                 <telerik:GridViewDataColumn Header="Benchmark Weight" 
                                                 DataMemberBinding="{Binding BenchmarkWeight}"                                               
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="*" 
                                                 DataFormatString="{}{0:n2}"
-                                                HeaderTextAlignment="Left"
+                                                HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>                             
                             </telerik:RadGridView.Columns>
                         </telerik:RadGridView>
