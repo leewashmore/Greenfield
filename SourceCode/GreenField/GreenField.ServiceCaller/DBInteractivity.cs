@@ -1420,13 +1420,13 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
         /// <param name="effectiveDate">Contains the selected effective date</param>
         /// <param name="callback">callback</param>
-        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback)
+        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String nodeName, Action<List<AttributionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate);
+            client.RetrieveAttributionDataAsync(portfolioSelectionData, effectiveDate, nodeName);
             client.RetrieveAttributionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -2453,7 +2453,7 @@ namespace GreenField.ServiceCaller
 
         }
 
-        #region ConsensusEstimates
+        #region ConsensusEstimates Gadgets
 
         /// <summary>
         /// Service Caller Method to Retrieve Data for TargetPriceGadget(ConsensusEstimates)
@@ -2509,6 +2509,50 @@ namespace GreenField.ServiceCaller
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
             client.RetrieveConsensusEstimatesMedianDataAsync(issuerId, periodType, currency);
             client.RetrieveConsensusEstimatesMedianDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+            };
+        }
+
+        /// <summary>
+        /// ServiceCaller Method for ConsesnsuEstimatesGadget- Valuations
+        /// </summary>
+        /// <param name="issuerId">Issuer ID</param>
+        /// <param name="periodType">Selected Period Type</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <param name="callback">Collection of ConsensusEstimateValuations</param>
+        public void RetrieveConsensusEstimatesValuationsData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveConsensusEstimatesValuationDataAsync(issuerId, periodType, currency);
+            client.RetrieveConsensusEstimatesValuationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
@@ -2624,7 +2668,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-       public void RetrieveQuarterlyResultsData(String fieldValue,int yearValue,Action<List<QuarterlyResultsData>> callback)
+        public void RetrieveQuarterlyResultsData(String fieldValue, int yearValue, Action<List<QuarterlyResultsData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
@@ -2665,45 +2709,122 @@ namespace GreenField.ServiceCaller
             };
         }
 
-       public void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback)
-       {
-           ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-           client.RetrievePRevenueDataAsync(entitySelectionData);
-           client.RetrievePRevenueDataCompleted += (se, e) =>
-           {
-               if (e.Error == null)
-               {
-                   if (callback != null)
-                   {
-                       if (e.Result != null)
-                       {
-                           callback(e.Result.ToList());
-                       }
-                       else
-                       {
-                           callback(null);
-                       }
-                   }
-               }
-               else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
-               {
-                   FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
-                       = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
-                   Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-                   if (callback != null)
-                       callback(null);
-               }
-               else
-               {
-                   Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-                   if (callback != null)
-                       callback(null);
-               }
+        public void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrievePRevenueDataAsync(entitySelectionData);
+            client.RetrievePRevenueDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
 
-           };
+            };
 
-       }
+        }
 
+        public void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveRatioComparisonDataAsync(contextSecurityXML);
+            client.RetrieveRatioComparisonDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+            };
+
+        }
+
+        public void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, Action<List<GF_SECURITY_BASEVIEW>> callback)
+        {
+            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            client.RetrieveRatioSecurityReferenceDataAsync(context, issuerDetails);
+            client.RetrieveRatioSecurityReferenceDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+            };
+
+        }
         #endregion
 
         #region Internal Research

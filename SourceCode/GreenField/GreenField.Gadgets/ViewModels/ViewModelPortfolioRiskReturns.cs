@@ -161,6 +161,22 @@ namespace GreenField.Gadgets.ViewModels
                             entry.BenchmarkValue = PortfolioRiskReturnInfo[4].BenchMarkValue1;
                             entry.PortfolioValue = PortfolioRiskReturnInfo[4].PortfolioValue1;
                             result.Add(entry);
+                            entry = new PerformancePeriodData();
+                            entry.DataPointName = PortfolioRiskReturnInfo[5].DataPointName;
+                            entry.BenchmarkValue = PortfolioRiskReturnInfo[5].BenchMarkValue1;
+                            entry.PortfolioValue = PortfolioRiskReturnInfo[5].PortfolioValue1;
+                            result.Add(entry);
+                            entry = new PerformancePeriodData();
+                            entry.DataPointName = PortfolioRiskReturnInfo[6].DataPointName;
+                            entry.BenchmarkValue = PortfolioRiskReturnInfo[6].BenchMarkValue1;
+                            entry.PortfolioValue = PortfolioRiskReturnInfo[6].PortfolioValue1;
+                            result.Add(entry);
+                            entry = new PerformancePeriodData();
+                            entry.DataPointName = PortfolioRiskReturnInfo[7].DataPointName;
+                            entry.BenchmarkValue = PortfolioRiskReturnInfo[7].BenchMarkValue1;
+                            entry.PortfolioValue = PortfolioRiskReturnInfo[7].PortfolioValue1;
+                            result.Add(entry);
+
 
                             PortfolioRiskReturnPeriodInfo = result;
                             if (null != portfolioRiskReturnDataLoadedEvent)
@@ -192,6 +208,21 @@ namespace GreenField.Gadgets.ViewModels
                             entry1.DataPointName = PortfolioRiskReturnInfo[4].DataPointName;
                             entry1.BenchmarkValue = PortfolioRiskReturnInfo[4].BenchMarkValue2;
                             entry1.PortfolioValue = PortfolioRiskReturnInfo[4].PortfolioValue2;
+                            result1.Add(entry1);
+                            entry1 = new PerformancePeriodData();
+                            entry1.DataPointName = PortfolioRiskReturnInfo[5].DataPointName;
+                            entry1.BenchmarkValue = PortfolioRiskReturnInfo[5].BenchMarkValue2;
+                            entry1.PortfolioValue = PortfolioRiskReturnInfo[5].PortfolioValue2;
+                            result1.Add(entry1);
+                            entry1 = new PerformancePeriodData();
+                            entry1.DataPointName = PortfolioRiskReturnInfo[6].DataPointName;
+                            entry1.BenchmarkValue = PortfolioRiskReturnInfo[6].BenchMarkValue2;
+                            entry1.PortfolioValue = PortfolioRiskReturnInfo[6].PortfolioValue2;
+                            result1.Add(entry1);
+                            entry1 = new PerformancePeriodData();
+                            entry1.DataPointName = PortfolioRiskReturnInfo[7].DataPointName;
+                            entry1.BenchmarkValue = PortfolioRiskReturnInfo[7].BenchMarkValue2;
+                            entry1.PortfolioValue = PortfolioRiskReturnInfo[7].PortfolioValue2;
                             result1.Add(entry1);
                             PortfolioRiskReturnPeriodInfo = result1;
                             if (null != portfolioRiskReturnDataLoadedEvent)
@@ -226,6 +257,21 @@ namespace GreenField.Gadgets.ViewModels
                             entry2.BenchmarkValue = PortfolioRiskReturnInfo[4].BenchMarkValue3;
                             entry2.PortfolioValue = PortfolioRiskReturnInfo[4].PortfolioValue3;
                             result2.Add(entry2);
+                            entry2 = new PerformancePeriodData();
+                            entry2.DataPointName = PortfolioRiskReturnInfo[5].DataPointName;
+                            entry2.BenchmarkValue = PortfolioRiskReturnInfo[5].BenchMarkValue3;
+                            entry2.PortfolioValue = PortfolioRiskReturnInfo[5].PortfolioValue3;
+                            result2.Add(entry2);
+                            entry2 = new PerformancePeriodData();
+                            entry2.DataPointName = PortfolioRiskReturnInfo[6].DataPointName;
+                            entry2.BenchmarkValue = PortfolioRiskReturnInfo[6].BenchMarkValue3;
+                            entry2.PortfolioValue = PortfolioRiskReturnInfo[6].PortfolioValue3;
+                            result2.Add(entry2);
+                            entry2 = new PerformancePeriodData();
+                            entry2.DataPointName = PortfolioRiskReturnInfo[7].DataPointName;
+                            entry2.BenchmarkValue = PortfolioRiskReturnInfo[7].BenchMarkValue3;
+                            entry2.PortfolioValue = PortfolioRiskReturnInfo[7].PortfolioValue3;
+                            result2.Add(entry2);
                             PortfolioRiskReturnPeriodInfo = result2;
                             if (null != portfolioRiskReturnDataLoadedEvent)
                                 portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -259,6 +305,21 @@ namespace GreenField.Gadgets.ViewModels
                             entry3.BenchmarkValue = PortfolioRiskReturnInfo[4].BenchMarkValue4;
                             entry3.PortfolioValue = PortfolioRiskReturnInfo[4].PortfolioValue4;
                             result3.Add(entry3);
+                            entry3 = new PerformancePeriodData();
+                            entry3.DataPointName = PortfolioRiskReturnInfo[5].DataPointName;
+                            entry3.BenchmarkValue = PortfolioRiskReturnInfo[5].BenchMarkValue4;
+                            entry3.PortfolioValue = PortfolioRiskReturnInfo[5].PortfolioValue4;
+                            result3.Add(entry3);
+                            entry3 = new PerformancePeriodData();
+                            entry3.DataPointName = PortfolioRiskReturnInfo[6].DataPointName;
+                            entry3.BenchmarkValue = PortfolioRiskReturnInfo[6].BenchMarkValue4;
+                            entry3.PortfolioValue = PortfolioRiskReturnInfo[6].PortfolioValue4;
+                            result3.Add(entry3);
+                            entry3 = new PerformancePeriodData();
+                            entry3.DataPointName = PortfolioRiskReturnInfo[7].DataPointName;
+                            entry3.BenchmarkValue = PortfolioRiskReturnInfo[7].BenchMarkValue4;
+                            entry3.PortfolioValue = PortfolioRiskReturnInfo[7].PortfolioValue4;
+                            result3.Add(entry3);
                             PortfolioRiskReturnPeriodInfo = result3;
                             if (null != portfolioRiskReturnDataLoadedEvent)
                                 portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
@@ -290,6 +351,21 @@ namespace GreenField.Gadgets.ViewModels
                             entry4.DataPointName = PortfolioRiskReturnInfo[4].DataPointName;
                             entry4.BenchmarkValue = PortfolioRiskReturnInfo[4].BenchMarkValue5;
                             entry4.PortfolioValue = PortfolioRiskReturnInfo[4].PortfolioValue5;
+                            result4.Add(entry4);
+                            entry4 = new PerformancePeriodData();
+                            entry4.DataPointName = PortfolioRiskReturnInfo[5].DataPointName;
+                            entry4.BenchmarkValue = PortfolioRiskReturnInfo[5].BenchMarkValue5;
+                            entry4.PortfolioValue = PortfolioRiskReturnInfo[5].PortfolioValue5;
+                            result4.Add(entry4);
+                            entry4 = new PerformancePeriodData();
+                            entry4.DataPointName = PortfolioRiskReturnInfo[6].DataPointName;
+                            entry4.BenchmarkValue = PortfolioRiskReturnInfo[6].BenchMarkValue5;
+                            entry4.PortfolioValue = PortfolioRiskReturnInfo[6].PortfolioValue5;
+                            result4.Add(entry4);
+                            entry4 = new PerformancePeriodData();
+                            entry4.DataPointName = PortfolioRiskReturnInfo[7].DataPointName;
+                            entry4.BenchmarkValue = PortfolioRiskReturnInfo[7].BenchMarkValue5;
+                            entry4.PortfolioValue = PortfolioRiskReturnInfo[7].PortfolioValue5;
                             result4.Add(entry4);
 
                             PortfolioRiskReturnPeriodInfo = result4;

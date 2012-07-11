@@ -37,14 +37,14 @@
                                          AlternateRowBackground="#d8d5d4"
                                          AlternationCount="2">
             <telerik:RadGridView.Columns>
-                <telerik:GridViewDataColumn Header="COUNTRY" 
+                <telerik:GridViewDataColumn Header="ID" 
                                                     DataMemberBinding="{Binding Country}"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*" 
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                 </telerik:GridViewDataColumn>
-                <telerik:GridViewDataColumn Header="COUNTRY NAME" 
+                <telerik:GridViewDataColumn Header="NAME" 
                                                     DataMemberBinding="{Binding CountryName}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*" 

@@ -1023,6 +1023,60 @@ namespace GreenField.App.ViewModel
 
         #endregion
 
+        #region NodeNameFilter Selector
+        /// <summary>
+        /// List of Node Names
+        /// </summary>
+        public List<String> NodeNameInfo
+        {
+            get
+            {
+                return new List<String> { "Country", "Sector", "Security"};
+            }
+        }
+
+
+
+        /// <summary>
+        /// Stores visibility property of the Node selector
+        /// </summary>
+        private Visibility _nodeSelectorVisibility = Visibility.Collapsed;
+        public Visibility NodeSelectorVisibility
+        {
+            get { return _nodeSelectorVisibility; }
+            set
+            {
+                _nodeSelectorVisibility = value;
+                RaisePropertyChanged(() => this.NodeSelectorVisibility);
+
+            }
+        }
+
+        /// <summary>
+        /// String that contains the selected Node Name
+        /// </summary>
+        private String _selectedNodeName = "Country";
+        public String SelectedNodeName
+        {
+            get
+            {
+                return _selectedNodeName;
+            }
+            set
+            {
+                _selectedNodeName = value;
+                RaisePropertyChanged(() => this.SelectedNodeName);
+
+                if (value != null)
+                {
+                    SelectorPayload.NodeNameSelectionData = value;
+                    _eventAggregator.GetEvent<NodeNameReferenceSetEvent>().Publish(value);
+                }
+            }
+        }
+
+        #endregion
+
         #region LookThruSelector
 
         /// <summary>
@@ -3496,10 +3550,7 @@ namespace GreenField.App.ViewModel
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
-            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
-            //SectorSelectorVisibility = ToolBoxItemVisibility.SECTOR_SELECTOR_VISIBILITY;
-            //IndustrySelectorVisibility = ToolBoxItemVisibility.INDUSTRY_SELECTOR_VISIBILITY;
-            //RegionSelectorVisibility = ToolBoxItemVisibility.REGION_SELECTOR_VISIBILITY;
+            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;            
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
             FilterTypeVisibility = ToolBoxItemVisibility.FILTER_TYPE_SELECTOR_VISIBILITY;
             FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
@@ -3507,6 +3558,7 @@ namespace GreenField.App.ViewModel
             CommoditySelectorVisibility = ToolBoxItemVisibility.COMMODITY_SELECTOR_VISIBILTY;
             RegionFXSelectorVisibility = ToolBoxItemVisibility.REGIONFX_SELECTOR_VISIBILITY;
             LookThruSelectorVisibility = ToolBoxItemVisibility.LOOK_THRU_VISIBILITY;
+            NodeSelectorVisibility = ToolBoxItemVisibility.NODENAME_SELECTOR_VISIBILITY;
 
         }
         

@@ -65,6 +65,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimatesSummaryData.cs">
       <Link>DataContracts\ConsensusEstimatesSummaryData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimatesValuations.cs">
+      <Link>DataContracts\ConsensusEstimatesValuations.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\CountrySelectionData.cs">
       <Link>DataContracts\CountrySelectionData.cs</Link>
     </Compile>
@@ -154,6 +157,9 @@
     </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\RiskIndexExposuresData.cs">
       <Link>DataContracts\RiskIndexExposuresData.cs</Link>
+    </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ScatterGraphInputData.cs">
+      <Link>DataContracts\ScatterGraphInputData.cs</Link>
     </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\SectorBreakdownData.cs">
       <Link>DataContracts\SectorBreakdownData.cs</Link>

@@ -84,6 +84,11 @@ namespace GreenField.Web.Services
                 String issuerId = securityDetails.ISSUER_ID;
                 String countryCode = securityDetails.ISO_COUNTRY_CODE;
                 String countryName = securityDetails.ASEC_SEC_COUNTRY_NAME;
+                String regionCode = securityDetails.ASHEMM_PROPRIETARY_REGION_CODE;
+                String sectorCode = securityDetails.GICS_SECTOR;
+                String sectorName = securityDetails.GICS_SECTOR_NAME;
+                String industryCode = securityDetails.GICS_INDUSTRY;
+                String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
                 String currencyCode = null;
                 String currencyName = null;
 
@@ -104,7 +109,12 @@ namespace GreenField.Web.Services
                     CountryCode = countryCode,
                     CountryName = countryName,
                     CurrencyCode = currencyCode,
-                    CurrencyName = currencyName
+                    CurrencyName = currencyName,
+                    RegionCode = regionCode,
+                    SectorCode = sectorCode,
+                    SectorName = sectorName,
+                    IndustryCode = industryCode,
+                    IndustryName = industryName
                 };
 
                 return result;
@@ -379,6 +389,43 @@ namespace GreenField.Web.Services
             }
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimatesValuations> RetrieveConsensusEstimatesValuationData(string issuerId, FinancialStatementPeriodType periodType, string currency)
+        {
+            List<ConsensusEstimatesValuations> result = new List<ConsensusEstimatesValuations>();
+            List<ConsensusEstimateValuation> dbResult = new List<ConsensusEstimateValuation>();
+            try
+            {
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
+                dbResult = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
+
+                ConsensusEstimatesValuations data;
+                foreach (ConsensusEstimateValuation item in dbResult)
+                {
+                    data = new ConsensusEstimatesValuations();
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+
+
+
+            return result;
+        }
+
+
         #endregion
 
         #region Consensus Estimates Summary Gadget
@@ -388,11 +435,11 @@ namespace GreenField.Web.Services
         {
             try
             {
-            List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
+                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
-            result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
-            return result;   
+                result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
+                return result;
             }
             catch (Exception ex)
             {
@@ -406,7 +453,7 @@ namespace GreenField.Web.Services
         #region Quarterly Comparision Results
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue,int yearValue)
+        public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue, int yearValue)
         {
             try
             {
@@ -419,7 +466,7 @@ namespace GreenField.Web.Services
                 else
                     dataID = 44;
                 result = research.ExecuteStoreQuery<QuarterlyResultsData>("exec usp_GetQuarterlyResults @DataId={0}, @PeriodYear = {1}", dataID, yearValue).ToList();
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -430,6 +477,7 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
         #region Historical Valuation Multiples Gadget
         /// <summary>
         /// Gets P/Revenue Data
@@ -478,6 +526,59 @@ namespace GreenField.Web.Services
             }
         }
 
+        #endregion
+
+        #region Scatter Graph Gadget
+        /// <summary>
+        /// Gets Ratio Comparison Data
+        /// </summary>
+        /// <param name="contextSecurityXML">xml script for security list for a particular context</param>
+        /// <returns>RatioComparisonData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<RatioComparisonData> RetrieveRatioComparisonData(String contextSecurityXML)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<RatioComparisonData> result = entity.usp_RetrieveRatioComparisonData(contextSecurityXML).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<GF_SECURITY_BASEVIEW> RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails)
+        {
+            try
+            {
+                switch (context)
+                {
+                    case ScatterGraphContext.REGION:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ASHEMM_PROPRIETARY_REGION_CODE == issuerDetails.RegionCode).ToList();
+                    case ScatterGraphContext.COUNTRY:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ISO_COUNTRY_CODE == issuerDetails.CountryCode).ToList();
+                    case ScatterGraphContext.SECTOR:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR == issuerDetails.SectorCode).ToList();
+                    case ScatterGraphContext.INDUSTRY:
+                        return DimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY == issuerDetails.IndustryCode).ToList();
+                    default:
+                        return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         #endregion
     }
 }

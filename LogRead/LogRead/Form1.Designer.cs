@@ -50,17 +50,18 @@
             this.btnExport = new System.Windows.Forms.Button();
             this.dgcSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgcDate = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcTimeStamp = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.dgcCategory = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.dgcLoggedIn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dgcUser = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.dgcType = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.dgcExceptionMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcStackTrace = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcMethodNamespace = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcArgumentIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcArgumentValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcAccountDetail = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgcRoleDetail = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgcExceptionMessage = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcStackTrace = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcMethodNamespace = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcArgumentIndex = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcArgumentValue = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcAccountDetail = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.dgcRoleDetail = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgLogDetails)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,6 +114,7 @@
             this.dgLogDetails.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgcSelect,
             this.dgcDate,
+            this.dgcTimeStamp,
             this.dgcCategory,
             this.dgcLoggedIn,
             this.dgcUser,
@@ -166,7 +168,6 @@
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.NullValue = "False";
             this.dgcSelect.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dgcSelect.Frozen = true;
             this.dgcSelect.HeaderText = "";
             this.dgcSelect.Name = "dgcSelect";
             this.dgcSelect.Width = 5;
@@ -182,6 +183,16 @@
             this.dgcDate.ReadOnly = true;
             this.dgcDate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcDate.Width = 76;
+            // 
+            // dgcTimeStamp
+            // 
+            this.dgcTimeStamp.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.dgcTimeStamp.DataPropertyName = "LogTimeStamp";
+            this.dgcTimeStamp.HeaderText = "Time Stamp";
+            this.dgcTimeStamp.Name = "dgcTimeStamp";
+            this.dgcTimeStamp.ReadOnly = true;
+            this.dgcTimeStamp.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgcTimeStamp.Width = 102;
             // 
             // dgcCategory
             // 
@@ -242,6 +253,7 @@
             this.dgcExceptionMessage.HeaderText = "Exception Message";
             this.dgcExceptionMessage.Name = "dgcExceptionMessage";
             this.dgcExceptionMessage.ReadOnly = true;
+            this.dgcExceptionMessage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcExceptionMessage.Width = 300;
             // 
             // dgcStackTrace
@@ -257,6 +269,7 @@
             this.dgcStackTrace.HeaderText = "Stack Trace";
             this.dgcStackTrace.Name = "dgcStackTrace";
             this.dgcStackTrace.ReadOnly = true;
+            this.dgcStackTrace.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcStackTrace.Width = 300;
             // 
             // dgcMethodNamespace
@@ -272,6 +285,7 @@
             this.dgcMethodNamespace.HeaderText = "Method Namespace";
             this.dgcMethodNamespace.Name = "dgcMethodNamespace";
             this.dgcMethodNamespace.ReadOnly = true;
+            this.dgcMethodNamespace.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcMethodNamespace.Width = 300;
             // 
             // dgcArgumentIndex
@@ -288,6 +302,7 @@
             this.dgcArgumentIndex.HeaderText = "Method Argument Index";
             this.dgcArgumentIndex.Name = "dgcArgumentIndex";
             this.dgcArgumentIndex.ReadOnly = true;
+            this.dgcArgumentIndex.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcArgumentIndex.Width = 109;
             // 
             // dgcArgumentValue
@@ -303,6 +318,7 @@
             this.dgcArgumentValue.HeaderText = "Method Argument Value";
             this.dgcArgumentValue.Name = "dgcArgumentValue";
             this.dgcArgumentValue.ReadOnly = true;
+            this.dgcArgumentValue.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgcArgumentValue.Width = 300;
             // 
             // dgcAccountDetail
@@ -318,6 +334,7 @@
             this.dgcAccountDetail.HeaderText = "Account Detail";
             this.dgcAccountDetail.Name = "dgcAccountDetail";
             this.dgcAccountDetail.ReadOnly = true;
+            this.dgcAccountDetail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // dgcRoleDetail
             // 
@@ -332,6 +349,7 @@
             this.dgcRoleDetail.HeaderText = "Role Detail";
             this.dgcRoleDetail.Name = "dgcRoleDetail";
             this.dgcRoleDetail.ReadOnly = true;
+            this.dgcRoleDetail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Form1
             // 
@@ -367,17 +385,18 @@
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgcSelect;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcDate;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcTimeStamp;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcCategory;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dgcLoggedIn;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcUser;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcExceptionMessage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcStackTrace;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcMethodNamespace;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcArgumentIndex;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcArgumentValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcAccountDetail;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dgcRoleDetail;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcExceptionMessage;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcStackTrace;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcMethodNamespace;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcArgumentIndex;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcArgumentValue;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcAccountDetail;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn dgcRoleDetail;
     }
 }
 

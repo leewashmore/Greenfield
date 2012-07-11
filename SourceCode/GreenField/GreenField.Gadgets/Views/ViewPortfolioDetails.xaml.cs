@@ -89,6 +89,9 @@ namespace GreenField.Gadgets.Views
 
         #region ExportToExcel/PDF/Print
 
+        /// <summary>
+        /// Static class storing string types
+        /// </summary>
         private static class ExportTypes
         {
             public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
@@ -133,27 +136,33 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = "*.pdf";
-            dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
+            //SaveFileDialog dialog = new SaveFileDialog();
+            //dialog.DefaultExt = "*.pdf";
+            //dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
 
-            if (dialog.ShowDialog() == true)
-            {
-                RadDocument document = CreateDocument(dgPortfolioDetails);
+            //if (dialog.ShowDialog() == true)
+            //{
+            //    RadDocument document = CreateDocument(dgPortfolioDetails);
 
-                document.LayoutMode = DocumentLayoutMode.Paged;
-                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+            //    document.LayoutMode = DocumentLayoutMode.Paged;
+            //    document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+            //    document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
 
-                PdfFormatProvider provider = new PdfFormatProvider();
-                using (Stream output = dialog.OpenFile())
-                {
-                    provider.Export(document, output);
-                }
-            }
+            //    PdfFormatProvider provider = new PdfFormatProvider();
+            //    using (Stream output = dialog.OpenFile())
+            //    {
+            //        provider.Export(document, output);
+            //    }
+            //}
+            PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
 
         }
 
+        /// <summary>
+        /// Helper Method for PDF Export
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private RadDocument CreateDocument(RadGridView grid)
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
@@ -203,6 +212,11 @@ namespace GreenField.Gadgets.Views
             return document;
         }
 
+        /// <summary>
+        /// Helper Method for PDF Export
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private void AddDataRows(Table table, IList items, IList<GridViewBoundColumnBase> columns, RadGridView grid)
         {
             for (int i = 0; i < items.Count; i++)
@@ -235,6 +249,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Helper Method for PDF Export
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private void AddGroupRow(Table table, QueryableCollectionViewGroup group, IList<GridViewBoundColumnBase> columns, RadGridView grid)
         {
             TableRow row = new TableRow();
@@ -279,6 +298,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Helper Method for PDF Export
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private void AddCellValue(TableCell cell, string value)
         {
             Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
@@ -292,6 +316,11 @@ namespace GreenField.Gadgets.Views
             paragraph.Inlines.Add(span);
         }
 
+        /// <summary>
+        /// Helper Method for PDF Export
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <param name="value"></param>
         private int GetGroupLevel(IGroup group)
         {
             int level = 0;
@@ -308,6 +337,11 @@ namespace GreenField.Gadgets.Views
 
         #region Printing the DataGrid
 
+        /// <summary>
+        /// Helper method for Print
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void doc_PrintPage(object sender, PrintPageEventArgs e)
         {
             e.PageVisual = canvas;
@@ -384,24 +418,15 @@ namespace GreenField.Gadgets.Views
 
         #region RadDocument
 
-        //private void btnPrint_Click(object sender, System.Windows.RoutedEventArgs e)
-        //{
-        //    Dispatcher.BeginInvoke((Action)(() =>
-        //    {
-        //        RichTextBox.Document = CreateDocument(dgPortfolioDetails);
-        //    }));
-
-        //    PrintSettings printSettings = new PrintSettings();
-        //    printSettings.DocumentName = "MyDocument";
-        //    printSettings.PrintMode = PrintMode.Native;
-        //    printSettings.PrintScaling = PrintScaling.ShrinkToPageSize;
-        //    RichTextBox.Print(printSettings);
-        //}
+        
 
         #endregion
 
         #region EventUnsubscribe
 
+        /// <summary>
+        /// Unsusbcribing the Events
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextPortfolioDetails.Dispose();
