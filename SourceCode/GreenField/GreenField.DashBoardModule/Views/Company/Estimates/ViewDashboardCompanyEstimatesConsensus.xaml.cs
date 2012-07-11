@@ -93,7 +93,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_VALUATIONS,
-                Content =null// new ViewValuations(new ViewModelValuations(param))
+                Content = null// new ViewValuations(new ViewModelValuations(param))
             });
         }
 

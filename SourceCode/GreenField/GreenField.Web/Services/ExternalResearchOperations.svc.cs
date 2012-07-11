@@ -401,10 +401,14 @@ namespace GreenField.Web.Services
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-               // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
-                dbResult = entity.GetConsensusEstimatesValuation("223340", "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
+                // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
+                dbResult = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
 
-                ConsensusEstimateMedian data = new ConsensusEstimateMedian();
+                ConsensusEstimatesValuations data;
+                foreach (ConsensusEstimateValuation item in dbResult)
+                {
+                    data = new ConsensusEstimatesValuations();
+                }
 
                 return result;
             }

@@ -132,6 +132,7 @@
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
+    <Compile Include="Helpers\Export\PDFExporter.cs" />
     <Compile Include="Helpers\ExtendedDataWraper.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
