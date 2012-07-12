@@ -63,6 +63,12 @@ namespace GreenField.Common
         public static Int32 FATAL_LEVEL = 1;
     }
 
+    public static class EntityNodeType
+    {
+        public static String NONE = "None";
+        public static String COUNTRY = "Country";
+        public static String SECTOR = "Sector";
+    }
     
 
     public delegate void DataRetrievalProgressIndicatorEventHandler(DataRetrievalProgressIndicatorEventArgs e);

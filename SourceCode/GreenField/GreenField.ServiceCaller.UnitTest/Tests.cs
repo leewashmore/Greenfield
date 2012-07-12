@@ -1885,7 +1885,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveMarketSnapshotPreferenceSnapshotPreferenceIdNotExists()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveMarketSnapshotPreference(1000, "<Root></Root>", (List<MarketSnapshotPreference> resultSet) =>
+            instance.SaveMarketSnapshotPreference("<Root></Root>", (List<MarketSnapshotPreference> resultSet) =>
             {
                 Assert.IsNull(resultSet, "MarketSnapshotPreference should be null");
                 EnqueueTestComplete();
@@ -1902,7 +1902,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveMarketSnapshotPreferenceUpdateXMLFormatErrors()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveMarketSnapshotPreference(74, "#Root##/Root#", (List<MarketSnapshotPreference> resultSet) =>
+            instance.SaveMarketSnapshotPreference("#Root##/Root#", (List<MarketSnapshotPreference> resultSet) =>
             {
                 Assert.IsNull(resultSet, "MarketSnapshotPreference should be null");
                 EnqueueTestComplete();
@@ -1919,7 +1919,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveMarketSnapshotPreferenceUpdateXMLNullOrEmpty()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveMarketSnapshotPreference(74, null, (List<MarketSnapshotPreference> resultSet) =>
+            instance.SaveMarketSnapshotPreference(null, (List<MarketSnapshotPreference> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "MarketSnapshotPreference should not be null");
                 EnqueueTestComplete();
@@ -1936,7 +1936,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveMarketSnapshotPreferenceValidData()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveMarketSnapshotPreference(74, "<Root></Root>", (List<MarketSnapshotPreference> resultSet) =>
+            instance.SaveMarketSnapshotPreference("<Root GroupPreferenceId=\"74\"></Root>", (List<MarketSnapshotPreference> resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "MarketSnapshotPreference should not be null");
                 EnqueueTestComplete();
@@ -1955,7 +1955,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveAsMarketSnapshotPreferenceupdateXMLFormatErrors()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", "#root##/root#", (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            instance.SaveAsMarketSnapshotPreference("#root##/root#", (PopulatedMarketPerformanceSnapshotData resultSet) =>
             {
                 Assert.IsNull(resultSet, "PopulatedMarketPerformanceSnapshotData should be null");
                 EnqueueTestComplete();
@@ -1972,11 +1972,11 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveAsMarketSnapshotPreferenceUpdateXMLNullOrEmpty()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", null, (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            instance.SaveAsMarketSnapshotPreference(null, (PopulatedMarketPerformanceSnapshotData resultSet) =>
             {
                 Assert.AreEqual<int>(0, resultSet.MarketPerformanceSnapshotInfo.Count, "MarketPerformanceSnapshotInfo should be empty");
                 Assert.IsNotNull(resultSet.MarketSnapshotSelectionInfo, "MarketSnapshotSelectionInfo should not be null");
-                instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", String.Empty, (PopulatedMarketPerformanceSnapshotData resultSet2) =>
+                instance.SaveAsMarketSnapshotPreference(String.Empty, (PopulatedMarketPerformanceSnapshotData resultSet2) =>
                 {
                     Assert.AreEqual<int>(0, resultSet.MarketPerformanceSnapshotInfo.Count, "MarketPerformanceSnapshotInfo should be empty");
                     Assert.IsNotNull(resultSet.MarketSnapshotSelectionInfo, "MarketSnapshotSelectionInfo should not be null");
@@ -1994,7 +1994,7 @@ namespace Greenfield.ServiceCaller.UnitTest
         public void SaveAsMarketSnapshotPreferenceValidData()
         {
             DBInteractivity instance = new DBInteractivity();
-            instance.SaveAsMarketSnapshotPreference("rvig", "snapshot", "<root></root>", (PopulatedMarketPerformanceSnapshotData resultSet) =>
+            instance.SaveAsMarketSnapshotPreference("<root UserName=\"rvig\" SnapshotName=\"snapshot\"></root>", (PopulatedMarketPerformanceSnapshotData resultSet) =>
             {
                 Assert.IsNotNull(resultSet, "PopulatedMarketPerformanceSnapshotData should not be null");
                 EnqueueTestComplete();

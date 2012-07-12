@@ -50,6 +50,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\BasicData.cs">
       <Link>DataContracts\BasicData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\BenchmarkFilterSelectionData.cs">
+      <Link>DataContracts\BenchmarkFilterSelectionData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\BenchmarkReturnData.cs">
       <Link>DataContracts\BenchmarkReturnData.cs</Link>
     </Compile>

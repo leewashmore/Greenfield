@@ -371,21 +371,8 @@ namespace GreenField.Gadgets.ViewModels
                         .Select(i => i.MarketSnapshotPreferenceInfo.GroupName).Distinct().ToList();
                 }
 
-
-                //Get all entities present in the snapshot
-                List<string> snapshotEntityNames = new List<string>();
-                if (MarketPerformanceSnapshotInfo != null)
-                {
-                    snapshotEntityNames = MarketPerformanceSnapshotInfo
-                        .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
-                }
-
-                //Open Child Window to receive inserted entity details
                 ChildViewInsertEntity childViewModelInsertEntity
-                    = new ChildViewInsertEntity(EntitySelectionInfo
-                                                        .Where(record => !(snapshotEntityNames.Contains(record.LongName)))
-                                                        .ToList()
-                                                , groupNames: snapshotGroupNames);
+                    = new ChildViewInsertEntity(EntitySelectionInfo, _dbInteractivity, _logger, groupNames: snapshotGroupNames);
                 childViewModelInsertEntity.Show();
                 childViewModelInsertEntity.Unloaded += (se, e) =>
                 {
@@ -400,6 +387,23 @@ namespace GreenField.Gadgets.ViewModels
                             {
                                 //Create Preference object - We assign propertyName new uncommitted GroupPreferenceId to the entity and place it with Entity Order 1
                                 MarketSnapshotPreference insertedMarketSnapshotPreference = childViewModelInsertEntity.InsertedMarketSnapshotPreference;
+
+                                if (MarketSnapshotPreferenceInfo != null)
+                                {
+                                    if (MarketSnapshotPreferenceInfo.Where(record => record.EntityId == insertedMarketSnapshotPreference.EntityId
+                                                                && record.EntityName == insertedMarketSnapshotPreference.EntityName
+                                                                && record.EntityNodeType == insertedMarketSnapshotPreference.EntityNodeType
+                                                                && record.EntityNodeValueCode == insertedMarketSnapshotPreference.EntityNodeValueCode
+                                                                && record.EntityNodeValueName == insertedMarketSnapshotPreference.EntityNodeValueName
+                                                                && record.EntityReturnType == insertedMarketSnapshotPreference.EntityReturnType
+                                                                && record.EntityType == insertedMarketSnapshotPreference.EntityType).FirstOrDefault() != null)
+                                    {
+                                        Prompt.ShowDialog("Entity already exists in the snapshot");
+                                        BusyIndicatorNotification();
+                                        return;
+                                    } 
+                                }
+
                                 insertedMarketSnapshotPreference.GroupPreferenceID = GetLastGroupPreferenceId() + 1;
                                 insertedMarketSnapshotPreference.EntityOrder = 1;
 
@@ -532,20 +536,8 @@ namespace GreenField.Gadgets.ViewModels
                     return;
                 }
 
-                //Get all entities present in the snapshot
-                List<string> snapshotEntityNames = new List<string>();
-                if (MarketPerformanceSnapshotInfo != null)
-                {
-                    snapshotEntityNames = MarketPerformanceSnapshotInfo
-                        .Select(p => p.MarketSnapshotPreferenceInfo.EntityName).Distinct().ToList();
-                }
-
-                //Open Child Window to receive inserted entity details
                 ChildViewInsertEntity childViewModelInsertEntity
-                    = new ChildViewInsertEntity(EntitySelectionInfo
-                                                        .Where(record => !(snapshotEntityNames.Contains(record.LongName)))
-                                                        .ToList()
-                                                , SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName);
+                    = new ChildViewInsertEntity(EntitySelectionInfo, _dbInteractivity, _logger, SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName);
                 childViewModelInsertEntity.Show();
                 childViewModelInsertEntity.Unloaded += (se, e) =>
                 {
@@ -561,6 +553,23 @@ namespace GreenField.Gadgets.ViewModels
                                 BusyIndicatorNotification(true, "Updating preference structure ...");
                                 //Create Preference object
                                 MarketSnapshotPreference insertedMarketSnapshotPreference = childViewModelInsertEntity.InsertedMarketSnapshotPreference;
+
+                                if (MarketSnapshotPreferenceInfo != null)
+                                {
+                                    if (MarketSnapshotPreferenceInfo.Where(record => record.EntityId == insertedMarketSnapshotPreference.EntityId
+                                                                && record.EntityName == insertedMarketSnapshotPreference.EntityName
+                                                                && record.EntityNodeType == insertedMarketSnapshotPreference.EntityNodeType
+                                                                && record.EntityNodeValueCode == insertedMarketSnapshotPreference.EntityNodeValueCode
+                                                                && record.EntityNodeValueName == insertedMarketSnapshotPreference.EntityNodeValueName
+                                                                && record.EntityReturnType == insertedMarketSnapshotPreference.EntityReturnType
+                                                                && record.EntityType == insertedMarketSnapshotPreference.EntityType).FirstOrDefault() != null)
+                                    {
+                                        Prompt.ShowDialog("Entity already exists in the snapshot");
+                                        BusyIndicatorNotification();
+                                        return;
+                                    } 
+                                }
+
                                 insertedMarketSnapshotPreference.GroupName = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName;
                                 insertedMarketSnapshotPreference.GroupPreferenceID = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupPreferenceID;
 
@@ -837,8 +846,7 @@ namespace GreenField.Gadgets.ViewModels
                 string updateXML = SaveXmlBuilder();
                 if (updateXML != String.Empty)
                 {
-                    _dbInteractivity.SaveMarketSnapshotPreference(SelectedMarketSnapshotSelectionInfo.SnapshotPreferenceId,
-                                updateXML, SaveMarketSnapshotPreferenceCallbackMethod);
+                    _dbInteractivity.SaveMarketSnapshotPreference(updateXML, SaveMarketSnapshotPreferenceCallbackMethod);
                 }
             }
             catch (Exception ex)
@@ -982,9 +990,8 @@ namespace GreenField.Gadgets.ViewModels
                             if (SessionManager.SESSION != null)
                             {
                                 BusyIndicatorNotification(true, "Creating snapshot and assigning preference structure...");
-                                string saveAsXml = SaveAsXmlBuilder();
-                                _dbInteractivity.SaveAsMarketSnapshotPreference(SessionManager.SESSION.UserName
-                                    , view.tbSnapshotName.Text, saveAsXml, SaveAsMarketSnapshotPreferenceCallbackMethod);
+                                string saveAsXml = SaveAsXmlBuilder(SessionManager.SESSION.UserName, view.tbSnapshotName.Text);
+                                _dbInteractivity.SaveAsMarketSnapshotPreference(saveAsXml, SaveAsMarketSnapshotPreferenceCallbackMethod);
                             }
                             else
                             {
@@ -1001,9 +1008,8 @@ namespace GreenField.Gadgets.ViewModels
                                             SessionManager.SESSION = session;
 
                                             BusyIndicatorNotification(true, "Creating snapshot and assigning preference structure...");
-                                            string saveAsXml = SaveAsXmlBuilder();
-                                            _dbInteractivity.SaveAsMarketSnapshotPreference(session.UserName
-                                                , view.tbSnapshotName.Text, saveAsXml, SaveAsMarketSnapshotPreferenceCallbackMethod);
+                                            string saveAsXml = SaveAsXmlBuilder(session.UserName, view.tbSnapshotName.Text);
+                                            _dbInteractivity.SaveAsMarketSnapshotPreference(saveAsXml, SaveAsMarketSnapshotPreferenceCallbackMethod);
                                         }
                                         else
                                         {
@@ -1060,9 +1066,10 @@ namespace GreenField.Gadgets.ViewModels
                                 XDocument doc = new XDocument(
                                     new XDeclaration("1.0", "utf-8", "yes"),
                                     new XComment("Market performance snapshot save as preference details"),
-                                    new XElement("Root"));
-                                _dbInteractivity.SaveAsMarketSnapshotPreference(SessionManager.SESSION.UserName
-                                    , view.tbSnapshotName.Text, doc.ToString(), AddMarketSnapshotPreferenceCallbackMethod);
+                                    new XElement("Root",
+                                        new XAttribute("UserName", SessionManager.SESSION.UserName),
+                                        new XAttribute("SnapshotName", view.tbSnapshotName.Text)));
+                                _dbInteractivity.SaveAsMarketSnapshotPreference(doc.ToString(), AddMarketSnapshotPreferenceCallbackMethod);
                             }
                             else
                             {
@@ -1081,9 +1088,10 @@ namespace GreenField.Gadgets.ViewModels
                                             XDocument doc = new XDocument(
                                                 new XDeclaration("1.0", "utf-8", "yes"),
                                                 new XComment("Market performance snapshot save as preference details"),
-                                                new XElement("Root"));
-                                            _dbInteractivity.SaveAsMarketSnapshotPreference(session.UserName
-                                                , view.tbSnapshotName.Text, doc.ToString(), AddMarketSnapshotPreferenceCallbackMethod);
+                                                new XElement("Root",
+                                                    new XAttribute("UserName", session.UserName),
+                                                    new XAttribute("SnapshotName", view.tbSnapshotName.Text)));
+                                            _dbInteractivity.SaveAsMarketSnapshotPreference(doc.ToString(), AddMarketSnapshotPreferenceCallbackMethod);
                                         }
                                         else
                                         {
@@ -1829,7 +1837,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Construct XML for Save As Event
         /// </summary>
         /// <returns></returns>
-        private string SaveAsXmlBuilder()
+        private string SaveAsXmlBuilder(String userName, String snapshotName)
         {
             string saveAsXml = String.Empty;
 
@@ -1841,7 +1849,11 @@ namespace GreenField.Gadgets.ViewModels
                     .ToList();
 
                 string insertedGroupName = String.Empty;
-                XElement root = new XElement("Root");
+
+                XElement root = new XElement("Root",
+                    new XAttribute("UserName", userName),
+                    new XAttribute("SnapshotName", snapshotName));
+
                 XElement createGroup = null;
                 foreach (MarketSnapshotPreference preference in MarketSnapshotPreferenceInfo)
                 {
@@ -1853,11 +1865,34 @@ namespace GreenField.Gadgets.ViewModels
                         insertedGroupName = preference.GroupName;
                     }
 
-                    XElement createGroupEntity = new XElement("CreateGroupEntity",
-                                new XAttribute("EntityName", preference.EntityName.ToString()),
-                                new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()),
-                                new XAttribute("EntityOrder", preference.EntityOrder.ToString()),
-                                new XAttribute("EntityType", preference.EntityType.ToString()));
+                    //XElement createGroupEntity = new XElement("CreateGroupEntity",
+                    //            new XAttribute("EntityName", preference.EntityName.ToString()),
+                    //            new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()),
+                    //            new XAttribute("EntityOrder", preference.EntityOrder.ToString()),
+                    //            new XAttribute("EntityType", preference.EntityType.ToString()),
+                    //            new XAttribute("EntityId", preference.EntityId.ToString()),
+                    //            new XAttribute("EntityNodeType", preference.EntityNodeType.ToString()),
+                    //            new XAttribute("EntityNodeValueCode", preference.EntityNodeValueCode.ToString()),
+                    //            new XAttribute("EntityNodeValueName", preference.EntityNodeValueName.ToString()));
+
+                    XElement createGroupEntity = new XElement("CreateGroupEntity");
+                    if(preference.EntityName != null)
+                        createGroupEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
+                    if (preference.EntityReturnType != null)
+                        createGroupEntity.Add(new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()));
+                    if (preference.EntityOrder != null)
+                        createGroupEntity.Add(new XAttribute("EntityOrder", preference.EntityOrder.ToString()));
+                    if (preference.EntityType != null)
+                        createGroupEntity.Add(new XAttribute("EntityType", preference.EntityType.ToString()));
+                    if (preference.EntityId != null)
+                        createGroupEntity.Add(new XAttribute("EntityId", preference.EntityId.ToString()));
+                    if (preference.EntityNodeType != null)
+                        createGroupEntity.Add(new XAttribute("EntityNodeType", preference.EntityNodeType.ToString()));
+                    if (preference.EntityNodeValueCode != null)
+                        createGroupEntity.Add(new XAttribute("EntityNodeValueCode", preference.EntityNodeValueCode.ToString()));
+                    if (preference.EntityNodeValueName != null)
+                        createGroupEntity.Add(new XAttribute("EntityNodeValueName", preference.EntityNodeValueName.ToString()));
+
                     createGroup.Add(createGroupEntity);
                 }
 
@@ -1887,7 +1922,8 @@ namespace GreenField.Gadgets.ViewModels
             string saveXml = String.Empty;
             try
             {
-                XElement root = new XElement("Root");
+                XElement root = new XElement("Root",
+                    new XAttribute("SnapshotPreferenceId", SelectedMarketSnapshotSelectionInfo.SnapshotPreferenceId.ToString()));
 
                 foreach (string groupName in _createGroupInfo)
                 {
@@ -1899,11 +1935,23 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (preference.GroupName == groupName)
                         {
-                            XElement createGroupEntity = new XElement("CreateGroupEntity",
-                                new XAttribute("EntityName", preference.EntityName.ToString()),
-                                new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()),
-                                new XAttribute("EntityOrder", preference.EntityOrder.ToString()),
-                                new XAttribute("EntityType", preference.EntityType.ToString()));
+                            XElement createGroupEntity = new XElement("CreateGroupEntity");
+                            if (preference.EntityName != null)
+                                createGroupEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
+                            if (preference.EntityReturnType != null)
+                                createGroupEntity.Add(new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()));
+                            if (preference.EntityOrder != null)
+                                createGroupEntity.Add(new XAttribute("EntityOrder", preference.EntityOrder.ToString()));
+                            if (preference.EntityType != null)
+                                createGroupEntity.Add(new XAttribute("EntityType", preference.EntityType.ToString()));
+                            if (preference.EntityId != null)
+                                createGroupEntity.Add(new XAttribute("EntityId", preference.EntityId.ToString()));
+                            if (preference.EntityNodeType != null)
+                                createGroupEntity.Add(new XAttribute("EntityNodeType", preference.EntityNodeType.ToString()));
+                            if (preference.EntityNodeValueCode != null)
+                                createGroupEntity.Add(new XAttribute("EntityNodeValueCode", preference.EntityNodeValueCode.ToString()));
+                            if (preference.EntityNodeValueName != null)
+                                createGroupEntity.Add(new XAttribute("EntityNodeValueName", preference.EntityNodeValueName.ToString()));
 
                             createGroup.Add(createGroupEntity);
                             //entity.SetMarketSnapshotEntityPreference(groupPrefId, preference.EntityName
@@ -1919,13 +1967,23 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (!_createGroupInfo.Contains(preference.GroupName))
                     {
-                        XElement createEntity = new XElement("CreateEntity",
-                                new XAttribute("GroupPreferenceId", preference.GroupPreferenceID.ToString()),
-                                new XAttribute("EntityName", preference.EntityName.ToString()),
-                                new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()),
-                                new XAttribute("EntityOrder", preference.EntityOrder.ToString()),
-                                new XAttribute("EntityType", preference.EntityType.ToString()));
-
+                        XElement createEntity = new XElement("CreateEntity");                                
+                        if (preference.EntityName != null)
+                            createEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
+                        if (preference.EntityReturnType != null)
+                            createEntity.Add(new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()));
+                        if (preference.EntityOrder != null)
+                            createEntity.Add(new XAttribute("EntityOrder", preference.EntityOrder.ToString()));
+                        if (preference.EntityType != null)
+                            createEntity.Add(new XAttribute("EntityType", preference.EntityType.ToString()));
+                        if (preference.EntityId != null)
+                            createEntity.Add(new XAttribute("EntityId", preference.EntityId.ToString()));
+                        if (preference.EntityNodeType != null)
+                            createEntity.Add(new XAttribute("EntityNodeType", preference.EntityNodeType.ToString()));
+                        if (preference.EntityNodeValueCode != null)
+                            createEntity.Add(new XAttribute("EntityNodeValueCode", preference.EntityNodeValueCode.ToString()));
+                        if (preference.EntityNodeValueName != null)
+                            createEntity.Add(new XAttribute("EntityNodeValueName", preference.EntityNodeValueName.ToString()));
                         root.Add(createEntity);
                         //entity.SetMarketSnapshotEntityPreference(preference.GroupPreferenceID, preference.EntityName
                         //    , preference.EntityReturnType, preference.EntityType, preference.EntityOrder);

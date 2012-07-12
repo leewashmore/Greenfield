@@ -549,80 +549,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
-        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
-        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
-        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
-        /// <param name="sTATEMENT_TYPE">No Metadata Documentation available.</param>
-        /// <param name="cURRENCY">No Metadata Documentation available.</param>
-        public ObjectResult<FinancialStatementData> Get_Statement(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String sTATEMENT_TYPE, global::System.String cURRENCY)
-        {
-            ObjectParameter iSSUER_IDParameter;
-            if (iSSUER_ID != null)
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
-            }
-            else
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
-            }
-    
-            ObjectParameter dATA_SOURCEParameter;
-            if (dATA_SOURCE != null)
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
-            }
-            else
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
-            }
-    
-            ObjectParameter pERIOD_TYPEParameter;
-            if (pERIOD_TYPE != null)
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
-            }
-            else
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter fISCAL_TYPEParameter;
-            if (fISCAL_TYPE != null)
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
-            }
-            else
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter sTATEMENT_TYPEParameter;
-            if (sTATEMENT_TYPE != null)
-            {
-                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", sTATEMENT_TYPE);
-            }
-            else
-            {
-                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter cURRENCYParameter;
-            if (cURRENCY != null)
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
-            }
-            else
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="issuer_Id">No Metadata Documentation available.</param>
         /// <param name="periodType">No Metadata Documentation available.</param>
         /// <param name="currency">No Metadata Documentation available.</param>
@@ -872,6 +798,80 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<RatioComparisonData>("usp_RetrieveRatioComparisonData", securityBucketXMLParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
+        /// <param name="sTATEMENT_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<FinancialStatementData> Get_Statement(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String sTATEMENT_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter fISCAL_TYPEParameter;
+            if (fISCAL_TYPE != null)
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
+            }
+            else
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter sTATEMENT_TYPEParameter;
+            if (sTATEMENT_TYPE != null)
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", sTATEMENT_TYPE);
+            }
+            else
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
         }
     
         /// <summary>

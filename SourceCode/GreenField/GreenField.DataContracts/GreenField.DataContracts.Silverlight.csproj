@@ -107,6 +107,7 @@
     <Compile Include="DataContracts\TopHoldingsData.cs" />
     <Compile Include="DataContracts\UnrealizedGainLossData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DataContracts\BenchmarkFilterSelectionData.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

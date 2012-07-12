@@ -28,7 +28,11 @@
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
         <xs:sequence>
+          <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeValueCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeValueName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="EntityOrder" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="EntityPreferenceId" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="EntityReturnType" nillable="true" type="xs:string" />

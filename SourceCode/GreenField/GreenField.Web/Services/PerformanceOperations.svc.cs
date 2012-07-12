@@ -492,6 +492,42 @@ namespace GreenField.Web.Services
         #endregion
 
         #region Market Performance Snapshot Operation Contracts
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<BenchmarkFilterSelectionData> RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String benchmarkName, String filterType)
+        {
+            List<BenchmarkFilterSelectionData> result = new List<BenchmarkFilterSelectionData>();
+
+            GF_PERF_DAILY_ATTRIBUTION lastBusinessDateRecord = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
+                .Where(record => record.NODE_NAME == (filterType == "Country" ? "Country" : "GICS Level 1")
+                    && record.BMNAME == benchmarkName
+                    && record.BM == benchmarkCode)
+                .OrderByDescending(g => g.TO_DATE).FirstOrDefault();
+
+            DateTime? lastBusinessDate = lastBusinessDateRecord.TO_DATE;
+
+            List<GF_PERF_DAILY_ATTRIBUTION> benchmarkCountryPerformanceData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION
+                .Where(record => record.NODE_NAME == (filterType == "Country" ? "Country" : "GICS Level 1")
+                    && record.BMNAME == benchmarkName
+                    && record.BM == benchmarkCode
+                    && record.TO_DATE == lastBusinessDate)
+                .ToList();
+
+            foreach (GF_PERF_DAILY_ATTRIBUTION item in benchmarkCountryPerformanceData)
+            {
+                if (result.Where(record => record.FilterCode == item.AGG_LVL_1 && record.FilterName == item.AGG_LVL_1_LONG_NAME)
+                    .FirstOrDefault() == null)
+                {
+                    result.Add(new BenchmarkFilterSelectionData()
+                    {
+                        FilterCode = item.AGG_LVL_1,
+                        FilterName = item.AGG_LVL_1_LONG_NAME
+                    });
+                }
+            }           
+
+            return result;
+        }
 
         /// <summary>
         /// retrieving list of market performance snapshots for particular user
@@ -951,36 +987,37 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML)
+        public List<MarketSnapshotPreference> SaveMarketSnapshotPreference(string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                int? result = entity.UpdateMarketPerformanceSnapshot(snapshotPreferenceId, updateXML).FirstOrDefault();
+                int? status = entity.UpdateMarketPerformanceSnapshot(updateXML).FirstOrDefault();
 
-                switch (result)
-                {
-                    case 0:
-                        break;
-                    case -1:
-                        throw new NotImplementedException("specified snapshot does not exists in database");
-                    case 1:
-                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
-                    case 2:
-                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
-                    case 3:
-                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
-                    case 4:
-                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
-                    case 5:
-                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
-                    case 6:
-                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
-                    default:
-                        break;
-                }
+                //switch (status)
+                //{
+                //    case -1:
+                //        throw new NotImplementedException("specified snapshot does not exists in database");
+                //    case -2:
+                //        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
+                //    case -3:
+                //        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
+                //    case -4:
+                //        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
+                //    case -5:
+                //        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
+                //    case -6:
+                //        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
+                //    case -7:
+                //        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
+                //    default:
+                //        break;
+                //}
 
-                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(snapshotPreferenceId))
+                if (status <= -10)
+                    throw new NotImplementedException("Error[" + status.ToString() + "]: Snapshot Updation Failed");
+
+                List<MarketSnapshotPreference> userPreference = (entity.GetMarketSnapshotPreference(status))
                     .ToList<MarketSnapshotPreference>();
 
                 return userPreference.OrderBy(record => record.GroupPreferenceID)
@@ -1002,45 +1039,27 @@ namespace GreenField.Web.Services
         /// <param name="marketSnapshotPreference"></param>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string userName, string snapshotName, string updateXML)
+        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
                 PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
 
-                Decimal? snapshotID = entity.SetMarketSnapshotPreference(userName, snapshotName).FirstOrDefault();
-                if (snapshotID == null)
+                int? status = entity.UpdateMarketPerformanceSnapshot(updateXML).FirstOrDefault();
+
+                if (status <= -10)
+                    throw new NotImplementedException("Error["+ status.ToString() + "]: Snapshot Creation Failed");
+                
+                tblMarketSnapshotPreference snapshotRecord = entity.tblMarketSnapshotPreferences.Where(record => record.SnapshotPreferenceId == status).FirstOrDefault();
+
+                if(snapshotRecord == null)
                     return null;
-
-                int? status = entity.UpdateMarketPerformanceSnapshot(Convert.ToInt32(snapshotID), updateXML).FirstOrDefault();
-
-                switch (status)
-                {
-                    case 0:
-                        break;
-                    case -1:
-                        throw new NotImplementedException("specified snapshot does not exists in database");
-                    case 1:
-                        throw new NotImplementedException("An error occured while creating groups within the specified snapshot");
-                    case 2:
-                        throw new NotImplementedException("An error occured while creating entities for inserted groups within the specified snapshot");
-                    case 3:
-                        throw new NotImplementedException("An error occured while deleting groups within the specified snapshot");
-                    case 4:
-                        throw new NotImplementedException("An error occured while creating entities within the specified snapshot");
-                    case 5:
-                        throw new NotImplementedException("An error occured while deleting entities within the specified snapshot");
-                    case 6:
-                        throw new NotImplementedException("An error occured while updating entities within the specified snapshot");
-                    default:
-                        break;
-                }
-
-                MarketSnapshotSelectionData marketSnapshotSelectionData = RetrieveMarketSnapshotSelectionData(userName)
-                    .Where(record => record.SnapshotName == snapshotName).FirstOrDefault();
-
-                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(snapshotID));
+                
+                MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData() 
+                { SnapshotName = snapshotRecord.SnapshotName, SnapshotPreferenceId = snapshotRecord.SnapshotPreferenceId };
+                
+                List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(status));
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
 
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;

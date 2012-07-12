@@ -435,6 +435,7 @@ namespace GreenField.Web.Services
             }
         }
 
+        
         /// <summary>
         /// retrieve list of securities for security selector
         /// </summary>
@@ -453,7 +454,6 @@ namespace GreenField.Web.Services
                     {
                         result.Add(new EntitySelectionData()
                         {
-
                             SortOrder = EntityTypeSortOrder.GetSortOrder(record.TYPE),
                             ShortName = record.SHORT_NAME == null ? String.Empty : record.SHORT_NAME,
                             LongName = record.LONG_NAME == null ? String.Empty : record.LONG_NAME,
@@ -467,16 +467,15 @@ namespace GreenField.Web.Services
                 List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM.ToList();
                 if (benchmarkData != null)
                 {
-                    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM record in benchmarkData)
+                    foreach (DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM benchmark in benchmarkData)
                     {
-                        
                         result.Add(new EntitySelectionData()
                         {
 
                             SortOrder = EntityTypeSortOrder.GetSortOrder("BENCHMARK"),
-                            ShortName = record.BM == null ? String.Empty : record.BM,
-                            LongName = record.BMNAME == null ? String.Empty : record.BMNAME,
-                            InstrumentID = record.BM == null ? String.Empty : record.BM,
+                            ShortName = benchmark.BM == null ? String.Empty : benchmark.BM,
+                            LongName = benchmark.BMNAME == null ? String.Empty : benchmark.BMNAME,
+                            InstrumentID = benchmark.BM == null ? String.Empty : benchmark.BM,
                             Type = "BENCHMARK",
                             SecurityType = null
                         });

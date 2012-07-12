@@ -142,6 +142,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.AttributionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BasicData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkChartReturnData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkFilterSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkGridReturnData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
@@ -177,6 +178,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceUIData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.RiskIndexExposuresData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SectorBreakdownData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.SectorSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SecurityOverviewData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.Session.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.TargetPriceCEData.datasource" />

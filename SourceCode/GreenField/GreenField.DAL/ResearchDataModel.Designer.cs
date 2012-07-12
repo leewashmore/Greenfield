@@ -122,22 +122,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreferences
-        {
-            get
-            {
-                if ((_tblMarketSnapshotEntityPreferences == null))
-                {
-                    _tblMarketSnapshotEntityPreferences = base.CreateObjectSet<tblMarketSnapshotEntityPreference>("tblMarketSnapshotEntityPreferences");
-                }
-                return _tblMarketSnapshotEntityPreferences;
-            }
-        }
-        private ObjectSet<tblMarketSnapshotEntityPreference> _tblMarketSnapshotEntityPreferences;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<tblMarketSnapshotGroupPreference> tblMarketSnapshotGroupPreferences
         {
             get
@@ -198,6 +182,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<COMMODITY_FORECASTS> _COMMODITY_FORECASTS;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<tblMarketSnapshotEntityPreference> tblMarketSnapshotEntityPreference
+        {
+            get
+            {
+                if ((_tblMarketSnapshotEntityPreference == null))
+                {
+                    _tblMarketSnapshotEntityPreference = base.CreateObjectSet<tblMarketSnapshotEntityPreference>("tblMarketSnapshotEntityPreference");
+                }
+                return _tblMarketSnapshotEntityPreference;
+            }
+        }
+        private ObjectSet<tblMarketSnapshotEntityPreference> _tblMarketSnapshotEntityPreference;
 
         #endregion
         #region AddTo Methods
@@ -224,14 +224,6 @@ namespace GreenField.DAL
         public void AddTotblHoldingsDatas(tblHoldingsData tblHoldingsData)
         {
             base.AddObject("tblHoldingsDatas", tblHoldingsData);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the tblMarketSnapshotEntityPreferences EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddTotblMarketSnapshotEntityPreferences(tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference)
-        {
-            base.AddObject("tblMarketSnapshotEntityPreferences", tblMarketSnapshotEntityPreference);
         }
     
         /// <summary>
@@ -264,6 +256,14 @@ namespace GreenField.DAL
         public void AddToCOMMODITY_FORECASTS(COMMODITY_FORECASTS cOMMODITY_FORECASTS)
         {
             base.AddObject("COMMODITY_FORECASTS", cOMMODITY_FORECASTS);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the tblMarketSnapshotEntityPreference EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddTotblMarketSnapshotEntityPreference(tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference)
+        {
+            base.AddObject("tblMarketSnapshotEntityPreference", tblMarketSnapshotEntityPreference);
         }
 
         #endregion
@@ -875,25 +875,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="snapshotPreferenceId">No Metadata Documentation available.</param>
-        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(Nullable<global::System.Int32> snapshotPreferenceId)
-        {
-            ObjectParameter snapshotPreferenceIdParameter;
-            if (snapshotPreferenceId.HasValue)
-            {
-                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", snapshotPreferenceId);
-            }
-            else
-            {
-                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", snapshotPreferenceIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userId">No Metadata Documentation available.</param>
         /// <param name="snapshotname">No Metadata Documentation available.</param>
         /// <param name="snapshotpreferenceid">No Metadata Documentation available.</param>
@@ -935,20 +916,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="snapshotPreferenceId">No Metadata Documentation available.</param>
         /// <param name="updateXML">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketPerformanceSnapshot(Nullable<global::System.Int32> snapshotPreferenceId, global::System.String updateXML)
+        public ObjectResult<Nullable<global::System.Int32>> UpdateMarketPerformanceSnapshot(global::System.String updateXML)
         {
-            ObjectParameter snapshotPreferenceIdParameter;
-            if (snapshotPreferenceId.HasValue)
-            {
-                snapshotPreferenceIdParameter = new ObjectParameter("snapshotPreferenceId", snapshotPreferenceId);
-            }
-            else
-            {
-                snapshotPreferenceIdParameter = new ObjectParameter("snapshotPreferenceId", typeof(global::System.Int32));
-            }
-    
             ObjectParameter updateXMLParameter;
             if (updateXML != null)
             {
@@ -959,7 +929,26 @@ namespace GreenField.DAL
                 updateXMLParameter = new ObjectParameter("updateXML", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketPerformanceSnapshot", snapshotPreferenceIdParameter, updateXMLParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateMarketPerformanceSnapshot", updateXMLParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="snapshotPreferenceId">No Metadata Documentation available.</param>
+        public ObjectResult<MarketSnapshotPreference> GetMarketSnapshotPreference(Nullable<global::System.Int32> snapshotPreferenceId)
+        {
+            ObjectParameter snapshotPreferenceIdParameter;
+            if (snapshotPreferenceId.HasValue)
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", snapshotPreferenceId);
+            }
+            else
+            {
+                snapshotPreferenceIdParameter = new ObjectParameter("SnapshotPreferenceId", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<MarketSnapshotPreference>("GetMarketSnapshotPreference", snapshotPreferenceIdParameter);
         }
 
         #endregion
@@ -2564,7 +2553,8 @@ namespace GreenField.DAL
         /// <param name="entityName">Initial value of the EntityName property.</param>
         /// <param name="entityOrder">Initial value of the EntityOrder property.</param>
         /// <param name="entityType">Initial value of the EntityType property.</param>
-        public static tblMarketSnapshotEntityPreference CreatetblMarketSnapshotEntityPreference(global::System.Int32 entityPreferenceId, global::System.Int32 groupPreferenceId, global::System.String entityName, global::System.Int32 entityOrder, global::System.String entityType)
+        /// <param name="entityId">Initial value of the EntityId property.</param>
+        public static tblMarketSnapshotEntityPreference CreatetblMarketSnapshotEntityPreference(global::System.Int32 entityPreferenceId, global::System.Int32 groupPreferenceId, global::System.String entityName, global::System.Int32 entityOrder, global::System.String entityType, global::System.String entityId)
         {
             tblMarketSnapshotEntityPreference tblMarketSnapshotEntityPreference = new tblMarketSnapshotEntityPreference();
             tblMarketSnapshotEntityPreference.EntityPreferenceId = entityPreferenceId;
@@ -2572,6 +2562,7 @@ namespace GreenField.DAL
             tblMarketSnapshotEntityPreference.EntityName = entityName;
             tblMarketSnapshotEntityPreference.EntityOrder = entityOrder;
             tblMarketSnapshotEntityPreference.EntityType = entityType;
+            tblMarketSnapshotEntityPreference.EntityId = entityId;
             return tblMarketSnapshotEntityPreference;
         }
 
@@ -2724,6 +2715,102 @@ namespace GreenField.DAL
         private global::System.String _EntityType;
         partial void OnEntityTypeChanging(global::System.String value);
         partial void OnEntityTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String EntityId
+        {
+            get
+            {
+                return _EntityId;
+            }
+            set
+            {
+                OnEntityIdChanging(value);
+                ReportPropertyChanging("EntityId");
+                _EntityId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("EntityId");
+                OnEntityIdChanged();
+            }
+        }
+        private global::System.String _EntityId;
+        partial void OnEntityIdChanging(global::System.String value);
+        partial void OnEntityIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeType
+        {
+            get
+            {
+                return _EntityNodeType;
+            }
+            set
+            {
+                OnEntityNodeTypeChanging(value);
+                ReportPropertyChanging("EntityNodeType");
+                _EntityNodeType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeType");
+                OnEntityNodeTypeChanged();
+            }
+        }
+        private global::System.String _EntityNodeType;
+        partial void OnEntityNodeTypeChanging(global::System.String value);
+        partial void OnEntityNodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeValueCode
+        {
+            get
+            {
+                return _EntityNodeValueCode;
+            }
+            set
+            {
+                OnEntityNodeValueCodeChanging(value);
+                ReportPropertyChanging("EntityNodeValueCode");
+                _EntityNodeValueCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeValueCode");
+                OnEntityNodeValueCodeChanged();
+            }
+        }
+        private global::System.String _EntityNodeValueCode;
+        partial void OnEntityNodeValueCodeChanging(global::System.String value);
+        partial void OnEntityNodeValueCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeValueName
+        {
+            get
+            {
+                return _EntityNodeValueName;
+            }
+            set
+            {
+                OnEntityNodeValueNameChanging(value);
+                ReportPropertyChanging("EntityNodeValueName");
+                _EntityNodeValueName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeValueName");
+                OnEntityNodeValueNameChanged();
+            }
+        }
+        private global::System.String _EntityNodeValueName;
+        partial void OnEntityNodeValueNameChanging(global::System.String value);
+        partial void OnEntityNodeValueNameChanged();
 
         #endregion
     
@@ -5710,6 +5797,102 @@ namespace GreenField.DAL
         private global::System.String _EntityType;
         partial void OnEntityTypeChanging(global::System.String value);
         partial void OnEntityTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityId
+        {
+            get
+            {
+                return _EntityId;
+            }
+            set
+            {
+                OnEntityIdChanging(value);
+                ReportPropertyChanging("EntityId");
+                _EntityId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityId");
+                OnEntityIdChanged();
+            }
+        }
+        private global::System.String _EntityId;
+        partial void OnEntityIdChanging(global::System.String value);
+        partial void OnEntityIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeType
+        {
+            get
+            {
+                return _EntityNodeType;
+            }
+            set
+            {
+                OnEntityNodeTypeChanging(value);
+                ReportPropertyChanging("EntityNodeType");
+                _EntityNodeType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeType");
+                OnEntityNodeTypeChanged();
+            }
+        }
+        private global::System.String _EntityNodeType;
+        partial void OnEntityNodeTypeChanging(global::System.String value);
+        partial void OnEntityNodeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeValueCode
+        {
+            get
+            {
+                return _EntityNodeValueCode;
+            }
+            set
+            {
+                OnEntityNodeValueCodeChanging(value);
+                ReportPropertyChanging("EntityNodeValueCode");
+                _EntityNodeValueCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeValueCode");
+                OnEntityNodeValueCodeChanged();
+            }
+        }
+        private global::System.String _EntityNodeValueCode;
+        partial void OnEntityNodeValueCodeChanging(global::System.String value);
+        partial void OnEntityNodeValueCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String EntityNodeValueName
+        {
+            get
+            {
+                return _EntityNodeValueName;
+            }
+            set
+            {
+                OnEntityNodeValueNameChanging(value);
+                ReportPropertyChanging("EntityNodeValueName");
+                _EntityNodeValueName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("EntityNodeValueName");
+                OnEntityNodeValueNameChanged();
+            }
+        }
+        private global::System.String _EntityNodeValueName;
+        partial void OnEntityNodeValueNameChanging(global::System.String value);
+        partial void OnEntityNodeValueNameChanged();
 
         #endregion
     }

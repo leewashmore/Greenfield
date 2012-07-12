@@ -752,8 +752,9 @@
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
-					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -792,7 +793,15 @@
 						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
 					</FunctionImport>
 					<FunctionImport Name="usp_RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-					<Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
@@ -1108,21 +1117,6 @@
 					<Property Type="Decimal" Name="MARKET_CAPITALIZATION" Nullable="true" Precision="18" Scale="0" />
 					<Property Type="Decimal" Name="ENTERPRISE_VALUE" Nullable="true" Precision="18" Scale="0" />
 				</ComplexType>
-				<ComplexType Name="FinancialStatementData">
-					<Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
-					<Property Type="Int32" Name="Data_ID" Nullable="false" />
-					<Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
-					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
-					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
-					<Property Type="String" Name="AMOUNT_TYPE" Nullable="true" MaxLength="1" />
-					<Property Type="String" Name="PERIOD" Nullable="true" MaxLength="4" />
-					<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
-					<Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
-					<Property Type="Int32" Name="DECIMALS" Nullable="false" />
-					<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-					<Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
-					<Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
-				</ComplexType>
 				<ComplexType Name="ConsensusEstimateDetailedData">
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
 					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
@@ -1270,6 +1264,21 @@
 					<Property Type="String" Name="FINANCIAL" Nullable="true" />
 					<Property Type="String" Name="VALUATION" Nullable="true" />
 				</ComplexType>
+        <ComplexType Name="FinancialStatementData">
+          <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Data_ID" Nullable="false" />
+          <Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="PERIOD" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
+        </ComplexType>
 
 
 				<ComplexType Name="ConsensusEstimateValuation" >
@@ -1546,25 +1555,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
-								<ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
-								<ScalarProperty Name="Data_ID" ColumnName="Data_ID" />
-								<ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
-								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-								<ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
-								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-								<ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
 					<EntitySetMapping Name="tblCETargetPrices">
 						<EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
 							<MappingFragment StoreEntitySet="tblCETargetPrice">
@@ -1616,6 +1606,25 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+                <ScalarProperty Name="Data_ID" ColumnName="Data_ID" />
+                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
 					<FunctionImportMapping FunctionImportName="GetConsensusEstimateData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimateData">
 						<ResultMapping>
 							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateMedianData">

@@ -733,6 +733,7 @@ namespace GreenField.LoginModule.ViewModel
                     {
                         if (result != null)
                         {
+                            HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText);
                             if ((bool)result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
                         }
                         else
