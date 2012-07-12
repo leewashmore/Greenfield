@@ -2148,8 +2148,15 @@ namespace GreenField.Web.Services
                         entry = new PerformanceGraphData();
                         entry.PortfolioID = fundSelectionData.PortfolioId;
                         entry.BenchmarkID = benchmarkID;
-                        entry.BenchmarkPerformance = attributionDatafor1D.Select(t => t.ADJ_BM1_RC_EXRTN_1D).First();
-                        entry.PortfolioPerformance = (attributionDatafor1D.Select(t => t.ADJ_RTN_POR_RC_TWR_1D)).First();
+                        Decimal? sumPerformanceWeight = 0;
+                        Decimal? sumBenchmarkWeight = 0;
+                        for (int i = 0; i <= attributionDatafor1D.Count - 1; i++)
+                        {
+                            sumPerformanceWeight = sumPerformanceWeight + attributionDatafor1D[i].ADJ_RTN_POR_RC_TWR_1D;
+                            sumBenchmarkWeight = sumBenchmarkWeight + attributionDatafor1D[i].ADJ_BM1_RC_EXRTN_1D;                        
+                        }
+                        entry.BenchmarkPerformance = sumBenchmarkWeight;
+                        entry.PortfolioPerformance = sumPerformanceWeight;
                         entry.EffectiveDate = effectiveDate;
                         result.Add(entry);
                         break;
@@ -2330,6 +2337,8 @@ namespace GreenField.Web.Services
 
         private void FetchDataPerformanceGraph(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates)
         {
+            Decimal? sumPerformanceWeight = 0;
+            Decimal? sumBenchmarkWeight = 0;
             foreach (DateTime d in listOfEffectiveDates)
             {
 
@@ -2344,10 +2353,15 @@ namespace GreenField.Web.Services
                 if (attributionData.Count == 0 || attributionData == null)
                     continue;
                 PerformanceGraphData  entry = new PerformanceGraphData();
+                for (int i = 0; i <= attributionData.Count - 1; i++)
+                {
+                    sumPerformanceWeight = sumPerformanceWeight + attributionData[i].ADJ_RTN_POR_RC_TWR_1D;
+                    sumBenchmarkWeight = sumBenchmarkWeight + attributionData[i].ADJ_BM1_RC_EXRTN_1D;
+                }
                 entry.PortfolioID = fundSelectionData.PortfolioId;
                 entry.BenchmarkID = benchmarkID;
-                entry.BenchmarkPerformance = attributionData.Select(t => t.ADJ_BM1_RC_EXRTN_1D).First();
-                entry.PortfolioPerformance = attributionData.Select(t => t.ADJ_RTN_POR_RC_TWR_1D).First();
+                entry.BenchmarkPerformance = sumBenchmarkWeight;
+                entry.PortfolioPerformance = sumPerformanceWeight;
                 entry.EffectiveDate = d;
                 result.Add(entry);
             }        
@@ -2356,6 +2370,8 @@ namespace GreenField.Web.Services
 
         private void FetchDataPerformanceGraphforMTDVaules(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> listOfEffectiveDates)
         {
+            Decimal? sumPerformanceWeight = 0;
+            Decimal? sumBenchmarkWeight = 0;
             foreach (DateTime d in listOfEffectiveDates)
             {
                 if (Country == "NoFiltering")
@@ -2369,10 +2385,15 @@ namespace GreenField.Web.Services
                 if (attributionData.Count == 0 || attributionData == null)
                     continue;
                 PerformanceGraphData entry = new PerformanceGraphData();
+                for (int i = 0; i <= attributionData.Count - 1; i++)
+                {
+                    sumPerformanceWeight = sumPerformanceWeight + attributionData[i].ADJ_RTN_POR_RC_TWR_MTD;
+                    sumBenchmarkWeight = sumBenchmarkWeight + attributionData[i].ADJ_BM1_RC_EXRTN_MTD;
+                }
                 entry.PortfolioID = fundSelectionData.PortfolioId;
                 entry.BenchmarkID = benchmarkID;
-                entry.BenchmarkPerformance = (attributionData.Select(t => t.ADJ_BM1_RC_EXRTN_MTD)).First();
-                entry.PortfolioPerformance = (attributionData.Select(t => t.ADJ_RTN_POR_RC_TWR_MTD)).First();
+                entry.BenchmarkPerformance = sumBenchmarkWeight;
+                entry.PortfolioPerformance = sumPerformanceWeight;
                 entry.EffectiveDate = d;
                 result.Add(entry);
             }
@@ -2381,7 +2402,7 @@ namespace GreenField.Web.Services
 
         private void FetchDataPerformanceGraph1YValues(String Country, List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDatafor1Y, ref List<PerformanceGraphData> result, String benchmarkID, PortfolioSelectionData fundSelectionData, List<DateTime> StubDates, List<Decimal?> eportfolioReturns, List<Decimal?> ebenchmarkReturns)
         {
-            foreach (DateTime d in StubDates)
+                      foreach (DateTime d in StubDates)
                         {
                             if (Country == "NoFiltering")
                             {
@@ -2394,7 +2415,11 @@ namespace GreenField.Web.Services
                             if (attributionDatafor1Y.Count == 0 || attributionDatafor1Y == null)
                                 continue;
 
-                            Decimal? portfolioReturn = (attributionDatafor1Y.Select(t => t.ADJ_RTN_POR_RC_TWR_1D)).First();
+                            Decimal? portfolioReturn = 0;
+                            for (int i = 0; i <= attributionDatafor1Y.Count - 1; i++)
+                            {
+                                portfolioReturn = portfolioReturn + attributionDatafor1Y[i].ADJ_RTN_POR_RC_TWR_1D;
+                            }                           
                             portfolioReturn = (portfolioReturn / 100) + 1;
                             eportfolioReturns.Add(portfolioReturn);
                             Decimal? mul = 1;
@@ -2404,7 +2429,11 @@ namespace GreenField.Web.Services
                             }
                             mul = (mul - 1) * 100;
 
-                            Decimal? benchmarkReturn = (attributionDatafor1Y.Select(t => t.ADJ_BM1_RC_EXRTN_1D)).First();
+                            Decimal? benchmarkReturn = 0;
+                            for (int i = 0; i <= attributionDatafor1Y.Count - 1; i++)
+                            {
+                                benchmarkReturn = benchmarkReturn + attributionDatafor1Y[i].ADJ_BM1_RC_EXRTN_1D;
+                            }                                
                             benchmarkReturn = (benchmarkReturn / 100) + 1;
                             ebenchmarkReturns.Add(benchmarkReturn);
                             Decimal? mulBenchmark = 1;
