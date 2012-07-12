@@ -18,6 +18,7 @@ begin
 end
 
 GO
+
 CREATE PROCEDURE [dbo].[GetConsensusEstimateData] @Issuer_Id nvarchar(20),
 @periodType nvarchar(10), @currency nvarchar(10)
 	
@@ -83,7 +84,7 @@ END
 GO
 
 --indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00038'
+declare @CurrentScriptVersion as nvarchar(100) = '00049'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
 
