@@ -29,6 +29,7 @@
     <MetadataFile FileName="ExternalResearchOperations2.xsd" MetadataType="Schema" ID="90422f6e-b75b-4f1f-9b81-83f9623be1ae" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="ExternalResearchOperations3.xsd" MetadataType="Schema" ID="f0d560d5-130a-47e8-a0b1-aaaf255d753e" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="ExternalResearchOperations4.xsd" MetadataType="Schema" ID="d90dc281-d2bc-4e3b-b72e-86b0b6f456db" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" />
+    <MetadataFile FileName="ExternalResearchOperations8.xsd" MetadataType="Schema" ID="0a62bab0-4f01-4c76-ad6d-6ccf9e52c745" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd8" />
     <MetadataFile FileName="ExternalResearchOperations5.xsd" MetadataType="Schema" ID="f9c89b5f-a8f5-4731-8d71-01900f28cf54" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd2" />
     <MetadataFile FileName="ExternalResearchOperations6.xsd" MetadataType="Schema" ID="3a0b8dde-986c-4913-ab3e-37195b4fd25f" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="ExternalResearchOperations.disco" MetadataType="Disco" ID="2f77d71a-4363-4067-aa23-321fdab5785d" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?disco" />

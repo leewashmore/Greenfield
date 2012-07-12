@@ -64,6 +64,7 @@
     <Compile Include="DataContracts\ChartExtensionData.cs" />
     <Compile Include="DataContracts\ConsensusEstimateMedian.cs" />
     <Compile Include="DataContracts\ConsensusEstimatesSummaryData.cs" />
+    <Compile Include="DataContracts\ConsensusEstimatesValuations.cs" />
     <Compile Include="DataContracts\CountrySelectionData.cs" />
     <Compile Include="DataContracts\EntitySelectionData.cs" />
     <Compile Include="DataContracts\Enumerations.cs" />

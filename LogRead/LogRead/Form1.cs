@@ -24,8 +24,8 @@ namespace LogRead
             this.dgLogDetails.Columns[0].ValueType = typeof(Boolean);
             this.dgLogDetails.Columns[1].ValueType = typeof(String);
             this.dgLogDetails.Columns[2].ValueType = typeof(String);
-            this.dgLogDetails.Columns[3].ValueType = typeof(Boolean);
-            this.dgLogDetails.Columns[4].ValueType = typeof(String);
+            this.dgLogDetails.Columns[3].ValueType = typeof(String);
+            this.dgLogDetails.Columns[4].ValueType = typeof(Boolean);
             this.dgLogDetails.Columns[5].ValueType = typeof(String);
             this.dgLogDetails.Columns[6].ValueType = typeof(String);
             this.dgLogDetails.Columns[7].ValueType = typeof(String);
@@ -34,6 +34,7 @@ namespace LogRead
             this.dgLogDetails.Columns[10].ValueType = typeof(String);
             this.dgLogDetails.Columns[11].ValueType = typeof(String);
             this.dgLogDetails.Columns[12].ValueType = typeof(String);
+            this.dgLogDetails.Columns[13].ValueType = typeof(String);
 
             this.dgLogDetails.DataError += (se, e) =>
                 {
@@ -144,7 +145,9 @@ namespace LogRead
                             , Convert.ToInt32(textLine.Substring(17, 2)), Convert.ToInt32(textLine.Substring(20, 3))).ToString("dd/MM/yyyy HH:mm:ss:fff");
 
                         subString = textLine.Substring(24, textLine.Length - 24);
-                        logDetail.LogCategory = textLine.Substring(24, subString.IndexOf("?") - 1).Trim();
+                        int breakerIndex = subString.IndexOf("?");
+
+                        logDetail.LogCategory = textLine.Substring(24, (subString.IndexOf("?") == -1 ? subString.IndexOf(" ") : subString.IndexOf("?") - 1)).Trim();
 
                         logDetail.LogUserIsLogged = subString.IndexOf("|User[(") > 0;
 
@@ -264,6 +267,19 @@ namespace LogRead
                                 logDetail.LogRoleDetail = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
                         }
 
+                        if (subString.IndexOf("|TimeStamp[(").Equals(-1))
+                        {
+                            logDetail.LogTimeStamp = "N/A";
+                        }
+                        else
+                        {
+                            string logSubString = subString.Substring(subString.IndexOf("|TimeStamp[("), subString.Length - subString.IndexOf("|TimeStamp[("));
+                            if (logSubString.IndexOf(")]").Equals(-1))
+                                logDetail.LogTimeStamp = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.Length - logSubString.IndexOf("[(") - 1);
+                            else
+                                logDetail.LogTimeStamp = logSubString.Substring(logSubString.IndexOf("[(") + 2, logSubString.IndexOf(")]") - logSubString.IndexOf("[(") - 2);
+                        }
+
                         logdetails.Add(logDetail);
 
 
@@ -290,7 +306,7 @@ namespace LogRead
             BindingSource bindingSource = new BindingSource();
             //bindingSource.SupportsFiltering = true;
             this.dgLogDetails.DataSource = bindingSource;
-            bindingSource.DataSource = logdetails.OrderByDescending(record => record.LogDateTime).ToList().ToDataTable().AsDataView();
+            bindingSource.DataSource = logdetails.OrderByDescending(record => record.LogTimeStamp).ToList().ToDataTable().AsDataView();
             //foreach (var item in logdetails.OrderByDescending(record => record.LogDateTime).ToList().ToDataTable().AsDataView())
             //{
             //    bindingSource.Add(item);

@@ -108,4 +108,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
+  <xs:complexType name="ArrayOfConsensusEstimatesValuations">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimatesValuations" nillable="true" type="tns:ArrayOfConsensusEstimatesValuations" />
+  <xs:complexType name="ConsensusEstimatesValuations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DividendYield" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PRevenue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="P_BV" type="xs:decimal" />
+      <xs:element minOccurs="0" name="P_CE" type="xs:decimal" />
+      <xs:element minOccurs="0" name="P_E" type="xs:decimal" />
+      <xs:element minOccurs="0" name="P_EGrowth" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
 </xs:schema>

@@ -136,7 +136,11 @@
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadChart x:Name="chPerformanceGadget" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}">
-                            <telerik:RadChart.DefaultView>
+                                <telerik:RadChart.PaletteBrushes>
+                                    <SolidColorBrush Color="#213671"/>
+                                    <SolidColorBrush Color="#9F1D21"/>
+                                </telerik:RadChart.PaletteBrushes>
+                                <telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView ChartLegendPosition="Right">                                   
                                     <telerik:ChartDefaultView.ChartArea>
                                         <telerik:ChartArea LegendName="chUnrealizedGainLossLegend" SmartLabelsEnabled="True" 

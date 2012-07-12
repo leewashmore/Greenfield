@@ -146,6 +146,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
@@ -224,13 +225,22 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations8.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />

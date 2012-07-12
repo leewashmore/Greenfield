@@ -6,7 +6,12 @@
       <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CurrencyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IndustryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IndustryName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SectorName" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IssuerReferenceData" nillable="true" type="tns:IssuerReferenceData" />

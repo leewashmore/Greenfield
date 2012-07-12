@@ -131,6 +131,7 @@
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
+    <Compile Include="Helpers\Export\PDFExporter.cs" />
     <Compile Include="Helpers\ExtendedDataWraper.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ConsensusEstimates\ViewModelValuations.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
@@ -202,6 +204,9 @@
     </Compile>
     <Compile Include="Views\ConsensusEstimates\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConsensusEstimates\ViewValuations.xaml.cs">
+      <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimateSummary.xaml.cs">
       <DependentUpon>ViewConsensusEstimateSummary.xaml</DependentUpon>
@@ -346,6 +351,10 @@
     <Page Include="Views\ConsensusEstimates\ViewTargetPrice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConsensusEstimates\ViewValuations.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewConsensusEstimateSummary.xaml">
       <SubType>Designer</SubType>
@@ -564,6 +573,9 @@
   <ItemGroup>
     <Resource Include="Images\MoveBackward.png" />
     <Resource Include="Images\MoveForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Flip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

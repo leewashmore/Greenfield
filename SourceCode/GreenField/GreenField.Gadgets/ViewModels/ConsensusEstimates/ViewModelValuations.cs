@@ -8,24 +8,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.Common.Helper;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.DataContracts;
 using Microsoft.Practices.Prism.Events;
 using GreenField.Common;
-using GreenField.Gadgets.Models;
-using System.Collections.Generic;
+using Microsoft.Practices.Prism.ViewModel;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using GreenField.Gadgets.Models;
 using GreenField.Gadgets.Helpers;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelEstimates : NotificationObject
+    public class ViewModelValuations : NotificationObject
     {
-        #region PrivateVariables
+        #region PrivateFields
 
         /// <summary>
         /// Instance of Service Caller
@@ -36,11 +35,6 @@ namespace GreenField.Gadgets.ViewModels
         /// LoggerFacade
         /// </summary>
         private ILoggerFacade _logger;
-
-        /// <summary>
-        /// Selected Security
-        /// </summary>
-        private EntitySelectionData _entitySelectionData;
 
         /// <summary>
         /// Event Aggregator
@@ -57,6 +51,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public bool IsActive { get; set; }
 
+
         #endregion
 
         #region Constructor
@@ -64,8 +59,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="param">Dashboard Gadget Payload</param>
-        public ViewModelEstimates(DashboardGadgetParam param)
+        public ViewModelValuations(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
@@ -87,6 +81,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region PropertyDeclaration
 
+        /// <summary>
+        /// Selected Security
+        /// </summary>
         private EntitySelectionData _entitySelectionInfo;
         public EntitySelectionData EntitySelectionInfo
         {
@@ -94,9 +91,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return _entitySelectionInfo;
             }
-            set { _entitySelectionInfo = value; }
+            set
+            {
+                _entitySelectionInfo = value;
+                this.RaisePropertyChanged(() => this.EntitySelectionInfo);
+            }
         }
 
+        
         /// <summary>
         /// Pivoted Financial Information to be dispayed on grid
         /// </summary>
@@ -115,26 +117,15 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Unpivoted ConsensusEstimatesDetail Information received from stored procedure
+        /// ConsensusEstimates Detailed Info
         /// </summary>
-        private List<ConsensusEstimateMedian> _consensusEstimateDetailInfo;
-        public List<ConsensusEstimateMedian> ConsensusEstimateDetailInfo
+        private List<ConsensusEstimatesValuations> _consensusEstimateDetailInfo;
+        public List<ConsensusEstimatesValuations> ConsensusEstimateDetailInfo
         {
-            get
-            {
-                if (_consensusEstimateDetailInfo == null)
-                    _consensusEstimateDetailInfo = new List<ConsensusEstimateMedian>();
-                return _consensusEstimateDetailInfo;
-            }
-            set
-            {
-                if (_consensusEstimateDetailInfo != value)
-                {
-                    _consensusEstimateDetailInfo = value;
-                    SetConsensusEstimateMedianDisplayInfo();
-                }
-            }
+            get { return _consensusEstimateDetailInfo; }
+            set { _consensusEstimateDetailInfo = value; }
         }
+        
 
         #region Busy Indicator
         private bool _busyIndicatorIsBusy;
@@ -148,6 +139,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Content of Busy Indicator
+        /// </summary>
         private string _busyIndicatorContent;
         public string BusyIndicatorContent
         {
@@ -310,55 +304,13 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #endregion
-
-        #region HelperMethods
-
-        /// <summary>
-        /// Arrange data according to Period Columns
-        /// </summary>
-        public void SetConsensusEstimateMedianDisplayInfo()
-        {
-            BusyIndicatorNotification(true, "Updating information based on selected preference");
-
-            PeriodRecord periodRecord = new PeriodRecord();
-            ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
-                PeriodColumns.SetPeriodRecord(Iterator));
-            PeriodRecord = periodRecord;
-            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-
-            BusyIndicatorNotification();
-        }
-
-        /// <summary>
-        /// Busy Indicator Notification
-        /// </summary>
-        /// <param name="showBusyIndicator"></param>
-        /// <param name="message"></param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
-
-        /// <summary>
-        /// Service Call method
-        /// </summary>
-        private void RetrieveConsensusEstimatesMedianData()
-        {
-            _dbInteractivity.RetrieveConsensusEstimatesMedianData(IssuerReferenceInfo.IssuerId,
-                                                                SelectedPeriodType,
-                                                                SelectedCurrency,
-                                                                RetrieveConsensusEstimateDataCallbackMethod);
-        }
 
         #endregion
 
         #region EventHandlers
 
         /// <summary>
-        /// Security Change event Handler
+        /// Security Change Event
         /// </summary>
         /// <param name="result"></param>
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
@@ -390,13 +342,13 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        
+
         #endregion
 
         #region Callback Methods
 
         /// <summary>
-        /// Issuer Reference Data callback method
+        /// IssuerReferenceData callback Method
         /// </summary>
         /// <param name="result"></param>
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
@@ -425,10 +377,10 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Consensus Estimate Data callback Method
+        /// ConsensusEstimateData callback Method
         /// </summary>
         /// <param name="result"></param>
-        public void RetrieveConsensusEstimateDataCallbackMethod(List<ConsensusEstimateMedian> result)
+        public void RetrieveConsensusEstimateDataCallbackMethod(List<ConsensusEstimatesValuations> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -457,11 +409,54 @@ namespace GreenField.Gadgets.ViewModels
         #region EventsUnsubscribe
 
         /// <summary>
-        /// Unsubscribe Event
+        /// Event Unsubscribe
         /// </summary>
         public void Dispose()
         {
             //Implement Dispose Here
+        }
+
+        #endregion
+
+        #region HelperMethods
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void SetConsensusEstimateMedianDisplayInfo()
+        {
+            BusyIndicatorNotification(true, "Updating information based on selected preference");
+
+            PeriodRecord periodRecord = new PeriodRecord();
+            ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
+                PeriodColumns.SetPeriodRecord(Iterator));
+            PeriodRecord = periodRecord;
+            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+
+            BusyIndicatorNotification();
+        }
+
+        /// <summary>
+        /// Busy Indicator Notification
+        /// </summary>
+        /// <param name="showBusyIndicator"></param>
+        /// <param name="message"></param>
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+        /// <summary>
+        /// Web Service Call Method
+        /// </summary>
+        private void RetrieveConsensusEstimatesMedianData()
+        {
+            _dbInteractivity.RetrieveConsensusEstimatesValuationsData(IssuerReferenceInfo.IssuerId,
+                                                                SelectedPeriodType,
+                                                                SelectedCurrency,
+                                                                RetrieveConsensusEstimateDataCallbackMethod);
         }
 
         #endregion

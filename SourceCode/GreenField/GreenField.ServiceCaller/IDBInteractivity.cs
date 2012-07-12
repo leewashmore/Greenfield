@@ -126,7 +126,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country, Action<List<PerformanceGridData>> callback);
 
-        void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<AttributionData>> callback);
+        void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String nodeName, Action<List<AttributionData>> callback);
 
         void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<HeatMapData>> callback);
 
@@ -198,10 +198,17 @@ namespace GreenField.ServiceCaller
 
         void RetrieveConsensusEstimatesMedianData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateMedian>> callback);
 
+        void RetrieveConsensusEstimatesValuationsData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback);
+
+
         #endregion
         
 
         void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback);
+
+        void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
+
+        void RetrieveRatioSecurityReferenceData(ScatterGraphContext context, IssuerReferenceData issuerDetails, Action<List<GF_SECURITY_BASEVIEW>> callback);
         #endregion
 
         #region Internal Research

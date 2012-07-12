@@ -59,8 +59,8 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
-                //new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
+            this.cctrDashboardContent.Content = 
+                new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -71,13 +71,19 @@ namespace GreenField.DashBoardModule.Views.Screening
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = false;
+            if (control != null)
+            {
+                control.IsActive = false; 
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            control.IsActive = true;
+            if (control != null)
+            {
+                control.IsActive = true; 
+            }
         }
     }
 }
