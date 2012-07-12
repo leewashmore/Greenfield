@@ -17,18 +17,28 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-
-    <Grid x:Name="LayoutRoot" Background="White">
+    
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <!--button to flip the gadget-->
             <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
                                        Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
                 <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </telerik:RadButton>
+                <!--button to export the grid to excel-->
+                <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
+                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
+                    <Button.Content>
+                        <Image Source="../Images/ExportExcel.png" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
         </Grid>
 
 
@@ -72,7 +82,6 @@
             
             <!--grid containing data for the gadget-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView Name="dgRegionBreakdown" 
                                          Background="White"
                                          AutoGenerateColumns="False" 
@@ -99,7 +108,8 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         RowLoaded="dgRegionBreakdown_RowLoaded">
+                                         RowLoaded="dgRegionBreakdown_RowLoaded"
+                                          ElementExporting="dgRegionBreakdown_ElementExporting">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" MinWidth="150"/>
@@ -129,11 +139,9 @@
                             <telerik:GroupDescriptor Member="Region" SortDirection="Ascending"/>
                             <telerik:GroupDescriptor Member="Country" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
-
                     </telerik:RadGridView>
-                </telerik:RadBusyIndicator>
             </Border>
-
         </Grid>
     </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

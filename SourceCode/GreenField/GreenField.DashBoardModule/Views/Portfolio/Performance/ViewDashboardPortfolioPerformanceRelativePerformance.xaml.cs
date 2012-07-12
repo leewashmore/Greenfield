@@ -68,16 +68,14 @@ namespace GreenField.DashboardModule.Views
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-                
+            {                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_COUNTRY_ACTIVE_POSITION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewRelativePerformanceCountryActivePosition(new ViewModelRelativePerformanceCountryActivePosition(param))
             });
                         
             this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-                
+            {                
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_SECTOR_ACTIVE_POSITION, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewRelativePerformanceSectorActivePosition(new ViewModelRelativePerformanceSectorActivePosition(param))

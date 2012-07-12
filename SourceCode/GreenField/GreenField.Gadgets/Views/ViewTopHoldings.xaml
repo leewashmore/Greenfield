@@ -15,25 +15,35 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid Grid.Row="0">
-                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top">
+                <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
                 <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
-                </StackPanel>
-            </Grid>
+
+            <!--button to export the grid to excel-->
+                <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
+                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
+                    <Button.Content>
+                        <Image Source="../Images/ExportExcel.png" />
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
         <Grid Grid.Row="1">
-            <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                 <!--grid containing data for the gadget-->
                 <telerik:RadGridView Name="dgTopHoldings" 
                                      AutoGenerateColumns="False" 
                                      ItemsSource="{Binding TopHoldingsInfo}" 
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 
+                                     ElementExporting="dgTopHoldings_ElementExporting"
                                      CanUserInsertRows="False" 
                                      telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" 
@@ -90,8 +100,8 @@
                         </telerik:GridViewDataColumn>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
-            </telerik:RadBusyIndicator>
             </Grid>
     </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
 

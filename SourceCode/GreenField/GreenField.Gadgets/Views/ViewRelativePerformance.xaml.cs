@@ -378,7 +378,7 @@ namespace GreenField.Gadgets.Views
 
             if (e.RelativePerformanceCountryNameInfo != null)
             {
-                ScrollViewer svc = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,VerticalScrollBarVisibility = ScrollBarVisibility.Hidden};
+                ScrollViewer svc = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,VerticalScrollBarVisibility = ScrollBarVisibility.Auto};
                 Grid grd = new Grid() {ShowGridLines = false };
                 grd.UseLayoutRounding = true;
                 int maxRows = GetMaxRows(e);

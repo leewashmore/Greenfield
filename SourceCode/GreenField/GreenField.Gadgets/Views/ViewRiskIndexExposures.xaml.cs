@@ -12,6 +12,9 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.ServiceCaller;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
@@ -42,6 +45,15 @@ namespace GreenField.Gadgets.Views
                     DataContextViewModelTopHoldings.IsActive = _isActive;
             }
         }
+
+        /// <summary>
+        /// Export Types to be passed to the ExportOptions class
+        /// </summary>
+        private static class ExportTypes
+        {
+            public const string HOLDINGS_RELATIVE_RISK_CHART = "Relative Risk";
+            public const string HOLDINGS_RELATIVE_RISK_GRID = "Relative Risk";
+        }
         #endregion
 
         #region Constructor
@@ -56,25 +68,86 @@ namespace GreenField.Gadgets.Views
            // dataContextSource.RiskIndexExposuresDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRiskIndexExposuresLoadedevent);
             this.DataContextViewModelTopHoldings = dataContextSource;
         }
-        #endregion
+        #endregion        
 
-        #region Event
+        #region Method to Flip
         /// <summary>
-        ///  event to handle RadBusyIndicator
+        /// Flipping between Grid & PieChart
+        /// Using the method FlipItem in class Flipper.cs
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
-        void DataContextSourceRiskIndexExposuresLoadedevent(DataRetrievalProgressIndicatorEventArgs e)
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
-            if (e.ShowBusy)
+            if (this.chartRelativerisk.Visibility == System.Windows.Visibility.Visible)
             {
-                //this.chartBusyIndicator.IsBusy = true;
+                Flipper.FlipItem(this.chartRelativerisk, this.dgRelativeRisk);
             }
             else
             {
-                //this.chartBusyIndicator.IsBusy = false;
+                Flipper.FlipItem(this.dgRelativeRisk, this.chartRelativerisk);
             }
         }
         #endregion
+
+        #region Export To Excel
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.chartRelativerisk.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {                   
+                    new RadExportOptions()
+                    {
+                        ElementName = ExportTypes.HOLDINGS_RELATIVE_RISK_CHART,
+                        Element = this.chartRelativerisk, 
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER 
+                    },                    
+                    
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo,
+                    "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                    childExportOptions.Show();
+                }
+
+                else
+                {
+                    if (this.dgRelativeRisk.Visibility == Visibility.Visible)
+                    {
+                        ChildExportOptions childExportOptions = new ChildExportOptions
+                    (new List<RadExportOptions>{new RadExportOptions() 
+                    {
+                        Element = this.dgRelativeRisk,
+                        ElementName = "Relative Risk Data",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    }}, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        childExportOptions.Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        private void dgRelativeRisk_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: true, aggregatedColumnIndex: new List<int> { 1, 2, 3 });
+        }
+        #endregion
+
+        private void dgRelativeRisk_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }  
 
         #region Dispose Method
         /// <summary>
@@ -83,7 +156,6 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             this.DataContextViewModelTopHoldings.Dispose();
-           // this.DataContextViewModelTopHoldings.RiskIndexExposuresDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRiskIndexExposuresLoadedevent);
             this.DataContextViewModelTopHoldings = null;
             this.DataContext = null;
         }
@@ -99,11 +171,8 @@ namespace GreenField.Gadgets.Views
                         Select(a => a.Value).FirstOrDefault());
                     (this.DataContext as ViewModelRiskIndexExposures).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.OrderByDescending(a => a.Value)).
                         Select(a => a.Value).FirstOrDefault());
-                    //int dataCount = (this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.Count;
-                    //if (dataCount != 0)
-                    //{
+                    
                     this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = 10;
-                    //}
                 }
             }
         }

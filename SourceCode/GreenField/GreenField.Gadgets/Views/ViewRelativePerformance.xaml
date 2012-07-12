@@ -99,7 +99,7 @@
                         <Image Source="../Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print">
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print"><!--Click="btnPrint_Click"-->
                         <Image Source="../Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnToggle" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -210,7 +210,7 @@
                                     <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:GridViewDataColumn.Footer>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}" TextAlignment="Right"/>
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}" TextAlignment="Right"/>  
                                 </telerik:GridViewDataColumn.Footer>
                             </telerik:GridViewDataColumn>
                         </telerik:RadGridView.Columns>

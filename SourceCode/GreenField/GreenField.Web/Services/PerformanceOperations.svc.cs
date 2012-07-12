@@ -1112,6 +1112,9 @@ namespace GreenField.Web.Services
                                                                                         t.POR_RC_MARKET_VALUE != 0 &&
                                                                                         t.COUNTRY != null &&
                                                                                         t.GICS_LVL1 != null).ToList();
+                if (data.Count.Equals(0))
+                    return result;
+
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in data)
                 {
                     result.Add(new RelativePerformanceSectorData()
@@ -1149,10 +1152,16 @@ namespace GreenField.Web.Services
                     return result;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<GF_PERF_DAILY_ATTRIBUTION> dailyData = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, null, null);
+                List<GF_PERF_DAILY_ATTRIBUTION> dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                   t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                   t.NODE_NAME == "Security ID" &&
+                                                                   t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.COUNTRY != null &&
+                                                                   t.GICS_LVL1 != null &&
+                                                                   t.SEC_INV_THEME == "EQUITY").ToList();
 
                 if (dailyData == null)
-                    return null;
+                    return result;
 
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
@@ -1261,12 +1270,54 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                List<GF_PERF_DAILY_ATTRIBUTION> data = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                #region Fetching data
+                if (countryID == null && sectorID == null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "Country" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+                                                                       t.AGG_LVL_1 != null).ToList();
+                }
+
+                else if (countryID == null && sectorID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                        t.NODE_NAME == "Country" &&
+                                                                        t.POR_RC_MARKET_VALUE != 0 &&
+                                                                        t.AGG_LVL_1 != null &&
+                                                                        t.GICS_LVL1 == sectorID).ToList();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "Country" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+                                                                       t.AGG_LVL_1 == countryID).ToList();
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "Country" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+                                                                       t.AGG_LVL_1 == countryID &&
+                                                                       t.GICS_LVL1 == sectorID).ToList();
+                } 
+                #endregion
+
+                if (data.Count.Equals(0))
+                    return result;
 
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
-                    countryCodes.Add(row.COUNTRY);
+                    countryCodes.Add(row.AGG_LVL_1);
                 }
                 countryCodes = countryCodes.Distinct().ToList();
 
@@ -1286,7 +1337,7 @@ namespace GreenField.Web.Services
                     decimal? BenchmarkWeight = 0;
 
                     record.Entity = countryCode.ToString();
-                    List<GF_PERF_DAILY_ATTRIBUTION> countrySpecificData = data.Where(row => row.COUNTRY == countryCode).ToList();
+                    List<GF_PERF_DAILY_ATTRIBUTION> countrySpecificData = data.Where(row => row.AGG_LVL_1 == countryCode).ToList();
 
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in countrySpecificData)
                     {
@@ -1341,15 +1392,59 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
+                List<GF_PERF_DAILY_ATTRIBUTION> data = new List<GF_PERF_DAILY_ATTRIBUTION>();
+                #region Fetching data
+                if (countryID == null && sectorID == null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "GICS Level 1" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+									                                   t.AGG_LVL_1_LONG_NAME != "-" &&
+                                                                       t.AGG_LVL_1_LONG_NAME != null).ToList();
+                }
+
+                else if (countryID == null && sectorID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t =>  t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                        t.NODE_NAME == "GICS Level 1" &&
+                                                                        t.POR_RC_MARKET_VALUE != 0 &&
+                                                                        t.AGG_LVL_1_LONG_NAME == sectorID).ToList();
+                }
+
+                else if (sectorID == null && countryID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "GICS Level 1" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+                                                                       t.AGG_LVL_1_LONG_NAME != "-" &&
+                                                                       t.AGG_LVL_1_LONG_NAME != null &&
+                                                                       t.COUNTRY == countryID).ToList();
+                }
+
+                else if (sectorID != null && countryID != null)
+                {
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                                                                       t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
+                                                                       t.NODE_NAME == "GICS Level 1" &&
+                                                                       t.POR_RC_MARKET_VALUE != 0 &&
+                                                                       t.AGG_LVL_1_LONG_NAME == sectorID &&
+                                                                       t.COUNTRY == countryID).ToList();
+                }
+                #endregion
+
+                if (data.Count.Equals(0))
+                    return result;
 
                 List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
                     sectorCodes.Add(new RelativePerformanceSectorData()
                     {
-                        SectorId = row.GICS_LVL1,
-                        SectorName = row.GICS_LVL1
+                        SectorId = row.AGG_LVL_1_LONG_NAME,
+                        SectorName = row.AGG_LVL_1_LONG_NAME
                     });
                 }
                 sectorCodes = sectorCodes.Distinct().ToList();
@@ -1371,7 +1466,7 @@ namespace GreenField.Web.Services
 
                     record.Entity = sector.SectorName.ToString();
 
-                    List<GF_PERF_DAILY_ATTRIBUTION> sectorSpecificData = data.Where(row => row.GICS_LVL1 == sector.SectorId).ToList();
+                    List<GF_PERF_DAILY_ATTRIBUTION> sectorSpecificData = data.Where(row => row.AGG_LVL_1_LONG_NAME == sector.SectorId).ToList();
 
                     foreach (GF_PERF_DAILY_ATTRIBUTION row in sectorSpecificData)
                     {
@@ -1428,6 +1523,9 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
+                if (data.Count.Equals(0))
+                    return result;
+
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
                     decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period));
@@ -1436,7 +1534,7 @@ namespace GreenField.Web.Services
 
                     result.Add(new RelativePerformanceActivePositionData()
                     {
-                        Entity = row.SEC_NAME,
+                        Entity = row.AGG_LVL_1_LONG_NAME,
                         EntityGroup = row.ISSUER_NAME,
                         MarketValue = row.POR_RC_MARKET_VALUE,
                         FundWeight = fundWeight,
@@ -1489,6 +1587,9 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 List<GF_PERF_DAILY_ATTRIBUTION> data = RetrieveRelativePerformanceDailyData(portfolioSelectionData, effectiveDate, countryID, sectorID);
 
+                if (data.Count.Equals(0))
+                    return result;
+
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
                     result.Add(new RelativePerformanceSecurityData()
@@ -1523,14 +1624,15 @@ namespace GreenField.Web.Services
         {
             DimensionEntitiesService.Entities entity = DimensionEntity;
             List<GF_PERF_DAILY_ATTRIBUTION> dailyData = new List<GF_PERF_DAILY_ATTRIBUTION>();
+            #region Fetching data
             if (country == null && sector == null)
             {
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
                                                                    t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY != null &&
-                                                                   t.GICS_LVL1 != null).ToList();
+                                                                   t.AGG_LVL_1_LONG_NAME != null &&
+                                                                   t.SEC_INV_THEME == "EQUITY").ToList();
             }
 
             else if (country == null && sector != null)
@@ -1539,7 +1641,8 @@ namespace GreenField.Web.Services
                                                                     t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                     t.NODE_NAME == "Security ID" &&
                                                                     t.POR_RC_MARKET_VALUE != 0 &&
-                                                                    t.COUNTRY != null &&
+                                                                    t.AGG_LVL_1_LONG_NAME != null &&
+                                                                    t.SEC_INV_THEME == "EQUITY" &&
                                                                     t.GICS_LVL1 == sector).ToList();
             }
 
@@ -1549,19 +1652,23 @@ namespace GreenField.Web.Services
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
                                                                    t.POR_RC_MARKET_VALUE != 0 &&
-                                                                   t.COUNTRY == country &&
-                                                                   t.GICS_LVL1 != null).ToList();
+                                                                   t.AGG_LVL_1_LONG_NAME != null &&
+                                                                   t.SEC_INV_THEME == "EQUITY" &&
+                                                                   t.COUNTRY == country).ToList();
             }
 
             else if (sector != null && country != null)
             {
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
-                                                                  t.NODE_NAME == "Security ID" &&
+                                                                   t.NODE_NAME == "Security ID" &&
                                                                    t.POR_RC_MARKET_VALUE != 0 &&
+                                                                   t.AGG_LVL_1_LONG_NAME != null &&
+                                                                   t.SEC_INV_THEME == "EQUITY" &&
                                                                    t.COUNTRY == country &&
                                                                    t.GICS_LVL1 == sector).ToList();
             }
+            #endregion
             return dailyData;
         }
 
@@ -1577,27 +1684,27 @@ namespace GreenField.Web.Services
             switch (period)
             {
                 case "1D":
-                    alpha = row.F_POR_ASH_RC_CTN_1D - row.F_BM1_ASH_RC_CTN_1D;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1D - row.BM1_RC_SEC_SELEC_1D;
                     break;
 
                 case "1W":
-                    alpha = row.F_POR_ASH_RC_CTN_1W - row.F_BM1_ASH_RC_CTN_1W;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1W - row.BM1_RC_SEC_SELEC_1W;
                     break;
 
                 case "MTD":
-                    alpha = row.F_POR_ASH_RC_CTN_MTD - row.F_BM1_ASH_RC_CTN_MTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_MTD - row.BM1_RC_SEC_SELEC_MTD;
                     break;
 
                 case "YTD":
-                    alpha = row.F_POR_ASH_RC_CTN_YTD - row.F_BM1_ASH_RC_CTN_YTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_YTD - row.BM1_RC_SEC_SELEC_YTD;
                     break;
 
                 case "QTD":
-                    alpha = row.F_POR_ASH_RC_CTN_QTD - row.F_BM1_ASH_RC_CTN_QTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_QTD - row.BM1_RC_SEC_SELEC_QTD;
                     break;
 
                 case "1Y":
-                    alpha = row.F_POR_ASH_RC_CTN_1Y - row.F_BM1_ASH_RC_CTN_1Y;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1Y - row.BM1_RC_SEC_SELEC_1Y;
                     break;
 
                 default:
