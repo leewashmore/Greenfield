@@ -549,6 +549,80 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
+        /// <param name="sTATEMENT_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<FinancialStatementData> Get_Statement(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String sTATEMENT_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter fISCAL_TYPEParameter;
+            if (fISCAL_TYPE != null)
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
+            }
+            else
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter sTATEMENT_TYPEParameter;
+            if (sTATEMENT_TYPE != null)
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", sTATEMENT_TYPE);
+            }
+            else
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         /// <param name="xRef">No Metadata Documentation available.</param>
         public ObjectResult<GetTargetPrice_Result> GetTargetPrice(global::System.String xRef)
         {
@@ -757,80 +831,6 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<RatioComparisonData>("usp_RetrieveRatioComparisonData", securityBucketXMLParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
-        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
-        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
-        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
-        /// <param name="sTATEMENT_TYPE">No Metadata Documentation available.</param>
-        /// <param name="cURRENCY">No Metadata Documentation available.</param>
-        public ObjectResult<FinancialStatementData> Get_Statement(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String sTATEMENT_TYPE, global::System.String cURRENCY)
-        {
-            ObjectParameter iSSUER_IDParameter;
-            if (iSSUER_ID != null)
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
-            }
-            else
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
-            }
-    
-            ObjectParameter dATA_SOURCEParameter;
-            if (dATA_SOURCE != null)
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
-            }
-            else
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
-            }
-    
-            ObjectParameter pERIOD_TYPEParameter;
-            if (pERIOD_TYPE != null)
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
-            }
-            else
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter fISCAL_TYPEParameter;
-            if (fISCAL_TYPE != null)
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
-            }
-            else
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter sTATEMENT_TYPEParameter;
-            if (sTATEMENT_TYPE != null)
-            {
-                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", sTATEMENT_TYPE);
-            }
-            else
-            {
-                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter cURRENCYParameter;
-            if (cURRENCY != null)
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
-            }
-            else
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
         }
     
         /// <summary>
@@ -6385,6 +6385,16 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ComplexType1")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class ComplexType1 : ComplexObject
+    {
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateDetailedData")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
@@ -9345,7 +9355,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String FINANCIAL
+        public Nullable<global::System.Decimal> FINANCIAL
         {
             get
             {
@@ -9355,13 +9365,13 @@ namespace GreenField.DAL
             {
                 OnFINANCIALChanging(value);
                 ReportPropertyChanging("FINANCIAL");
-                _FINANCIAL = StructuralObject.SetValidValue(value, true);
+                _FINANCIAL = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("FINANCIAL");
                 OnFINANCIALChanged();
             }
         }
-        private global::System.String _FINANCIAL;
-        partial void OnFINANCIALChanging(global::System.String value);
+        private Nullable<global::System.Decimal> _FINANCIAL;
+        partial void OnFINANCIALChanging(Nullable<global::System.Decimal> value);
         partial void OnFINANCIALChanged();
     
         /// <summary>
@@ -9369,7 +9379,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String VALUATION
+        public Nullable<global::System.Decimal> VALUATION
         {
             get
             {
@@ -9379,13 +9389,13 @@ namespace GreenField.DAL
             {
                 OnVALUATIONChanging(value);
                 ReportPropertyChanging("VALUATION");
-                _VALUATION = StructuralObject.SetValidValue(value, true);
+                _VALUATION = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("VALUATION");
                 OnVALUATIONChanged();
             }
         }
-        private global::System.String _VALUATION;
-        partial void OnVALUATIONChanging(global::System.String value);
+        private Nullable<global::System.Decimal> _VALUATION;
+        partial void OnVALUATIONChanging(Nullable<global::System.Decimal> value);
         partial void OnVALUATIONChanged();
 
         #endregion

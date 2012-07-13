@@ -62,31 +62,31 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+                RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_BANK,
-                Content =null// new ViewScatterGraph(new ViewModelScatterGraph(param))
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+                RestoredHeight = 300, 
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+                RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                 
+                RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY,
                 Content = null
-            });
+            }); 
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

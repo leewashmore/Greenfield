@@ -72,11 +72,11 @@
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:ComplexObject">
         <xs:sequence>
-          <xs:element minOccurs="0" name="FINANCIAL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FINANCIAL" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ISSUE_NAME" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SECURITY_ID" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="VALUATION" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VALUATION" nillable="true" type="xs:decimal" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

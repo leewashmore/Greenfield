@@ -22,7 +22,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-    
+
     <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0"
                               IsBusy="{Binding BusyIndicatorIsBusy}" BusyContent="{Binding BusyIndicatorContent}">
         <Grid x:Name="LayoutRoot" Background="White">
@@ -33,19 +33,19 @@
             </Grid.RowDefinitions>
             <Grid>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding SelectedValuationRatio}" FontFamily="Arial" FontSize="11" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedValuationRatio, Converter={StaticResource EnumDisplayConverter}}" FontFamily="Arial" FontSize="11" FontWeight="Bold"/>
                     <TextBlock Text="Vs" FontFamily="Arial" FontSize="11" FontWeight="Bold" Margin="1,0,1,0"/>
-                    <TextBlock Text="{Binding SelectedFinancialRatio}" FontFamily="Arial" FontSize="11" FontWeight="Bold"/>
-                </StackPanel>                
+                    <TextBlock Text="{Binding SelectedFinancialRatio, Converter={StaticResource EnumDisplayConverter}}" FontFamily="Arial" FontSize="11" FontWeight="Bold"/>
+                </StackPanel>
             </Grid>
-            
+
             <Grid Grid.Row="1">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Text="{Binding EntitySelectionInfo.LongName, StringFormat=\{0\,-1\}}" FontSize="11" FontWeight="Bold" FontFamily="Arial"/>
                     <TextBlock Grid.Column="1" Text="{Binding EntitySelectionInfo.ShortName, StringFormat=(\{0\})}" FontSize="11" FontWeight="Bold" FontFamily="Arial"/>
                 </StackPanel>
             </Grid>
-            
+
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -156,60 +156,87 @@
                 <Grid Grid.Column="1">
                     <!--Chart-->
                     <Grid>
-                        <telerik:RadChart x:Name="chScatter" telerik:StyleManager.Theme="Metro" FontSize="7" FontFamily="Arial"
-                                          Visibility="Collapsed" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}"
-                                          IsHitTestVisible="True">
+                        <telerik:RadChart x:Name="chScatter" telerik:StyleManager.Theme="Metro" FontSize="7" FontFamily="Arial" UseDefaultLayout="False"
+                                          Visibility="Visible" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}" Background="Transparent"
+                                          IsHitTestVisible="True" Loaded="chScatter_Loaded" DataBound="chScatter_DataBound">
+                            <telerik:RadChart.SamplingSettings>
+                                <telerik:SamplingSettings SamplingThreshold="0"/>
+                            </telerik:RadChart.SamplingSettings>
+
                             <!--Palette Brushes Settings-->
                             <telerik:RadChart.PaletteBrushes>
+                                <!--Color for all data points-->
                                 <SolidColorBrush Color="#213671"/>
+                                <!--Color for selected data points-->
                                 <SolidColorBrush Color="#9F1D21"/>
-                                <SolidColorBrush Color="#A7362C"/>
+                                <!--<SolidColorBrush Color="#A7362C"/>
                                 <SolidColorBrush Color="#BE715C"/>
                                 <SolidColorBrush Color="#DAAE9E"/>
                                 <SolidColorBrush Color="#FFFFFF"/>
-                                <SolidColorBrush Color="#000000"/>
+                                <SolidColorBrush Color="#000000"/>-->
                             </telerik:RadChart.PaletteBrushes>
                             <!--Default View Settings-->
-                            <telerik:RadChart.DefaultView>
+                            <telerik:ChartArea x:Name="chaScatter" SmartLabelsEnabled="True" LegendName="chPricingLegend" 
+                                               EnableAnimations="False" NoDataString="No Data Available"
+                                               telerik:StyleManager.Theme="Metro" ItemToolTipOpening="ChartArea_ItemToolTipOpening"
+                                               ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1">
+                                <telerik:ChartArea.AxisX>
+                                    <telerik:AxisX AutoRange="True" LayoutMode="Normal" IsZeroBased="False" PlotAreaAxisVisibility="Collapsed"
+                                                               Step="5" MajorGridLinesVisibility="Collapsed" LabelStep="2" MinorGridLinesVisibility="Collapsed"
+                                                               AxisLabelsVisibility="Visible"/>
+                                    <!--DefaultLabelFormat="d"/>-->
+                                </telerik:ChartArea.AxisX>
+                                <telerik:ChartArea.AxisY>
+                                    <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
+                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" PlotAreaAxisVisibility="Collapsed"
+                                                               MajorGridLinesVisibility="Collapsed" MinorGridLinesVisibility="Collapsed"/>
+                                </telerik:ChartArea.AxisY>
+                            </telerik:ChartArea>
+                            <!--<telerik:RadChart.DefaultView>
                                 <telerik:ChartDefaultView>
                                     <telerik:ChartDefaultView.ChartArea>
                                         <telerik:ChartArea  SmartLabelsEnabled="True" LegendName="chPricingLegend" 
                                                             EnableAnimations="False" NoDataString="No Data Available"
-                                                            telerik:StyleManager.Theme="Metro"
+                                                            telerik:StyleManager.Theme="Metro" ItemToolTipOpening="ChartArea_ItemToolTipOpening"
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1">
                                             <telerik:ChartArea.AxisX>
-                                                <telerik:AxisX AutoRange="True"  IsDateTime="True" 
-                                                               LayoutMode="Normal" IsZeroBased="False" 
-                                                               Step="5"
-                                                               LabelStep="2" DefaultLabelFormat="d"/>
+                                                <telerik:AxisX AutoRange="True" LayoutMode="Normal" IsZeroBased="False" PlotAreaAxisVisibility="Collapsed"
+                                                               Step="5" MajorGridLinesVisibility="Collapsed" LabelStep="2" MinorGridLinesVisibility="Collapsed"
+                                                               AxisLabelsVisibility="Visible"/>
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible"
-                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" />
+                                                               AutoRange="True" IsZeroBased="False" ExtendDirection="None" PlotAreaAxisVisibility="Collapsed"
+                                                               MajorGridLinesVisibility="Collapsed" MinorGridLinesVisibility="Collapsed"/>
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
-                                    </telerik:ChartDefaultView.ChartArea>
-                                    <telerik:ChartDefaultView.ChartLegend>
+                                    </telerik:ChartDefaultView.ChartArea>-->
+                                    <!--<telerik:ChartDefaultView.ChartLegend>
                                         <telerik:ChartLegend UseAutoGeneratedItems="False"
                                                              Header="" ItemsPanelOrientation="Horizontal" x:Name="chScatterLegend" 
                                                              Style="{StaticResource ChartLegendStyle}" 
                                                              LegendItemStyle="{StaticResource ChartLegendItemStyle}" />
                                     </telerik:ChartDefaultView.ChartLegend>
                                 </telerik:ChartDefaultView>
-                            </telerik:RadChart.DefaultView>
+                            </telerik:RadChart.DefaultView>-->
                             <!--Series Mapping Settings-->
                             <telerik:RadChart.SeriesMappings>
-                                <telerik:SeriesMapping>
+                                <telerik:SeriesMapping ChartAreaName="chaScatter">
                                     <telerik:SeriesMapping.SeriesDefinition>
-                                        <telerik:ScatterSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" LegendDisplayMode="None">
-                                            
-                                        </telerik:ScatterSeriesDefinition>
+                                        <telerik:ScatterSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" LegendDisplayMode="None"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping FieldName="FINANCIAL" DataPointMember="YValue" />
-                                    <telerik:ItemMapping FieldName="VALUATION" DataPointMember="XValue"  />
+                                    <telerik:ItemMapping FieldName="VALUATION" DataPointMember="XValue" />
                                 </telerik:SeriesMapping>
-                            </telerik:RadChart.SeriesMappings>                            
-                            
+
+                                <telerik:SeriesMapping ChartAreaName="chaScatter" ItemsSource="{Binding IssueRatioComparisonInfo}">
+                                    <telerik:SeriesMapping.SeriesDefinition>
+                                        <telerik:ScatterSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" LegendDisplayMode="None"/>
+                                    </telerik:SeriesMapping.SeriesDefinition>
+                                    <telerik:ItemMapping FieldName="FINANCIAL" DataPointMember="YValue" />
+                                    <telerik:ItemMapping FieldName="VALUATION" DataPointMember="XValue" />
+                                </telerik:SeriesMapping>
+                            </telerik:RadChart.SeriesMappings>
                         </telerik:RadChart>
                     </Grid>
                     <!--Grid-->
@@ -221,14 +248,14 @@
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                      FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21" CanUserResizeColumns="False"                                     
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" Visibility="Collapsed"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgScatterGraph_ElementExporting"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      RowLoaded="dgScatterGraph_RowLoaded">
                                 <telerik:RadGridView.Columns>
                                     <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>
                                     <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>                                    
+                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                                 </telerik:RadGridView.Columns>
                             </telerik:RadGridView>
 

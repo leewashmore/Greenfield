@@ -720,7 +720,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="RatioComparisonData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class RatioComparisonData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
         
-        private string FINANCIALField;
+        private System.Nullable<decimal> FINANCIALField;
         
         private string ISSUER_IDField;
         
@@ -728,15 +728,15 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string SECURITY_IDField;
         
-        private string VALUATIONField;
+        private System.Nullable<decimal> VALUATIONField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FINANCIAL {
+        public System.Nullable<decimal> FINANCIAL {
             get {
                 return this.FINANCIALField;
             }
             set {
-                if ((object.ReferenceEquals(this.FINANCIALField, value) != true)) {
+                if ((this.FINANCIALField.Equals(value) != true)) {
                     this.FINANCIALField = value;
                     this.RaisePropertyChanged("FINANCIAL");
                 }
@@ -783,12 +783,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string VALUATION {
+        public System.Nullable<decimal> VALUATION {
             get {
                 return this.VALUATIONField;
             }
             set {
-                if ((object.ReferenceEquals(this.VALUATIONField, value) != true)) {
+                if ((this.VALUATIONField.Equals(value) != true)) {
                     this.VALUATIONField = value;
                     this.RaisePropertyChanged("VALUATION");
                 }

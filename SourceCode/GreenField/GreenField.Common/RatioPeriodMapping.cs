@@ -76,7 +76,7 @@ namespace GreenField.Common
         /// <returns>DataId</returns>
         public static Int32? GetDataId(object ratio, ScatterGraphPeriod period)
         {
-            String desc = ratio.ToString();
+            String desc = ratio.ToString();            
 
             if (ratio.GetType().Equals(typeof(ScatterGraphFinancialRatio)))
                 desc = EnumUtils.GetDescriptionFromEnumValue<ScatterGraphFinancialRatio>(ratio);

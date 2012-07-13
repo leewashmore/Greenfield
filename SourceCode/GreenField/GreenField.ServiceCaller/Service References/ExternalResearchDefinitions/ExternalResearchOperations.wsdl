@@ -119,7 +119,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRatioComparisonDataResponse" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveRatioComparisonData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveRatioSecurityReferenceData" />
@@ -128,7 +128,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveRatioSecurityReferenceDataResponse" />
   </wsdl:message>
   <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
@@ -197,7 +197,7 @@
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_ExternalResearchOperations" type="tns:ExternalResearchOperations">
+  <wsdl:binding name="ExternalResearchOperations" type="tns:ExternalResearchOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="RetrieveIssuerId">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" style="document" />
@@ -357,7 +357,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="ExternalResearchOperations">
-    <wsdl:port name="BasicHttpBinding_ExternalResearchOperations" binding="tns:BasicHttpBinding_ExternalResearchOperations">
+    <wsdl:port name="ExternalResearchOperations" binding="tns:ExternalResearchOperations">
       <soap:address location="http://localhost:59430/Services/ExternalResearchOperations.svc" />
     </wsdl:port>
   </wsdl:service>
