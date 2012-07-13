@@ -365,6 +365,10 @@
                                                  Command="{Binding GadgetTopBenchmarkSecuritiesCommand}"  Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
                         <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="../Images/equityPortfolio.png" Text="Relative Risk" Size="Large" 
+                                                 Command="{Binding GadgetRelativeRiskCommand}"  Background="#9DA6C0"/>
+                        </telerik:RadRibbonGroup>
+                        <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                             <telerik:RadRibbonButton LargeImage="../Images/saveButtonImage.png" Text="Save" Size="Large" Command="{Binding GadgetSaveCommand}"  Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
                     </telerik:RadRibbonTab>

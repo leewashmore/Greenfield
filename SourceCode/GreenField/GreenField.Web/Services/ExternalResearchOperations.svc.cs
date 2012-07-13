@@ -175,7 +175,7 @@ namespace GreenField.Web.Services
 
                 List<ConsensusEstimateDetailedData> result = null;
 
-                result = entity.GetConsensusEstimateDetailedData(issuerId, _periodType, currency).ToList();
+                result = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
                 return result;
             }
             catch (Exception ex)
