@@ -20,6 +20,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewPortfolioRiskReturns : ViewBaseUserControl
     {
+        #region constructor
         /// <summary>
         /// Constructor for the class having ViewModelPortfolioRiskReturns as its data context
         /// </summary>
@@ -32,21 +33,7 @@ namespace GreenField.Gadgets.Views
             dataContextSource.portfolioRiskReturnDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
-
-        /// <summary>
-        /// True is gadget is currently on display
-        /// </summary>
-        private bool _isActive;
-        public override bool IsActive
-        {
-            get { return _isActive; }
-            set
-            {
-                _isActive = value;
-                if (DataContextRiskReturn != null)
-                    DataContextRiskReturn.IsActive = _isActive;
-            }
-        }
+        #endregion
 
         #region Private Methods
         /// <summary>
@@ -65,6 +52,14 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private void dgPortfolioRiskReturn_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }        
+
+        #endregion
+
+        #region Properties
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
@@ -73,6 +68,20 @@ namespace GreenField.Gadgets.Views
         {
             get { return _dataContextRiskReturn; }
             set { _dataContextRiskReturn = value; }
+        }
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextRiskReturn != null)
+                    DataContextRiskReturn.IsActive = _isActive;
+            }
         }
 
         #endregion
@@ -89,10 +98,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgPortfolioRiskReturn_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
+       
     }
 }

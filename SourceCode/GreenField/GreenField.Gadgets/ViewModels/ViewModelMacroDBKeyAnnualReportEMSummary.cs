@@ -45,6 +45,7 @@ namespace GreenField.Gadgets.ViewModels
         private List<String> _countryNames;
 
         #endregion
+
         #region Constructor
         /// <summary>
         /// Constructor
@@ -77,8 +78,15 @@ namespace GreenField.Gadgets.ViewModels
         /// Event for the notification of Data Load Completion
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler macroDBKeyAnnualReportEMSummaryDataLoadedEvent;
+        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;   
         #endregion
 
+        #region Properties
+
+        #region UI
+        /// <summary>
+        /// Stores the complete Macro Country data
+        /// </summary>
         private List<MacroDatabaseKeyAnnualReportData> macroCountryData;
         public List<MacroDatabaseKeyAnnualReportData> MacroCountryData
         {
@@ -94,7 +102,186 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.MacroCountryData);
             }
         }
+        /// <summary>
+        /// Stores the Five Year data binded to the grid
+        /// </summary>
+        private List<FiveYearDataModels> fiveYearMacroCountryData;
+        public List<FiveYearDataModels> FiveYearMacroCountryData
+        {
+            get
+            {
 
+                return fiveYearMacroCountryData;
+            }
+            set
+            {
+                fiveYearMacroCountryData = value;
+                RaisePropertyChanged(() => this.FiveYearMacroCountryData);
+            }
+        }
+
+        /// <summary>
+        /// Stores the value of the current year
+        /// </summary>
+        private int _currentYear = System.DateTime.Now.Year;
+        public int CurrentYear
+        {
+            get
+            {
+                return _currentYear;
+            }
+
+            set
+            {
+                _currentYear = value;
+                AddDataToFiveYearModels(value);
+                RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = MacroCountryData });
+                RaisePropertyChanged(() => this.CurrentYear);
+            }
+        }
+        #endregion
+
+        #region ICommand
+        /// <summary>
+        /// On left Arrow Click
+        /// </summary>
+        public ICommand LeftNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveLeftCommandMethod);
+            }
+        }
+        /// <summary>
+        /// On Right Arrow Click
+        /// </summary>
+        public ICommand RightNavigationClick
+        {
+            get
+            {
+                return new DelegateCommand<object>(MoveRightCommandMethod);
+            }
+        }
+
+        /// <summary>
+        /// Move Right
+        /// </summary>
+        public ICommand MoveRightCommand
+        {
+            get { return new DelegateCommand<object>(MoveRightCommandMethod); }
+        }
+
+        /// <summary>
+        /// Move Left
+        /// </summary>
+        public ICommand MoveLeftCommand
+        {
+            get { return new DelegateCommand<object>(MoveLeftCommandMethod); }
+        }
+
+        #region ICommand Methods
+        public void MoveRightCommandMethod(object param)
+        {
+            CurrentYear = CurrentYear + 1;
+        }
+
+        public void MoveLeftCommandMethod(object param)
+        {
+            CurrentYear = CurrentYear - 1;
+        }
+        #endregion
+        #endregion
+
+        #endregion
+
+        #region Callback Methods
+        /// <summary>
+        /// Callback Method when the result list gets populated
+        /// </summary>
+        /// <param name="result">result</param>
+        public void RetrieveMacroEconomicDataEMSummaryCallbackMethod(List<MacroDatabaseKeyAnnualReportData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            if (result != null && result.Count > 0)
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                MacroCountryData = result;
+                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = result });
+            }
+            else
+            {
+                Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
+        }   
+        #endregion  
+
+        #region Event handler
+        /// <summary>
+        /// Handler called when the user selects a region
+        /// </summary>
+        /// <param name="countryValues">The country Values for a selected region</param>
+        public void HandleRegionCountryReferenceSetEvent(List<String> countryValues)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (countryValues != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, countryValues, 1);
+                    _countryNames = countryValues;
+
+                    if (_countryNames != null)
+                    {
+                        if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                            macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        #endregion
+
+        #region ClassMethods
+
+        /// <summary>
+        /// Gets the property value by the property name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="m"></param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns></returns>
+        public static T GetProperty<T>(MacroDatabaseKeyAnnualReportData m, string propertyName)
+        {
+            var theProperty = m.GetType().GetProperty(propertyName);
+            if (theProperty == null)
+                throw new ArgumentException("object does not have an " + propertyName + " property", "m");
+            if (theProperty.PropertyType.FullName != typeof(T).FullName)
+                throw new ArgumentException("object has an Id property, but it is not of type " + typeof(T).FullName, "m");
+            return (T)theProperty.GetValue(m, null);
+        }
+        /// <summary>
+        /// Fills the FiveYearDataModels  type list
+        /// </summary>
+        /// <param name="CurrentYear">Value of the current Year</param>
         public void AddDataToFiveYearModels(int CurrentYear)
         {
             if (FiveYearMacroCountryData != null)
@@ -139,143 +326,17 @@ namespace GreenField.Gadgets.ViewModels
             FiveYearMacroCountryData = result;
 
         }
-
-        #region ICommand
-
-        public ICommand LeftNavigationClick
-        {
-            get
-            {
-                return new DelegateCommand<object>(MoveLeftCommandMethod);
-            }
-        }
-
-        public ICommand RightNavigationClick
-        {
-            get
-            {
-                return new DelegateCommand<object>(MoveRightCommandMethod);
-            }
-        }
-
-
-        public ICommand MoveRightCommand
-        {
-            get { return new DelegateCommand<object>(MoveRightCommandMethod); }
-        }
-
-
-        public ICommand MoveLeftCommand
-        {
-            get { return new DelegateCommand<object>(MoveLeftCommandMethod); }
-        }
-
-        public void MoveRightCommandMethod(object param)
-        {
-            CurrentYear = CurrentYear + 1;
-        }
-
-        public void MoveLeftCommandMethod(object param)
-        {
-            CurrentYear = CurrentYear - 1;
-        }
         #endregion
 
-        private List<FiveYearDataModels> fiveYearMacroCountryData;
-        public List<FiveYearDataModels> FiveYearMacroCountryData
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
         {
-            get
-            {
-
-                return fiveYearMacroCountryData;
-            }
-            set
-            {
-                fiveYearMacroCountryData = value;
-                RaisePropertyChanged(() => this.FiveYearMacroCountryData);
-            }
+            _eventAggregator.GetEvent<RegionFXEvent>().Unsubscribe(HandleRegionCountryReferenceSetEvent);
         }
 
-        private int _currentYear = System.DateTime.Now.Year;
-        public int CurrentYear
-        {
-            get
-            {
-                return _currentYear;
-            }
-
-            set
-            {
-                _currentYear = value;
-                AddDataToFiveYearModels(value);
-                RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = MacroCountryData });
-                RaisePropertyChanged(() => this.CurrentYear);
-            }
-        }
-
-        public void RetrieveMacroEconomicDataEMSummaryCallbackMethod(List<MacroDatabaseKeyAnnualReportData> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
-            if (result != null && result.Count > 0)
-            {
-                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                MacroCountryData = result;
-                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-                RetrieveMacroEMSummaryDataCompletedEvent(new RetrieveMacroCountrySummaryDataCompleteEventArgs() { MacroInfo = result });
-            }
-            else
-            {
-                Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                    macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
-            }
-        }
-
-        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroEMSummaryDataCompletedEvent;        
-
-        public void HandleRegionCountryReferenceSetEvent(List<String> countryValues)
-        {
-
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (countryValues != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, countryValues, 1);
-                    _countryNames = countryValues;
-
-                    if (_countryNames != null)
-                    {
-                        if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
-                            macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        public static T GetProperty<T>(MacroDatabaseKeyAnnualReportData m, string propertyName)
-        {
-            var theProperty = m.GetType().GetProperty(propertyName);
-            if (theProperty == null)
-                throw new ArgumentException("object does not have an " + propertyName + " property", "m");
-            if (theProperty.PropertyType.FullName != typeof(T).FullName)
-                throw new ArgumentException("object has an Id property, but it is not of type " + typeof(T).FullName, "m");
-            return (T)theProperty.GetValue(m, null);
-        } 
+        #endregion
     }
 }

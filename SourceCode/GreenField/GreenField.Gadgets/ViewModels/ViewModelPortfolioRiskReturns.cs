@@ -86,6 +86,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Consists of whole Portfolio Data
+        /// </summary>
         private List<PortfolioRiskReturnData> _portfolioRiskReturnInfo;
         public List<PortfolioRiskReturnData> PortfolioRiskReturnInfo
         {
@@ -99,7 +102,9 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.PortfolioRiskReturnInfo);
             }
         }
-
+        /// <summary>
+        /// Property binded to the grid
+        /// </summary>
          private List<PerformancePeriodData> _portfolioRiskReturnPeriodInfo;
         public List<PerformancePeriodData> PortfolioRiskReturnPeriodInfo
         {
@@ -578,9 +583,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-       
+        }       
 
         #endregion 
       

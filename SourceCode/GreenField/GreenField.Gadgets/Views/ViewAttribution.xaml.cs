@@ -34,6 +34,8 @@ namespace GreenField.Gadgets.Views
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
         }
         #endregion
+
+        #region Properties
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
@@ -59,6 +61,10 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+
+        #region EventHandler
+
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -74,6 +80,7 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;                
             }
         }
+        #endregion
 
         #region RemoveEvents
         /// <summary>
@@ -88,9 +95,16 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// When row gets loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgAttribution_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
         }
+        #endregion
     }
 }

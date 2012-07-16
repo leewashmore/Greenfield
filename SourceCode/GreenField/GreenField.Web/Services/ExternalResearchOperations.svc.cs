@@ -428,6 +428,12 @@ namespace GreenField.Web.Services
 
         #endregion
 
+        /// <summary>
+        /// Retrieve data for consensus Estimates Summary Gadget
+        /// </summary>
+        /// <param name="entityIdentifier">Security identifier selected by the user</param>
+        /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
+        /// 
         #region Consensus Estimates Summary Gadget
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -451,6 +457,12 @@ namespace GreenField.Web.Services
         #endregion
 
         #region Quarterly Comparision Results
+        /// <summary>
+        /// Retrieves Data for Quarterly Comparison
+        /// </summary>
+        /// <param name="fieldValue">field as selected by the user</param>
+        /// <param name="yearValue">year as selected by the user</param>
+        /// <returns>Returns data in list of type QuarterlyResultsData </returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue, int yearValue)

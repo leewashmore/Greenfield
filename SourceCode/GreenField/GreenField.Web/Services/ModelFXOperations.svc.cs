@@ -47,8 +47,7 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Retrives data for Macro database key annual report
         /// </summary>
-        /// <param name="CountryName"></param>
-        /// <param name="regionName"></param>
+        /// <param name="countryNameVal">Country Selected by the user</param>      
         /// <returns>report data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -79,7 +78,10 @@ namespace GreenField.Web.Services
             }
         }
 
-
+        /// <summary>
+        /// Retrieves the list of countries
+        /// </summary>
+        /// <returns>List of countries in result of type CountrySelectionData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<CountrySelectionData> RetrieveCountrySelectionData()
@@ -97,7 +99,10 @@ namespace GreenField.Web.Services
             }
             return result;
         }
-
+        /// <summary>
+        /// Retrieves a list of regions 
+        /// </summary>
+        /// <returns>List of regions in result of type RegionSelectionData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<RegionSelectionData> RetrieveRegionSelectionData()
@@ -116,7 +121,12 @@ namespace GreenField.Web.Services
             return result;
         
         }
-
+        /// <summary>
+        /// Retrives Data for MacroDatabaseKeyAnnualReportDataEMSummary
+        /// </summary>
+        /// <param name="countryNameVal">Country Name</param>
+        /// <param name="countryValues">CountryValues in a Region</param>
+        /// <returns>returns report data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<MacroDatabaseKeyAnnualReportData> RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(String countryNameVal,List<String> countryValues)

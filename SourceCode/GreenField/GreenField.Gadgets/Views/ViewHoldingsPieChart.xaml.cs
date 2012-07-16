@@ -48,7 +48,9 @@ namespace GreenField.Gadgets.Views
             //this.dgHoldingsPercentageSector.ItemsSource = ((ViewModelHoldingsPieChart)this.DataContext).HoldingsPercentageInfo;
         }
         #endregion
-
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
         private ViewModelHoldingsPieChart _dataContextHoldingsPieChart;
         public ViewModelHoldingsPieChart DataContextHoldingsPieChart
         {

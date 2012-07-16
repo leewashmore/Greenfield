@@ -29,6 +29,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextPerformanceGrid = dataContextSource;
             dataContextSource.performanceGridDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
         }
@@ -51,6 +52,23 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
+    
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
+        private ViewModelPerformanceGrid _dataContextPerformanceGrid;
+        public ViewModelPerformanceGrid DataContextPerformanceGrid
+        {
+            get { return _dataContextPerformanceGrid; }
+            set { _dataContextPerformanceGrid = value; }
+        }
 
         /// <summary>
         /// True is gadget is currently on display
@@ -66,16 +84,18 @@ namespace GreenField.Gadgets.Views
                     ((ViewModelPerformanceGrid)DataContext).IsActive = _isActive;
             }
         }
-        #endregion
+        #endregion        
+
+        #region RemoveEvents
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextPerformanceGrid.performanceGridDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
+            this.DataContextPerformanceGrid.Dispose();
+            this.DataContextPerformanceGrid = null;
+            this.DataContext = null;
         }
 
-        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
+        #endregion
     }
 }

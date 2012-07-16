@@ -18,6 +18,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewQuarterlyResultsComparison : ViewBaseUserControl
     {
+        #region Constructor
         public ViewQuarterlyResultsComparison(ViewModelQuarterlyResultsComparison dataContextSource)
         {
             InitializeComponent();
@@ -26,6 +27,7 @@ namespace GreenField.Gadgets.Views
             dataContextSource.quarterlyResultsComoarisonDataLoadedEvent +=
            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_quarterlyResultsComoarisonDataLoadedEvent);
         }
+        #endregion
 
         /// <summary>
         /// Data Retrieval Indicator
@@ -55,6 +57,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Properties
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
@@ -64,6 +67,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextQuarterlyResultsComparison; }
             set { _dataContextQuarterlyResultsComparison = value; }
         }
+        #endregion
 
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)

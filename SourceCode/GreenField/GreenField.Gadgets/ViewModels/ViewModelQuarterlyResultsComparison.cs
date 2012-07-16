@@ -53,19 +53,25 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties      
-
+        /// <summary>
+        /// List of field values binded to the field combo box
+        /// </summary>
         public List<String> FieldValues 
         {
             get { return new List<String> { "Net Income", "Revenue"}; }            
         }        
-
+        /// <summary>
+        /// List of year values binded to the year combo box
+        /// </summary>
         public List<int>  YearValues
         {
           //  get { return new List<int> {DateTime.Now.Year,DateTime.Now.Year+1,DateTime.Now.Year+2}; } 
             get { return new List<int> { 2002,2003,2004}; }
         }
 
-      
+      /// <summary>
+      /// Selected Year Value
+      /// </summary>
         private int yearValue;
         public int YearValue
         {
@@ -88,6 +94,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Selected Field Value
+        /// </summary>
         private String fieldValue;
         public String FieldValue
         {
@@ -110,7 +119,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-      
+      /// <summary>
+      /// list that stores the Quarterly Comparison Info
+      /// </summary>
         private List<QuarterlyResultsData> quarterlyResultsInfo;
         public List<QuarterlyResultsData> QuarterlyResultsInfo
         {
@@ -136,6 +147,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallbackMethods
+        /// <summary>
+        /// Called when the result list gets populated with data 
+        /// </summary>
+        /// <param name="result">result</param>
         private void RetrieveQuarterlyResultsDataCallbackMethod(List<QuarterlyResultsData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -165,12 +180,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        #endregion
-
-
-
-
-
+        #endregion      
 
     }
 }
