@@ -1703,27 +1703,27 @@ namespace GreenField.Web.Services
             switch (period)
             {
                 case "1D":
-                    alpha = row.BM1_RC_ASSET_ALLOC_1D - row.BM1_RC_SEC_SELEC_1D;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1D + row.BM1_RC_SEC_SELEC_1D;
                     break;
 
                 case "1W":
-                    alpha = row.BM1_RC_ASSET_ALLOC_1W - row.BM1_RC_SEC_SELEC_1W;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1W + row.BM1_RC_SEC_SELEC_1W;
                     break;
 
                 case "MTD":
-                    alpha = row.BM1_RC_ASSET_ALLOC_MTD - row.BM1_RC_SEC_SELEC_MTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_MTD + row.BM1_RC_SEC_SELEC_MTD;
                     break;
 
                 case "YTD":
-                    alpha = row.BM1_RC_ASSET_ALLOC_YTD - row.BM1_RC_SEC_SELEC_YTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_YTD + row.BM1_RC_SEC_SELEC_YTD;
                     break;
 
                 case "QTD":
-                    alpha = row.BM1_RC_ASSET_ALLOC_QTD - row.BM1_RC_SEC_SELEC_QTD;
+                    alpha = row.BM1_RC_ASSET_ALLOC_QTD + row.BM1_RC_SEC_SELEC_QTD;
                     break;
 
                 case "1Y":
-                    alpha = row.BM1_RC_ASSET_ALLOC_1Y - row.BM1_RC_SEC_SELEC_1Y;
+                    alpha = row.BM1_RC_ASSET_ALLOC_1Y + row.BM1_RC_SEC_SELEC_1Y;
                     break;
 
                 default:
