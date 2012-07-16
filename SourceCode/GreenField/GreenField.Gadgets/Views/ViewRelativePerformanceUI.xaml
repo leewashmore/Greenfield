@@ -58,7 +58,7 @@
                                  AutoGenerateColumns="False" 
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
-                                 CanUserInsertRows="False" 
+                                 CanUserInsertRows="False" ColumnWidth="*"
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
@@ -71,21 +71,21 @@
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn  Header="Name"  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                 DataMemberBinding="{Binding EntityName}" Width="Auto" HeaderTextAlignment="Left" 
+                                                 DataMemberBinding="{Binding EntityName}"  HeaderTextAlignment="Left" 
                                                  CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  Header="MTD" TextAlignment="Right" UniqueName="MTD"
                                                  DataMemberBinding="{Binding MTDReturn, StringFormat=\{0:n4\}%}" 
-                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="QTD" UniqueName="QTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding QTDReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
-                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="YTD" UniqueName="YTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding YTDReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
-                                                 Width="Auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  Header="1-Year" UniqueName="One Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
-                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
+                                                 HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <!--<telerik:GridViewDataColumn  Header="3-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding ThreeYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
                                                  Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
