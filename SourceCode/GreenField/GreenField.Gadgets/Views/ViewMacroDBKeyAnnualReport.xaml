@@ -54,14 +54,20 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <telerik:RadButton x:Name="btnMoveRight" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
+
+        <TextBlock Grid.Row="0" Text="Macro Database Key Annual Data Report" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
+        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+            <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </telerik:RadButton>
+        <!--<telerik:RadButton x:Name="btnMoveRight" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
                                        Margin="5,0,0,0"  ToolTipService.ToolTip="Move Right One Year"  Command="{Binding MoveRightCommand}">
             <Image Source="../Images/AddToChart.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </telerik:RadButton>
         <telerik:RadButton x:Name="btnMoveLeft" Grid.Row="0" Height="20" Width="20" HorizontalAlignment="Right"  VerticalAlignment="Center"
                                        Margin="5,0,20,0"  ToolTipService.ToolTip="Move Left One Year"  Command="{Binding MoveLeftCommand}">
             <Image Source="../Images/LeftArrow.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        </telerik:RadButton>
+        </telerik:RadButton>-->
         <Grid Grid.Row="1">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                            DisplayAfter="0">
@@ -92,7 +98,8 @@
                                          AutoExpandGroups="True"
                                          RowLoaded="dgMacroDBKeyReport_RowLoaded"
                                          EnableRowVirtualization="False"
-                                     EnableColumnVirtualization="False">
+                                         EnableColumnVirtualization="False"
+                                         ElementExporting="dgMacroDBKeyReport_ElementExporting">
                     <telerik:RadGridView.Columns>
                         
                         <telerik:GridViewDataColumn x:Name="dgcDescription" 

@@ -19,6 +19,7 @@ using System.Windows.Data;
 using GreenField.Common;
 using Telerik.Windows.Controls.GridView;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -167,6 +168,42 @@ namespace GreenField.Gadgets.Views
         {
             GroupedGridRowLoadedHandler.Implement(e);
         }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+                if (this.dgMacroDBKeyReport.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                  
+                      new RadExportOptions() { ElementName = "MacroDB Key Annual Report", Element = this.dgMacroDBKeyReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_MACRO_DATABASE_KEY_ANNUAL_DATA_REPORT);
+                    childExportOptions.Show();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        private void dgMacroDBKeyReport_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+
         #endregion
 
         #region RemoveEvents
@@ -180,7 +217,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextMacroDBKeyAnnualReport = null;
             this.DataContext = null;
         }
-
+        
         #endregion
     }
 }

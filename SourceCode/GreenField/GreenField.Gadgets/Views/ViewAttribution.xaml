@@ -17,10 +17,16 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>            
+            <RowDefinition Height= "Auto" />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-            <telerik:RadGridView Grid.Row="0" Name="dgAttribution"  AutoGenerateColumns="False" 
+        <TextBlock Grid.Row="0" Text="Performance Attribution" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
+        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+            <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </telerik:RadButton>
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1">
+            <telerik:RadGridView  Name="dgAttribution"  AutoGenerateColumns="False" 
                                      ItemsSource="{Binding PeriodAttributionInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
@@ -30,12 +36,13 @@
                                      FontSize="7"
                                      FontFamily="Arial"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         RowLoaded="dgAttribution_RowLoaded"
-                                         AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2">
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     RowLoaded="dgAttribution_RowLoaded"
+                                     AlternateRowBackground="#d8d5d4"
+                                     AlternationCount="2"
+                                     ElementExporting = "dgAttribution_ElementExporting">
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn Header="ID" 
                                                     DataMemberBinding="{Binding Country}"  
