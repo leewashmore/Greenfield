@@ -96,13 +96,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Unpivoted ConsensusEstimatesDetail Information received from stored procedure
         /// </summary>
-        private List<ConsensusEstimateDetailedData> _consensusEstimateDetailInfo;
-        public List<ConsensusEstimateDetailedData> ConsensusEstimateDetailInfo
+        private List<ConsensusEstimateDetail> _consensusEstimateDetailInfo;
+        public List<ConsensusEstimateDetail> ConsensusEstimateDetailInfo
         {
             get
             {
                 if (_consensusEstimateDetailInfo == null)
-                    _consensusEstimateDetailInfo = new List<ConsensusEstimateDetailedData>();
+                    _consensusEstimateDetailInfo = new List<ConsensusEstimateDetail>();
                 return _consensusEstimateDetailInfo;
             }
             set
@@ -363,7 +363,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        public void RetrieveConsensusEstimateDetailedDataCallbackMethod(List<ConsensusEstimateDetailedData> result)
+        public void RetrieveConsensusEstimateDetailedDataCallbackMethod(List<ConsensusEstimateDetail> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

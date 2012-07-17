@@ -4,7 +4,7 @@
 	<edmx:Runtime>
 		<!-- SSDL content -->
 		<edmx:StorageModels>
-    <Schema Namespace="ExternalResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+		<Schema Namespace="ExternalResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ExternalResearchModelStoreContainer">
           <EntitySet Name="CONSENSUS_MASTER" EntityType="ExternalResearchModel.Store.CONSENSUS_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="CONSENSUS_MASTER">
             <DefiningQuery>SELECT 
@@ -68,7 +68,8 @@
       [DATA_MASTER].[DATA_DESC] AS [DATA_DESC], 
       [DATA_MASTER].[COA_TYPE] AS [COA_TYPE], 
       [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
-      [DATA_MASTER].[CURRENT] AS [CURRENT]
+      [DATA_MASTER].[CURRENT] AS [CURRENT], 
+      [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.Store.FX_RATES" store:Type="Tables" store:Schema="dbo" store:Name="FX_RATES">
@@ -262,7 +263,7 @@
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -289,7 +290,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -308,7 +309,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -349,7 +350,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -376,9 +377,10 @@
           <Property Name="COA_TYPE" Type="varchar" MaxLength="3" />
           <Property Name="ANNUAL" Type="char" MaxLength="1" />
           <Property Name="CURRENT" Type="char" MaxLength="1" />
+          <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -393,7 +395,7 @@
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_DATA_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.INTERNAL_DATA_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_DATA_ANNUAL">
           <Key>
@@ -410,7 +412,7 @@
           <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_DATA_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.INTERNAL_DATA_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_DATA_INTERIM">
           <Key>
@@ -427,7 +429,7 @@
           <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_ISSUER">
           <Key>
@@ -440,7 +442,7 @@
           <Property Name="LastIndustryModelLoad" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_STATEMENT_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.INTERNAL_STATEMENT_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_STATEMENT_ANNUAL">
           <Key>
@@ -465,7 +467,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.INTERNAL_STATEMENT_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.INTERNAL_STATEMENT_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="INTERNAL_STATEMENT_INTERIM">
           <Key>
@@ -494,7 +496,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -504,10 +506,10 @@
           </Key>
           <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="SHARES_DATE" Type="datetime" Nullable="false" />
-          <Property Name="SHARES_OUTSTANDING" Type="int" Nullable="false" />
+          <Property Name="SHARES_OUTSTANDING" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -518,7 +520,7 @@
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
@@ -536,7 +538,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -557,7 +559,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -595,7 +597,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -619,7 +621,7 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="REUTERS_XREF">
           <Key>
@@ -636,7 +638,7 @@
           <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="tblCETargetPrice">
           <Key>
@@ -659,7 +661,7 @@
           <Property Name="Currency" Type="char" MaxLength="3" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_LatestData.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="tblCompanyInfo">
           <Key>
@@ -699,6 +701,15 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="Get_ConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+        </Function>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
@@ -714,6 +725,15 @@
           <Parameter Name="Issuer_Id" Type="nvarchar" Mode="In" />
           <Parameter Name="periodType" Type="nvarchar" Mode="In" />
           <Parameter Name="currency" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
@@ -739,9 +759,8 @@
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
-<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -775,16 +794,8 @@
 						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
 					</FunctionImport>
 					<FunctionImport Name="usp_RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityBucketXML" Mode="In" Type="String" />
+					</FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -795,8 +806,8 @@
             <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.DATA_MASTER" />
-          <FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailedData)">
+					<EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.DATA_MASTER" />
+          <FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
@@ -1106,6 +1117,21 @@
 					<Property Type="Decimal" Name="MARKET_CAPITALIZATION" Nullable="true" Precision="18" Scale="0" />
 					<Property Type="Decimal" Name="ENTERPRISE_VALUE" Nullable="true" Precision="18" Scale="0" />
 				</ComplexType>
+				<ComplexType Name="FinancialStatementData">
+					<Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
+					<Property Type="Int32" Name="Data_ID" Nullable="false" />
+					<Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
+					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
+					<Property Type="String" Name="AMOUNT_TYPE" Nullable="true" MaxLength="1" />
+					<Property Type="String" Name="PERIOD" Nullable="true" MaxLength="4" />
+					<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
+					<Property Type="Int32" Name="DECIMALS" Nullable="false" />
+					<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
+					<Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
+				</ComplexType>
 				<EntityType Name="tblCETargetPrice">
 					<Key>
 						<PropertyRef Name="XRef" />
@@ -1233,21 +1259,6 @@
 					<Property Type="String" Name="FINANCIAL" Nullable="true" />
 					<Property Type="String" Name="VALUATION" Nullable="true" />
 				</ComplexType>
-        <ComplexType Name="FinancialStatementData">
-          <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="Data_ID" Nullable="false" />
-          <Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
-          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="AMOUNT_TYPE" Nullable="true" MaxLength="1" />
-          <Property Type="String" Name="PERIOD" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="38" Scale="6" />
-          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
-          <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
-        </ComplexType>
 
 
 				<ComplexType Name="ConsensusEstimateValuation" >
@@ -1268,35 +1279,34 @@
 					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
 					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
 				</ComplexType>
-        <EntityType Name="DATA_MASTER">
-          <Key>
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="FX_CONV_TYPE" />
-            <PropertyRef Name="CALENDARIZE" />
-            <PropertyRef Name="INDUSTRIAL" />
-            <PropertyRef Name="BANK" />
-            <PropertyRef Name="INSURANCE" />
-            <PropertyRef Name="UTILITY" />
-            <PropertyRef Name="QUARTERLY" />
-            <PropertyRef Name="DATA_DESC" />
-          </Key>
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="String" Name="COA" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="FX_CONV_TYPE" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="CALENDARIZE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="INDUSTRIAL" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="BANK" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="INSURANCE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="UTILITY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="QUARTERLY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="COA_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
-        </EntityType>
-				
-        <ComplexType Name="ConsensusEstimateDetailedData" >
+				<EntityType Name="DATA_MASTER">
+					<Key>
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="FX_CONV_TYPE" />
+						<PropertyRef Name="CALENDARIZE" />
+						<PropertyRef Name="INDUSTRIAL" />
+						<PropertyRef Name="BANK" />
+						<PropertyRef Name="INSURANCE" />
+						<PropertyRef Name="UTILITY" />
+						<PropertyRef Name="QUARTERLY" />
+						<PropertyRef Name="DATA_DESC" />
+					</Key>
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="String" Name="COA" MaxLength="8" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="FX_CONV_TYPE" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="CALENDARIZE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="INDUSTRIAL" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="BANK" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="INSURANCE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="UTILITY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="QUARTERLY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="COA_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+				</EntityType>
+        <ComplexType Name="ConsensusEstimateDetailData" >
 			<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
 			<Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
 			<Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100"/>
@@ -1304,17 +1314,17 @@
 			<Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10"/>
 			<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
 			<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="10"/>
-			<Property Type="Decimal" Name="AMOUNT" Nullable="false" />
-			<Property Type="Decimal" Name="ASHMOREEMM_AMOUNT" Nullable="true" />
+			<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+			<Property Type="Decimal" Name="ASHMOREEMM_AMOUNT" Nullable="true" Precision="32" Scale="6" />
 			<Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
-			<Property Type="Decimal" Name="HIGH" Nullable="false" />
-			<Property Type="Decimal" Name="LOW" Nullable="false" />
-			<Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" />
+			<Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+			<Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+			<Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
 			<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="10"/>
 			<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10"/>
-			<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" />
-			<Property Type="Decimal" Name="ACTUAL" Nullable="false" />
-		</ComplexType>
+			<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23"/>
+			<Property Type="Decimal" Name="ACTUAL" Nullable="true" Precision="32" Scale="6" />
+        </ComplexType>
 
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1544,6 +1554,25 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+								<ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+								<ScalarProperty Name="Data_ID" ColumnName="Data_ID" />
+								<ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+								<ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+								<ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
 					<EntitySetMapping Name="tblCETargetPrices">
 						<EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
 							<MappingFragment StoreEntitySet="tblCETargetPrice">
@@ -1595,25 +1624,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
-                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
-                <ScalarProperty Name="Data_ID" ColumnName="Data_ID" />
-                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
-                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-                <ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
 					<FunctionImportMapping FunctionImportName="GetConsensusEstimateData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimateData">
 						<ResultMapping>
 							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateMedianData">
@@ -1638,28 +1648,53 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-          <EntitySetMapping Name="DATA_MASTER">
-            <EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
-              <MappingFragment StoreEntitySet="DATA_MASTER">
-                <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
-                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
-                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
-                <ScalarProperty Name="UTILITY" ColumnName="UTILITY" />
-                <ScalarProperty Name="INSURANCE" ColumnName="INSURANCE" />
-                <ScalarProperty Name="BANK" ColumnName="BANK" />
-                <ScalarProperty Name="INDUSTRIAL" ColumnName="INDUSTRIAL" />
-                <ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
-                <ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
-                <ScalarProperty Name="COA" ColumnName="COA" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+
+
+					<FunctionImportMapping FunctionImportName="GetConsensusEstimatesValuation" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesValuation">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateValuation">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+								<ScalarProperty Name="PERIOD" ColumnName="PERIOD" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="ASHMOREEMM_AMOUNT" ColumnName="ASHMOREEMM_AMOUNT" />
+								<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+								<ScalarProperty Name="HIGH" ColumnName="HIGH" />
+								<ScalarProperty Name="LOW" ColumnName="LOW" />
+								<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="DATA_MASTER">
+						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
+							<MappingFragment StoreEntitySet="DATA_MASTER">
+								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
+								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+								<ScalarProperty Name="UTILITY" ColumnName="UTILITY" />
+								<ScalarProperty Name="INSURANCE" ColumnName="INSURANCE" />
+								<ScalarProperty Name="BANK" ColumnName="BANK" />
+								<ScalarProperty Name="INDUSTRIAL" ColumnName="INDUSTRIAL" />
+								<ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
+								<ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
+								<ScalarProperty Name="COA" ColumnName="COA" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetConsensusDetail" FunctionName="ExternalResearchModel.Store.Get_Consensus_Detail">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateDetailedData">
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateDetailData">
                 <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
                 <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
                 <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
@@ -1680,7 +1715,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-
 				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
@@ -1720,8 +1754,9 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.tblCETargetPrice" Width="1.5" PointX="7.375" PointY="10.75" Height="3.5186979166666674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.tblCompanyInfo" Width="1.5" PointX="9.375" PointY="10.75" Height="6.0186165364583317" />
-        <EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
+				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
 </edmx:Edmx>
+

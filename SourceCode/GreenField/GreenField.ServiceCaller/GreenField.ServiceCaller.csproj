@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -147,6 +146,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkGridReturnData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateDetail.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
@@ -230,9 +230,6 @@
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations8.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

@@ -206,7 +206,7 @@ namespace GreenField.ServiceCaller
         #endregion
         
 
-        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback);
+        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
 
